@@ -1,4 +1,4 @@
-HAPI FHIR - HL7 FHIR Core Artifacts
+FHIR Test Cases
 ===================================
 
 # Building this Project
