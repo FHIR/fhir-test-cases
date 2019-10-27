@@ -9,14 +9,10 @@ This project uses [Apache Maven](http://maven.apache.org) to build. To build:
 mvn install
 ```
 
-Note that unit tests will run, but are currently not set to fail the build as they do not all pass. This is being worked on.
-
-To skip unit tests:
-
-```
-mvn -Dmaven.test.skip install
-```
+Note: there's no java code in here. The fact that maven is used is just to make it easy to book up
+other maven dependencies to the test cases 
 
 == Maintenance
 
-This project is maintained by Grahame Grieve and Lloyd Mckenzie on behalf of the FHIR community.
+This project is maintained by the FHIR community to help implementations test their functionality
+
