@@ -14,8 +14,7 @@ pause
 call mvn versions:set -DnewVersion=%newver%-SNAPSHOT
 call git commit -a -m "Release new version"
 call git push origin master
-call "C:\tools\fnr.exe" -dir "C:\work\org.hl7.fhir\org.hl7.fhir.core" -fileMask "*.xml" -find "%oldver%-SNAPSHOT" -replace "%newver%-SNAPSHOT" -count 0
-call "C:\tools\fnr.exe" -dir "C:\work\org.hl7.fhir\fhir-ig-publisher" -fileMask "*.xml" -find "%oldver%-SNAPSHOT" -replace "%newver%-SNAPSHOT" -count 0
+call "C:\tools\fnr.exe" -dir "C:\work\org.hl7.fhir\org.hl7.fhir.core" -fileMask "*.xml" -find "%oldver%-SNAPSHOT" -replace "%newver%-SNAPSHOT" -count 1
 call mvn clean deploy -Dmaven.test.redirectTestOutputToFile=false -DdeployAtEnd=true 
 IF %ERRORLEVEL% NEQ 0 ( 
   GOTO DONE
