@@ -2,14 +2,14 @@
 
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="obs-1"/>
-  <url value="urn:uuid:65cd0191-695b-4f9c-97ae-33814b5f3d37"/>
+  <url value="urn:uuid:9a788a05-e881-4c0c-a3e7-cce309aab2d7"/>
   <name value="Obs1"/>
   <status value="draft"/>
   <description value="fixture for #1: closed slicing on polymorphic"/>
   <kind value="resource"/>
   <abstract value="false"/>
   <type value="Observation"/>
-  <baseDefinition value="urn:uuid:861adb34-166f-4c2d-9bef-c8a5c6d9c58c"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
   <derivation value="constraint"/>
   <differential>
     <element>
@@ -20,13 +20,25 @@
     </element>
     <element>
       <path value="Observation.value[x]"/>
+      <sliceName value="valueCodeableConcept"/>
+      <min value="1"/>
+      <type>  
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://somewhere/something"/>
+      </binding>
+    </element>
+    <element>
+      <path value="Observation.value[x]"/>
       <sliceName value="valueQuantity"/>
       <type>  
         <code value="Quantity"/>
       </type>
       <binding>
         <strength value="required"/>
-        <valueSet value="http://somewhere/something-else"/>
+        <valueSet value="http://somewhere/something"/>
       </binding>
     </element>
   </differential>
