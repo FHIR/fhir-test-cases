@@ -1,7 +1,7 @@
 @echo off
 
-set oldver=1.0.15
-set newver=1.0.16
+set oldver=1.0.16
+set newver=1.0.17
 
 echo ..
 echo ================================================================================
@@ -23,7 +23,6 @@ IF %ERRORLEVEL% NEQ 0 (
 )
 
 call "c:\program files\7-zip\7z" a ..\latest-ig-publisher\test-cases.zip cda npm r4 r5 ucum validator
-pause
 
 cd ..\latest-ig-publisher
 call git commit -a -m "Release new version %newver%-SNAPSHOT"
