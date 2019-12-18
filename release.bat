@@ -1,7 +1,8 @@
 @echo off
 
-set oldver=1.0.19
-set newver=1.0.20
+set oldver=1.0.20
+set newver=1.0.21
+set comment=More validation examples to test various forms of invalid extension use, and cross version extensions
 
 echo ..
 echo ================================================================================
@@ -25,12 +26,12 @@ IF %ERRORLEVEL% NEQ 0 (
 call "c:\program files\7-zip\7z" a ..\latest-ig-publisher\test-cases.zip cda npm r4 r5 ucum validator
 
 cd ..\latest-ig-publisher
-call git commit -a -m "Release new version %newver%-SNAPSHOT"
+call git commit -a -m "Release new version %newver%-SNAPSHOT. Changes: %comment%"
 call git push origin master
 cd ..\fhir-test-cases
 
 
-call python c:\tools\zulip-api\zulip\zulip\send.py --stream committers/notification --subject "FHIR Test Cases" -m "New Test cases v%newver% released via Maven, also deployed at https://fhir.github.io/latest-ig-publisher/test-cases.zip " --config-file zuliprc
+call python c:\tools\zulip-api\zulip\zulip\send.py --stream committers/notification --subject "FHIR Test Cases" -m "New Test cases v%newver% released via Maven, also deployed at https://fhir.github.io/latest-ig-publisher/test-cases.zip. Changes: %comment%" --config-file zuliprc
 
 :DONE
 echo ===============================================================
