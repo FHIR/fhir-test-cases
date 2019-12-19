@@ -1,16 +1,14 @@
 @echo off
 
-set oldver=1.0.21
-set newver=1.0.22
-set comment=More validation examples to test various forms of invalid extension use, and cross version extensions
+set oldver=1.0.22
+set newver=1.0.23
+set comment=Add additional test - reslicing as a child of type slicing
 
 echo ..
 echo ================================================================================
 echo upgrade and release fhir-tests-cases from %oldver%-SNAPSHOT to %newver%-SNAPSHOT
 echo ================================================================================
 echo ..
-echo check versions and make sure committed...
-pause
 
 call mvn versions:set -DnewVersion=%newver%-SNAPSHOT
 call git commit -a -m "Release new version"
