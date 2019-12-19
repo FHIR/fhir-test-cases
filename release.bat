@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.22
-set newver=1.0.23
-set comment=Add additional test - reslicing as a child of type slicing
+set oldver=1.0.23
+set newver=1.0.24
+set comment=Add a test for a type slicing case that lead to a stack overflow
 
 echo ..
 echo ================================================================================
