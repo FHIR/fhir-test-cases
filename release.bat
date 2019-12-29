@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.24
-set newver=1.0.25
-set comment=Fix code system narrative generation poly-heirarchy test cases
+set oldver=1.0.25
+set newver=1.0.26
+set comment=Reorganize validator test manifest
 
 echo ..
 echo ================================================================================
