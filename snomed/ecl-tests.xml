@@ -1,0 +1,530 @@
+<ecl-tests>
+  <group name="Simple"/>
+    <case>
+      <expression>404684003 |Clinical finding|</expression>
+      <included>404684003 |Clinical finding|</included>
+      <excluded>56265001 |Heart disease|</excluded>
+      <excluded>404684003 |Clinical finding| : 363698007 |Finding site|  = 80891009 |Heart structure|  </excluded>
+      <excluded>71388002 |Procedure|</excluded>
+    </case>
+    <case>
+      <expression> &lt; 404684003 |Clinical finding|</expression>
+      <included>64572001 |Disease|</included>
+      <included>56265001 |Heart disease|</included>
+      <included>404684003 |Clinical finding| : 363698007 |Finding site|  = 80891009 |Heart structure|</included>
+      <excluded>404684003 |Clinical finding|</excluded>
+      <excluded>71388002 |Procedure| :   405813007 |Procedure site - Direct|  =   80891009 |Heart structure|  </excluded>
+      <excluded>71388002 |Procedure|</excluded>
+    </case>
+    <case>
+      <expression> &lt; &lt;  73211009 |Diabetes mellitus| </expression>
+      <included>73211009 |Diabetes mellitus|</included>
+      <included>#PC 73211009 |Diabetes mellitus| : 42752001 |Due to|  = 61823004 |Injury of pancreas|</included>
+      <included>46635009 |Diabetes mellitus type 1|</included>
+      <included>105401000119101 |Diabetes mellitus due to pancreatic injury|</included>
+      <excluded>71388002 |Procedure|</excluded>
+      <excluded>404684003 |Clinical finding| :   363698007 |Finding site|  =   113331007 |Structure of endocrine system|</excluded>
+      <excluded>362969004 |Disorder of endocrine system|  </excluded>
+    </case>
+    <case>
+      <expression> &lt;!  404684003 |Clinical finding|</expression>
+      <included>64572001 |Disease|</included>
+      <included>404684003 |Clinical finding|  : 116676008 |Associated morphology|  = 79654002 |Edema|2</included>
+      <included>267038008 |Edema|</included>
+      <excluded>404684003 |Clinical finding|</excluded>
+      <excluded>404684003 |Clinical finding|  :   116676008 |Associated morphology|  =   79654002 |Edema| ,   363698007 |Finding site|  =   80891009 |Heart structure|</excluded>
+      <excluded>233709006 |Toxic pulmonary edema|</excluded>
+    </case>
+    <case>
+      <expression>>  40541001 |Acute pulmonary edema|</expression>
+      <included>111273006 |Acute respiratory disease|</included>
+      <included>64572001 |Disease|  : 116676008 |Associated morphology|  = 79654002 |Edema| , 363698007 |Finding site|  = 39607008 |Lung structure|</included>
+      <included>404684003 |Clinical finding|</included>
+      <included>138875005 |SNOMED CT concept|</included>
+      <excluded>40541001 |Acute pulmonary edema|</excluded>
+      <excluded>40541001 |Acute pulmonary edema|  :   246112005 |Severity|  =   24484000 |Severe|</excluded>
+      <excluded>233709006 |Toxic pulmonary edema|</excluded>
+      <excluded>304527002 |Acute asthma|</excluded>
+    </case>
+    <case>
+      <expression>>>  40541001 |Acute pulmonary edema|</expression>
+      <included>40541001 |Acute pulmonary edema|</included>
+      <included>64572001 |Disease|  : 263502005 |Clinical course|  = 424124008 |Sudden onset AND/OR short duration| , { 116676008 |Associated morphology|  = 40829002 |Acute edema|  , 363698007 |Finding site|  = 39607008 |Lung structure| }</included>
+      <included>111273006 |Acute respiratory disease|</included>
+      <included>404684003 |Clinical finding|</included>
+      <included>138875005 |SNOMED CT concept|</included>
+      <excluded>40541001 |Acute pulmonary edema|</excluded>
+      <excluded>40541001 |Acute pulmonary edema|  :   246112005 |Severity|  =   24484000 |Severe|</excluded>
+      <excluded>233709006 |Toxic pulmonary edema|</excluded>
+      <excluded>304527002 |Acute asthma|</excluded>
+    </case>
+    <case>
+      <expression>>!  40541001 |Acute pulmonary edema|</expression>
+      <included>111273006 |Acute respiratory disease|</included>
+      <included>19829001 |Disorder of lung|  : { 116676008 |Associated morphology|  = 79654002 |Edema| , 363698007 |Finding site|  = 39607008 |Lung structure| }</included>
+      <included>19242006 |Pulmonary edema|</included>
+      <excluded>404684003 |Clinical finding|</excluded>
+      <excluded>64572001 |Disease|  :   263502005 |Clinical course|  =   424124008 |Sudden onset AND/OR short duration|3</excluded>
+      <excluded>267038008 |Edema|</excluded>
+    </case>
+    <case>
+      <expression>^  700043003 |Example problem list concepts reference set|</expression>
+      <included>394659003 |Acute coronary syndrome|</included>
+      <included>194828000 |Angina|</included>
+      <included>29857009 |Chest pain|</included>
+      <excluded>6143009 |Diabetic education|</excluded>
+      <excluded>71388002 |Procedure| :   405813007 |Procedure site - Direct|  =   80891009 |Heart structure|  </excluded>
+    </case>
+    <case>
+      <expression>*</expression>
+      <included>138875005 |SNOMED CT concept|</included>
+      <included>404684003 |Clinical finding| : 363698007 |Finding site|  = 80891009 |Heart structure|</included>
+      <included>404684003 |Clinical finding|</included>
+      <included>71388002 |Procedure| : 405813007 |Procedure site - Direct|  = 66754008 |Appendix structure|</included>
+      <included>322236009 |Paracetamol 500mg tablet|</included>
+      <included>373873005 |Pharmaceutical / biologic product| : { 127489000 |Has active ingredient|  = 412031009 |Paracetamol or derivative| }</included>
+    </case>
+  </group>
+  <group name="Refinements">
+    <case>
+      <expression> &lt;  19829001 |Disorder of lung| : 116676008 |Associated morphology|  =  79654002 |Edema|</expression>
+      <included>11468004 |Postoperative pulmonary edema|</included>
+      <included>210051003 |Injury to heart and lung| : 116676008 |Associated morphology|  =  79654002 |Edema|</included>
+      <included>276637009 |Hemorrhagic pulmonary edema|</included>
+      <excluded>19829001 |Disorder of lung|</excluded>
+      <excluded>19829001 |Disorder of lung| :   116676008 |Associated morphology| =   44132006 |Abscess|</excluded>
+      <excluded>73452002 |Abscess of lung|</excluded>
+      <excluded>19829001 |Disorder of lung| :   116676008 |Associated morphology| =   40829002 |Acute edema|</excluded>
+      <excluded>233711002 |Oxygen-induced pulmonary edema|</excluded>
+    </case>
+    <case>
+      <expression> &lt; 19829001 |Disorder of lung| : 116676008 |Associated morphology|  =  &lt; &lt;  79654002 |Edema|</expression>
+      <included>233709006 |Toxic pulmonary edema|</included>
+      <included>275504005 |Lung cyst| : 116676008 |Associated morphology|  =  103619005 |Inflammatory edema|</included>
+      <included>233711002 |Oxygen-induced pulmonary edema|</included>
+      <included>19829001 |Disorder of lung| :  116676008 |Associated morphology|  =  40829002 |Acute edema|</included>
+      <excluded>19829001 |Disorder of lung|</excluded>
+      <excluded>6141006 |Retinal edema| :   116676008 |Associated morphology| =   103619005 |Inflammatory edema|</excluded>
+      <excluded>73452002 |Abscess of lung|</excluded>
+      <excluded>19829001 |Disorder of lung| :   116676008 |Associated morphology| =   44132006 |Abscess|</excluded>
+      <excluded>6141006 |Retinal edema|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| : 363698007 |Finding site|  =  &lt; &lt;  39057004 |Pulmonary valve structure| , 116676008 |Associated morphology|  =  &lt; &lt;  415582006 |Stenosis|</expression>
+      <included>56786000 |Pulmonic valve stenosis| </included>
+      <included>56786000 |Pulmonic valve stenosis| : 363698007 |Finding site|  =  90318009 |Structure of anulus fibrosus of pulmonary artery| , 116676008 |Associated morphology|  =  88015002 |Partial stenosis|</included>
+      <included>86299006 |Tetralogy of Fallot|</included>
+      <included>404684003 |Clinical finding| : 363698007 |Finding site|  =  39057004 |Pulmonary valve structure| ,  116676008 |Associated morphology|  =  415582006 |Stenosis|</included>
+      <excluded>404684003 |Clinical finding|</excluded>
+      <excluded>448643005 |Abnormality of pulmonary valve| :   116676008 |Associated morphology| =   44132006 |Abscess|</excluded>
+      <excluded>448643005 |Abnormality of pulmonary valve|</excluded>
+      <excluded>404684003 |Clinical finding| :   363698007 |Finding site| =   61853006 |Spinal canal structure| ,   116676008 |Associated morphology| =   415582006 |Stenosis|</excluded>
+      <excluded>431238002 |Abscess of pulmonary valve|</excluded>
+    </case>
+    <case>
+      <expression>* :  246075003 |Causative agent|  = 387517004 |Paracetamol| </expression>
+      <included>295124009 |Paracetamol overdose|</included>
+      <included>404684003 |Clinical finding| : 246075003 |Causative agent|  =  387517004 |Paracetamol| </included>
+      <included>292042007 |Adverse reaction to paracetamol|</included>
+      <excluded>46093004 |Paracetamol measurement|</excluded>
+      <excluded>404684003 |Clinical finding|  :   246075003 |Causative agent| =   372687004 |Amoxicillin|  </excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| : { 363698007 |Finding site|  =  &lt; &lt;  39057004 |Pulmonary valve structure| ,116676008 |Associated morphology|  =     &lt; &lt;  415582006 |Stenosis| },{ 363698007 |Finding site|  =    &lt; &lt;  53085002 |Right ventricular structure| ,  116676008 |Associated morphology|  =      &lt; &lt;  56246009 |Hypertrophy| }</expression>
+      <included>86299006 |Tetralogy of Fallot|</included>
+      <included>404684003 |Clinical finding| : { 363698007 |Finding site|  =   31689007 |Structure of cusp of pulmonic valve| , 116676008 |Associated morphology|  =   415582006 |Stenosis| }, { 363698007 |Finding site|  =  53085002 |Right ventricular structure| , 116676008 |Associated morphology|  =   125521000 |Acute hypertrophy| } </included>
+      <included>204351007 |Fallot's trilogy|</included>
+      <excluded>404684003 |Clinical finding|</excluded>
+      <excluded>404684003 |Clinical finding| :  { 363698007 |Finding site| =   39057004 |Pulmonary valve structure| ,   116676008 |Associated morphology| =   56246009 |Hypertrophy| },  { 363698007 |Finding site| =   53085002 |Right ventricular structure| ,   116676008 |Associated morphology| =   415582006 |Stenosis|  }</excluded>
+      <excluded>56786000 |Pulmonary valve stenosis|</excluded>
+    </case>
+    <case>
+      <expression> &lt; &lt;  404684003 |Clinical finding| :  &lt; &lt;  47429007 |Associated with|  =  &lt; &lt;  267038008 |Edema|</expression>
+      <included>230580009 |Myxedema neuropathy|</included>
+      <included>95356008 |Mucosal ulcer| : 42752001 |Due to|  =  19242006 |Pulmonary edema|</included>
+      <excluded>404684003 |Clinical finding|</excluded>
+      <excluded>95356008 |Mucosal ulcer| :   42752001 |Due to| =   59901004 |Cheek biting|  </excluded>
+    </case>
+    <case>
+      <expression> &lt;  27658006 |Amoxicillin| : 411116001 |Has dose form|  =  &lt; &lt;  385055001 |Tablet dose form| , { 179999999100 |Has basis of strength|  =   ( 219999999102 |Amoxicillin only| :    189999999103 |Has strength magnitude| >= #200,    199999999101 |Has strength unit|  =  258684004 |mg| )}</expression>
+      <included>374644001 |Amoxicillin trihydrate 200 mg tablet| </included>
+      <included>27658006 |Amoxicillin| : 411116001 |Has dose form|  =  421026006 |Oral tablet| ,{ 127489000 |Has active ingredient|  =  96068000 |Amoxicillin trihydrate| ,  179999999100 |Has basis of strength|  = ( 219999999102 |Amoxicillin only| : 189999999103 |Has strength magnitude|  = #500,   199999999101 |Has strength unit|  =  258684004 |mg| )}</included>
+      <excluded>269999999100 |Amoxicillin capsule|</excluded>
+      <excluded>27658006 |Amoxicillin|  :   411116001 |Has dose form|   =   421026006 |Oral tablet|  ,  {  179999999100 |Has basis of strength|   =  (  219999999102 |Amoxicillin only|  :   189999999103 |Has strength magnitude|   = 175,   199999999101 |Has strength unit|   =   258684004 |mg|  )}</excluded>
+      <excluded>374233002 |Amoxicillin trihydrate 125 mg chewable tablet| </excluded>
+    </case>
+    <case>
+      <expression> &lt;  27658006 |Amoxicillin| : 411116001 |Has dose form|  =  &lt; &lt;  385055001 |Tablet dose form| , { 179999999100 |Has basis of strength|  = ( 219999999102 |Amoxicillin only| :    189999999103 |Has strength magnitude|  >= #500,    189999999103 |Has strength magnitude|   &lt;= #800,    199999999101 |Has strength unit|  =  258684004 |mg| )}</expression>
+      <included>374646004 |Amoxicillin 500 mg tablet| </included>
+      <included>27658006 |Amoxicillin| : 411116001 |Has dose form|  =  421026006 |Oral tablet| ,{ 179999999100 |Has basis of strength|  = ( 219999999102 |Amoxicillin only| :      189999999103 |Has strength magnitude|  = #750,    199999999101 |Has strength unit|  =  258684004 |mg| )}</included>
+      <excluded>269999999100 |Amoxicillin capsule|</excluded>
+      <excluded>27658006 |Amoxicillin|  :   411116001 |Has dose form|   =   421026006 |Oral tablet|  ,  {  179999999100 |Has basis of strength|   =  (  219999999102 |Amoxicillin only|  :   189999999103 |Has strength magnitude|   = #850,   199999999101 |Has strength unit|   =   258684004 |mg|  )}</excluded>
+      <excluded>374647008 |Amoxicillin 875 mg tablet|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  373873005 |Pharmaceutical / biologic product| :  209999999104 |Has trade name|  = "PANADOL"</expression>
+      <included>259999999103 |PANADOL [paracetamol] tablet|</included>
+      <included>373873005 |Pharmaceutical / biologic product| : { 127489000 |Has active ingredient|  =  412031009 |Paracetamol or derivative| },  209999999104 |Has trade name|  = "PANADOL"</included>
+      <excluded>373873005 |Pharmaceutical / biologic product|</excluded>
+      <excluded>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient| =   412031009 |Paracetamol or derivative| ,   209999999104 |Has trade name| = "PANADEINE"} </excluded>
+      <excluded>322236009 |Paracetamol 500mg tablet|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  91723000 |Anatomical structure| :  R  363698007 |Finding site|  =     &lt;  125605004 |Fracture of bone|</expression>
+      <included>85050009 |Humerus|</included>
+      <included>85050009 |Humerus| : 272741003 |Laterality|  =  7771000 |Left|</included>
+      <included>71341001 |Femur|</included>
+      <included>71341001 |Femur| :    272741003 |Laterality|  =  24028007 |Right|</included>
+      <excluded>34080009 |Malleus structure|</excluded>
+      <excluded>34080009 |Malleus structure| :  272741003 |Laterality|  =  7771000 |Left|</excluded>
+      <excluded>10200004 |Liver structure|</excluded>
+      <excluded>10200004 |Liver structure| :  272741003 |Laterality|  =  24028007 |Right|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  125605004 |Fracture of bone| . 363698007 |Finding site|</expression>
+      <included>85050009 |Humerus|</included>
+      <included>85050009 |Humerus| :  272741003 |Laterality|  =  7771000 |Left|</included>
+      <included>71341001 |Femur|</included>
+      <included>71341001 |Femur| : 272741003 |Laterality|  =  24028007 |Right|</included>
+      <excluded>34080009 |Malleus structure|</excluded>
+      <excluded>34080009 |Malleus structure| : 272741003 |Laterality|  =  7771000 |Left|</excluded>
+      <excluded>10200004 |Liver structure|</excluded>
+      <excluded>10200004 |Liver structure| : 272741003 |Laterality|  =  24028007 |Right|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  105590001 |Substance| :  R  127489000 |Has active ingredient|  =   249999999101 |TRIPHASIL tablet| </expression>
+      <included>126109000 |Levonorgestrel|</included>
+      <included>126097006 |Ethinylestradiol|</included>
+      <excluded>105590001 |Substance|</excluded>
+      <excluded>373873005 |Pharmaceutical / biologic product| :   127489000 |Has active ingredient| =   126109000 |Levonorgestrel|</excluded>
+      <excluded>387517004 |Paracetamol|</excluded>
+    </case>
+    <case>
+      <expression>249999999101 |TRIPHASIL tablet| . 127489000 |Has active ingredient|</expression>
+      <included>126109000 |Levonorgestrel|</included>
+      <included>126097006 |Ethinylestradiol|</included>
+      <excluded>105590001 |Substance|</excluded>
+      <excluded>373873005 |Pharmaceutical / biologic product| :   127489000 |Has active ingredient| =   126109000 |Levonorgestrel|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| :  * =  79654002 |Edema|</expression>
+      <included>19242006 |Pulmonary edema|</included>
+      <included>404684003 |Clinical finding| :  116676008 |Associated morphology|  =  79654002 |Edema|</included>
+      <included>97341000119105 Proliferative | retinopathy with retinal edema due to type |</included>
+      <excluded>263225007 |Hip fracture|</excluded>
+      <excluded>404684003 |Clinical finding| :   116676008 |Associated morphology| =   72704001 |Fracture|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| : 116676008 |Associated morphology|  = * </expression>
+      <included>19242006 |Pulmonary edema|</included>
+      <included>404684003 |Clinical finding| :  116676008 |Associated morphology|  =  79654002 |Edema|</included>
+      <included>263225007 |Hip fracture|</included>
+      <included>404684003 |Clinical finding| : 116676008 |Associated morphology|  =  72704001 |Fracture| </included>
+      <excluded>195967001 |Asthma|</excluded>
+      <excluded>404684003 |Clinical finding| :   363698007 |Finding site| =   80891009 |Heart structure|</excluded>
+      <excluded>73211009 |Diabetes mellitus|</excluded>
+      <excluded>404684003 |Clinical finding| :   246075003 |Causative agent| =   372687004 |Amoxicillin|    </excluded>
+    </case>
+   </group>
+  <group name="Cardinality">
+    <case>
+      <expression> &lt;  373873005 |Pharmaceutical / biologic product| : [1..3]  127489000 |Has active ingredient|  =  &lt;  105590001 |Substance|</expression>
+      <included>322236009 |Paracetamol 500mg tablet|</included>
+      <included>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient|  =   412031009 |Paracetamol or derivative| }</included>
+      <included>404826002 |Benzocaine + butamben + tetracaine hydrochloride|</included>
+      <included>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient|  =   412031009 |Paracetamol or derivative| },  { 127489000 |Has active ingredient| =   387494007 |Codeine| }</included>
+      <excluded>279999999108 |Inert tablet|</excluded>
+      <excluded>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient| =   412031009 |Paracetamol or derivative| },  { 127489000 |Has active ingredient| =   387494007 |Codeine| },  { 127489000 |Has active ingredient| =   255641001 |Caffeine| },  { 127489000 |Has active ingredient| =   44068004 |Doxylamine| }</excluded>
+      <excluded>437867004 |Chlorphenamine + dextromethorphan + paracetamol + pseudoephedrine|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  373873005 |Pharmaceutical / biologic product| : [1..1]  127489000 |Has active ingredient|  =  &lt;  105590001 |Substance|</expression>
+      <included>370166004 |Aspirin 325mg tablet|</included>
+      <included>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient| =   412031009 |Paracetamol or derivative| }</included>
+      <excluded>279999999108 |Inert tablet|</excluded>
+      <excluded>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient| =   412031009 |Paracetamol or derivative| },  { 127489000 |Has active ingredient| =   387494007 |Codeine| }</excluded>
+      <excluded>412556009 |Paracetamol + codeine|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  373873005 |Pharmaceutical / biologic product| : [0..1]  127489000 |Has active ingredient|  =  &lt;  105590001 |Substance|</expression>
+      <included>279999999108 |Inert tablet|</included>
+      <included>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient|  =   412031009 |Paracetamol or derivative| }</included>
+      <included>370166004 |Aspirin 325mg tablet|</included>
+      <excluded>412556009 |Paracetamol + codeine|</excluded>
+      <excluded>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient|  =   412031009 |Paracetamol or derivative| },  { 127489000 |Has active ingredient| =   387494007 |Codeine| }  </excluded>
+    </case>
+    <case>
+      <expression> &lt;  373873005 |Pharmaceutical / biologic product| : [1..*]  127489000 |Has active ingredient|  =  &lt;  105590001 |Substance|</expression>
+      <included>7947003 |Aspirin|</included>
+      <included>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient|  =   412031009 |Paracetamol or derivative| },  { 127489000 |Has active ingredient|  =   255641001 |Caffeine| },  { 127489000 |Has active ingredient|  =   387458008 |Aspirin| }</included>
+      <included>437867004 |Chlorphenamine + dextromethorphan + paracetamol + pseudoephedrine|</included>
+      <excluded>279999999108 |Inert tablet|</excluded>
+      <excluded>373873005 |Pharmaceutical / biologic product| :   411116001 |Has dose form| =   385055001 |Tablet|  </excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| :  [1..1]  363698007 |Finding site|  =   &lt;  91723000 |Anatomical structure|</expression>
+      <included>125596004 |Injury of elbow|</included>
+      <included>404684003 |Clinical finding| :  { 116676008 |Associated morphology|  =   72704001 |Fracture| ,   363698007 |Finding site|  =   299701004 |Bone of forearm| ,   363698007 |Finding site|  =   62413002 |Bone structure of radius| }2</included>
+      <excluded>75857000 |Fracture of radius and ulna|</excluded>
+      <excluded>404684003 |Clinical finding| :  { 116676008 |Associated morphology| =   72704001 |Fracture| ,   363698007 |Finding site| =   62413002 |Bone structure of radius| ,   363698007 |Finding site| =   23416004 |Bone structure of ulna| }</excluded>
+      <excluded>40733004 |Infectious disease|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| :  [2..*]  363698007 |Finding site|  =   &lt;  91723000 |Anatomical structure|</expression>
+      <included>86299006 |Tetralogy of Fallot|</included>
+      <included>404684003 |Clinical finding| :  { 116676008 |Associated morphology|  =   72704001 |Fracture| ,   363698007 |Finding site|  =   299701004 |Bone of forearm| },  { 116676008 |Associated morphology|  =   72704001 |Fracture| ,   363698007 |Finding site|  =   702468001 |Bone structure of lower leg| }</included>
+      <excluded>23406007 |Arm fracture|</excluded>
+      <excluded>404684003 |Clinical finding| :  { 116676008 |Associated morphology| =   72704001 |Fracture| ,   363698007 |Finding site| =   702468001 |Bone structure of lower leg| }</excluded>
+      <excluded>40733004 |Infectious disease|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| :  { [2..*]  363698007 |finding site|  =   &lt;  91723000 |Anatomical structure| }</expression>
+      <included>64572001 |Disease|  :  { 116676008 |Associated morphology|  =   396351009 |Congenital septal defect| ,   363698007 |Finding site|  =   25943004 |Structure of atrioventricular node| ,   363698007 |Finding site|  =   113262008 |Thoracic aorta structure|  }  { 116676008 |Associated morphology|  =   90141005 |Congenital hypertrophy|  ,   363698007 |Finding site|  =   244384009 |Entire right ventricle| }</included>
+      <excluded>75857000 |Fracture of radius and ulna|</excluded>
+      <excluded>64572001 |Disease|  :  { 116676008 |Associated morphology| =   396351009 |Congenital septal defect| ,   363698007 |Finding site| =   113262008 |Thoracic aorta structure|  }  { 116676008 |Associated morphology| =   90141005 |Congenital hypertrophy|  ,   363698007 |Finding site| =   244384009 |Entire right ventricle| }  </excluded>
+    </case>
+    <case>
+      <expression> &lt;  373873005 |Pharmaceutical / biologic product| : [1..3] { [1..*]  127489000 |Has active ingredient|  =  &lt;  105590001 |Substance| }</expression>
+      <included>322236009 |Paracetamol 500mg tablet|</included>
+      <included>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient|  =   412031009 |Paracetamol or derivative| }</included>
+      <included>404826002 |Benzocaine + butamben + tetracaine hydrochloride|</included>
+      <included>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient|  =   412031009 |Paracetamol or derivative| },  { 127489000 |Has active ingredient| =   387494007 |Codeine| }</included>
+      <excluded>279999999108 |Inert tablet|</excluded>
+      <excluded>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient| =   412031009 |Paracetamol or derivative| },  { 127489000 |Has active ingredient| =   387494007 |Codeine| },  { 127489000 |Has active ingredient| =   255641001 |Caffeine| },  { 127489000 |Has active ingredient| =   44068004 |Doxylamine| }</excluded>
+      <excluded>437867004 |Chlorphenamine + dextromethorphan + paracetamol + pseudoephedrine|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  373873005 |Pharmaceutical / biologic product| : [0..1] { 127489000 |Has active ingredient|  =  &lt;  105590001 |Substance| }</expression>
+      <included>111115279999999108 |Inert tablet|</included>
+      <included>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient|  =   412031009 |Paracetamol or derivative| }</included>
+      <included>370166004 |Aspirin 325mg tablet|</included>
+      <excluded>412556009 |Paracetamol + codeine|</excluded>
+      <excluded>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient| =   412031009 |Paracetamol or derivative| },  { 127489000 |Has active ingredient| =   387494007 |Codeine| }  </excluded>
+    </case>
+    <case>
+      <expression> &lt;  373873005 |Pharmaceutical / biologic product| : [1..*] { 127489000 |Has active ingredient|  =  &lt;  105590001 |Substance| }</expression>
+      <included>370166004 |Aspirin 325mg tablet|</included>
+      <included>373873005 |Pharmaceutical / biologic product| :  { 127489000 |Has active ingredient|  =   412031009 |Paracetamol or derivative| },  { 127489000 |Has active ingredient| =   387494007 |Codeine| }</included>
+      <excluded>279999999108 |Inert tablet|</excluded>
+      <excluded>373873005 |Pharmaceutical / biologic product| :   411116001 |Has dose form| =   385055001 |Tablet|  </excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| :  [1..1] { 363698007 |Finding site|  =   &lt;  91723000 |Anatomical structure| }</expression>
+      <included>125596004 |Injury of elbow|</included>
+      <included>404684003 |Clinical finding| :  { 363698007 |Finding site|  =   299701004 |Bone of forearm| },  { 363698007 |Finding site|  =   62413002 |Bone structure of radius| }</included>
+      <excluded>75857000 |Fracture of radius and ulna|</excluded>
+      <excluded>404684003 |Clinical finding| :  { 116676008 |Associated morphology| =   72704001 |Fracture| ,   363698007 |Finding site|  =   62413002 |Bone structure of radius| },  { 116676008 |Associated morphology| =   72704001 |Fracture| ,   363698007 |Finding site| =   23416004 |Bone structure of ulna| }</excluded>
+      <excluded>40733004 |Infectious disease|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| : [0..0] { [2..*]  363698007 |Finding site|  =  &lt;  91723000 |Anatomical structure| }</expression>
+      <included>86299006 |Tetralogy of Fallot|</included>
+      <included>404684003 |Clinical finding| :   363698007 |Finding site| =   39057004 |Pulmonary valve structure| ,   116676008 |Associated morphology|  =   415582006 |Stenosis|</included>
+      <excluded>64572001 |Disease|  :  { 116676008 |Associated morphology| =   396351009 |Congenital septal defect| ,   363698007 |Finding site| =   25943004 |Structure of atrioventricular node| ,   363698007 |Finding site| =   113262008 |Thoracic aorta structure|  }  { 116676008 |Associated morphology| =   90141005 |Congenital hypertrophy| ,   363698007 |Finding site| =   244384009 |entire right ventricle| }  </excluded>
+    </case>
+   </group>
+  <group name="Conjunction / Disjunction">
+    <case>
+      <expression> &lt;  19829001 |Disorder of lung|  AND   &lt;  301867009 |Edema of trunk|</expression>
+      <included>233709006 |Toxic pulmonary edema|</included>
+      <included>233709006 |Toxic pulmonary edema|  :   116676008 |Associated morphology|  =   40829002 |Acute edema|  ,   363698007 |Finding site|  =   278985004 |Fissure of right lung|</included>
+      <included>61233003 |Silo-fillers' disease|</included>
+      <excluded>73452002 |Abscess of lung|</excluded>
+      <excluded>248508001 |Abdominal wall edema|  :   116676008 |Associated morphology|  =   40829002 |Acute edema|  </excluded>
+    </case>
+    <case>
+      <expression> &lt;  19829001 |Disorder of lung|  OR   &lt;  301867009 |Edema of trunk|</expression>
+      <included>363358000 |Malignant tumour of lung|</included>
+      <included>233709006 |Toxic pulmonary edema|  :   116676008 |Associated morphology|  =   40829002 |Acute edema|</included>
+      <included>19242006 |Pulmonary edema|</included>
+      <excluded>19829001 |Disorder of lung|</excluded>
+      <excluded>128121009 |Disorder of trunk|  :   116676008 |Associated morphology|  =   44132006 |Abscess|</excluded>
+      <excluded>301867009 |Edema of trunk|</excluded>
+      <excluded>128121009 |Disorder of trunk|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  19829001 |Disorder of lung|  AND  ^  700043003 |Example problem list concepts reference set|</expression>
+      <included>1001000119102 |Pulmonary embolism with pulmonary infarction|</included>
+      <excluded>73452002 |Abscess of lung|</excluded>
+      <excluded>19829001 |Disorder of lung| :   116676008 |Associated morphology|  =   44132006 |Abscess|  </excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| :   363698007 |Finding site|  =   &lt; &lt;  39057004 |Pulmonary valve structure|  AND   116676008 |Associated morphology|  =   &lt; &lt;  415582006 |Stenosis|</expression>
+      <included>91442002 |Rheumatic pulmonary valve stenosis|</included>
+      <included>56786000 |Pulmonic valve stenosis| :   363698007 |Finding site|  =   90318009 |Structure of anulus fibrosus of pulmonary artery| ,   116676008 |Associated morphology|  =   88015002 |Partial stenosis|</included>
+      <included>86299006 |Tetralogy of Fallot|</included>
+      <excluded>301104003 |Pulmonary valve finding|</excluded>
+      <excluded>404684003 |Clinical finding| :   116676008 |Associated morphology|  =   88015002 |Partial stenosis|</excluded>
+      <excluded>60573004 |Aortic valve stenosis|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding|  :   116676008 |Associated morphology|  =   &lt; &lt;  55641003 |Infarct|  OR   42752001 |Due to|  =   &lt; &lt;  22298006 |Myocardial infarction|</expression>
+      <included>45456005 |Renal infarct|</included>
+      <included>95281009 |Sudden cardiac death| :   42752001 |Due to|  =   22298006 |Myocardial infarction|</included>
+      <included>703326006 |Mitral regurgitation due to acute myocardial infarction|</included>
+      <excluded>368009 |Heart valve disorder|</excluded>
+      <excluded>95281009 |Sudden cardiac death| :   42752001 |Due to|  =   10633002 |Acute congestive heart failure| </excluded>
+      <excluded>461089003 |Cardiac abnormality due to heart abscess|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| : { 363698007 |Finding site|  =  &lt; &lt;  39057004 |Pulmonary valve structure| , 116676008 |Associated morphology|  =  &lt; &lt;  415582006 |Stenosis| } OR { 363698007 |Finding site|  =                                &lt; &lt;  53085002 |Right ventricular structure| , 116676008 |Associated morphology|  =  &lt; &lt;  56246009 |Hypertrophy| }         </expression>
+      <included>85971001 |Rheumatic pulmonary valve stenosis with insufficiency|</included>
+      <included>56786000 |Pulmonic valve stenosis| :   363698007 |Finding site|  =   90318009 |Structure of anulus fibrosus of pulmonary artery| ,   116676008 |Associated morphology| =   88015002 |Partial stenosis|</included>
+      <included>86299006 |Tetralogy of Fallot|</included>
+      <excluded>93075009 |Congenital hypertrophy of pulmonary valve|</excluded>
+      <excluded>404684003 |Clinical finding| :   363698007 |Finding site|  =   39057004 |Pulmonary valve structure| ,   116676008 |Associated morphology|  =   56246009 |Hypertrophy|</excluded>
+      <excluded>204370002 |Stenosis of infundibulum of right ventricle|</excluded>
+    </case>
+    <case>
+      <expression>^  450990004 |Adverse drug reactions reference set for GP/FP health issue| :   246075003 |Causative agent|  =  ( &lt; 373873005 |Pharmaceutical / biologic product|   OR  &lt; 105590001 |Substance| )</expression>
+      <included>294811002 |Corticotrophic hormone allergy|</included>
+      <included>293584003 |Paracetamol allergy|</included>
+      <included>293585002 |Salicylate allergy|</included>
+      <excluded>87628006 |Bacterial infectious disease|</excluded>
+      <excluded>609328004 |Allergic disposition| :   246075003 |Causative agent|  =   84489001 |Mold| </excluded>
+      <excluded>609328004 |Allergic disposition| </excluded>
+      <excluded>10629471000119106 |Allergic rhinitis caused by mould| </excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| :   116676008 |Associated morphology|  =  ( &lt; &lt;  56208002 |Ulcer|   AND  &lt; &lt;  50960005 |Hemorrhage| )</expression>
+      <included>12847006 |Acute duodenal ulcer with hemorrhage|</included>
+      <included>64572001 |Disease| : { 116676008 |Associated morphology|  =  55075001 |Bleeding ulcer| ,   363698007 |Finding site|  =  14374004 |Structure of lymphatic vessel of oesophagus| }</included>
+      <excluded>196652006 |Acute duodenal ulcer|</excluded>
+      <excluded>64572001 |Disease|  :   116676008 |Associated morphology|  =   405719001 |Chronic ulcer|</excluded>
+      <excluded>74474003 |Gastrointestinal haemorrhage|</excluded>
+    </case>
+   </group>
+  <group name="Exclusion">
+    <case>
+      <expression> &lt; &lt;  19829001 |Disorder of lung|  MINUS   &lt; &lt;  301867009 |Edema of trunk|</expression>
+      <included>372146004 |Acute chest syndrome|</included>
+      <included>27819004 |Pulmonary ossification|  :  { 116676008 |Associated morphology|  =   18115005 |Pathologic calcification| ,   363698007 |Finding site|  =   31094006 |Structure of lobe of lung| }</included>
+      <included>413839001 |Chronic lung disease|</included>
+      <excluded>27719009 |Acute gastrointestinal hemorrhage|</excluded>
+      <excluded>19829001 |Disorder of lung| :  { 116676008 |Associated morphology|  =   40829002 |Acute edema| ,  363698007 |Finding site|  =  22943007 |Trunk structure| }</excluded>
+      <excluded>19242006 |Pulmonary edema|</excluded>
+    </case>
+    <case>
+      <expression> &lt; &lt;  19829001 |Disorder of lung|  MINUS  ^  700043003 |Example problem list concepts reference set|</expression>
+      <included>233613009 |Fungal pneumonia|</included>
+      <included>27819004 |Pulmonary ossification|  :  { 116676008 |Associated morphology|  =   18115005 |Pathologic calcification| ,   363698007 |Finding site|  =   31094006 |Structure of lobe of lung| }</included>
+      <excluded>67599009 |Pulmonary congestion|</excluded>
+      <excluded>67599009 |Pulmonary congestion|  :   363698007 |Finding site|  =   3341006 |Right lung structure|  </excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| :   116676008 |Associated morphology|  =  (( &lt; &lt;  56208002 |Ulcer|  AND   &lt; &lt;  50960005 |Hemorrhage| ) MINUS   &lt; &lt;  26036001 |Obstruction| )</expression>
+      <included>15902003 |Gastric ulcer with hemorrhage|</included>
+      <included>64572001 |Disease|  :  { 116676008 |Associated morphology|  =   55075001 |Bleeding ulcer| ,   363698007 |Finding site|  =   14374004 |Structure of lymphatic vessel of esophagus| }</included>
+      <excluded>397825006 |Gastric ulcer|</excluded>
+      <excluded>64572001 |Disease|  :   116676008 |Associated morphology|  =  26036001 |Obstruction|</excluded>
+      <excluded>235670001 |Gastric stomal obstruction|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| :   116676008 |Associated morphology|  !=   &lt; &lt;  26036001 |Obstruction|</expression>
+      <included>233613009 |Fungal pneumonia|</included>
+      <included>64572001 |Disease|  :  { 116676008 |Associated morphology|  =   26036001 |Obstruction| ,   363698007 |Finding site|  =   422897007 |Vascular structure of stomach| }  { 116676008 |Associated morphology|  =   45771005 |Acute bleeding ulcer|  ,   363698007 |Finding site|  =   422897007 |Vascular structure of stomach| }</included>
+      <included>46708007 |Acute gastric ulcer with hemorrhage AND obstruction|</included>
+      <excluded>81060008 |Intestinal obstruction|</excluded>
+      <excluded>64572001 |Disease|  :   116676008 |Associated morphology|  =   26036001 |Obstruction| ,   363698007 |Finding site|  =   422897007 |Vascular structure of stomach|</excluded>
+      <excluded>56265001 |Heart disease|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| : [0..0]   116676008 |Associated morphology|  =   &lt; &lt;  26036001 |Obstruction|</expression>
+      <included>233613009 |Fungal pneumonia|</included>
+      <included>64572001 |Disease|  :  { 116676008 |Associated morphology|  =   55075001 |Bleeding ulcer| ,   363698007 |Finding site|  =   14374004 |Structure of lymphatic vessel of oesophagus| }</included>
+      <included>15902003 |Gastric ulcer with hemorrhage|</included>
+      <excluded>81060008 |Intestinal obstruction|</excluded>
+      <excluded>64572001 |Disease|  :  { 116676008 |Associated morphology|  =   26036001 |Obstruction| ,   363698007 |Finding site|  =   422897007 |Vascular structure of stomach| }  { 116676008 |Associated morphology|  =   45771005 |Acute bleeding ulcer|  ,   363698007 |Finding site|  =   422897007 |Vascular structure of stomach| }</excluded>
+      <excluded>234059001 |Venous stenosis|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| : [0..0]   116676008 |Associated morphology|  !=   &lt; &lt;  26036001 |Obstruction|</expression>
+      <included>244815007 |Pyloric obstruction|</included>
+      <included>64572001 |Disease|  :  { 116676008 |Associated morphology|  =   26036001 |Obstruction|  ,   363698007 |Finding site|  =   314600001 |Choledochoenterostomy stoma| }</included>
+      <included>84906002 |Local cyanosis|</included>
+      <excluded>196652006 |Acute duodenal ulcer|</excluded>
+      <excluded>64572001 |Disease|  :  { 116676008 |Associated morphology|  =   26036001 |Obstruction| ,   363698007 |Finding site|  =   422897007 |Vascular structure of stomach| }  { 116676008 |Associated morphology|  =   45771005 |Acute bleeding ulcer|  ,   363698007 |Finding site|  =   422897007 |Vascular structure of stomach| }</excluded>
+      <excluded>8377001 |Hernia, with obstruction|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding| :  [0..0]  116676008 |Associated morphology|   !=  &lt; &lt;  26036001 |Obstruction|  AND  [1..*]  116676008 |Associated morphology|   =  &lt; &lt;  26036001 |Obstruction|</expression>
+      <included>244815007 |Pyloric obstruction|</included>
+      <included>64572001 |Disease|  :  { 116676008 |Associated morphology|  =   26036001 |Obstruction| ,   363698007 |Finding site|  =   314600001 |Choledochoenterostomy stoma| }</included>
+      <excluded>196652006 |Acute duodenal ulcer|</excluded>
+      <excluded>64572001 |Disease|  :  { 116676008 |Associated morphology|  =   26036001 |Obstruction| ,   363698007 |Finding site|  =   422897007 |Vascular structure of stomach| }  { 116676008 |Associated morphology|  =   45771005 |Acute bleeding ulcer|  ,   363698007 |Finding site|  =   422897007 |vascular structure of stomach| }</excluded>
+      <excluded>8377001 |Hernia, with obstruction|</excluded>
+      <excluded>64572001 |Disease|  :  { 116676008 |Associated morphology|  =   45771005 |Acute bleeding ulcer|  ,   363698007 |Finding site|  =   422897007 |Vascular structure of stomach| }</excluded>
+      <excluded>56265001 |Heart disease|</excluded>
+    </case>
+   </group>
+  <group name="Nested">
+    <case>
+      <expression> &lt; &lt; (^  700043003 |Example problem list concepts reference set|  )</expression>
+      <included>394659003 |Acute coronary syndrome|</included>
+      <included>194828000 |Angina|  : 255234002 |After|  =  22298006 |Myocardial infarction|</included>
+      <included>194828000 |Angina|</included>
+      <included>371807002 |Atypical angina|</included>
+      <excluded>6143009 |Diabetic education|</excluded>
+      <excluded>71388002 |Procedure|  :   405813007 |Procedure site - Direct|  =   80891009 |Heart structure|</excluded>
+      <excluded>75367002 |Blood pressure|  </excluded>
+    </case>
+    <case>
+      <expression>^ ( &lt;  450973005 |GP/FP health issue reference set|  )</expression>
+      <included>140004 |Chronic pharyngitis|</included>
+      <included>297009 |Acute myringitis|</included>
+      <excluded>80146002 |Appendectomy|</excluded>
+      <excluded>305342007 |Admission to ward|</excluded>
+    </case>
+    <case>
+      <expression>( &lt;   404684003 |Clinical finding|  :        363698007 |Finding site|   =  &lt; &lt;   39057004 |Pulmonary valve structure|  )  AND ^  700043003 |Example problem list concepts reference set|</expression>
+      <included>204351007 |Fallot's trilogy|</included>
+      <included>457652006 |Calcification of pulmonary valve|</included>
+      <excluded>125605004 |Fracture of bone|  </excluded>
+      <excluded>404684003 |Clinical finding|  :   363698007 |Finding site|   =   17401000 |Cardiac valve structure|  </excluded>
+      <excluded>195967001 |Asthma|</excluded>
+    </case>
+    <case>
+      <expression>( &lt;   404684003 |Clinical finding|  :   363698007 |Finding site|   =  &lt; &lt;   39057004 |Pulmonary valve structure|  )  AND ( &lt;   64572001 |Disease|  :   116676008 |Associated morphology|   =  &lt; &lt;   415582006 |Stenosis|  )</expression>
+      <included>204351007 |Fallot's trilogy|</included>
+      <included>19036004 |Rheumatic heart valve stenosis| : { 363698007 |Finding site|  =  39057004 |Pulmonary valve structure| ,   116676008 |Associated morphology|  =  415582006 |Stenosis| }</included>
+      <included>56786000 |Pulmonic valve stenosis|</included>
+      <excluded>301104003 |Pulmonary valve finding|</excluded>
+      <excluded>404684003 |Clinical finding|  :   363698007 |Finding site|   =   39057004 |Pulmonary valve structure|</excluded>
+      <excluded>76107001 |Spinal stenosis|  </excluded>
+      <excluded>64572001 |Disease|  :   116676008 |Associated morphology| =   415582006 |Stenosis|  </excluded>
+    </case>
+    <case>
+      <expression>( &lt; &lt; 17636008 |Specimen collection| :     424226004 |Using device|  =  &lt; &lt;  19923001 |Catheter| )       .  363701004 |Direct substance|</expression>
+      <included>78014005 |Urine|</included>
+      <included>87612001 |Blood|</included>
+      <excluded>57617002 |Urine specimen collection|  </excluded>
+      <excluded>17636008 |Specimen collection| :   424226004 |Using device|  =   19923001 |Catheter|</excluded>
+      <excluded>122575003 |Urine specimen|</excluded>
+    </case>
+    <case>
+      <expression>( &lt; &lt;  404684003 |Clinical finding (finding)|  OR  &lt; &lt;  272379006 |Event (event)|  ): 255234002 |After|  =  &lt; &lt;  71388002 |Procedure (procedure)| </expression>
+      <included>235948002 |Postoperative acute pancreatitis|</included>
+      <included>64572001 |Disease| :  { 370135005 |Pathological process|  =  441862004 |Infectious process| , 255234002 |After|  =  387713003 |Surgical procedure| , 116676008 |Associated morphology|  =  112633009 |Surgical would| }</included>
+      <included>441795000 |Infected seroma after surgical procedure|</included>
+      <excluded>293690005 |Peppermint oil allergy|</excluded>
+      <excluded>404684003 |Clinical finding| :   255234002 |After|  =   417163006 |Injury|</excluded>
+      <excluded>82510005 |Posttraumatic vertigo|</excluded>
+    </case>
+    <case>
+      <expression> &lt; &lt;  125605004 |Fracture of bone|  : [0..0] (( &lt; &lt;  410662002 |Concept model attribute|  MINUS  363698007 |Finding site| ) MINUS  116676008 |Associated morphology|  ) = *</expression>
+      <included>125605004 |Fracture of bone|</included>
+      <included>64572001 |Disease| :  { 363698007 |Finding site|  =   71341001 |Bone structure of femur| ,   116676008 |Associated morphology|  =   20946005 |Fracture, closed| }</included>
+      <included>439987009 |Open fracture of bone|</included>
+      <excluded>704333004 |Pathological fracture of hand due to osteoporosis|</excluded>
+      <excluded>125605004 |Fracture of bone| :   42752001 |Due to|  =   417163006 |Injury|</excluded>
+      <excluded>722571004 |Linear fracture of skull due to birth trauma|</excluded>
+    </case>
+    <case>
+      <expression> &lt;  404684003 |Clinical finding|  : 47429007 |Associated with|  = ( &lt;  404684003 |Clinical finding|  :  116676008 |Associated morphology|  =  &lt; &lt;  55641003 |Infarct|  )</expression>
+      <included>71023004 |Pericarditis secondary to acute myocardial infarction|</included>
+      <included>3238004 |Pericarditis (disorder)|  :   47429007 |Associated with|  =   57054005 |Acute myocardial infarction|</included>
+      <excluded>3238004 |Pericarditis|</excluded>
+      <excluded>64572001 |Disease|  :   47429007 |Associated with|  =  ( 404684003 |Clinical finding|  :   363698007 |Finding site|  =   277712000 |Cardiac internal structure|  )</excluded>
+    </case>
+  </group>
+</ecl-tests>
