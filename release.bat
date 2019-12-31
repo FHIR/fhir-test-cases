@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.25
-set newver=1.0.26
-set comment=Reorganize validator test manifest
+set oldver=1.0.26
+set newver=1.0.27
+set comment=4.2.0 Release
 
 echo ..
 echo ================================================================================
