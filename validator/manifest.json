@@ -1,5 +1,12 @@
 {
   "test-cases": {
+    "allergy.json": {
+      "version" : "4.0",
+      "java": {
+        "errorCount": 0,
+        "output": []
+      }
+    },
     "bundle-good.json": {
       "java": {
         "errorCount": 0,
@@ -332,10 +339,14 @@
       "allowed-extension-domain": "https://api-v8-r4.hspconsortium.org/DrugFormulary0/open",
       "java": {
         "errorCount": 1,
+        "warningCount": 2,
+        "infoCount" : 1;
         "output": [
           "WARNING: Medication.meta.profile[0]: StructureDefinition reference \"https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/StructureDefinition/usdrugformulary-FormularyDrug\" could not be resolved",
-          "ERROR: Medication.extension[1].value.ofType(CodeableConcept).coding[0]: The code \"N02AA\" is not valid in the system http://www.whocc.no/atc; The code provided (http://www.whocc.no/atc#N02AA) is not  valid in the value set All codes known to the system for \u0027http://www.whocc.no/atc#N02AA\u0027",
-          "WARNING: Medication.code.coding[0]: The display \"Acetaminophen 325 MG / Oxycodone Hydrochloride 5 MG Oral Tablet [Percocet]\" is not a valid display for the code {http://www.nlm.nih.gov/research/umls/rxnorm}1049640 - should be one of [\"Percocet 5 MG / 325 MG Oral Tablet\",\"Percocet 5/325 Oral Tablet\",\"Percocet 5/325 (oxycodone hydrochloride / APAP) Oral Tablet\",\"APAP 325 MG / Oxycodone Hydrochloride 5 MG Oral Tablet [Percocet]\"]"
+          "WARNING: Medication.code.coding[0]: The display \"Acetaminophen 325 MG / Oxycodone Hydrochloride 5 MG Oral Tablet [Percocet]\" is not a valid display for the code {http://www.nlm.nih.gov/research/umls/rxnorm}1049640 - should be one of [\"Percocet 5 MG / 325 MG Oral Tablet\",\"Percocet 5/325 Oral Tablet\",\"Percocet 5/325 (oxycodone hydrochloride / APAP) Oral Tablet\",\"APAP 325 MG / Oxycodone Hydrochloride 5 MG Oral Tablet [Percocet]\"]",
+          "hint: INFORMATION: Medication.extension[1].value.ofType(CodeableConcept).coding[0]: Code System URI 'http://www.whocc.no/atc' is unknown so the code cannot be validated",
+          "hint: INFORMATION: Medication.extension[2].value.ofType(CodeableConcept).coding[0]: Code System URI 'https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/CodeSystem/usdrugformulary-DrugTierCS' is unknown so the code cannot be validated"
+
         ]
       }
     },
@@ -2522,6 +2533,13 @@
         "output": [
           "FATAL: ClinicalDocument: This does not appear to be a FHIR resource (unknown namespace/name \u0027urn:hl7-org:v3::ClinicalDocument\u0027)"
         ]
+      }
+    },
+    "snomed-ca.json" : {
+      "version": "4.0",
+      "explanation": "code is in international edition",
+      "java": {
+        "errorCount": 0
       }
     }
   }
