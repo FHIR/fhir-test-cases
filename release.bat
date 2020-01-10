@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.26
-set newver=1.0.27
-set comment=4.2.0 Release
+set oldver=1.0.27
+set newver=1.0.28
+set comment=Changes to the way CodeableConcept is validated
 
 echo ..
 echo ================================================================================
