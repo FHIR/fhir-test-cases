@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.27
-set newver=1.0.28
-set comment=Changes to the way CodeableConcept is validated
+set oldver=1.0.28
+set newver=1.0.29
+set comment=Additional test for snapshot generation and code system validation 
 
 echo ..
 echo ================================================================================
