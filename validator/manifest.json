@@ -2556,6 +2556,97 @@
         "errorCount": 1,
         "output" : ["ERROR: Patient.identifier[0].type.coding[0]: Unknown Code System 'http://hl7.org/fhir/v2/0203'"]
       }
+    },
+    "bundle-ihe-bad.xml": {
+      "version" : "4.0",
+      "explanation" : "Checking profiling on Bundle.entry.resource - resource type is wrong",
+      "java": {
+        "errorCount": 0
+      },
+      "profile": {
+        "source": "bundle-ihe-profile.xml",
+        "java": {
+          "errorCount": 1,
+          "output": [
+            "ERROR: Bundle.entry[0].resource: The type 'Patient' is not valid - must be DocumentManifest"
+          ]
+        }
+      }
+    },
+    "bundle-ihe-good.xml": {
+      "version" : "4.0",
+      "explanation" : "Checking profiling on Bundle.entry.resource - resource type is right",
+      "java": {
+        "errorCount": 0
+      },
+      "profile": {
+        "source": "bundle-ihe-profile.xml",
+        "java": {
+          "errorCount": 0
+        }
+      }
+    },
+    "bundle-slice-good.xml": {
+      "version" : "4.0",
+      "explanation" : "Checking profiling/slicing on Bundle.entry.resource - this is a simple good case",
+      "java": {
+        "errorCount": 0
+      },
+      "profiles": [
+        "bundle-slice-profile-obs1.xml",
+        "bundle-slice-profile-obs2.xml",
+        "bundle-slice-profile-patient.xml"
+      ],
+      "profile": {
+        "source": "bundle-slice-profile-master.xml",
+        "java": {
+          "errorCount": 0
+        }
+      }
+    },
+    "bundle-slice-bad1.xml": {
+      "version" : "4.0",
+      "explanation" : "Observations are both profile obs1, so that fails the slicing definition",
+      "java": {
+        "errorCount": 0
+      },
+      "profiles": [
+        "bundle-slice-profile-obs1.xml",
+        "bundle-slice-profile-obs2.xml",
+        "bundle-slice-profile-patient.xml"
+      ],
+      "profile": {
+        "source": "bundle-slice-profile-master.xml",
+        "java": {
+          "errorCount": 2,
+          "output" : [
+            "ERROR: Bundle: Profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-master, Element 'Bundle.entry[Obs1]': max allowed = 1, but found 2",
+            "ERROR: Bundle: Profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-master, Element 'Bundle.entry[Obs2]': minimum required = 1, but only found 0"
+          ]
+        }
+      }
+    },
+    "bundle-slice-bad2.xml": {
+      "version" : "4.0",
+      "explanation" : "Patient is not valid against the profile",
+      "java": {
+        "errorCount": 0
+      },
+      "profiles": [
+        "bundle-slice-profile-obs1.xml",
+        "bundle-slice-profile-obs2.xml",
+        "bundle-slice-profile-patient.xml"
+      ],
+      "profile": {
+        "source": "bundle-slice-profile-master.xml",
+        "java": {
+          "errorCount": 2,
+          "output" : [
+            "ERROR: Bundle.entry[0]: This element does not match any known slice for profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-master and slicing is CLOSED",
+            "ERROR: Bundle: Profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-master, Element 'Bundle.entry[Patient]': minimum required = 1, but only found 0"
+          ]
+        }
+      }
     }
   }
 }
