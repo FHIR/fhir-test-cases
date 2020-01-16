@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.29
-set newver=1.0.30
-set comment=Add snapshot generation and validation tests for Bundle.entry slicing on resource by profile and add R4 tests
+set oldver=1.0.30
+set newver=1.0.31
+set comment=Tests for reference validation of profiles, including circular references, and tests for consequential issues discovered
 
 echo ..
 echo ================================================================================
