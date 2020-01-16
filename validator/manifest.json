@@ -1384,7 +1384,7 @@
       "version": "3.0",
       "explanation": "21 errors about about extensions and codes, then 5 about bundle references",
       "java": {
-        "errorCount": 28,
+        "errorCount": 26,
         "output": [
           "ERROR: Composition/f:extension: Undefined element \u0027coding\u0027",
           "WARNING: Bundle.meta.profile[0]: StructureDefinition reference \"https://fhir.nhs.uk/STU3/StructureDefinition/ITK-Message-Bundle-1\" could not be resolved",
@@ -1428,7 +1428,6 @@
           "ERROR: Bundle.entry[3].resource.entry[1].resource.custodian.reference: Can\u0027t find \u0027urn:uuid:97775e71-21d7-4f2d-aadb-2f3f5a1da6a6\u0027 in the bundle (Composition.custodian)",
           "ERROR: Bundle.entry[3].resource.entry[1].resource.section[2].entry[1].reference: Can\u0027t find \u0027urn:uuid:a7f1f367-144b-4bf3-8c65-a0826787986b\u0027 in the bundle (Section Entry)",
           "ERROR: Bundle.entry[3].resource.entry[1].resource.section[8].entry[1].reference: Can\u0027t find \u0027urn:uuid:16bbba8a-ba9b-46ea-b571-a64dba136a2a\u0027 in the bundle (Section Entry)",
-          "ERROR: Bundle.entry[3].resource.entry[1].resource.patient: Unable to find matching profile among choices: ; [CanonicalType[http://hl7.org/fhir/StructureDefinition/Patient]]",
           "ERROR: Bundle.entry[3].resource.entry[1].resource.patient->resource.identifier[0].extension[0]: The extension https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-NHSNumberVerificationStatus-1 is unknown, and not allowed here"
         ]
       }
@@ -2627,7 +2626,7 @@
     "patient-circle1-bad-source2.xml" : {
       "version" : "4.0",
       "validate" : "CHECK_VALID",
-      "explanation" : "This test: Patient is not valid, but target is, and refers back to source",
+      "explanation" : "This test: Patient is not valid, but target is, and refers back to source. Note - target is considered valid even though it refers to an invalid resource because it's a circle - it's still invalid...",
       "java": {
         "errorCount": 0
       },
@@ -2635,6 +2634,7 @@
         "source": "patient-circle1-profile.xml",
         "java": {
           "errorCount": 1,
+          "infoCount": 0,
           "output" : []
         }
       }      
@@ -2743,7 +2743,7 @@
         }
       }      
     },
-    "patient-circle1-bad-source2.xml" : {
+    "patient-circle2-bad-source2.xml" : {
       "version" : "4.0",
       "validate" : "CHECK_VALID",
       "explanation" : "This test: Patient is not valid, but target is, and refers back to source",
@@ -2754,10 +2754,27 @@
       "profile": {
         "source": "patient-circle2-profile1.xml",
         "java": {
-          "errorCount": 1,
+          "errorCount": 2,
+          "infoCount": 2,
           "output" : []
         }
       }      
-    }    
+    },
+    "bundle-validation-location-1.xml" : {    
+      "version" : "4.0",
+      "explanation" : "This is first of a series of tests that test nevigation and location reporting. This one is straight forward - two independent locations",
+      "java": {
+        "errorCount": 2,
+        "error-locations" : ["Bundle.entry[0].resource.gender", "Bundle.entry[1].resource.gender"]
+      }
+    },
+    "bundle-validation-location-2.xml" : {    
+      "version" : "4.0",
+      "explanation" : "This is first of a series of tests that test nevigation and location reporting. This one the first patient references the other, and encounters the 2nd error as a reference",
+      "java": {
+        "errorCount": 2,
+        "error-locations" : ["Bundle.entry[0].resource.gender", "Bundle.entry[1].resource.gender"]
+      }
+    }
   }
 }
