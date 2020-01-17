@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.30
-set newver=1.0.31
-set comment=Tests for reference validation of profiles, including circular references, and tests for consequential issues discovered
+set oldver=1.0.31
+set newver=1.0.32
+set comment=Tests for context invariants and memberOf
 
 echo ..
 echo ================================================================================
