@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.31
-set newver=1.0.32
-set comment=Tests for context invariants and memberOf
+set oldver=1.0.32
+set newver=1.0.33
+set comment=Fix test for contextInvariant usage
 
 echo ..
 echo ================================================================================
