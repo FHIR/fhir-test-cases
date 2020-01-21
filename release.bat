@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.32
-set newver=1.0.33
-set comment=Fix test for contextInvariant usage
+set oldver=1.0.33
+set newver=1.0.34
+set comment=more test cases for extension context and example references
 
 echo ..
 echo ================================================================================
