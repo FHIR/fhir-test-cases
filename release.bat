@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.33
-set newver=1.0.34
-set comment=more test cases for extension context and example references
+set oldver=1.0.34
+set newver=1.0.35
+set comment=more test cases for slicing and validating
 
 echo ..
 echo ================================================================================
