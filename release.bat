@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.34
-set newver=1.0.35
-set comment=more test cases for slicing and validating
+set oldver=1.0.35
+set newver=1.0.36
+set comment=add test cases for constraining element part of choice, and not the choice
 
 echo ..
 echo ================================================================================
