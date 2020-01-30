@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.35
-set newver=1.0.36
-set comment=add test cases for constraining element part of choice, and not the choice
+set oldver=1.0.36
+set newver=1.0.37
+set comment=Fix test for constraining slices to also sort
 
 echo ..
 echo ================================================================================
