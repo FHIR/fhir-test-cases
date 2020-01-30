@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.36
-set newver=1.0.37
-set comment=Fix test for constraining slices to also sort
+set oldver=1.0.37
+set newver=1.0.38
+set comment=Add test cases for assumeValidRestReferences
 
 echo ..
 echo ================================================================================
