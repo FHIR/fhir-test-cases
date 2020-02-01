@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.37
-set newver=1.0.38
-set comment=Add test cases for assumeValidRestReferences
+set oldver=1.0.38
+set newver=1.0.39
+set comment=Add test cases for testing earch parameter type in CapabilityStatement
 
 echo ..
 echo ================================================================================
