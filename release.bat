@@ -1,8 +1,8 @@
 @echo off
 
-set oldver=1.0.38
-set newver=1.0.39
-set comment=Add test cases for testing earch parameter type in CapabilityStatement
+set oldver=1.0.39
+set newver=1.0.40
+set comment=See release notes at https://fhir.github.io/latest-ig-publisher/release-notes-test-cases.html
 
 echo ..
 echo ================================================================================
@@ -31,8 +31,8 @@ call git push origin master
 cd ..\fhir-test-cases
 
 
-call python c:\tools\zulip-api\zulip\zulip\send.py --stream committers/notification --subject "FHIR Test Cases" -m "New Test cases v%newver% released via Maven, also deployed at https://fhir.github.io/latest-ig-publisher/test-cases.zip. Changes: %comment%" --config-file zuliprc
-call python c:\tools\zulip-api\zulip\zulip\send.py --stream tooling/releases --subject "FHIR Test Cases" -m "New Test cases @ https://fhir.github.io/latest-ig-publisher/test-cases.zip (v%newver%). Changes: %comment%" --config-file zuliprc
+call python c:\tools\zulip-api\zulip\zulip\send.py --stream committers/notification --subject "FHIR Test Cases" -m "New Test cases v%newver% released via Maven, also deployed at https://fhir.github.io/latest-ig-publisher/test-cases.zip. See release notes at https://fhir.github.io/latest-ig-publisher/release-notes-test-cases.html" --config-file zuliprc
+call python c:\tools\zulip-api\zulip\zulip\send.py --stream tooling/releases --subject "FHIR Test Cases" -m "New Test cases @ https://fhir.github.io/latest-ig-publisher/test-cases.zip (v%newver%). See release notes at https://fhir.github.io/latest-ig-publisher/release-notes-test-cases.html" --config-file zuliprc
 
 :DONE
 echo ===============================================================
