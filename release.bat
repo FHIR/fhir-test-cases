@@ -2,7 +2,6 @@
 
 set oldver=1.0.39
 set newver=1.0.40
-set comment=See release notes at https://fhir.github.io/latest-ig-publisher/release-notes-test-cases.html
 
 echo ..
 echo ================================================================================
@@ -23,6 +22,7 @@ IF %ERRORLEVEL% NEQ 0 (
   GOTO DONE
 )
 
+call "C:\tools\versionNotes.exe" -fileName C:\work\org.hl7.fhir\latest-ig-publisher\release-notes-test-cases.md -version %newver% -fileDest C:\temp\current-release-notes-test-cases.md -url https://fhir.github.io/latest-ig-publisher/test-cases.zip
 call "c:\program files\7-zip\7z" a ..\latest-ig-publisher\test-cases.zip cda npm r4 r5 ucum validator
 
 cd ..\latest-ig-publisher
@@ -32,7 +32,11 @@ cd ..\fhir-test-cases
 
 
 call python c:\tools\zulip-api\zulip\zulip\send.py --stream committers/notification --subject "FHIR Test Cases" -m "New Test cases v%newver% released via Maven, also deployed at https://fhir.github.io/latest-ig-publisher/test-cases.zip. See release notes at https://fhir.github.io/latest-ig-publisher/release-notes-test-cases.html" --config-file zuliprc
-call python c:\tools\zulip-api\zulip\zulip\send.py --stream tooling/releases --subject "FHIR Test Cases" -m "New Test cases @ https://fhir.github.io/latest-ig-publisher/test-cases.zip (v%newver%). See release notes at https://fhir.github.io/latest-ig-publisher/release-notes-test-cases.html" --config-file zuliprc
+call python c:\tools\zulip-api\zulip\zulip\send.py --stream tooling/releases --subject "FHIR Test Cases" --config-file zuliprc < C:\temp\current-release-notes-test-cases.md 
+
+pause
+
+del C:\temp\current-release-notes-test-cases.md
 
 :DONE
 echo ===============================================================
