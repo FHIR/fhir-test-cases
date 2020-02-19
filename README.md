@@ -12,6 +12,9 @@ mvn install
 Note: there's no java code in here. The fact that maven is used is just to make it easy to book up
 other maven dependencies to the test cases 
 
+Releases are also posted to https://fhir.github.io/latest-ig-publisher/, where the release notes 
+can be found
+
 == Contents ==
 
 This repository contains the following content:
