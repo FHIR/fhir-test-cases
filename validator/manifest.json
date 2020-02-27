@@ -3069,6 +3069,39 @@
         "errorCount": 1, 
         "output" : ["ERROR: Bundle.entry[1].resource.extension[0]: The extension http://hapifhir.io/fhir/StructureDefinition/sp-unique is unknown, and not allowed here"]
       }
+    },
+    "care-plan.json" : {
+      "version" : "4.0",
+      "java": {
+        "errorCount": 0,
+        "output" : ["ERROR: CarePlan.activity[1].detail.scheduled.ofType(Timing).repeat: tim-9: If there's an offset, there must be a when (and not C, CM, CD, CV) (XXXX) [offset.empty() or (when.exists() and ((when in ('C' | 'CM' | 'CD' | 'CV')).not()))]"]
+      }
+    }, 
+    "profile-slicing-coding-good.json" : {
+      "version" : "3.0",
+      "java": {
+        "errorCount": 0
+      },
+      "profile" : {
+        "source" : "profile-slicing-coding-profile.xml",
+        "java": {
+          "errorCount": 0
+        }
+      }  
+    }, 
+    "profile-slicing-coding-bad.json" : {
+      "version" : "3.0",
+      "java": {
+        "errorCount": 0
+      },
+      "profile" : {
+        "source" : "profile-slicing-coding-profile.xml",
+        "java": {
+          "errorCount": 2,
+          "output" : ["ERROR: Observation.code.coding[0]: This element does not match any known slice  defined in the profile http://hl7.org.au/fhir/ch/v1/StructureDefinition/ncdhc-observation-urinalysis-protein and slicing is CLOSED: Observation.code.coding[0]: Does not match sliceUrinalysis-SNOMED-CT",
+                      "ERROR: Observation.code: Profile http://hl7.org.au/fhir/ch/v1/StructureDefinition/ncdhc-observation-urinalysis-protein, Element 'Observation.code.coding[Urinalysis-SNOMED-CT]': minimum required = 1, but only found 0"]
+        }
+      }  
     }
   }   
 }
