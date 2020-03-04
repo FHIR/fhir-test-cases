@@ -366,6 +366,15 @@
 
   </group>
   
+	<group name="testExists">
+		<test inputfile="patient-example.xml"><expression>Patient.name.exists()</expression><output type="boolean">true</output></test>
+		<test inputfile="patient-example.xml"><expression>Patient.name.exists(use = 'nickname')</expression><output type="boolean">false</output></test>
+		<test inputfile="patient-example.xml"><expression>Patient.name.exists(use = 'official')</expression><output type="boolean">true</output></test>
+		<test inputfile="patient-example.xml"><expression>Patient.maritalStatus.coding.exists(code = 'P' and system = 'http://terminology.hl7.org/CodeSystem/v3-MaritalStatus') 
+      or Patient.maritalStatus.coding.exists(code = 'A' and system = 'http://terminology.hl7.org/CodeSystem/v3-MaritalStatus')</expression><output type="boolean">false</output></test>  
+  </group>
+  
+  
 	<group name="testAll">
 		<test inputfile="patient-example.xml"><expression>Patient.name.select(given.exists()).allTrue()</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>Patient.name.select(period.exists()).allTrue()</expression><output type="boolean">false</output></test>
