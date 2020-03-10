@@ -49,6 +49,7 @@
  44. Choice Types: constrain list of choices to 1 and constrain the type (shortcut)
  45. Choice Types: constrain list of choices to 2 and constrain the types (slicing)
  46. Choice Types: constrain list of choices to 2 and constrain the types (shortcut)
+ 47. Extensions on extensions
 -->
   <contained>
     <StructureDefinition>
@@ -2079,6 +2080,7 @@
                <type value="type"/>
                <path value="$this"/>
             </discriminator>
+            <rules value="open"/>
           </slicing>
           <short value="some text"/>
           <type>
@@ -2161,6 +2163,7 @@
                <type value="type"/>
                <path value="@this"/>
             </discriminator>
+            <rules value="open"/>
           </slicing>
           <short value="some text"/>
           <type>
@@ -2237,6 +2240,79 @@
         <element>
           <path value="Observation.valueCodeableConcept.text"/>
           <max value="0"/>
+        </element>
+      </differential>
+    </StructureDefinition>
+  </contained>
+  <!-- 47. Extensions on extensions -->
+  <contained>
+    <StructureDefinition>
+      <id value="t47"/>
+      <url value="urn:uuid:aebd6022-6bf1-4fd9-862e-d960659ec027"/>
+      <name value="t47"/>
+      <status value="draft"/>
+      <description value="fixture for #47: Extensions on extensions"/>
+      <kind value="resource"/>
+      <abstract value="false"/>
+      <type value="OperationOutcome"/>
+      <baseDefinition value="http://hl7.org/fhir/StructureDefinition/OperationOutcome"/>
+      <derivation value="constraint"/>
+      <differential>
+        <element>
+          <path value="OperationOutcome"/>
+        </element>
+        <element>
+          <path value="OperationOutcome.issue"/>
+        </element>
+        <element>
+          <path value="OperationOutcome.issue.extension"/>
+          <sliceName value="userText"/>
+          <type>
+            <code value="Extension"/>
+            <profile value="http://sharedhealth.exchange/fhir/StructureDefinition/ext-operationoutcome-usertext"/>
+          </type>
+        </element>
+        <element>
+          <path value="OperationOutcome.issue.extension.value[x]"/>
+          <type>
+            <code value="string"/>
+          </type>
+        </element>
+        <element>
+          <path value="OperationOutcome.issue.extension.value[x]"/>
+          <sliceName value="valueString"/>
+          <type>
+            <code value="string"/>
+          </type>
+        </element>
+        <element>
+          <path value="OperationOutcome.issue.extension.value[x].extension"/>
+          <sliceName value="userText-translation"/>
+          <type>
+            <code value="Extension"/>
+            <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ST-translation"/>
+          </type>
+        </element>
+        <element>
+          <path value="OperationOutcome.issue.extension.value[x].extension.value[x]"/>
+          <type>
+            <code value="string"/>
+          </type>
+        </element>
+        <element>
+          <path value="OperationOutcome.issue.extension.value[x].extension.value[x]"/>
+          <sliceName value="valueString"/>
+          <type>
+            <code value="string"/>
+          </type>
+        </element>
+        <element>
+          <path value="OperationOutcome.issue.extension.value[x].extension.value[x].extension"/>
+          <sliceName value="userText-translation-language"/>
+          <type>
+            <code value="Extension"/>
+            <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ST-language"/>
+          </type>
         </element>
       </differential>
     </StructureDefinition>
@@ -4590,6 +4666,81 @@
         <description value="The element definition for value[x].value quantity slice should have sliceName = 'Quantity'"/>
         <direction value="response"/>
         <expression value="fixture('t44o').snapshot.element.where(id = 'Observation.value[x]:Quantity.value').check(exists(), 'no slice').min = 1"/>
+        <warningOnly value="false"/>
+      </assert>
+    </action>
+  </test>
+  <test>
+    <name value="Test45"/>
+    <description value="Choice Types: constrain list of choices to 2 and constrain the types (shortcut)"/>
+    <action>
+      <operation>
+        <type>
+          <system value="http://hl7.org/fhir/testscript-operation-codes"/>
+          <code value="snapshot"/>
+        </type>
+        <resource value="StructureDefinition"/>
+        <encodeRequestUrl value="false"/>
+        <params value="sort=true"/>
+        <responseId value="t45o"/>
+        <sourceId value="t45"/>
+      </operation>
+    </action>
+    <action>
+      <assert>
+        <label value="test45-1"/>
+        <description value="Snapshot must generate ok"/>
+        <response value="okay"/>
+        <warningOnly value="false"/>
+      </assert>
+    </action>
+  </test>
+  <test>
+    <name value="Test46"/>
+    <description value="Choice Types: constrain list of choices to 2 and constrain the types (shortcut)"/>
+    <action>
+      <operation>
+        <type>
+          <system value="http://hl7.org/fhir/testscript-operation-codes"/>
+          <code value="snapshot"/>
+        </type>
+        <resource value="StructureDefinition"/>
+        <encodeRequestUrl value="false"/>
+        <params value="sort=true"/>
+        <responseId value="t46o"/>
+        <sourceId value="t46"/>
+      </operation>
+    </action>
+    <action>
+      <assert>
+        <label value="test46-1"/>
+        <description value="Snapshot must generate ok"/>
+        <response value="okay"/>
+        <warningOnly value="false"/>
+      </assert>
+    </action>
+  </test>
+  <test>
+    <name value="Test47"/>
+    <description value="String extensions in string extensions"/>
+    <action>
+      <operation>
+        <type>
+          <system value="http://hl7.org/fhir/testscript-operation-codes"/>
+          <code value="snapshot"/>
+        </type>
+        <resource value="StructureDefinition"/>
+        <encodeRequestUrl value="false"/>
+        <params value="sort=true"/>
+        <responseId value="t47o"/>
+        <sourceId value="t47"/>
+      </operation>
+    </action>
+    <action>
+      <assert>
+        <label value="test47-1"/>
+        <description value="Snapshot must generate ok"/>
+        <response value="okay"/>
         <warningOnly value="false"/>
       </assert>
     </action>

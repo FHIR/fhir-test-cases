@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../r5/schemas/fhir-single.xsd">
+  <id value="profile-operationoutcome"/>
+  <url value="http://sharedhealth.exchange/fhir/StructureDefinition/profile-operationoutcome"/>
+  <name value="Shared Health Operation Outcome"/>
+  <status value="draft"/>
+  <date value="2016-03-31T08:01:25+11:00"/>
+  <description value="Constraints on the OperationOutcome resource"/>
+  <fhirVersion value="1.4.0"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="OperationOutcome"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/OperationOutcome"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="OperationOutcome"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.id"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue.extension"/>
+      <sliceName value="referenceNum"/>
+      <definition value="This reference number acts as a transaction locator number and may be provided to PrescribeIT&#174; support team for troubleshooting purposes. Vendors may wish to make this visible to users for this purpose."/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://sharedhealth.exchange/fhir/StructureDefinition/ext-operationoutcome-referencenum"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue.extension"/>
+      <sliceName value="userText"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://example.org/fhir/StructureDefinition/ext-operationoutcome-usertext"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue.extension.value[x]"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue.extension.value[x]"/>
+      <sliceName value="valueString"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue.extension.value[x].extension"/>
+      <sliceName value="userText-translation"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ST-translation"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue.extension.value[x].extension.value[x]"/>
+      <min value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue.extension.value[x].extension.value[x]"/>
+      <sliceName value="valueString"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue.extension.value[x].extension.value[x].extension"/>
+      <sliceName value="userText-translation-language"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ST-language"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+  </differential>
+</StructureDefinition>
