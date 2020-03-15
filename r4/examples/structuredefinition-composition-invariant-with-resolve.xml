@@ -1,0 +1,41 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="composition-invariant-with-resolve" />
+  <url value="http://hl7.org/fhir/StructureDefinition/composition-invariant-with-resolve" />
+  <version value="dv0.0.1" />
+  <name value="TestOfResolve" />
+  <title value="Test of invariants with resolve()" />
+  <status value="draft" />
+  <date value="2020-03-09" />
+  <fhirVersion value="3.0.1" />
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Composition" />
+  <baseDefinition value="Composition" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Composition">
+      <path value="Composition" />
+      <short value="Test of invariants with resolve()" />
+    </element>
+    <element id="Composition.section.entry">
+      <path value="Composition.section.entry" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/bodyweight" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/bodyheight" />
+      </type>
+      <constraint>
+        <key value="inv-cmp-xxx-001" />
+        <severity value="error" />
+        <human value="There is at most one body weight" />
+        <expression value="reference().code.coding.where(system='http://loinc.org' and code='29463-7').count()&lt;2" />
+      </constraint>
+      <constraint>
+        <key value="inv-cmp-xxx-002" />
+        <severity value="error" />
+        <human value="There is at most one body height" />
+        <expression value="reference().code.coding.where(system='http://loinc.org' and code='8302-2').count()&lt;2" />
+      </constraint>
+    </element>
+  </differential>
+</StructureDefinition>
