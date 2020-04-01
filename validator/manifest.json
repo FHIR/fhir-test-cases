@@ -388,9 +388,10 @@
       "allowed-extension-domain": "https://api-v8-r4.hspconsortium.org/DrugFormulary0/open",
       "java": {
         "errorCount": 1,
-        "warningCount": 2,
+        "warningCount": 3,
         "infoCount" : 1,
         "output": [
+          "warning: WARNING: Medication.extension[0].value.ofType(CodeableConcept).coding[0]: A code with no system has no defined meaning. A system should be provided",
           "WARNING: Medication.meta.profile[0]: StructureDefinition reference \"https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/StructureDefinition/usdrugformulary-FormularyDrug\" could not be resolved",
           "WARNING: Medication.code.coding[0]: The display \"Acetaminophen 325 MG / Oxycodone Hydrochloride 5 MG Oral Tablet [Percocet]\" is not a valid display for the code {http://www.nlm.nih.gov/research/umls/rxnorm}1049640 - should be one of [\"Percocet 5 MG / 325 MG Oral Tablet\",\"Percocet 5/325 Oral Tablet\",\"Percocet 5/325 (oxycodone hydrochloride / APAP) Oral Tablet\",\"APAP 325 MG / Oxycodone Hydrochloride 5 MG Oral Tablet [Percocet]\"]",
           "hint: INFORMATION: Medication.extension[1].value.ofType(CodeableConcept).coding[0]: Code System URI 'http://www.whocc.no/atc' is unknown so the code cannot be validated",
@@ -3263,6 +3264,66 @@
       "java" : {
          "errorCount" : 0
       }
+    },
+    "mr-m-simple-nossystem.xml" : {
+      "java" : {
+         "errorCount" : 1,
+         "warningCount" : 2,
+         "output" : ["warning: WARNING: Measure.group[0].population[0].code: None of the codes provided are in the value set http://hl7.org/fhir/ValueSet/measure-population (http://hl7.org/fhir/ValueSet/measure-population, and a code should come from this value set unless it has no suitable code) (codes = null#initial-population)", 
+                     "warning: WARNING: Measure.group[0].population[0].code.coding[0]: A code with no system has no defined meaning. A system should be provided",
+                     "ERROR: Measure.library[0]: Canonical URLs must be absolute URLs if they are not fragment references"]
+      }
+    },
+    "mr-single-good.xml" : {
+      "measure" : "mr-m-simple.xml",
+      "java" : {
+         "errorCount" : 0
+      }
+    },
+    "mr-single-two-groups.xml" : {
+      "measure" : "mr-m-simple.xml",
+      "java" : {
+         "errorCount" : 4,
+         "output" : ["ERROR: MeasureReport.group[1]: Duplicate id value 'CMS146-group-1'", 
+                     "ERROR: MeasureReport.group[0]: Group should have a code that matches the group definition in the measure", 
+                     "ERROR: MeasureReport.group[1]: Group should have a code that matches the group definition in the measure", 
+                     "ERROR: MeasureReport: The MeasureReport does not include a group for the group null"]
+      }
+    },
+    "mr-single-bad-2.xml" : {
+      "measure" : "mr-m-simple.xml",
+      "java" : {
+         "errorCount" : 1,
+         "output" : ["ERROR: MeasureReport.group[0].population[1]: The code for this group population has no match in the measure definition"]
+       }
+    },
+    "mr-single-subj-list.xml" : {
+      "measure" : "mr-m-simple.xml",
+      "java" : {
+         "errorCount" : 1,
+         "output" : ["ERROR: MeasureReport.group[0].population[0]: Mismatch between count 500 and number of subjects 1"]
+       }
+    },
+    "mr-single-not-subj-list.xml" : {
+      "measure" : "mr-m-simple.xml",
+      "java" : {
+         "errorCount" : 1,
+         "earningCount" : 1,
+         "output" : ["ERROR: MeasureReport.group[0].population[0]: Reports where type is not ''subject-list'' don't have subjects listed", 
+                     "warning: WARNING: MeasureReport.group[0].population[0]: Count should be present for reports where type is not ''subject-list'' "]
+       }
+    },
+    "mcode-pat.json" : {
+      "packages" : ["hl7.fhir.us.mcode#1.0.0"],
+      "java" : {
+         "errorCount" : 0
+       }
+    },
+    "mcode-pat-bad.json" : {
+      "java" : {
+         "errorCount" : 1,
+         "output" : [""]
+       }
     }
   }   
 }
