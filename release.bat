@@ -27,7 +27,7 @@ call "C:\tools\versionNotes.exe" -fileName C:\work\org.hl7.fhir\latest-ig-publis
 
 call "c:\program files\7-zip\7z" a ..\test-cases.zip cda npm r4 r5 ucum validator
 
-gsutil cp -a public-read ..\test-cases.zip gs://ig-build/test-cases.zip
+call gsutil cp -a public-read ..\test-cases.zip gs://ig-build/test-cases.zip
 
 cd ..\latest-ig-publisher
 call git commit -a -m "Release new version %newver%-SNAPSHOT. Changes: %comment%"
