@@ -1,7 +1,7 @@
 @echo off
 
-set oldver=1.1.7
-set newver=1.1.8
+set oldver=1.1.8
+set newver=1.1.9
 
 echo ..
 echo ================================================================================
@@ -23,16 +23,18 @@ IF %ERRORLEVEL% NEQ 0 (
   GOTO DONE
 )
 
-call "C:\tools\versionNotes.exe" -fileName C:\work\org.hl7.fhir\latest-ig-publisher\release-notes-test-cases.md -version %newver% -fileDest C:\temp\current-release-notes-test-cases.md -url https://fhir.github.io/latest-ig-publisher/test-cases.zip
+call "C:\tools\versionNotes.exe" -fileName C:\work\org.hl7.fhir\latest-ig-publisher\release-notes-test-cases.md -version %newver% -fileDest C:\temp\current-release-notes-test-cases.md -url https://storage.googleapis.com/ig-build/test-cases.zip
 
-call "c:\program files\7-zip\7z" a ..\latest-ig-publisher\test-cases.zip cda npm r4 r5 ucum validator
+call "c:\program files\7-zip\7z" a ..\test-cases.zip cda npm r4 r5 ucum validator
+
+gsutil cp -a public-read ..\test-cases.zip gs://ig-build/test-cases.zip
 
 cd ..\latest-ig-publisher
 call git commit -a -m "Release new version %newver%-SNAPSHOT. Changes: %comment%"
 call git push origin master
 cd ..\fhir-test-cases
 
-call python c:\tools\zulip-api\zulip\zulip\send.py --stream committers/notification --subject "FHIR Test Cases" -m "New Test cases v%newver% released via Maven, also deployed at https://fhir.github.io/latest-ig-publisher/test-cases.zip. See release notes at https://fhir.github.io/latest-ig-publisher/release-notes-test-cases.html" --config-file zuliprc
+call python c:\tools\zulip-api\zulip\zulip\send.py --stream committers/notification --subject "FHIR Test Cases" -m "New Test cases v%newver% released via Maven, also deployed at https://storage.googleapis.com/ig-build/test-cases.zip. See release notes at https://fhir.github.io/latest-ig-publisher/release-notes-test-cases.html" --config-file zuliprc
 call python c:\tools\zulip-api\zulip\zulip\send.py --stream tooling/releases --subject "FHIR Test Cases" --config-file zuliprc < C:\temp\current-release-notes-test-cases.md 
 
 del C:\temp\current-release-notes-test-cases.md
