@@ -30,7 +30,7 @@ call "c:\program files\7-zip\7z" a ..\test-cases.zip cda npm r4 r5 ucum validato
 call gsutil cp -a public-read ..\test-cases.zip gs://ig-build/test-cases.zip
 
 cd ..\latest-ig-publisher
-call git commit -a -m "Release new version %newver%-SNAPSHOT. Changes: %comment%"
+call git commit -a -m "Release new test cases version %newver%-SNAPSHOT. Changes: %comment%"
 call git push origin master
 cd ..\fhir-test-cases
 
