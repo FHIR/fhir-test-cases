@@ -17,6 +17,9 @@ strategy:
 pool:
   vmImage: $(imageName)
 
+variables:
+  currentImage: $(imageName)
+
 steps:
   # This task pulls the <version> value from the pom.xml file, so we can set it to the variable $version.
   - task: PowerShell@2
@@ -46,6 +49,7 @@ steps:
 
   # Publishes the fhir-test-cases build artifact to azure, so we can reference it in other builds
   - task: PublishPipelineArtifact@1
+    condition: eq(variables.currentImage, 'ubuntu-16.04')
     inputs:
       targetPath: "$(System.DefaultWorkingDirectory)/target/fhir-test-cases-$(version).jar"
       artifactName: ProjectAOutput
