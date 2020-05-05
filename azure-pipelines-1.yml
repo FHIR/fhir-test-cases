@@ -1,0 +1,58 @@
+trigger:
+  branches:
+    include:
+      - '*'
+
+# Different users have different machine setups, we run the build three times, on ubuntu, osx, and windows
+strategy:
+  matrix:
+    linux:
+      imageName: "ubuntu-16.04"
+    mac:
+      imageName: "macos-10.14"
+    windows:
+      imageName: "vs2017-win2016"
+  maxParallel: 3
+
+pool:
+  vmImage: $(imageName)
+
+variables:
+  currentImage: $(imageName)
+
+steps:
+  # This task pulls the <version> value from the pom.xml file, so we can set it to the variable $version.
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: |
+        [xml]$pomXml = Get-Content .\pom.xml
+        # version
+        Write-Host $pomXml.project.version
+        $version=$pomXml.project.version
+        Write-Host "##vso[task.setvariable variable=version]$version"
+
+  # Runs mvn package
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'pom.xml'
+      mavenOptions: '-Xmx3072m'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.8'
+      jdkArchitectureOption: 'x64'
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      goals: 'package'
+
+  # Prints out the build version, for debugging purposes
+  - bash: echo Pulled version from pom.xml => $(version)
+
+  # Publishes the fhir-test-cases build artifact to azure, so we can reference it in other builds
+  - task: PublishPipelineArtifact@1
+    condition: eq(variables.currentImage, 'ubuntu-16.04')
+    inputs:
+      targetPath: "$(System.DefaultWorkingDirectory)/target/fhir-test-cases-$(version).jar"
+      artifactName: fhir-test-cases
+
+
+
