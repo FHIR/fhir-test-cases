@@ -1,7 +1,7 @@
 @echo off
 
-set oldver=1.1.11
-set newver=1.1.12
+set oldver=1.1.12
+set newver=1.1.13
 
 echo ..
 echo ================================================================================
@@ -23,7 +23,7 @@ IF %ERRORLEVEL% NEQ 0 (
   GOTO DONE
 )
 
-call "C:\tools\versionNotes.exe" -fileName C:\work\org.hl7.fhir\latest-ig-publisher\release-notes-test-cases.md -version %newver% -fileDest C:\temp\current-release-notes-test-cases.md -url https://storage.googleapis.com/ig-build/test-cases.zip
+call "C:\tools\versionNotes.exe" -fileName C:\work\org.hl7.fhir\fhir-test-cases\release-notes-test-cases.md -version %newver% -fileDest C:\temp\current-release-notes-test-cases.md -url https://storage.googleapis.com/ig-build/test-cases.zip
 
 call "c:\program files\7-zip\7z" a ..\test-cases.zip cda npm r4 r5 ucum validator
 

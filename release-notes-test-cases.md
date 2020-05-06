@@ -6,10 +6,9 @@ title: FHIR Test Cases Release Notes
 
 ## Current (not released yet)
 
-(no changes yet)
+* Add test case to check proper use of urn:ietf:rfc:3986 identifiers
 
 ## v1.1.12 (2020-05-02)
-
 
 * update for release of new FHIR version
 
