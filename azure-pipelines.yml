@@ -68,12 +68,21 @@ steps:
     inputs:
       PathtoPublish: '$(build.artifactstagingdirectory)'
 
-  - task: CmdLine@2
-    condition: eq(variables.currentImage, 'ubuntu-16.04')
-    inputs:
-      script: |
-        mkdir -p $(build.artifactstagingdirectory)/variables
-        echo "$version" > $(build.artifactstagingdirectory)/variables/version
+#  - task: CmdLine@2
+#    condition: eq(variables.currentImage, 'ubuntu-16.04')
+#    inputs:
+#      script: |
+#        mkdir -p $(build.artifactstagingdirectory)/variables
+#        echo "$version" > $(build.artifactstagingdirectory)/variables/version
+#
+#  - publish: $(Pipeline.Workspace)/variables
+#    artifact: variables
 
+  - bash: |
+      FOO="some value"
+      mkdir -p $(Pipeline.Workspace)/variables
+      echo "$FOO" > $(Pipeline.Workspace)/variables/FOO
+
+  # Publish the folder as pipeline artifact
   - publish: $(Pipeline.Workspace)/variables
     artifact: variables
