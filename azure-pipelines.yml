@@ -55,12 +55,12 @@ steps:
       artifactName: fhir-test-cases
 
   - task: CopyFiles@2
+    condition: eq(variables.currentImage, 'ubuntu-16.04')
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
     inputs:
       SourceFolder: '$(system.defaultworkingdirectory)'
       Contents: "$(System.DefaultWorkingDirectory)/target/fhir-test-cases-$(version).jar"
       TargetFolder: '$(build.artifactstagingdirectory)'
-    condition: succeededOrFailed()
 
   - task: PublishBuildArtifacts@1
     condition: eq(variables.currentImage, 'ubuntu-16.04')
@@ -69,6 +69,7 @@ steps:
       PathtoPublish: '$(build.artifactstagingdirectory)'
 
   - task: CmdLine@2
+    condition: eq(variables.currentImage, 'ubuntu-16.04')
     inputs:
       script: |
         mkdir -p $(build.artifactstagingdirectory)/variables
