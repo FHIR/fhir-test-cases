@@ -6,6 +6,10 @@ title: FHIR Test Cases Release Notes
 
 ## Current (not released yet)
 
+* Start adding test cases for Conformance resource comparisons
+
+## v1.1.13 (2020-05-06)
+
 * Add test case to check proper use of urn:ietf:rfc:3986 identifiers
 
 ## v1.1.12 (2020-05-02)
@@ -127,4 +131,4 @@ title: FHIR Test Cases Release Notes
 
 ## v1.0.39  (2020-02-02)
 
-* This release 
+* This release
