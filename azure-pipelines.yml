@@ -80,9 +80,10 @@ steps:
 
   - bash: |
     condition: eq(variables.currentImage, 'ubuntu-16.04')
-      VERSION=$(version)
-      mkdir -p $(Pipeline.Workspace)/variables
-      echo "$VERSION" > $(Pipeline.Workspace)/variables/VERSION
+    echo $(version)
+    VERSION=$(version)
+    mkdir -p $(Pipeline.Workspace)/variables
+    echo "$VERSION" > $(Pipeline.Workspace)/variables/VERSION
 
   # Publish the folder as pipeline artifact
   - publish: $(Pipeline.Workspace)/variables
