@@ -54,5 +54,17 @@ steps:
       targetPath: "$(System.DefaultWorkingDirectory)/target/fhir-test-cases-$(version).jar"
       artifactName: fhir-test-cases
 
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+    inputs:
+      SourceFolder: '$(system.defaultworkingdirectory)'
+      Contents: "$(System.DefaultWorkingDirectory)/target/fhir-test-cases-$(version).jar"
+      TargetFolder: '$(build.artifactstagingdirectory)'
+    condition: succeededOrFailed()
 
+  - task: PublishBuildArtifacts@1
+    condition: eq(variables.currentImage, 'ubuntu-16.04')
+    displayName: 'Publish Artifact: snapshot'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
 
