@@ -7,6 +7,7 @@ title: FHIR Test Cases Release Notes
 ## Current (not released yet)
 
 * Start adding test cases for Conformance resource comparisons
+* Updates to test cases for v 4.4.0 releases
 
 ## v1.1.13 (2020-05-06)
 
