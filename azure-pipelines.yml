@@ -49,11 +49,11 @@ steps:
   - bash: echo Pulled version from pom.xml => $(version)
 
   # Publishes the fhir-test-cases build artifact to azure, so we can reference it in other builds
-  - task: PublishPipelineArtifact@1
-    condition: eq(variables.currentImage, 'ubuntu-16.04')
-    inputs:
-      targetPath: "$(System.DefaultWorkingDirectory)/target/fhir-test-cases-$(version).jar"
-      artifactName: fhir-test-cases
+  # - task: PublishPipelineArtifact@1
+  #   condition: eq(variables.currentImage, 'ubuntu-16.04')
+  #   inputs:
+  #     targetPath: "$(System.DefaultWorkingDirectory)/target/fhir-test-cases-$(version).jar"
+  #     artifactName: fhir-test-cases
 
   - task: CopyFiles@2
     condition: eq(variables.currentImage, 'ubuntu-16.04')
@@ -63,11 +63,19 @@ steps:
       Contents: "$(System.DefaultWorkingDirectory)/target/fhir-test-cases-$(version).jar"
       TargetFolder: '$(build.artifactstagingdirectory)'
 
-  - task: PublishBuildArtifacts@1
+  - bash: |
+      echo $(version)
+      VERSION=$(version)
+      echo "$VERSION" > $(System.DefaultWorkingDirectory)/VERSION
     condition: eq(variables.currentImage, 'ubuntu-16.04')
-    displayName: 'Publish Artifact: snapshot'
+
+  - task: CopyFiles@2
+    condition: eq(variables.currentImage, 'ubuntu-16.04')
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
     inputs:
-      PathtoPublish: '$(build.artifactstagingdirectory)'
+      SourceFolder: '$(System.Defaultworkingdirectory)'
+      Contents: "$(System.DefaultWorkingDirectory)/VERSION"
+      TargetFolder: '$(build.artifactstagingdirectory)'
 
 #  - task: CmdLine@2
 #    condition: eq(variables.currentImage, 'ubuntu-16.04')
@@ -86,13 +94,15 @@ steps:
   #     echo "$VERSION" > $(Pipeline.Workspace)/variables/VERSION
   #   condition: eq(variables.currentImage, 'ubuntu-16.04')
 
-  - bash: |
-      echo $(version)
-      VERSION=$(version)
-      echo "$VERSION" > $(build.artifactstagingdirectory)/VERSION
-    condition: eq(variables.currentImage, 'ubuntu-16.04')
+
 
   # Publish the folder as pipeline artifact
-  - publish: $(build.artifactstagingdirectory)/variables
+  # - publish: $(build.artifactstagingdirectory)/variables
+  #   condition: eq(variables.currentImage, 'ubuntu-16.04')
+  #   artifact: variables
+
+  - task: PublishBuildArtifacts@1
     condition: eq(variables.currentImage, 'ubuntu-16.04')
-    artifact: variables
+    displayName: 'Publish Artifact: snapshot'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
