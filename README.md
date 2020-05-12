@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/markiantorno/FHIR/_apis/build/status/FHIR.fhir-test-cases?branchName=master)](https://dev.azure.com/markiantorno/FHIR/_build/latest?definitionId=12&branchName=master)
+
 FHIR Test Cases
 ===================================
 
