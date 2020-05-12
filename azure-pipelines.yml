@@ -33,7 +33,7 @@ steps:
         $version=$pomXml.project.version
         Write-Host "##vso[task.setvariable variable=version]$version"
 
-  # Runs mvn package
+  # Runs 'mvn package'
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
@@ -48,13 +48,7 @@ steps:
   # Prints out the build version, for debugging purposes
   - bash: echo Pulled version from pom.xml => $(version)
 
-  # Publishes the fhir-test-cases build artifact to azure, so we can reference it in other builds
-  # - task: PublishPipelineArtifact@1
-  #   condition: eq(variables.currentImage, 'ubuntu-16.04')
-  #   inputs:
-  #     targetPath: "$(System.DefaultWorkingDirectory)/target/fhir-test-cases-$(version).jar"
-  #     artifactName: fhir-test-cases
-
+  # Copies the generated *.jar file to the staging directory, mainly for debugging purposes
   - task: CopyFiles@2
     condition: eq(variables.currentImage, 'ubuntu-16.04')
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
@@ -63,12 +57,17 @@ steps:
       Contents: "$(System.DefaultWorkingDirectory)/target/fhir-test-cases-$(version).jar"
       TargetFolder: '$(build.artifactstagingdirectory)'
 
+  # Azure pipelines cannot pass variables between pipelines, but it can pass files, so we
+  # pass the build id (ex: 1.1.13-SNAPSHOT) as a string in a file. This used to be used for
+  # the nexus upload tool, but we no longer use the stock tool. This is only here for debugging
+  # now, and to remind me of how sad I was when I was trying to get this to work.
   - bash: |
       echo $(version)
       VERSION=$(version)
       echo "$VERSION" > $(System.DefaultWorkingDirectory)/VERSION
     condition: eq(variables.currentImage, 'ubuntu-16.04')
 
+  # Copies the VERSION file containing the build id (ex: 1.1.13-SNAPSHOT) to the staging directory
   - task: CopyFiles@2
     condition: eq(variables.currentImage, 'ubuntu-16.04')
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
@@ -77,32 +76,11 @@ steps:
       Contents: "$(System.DefaultWorkingDirectory)/VERSION"
       TargetFolder: '$(build.artifactstagingdirectory)'
 
-#  - task: CmdLine@2
-#    condition: eq(variables.currentImage, 'ubuntu-16.04')
-#    inputs:
-#      script: |
-#        mkdir -p $(build.artifactstagingdirectory)/variables
-#        echo "$version" > $(build.artifactstagingdirectory)/variables/version
-#
-#  - publish: $(Pipeline.Workspace)/variables
-#    artifact: variables
-
-  # - bash: |
-  #     echo $(version)
-  #     VERSION=$(version)
-  #     mkdir -p $(Pipeline.Workspace)/variables
-  #     echo "$VERSION" > $(Pipeline.Workspace)/variables/VERSION
-  #   condition: eq(variables.currentImage, 'ubuntu-16.04')
-
-
-
-  # Publish the folder as pipeline artifact
-  # - publish: $(build.artifactstagingdirectory)/variables
-  #   condition: eq(variables.currentImage, 'ubuntu-16.04')
-  #   artifact: variables
-
+  # Publishes the files we've moved into the staging directory, so they can be accessed by the 
+  # release pipeline. You will notice that we only do this for the ubuntu build, as doing it 
+  # for each of the three release pipelines will cause conflicts.
   - task: PublishBuildArtifacts@1
     condition: eq(variables.currentImage, 'ubuntu-16.04')
-    displayName: 'Publish Artifact: snapshot'
+    displayName: 'Publish Build Artifacts'
     inputs:
       PathtoPublish: '$(build.artifactstagingdirectory)'
