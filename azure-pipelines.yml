@@ -85,3 +85,43 @@ steps:
     displayName: 'Publish Build Artifacts'
     inputs:
       PathtoPublish: '$(build.artifactstagingdirectory)'
+
+  # For creating the snapshot release with maven, we need to build a fake settings.xml for it to read from
+  - bash: |
+      cat >$(System.DefaultWorkingDirectory)/settings.xml <<EOL
+      <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                                    https://maven.apache.org/xsd/settings-1.0.0.xsd">
+        <servers>
+          <server>
+            <id>ossrh</id>
+            <username>$(SONATYPE_USER)</username>
+            <password>$(SONATYPE_PASS)</password>
+          </server>
+          <server>
+            <id>sonatype-nexus-snapshots</id>
+            <username>$(SONATYPE_USER)</username>
+            <password>$(SONATYPE_PASS)</password>
+          </server>
+          <server>
+            <id>sonatype-nexus-staging</id>
+            <username>$(SONATYPE_USER)</username>
+            <password>$(SONATYPE_PASS)</password>
+          </server>
+        </servers>
+      </settings>
+      EOL
+    displayName: 'Create .mvn/settings.xml'
+    condition: and(eq(variables.currentImage, 'ubuntu-16.04'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    
+  # Deploy the SNAPSHOT artifact to sonatype nexus
+  - task: Maven@3
+    displayName: 'Deploy $(version) to Sonatype staging'
+    condition: and(eq(variables.currentImage, 'ubuntu-16.04'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    inputs:
+      mavenPomFile: '$(System.DefaultWorkingDirectory)/fhir-test-cases/pom.xml'
+      goals: deploy
+      options: '--settings $(System.DefaultWorkingDirectory)/settings.xml '
+      publishJUnitResults: false
+
