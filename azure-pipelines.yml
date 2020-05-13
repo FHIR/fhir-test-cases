@@ -1,5 +1,8 @@
 trigger:
-  - 'master'
+  - master
+
+pr:
+  - master
 
 # Different users have different machine setups, we run the build three times, on ubuntu, osx, and windows
 strategy:
@@ -48,7 +51,7 @@ steps:
 
   # Copies the generated *.jar file to the staging directory, mainly for debugging purposes
   - task: CopyFiles@2
-    condition: eq(variables.currentImage, 'ubuntu-16.04')
+    condition: and(eq(variables.currentImage, 'ubuntu-16.04'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
     inputs:
       SourceFolder: '$(system.defaultworkingdirectory)'
@@ -63,11 +66,11 @@ steps:
       echo $(version)
       VERSION=$(version)
       echo "$VERSION" > $(System.DefaultWorkingDirectory)/VERSION
-    condition: eq(variables.currentImage, 'ubuntu-16.04')
+    condition: and(eq(variables.currentImage, 'ubuntu-16.04'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
   # Copies the VERSION file containing the build id (ex: 1.1.13-SNAPSHOT) to the staging directory
   - task: CopyFiles@2
-    condition: eq(variables.currentImage, 'ubuntu-16.04')
+    condition: and(eq(variables.currentImage, 'ubuntu-16.04'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
     inputs:
       SourceFolder: '$(System.Defaultworkingdirectory)'
@@ -78,7 +81,7 @@ steps:
   # release pipeline. You will notice that we only do this for the ubuntu build, as doing it 
   # for each of the three release pipelines will cause conflicts.
   - task: PublishBuildArtifacts@1
-    condition: eq(variables.currentImage, 'ubuntu-16.04')
+    condition: and(eq(variables.currentImage, 'ubuntu-16.04'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     displayName: 'Publish Build Artifacts'
     inputs:
       PathtoPublish: '$(build.artifactstagingdirectory)'
