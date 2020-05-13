@@ -65,6 +65,9 @@ steps:
       echo "$VERSION" > $(System.DefaultWorkingDirectory)/VERSION
     condition: eq(variables.currentImage, 'ubuntu-16.04')
 
+  - bash: 
+      echo $(Build.SourceBranch)
+
   # Copies the VERSION file containing the build id (ex: 1.1.13-SNAPSHOT) to the staging directory
   - task: CopyFiles@2
     condition: eq(variables.currentImage, 'ubuntu-16.04')
