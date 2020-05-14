@@ -1,7 +1,8 @@
 trigger:
-  branches:
-    include:
-      - '*'
+  - master
+
+pr:
+  - master
 
 # Different users have different machine setups, we run the build three times, on ubuntu, osx, and windows
 strategy:
@@ -19,6 +20,7 @@ pool:
 
 variables:
   currentImage: $(imageName)
+  VERSION:
 
 steps:
   # This task pulls the <version> value from the pom.xml file, so we can set it to the variable $version.
@@ -32,7 +34,7 @@ steps:
         $version=$pomXml.project.version
         Write-Host "##vso[task.setvariable variable=version]$version"
 
-  # Runs mvn package
+  # Runs 'mvn package'
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
@@ -47,12 +49,79 @@ steps:
   # Prints out the build version, for debugging purposes
   - bash: echo Pulled version from pom.xml => $(version)
 
-  # Publishes the fhir-test-cases build artifact to azure, so we can reference it in other builds
-  - task: PublishPipelineArtifact@1
-    condition: eq(variables.currentImage, 'ubuntu-16.04')
+  # Copies the generated *.jar file to the staging directory, mainly for debugging purposes
+  - task: CopyFiles@2
+    condition: and(eq(variables.currentImage, 'ubuntu-16.04'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
     inputs:
-      targetPath: "$(System.DefaultWorkingDirectory)/target/fhir-test-cases-$(version).jar"
-      artifactName: fhir-test-cases
+      SourceFolder: '$(system.defaultworkingdirectory)'
+      Contents: "$(System.DefaultWorkingDirectory)/target/fhir-test-cases-$(version).jar"
+      TargetFolder: '$(build.artifactstagingdirectory)'
 
+  # Azure pipelines cannot pass variables between pipelines, but it can pass files, so we
+  # pass the build id (ex: 1.1.13-SNAPSHOT) as a string in a file. This used to be used for
+  # the nexus upload tool, but we no longer use the stock tool. This is only here for debugging
+  # now, and to remind me of how sad I was when I was trying to get this to work.
+  - bash: |
+      echo $(version)
+      VERSION=$(version)
+      echo "$VERSION" > $(System.DefaultWorkingDirectory)/VERSION
+    condition: and(eq(variables.currentImage, 'ubuntu-16.04'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
+  # Copies the VERSION file containing the build id (ex: 1.1.13-SNAPSHOT) to the staging directory
+  - task: CopyFiles@2
+    condition: and(eq(variables.currentImage, 'ubuntu-16.04'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+    inputs:
+      SourceFolder: '$(System.Defaultworkingdirectory)'
+      Contents: "$(System.DefaultWorkingDirectory)/VERSION"
+      TargetFolder: '$(build.artifactstagingdirectory)'
+
+  # Publishes the files we've moved into the staging directory, so they can be accessed by the 
+  # release pipeline. You will notice that we only do this for the ubuntu build, as doing it 
+  # for each of the three release pipelines will cause conflicts.
+  - task: PublishBuildArtifacts@1
+    condition: and(eq(variables.currentImage, 'ubuntu-16.04'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    displayName: 'Publish Build Artifacts'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
+
+  # For creating the snapshot release with maven, we need to build a fake settings.xml for it to read from
+  - bash: |
+      cat >$(System.DefaultWorkingDirectory)/settings.xml <<EOL
+      <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                                    https://maven.apache.org/xsd/settings-1.0.0.xsd">
+        <servers>
+          <server>
+            <id>ossrh</id>
+            <username>$(SONATYPE_USER)</username>
+            <password>$(SONATYPE_PASS)</password>
+          </server>
+          <server>
+            <id>sonatype-nexus-snapshots</id>
+            <username>$(SONATYPE_USER)</username>
+            <password>$(SONATYPE_PASS)</password>
+          </server>
+          <server>
+            <id>sonatype-nexus-staging</id>
+            <username>$(SONATYPE_USER)</username>
+            <password>$(SONATYPE_PASS)</password>
+          </server>
+        </servers>
+      </settings>
+      EOL
+    displayName: 'Create .mvn/settings.xml'
+    condition: and(eq(variables.currentImage, 'ubuntu-16.04'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    
+  # Deploy the SNAPSHOT artifact to sonatype nexus
+  - task: Maven@3
+    displayName: 'Deploy $(version) to Sonatype staging'
+    condition: and(eq(variables.currentImage, 'ubuntu-16.04'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    inputs:
+      mavenPomFile: '$(System.DefaultWorkingDirectory)/pom.xml'
+      goals: deploy
+      options: '--settings $(System.DefaultWorkingDirectory)/settings.xml '
+      publishJUnitResults: false
 
