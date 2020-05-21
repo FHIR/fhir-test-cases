@@ -75,7 +75,22 @@ steps:
             <username>$(SONATYPE_USER)</username>
             <password>$(SONATYPE_PASS)</password>
           </server>
+          <server>
+              <id>$(PGP_KEYNAME)</id>
+              <passphrase>$(PGP_PASSPHRASE)</passphrase>
+          </server>
         </servers>
+        <profiles>
+          <profile>
+            <id>release</id>
+            <activation>
+              <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+              <gpg.keyname>$(PGP_KEYNAME)</gpg.keyname>
+            </properties>
+          </profile>
+        </profiles>
       </settings>
       EOL
     displayName: 'Create .mvn/settings.xml'
