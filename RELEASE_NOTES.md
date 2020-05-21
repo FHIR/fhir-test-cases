@@ -3,3 +3,5 @@
 * add dependencies for CDA test case
 * Add test case for Questionnaire rendering 
 * Add test case for corner case - sparse differentials on slices
+* Fix test cases for validating Quantity coded units
+* Add test cases for Attachment validation

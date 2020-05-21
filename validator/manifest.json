@@ -35,18 +35,22 @@
           "bug824/bug824-fiphr-vitalsigns-stu3.json"
         ],
         "java": {
-          "errorCount": 3,
+          "errorCount": 5,
           "output" : ["ERROR: Observation.extension[0]: The extension http://phr.kanta.fi/StructureDefinition/fiphr-medicationcontext is unknown, and not allowed here",
                       "ERROR: Observation.extension[0].value.ofType(CodeableConcept).coding[0]: Unknown Code http://phr.kanta.fi/fiphr-cs-medicationcontext#13 in http://phr.kanta.fi/fiphr-cs-medicationcontext for \"http://phr.kanta.fi/fiphr-cs-medicationcontext#13\"",
-                      "ERROR: Observation.extension[1]: The extension http://phr.kanta.fi/StructureDefinition/fiphr-boolean is unknown, and not allowed here"]
+                      "ERROR: Observation.extension[1]: The extension http://phr.kanta.fi/StructureDefinition/fiphr-boolean is unknown, and not allowed here",
+					"ERROR: Observation.referenceRange[0].age.low: Error processing Unit: '21612-7': Expected \"/\" or \".\" at character 6; The code \"21612-7\" is not valid in the system http://unitsofmeasure.org; The code provided (http://unitsofmeasure.org#21612-7) is not  valid in the value set All codes known to the system for \"http://unitsofmeasure.org#21612-7\"", 
+                    "ERROR: Observation.referenceRange[0].age.high: Error processing Unit: '21612-7': Expected \"/\" or \".\" at character 6; The code \"21612-7\" is not valid in the system http://unitsofmeasure.org; The code provided (http://unitsofmeasure.org#21612-7) is not  valid in the value set All codes known to the system for \"http://unitsofmeasure.org#21612-7\""]
         }
 
       },
       "java": {
-        "errorCount": 3,
+        "errorCount": 5,
         "output" : ["ERROR: Observation.extension[0].value.ofType(CodeableConcept): None of the codes provided are in the value set http://phr.kanta.fi/ValueSet/fiphr-vs-medicationcontext (http://phr.kanta.fi/ValueSet/fiphr-vs-medicationcontext), and a code from this value set is required) (codes = http://phr.kanta.fi/fiphr-cs-medicationcontext#13)",
                     "ERROR: Observation.extension[0].value.ofType(CodeableConcept).coding[0]: Unknown Code http://phr.kanta.fi/fiphr-cs-medicationcontext#13 in http://phr.kanta.fi/fiphr-cs-medicationcontext for \"http://phr.kanta.fi/fiphr-cs-medicationcontext#13\"",
-                    "ERROR: Observation: The extension http://phr.kanta.fi/StructureDefinition/fiphr-boolean is not allowed to be used at this point (allowed = e:StructureDefinition; this element is [[Observation]]"]
+                    "ERROR: Observation: The extension http://phr.kanta.fi/StructureDefinition/fiphr-boolean is not allowed to be used at this point (allowed = e:StructureDefinition; this element is [[Observation]]",
+					"ERROR: Observation.referenceRange[0].age.low: Error processing Unit: '21612-7': Expected \"/\" or \".\" at character 6; The code \"21612-7\" is not valid in the system http://unitsofmeasure.org; The code provided (http://unitsofmeasure.org#21612-7) is not  valid in the value set All codes known to the system for \"http://unitsofmeasure.org#21612-7\"", 
+                    "ERROR: Observation.referenceRange[0].age.high: Error processing Unit: '21612-7': Expected \"/\" or \".\" at character 6; The code \"21612-7\" is not valid in the system http://unitsofmeasure.org; The code provided (http://unitsofmeasure.org#21612-7) is not  valid in the value set All codes known to the system for \"http://unitsofmeasure.org#21612-7\""]
       },
       "supporting" : [
         "bug824/bug824-fhirphr-cs-medicationcontext.json",
@@ -1033,15 +1037,16 @@
       "profile": {
         "source": "slice-by-polymorphic-type-profile.xml",
         "java": {
-          "errorCount": 0,
+          "errorCount": 1,
           "output": [
+		    "ERROR: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language",
             "INFORMATION: Communication.status: Could not verify slice for profile http://hl7.org/fhir/StructureDefinition/slice-by-polymorphic-type"
           ]
         }
       },
       "java": {
-        "errorCount": 0,
-        "output": []
+        "errorCount": 1,
+        "output": ["ERROR: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language"]
       }
     },
     "code-correct.xml": {
@@ -1123,13 +1128,15 @@
       "profile": {
         "source": "slicing-types-by-string-profile.xml",
         "java": {
-          "errorCount": 0,
-          "output": []
+          "errorCount": 2,
+          "output": ["ERROR: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language",
+                     "ERROR: Communication.payload[2].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language"]
         }
       },
       "java": {
-        "errorCount": 0,
-        "output": []
+        "errorCount": 2,
+        "output": ["ERROR: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language",
+                   "ERROR: Communication.payload[2].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language"]
       }
     },
     "uk-nhs-pat.xml": {
@@ -2370,16 +2377,23 @@
           "ch/mixed-valueset-vs.json"
         ],
         "java": {
-          "errorCount": 0,
+          "errorCount": 2,
+          "warningCount": 2,
+          "infoCount": 0,
           "output": [
+		    "ERROR: DocumentReference.content[0].attachment: Attachment size is 17 bytes which exceeds the stated limit of 15 bytes",
+		    "ERROR: DocumentReference.content[0].attachment: Stated Attachment Size 19 does not match actual attachment size 17",
             "WARNING: DocumentReference.type: [The display \"Progress note\" is not a valid display for the code {http://snomed.info/sct}371532007 - should be one of [\"Progress report\",\"Report of subsequent visit\",\"Progress report (record artifact)\"]]",
             "WARNING: DocumentReference.category[0]: ValueSet http://fhir.ch/ig/ch-epr-term/ValueSet/DocumentEntry.classCode not found by validator"
           ]
         }
       },
       "java": {
-        "errorCount": 0,
+        "errorCount": 1,
+        "warningCount": 1,
+        "infoCount": 1,
         "output": [
+          "ERROR: ERROR: DocumentReference.content[0].attachment: Stated Attachment Size 19 does not match actual attachment size 17",
           "INFORMATION: DocumentReference.type: None of the codes provided are in the value set http://hl7.org/fhir/ValueSet/c80-doc-typecodes (http://hl7.org/fhir/ValueSet/c80-doc-typecodes, and a code is recommended to come from this value set) (codes \u003d http://snomed.info/sct#371532007)",
           "WARNING: DocumentReference.type.coding[0]: The display \"Progress note\" is not a valid display for the code {http://snomed.info/sct}371532007 - should be one of [\"Progress report\",\"Report of subsequent visit\",\"Progress report (record artifact)\"]"
         ]
@@ -3303,7 +3317,8 @@
     "bundle-ref.xml" : {
       "version" : "3.0",
       "java" : {
-         "errorCount" : 0
+         "errorCount" : 1,
+		 "output" : ["ERROR: Bundle.entry[5].resource.ofType(MedicationRequest).dosageInstruction[0].dose.ofType(Quantity): Error processing Unit: 'tbl': The unit \"tbl\" is unknown at character 1; The code \"tbl\" is not valid in the system http://unitsofmeasure.org; The code provided (http://unitsofmeasure.org#tbl) is not  valid in the value set All codes known to the system for \"http://unitsofmeasure.org#tbl\""]
       }
     },
     "mr-m-simple-nossystem.xml" : {
