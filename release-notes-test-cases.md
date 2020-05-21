@@ -6,10 +6,9 @@ title: FHIR Test Cases Release Notes
 
 ## Current (not released yet)
 
-(no changes yet)
+* add test case for extension differentation on NL profiles
 
 ## v1.1.14 (2020-05-11)
-
 
 * Start adding test cases for Conformance resource comparisons
 * Updates to test cases for v 4.4.0 releases
