@@ -49,6 +49,50 @@
     "output" : "ChalmersWindsor",
     "includes" : {
       "humanname.html" : "{{include.name.family}}"
-    }
+  },{
+    "name" : "for",
+    "focus" : "Patient/example",
+    "template" : "{%for name in Patient.name%}{{name.family}}{%endfor%}",
+    "output" : "ChalmersWindsor"
+  },{
+    "name" : "forelse",
+    "focus" : "Patient/example",
+    "template" : "{%for link in Patient.link%}{{link.type}}{%else%}none{%endfor%}",
+    "output" : "none"
+  },{
+    "name" : "forcontinue",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom%}{%if telecom.use = 'old'%}{%continue%}{%else%}{{telecom.value}}{%endfor%}",
+    "output" : "(03) 5555 6473(03) 3410 5613"
+  },{
+    "name" : "forbreak",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom%}{%if telecom.rank = 2%}{%break%}{%else%}{{telecom.value}}{%endfor%}",
+    "output" : "(03) 5555 6473"
+  },{
+    "name" : "forcycle",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom%}{%cycle \"odd\", \"even\"%}{%endfor%}",
+    "output" : "oddevenoddeven"
+  },{
+    "name" : "forlimit",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom limit:2%}{{telecom.use}}{%endfor%}",
+    "output" : "homework"
+  },{
+    "name" : "foroffset",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom offset:2%}{{telecom.use}}{%endfor%}",
+    "output" : "mobileold"
+  },{
+    "name" : "forrange",
+    "focus" : "Patient/example",
+    "template" : "{%for i in (3..5)%}{{i}}{%endfor%}",
+    "output" : "345"
+  },{
+    "name" : "forreversed",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom reversed%}{{telecom.use}}{%endfor%}",
+    "output" : "oldmobileworkhome"
   }]
 }
