@@ -49,6 +49,7 @@
     "output" : "ChalmersWindsor",
     "includes" : {
       "humanname.html" : "{{include.name.family}}"
+	}
   },{
     "name" : "for",
     "focus" : "Patient/example",
@@ -62,12 +63,12 @@
   },{
     "name" : "forcontinue",
     "focus" : "Patient/example",
-    "template" : "{%for telecom in Patient.telecom%}{%if telecom.use = 'old'%}{%continue%}{%else%}{{telecom.value}}{%endfor%}",
+    "template" : "{%for telecom in Patient.telecom%}{%if telecom.use = 'old'%}{%continue%}{%else%}{{telecom.value}}{%endif%}{%endfor%}",
     "output" : "(03) 5555 6473(03) 3410 5613"
   },{
     "name" : "forbreak",
     "focus" : "Patient/example",
-    "template" : "{%for telecom in Patient.telecom%}{%if telecom.rank = 2%}{%break%}{%else%}{{telecom.value}}{%endfor%}",
+    "template" : "{%for telecom in Patient.telecom%}{%if telecom.rank = 2%}{%break%}{%else%}{{telecom.value}}{%endif%}{%endfor%}",
     "output" : "(03) 5555 6473"
   },{
     "name" : "forcycle",
@@ -84,11 +85,6 @@
     "focus" : "Patient/example",
     "template" : "{%for telecom in Patient.telecom offset:2%}{{telecom.use}}{%endfor%}",
     "output" : "mobileold"
-  },{
-    "name" : "forrange",
-    "focus" : "Patient/example",
-    "template" : "{%for i in (3..5)%}{{i}}{%endfor%}",
-    "output" : "345"
   },{
     "name" : "forreversed",
     "focus" : "Patient/example",
