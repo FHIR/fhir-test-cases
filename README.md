@@ -35,10 +35,10 @@ This repository contains the following content:
 
 This project is maintained by the FHIR community to help implementations test their functionality
 
-[Link-AzurePipeline]: https://dev.azure.com/markiantorno/FHIR/_build/latest?definitionId=12&branchName=master
+[Link-AzurePipeline]: https://dev.azure.com/fhir-pipelines/fhir-test-cases/_build/latest?definitionId=12&branchName=master
 [Link-SonatypeReleases]: https://oss.sonatype.org/content/repositories/releases/dev/org.hl7.fhir.testcases/fhir-test-cases/ "Sonatype Releases"
 [Link-SonatypeSnapshots]: https://oss.sonatype.org/content/repositories/snapshots/dev/org.hl7.fhir.testcases/fhir-test-cases/ "Sonatype Snapshots"
 
-[Badge-AzurePipeline]: https://dev.azure.com/markiantorno/FHIR/_apis/build/status/FHIR.fhir-test-cases?branchName=master
+[Badge-AzurePipeline]: https://dev.azure.com/fhir-pipelines/fhir-test-cases/_apis/build/status/FHIR.fhir-test-cases?branchName=master
 [Badge-SonatypeReleases]: https://img.shields.io/nexus/r/https/oss.sonatype.org/org.hl7.fhir.testcases/fhir-test-cases.svg "Sonatype Releases"
 [Badge-SonatypeSnapshots]: https://img.shields.io/nexus/s/https/oss.sonatype.org/org.hl7.fhir.testcases/fhir-test-cases.svg "Sonatype Snapshots"
