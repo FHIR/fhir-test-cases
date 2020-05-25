@@ -33,6 +33,11 @@
     "template" : "{% if Patient.id = 'example'%} yes {%else%} no {%endif%}",
     "output" : " yes "
   },{
+    "name" : "elsif",
+    "focus" : "Patient/example",
+    "template" : "{% if Patient.id = 'example'%} yes {%elsif Patient.id='none'%} ?? {%else%} no {%endif%}",
+    "output" : " yes "
+  },{
     "name" : "loop",
     "focus" : "Patient/example",
     "template" : "{%loop name in Patient.name%}{{name.family}}{%endloop%}",
@@ -44,6 +49,46 @@
     "output" : "ChalmersWindsor",
     "includes" : {
       "humanname.html" : "{{include.name.family}}"
-    }
+	}
+  },{
+    "name" : "for",
+    "focus" : "Patient/example",
+    "template" : "{%for name in Patient.name%}{{name.family}}{%endfor%}",
+    "output" : "ChalmersWindsor"
+  },{
+    "name" : "forelse",
+    "focus" : "Patient/example",
+    "template" : "{%for link in Patient.link%}{{link.type}}{%else%}none{%endfor%}",
+    "output" : "none"
+  },{
+    "name" : "forcontinue",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom%}{%if telecom.use = 'old'%}{%continue%}{%else%}{{telecom.value}}{%endif%}{%endfor%}",
+    "output" : "(03) 5555 6473(03) 3410 5613"
+  },{
+    "name" : "forbreak",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom%}{%if telecom.rank = 2%}{%break%}{%else%}{{telecom.value}}{%endif%}{%endfor%}",
+    "output" : "(03) 5555 6473"
+  },{
+    "name" : "forcycle",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom%}{%cycle \"odd\", \"even\"%}{%endfor%}",
+    "output" : "oddevenoddeven"
+  },{
+    "name" : "forlimit",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom limit:2%}{{telecom.use}}{%endfor%}",
+    "output" : "homework"
+  },{
+    "name" : "foroffset",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom offset:2%}{{telecom.use}}{%endfor%}",
+    "output" : "mobileold"
+  },{
+    "name" : "forreversed",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom reversed%}{{telecom.use}}{%endfor%}",
+    "output" : "oldmobileworkhome"
   }]
 }
