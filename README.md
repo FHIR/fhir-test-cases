@@ -32,7 +32,7 @@ Please see our [Wiki Page][Link-Publishing].
 
 ## Download
 
-### Maven
+#### Maven
 ```xml
 <dependency>
     <groupId>org.hl7.fhir.testcases</groupId>
@@ -41,7 +41,7 @@ Please see our [Wiki Page][Link-Publishing].
 </dependency>
 ```
 
-### Gradle
+#### Gradle
 ```groovy
 compile group: 'org.hl7.fhir.testcases', name: 'fhir-test-cases', version: '1.1.15'
 ```
