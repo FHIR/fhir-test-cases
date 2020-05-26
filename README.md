@@ -43,7 +43,7 @@ Please see our [Wiki Page][Link-Publishing].
 
 #### Gradle
 ```groovy
-compile group: 'org.hl7.fhir.testcases', name: 'fhir-test-cases', version: '1.1.15'
+compile group: 'org.hl7.fhir.testcases', name: 'fhir-test-cases', version: '(latest version)'
 ```
 
 ## Releases
