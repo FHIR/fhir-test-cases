@@ -1,8 +1,8 @@
 # fhir-test-cases
 
-| CI Status | Current Release |
-| :---: | :---: |
-| [![Build Status][Badge-AzurePipeline]][Link-AzurePipeline] | [![Release Artifacts][Badge-SonatypeReleases]][Link-MavenCentralReleases] |
+| CI Status | Current Release | Latest SNAPSHOT |
+| :---: | :---: | :---: |
+| [![Build Status][Badge-AzurePipeline]][Link-AzurePipeline] | [![Release Artifacts][Badge-SonatypeReleases]][Link-MavenCentralReleases] | ![Snapshot Artifact][Badge-SonatypeSnapshots] |
 
 ## Contents
 
