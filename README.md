@@ -15,6 +15,13 @@ This repository contains:
 * validator - test cases for the cross-version validation
 * target - maven administrative stuff
 
+## Accessing the test cases
+
+You can access the test cases via Maven. If using Maven doesn't suit, then 
+another option is to download the test cases directly from 
+https://github.com/FHIR/fhir-test-cases/releases/latest/download/testcases.zip
+
+
 ## Building this Project
 
 This project uses [Apache Maven](http://maven.apache.org) to build. To build:
