@@ -1,10 +1,14 @@
 trigger:
-  - master
-  - release
+  branches:
+    include:
+    - master
+    - releases
 
 pr:
-  - master
-  - release
+  branches:
+    include:
+    - master
+    - releases
 
 # Different users have different machine setups, we run the build three times, on ubuntu, osx, and windows
 strategy:
@@ -96,6 +100,9 @@ steps:
     displayName: 'Create .mvn/settings.xml'
     condition: and(eq(variables.currentImage, 'ubuntu-16.04'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
+  # Signing, for now, occurs for all builds, SNAPSHOT or release. So we need a valid
+  # signing key. The next two steps download the public and private keys from the
+  # secure library files. 
   - task: DownloadSecureFile@1
     displayName: 'Download public key.'
     inputs:
@@ -106,12 +113,13 @@ steps:
     inputs:
       secureFile: private.key
 
+  # Import both the private and public keys into gpg for signing.
   - bash: |
       gpg --import --no-tty --batch --yes $(Agent.TempDirectory)/public.key
       gpg --import --no-tty --batch --yes $(Agent.TempDirectory)/private.key
       gpg --list-keys --keyid-format LONG
       gpg --list-secret-keys --keyid-format LONG
-    displayName: 'Import signing key.'
+    displayName: 'Import signing keys.'
 
   # Deploy the SNAPSHOT artifact to sonatype nexus
   # This is done for the master branch merges only.
