@@ -4,6 +4,10 @@
 | :---: | :---: | :---: |
 | [![Build Status][Badge-AzurePipeline]][Link-AzurePipeline] | [![Release Artifacts][Badge-SonatypeReleases]][Link-GithubZipRelease] | [![Snapshot Artifact][Badge-SonatypeSnapshots]][Link-SonatypeSnapshots] |
 
+## CI/CD
+
+All intergration and delivery done on Azure pipelines. Azure project can be viewed [here](https://dev.azure.com/fhir-pipelines/fhir-test-cases).
+
 ## Contents
 
 This repository contains:
