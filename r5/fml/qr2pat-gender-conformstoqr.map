@@ -1,0 +1,10 @@
+map "http://github.com/hapifhir/org.hl7.fhir.core/org.hl7.fhir.r4.tests/qr2pat-gender-conformstoqr" = "qr2pat-gender-conformstoqr"
+
+uses "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse" alias QuestionnaireResponse as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as target
+
+// we want to check if source conformsTo works
+group QuestionnaireResponse(source src : QuestionnaireResponse, target tgt : Patient) {
+  src where conformsTo('http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse')-> tgt as patient, patient.gender = 'female' "conformsToCheck";
+}
+
