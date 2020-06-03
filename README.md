@@ -2,7 +2,7 @@
 
 | CI Status | Current Release | Latest SNAPSHOT |
 | :---: | :---: | :---: |
-| [![Build Status][Badge-AzurePipeline]][Link-AzurePipeline] | [![Release Artifacts][Badge-SonatypeReleases]][Link-MavenCentralReleases] | ![Snapshot Artifact][Badge-SonatypeSnapshots] |
+| [![Build Status][Badge-AzurePipeline]][Link-AzurePipeline] | [![Release Artifacts][Badge-SonatypeReleases]][Link-GithubZipRelease] | [![Snapshot Artifact][Badge-SonatypeSnapshots]][Link-SonatypeSnapshots] |
 
 ## Contents
 
@@ -59,8 +59,9 @@ This project is maintained by the FHIR community to help implementations test th
 [Link-GitHubReleases]: https://github.com/FHIR/fhir-test-cases/releases
 [Link-Publishing]: https://github.com/FHIR/fhir-test-cases/wiki/Publishing-Binaries
 [Link-AzurePipeline]: https://dev.azure.com/fhir-pipelines/fhir-test-cases/_build/latest?definitionId=12&branchName=master
-[Link-SonatypeReleases]: https://oss.sonatype.org/content/repositories/releases/dev/org.hl7.fhir.testcases/fhir-test-cases/ "Sonatype Releases"
-[Link-SonatypeSnapshots]: https://oss.sonatype.org/content/repositories/snapshots/dev/org.hl7.fhir.testcases/fhir-test-cases/ "Sonatype Snapshots"
+[Link-GithubZipRelease]: https://github.com/FHIR/fhir-test-cases/releases/latest/download/testcases.zip "Sonatype Releases"
+[Link-SonatypeSnapshots]: https://oss.sonatype.org/service/local/artifact/maven/redirect?r=snapshots&g=org.hl7.fhir.testcases&a=fhir-test-cases&v=LATEST "Sonatype Snapshots"
+
 
 [Badge-AzurePipeline]: https://dev.azure.com/fhir-pipelines/fhir-test-cases/_apis/build/status/FHIR.fhir-test-cases?branchName=master
 [Badge-SonatypeReleases]: https://img.shields.io/nexus/r/https/oss.sonatype.org/org.hl7.fhir.testcases/fhir-test-cases.svg "Sonatype Releases"
