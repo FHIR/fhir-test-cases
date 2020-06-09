@@ -1055,16 +1055,20 @@
       "profile": {
         "source": "slice-by-polymorphic-type-profile.xml",
         "java": {
-          "errorCount": 1,
+          "errorCount": 0,
+          "warningCount": 1,
+          "hintCount": 1,
           "output": [
-		    "ERROR: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language",
+		    "WARNING: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language",
             "INFORMATION: Communication.status: Could not verify slice for profile http://hl7.org/fhir/StructureDefinition/slice-by-polymorphic-type"
           ]
         }
       },
       "java": {
-        "errorCount": 1,
-        "output": ["ERROR: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language"]
+        "errorCount": 0,
+        "warningCount": 1,
+        "hintCount": 0,
+        "output": ["WARNING: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language"]
       }
     },
     "code-correct.xml": {
@@ -1146,15 +1150,13 @@
       "profile": {
         "source": "slicing-types-by-string-profile.xml",
         "java": {
-          "errorCount": 2,
-          "output": ["ERROR: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language",
-                     "ERROR: Communication.payload[2].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language"]
+          "errorCount": 0,
+          "output": []
         }
       },
       "java": {
-        "errorCount": 2,
-        "output": ["ERROR: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language",
-                   "ERROR: Communication.payload[2].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language"]
+        "errorCount": 0,
+        "output": []
       }
     },
     "uk-nhs-pat.xml": {
@@ -3812,6 +3814,66 @@
         "output": ["valueSet.exists() or system.exists()", 
 		   "(concept.exists() or filter.exists()) implies system.exists()"]
       }
+	},
+	"pat-security-good1.json" : {
+	  "version" : "4.0",
+	  "java": {
+        "errorCount": 0,
+        "warningCount": 0
+      } 
+	},
+	"pat-security-good2.json" : {
+	  "note" : "Bad String, but with no security checks on",
+	  "version" : "4.0",
+	  "java": {
+        "errorCount": 0,
+        "warningCount": 0
+      } 
+	},
+	"pat-security-good3.json" : {
+	  "note" : "Same as good1, but with security checks on",
+	  "version" : "4.0",
+	  "security-checks" : true,
+	  "java": {
+        "errorCount": 0,
+        "warningCount": 0
+      } 
+	},
+	"pat-security-bad-xhtml.json" : {
+	  "version" : "4.0",
+	  "security-checks" : true,
+	  "java": {
+        "errorCount": 1,
+        "warningCount": 0,
+		"output": ["ERROR: Patient.text.div: Illegal element name in the XHTML (\"script\")"]
+      } 
+	},
+	"pat-security-bad-string.json" : {
+	  "version" : "4.0",
+	  "security-checks" : true,
+	  "java": {
+        "errorCount": 1,
+        "warningCount": 0,
+		"output": ["ERROR: Patient.name[0].text: The string value contains embedded HTML tags, which are not allowed for security reasons in this context"]
+      } 
+	},
+	"pat-security-bad-string1.xml" : {
+	  "version" : "4.0",
+	  "security-checks" : true,
+	  "java": {
+        "errorCount": 1,
+        "warningCount": 0,
+		"output": ["ERROR: Patient.name[0].text: The string value contains embedded HTML tags, which are not allowed for security reasons in this context "]
+      } 
+	},
+	"pat-security-bad-string2.xml" : {
+	  "version" : "4.0",
+	  "security-checks" : true,
+	  "java": {
+        "errorCount": 1,
+        "warningCount": 0,
+		"output": ["ERROR: /f:Patient/f:name/f:text: Undefined element 'script'"]
+      } 
 	}
   }   
 }
