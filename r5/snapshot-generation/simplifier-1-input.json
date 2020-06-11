@@ -1,0 +1,253 @@
+{
+  "resourceType": "StructureDefinition",
+  "url": "https://www.medizininformatik-initiative.de/fhir/core/StructureDefinition/Patient",
+  "version": "1.0",
+  "name": "PatientIn",
+  "title": "Patient - PatientIn",
+  "status": "active",
+  "description": "Dieses Profil beschreibt eine PatientIn in der Medizininformatik-Initiative.",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient.identifier",
+        "path": "Patient.identifier",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "pattern",
+              "path": "type"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_gkv",
+        "path": "Patient.identifier",
+        "sliceName": "versicherungsnummer_gkv",
+        "max": "1",
+        "type": [
+          {
+            "code": "Identifier",
+            "profile": [
+              "http://fhir.de/StructureDefinition/identifier-kvid-10"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_gkv.use",
+        "path": "Patient.identifier.use",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_gkv.type",
+        "path": "Patient.identifier.type",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://fhir.de/CodeSystem/identifier-type-de-basis",
+              "code": "GKV"
+            }
+          ]
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_gkv.type.coding",
+        "path": "Patient.identifier.type.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_gkv.type.coding:GKV-Type",
+        "path": "Patient.identifier.type.coding",
+        "sliceName": "GKV-Type",
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_gkv.type.coding:GKV-Type.system",
+        "path": "Patient.identifier.type.coding.system",
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_gkv.type.coding:GKV-Type.code",
+        "path": "Patient.identifier.type.coding.code",
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_gkv.assigner",
+        "path": "Patient.identifier.assigner",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_gkv.assigner.identifier",
+        "path": "Patient.identifier.assigner.identifier",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_gkv.assigner.identifier:iknr",
+        "path": "Patient.identifier.assigner.identifier",
+        "sliceName": "iknr",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Identifier",
+            "profile": [
+              "http://fhir.de/StructureDefinition/identifier-iknr"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_gkv.assigner.identifier:iknr.use",
+        "path": "Patient.identifier.assigner.identifier.use",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:pid",
+        "path": "Patient.identifier",
+        "sliceName": "pid",
+        "type": [
+          {
+            "code": "Identifier",
+            "profile": [
+              "http://fhir.de/StructureDefinition/identifier-pid"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:pid.use",
+        "path": "Patient.identifier.use",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:pid.type",
+        "path": "Patient.identifier.type",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+              "code": "MR"
+            }
+          ]
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:pid.type.coding",
+        "path": "Patient.identifier.type.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:pid.type.coding:MR-Type",
+        "path": "Patient.identifier.type.coding",
+        "sliceName": "MR-Type",
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:pid.type.coding:MR-Type.system",
+        "path": "Patient.identifier.type.coding.system",
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:pid.type.coding:MR-Type.code",
+        "path": "Patient.identifier.type.coding.code",
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:pid.assigner",
+        "path": "Patient.identifier.assigner",
+        "min": 1,
+        "type": [
+          {
+            "code": "Reference"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_pkv",
+        "path": "Patient.identifier",
+        "sliceName": "versicherungsnummer_pkv",
+        "max": "1",
+        "type": [
+          {
+            "code": "Identifier",
+            "profile": [
+              "http://fhir.de/StructureDefinition/identifier-pkv"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_pkv.use",
+        "path": "Patient.identifier.use",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_pkv.type",
+        "path": "Patient.identifier.type",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://fhir.de/CodeSystem/identifier-type-de-basis",
+              "code": "PKV"
+            }
+          ]
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_pkv.type.coding",
+        "path": "Patient.identifier.type.coding",
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_pkv.type.coding:PKV-Type",
+        "path": "Patient.identifier.type.coding",
+        "sliceName": "PKV-Type",
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_pkv.type.coding:PKV-Type.system",
+        "path": "Patient.identifier.type.coding.system",
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.identifier:versicherungsnummer_pkv.type.coding:PKV-Type.code",
+        "path": "Patient.identifier.type.coding.code",
+        "mustSupport": true
+      }
+    ]
+  }
+}
