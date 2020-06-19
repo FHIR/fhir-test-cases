@@ -39,6 +39,7 @@ steps:
   # This task pulls the <version> value from the pom.xml file, so we can set it to the variable $version.
   - task: PowerShell@2
     condition: eq(variables.currentImage, 'ubuntu-16.04')
+    displayName: 'Pull test case snapshot version.'
     inputs:
       targetType: 'inline'
       script: |
@@ -77,6 +78,7 @@ steps:
     condition: eq(variables.currentImage, 'ubuntu-16.04')
 
   - task: Bash@3
+    displayName: 'Set git user.'
     condition: eq(variables.currentImage, 'ubuntu-16.04')
     inputs:
       targetType: 'inline'
@@ -85,6 +87,7 @@ steps:
         git config --global user.name "Mark Iantorno"
 
   - task: Bash@3
+    displayName: 'Build settings.xml file.'
     condition: eq(variables.currentImage, 'ubuntu-16.04')
     inputs:
       targetType: 'inline'
@@ -135,6 +138,7 @@ steps:
         EOL
 
   - task: Bash@3
+    displayName: 'Clone core lib.'
     condition: eq(variables.currentImage, 'ubuntu-16.04')
     inputs:
       targetType: 'inline'
@@ -148,7 +152,7 @@ steps:
     inputs:
       mavenPomFile: '$(System.DefaultWorkingDirectory)/org.hl7.fhir.core/pom.xml'
       goals: 'versions:set-property '
-      options: '--settings $(System.DefaultWorkingDirectory)/settings.xml -X -Dproperty=validator_test_case_version -DnewVersion=$SNAPSHOT_VERSION'
+      options: '--settings $(System.DefaultWorkingDirectory)/settings.xml -X -Dproperty=validator_test_case_version -DnewVersion=$(version)'
       publishJUnitResults: false
 
   - task: Maven@3
