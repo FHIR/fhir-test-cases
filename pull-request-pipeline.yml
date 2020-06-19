@@ -22,7 +22,7 @@ variables:
   currentImage: $(imageName)
 
 steps:
-  # Runs 'mvn package'
+  # Runs 'mvn deploy'
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
@@ -32,7 +32,7 @@ steps:
       jdkArchitectureOption: 'x64'
       publishJUnitResults: true
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
-      goals: 'package'
+      goals: 'deploy'
 
   # Everything after here is for testing that core builds with the new test case updates.
 
