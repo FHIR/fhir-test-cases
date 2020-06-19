@@ -69,3 +69,4 @@ This project is maintained by the FHIR community to help implementations test th
 [Badge-AzurePipeline]: https://dev.azure.com/fhir-pipelines/fhir-test-cases/_apis/build/status/FHIR.fhir-test-cases?branchName=master
 [Badge-SonatypeReleases]: https://img.shields.io/nexus/r/https/oss.sonatype.org/org.hl7.fhir.testcases/fhir-test-cases.svg "Sonatype Releases"
 [Badge-SonatypeSnapshots]: https://img.shields.io/nexus/s/https/oss.sonatype.org/org.hl7.fhir.testcases/fhir-test-cases.svg "Sonatype Snapshots"
+
