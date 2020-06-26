@@ -44,28 +44,6 @@
         ]
       }
     },
-    "bb-obs-value-is-not-quantity.json": {
-      "version": "4.0",
-      "profiles": [
-        "bb-sd.json"
-      ],
-      "profile": {
-        "source": "bb-sd.json",
-        "supporting": [
-          "bb-vs.json"
-        ],
-        "java": {
-          "errorCount": 1,
-          "output": [ "AAAA" ]
-        }
-      },
-      "java": {
-        "errorCount": 1,
-        "output" : [
-          "ERROR: Observation.value: None of the codes provided are in the value set http://hl7.org/fhir/ValueSet/account-type (http://hl7.org/fhir/ValueSet/account-type), and a code from this value set is required) (codes = http://unitsofmeasure.org#whatever)"
-        ]
-      }
-    },
     "bug824/bug824-resource.json": {
       "version": "3.0",
       "profile": {
@@ -3962,6 +3940,23 @@
         "errorCount": 0,
         "warningCount": 2,
         "output": [""]
+      }
+    },
+    "bb-obs-value-is-not-quantity.json": {
+      "version": "4.0",
+      "debug" : true,
+      "profile": {
+        "source": "bb-sd.json",
+        "supporting": [
+          "bb-vs.json"
+        ],
+        "java": {
+          "errorCount": 1,
+          "output": [ "ERROR: Observation.value.ofType(string): The Profile \"https://bb/StructureDefinition/BBDemographicAge\" definition allows for the type Quantity but found type string"]
+        }
+      },
+      "java": {
+        "errorCount": 0
       }
     }
   }
