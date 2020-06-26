@@ -1,8 +1,8 @@
 # fhir-test-cases
 
-| CI Status (master) | Current Release | Latest SNAPSHOT |
-| :---: | :---: | :---: |
-| [![Build Status][Badge-AzurePipeline]][Link-AzurePipeline] | [![Release Artifacts][Badge-SonatypeReleases]][Link-GithubZipRelease] | [![Snapshot Artifact][Badge-SonatypeSnapshots]][Link-SonatypeSnapshots] |
+| CI Status (master) | Release Pipeline | Current Release | Latest SNAPSHOT |
+| :---: | :---: | :---: | :---: |
+| [![Build Status][Badge-AzurePipeline]][Link-AzurePipeline] | [![Build Status][Badge-AzureReleasePipeline]][Link-AzureReleasePipeline] | [![Release Artifacts][Badge-SonatypeReleases]][Link-GithubZipRelease] | [![Snapshot Artifact][Badge-SonatypeSnapshots]][Link-SonatypeSnapshots] |
 
 ## CI/CD
 
@@ -62,10 +62,12 @@ This project is maintained by the FHIR community to help implementations test th
 [Link-GitHubReleases]: https://github.com/FHIR/fhir-test-cases/releases
 [Link-Publishing]: https://github.com/FHIR/fhir-test-cases/wiki/Publishing-Binaries
 [Link-AzurePipeline]: https://dev.azure.com/fhir-pipelines/fhir-test-cases/_build/latest?definitionId=27&branchName=master
+[Link-AzureReleasePipeline]: https://dev.azure.com/fhir-pipelines/fhir-test-cases/_build/latest?definitionId=28&branchName=master
 [Link-GithubZipRelease]: https://github.com/FHIR/fhir-test-cases/releases/latest/download/testcases.zip "Sonatype Releases"
 [Link-SonatypeSnapshots]: https://oss.sonatype.org/service/local/artifact/maven/redirect?r=snapshots&g=org.hl7.fhir.testcases&a=fhir-test-cases&v=LATEST "Sonatype Snapshots"
 [Link-PublishingRelease]: https://github.com/FHIR/fhir-test-cases/wiki/Detailed-Release-Instructions
 
+[Badge-AzureReleasePipeline]: https://dev.azure.com/fhir-pipelines/fhir-test-cases/_apis/build/status/Release%20Branch%20Pipeline?branchName=master
 [Badge-AzurePipeline]: https://dev.azure.com/fhir-pipelines/fhir-test-cases/_apis/build/status/Master%20Branch%20Pipeline?branchName=master
 [Badge-SonatypeReleases]: https://img.shields.io/nexus/r/https/oss.sonatype.org/org.hl7.fhir.testcases/fhir-test-cases.svg "Sonatype Releases"
 [Badge-SonatypeSnapshots]: https://img.shields.io/nexus/s/https/oss.sonatype.org/org.hl7.fhir.testcases/fhir-test-cases.svg "Sonatype Snapshots"
