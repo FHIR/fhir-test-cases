@@ -37,27 +37,6 @@ steps:
   # Prints out the build version, for debugging purposes
   - bash: echo Pulled version from pom.xml => $(version)
 
-  # Signing, for now, occurs for all builds, SNAPSHOT or release. So we need a valid
-  # signing key. The next two steps download the public and private keys from the
-  # secure library files. 
-  - task: DownloadSecureFile@1
-    displayName: 'Download public key.'
-    inputs:
-      secureFile: public.key
-
-  - task: DownloadSecureFile@1
-    displayName: 'Download private key.'
-    inputs:
-      secureFile: private.key
-
-  # Import both the private and public keys into gpg for signing.
-  - bash: |
-      gpg --import --no-tty --batch --yes $(Agent.TempDirectory)/public.key
-      gpg --import --no-tty --batch --yes $(Agent.TempDirectory)/private.key
-      gpg --list-keys --keyid-format LONG
-      gpg --list-secret-keys --keyid-format LONG
-    displayName: 'Import signing keys.'
-
   # Copies the generated *.jar file to the staging directory.
   # This is done for release versions only.
   - task: CopyFiles@2
