@@ -3078,7 +3078,15 @@
     "obs-unit-profile.json" : {
       "version" : "4.0",
       "java": {
-        "errorCount": 2
+        "errorCount": 3,
+        "warningCount" : 2,
+        "output" : [
+        "WARNING: StructureDefinition: sdf-0: Name should be usable as an identifier for the module by machine processing applications such as code generation [name.matches('[A-Z]([A-Za-z0-9_]){0,254}')]",
+        "ERROR: StructureDefinition: Profile http://hl7.org/fhir/StructureDefinition/StructureDefinition, Element 'StructureDefinition.name': minimum required = 1, but only found 0",
+        "ERROR: StructureDefinition.differential.element[0]: eld-19: Element names cannot include some special characters [path.matches('[^\\s\\.,:;\\'\"\\/|?!@#$%&*()\\[\\]{}]{1,64}(\\.[^\\s\\.,:;\\'\"\\/|?!@#$%&*()\\[\\]{}]{1,64}(\\[x\\])?(\\:[^\\s\\.]+)?)*')]",
+        "WARNING: StructureDefinition.differential.element[0]: eld-20: Element names should be simple alphanumerics with a max of 64 characters, or code generation tools may be broken [path.matches('[A-Za-z][A-Za-z0-9]*(\\.[a-z][A-Za-z0-9]*(\\[x])?)*')]",
+        "ERROR: StructureDefinition: Error generating Snapshot: Illegal path 'Observation...unit' in differential in http://hl7.org.au/fhir/tools/StructureDefinition/-unit-profile: name portion missing ('..') (this usually arises from a problem in the differential)"
+        ]
       }
     },
     "medstmt-ips.json" : {
@@ -3136,7 +3144,12 @@
       "version" : "4.0",
       "java": {
         "errorCount": 1,
-        "output" : ["fails eld-13"]
+        "warningCount" : 2,
+        "output" : [
+          "WARNING: StructureDefinition.date: The value \"3017-09-06T06:30:54+00:00\" is outside the range of reasonable years - check for data entry error",
+          "ERROR: StructureDefinition.differential.element[0]: eld-13: Types must be unique by code [type.select(code).isDistinct()]",
+          "WARNING: StructureDefinition.differential.element.where(path = 'HealthcareService.endpoint'): Connect check whether the target profile http://hl7.org.au/fhir/pd/StructureDefinition/au-pd-sm-endpoint is valid constraint on the base because it is not known"        
+        ]
       }
     },
     "bundle-transaction.json" : {
