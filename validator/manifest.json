@@ -27,6 +27,9 @@
     },
     "fixed-quantity-binding-observation.json": {
       "version": "4.0",
+      "profiles": [
+        "fixed-quantity-binding-structuredef.json"
+      ],
       "profile": {
         "source": "fixed-quantity-binding-structuredef.json",
         "java": {
@@ -37,7 +40,7 @@
       "java": {
         "errorCount": 1,
         "output" : [
-          "ERROR: Observation.value: None of the codes provided are in the value set http://hl7.org/fhir/ValueSet/account-type (http://hl7.org/fhir/ValueSet/account-type), and a code from this value set is required) (codes = http://unitsofmeasure.org#whatever)"
+          "ERROR: Observation: As specified by profile Profile https://bb/StructureDefinition/BBDemographicAge, Element 'Observation.value[x]', Element \"https://bb/StructureDefinition/BBDemographicAge\" must not be of type \"Observation.value[x]\""
         ]
       }
     },
@@ -3075,7 +3078,15 @@
     "obs-unit-profile.json" : {
       "version" : "4.0",
       "java": {
-        "errorCount": 2
+        "errorCount": 3,
+        "warningCount" : 2,
+        "output" : [
+        "WARNING: StructureDefinition: sdf-0: Name should be usable as an identifier for the module by machine processing applications such as code generation [name.matches('[A-Z]([A-Za-z0-9_]){0,254}')]",
+        "ERROR: StructureDefinition: Profile http://hl7.org/fhir/StructureDefinition/StructureDefinition, Element 'StructureDefinition.name': minimum required = 1, but only found 0",
+        "ERROR: StructureDefinition.differential.element[0]: eld-19: Element names cannot include some special characters [path.matches('[^\\s\\.,:;\\'\"\\/|?!@#$%&*()\\[\\]{}]{1,64}(\\.[^\\s\\.,:;\\'\"\\/|?!@#$%&*()\\[\\]{}]{1,64}(\\[x\\])?(\\:[^\\s\\.]+)?)*')]",
+        "WARNING: StructureDefinition.differential.element[0]: eld-20: Element names should be simple alphanumerics with a max of 64 characters, or code generation tools may be broken [path.matches('[A-Za-z][A-Za-z0-9]*(\\.[a-z][A-Za-z0-9]*(\\[x])?)*')]",
+        "ERROR: StructureDefinition: Error generating Snapshot: Illegal path 'Observation...unit' in differential in http://hl7.org.au/fhir/tools/StructureDefinition/-unit-profile: name portion missing ('..') (this usually arises from a problem in the differential)"
+        ]
       }
     },
     "medstmt-ips.json" : {
@@ -3133,7 +3144,12 @@
       "version" : "4.0",
       "java": {
         "errorCount": 1,
-        "output" : ["fails eld-13"]
+        "warningCount" : 2,
+        "output" : [
+          "WARNING: StructureDefinition.date: The value \"3017-09-06T06:30:54+00:00\" is outside the range of reasonable years - check for data entry error",
+          "ERROR: StructureDefinition.differential.element[0]: eld-13: Types must be unique by code [type.select(code).isDistinct()]",
+          "WARNING: StructureDefinition.differential.element.where(path = 'HealthcareService.endpoint'): Connect check whether the target profile http://hl7.org.au/fhir/pd/StructureDefinition/au-pd-sm-endpoint is valid constraint on the base because it is not known"        
+        ]
       }
     },
     "bundle-transaction.json" : {
@@ -3687,15 +3703,16 @@
       "version": "4.0",
       "java": {
         "errorCount": 0,
-        "warningCount": 1,
-        "output" : ["WARNING: ValueSet.compose.include[0].concept[0].designation[0].use: Could not confirm that the codes provided are in the value set http://hl7.org/fhir/ValueSet/designation-use, and a code should come from this value set unless it has no suitable code"]
+        "warningCount": 2,
+        "output" : ["WARNING: ValueSet.compose.include[0].concept[0].designation[0].use: Could not confirm that the codes provided are in the value set http://hl7.org/fhir/ValueSet/designation-use, and a code should come from this value set unless it has no suitable code",
+                    "WARNING: ValueSet.compose[0].include[0]: Unknown System specified, so Concepts and Filters can't be checked"]
       },
       "supporting" : ["tx-extensible-suppression-cs.xml"],
       "profile": {
         "source": "tx-extensible-suppression-profile.xml",
         "java": {
           "errorCount": 0,
-          "warningCount": 0
+          "warningCount": 1
         }
       }
     },
@@ -3895,6 +3912,126 @@
       "supporting" : [
         "mixed-type-slicing-profile.xml"
       ]
+    },
+    "sp-diff-expression.json" : {
+      "version" : "4.0",
+      "java": {
+        "errorCount": 0,
+        "warningCount": 1,
+        "output": ["The expression \"Organization.name\" is different to the expression \"Organization.name | Organization.alias\" in the derivedFrom SearchParameter, and this likely indicates that the derivation relationship is not valid"]
+      }
+    },
+    "sp-diff-type.json" : {
+      "version" : "4.0",
+      "java": {
+        "errorCount": 1,
+        "warningCount": 0,
+        "output": ["The expression \"Organization.name\" is different to the expression \"Organization.name | Organization.alias\" in the derivedFrom SearchParameter, and this likely indicates that the derivation relationship is not valid"]
+      }
+    },
+    "sp-diff-base.json" : {
+      "version" : "4.0",
+      "java": {
+        "errorCount": 1,
+        "warningCount": 0,
+        "output": ["The expression \"Organization.name\" is different to the expression \"Organization.name | Organization.alias\" in the derivedFrom SearchParameter, and this likely indicates that the derivation relationship is not valid"]
+      }
+    },
+    "dr-eh.json" : {
+      "version" : "4.0",
+      "assumeValidRestReferences" : true,
+      "packages" : ["hl7.fhir.us.core#3.1.0"],
+      "java": {
+        "errorCount": 1,
+        "output": ["ERROR: DocumentReference.subject: The type \"Device\" implied by the reference URL Device/foo is not a valid Target for this element (must be one of [Patient])"]
+      }
+    },
+    "vs-bad-code.json" : {
+      "version" : "4.0",
+      "java": {
+        
+        "errorCount": 0,
+        "warningCount": 2,
+        "output": [""]
+      }
+    },
+    "bb-obs-value-is-not-quantity.json": {
+      "version": "4.0",
+      "profile": {
+        "source": "bb-sd.json",
+        "supporting": [
+          "bb-vs.json"
+        ],
+        "java": {
+          "errorCount": 1,
+          "output": [ "ERROR: Observation.value.ofType(string): The Profile \"https://bb/StructureDefinition/BBDemographicAge\" definition allows for the type Quantity but found type string"]
+        }
+      },
+      "java": {
+        "errorCount": 0
+      }
+    },
+    "bb-obs-value-is-not-in-valueset.json": {
+      "version": "4.0",
+      "profile": {
+        "source": "bb-sd.json",
+        "supporting": [
+          "bb-vs.json"
+        ],
+        "java": {
+          "errorCount": 1,
+          "output": [ "ERROR: Observation.value.ofType(Quantity): The Coding provided is not in the value set https://bb/ValueSet/BBDemographicAgeUnit, and a code is required from this value set.  (error message = The code provided (http://unitsofmeasure.org#cm) is not  valid in the value set BBDemographicAgeUnit)" ]
+        }
+      },
+      "java": {
+        "errorCount": 0
+      }
+    },
+    "bb-obs-value-is-not-quantity-or-string.json": {
+      "version": "4.0",
+      "profile": {
+        "source": "bb-sd-2.json",
+        "java": {
+          "errorCount": 1,
+          "output": [""]
+        }
+      },
+      "java": {
+        "errorCount": 0
+      }
+    },
+    "obs-temp.json" : {
+      "version": "4.0",
+      "java": {
+        "errorCount": 0
+      }      
+    },
+    "patient-ig-good.json" : {
+      "version": "4.0",
+      "crumb-trail" : true,
+      "supporting": ["patient-ig-ig.json", "patient-ig-sd.json"],
+      "java": {
+        "errorCount": 0,
+        "hintCount" : 2,
+        "output" : [
+          "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/StructureDefinition/Patient",
+          "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/test/StructureDefinition/patient-ig-sd - a global profile in http://hl7.org/fhir/test/ImplementationGuide/patient-ig-ig"
+        ]
+      }      
+    },
+    "patient-ig-bad.json" : {
+      "version": "4.0",
+      "crumb-trail" : true,
+      "supporting": ["patient-ig-ig.json", "patient-ig-sd.json"],
+      "java": {
+        "errorCount": 1,
+        "hintCount" : 2,
+        "output" : [
+          "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/StructureDefinition/Patient",
+          "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/test/StructureDefinition/patient-ig-sd - a global profile in http://hl7.org/fhir/test/ImplementationGuide/patient-ig-ig",
+          "ERROR: Patient: Profile http://hl7.org/fhir/test/StructureDefinition/patient-ig-sd, Element 'Patient.name': minimum required = 1, but only found 0"
+        ]
+      }      
     }
   }
 }
