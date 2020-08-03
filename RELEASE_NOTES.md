@@ -1,0 +1,1 @@
+Add additional test cases vor validation when applying profiles to inline resources (Bundle.entry, Resource.contained, Parameters.parameter.resource). Note that validating multiple profiles is not yet supported (work in progress)

@@ -3984,8 +3984,7 @@
     },
     "vs-bad-code.json" : {
       "version" : "4.0",
-      "java": {
-        
+      "java": {        
         "errorCount": 0,
         "warningCount": 2,
         "output": [""]
@@ -4138,6 +4137,75 @@
         "source": "patient-min-profile-pattern1.xml",
         "java": {
           "errorCount": 1
+        }
+      }
+    },
+    "parameters-reference.json" : {
+      "version" : "4.0",
+      "validate" : "CHECK_EXISTS_AND_TYPE",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 1,
+        "output" : ["WARNING: Parameters.parameter[0].resource.ofType(Patient).identifier[0].type: None of the codes provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a code should come from this value set unless it has no suitable code) (codes = http://terminology.hl7.org/CodeSystem/v2-0203#MB)"]
+      }
+    },
+    "parameters-reference-bad.json" : {
+      "version" : "4.0",
+      "validate" : "CHECK_EXISTS_AND_TYPE",
+      "java" : {
+        "errorCount" : 1,
+        "warningCount" : 1,
+        "output" : ["WARNING: Parameters.parameter[0].resource.ofType(Patient).identifier[0].type: None of the codes provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a code should come from this value set unless it has no suitable code) (codes = http://terminology.hl7.org/CodeSystem/v2-0203#MB)",
+                    "ERROR: Parameters.parameter[2].resource.ofType(Coverage).beneficiary: Unable to resolve resource \"Patient/2\""]
+      }
+    },
+    "parameters-profiled-resource-valid.json" : {
+      "version" : "4.0",
+      "supporting" : [
+        "parameters-profiled-resource-profiles-patient.json",
+        "parameters-profiled-resource-profile-params.json"
+      ],
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "output" : []
+      }
+    },
+    "parameters-profiled-resource-invalid.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "output" : []
+      },
+      "profile" : {
+        "source" : "parameters-profiled-resource-profile-params.json",
+        "supporting" : [ "parameters-profiled-resource-profiles-patient.json" ],
+        "java" : {
+          "errorCount" : 1,
+          "warningCount" : 0,
+          "output" : ["ERROR: Parameters.parameter[0].resource.ofType(Patient): Profile http://hl7.org/fhir/test/StructureDefinition/parameters-profiled-resource-profiles-patient, Element 'Parameters.parameter[0].resource.ofType(Patient).name': minimum required = 1, but only found 0"]
+        }
+      }
+    },
+    "parameters-profiled-resource-multiple.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "output" : []
+      },
+      "supporting" : [ 
+        "parameters-profiled-resource-profiles-patient.json",
+        "parameters-profiled-resource-profiles-patient2.json"
+      ],
+      "profile" : {
+        "source" : "parameters-profiled-resource-profile-params-multiples.json",
+        "java" : {
+          "errorCount" : 1,
+          "warningCount" : 0,
+          "comment" : "This needs to be fixed so that it's not just an error",
+          "output" : ["ERROR: Parameters.parameter[0].resource.ofType(Patient): Multiple profiles found for contained resource. This is not supported at this time. (Type Resource: http://hl7.org/fhir/test/StructureDefinition/parameters-profiled-resource-profiles-patient, http://hl7.org/fhir/test/StructureDefinition/parameters-profiled-resource-profiles-patient2)"]
         }
       }
     }
