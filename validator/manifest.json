@@ -273,8 +273,9 @@
     },
     "list-xhtml-attribute.json": {
       "java": {
-        "errorCount": 1,
+        "errorCount": 2,
         "output": [
+          "ERROR: List.text.div: txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained style attributes [htmlChecks()]",
           "ERROR: List.text.div: Illegal attribute name in the XHTML (\u0027onClick\u0027 on \u0027p\u0027)"
         ]
       }
@@ -302,8 +303,9 @@
     },
     "list-xhtml-element.json": {
       "java": {
-        "errorCount": 2,
+        "errorCount": 3,
         "output": [
+          "ERROR: List.text.div: txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained style attributes [htmlChecks()]",
           "ERROR: List.text.div: Illegal element name in the XHTML (\u0027object\u0027)",
           "ERROR: List.text.div: Illegal attribute name in the XHTML (\u0027value\u0027 on \u0027object\u0027)"
         ]
@@ -311,9 +313,11 @@
     },
     "list-xhtml-syntax.json": {
       "java": {
-        "errorCount": 1,
+        "errorCount": 3,
         "output": [
-          "ERROR: List.text.div: Error parsing XHTML: Malformed XHTML: Found \"\u003c/pa\u003e\" expecting \"\u003c/p\u003e\" at line 2 column 37"
+          "ERROR: List.text.div: txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained style attributes [htmlChecks()]",
+          "ERROR: List.text.div: Error parsing XHTML: Malformed XHTML: Found \"\u003c/pa\u003e\" expecting \"\u003c/p\u003e\" at line 2 column 37",
+          "ERROR: List.text.div: txt-2: The narrative SHALL have some non-whitespace content [htmlChecks2()"
         ]
       }
     },
@@ -335,8 +339,9 @@
     },
     "list-xhtml-xxe.json": {
       "java": {
-        "errorCount": 1,
+        "errorCount": 2,
         "output": [
+          "ERROR: List.text.div: txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained style attributes [htmlChecks()]",
           "ERROR: List.text.div: Error parsing XHTML: Malformed XHTML: Found a DocType declaration, and these are not allowed (XXE security vulnerability protection)"
         ]
       }
@@ -986,8 +991,9 @@
     },
     "list-xhtml-attribute.xml": {
       "java": {
-        "errorCount": 1,
+        "errorCount": 2,
         "output": [
+          "ERROR: List.text.div: txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained style attributes [htmlChecks()]",
           "ERROR: List.text.div: Illegal attribute name in the XHTML (\u0027onClick\u0027 on \u0027p\u0027)"
         ]
       }
@@ -1006,8 +1012,9 @@
     },
     "list-xhtml-element.xml": {
       "java": {
-        "errorCount": 2,
+        "errorCount": 3,
         "output": [
+          "ERROR: List.text.div: txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained style attributes [htmlChecks()]",
           "ERROR: List.text.div: Illegal element name in the XHTML (\u0027object\u0027)",
           "ERROR: List.text.div: Illegal attribute name in the XHTML (\u0027value\u0027 on \u0027object\u0027)"
         ]
@@ -1629,16 +1636,17 @@
       "profile": {
         "source": "extension-slice-profile.xml",
         "java": {
-          "errorCount": 0,
+          "errorCount": 1,
           "output": [
+            "ERROR: Patient.text.div: txt-2: The narrative SHALL have some non-whitespace content [htmlChecks2()]",
             "INFORMATION: Patient: Profile http://hl7.org/fhir/StructureDefinition/extension-slice-profile, Element \u0027Patient.name[foo]\u0027\u0027: Unable to check minimum required (1) due to lack of slicing validation"
           ]
         }
       },
       "explanation": "Should be 0 errors on the profile, but hacked on R4 technical release toget the validator out - revisit....",
       "java": {
-        "errorCount": 0,
-        "output": []
+        "errorCount": 1,
+        "output": ["ERROR: Patient.text.div: txt-2: The narrative SHALL have some non-whitespace content [htmlChecks2()]"]
       }
     },
     "slice-by-polymorphic-type2.xml": {
@@ -3126,6 +3134,33 @@
         }
       }
     },
+    "mycommunication.invalid.json" : {
+      "version" : "4.0",
+      "java": {
+        "errorCount": 0
+      },
+      "profile" : {
+        "assumeValidRestReferences" : true,
+        "source": "mycommunication.structureDefinition.xml",
+        "java": {
+          "errorCount": 1,
+          "output" : ["ERROR: Communication.partOf[0]: The type \"Observation\" implied by the reference URL Observation/example is not a valid Target for this element (must be one of [Basic, Patient])"]
+        }
+      }
+    },
+    "mycommunication.valid.example.json" : {
+      "version" : "4.0",
+      "java": {
+        "errorCount": 0
+      },
+      "profile" : {
+        "assumeValidRestReferences" : true,
+        "source": "mycommunication.structureDefinition.xml",
+        "java": {
+          "errorCount": 0
+        }
+      }
+    },
     "capstmt.json" : {
       "version" : "4.0",
       "java": {
@@ -3860,10 +3895,11 @@
       "version" : "4.0",
       "security-checks" : true,
       "java": {
-          "errorCount": 1,
-          "warningCount": 0,
-      "output": ["ERROR: Patient.text.div: Illegal element name in the XHTML (\"script\")"]
-        } 
+        "errorCount": 2,
+        "warningCount": 0,
+        "output": ["ERROR: Patient.text.div: Illegal element name in the XHTML (\"script\")", 
+        "ERROR: Patient.text.div: txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained style attributes [htmlChecks()]"]
+      } 
     },
     "pat-security-bad-string.json" : {
       "version" : "4.0",
@@ -3948,8 +3984,7 @@
     },
     "vs-bad-code.json" : {
       "version" : "4.0",
-      "java": {
-        
+      "java": {        
         "errorCount": 0,
         "warningCount": 2,
         "output": [""]
@@ -4032,6 +4067,155 @@
           "ERROR: Patient: Profile http://hl7.org/fhir/test/StructureDefinition/patient-ig-sd, Element 'Patient.name': minimum required = 1, but only found 0"
         ]
       }      
+    },
+    "patient-min-none.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0
+      },
+      "profile": {
+        "source": "patient-min-profile-none.xml",
+        "java": {
+          "errorCount": 0
+        }
+      }
+    },
+    "patient-min-none1.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0
+      },
+      "profile": {
+        "source": "patient-min-profile-none1.xml",
+        "java": {
+          "errorCount": 1
+        }
+      }
+    },
+    "patient-min-fixed.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0
+      },
+      "profile": {
+        "source": "patient-min-profile-fixed.xml",
+        "java": {
+          "errorCount": 0
+        }
+      }
+    },
+    "patient-min-fixed1.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0
+      },
+      "profile": {
+        "source": "patient-min-profile-fixed1.xml",
+        "java": {
+          "errorCount": 1
+        }
+      }
+    },
+    "patient-min-pattern.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0
+      },
+      "profile": {
+        "source": "patient-min-profile-pattern.xml",
+        "java": {
+          "errorCount": 0
+        }
+      }
+    },
+    "patient-min-pattern1.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0
+      },
+      "profile": {
+        "source": "patient-min-profile-pattern1.xml",
+        "java": {
+          "errorCount": 1
+        }
+      }
+    },
+    "parameters-reference.json" : {
+      "version" : "4.0",
+      "validate" : "CHECK_EXISTS_AND_TYPE",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 1,
+        "output" : ["WARNING: Parameters.parameter[0].resource.ofType(Patient).identifier[0].type: None of the codes provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a code should come from this value set unless it has no suitable code) (codes = http://terminology.hl7.org/CodeSystem/v2-0203#MB)"]
+      }
+    },
+    "parameters-reference-bad.json" : {
+      "version" : "4.0",
+      "validate" : "CHECK_EXISTS_AND_TYPE",
+      "java" : {
+        "errorCount" : 1,
+        "warningCount" : 1,
+        "output" : ["WARNING: Parameters.parameter[0].resource.ofType(Patient).identifier[0].type: None of the codes provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a code should come from this value set unless it has no suitable code) (codes = http://terminology.hl7.org/CodeSystem/v2-0203#MB)",
+                    "ERROR: Parameters.parameter[2].resource.ofType(Coverage).beneficiary: Unable to resolve resource \"Patient/2\""]
+      }
+    },
+    "parameters-profiled-resource-valid.json" : {
+      "version" : "4.0",
+      "supporting" : [
+        "parameters-profiled-resource-profiles-patient.json",
+        "parameters-profiled-resource-profile-params.json"
+      ],
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "output" : []
+      }
+    },
+    "parameters-profiled-resource-invalid.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "output" : []
+      },
+      "profile" : {
+        "source" : "parameters-profiled-resource-profile-params.json",
+        "supporting" : [ "parameters-profiled-resource-profiles-patient.json" ],
+        "java" : {
+          "errorCount" : 1,
+          "warningCount" : 0,
+          "output" : ["ERROR: Parameters.parameter[0].resource.ofType(Patient): Profile http://hl7.org/fhir/test/StructureDefinition/parameters-profiled-resource-profiles-patient, Element 'Parameters.parameter[0].resource.ofType(Patient).name': minimum required = 1, but only found 0"]
+        }
+      }
+    },
+    "parameters-profiled-resource-multiple.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "output" : []
+      },
+      "supporting" : [ 
+        "parameters-profiled-resource-profiles-patient.json",
+        "parameters-profiled-resource-profiles-patient2.json"
+      ],
+      "profile" : {
+        "source" : "parameters-profiled-resource-profile-params-multiples.json",
+        "java" : {
+          "errorCount" : 1,
+          "warningCount" : 0,
+          "comment" : "This needs to be fixed so that it's not just an error",
+          "output" : ["ERROR: Parameters.parameter[0].resource.ofType(Patient): Multiple profiles found for contained resource. This is not supported at this time. (Type Resource: http://hl7.org/fhir/test/StructureDefinition/parameters-profiled-resource-profiles-patient, http://hl7.org/fhir/test/StructureDefinition/parameters-profiled-resource-profiles-patient2)"]
+        }
+      }
+    },
+    "canonical-url.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "output" : []
+      }    
     }
   }
 }
