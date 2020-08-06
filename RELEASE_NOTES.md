@@ -1,4 +1,0 @@
-- reported slicing bug in composition validation (not a bug, but keep the test)
-- test bug with duplication id detection
-- test for bug with questionnaire code validation
-- add questionnaire rendering test
