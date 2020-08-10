@@ -1,0 +1,250 @@
+{
+  "resourceType" : "CapabilityStatement",
+  "id" : "us-core-server",
+  "url" : "http://hl7.org/fhir/us/core/CapabilityStatement/us-core-server",
+  "version" : "3.1.0",
+  "name" : "UsCoreServerCapabilityStatement",
+  "title" : "US Core Server CapabilityStatement",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2019-10-04T00:00:00+10:00",
+  "publisher" : "HL7 International - US Realm Steering Committee",
+  "contact" : [
+    {
+      "telecom" : [
+        {
+          "system" : "url",
+          "value" : "http://www.hl7.org/Special/committees/usrealm/index.cfm"
+        }
+      ]
+    }
+  ],
+  "description" : "This Section describes the expected capabilities of the US Core Server actor which is responsible for providing responses to the queries submitted by the US Core Requestors. The complete list of FHIR profiles, RESTful operations, and search parameters supported by US Core Servers are defined. Systems implementing this capability statement should meet the ONC 2015 Common Clinical Data Set (CCDS) access requirement for Patient Selection 170.315(g)(7) and Application Access - Data Category Request 170.315(g)(8) and and the latest proposed ONC [U.S. Core Data for Interoperability (USCDI)].  US Core Clients have the option of choosing from this list to access necessary data based on their local use cases and other contextual requirements.",
+  "jurisdiction" : [
+    {
+      "coding" : [
+        {
+          "system" : "urn:iso:std:iso:3166",
+          "code" : "US",
+          "display" : "United States of America"
+        }
+      ]
+    }
+  ],
+  "kind" : "requirements",
+  "fhirVersion" : "4.0.1",
+  "format" : [
+    "xml",
+    "json"
+  ],
+  "patchFormat" : [
+    "application/json-patch+json"
+  ],
+  "implementationGuide" : [
+    "http://hl7.org/fhir/us/core/ImplementationGuide/hl7.fhir.us.core-3.1.0"
+  ],
+  "rest" : [
+    {
+      "mode" : "server",
+      "documentation" : "Some documentation",
+      "security" : {
+        "cors" : true,
+        "service" : [{ 
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/restful-security-service",
+            "code" : "SMART-on-FHIR"
+          }],
+          "text" : "SMART App Launch"
+        },{
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/restful-security-service",
+            "code" : "NTLM"
+          }]
+        }],
+        "description" : "Security comment."
+      },
+      "resource" : [
+        {
+          "extension" : [
+            {
+              "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+              "valueCode" : "SHOULD"
+            },
+            {
+              "extension" : [
+                {
+                  "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+                  "valueCode" : "SHOULD"
+                },
+                {
+                  "url" : "required",
+                  "valueString" : "patient"
+                },
+                {
+                  "url" : "required",
+                  "valueString" : "clinical-status"
+                }
+              ],
+              "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-search-parameter-combination"
+            }
+          ],
+          "type" : "AllergyIntolerance",
+          "supportedProfile" : [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance"
+          ],
+          "interaction" : [
+            {
+              "extension" : [
+                {
+                  "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+                  "valueCode" : "SHALL"
+                }
+              ],
+              "code" : "create",
+              "documentation" : "First Documentation"
+            },
+            {
+              "extension" : [
+                {
+                  "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+                  "valueCode" : "SHALL"
+                }
+              ],
+              "code" : "search-type"
+            }
+          ],
+          "conditionalCreate" : "true",
+          "referencePolicy" : [
+            "resolves"
+          ],
+          "searchRevInclude" : [
+            "Provenance:target"
+          ],
+          "searchParam" : [
+            {
+              "extension" : [
+                {
+                  "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+                  "valueCode" : "MAY"
+                }
+              ],
+              "name" : "clinical-status",
+              "definition" : "http://hl7.org/fhir/us/core/SearchParameter/us-core-allergyintolerance-clinical-status",
+              "type" : "token"
+            },
+            {
+              "extension" : [
+                {
+                  "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+                  "valueCode" : "SHALL"
+                }
+              ],
+              "name" : "patient",
+              "definition" : "http://hl7.org/fhir/us/core/SearchParameter/us-core-allergyintolerance-patient",
+              "type" : "reference"
+            }
+          ]
+        },
+        {
+          "extension" : [
+            {
+              "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+              "valueCode" : "SHALL"
+            }
+          ],
+          "type" : "Provenance",
+          "supportedProfile" : [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-provenance"
+          ],
+          "documentation" : "If a system receives a provider in `Provenance.agent.who` as free text they must capture who sent them the information as the organization. On request they **SHALL** provide this organization as the source and **MAY** include the free text provider.",
+          "interaction" : [
+            {
+              "extension" : [
+                {
+                  "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+                  "valueCode" : "MAY"
+                }
+              ],
+              "code" : "create"
+            },
+            {
+              "extension" : [
+                {
+                  "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+                  "valueCode" : "SHALL"
+                }
+              ],
+              "code" : "search-type"
+            },
+            {
+              "extension" : [
+                {
+                  "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+                  "valueCode" : "SHALL"
+                }
+              ],
+              "code" : "read"
+            },
+            {
+              "extension" : [
+                {
+                  "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+                  "valueCode" : "SHOULD"
+                }
+              ],
+              "code" : "vread"
+            },
+            {
+              "extension" : [
+                {
+                  "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+                  "valueCode" : "MAY"
+                }
+              ],
+              "code" : "update"
+            },
+            {
+              "extension" : [
+                {
+                  "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+                  "valueCode" : "MAY"
+                }
+              ],
+              "code" : "patch"
+            },
+            {
+              "extension" : [
+                {
+                  "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+                  "valueCode" : "MAY"
+                }
+              ],
+              "code" : "delete"
+            },
+            {
+              "extension" : [
+                {
+                  "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+                  "valueCode" : "SHOULD"
+                }
+              ],
+              "code" : "history-instance"
+            },
+            {
+              "extension" : [
+                {
+                  "url" : "http://hl7.org/fhir/StructureDefinition/capabilitystatement-expectation",
+                  "valueCode" : "MAY"
+                }
+              ],
+              "code" : "history-type"
+            }
+          ],
+          "referencePolicy" : [
+            "resolves"
+          ]
+        }
+      ]
+    }
+  ]
+}
