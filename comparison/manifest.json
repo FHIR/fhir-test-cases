@@ -1,51 +1,104 @@
 {
-  "test-cases": {
-    "basic-codesystem-comparison": {
-	  "left" : {
-	    "source" : "cs-base-left.json",
-		"version" : "3.0"
-	  }, 
-	  "right" : {
-	    "source" : "cs-base-right.json",
-		"version" : "4.0"
-	  },
+  "test-cases" : {
+    "basic-codesystem-comparison" : {
+      "left" : {
+        "source" : "cs-base-left.json",
+        "version" : "3.0"
+      },
+      "right" : {
+        "source" : "cs-base-right.json",
+        "version" : "4.0"
+      },
       "output" : {
-        "errorCount": 0,
-        "warningCount": 1,
-        "infoCount": 6,
-        "output": []
+        "errorCount" : 2,
+        "warningCount" : 1,
+        "infoCount" : 4,
+        "output" : [
+          "Error	CodeSystem.url	Values for url differ: 'http://hl7.org/fhir/medication-admin-status' vs 'http://terminology.hl7.org/CodeSystem/medication-admin-status'",
+          "Error	CodeSystem.version	Values for version differ: '3.0.2' vs '4.0.1'",
+          "Information	CodeSystem.name	Values for name differ: 'MedicationAdministrationStatus' vs 'MedicationAdministration Status Codes'",
+          "Information	CodeSystem.publisher	Values for publisher differ: 'HL7 (FHIR Project)' vs 'FHIR Project team'",
+          "Information	CodeSystem.concept.where(code='on-hold').definition	Changed value for definition: 'Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called 'suspended'.' vs 'Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called 'suspended'.'",
+          "Warning	CodeSystem.concept.where(code='entered-in-error').display	Changed value for display: 'Entered in Error' vs 'Entered-in-Error'",
+          "Information	CodeSystem.concept.where(code='unknown').definition	Changed value for definition: 'The authoring system does not know which of the status values currently applies for this request. Note: This concept is not to be used for 'other' - one of the listed statuses is presumed to apply, it's just not known which one.' vs 'The authoring system does not know which of the status values currently applies for this request. Note: This concept is not to be used for 'other' - one of the listed statuses is presumed to apply, it's just not known which one.'"
+        ]
       }
-    },  
-    "basic-valueset-comparison": {
-	  "left" : {
-	    "source" : "vs-base-left.json",
-		"version" : "4.0"
-	  }, 
-	  "right" : {
-	    "source" : "vs-base-right.json",
-		"version" : "4.0"
-	  },
+    },
+    "basic-valueset-comparison" : {
+      "left" : {
+        "source" : "vs-base-left.json",
+        "version" : "4.0"
+      },
+      "right" : {
+        "source" : "vs-base-right.json",
+        "version" : "4.0"
+      },
       "output" : {
-        "errorCount": 0,
-        "warningCount": 2,
-        "infoCount": 4,
-        "output": []
+        "errorCount" : 2,
+        "warningCount" : 2,
+        "infoCount" : 2,
+        "output" : [
+          "Error	ValueSet.url	Values for url differ: 'http://hl7.org/fhir/test/ValueSet/vs-base-left' vs 'http://hl7.org/fhir/test/ValueSet/vs-base-right'",
+          "Error	ValueSet.version	Values for version differ: '1.0.2' vs '4.4.0'",
+          "Information	ValueSet.status	Values for status differ: 'draft' vs 'active'",
+          "Warning	ValueSet.experimental	Values for experimental differ: 'true' vs 'false'",
+          "Information	ValueSet.date	Values for date differ: '2015-10-24T07:41:03+11:00' vs '2020-05-03T08:43:35+10:00'",
+          "Warning	ValueSet.expansion.contains.name	Changed value for display: 'Low' vs 'Extra Low'"
+        ]
       }
-    },  
-    "profile-comparison-simple": {
-	  "left" : {
-	    "source" : "sd-simple-1-left.json",
-		"version" : "4.0"
-	  }, 
-	  "right" : {
-	    "source" : "sd-simple-1-right.json",
-		"version" : "4.0"
-	  },
+    },
+    "profile-comparison-simple" : {
+      "left" : {
+        "source" : "sd-simple-1-left.json",
+        "version" : "4.0"
+      },
+      "right" : {
+        "source" : "sd-simple-1-right.json",
+        "version" : "4.0"
+      },
       "output" : {
-        "errorCount": 1,
-        "warningCount": 1,
-        "infoCount": 2,
-        "output": []
+        "errorCount" : 2,
+        "warningCount" : 1,
+        "infoCount" : 2,
+        "output" : [
+          "Error	StructureDefinition.url	Values for url differ: 'http://hl7.org/fhir/sd-simple-1-left' vs 'http://hl7.org/fhir/sd-simple-1-right'",
+          "Information	StructureDefinition.name	Values for name differ: 'SimpleProfileLeft' vs 'SimpleProfileRight'",
+          "Information	StructureDefinition.jurisdiction	Added the item 'urn:iso:std:iso:3166#US'",
+          "Warning	Practitioner.identifier	Elements differ in short: 'Short Comment (left)' 'Short Comment (right)'",
+          "Error	Practitioner.identifier	Elements differ in definition for mustSupport: 'true' 'false'"
+        ]
+      }
+    },
+    "capabilitystatement-comparison-simple" : {
+      "left" : {
+        "source" : "cps-base-left.json",
+        "version" : "4.0"
+      },
+      "right" : {
+        "source" : "cps-base-right.json",
+        "version" : "4.0"
+      },
+      "output" : {
+        "errorCount" : 3,
+        "warningCount" : 1,
+        "infoCount" : 11,
+        "output" : [
+          "Error	CapabilityStatement.url	Values for url differ: 'http://hl7.org/fhir/us/core/CapabilityStatement/us-core-server' vs 'http://hl7.org/fhir/us/core/CapabilityStatement/us-core-server2'",
+          "Error	CapabilityStatement.version	Values for version differ: '3.1.0' vs '3.2.0'",
+          "Information	CapabilityStatement.name	Values for name differ: 'UsCoreServerCapabilityStatement' vs 'UsCoreServerCapabilityStatement2'",
+          "Information	CapabilityStatement.title	Values for title differ: 'US Core Server CapabilityStatement' vs 'US Core Server CapabilityStatement2'",
+          "Information	CapabilityStatement.status	Values for status differ: 'active' vs 'retired'",
+          "Information	CapabilityStatement.publisher	Values for publisher differ: 'HL7 International - US Realm Steering Committee' vs 'HL7 International'",
+          "Information	CapabilityStatement.jurisdiction	Removed the item 'urn:iso:std:iso:3166#US'",
+          "Error	CapabilityStatement.kind	Values for kind differ: 'requirements' vs 'instance'",
+          "Information	CapabilityStatement.format	Removed the item 'xml'",
+          "Information	CapabilityStatement.implementationGuide	Removed the item 'http://hl7.org/fhir/us/core/ImplementationGuide/hl7.fhir.us.core-3.1.0'",
+          "Information	CapabilityStatement.implementationGuide	Added the item 'http://hl7.org/fhir/us/core/ImplementationGuide/hl7.fhir.us.core-3.2.0'",
+          "Warning	CapabilityStatement.rest.where(mode='SERVER').documentation	Changed value for documentation: 'Some documentation' vs 'other documentation'",
+          "Information	CapabilityStatement.rest.security.security.description	Changed value for security.description: 'Security comment.' vs 'Other security comment.'",
+          "Information	CapabilityStatement.rest.security.security.text	Changed value for text: 'SMART App Launch' vs 'SMART ON FHIR'",
+          "Information	CapabilityStatement.rest.resource.documentation	Changed value for documentation: 'First Documentation' vs 'Other Documentation'"        
+        ]
       }
     }
   }
