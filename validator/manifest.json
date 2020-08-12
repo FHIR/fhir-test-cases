@@ -27,6 +27,9 @@
     },
     "fixed-quantity-binding-observation.json": {
       "version": "4.0",
+      "profiles": [
+        "fixed-quantity-binding-structuredef.json"
+      ],
       "profile": {
         "source": "fixed-quantity-binding-structuredef.json",
         "java": {
@@ -37,7 +40,7 @@
       "java": {
         "errorCount": 1,
         "output" : [
-          "ERROR: Observation.value: None of the codes provided are in the value set http://hl7.org/fhir/ValueSet/account-type (http://hl7.org/fhir/ValueSet/account-type), and a code from this value set is required) (codes = http://unitsofmeasure.org#whatever)"
+          "ERROR: Observation: As specified by profile Profile https://bb/StructureDefinition/BBDemographicAge, Element 'Observation.value[x]', Element \"https://bb/StructureDefinition/BBDemographicAge\" must not be of type \"Observation.value[x]\""
         ]
       }
     },
@@ -270,8 +273,9 @@
     },
     "list-xhtml-attribute.json": {
       "java": {
-        "errorCount": 1,
+        "errorCount": 2,
         "output": [
+          "ERROR: List.text.div: txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained style attributes [htmlChecks()]",
           "ERROR: List.text.div: Illegal attribute name in the XHTML (\u0027onClick\u0027 on \u0027p\u0027)"
         ]
       }
@@ -299,8 +303,9 @@
     },
     "list-xhtml-element.json": {
       "java": {
-        "errorCount": 2,
+        "errorCount": 3,
         "output": [
+          "ERROR: List.text.div: txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained style attributes [htmlChecks()]",
           "ERROR: List.text.div: Illegal element name in the XHTML (\u0027object\u0027)",
           "ERROR: List.text.div: Illegal attribute name in the XHTML (\u0027value\u0027 on \u0027object\u0027)"
         ]
@@ -308,9 +313,11 @@
     },
     "list-xhtml-syntax.json": {
       "java": {
-        "errorCount": 1,
+        "errorCount": 3,
         "output": [
-          "ERROR: List.text.div: Error parsing XHTML: Malformed XHTML: Found \"\u003c/pa\u003e\" expecting \"\u003c/p\u003e\" at line 2 column 37"
+          "ERROR: List.text.div: txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained style attributes [htmlChecks()]",
+          "ERROR: List.text.div: Error parsing XHTML: Malformed XHTML: Found \"\u003c/pa\u003e\" expecting \"\u003c/p\u003e\" at line 2 column 37",
+          "ERROR: List.text.div: txt-2: The narrative SHALL have some non-whitespace content [htmlChecks2()"
         ]
       }
     },
@@ -332,8 +339,9 @@
     },
     "list-xhtml-xxe.json": {
       "java": {
-        "errorCount": 1,
+        "errorCount": 2,
         "output": [
+          "ERROR: List.text.div: txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained style attributes [htmlChecks()]",
           "ERROR: List.text.div: Error parsing XHTML: Malformed XHTML: Found a DocType declaration, and these are not allowed (XXE security vulnerability protection)"
         ]
       }
@@ -983,8 +991,9 @@
     },
     "list-xhtml-attribute.xml": {
       "java": {
-        "errorCount": 1,
+        "errorCount": 2,
         "output": [
+          "ERROR: List.text.div: txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained style attributes [htmlChecks()]",
           "ERROR: List.text.div: Illegal attribute name in the XHTML (\u0027onClick\u0027 on \u0027p\u0027)"
         ]
       }
@@ -1003,8 +1012,9 @@
     },
     "list-xhtml-element.xml": {
       "java": {
-        "errorCount": 2,
+        "errorCount": 3,
         "output": [
+          "ERROR: List.text.div: txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained style attributes [htmlChecks()]",
           "ERROR: List.text.div: Illegal element name in the XHTML (\u0027object\u0027)",
           "ERROR: List.text.div: Illegal attribute name in the XHTML (\u0027value\u0027 on \u0027object\u0027)"
         ]
@@ -1055,16 +1065,20 @@
       "profile": {
         "source": "slice-by-polymorphic-type-profile.xml",
         "java": {
-          "errorCount": 1,
+          "errorCount": 0,
+          "warningCount": 1,
+          "hintCount": 1,
           "output": [
-		    "ERROR: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language",
+		    "WARNING: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language",
             "INFORMATION: Communication.status: Could not verify slice for profile http://hl7.org/fhir/StructureDefinition/slice-by-polymorphic-type"
           ]
         }
       },
       "java": {
-        "errorCount": 1,
-        "output": ["ERROR: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language"]
+        "errorCount": 0,
+        "warningCount": 1,
+        "hintCount": 0,
+        "output": ["WARNING: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language"]
       }
     },
     "code-correct.xml": {
@@ -1146,15 +1160,13 @@
       "profile": {
         "source": "slicing-types-by-string-profile.xml",
         "java": {
-          "errorCount": 2,
-          "output": ["ERROR: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language",
-                     "ERROR: Communication.payload[2].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language"]
+          "errorCount": 0,
+          "output": []
         }
       },
       "java": {
-        "errorCount": 2,
-        "output": ["ERROR: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language",
-                   "ERROR: Communication.payload[2].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language"]
+        "errorCount": 0,
+        "output": []
       }
     },
     "uk-nhs-pat.xml": {
@@ -1624,16 +1636,17 @@
       "profile": {
         "source": "extension-slice-profile.xml",
         "java": {
-          "errorCount": 0,
+          "errorCount": 1,
           "output": [
+            "ERROR: Patient.text.div: txt-2: The narrative SHALL have some non-whitespace content [htmlChecks2()]",
             "INFORMATION: Patient: Profile http://hl7.org/fhir/StructureDefinition/extension-slice-profile, Element \u0027Patient.name[foo]\u0027\u0027: Unable to check minimum required (1) due to lack of slicing validation"
           ]
         }
       },
       "explanation": "Should be 0 errors on the profile, but hacked on R4 technical release toget the validator out - revisit....",
       "java": {
-        "errorCount": 0,
-        "output": []
+        "errorCount": 1,
+        "output": ["ERROR: Patient.text.div: txt-2: The narrative SHALL have some non-whitespace content [htmlChecks2()]"]
       }
     },
     "slice-by-polymorphic-type2.xml": {
@@ -3073,7 +3086,15 @@
     "obs-unit-profile.json" : {
       "version" : "4.0",
       "java": {
-        "errorCount": 2
+        "errorCount": 3,
+        "warningCount" : 2,
+        "output" : [
+        "WARNING: StructureDefinition: sdf-0: Name should be usable as an identifier for the module by machine processing applications such as code generation [name.matches('[A-Z]([A-Za-z0-9_]){0,254}')]",
+        "ERROR: StructureDefinition: Profile http://hl7.org/fhir/StructureDefinition/StructureDefinition, Element 'StructureDefinition.name': minimum required = 1, but only found 0",
+        "ERROR: StructureDefinition.differential.element[0]: eld-19: Element names cannot include some special characters [path.matches('[^\\s\\.,:;\\'\"\\/|?!@#$%&*()\\[\\]{}]{1,64}(\\.[^\\s\\.,:;\\'\"\\/|?!@#$%&*()\\[\\]{}]{1,64}(\\[x\\])?(\\:[^\\s\\.]+)?)*')]",
+        "WARNING: StructureDefinition.differential.element[0]: eld-20: Element names should be simple alphanumerics with a max of 64 characters, or code generation tools may be broken [path.matches('[A-Za-z][A-Za-z0-9]*(\\.[a-z][A-Za-z0-9]*(\\[x])?)*')]",
+        "ERROR: StructureDefinition: Error generating Snapshot: Illegal path 'Observation...unit' in differential in http://hl7.org.au/fhir/tools/StructureDefinition/-unit-profile: name portion missing ('..') (this usually arises from a problem in the differential)"
+        ]
       }
     },
     "medstmt-ips.json" : {
@@ -3113,6 +3134,33 @@
         }
       }
     },
+    "mycommunication.invalid.json" : {
+      "version" : "4.0",
+      "java": {
+        "errorCount": 0
+      },
+      "profile" : {
+        "assumeValidRestReferences" : true,
+        "source": "mycommunication.structureDefinition.xml",
+        "java": {
+          "errorCount": 1,
+          "output" : ["ERROR: Communication.partOf[0]: The type \"Observation\" implied by the reference URL Observation/example is not a valid Target for this element (must be one of [Basic, Patient])"]
+        }
+      }
+    },
+    "mycommunication.valid.example.json" : {
+      "version" : "4.0",
+      "java": {
+        "errorCount": 0
+      },
+      "profile" : {
+        "assumeValidRestReferences" : true,
+        "source": "mycommunication.structureDefinition.xml",
+        "java": {
+          "errorCount": 0
+        }
+      }
+    },
     "capstmt.json" : {
       "version" : "4.0",
       "java": {
@@ -3131,7 +3179,12 @@
       "version" : "4.0",
       "java": {
         "errorCount": 1,
-        "output" : ["fails eld-13"]
+        "warningCount" : 2,
+        "output" : [
+          "WARNING: StructureDefinition.date: The value \"3017-09-06T06:30:54+00:00\" is outside the range of reasonable years - check for data entry error",
+          "ERROR: StructureDefinition.differential.element[0]: eld-13: Types must be unique by code [type.select(code).isDistinct()]",
+          "WARNING: StructureDefinition.differential.element.where(path = 'HealthcareService.endpoint'): Connect check whether the target profile http://hl7.org.au/fhir/pd/StructureDefinition/au-pd-sm-endpoint is valid constraint on the base because it is not known"        
+        ]
       }
     },
     "bundle-transaction.json" : {
@@ -3685,15 +3738,16 @@
       "version": "4.0",
       "java": {
         "errorCount": 0,
-        "warningCount": 1,
-        "output" : ["WARNING: ValueSet.compose.include[0].concept[0].designation[0].use: Could not confirm that the codes provided are in the value set http://hl7.org/fhir/ValueSet/designation-use, and a code should come from this value set unless it has no suitable code"]
+        "warningCount": 2,
+        "output" : ["WARNING: ValueSet.compose.include[0].concept[0].designation[0].use: Could not confirm that the codes provided are in the value set http://hl7.org/fhir/ValueSet/designation-use, and a code should come from this value set unless it has no suitable code",
+                    "WARNING: ValueSet.compose[0].include[0]: Unknown System specified, so Concepts and Filters can't be checked"]
       },
       "supporting" : ["tx-extensible-suppression-cs.xml"],
       "profile": {
         "source": "tx-extensible-suppression-profile.xml",
         "java": {
           "errorCount": 0,
-          "warningCount": 0
+          "warningCount": 1
         }
       }
     },
@@ -3704,114 +3758,517 @@
         "warningCount": 0
       }
     },
-	"q-enablewhen-me-wrong.json" : {
+    "q-enablewhen-me-wrong.json" : {
+        "version": "4.0",
+        "java": {
+          "errorCount": 1,
+          "output" : ["ERROR: Questionnaire.item[2]: que-12: If there are more than one enableWhen, enableBehavior must be specified [(enableWhen.count() >= 2) implies enableBehavior.exists()]"]
+        }	  
+    },
+    "qr-enablewhen-me.json" : {
+        "version": "4.0",
+        "supporting": [ "q-enablewhen-me.json" ],
+        "java": {
+          "errorCount": 0,
+          "warningCount": 0
+        }	  
+    },
+    "profile-slicing-type-example-good.xml" : {
       "version": "4.0",
-      "java": {
-        "errorCount": 1,
-        "output" : ["ERROR: Questionnaire.item[2]: que-12: If there are more than one enableWhen, enableBehavior must be specified [(enableWhen.count() >= 2) implies enableBehavior.exists()]"]
-      }	  
-	},
-	"qr-enablewhen-me.json" : {
-      "version": "4.0",
-      "supporting": [ "q-enablewhen-me.json" ],
-      "java": {
-        "errorCount": 0,
-        "warningCount": 0
-      }	  
-	},
-	"profile-slicing-type-example-good.xml" : {
-    "version": "4.0",
-    "java": {
-      "errorCount": 0
-    }, 
-    "profile" : {
-      "source": "profile-slicing-type-resolve.xml",
-      "java": {
-        "errorCount": 0
-      }
-    }	  
-	},
-	"profile-slicing-type-example-bad.xml" : {
-      "version": "4.0",
-      "supporting": [ "profile-slicing-type-resolve.xml" ],
       "java": {
         "errorCount": 0
       }, 
       "profile" : {
         "source": "profile-slicing-type-resolve.xml",
         "java": {
-  		    "errorCount": 2,
-          "output" : [ "ERROR: List: Profile http://hl7.org/fhir/test/StructureDefinition/profile-slicing-type-resolve, Element 'List.entry[slice1]': max allowed = 1, but found 2",
-                       "ERROR: List: Profile http://hl7.org/fhir/test/StructureDefinition/profile-slicing-type-resolve, Element 'List.entry[slice2]': minimum required = 1, but only found 0" ]
-  		  }
+          "errorCount": 0
+        }
       }	  
-  	},
-	"cs-bad-oid.xml" : {
-      "version": "4.0",
-      "java": {
-        "errorCount": 1,
-		"output" : ["bad oid"]
-		
-      } 
-	},
-	"ext-example-nl.json" : {
-      "version": "3.0",
-      "supporting" : ["ext-example-nl-ext.json", "ext-example-nl-ext2.json", "ext-example-nl-ext3.json", "ext-example-nl-profile2.json", "ext-example-nl-ext4.json"],
-      "java": {
-        "errorCount": 0
+    },
+    "profile-slicing-type-example-bad.xml" : {
+        "version": "4.0",
+        "supporting": [ "profile-slicing-type-resolve.xml" ],
+        "java": {
+          "errorCount": 0
+        }, 
+        "profile" : {
+          "source": "profile-slicing-type-resolve.xml",
+          "java": {
+            "errorCount": 2,
+            "output" : [ "ERROR: List: Profile http://hl7.org/fhir/test/StructureDefinition/profile-slicing-type-resolve, Element 'List.entry[slice1]': max allowed = 1, but found 2",
+                         "ERROR: List: Profile http://hl7.org/fhir/test/StructureDefinition/profile-slicing-type-resolve, Element 'List.entry[slice2]': minimum required = 1, but only found 0" ]
+          }
+        }	  
       },
-      "profile" : {	  
-	    "source" : "ext-example-nl-profile.json",
-		"java": {
-			"errorCount": 1,
-			"output" : ["Profile http://fhir.nl/fhir/StructureDefinition/nl-core-address, Element matches more than one slice - LandGBACodelijst, LandISOCodelijst"],
-			"background" : "see https://chat.fhir.org/#narrow/stream/179166-implementers/topic/why.20does.20this.20.24validate.20fail.3F/near/197350736 - slicing isn't understood by the validator"
-		}
-	  }
-	},
-	"nl/nl-patient-date.json" : {
-	  "version" : "3.0",
-	  "supporting" : ["nl/nl-core-address.xml",
-		"nl/nl-core-address-official.xml",
-		"nl/nl-core-patient.1.xml",
-		"nl/AdresSoortCodelijst-2.16.840.1.113883.2.4.3.11.60.40.2.20.5.3--20171231000000.xml",
-		"nl/extension-code-specification.xml",
-		"nl/LandGBACodelijst-2.16.840.1.113883.2.4.3.11.60.40.2.20.5.1--20171231000000.xml",
-		"nl/LandISOCodelijst-2.16.840.1.113883.2.4.3.11.60.40.2.20.5.2--20171231000000.xml"],
-      "java": {
-        "errorCount": 0,
-        "warningCount": 0,
-        "infoCount": 0
-      }
-	},
-	"nl/nl-core-patient-01.xml" : {
-	  "version" : "3.0",
-	  "supporting" : ["nl/nl-core-address.xml",
-		"nl/nl-core-address-official.xml",
-		"nl/nl-core-patient.1.xml",
-		"nl/AdresSoortCodelijst-2.16.840.1.113883.2.4.3.11.60.40.2.20.5.3--20171231000000.xml",
-		"nl/extension-code-specification.xml",
-		"nl/LandGBACodelijst-2.16.840.1.113883.2.4.3.11.60.40.2.20.5.1--20171231000000.xml",
-		"nl/LandISOCodelijst-2.16.840.1.113883.2.4.3.11.60.40.2.20.5.2--20171231000000.xml",
-		"nl/Codesystem-urnoid2.16.840.1.113883.2.4.4.16.34.xml",
-		"nl/Codesystem-urnoid2.16.840.1.113883.2.4.4.16.35.xml"],
+    "cs-bad-oid.xml" : {
+        "version": "4.0",
+        "java": {
+          "errorCount": 1,
+      "output" : ["bad oid"]
+      
+        } 
+    },
+    "ext-example-nl.json" : {
+        "version": "3.0",
+        "supporting" : ["ext-example-nl-ext.json", "ext-example-nl-ext2.json", "ext-example-nl-ext3.json", "ext-example-nl-profile2.json", "ext-example-nl-ext4.json"],
+        "java": {
+          "errorCount": 0
+        },
+        "profile" : {	  
+        "source" : "ext-example-nl-profile.json",
       "java": {
         "errorCount": 1,
-        "warningCount": 0,
-        "infoCount": 2,
-		"output" : [
-		  "ERROR: Patient.address[0].country.extension[3]: The extension http://nictiz.nl/fhir/StructureDefinition/some-other-extension is unknown, and not allowed here",
-          "INFORMATION: Patient.address[0].country.extension[2]: This element does not match any known slice defined in the profile http://fhir.nl/fhir/StructureDefinition/nl-core-address",
-          "INFORMATION: Patient.address[0].country.extension[3]: This element does not match any known slice defined in the profile http://fhir.nl/fhir/StructureDefinition/nl-core-address"]
+        "output" : ["Profile http://fhir.nl/fhir/StructureDefinition/nl-core-address, Element matches more than one slice - LandGBACodelijst, LandISOCodelijst"],
+        "background" : "see https://chat.fhir.org/#narrow/stream/179166-implementers/topic/why.20does.20this.20.24validate.20fail.3F/near/197350736 - slicing isn't understood by the validator"
       }
-	},
-	"vs-no-system.json" : {
-	  "version" : "3.0",
+      }
+    },
+    "nl/nl-patient-date.json" : {
+      "version" : "3.0",
+      "supporting" : ["nl/nl-core-address.xml",
+      "nl/nl-core-address-official.xml",
+      "nl/nl-core-patient.1.xml",
+      "nl/AdresSoortCodelijst-2.16.840.1.113883.2.4.3.11.60.40.2.20.5.3--20171231000000.xml",
+      "nl/extension-code-specification.xml",
+      "nl/LandGBACodelijst-2.16.840.1.113883.2.4.3.11.60.40.2.20.5.1--20171231000000.xml",
+      "nl/LandISOCodelijst-2.16.840.1.113883.2.4.3.11.60.40.2.20.5.2--20171231000000.xml"],
+        "java": {
+          "errorCount": 0,
+          "warningCount": 0,
+          "infoCount": 0
+        }
+    },
+    "nl/nl-core-patient-01.xml" : {
+      "version" : "3.0",
+      "supporting" : ["nl/nl-core-address.xml",
+      "nl/nl-core-address-official.xml",
+      "nl/nl-core-patient.1.xml",
+      "nl/AdresSoortCodelijst-2.16.840.1.113883.2.4.3.11.60.40.2.20.5.3--20171231000000.xml",
+      "nl/extension-code-specification.xml",
+      "nl/LandGBACodelijst-2.16.840.1.113883.2.4.3.11.60.40.2.20.5.1--20171231000000.xml",
+      "nl/LandISOCodelijst-2.16.840.1.113883.2.4.3.11.60.40.2.20.5.2--20171231000000.xml",
+      "nl/Codesystem-urnoid2.16.840.1.113883.2.4.4.16.34.xml",
+      "nl/Codesystem-urnoid2.16.840.1.113883.2.4.4.16.35.xml"],
+        "java": {
+          "errorCount": 1,
+          "warningCount": 0,
+          "infoCount": 2,
+      "output" : [
+        "ERROR: Patient.address[0].country.extension[3]: The extension http://nictiz.nl/fhir/StructureDefinition/some-other-extension is unknown, and not allowed here",
+            "INFORMATION: Patient.address[0].country.extension[2]: This element does not match any known slice defined in the profile http://fhir.nl/fhir/StructureDefinition/nl-core-address",
+            "INFORMATION: Patient.address[0].country.extension[3]: This element does not match any known slice defined in the profile http://fhir.nl/fhir/StructureDefinition/nl-core-address"]
+        }
+    },
+    "vs-no-system.json" : {
+      "version" : "3.0",
+        "java": {
+          "errorCount": 2,
+          "output": ["valueSet.exists() or system.exists()", 
+         "(concept.exists() or filter.exists()) implies system.exists()"]
+        }
+    },
+    "pat-security-good1.json" : {
+      "version" : "4.0",
+      "java": {
+          "errorCount": 0,
+          "warningCount": 0
+        } 
+    },
+    "pat-security-good2.json" : {
+      "note" : "Bad String, but with no security checks on",
+      "version" : "4.0",
+      "java": {
+          "errorCount": 0,
+          "warningCount": 0
+        } 
+    },
+    "pat-security-good3.json" : {
+      "note" : "Same as good1, but with security checks on",
+      "version" : "4.0",
+      "security-checks" : true,
+      "java": {
+          "errorCount": 0,
+          "warningCount": 0
+        } 
+    },
+    "pat-security-bad-xhtml.json" : {
+      "version" : "4.0",
+      "security-checks" : true,
       "java": {
         "errorCount": 2,
-        "output": ["valueSet.exists() or system.exists()", 
-		   "(concept.exists() or filter.exists()) implies system.exists()"]
+        "warningCount": 0,
+        "output": ["ERROR: Patient.text.div: Illegal element name in the XHTML (\"script\")", 
+        "ERROR: Patient.text.div: txt-1: The narrative SHALL contain only the basic html formatting elements and attributes described in chapters 7-11 (except section 4 of chapter 9) and 15 of the HTML 4.0 standard, <a> elements (either name or href), images and internally contained style attributes [htmlChecks()]"]
+      } 
+    },
+    "pat-security-bad-string.json" : {
+      "version" : "4.0",
+      "security-checks" : true,
+      "java": {
+          "errorCount": 1,
+          "warningCount": 0,
+      "output": ["ERROR: Patient.name[0].text: The string value contains embedded HTML tags, which are not allowed for security reasons in this context"]
+        } 
+    },
+    "pat-security-bad-string1.xml" : {
+      "version" : "4.0",
+      "security-checks" : true,
+      "java": {
+          "errorCount": 1,
+          "warningCount": 0,
+      "output": ["ERROR: Patient.name[0].text: The string value contains embedded HTML tags, which are not allowed for security reasons in this context "]
+        } 
+    },
+    "pat-security-bad-string2.xml" : {
+      "version" : "4.0",
+      "security-checks" : true,
+      "java": {
+          "errorCount": 1,
+          "warningCount": 0,
+      "output": ["ERROR: /f:Patient/f:name/f:text: Undefined element 'script'"]
+        } 
+    },
+    "qr-vr.json" : {
+      "version" : "4.0",
+      "description" : "Testing versioned reference to questionnaire",
+      "supporting" : ["q-vr.json"],
+      "java": {
+          "errorCount": 1,
+          "warningCount": 1,
+          "output" : ["WARNING: QuestionnaireResponse.item[0].answer[0].value.ofType(Coding): A code with no system has no defined meaning. A system should be provided",
+                      "ERROR: QuestionnaireResponse: LinkId \"1.1\" not found in questionnaire"]
+      } 
+    },
+   "mixed-type-slicing.xml": {
+      "version" : "4.0",
+      "java": {
+        "errorCount": 0,
+        "output": []
+      },
+      "supporting" : [
+        "mixed-type-slicing-profile.xml"
+      ]
+    },
+    "sp-diff-expression.json" : {
+      "version" : "4.0",
+      "java": {
+        "errorCount": 0,
+        "warningCount": 1,
+        "output": ["The expression \"Organization.name\" is different to the expression \"Organization.name | Organization.alias\" in the derivedFrom SearchParameter, and this likely indicates that the derivation relationship is not valid"]
       }
-	}
-  }   
+    },
+    "sp-diff-type.json" : {
+      "version" : "4.0",
+      "java": {
+        "errorCount": 1,
+        "warningCount": 0,
+        "output": ["The expression \"Organization.name\" is different to the expression \"Organization.name | Organization.alias\" in the derivedFrom SearchParameter, and this likely indicates that the derivation relationship is not valid"]
+      }
+    },
+    "sp-diff-base.json" : {
+      "version" : "4.0",
+      "java": {
+        "errorCount": 1,
+        "warningCount": 0,
+        "output": ["The expression \"Organization.name\" is different to the expression \"Organization.name | Organization.alias\" in the derivedFrom SearchParameter, and this likely indicates that the derivation relationship is not valid"]
+      }
+    },
+    "dr-eh.json" : {
+      "version" : "4.0",
+      "assumeValidRestReferences" : true,
+      "packages" : ["hl7.fhir.us.core#3.1.0"],
+      "java": {
+        "errorCount": 1,
+        "output": ["ERROR: DocumentReference.subject: The type \"Device\" implied by the reference URL Device/foo is not a valid Target for this element (must be one of [Patient])"]
+      }
+    },
+    "vs-bad-code.json" : {
+      "version" : "4.0",
+      "java": {        
+        "errorCount": 0,
+        "warningCount": 2,
+        "output": [""]
+      }
+    },
+    "bb-obs-value-is-not-quantity.json": {
+      "version": "4.0",
+      "profile": {
+        "source": "bb-sd.json",
+        "supporting": [
+          "bb-vs.json"
+        ],
+        "java": {
+          "errorCount": 1,
+          "output": [ "ERROR: Observation.value.ofType(string): The Profile \"https://bb/StructureDefinition/BBDemographicAge\" definition allows for the type Quantity but found type string"]
+        }
+      },
+      "java": {
+        "errorCount": 0
+      }
+    },
+    "bb-obs-value-is-not-in-valueset.json": {
+      "version": "4.0",
+      "profile": {
+        "source": "bb-sd.json",
+        "supporting": [
+          "bb-vs.json"
+        ],
+        "java": {
+          "errorCount": 1,
+          "output": [ "ERROR: Observation.value.ofType(Quantity): The Coding provided is not in the value set https://bb/ValueSet/BBDemographicAgeUnit, and a code is required from this value set.  (error message = The code provided (http://unitsofmeasure.org#cm) is not  valid in the value set BBDemographicAgeUnit)" ]
+        }
+      },
+      "java": {
+        "errorCount": 0
+      }
+    },
+    "bb-obs-value-is-not-quantity-or-string.json": {
+      "version": "4.0",
+      "profile": {
+        "source": "bb-sd-2.json",
+        "java": {
+          "errorCount": 1,
+          "output": [""]
+        }
+      },
+      "java": {
+        "errorCount": 0
+      }
+    },
+    "obs-temp.json" : {
+      "version": "4.0",
+      "java": {
+        "errorCount": 0
+      }      
+    },
+    "patient-ig-good.json" : {
+      "version": "4.0",
+      "crumb-trail" : true,
+      "supporting": ["patient-ig-ig.json", "patient-ig-sd.json"],
+      "java": {
+        "errorCount": 0,
+        "hintCount" : 2,
+        "output" : [
+          "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/StructureDefinition/Patient",
+          "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/test/StructureDefinition/patient-ig-sd - a global profile in http://hl7.org/fhir/test/ImplementationGuide/patient-ig-ig"
+        ]
+      }      
+    },
+    "patient-ig-bad.json" : {
+      "version": "4.0",
+      "crumb-trail" : true,
+      "supporting": ["patient-ig-ig.json", "patient-ig-sd.json"],
+      "java": {
+        "errorCount": 1,
+        "hintCount" : 2,
+        "output" : [
+          "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/StructureDefinition/Patient",
+          "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/test/StructureDefinition/patient-ig-sd - a global profile in http://hl7.org/fhir/test/ImplementationGuide/patient-ig-ig",
+          "ERROR: Patient: Profile http://hl7.org/fhir/test/StructureDefinition/patient-ig-sd, Element 'Patient.name': minimum required = 1, but only found 0"
+        ]
+      }      
+    },
+    "patient-min-none.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0
+      },
+      "profile": {
+        "source": "patient-min-profile-none.xml",
+        "java": {
+          "errorCount": 0
+        }
+      }
+    },
+    "patient-min-none1.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0
+      },
+      "profile": {
+        "source": "patient-min-profile-none1.xml",
+        "java": {
+          "errorCount": 1
+        }
+      }
+    },
+    "patient-min-fixed.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0
+      },
+      "profile": {
+        "source": "patient-min-profile-fixed.xml",
+        "java": {
+          "errorCount": 0
+        }
+      }
+    },
+    "patient-min-fixed1.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0
+      },
+      "profile": {
+        "source": "patient-min-profile-fixed1.xml",
+        "java": {
+          "errorCount": 1
+        }
+      }
+    },
+    "patient-min-pattern.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0
+      },
+      "profile": {
+        "source": "patient-min-profile-pattern.xml",
+        "java": {
+          "errorCount": 0
+        }
+      }
+    },
+    "patient-min-pattern1.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0
+      },
+      "profile": {
+        "source": "patient-min-profile-pattern1.xml",
+        "java": {
+          "errorCount": 1
+        }
+      }
+    },
+    "parameters-reference.json" : {
+      "version" : "4.0",
+      "validate" : "CHECK_EXISTS_AND_TYPE",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 1,
+        "output" : ["WARNING: Parameters.parameter[0].resource.ofType(Patient).identifier[0].type: None of the codes provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a code should come from this value set unless it has no suitable code) (codes = http://terminology.hl7.org/CodeSystem/v2-0203#MB)"]
+      }
+    },
+    "parameters-reference-bad.json" : {
+      "version" : "4.0",
+      "validate" : "CHECK_EXISTS_AND_TYPE",
+      "java" : {
+        "errorCount" : 1,
+        "warningCount" : 1,
+        "output" : ["WARNING: Parameters.parameter[0].resource.ofType(Patient).identifier[0].type: None of the codes provided are in the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type), and a code should come from this value set unless it has no suitable code) (codes = http://terminology.hl7.org/CodeSystem/v2-0203#MB)",
+                    "ERROR: Parameters.parameter[2].resource.ofType(Coverage).beneficiary: Unable to resolve resource \"Patient/2\""]
+      }
+    },
+    "parameters-profiled-resource-valid.json" : {
+      "version" : "4.0",
+      "supporting" : [
+        "parameters-profiled-resource-profiles-patient.json",
+        "parameters-profiled-resource-profile-params.json"
+      ],
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "output" : []
+      }
+    },
+    "parameters-profiled-resource-invalid.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "output" : []
+      },
+      "profile" : {
+        "source" : "parameters-profiled-resource-profile-params.json",
+        "supporting" : [ "parameters-profiled-resource-profiles-patient.json" ],
+        "java" : {
+          "errorCount" : 1,
+          "warningCount" : 0,
+          "output" : ["ERROR: Parameters.parameter[0].resource.ofType(Patient): Profile http://hl7.org/fhir/test/StructureDefinition/parameters-profiled-resource-profiles-patient, Element 'Parameters.parameter[0].resource.ofType(Patient).name': minimum required = 1, but only found 0"]
+        }
+      }
+    },
+    "parameters-profiled-resource-multiple.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "output" : []
+      },
+      "supporting" : [ 
+        "parameters-profiled-resource-profiles-patient.json",
+        "parameters-profiled-resource-profiles-patient2.json"
+      ],
+      "profile" : {
+        "source" : "parameters-profiled-resource-profile-params-multiples.json",
+        "java" : {
+          "errorCount" : 1,
+          "warningCount" : 0,
+          "comment" : "This needs to be fixed so that it's not just an error",
+          "output" : ["ERROR: Parameters.parameter[0].resource.ofType(Patient): Multiple profiles found for contained resource. This is not supported at this time. (Type Resource: http://hl7.org/fhir/test/StructureDefinition/parameters-profiled-resource-profiles-patient, http://hl7.org/fhir/test/StructureDefinition/parameters-profiled-resource-profiles-patient2)"]
+        }
+      }
+    },
+    "canonical-url.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "output" : []
+      }    
+    },
+    "bundle-duplicate-id.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "output" : []
+      }    
+    }, 
+    "mni-patientOverview-bundle-example1.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "output" : []
+      } 
+    }, 
+    "mni-patientOverview-bundle-example1b.json" : {
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 2,
+        "warningCount" : 0,
+        "output" : ["ERROR: Bundle.entry[1].resource.ofType(Patient).name[0]: Duplicate id value '2'", 
+                    "ERROR: Bundle.entry[2]: Duplicate id value '1a'"]
+      } 
+    },      
+    "q-sct-r.json": {
+      "version" : "3.0",
+      "supporting": ["q-sct.json"],
+      "java": {
+        "errorCount": 0,
+        "output": []
+      }
+    }, 
+    "bundle-india.xml" : {
+      "version" : "4.0",
+      "supporting": ["bundle-india-profile-document.xml", "bundle-india-profile-prescription.xml"],
+      "java": {
+        "errorCount": 0,
+        "warningCount": 1,
+        "output": ["INFORMATION: Bundle.entry[0].resource.ofType(Composition).type: None of the codes provided are in the value set http://hl7.org/fhir/ValueSet/doc-typecodes (http://hl7.org/fhir/ValueSet/doc-typecodes), and a code is recommended to come from this value set) (codes = http://snomed.info/sct#440545006)",
+                   "WARNING: Bundle.entry[3].resource.ofType(MedicationRequest).reasonCode[0].coding[0]: Internal error: The display \"Traveller's Diarrhea (disorder)\" is not a valid display for the code {http://snomed.info/sct}11840006 - should be one of [\"Traveler's diarrhea\",Turista,\"Traveler's diarrhea (disorder)\"]"]
+      }
+    }, 
+    "bundle-india-bad.xml" : {
+      "version" : "4.0",
+      "supporting": ["bundle-india-profile-document.xml", "bundle-india-profile-prescription.xml"],
+      "java": {
+        "errorCount": 1,
+        "warningCount": 1,
+        "output": ["INFORMATION: Bundle.entry[0].resource.ofType(Composition).type: None of the codes provided are in the value set http://hl7.org/fhir/ValueSet/doc-typecodes (http://hl7.org/fhir/ValueSet/doc-typecodes), and a code is recommended to come from this value set) (codes = http://snomed.info/sct#440545006)",
+                   "WARNING: Bundle.entry[3].resource.ofType(MedicationRequest).reasonCode[0].coding[0]: Internal error: The display \"Traveller's Diarrhea (disorder)\" is not a valid display for the code {http://snomed.info/sct}11840006 - should be one of [\"Traveler's diarrhea\",Turista,\"Traveler's diarrhea (disorder)\"]"]
+      }
+    }
+  }
 }

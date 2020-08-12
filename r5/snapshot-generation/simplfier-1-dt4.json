@@ -1,0 +1,89 @@
+{
+  "resourceType": "StructureDefinition",
+  "url": "http://fhir.de/StructureDefinition/identifier-pkv",
+  "version": "0.9.6",
+  "name": "IdentifierPkv",
+  "title": "Identifier-Profil für die Abbildung einer Privatversichertennummer",
+  "status": "draft",
+  "date": "2019-07-06",
+  "description": "Identifier-Profil für die Abbildung einer Privatversichertennummer",
+  "fhirVersion": "4.0.1",
+  "kind": "complex-type",
+  "abstract": false,
+  "type": "Identifier",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Identifier",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Identifier.use",
+        "path": "Identifier.use",
+        "fixedCode": "secondary"
+      },
+      {
+        "id": "Identifier.type",
+        "path": "Identifier.type",
+        "min": 1
+      },
+      {
+        "id": "Identifier.type.coding",
+        "path": "Identifier.type.coding",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1
+      },
+      {
+        "id": "Identifier.type.coding:PKV-Type",
+        "path": "Identifier.type.coding",
+        "sliceName": "PKV-Type",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Identifier.type.coding:PKV-Type.system",
+        "path": "Identifier.type.coding.system",
+        "min": 1,
+        "fixedUri": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+      },
+      {
+        "id": "Identifier.type.coding:PKV-Type.code",
+        "path": "Identifier.type.coding.code",
+        "min": 1,
+        "fixedCode": "PKV"
+      },
+      {
+        "id": "Identifier.value",
+        "path": "Identifier.value",
+        "min": 1
+      },
+      {
+        "id": "Identifier.assigner",
+        "path": "Identifier.assigner",
+        "min": 1
+      },
+      {
+        "id": "Identifier.assigner.identifier.system",
+        "path": "Identifier.assigner.identifier.system",
+        "min": 1,
+        "fixedUri": "http://fhir.de/NamingSystem/arge-ik/iknr"
+      },
+      {
+        "id": "Identifier.assigner.identifier.value",
+        "path": "Identifier.assigner.identifier.value",
+        "min": 1
+      },
+      {
+        "id": "Identifier.assigner.display",
+        "path": "Identifier.assigner.display",
+        "min": 1
+      }
+    ]
+  }
+}
