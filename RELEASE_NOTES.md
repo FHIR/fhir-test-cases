@@ -1,0 +1,1 @@
+* improve capability statement tests
