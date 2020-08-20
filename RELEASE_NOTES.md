@@ -1,0 +1,1 @@
+* update tests for fixing broken redirection code in snapshot generation
