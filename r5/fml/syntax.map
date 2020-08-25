@@ -1,0 +1,24 @@
+map "http://github.com/FHIR/fhir-test-cases/r5/fml/syntax" = "syntax"
+
+// Title of this map
+// Author
+
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as source // Source Documentation
+uses "http://hl7.org/fhir/StructureDefinition/Basic" alias Basic as target // Target Documentation
+
+// Groups
+// rule for patient group
+group Patient(source src : Patient, target tgt : Basic) {
+  // Comment to rule
+  src -> tgt.extension as ext, ext.value = create('Reference') as reference, reference.reference = reference(src) "value";
+  // Copy identifier short syntax
+  src.identifier -> tgt.identifer;
+  // FHIR Path expression
+  // ('urn:uuid:' + r.lower())
+  src -> tgt.identifer as ext, ext.system = ('urn:uuid:' + r.lower()) "rootuuid";
+}
+
+// Patient2Patient ropt
+group Patient2Patient(source src : Patient, target tgt : Patient) {
+	src.identifier -> tgt.identifier;
+}
