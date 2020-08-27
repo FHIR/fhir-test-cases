@@ -266,7 +266,9 @@
 		<test name="testDateNotEqualTimeSecond" inputfile="patient-example.xml"><expression>Patient.birthDate != @T12:14:15</expression><output type="boolean">true</output></test>
 		<test name="testDateNotEqualTimeMinute" inputfile="patient-example.xml"><expression>Patient.birthDate != @T12:14</expression><output type="boolean">true</output></test>
 		<test name="testDateNotEqualToday" inputfile="patient-example.xml"><expression>Patient.birthDate &lt; today()</expression><output type="boolean">true</output></test>
-		<test name="testDateTimeGreaterThanDate" inputfile="patient-example.xml"><expression>now() &gt; Patient.birthDate</expression><output type="boolean">true</output></test>
+		<test name="testDateTimeGreaterThanDate1" inputfile="patient-example.xml"><expression>now() &gt; Patient.birthDate</expression><output type="boolean">true</output></test> 
+		<test name="testDateGreaterThanDate" inputfile="patient-example.xml"><expression>today() &gt; Patient.birthDate</expression><output type="boolean">true</output></test> 
+		<test name="testDateTimeGreaterThanDate2" inputfile="patient-example.xml"><expression>now() &gt; today()</expression></test> 
 
 		<test name="testLiteralDateTimeTZGreater" inputfile="patient-example.xml"><expression>@2017-11-05T01:30:00.0-04:00 > @2017-11-05T01:15:00.0-05:00</expression><output type="boolean">false</output></test>
 		<test name="testLiteralDateTimeTZLess" inputfile="patient-example.xml"><expression>@2017-11-05T01:30:00.0-04:00 &lt; @2017-11-05T01:15:00.0-05:00</expression><output type="boolean">true</output></test>
@@ -371,7 +373,7 @@
 		<test name="testDecimalLiteralToQuantity" inputfile="patient-example.xml"><expression>1.0.toQuantity() = 1.0 '1'</expression><output type="boolean">true</output></test>
 		<test name="testStringIntegerLiteralToQuantity" inputfile="patient-example.xml"><expression>'1'.toQuantity()</expression><output type="Quantity">1 '1'</output></test>
 		<test name="testStringQuantityLiteralToQuantity" inputfile="patient-example.xml"><expression>'1 day'.toQuantity() = 1 day</expression><output type="boolean">true</output></test>
-		<test name="testStringQuantityDayLiteralToQuantity" inputfile="patient-example.xml"><expression>'1 day'.toQuantity() = 1 '{day}'</expression><output type="boolean">true</output></test>
+		<test name="testStringQuantityDayLiteralToQuantity" inputfile="patient-example.xml"><expression>'1 day'.toQuantity() = 1 'd'</expression><output type="boolean">true</output></test>
 		<test name="testStringQuantityWeekLiteralToQuantity" inputfile="patient-example.xml"><expression>'1 \'wk\''.toQuantity() = 1 'wk'</expression><output type="boolean">true</output></test>
 		<test name="testStringDecimalLiteralToQuantity" inputfile="patient-example.xml"><expression>'1.0'.toQuantity() ~ 1 '1'</expression><output type="boolean">true</output></test>
 
@@ -406,7 +408,7 @@
 		<test name="testStringLiteralToString" inputfile="patient-example.xml"><expression>'true'.toString()</expression><output type="string">true</output></test>
 		<test name="testBooleanLiteralToString" inputfile="patient-example.xml"><expression>true.toString()</expression><output type="string">true</output></test>
 		<test name="testQuantityLiteralWkToString" inputfile="patient-example.xml"><expression>1 'wk'.toString()</expression><output type="string">1 'wk'</output></test>
-		<test name="testQuantityLiteralWeekToString" inputfile="patient-example.xml"><expression>1 week.toString()</expression><output type="string">1 'week'</output></test>
+		<test name="testQuantityLiteralWeekToString" inputfile="patient-example.xml"><expression>1 week.toString()</expression><output type="string">1 'wk'</output></test>
 
 	</group>
 
@@ -696,7 +698,7 @@
 		<test name="testEquality4" inputfile="patient-example.xml"><expression>(1) = (1)</expression><output type="boolean">true</output></test>
 		<test name="testEquality5" inputfile="patient-example.xml"><expression>(1 | 2) = (1 | 2)</expression><output type="boolean">true</output></test>
 		<test name="testEquality6" inputfile="patient-example.xml"><expression>(1 | 2 | 3) = (1 | 2 | 3)</expression><output type="boolean">true</output></test>
-		<test name="testEquality7" inputfile="patient-example.xml"><expression>(1 | 1) = (1 | 2 | {})</expression></test>
+		<test name="testEquality7" inputfile="patient-example.xml"><expression>(1 | 1) = (1 | 2 | {})</expression><output type="boolean">false</output></test>
 		<test name="testEquality8" inputfile="patient-example.xml"><expression>1 = 2</expression><output type="boolean">false</output></test>
 		<test name="testEquality9" inputfile="patient-example.xml"><expression>'a' = 'a'</expression><output type="boolean">true</output></test>
 		<test name="testEquality10" inputfile="patient-example.xml"><expression>'a' = 'A'</expression><output type="boolean">false</output></test>
@@ -743,7 +745,7 @@
 		<test name="testNEquality20" inputfile="patient-example.xml"><expression>name.take(2) != name.take(2).first() | name.take(2).last()</expression><output type="boolean">false</output></test>
 		<test name="testNEquality21" inputfile="patient-example.xml"><expression>name.take(2) != name.take(2).last() | name.take(2).first()</expression><output type="boolean">true</output></test>
 		<test name="testNEquality22" inputfile="patient-example.xml"><expression>1.2 / 1.8 != 0.6666667</expression><output type="boolean">true</output></test>
-		<test name="testNEquality23" inputfile="patient-example.xml"><expression>1.2 / 1.8 != 0.67</expression><output type="boolean">true</output></test>
+		<test name="testNEquality23" inputfile="patient-example.xml"><expression>1.2 / 1.8 != 0.67</expression><output type="boolean">false</output></test>
 		<test name="testNEquality24" inputfile="observation-example.xml"><expression>Observation.value != 185 'kg'</expression><output type="boolean">true</output></test>
 	</group>
 
@@ -821,8 +823,8 @@
 		<test name="testLessThan21" inputfile="patient-example.xml"><expression>@T12:00:01 &lt; @T12:00:00</expression><output type="boolean">false</output></test>
 		<test name="testLessThan22" inputfile="observation-example.xml"><expression>Observation.value &lt; 200 '[lb_av]'</expression><output type="boolean">true</output></test>
 		<test name="testLessThan23" inputfile="patient-example.xml"><expression>@2018-03 &lt; @2018-03-01</expression></test>
-		<test name="testLessThan24" inputfile="patient-example.xml"><expression>@2018-03-01T10 &lt; @2018-03-01T10:30</expression></test>
-		<test name="testLessThan25" inputfile="patient-example.xml"><expression>@T10 &lt; @T10:30</expression></test>
+		<test name="testLessThan24" inputfile="patient-example.xml"><expression>@2018-03-01T10:30 &lt; @2018-03-01T10:30:00</expression></test>
+		<test name="testLessThan25" inputfile="patient-example.xml"><expression>@T10:30 &lt; @T10:30:00</expression></test>
 		<test name="testLessThan26" inputfile="patient-example.xml"><expression>@2018-03-01T10:30:00 &lt; @2018-03-01T10:30:00.0</expression><output type="boolean">false</output></test>
 		<test name="testLessThan27" inputfile="patient-example.xml"><expression>@T10:30:00 &lt; @T10:30:00.0</expression><output type="boolean">false</output></test>
 	</group>
@@ -851,8 +853,8 @@
 		<test name="testLessOrEqual21" inputfile="patient-example.xml"><expression>@T12:00:01 &lt;= @T12:00:00</expression><output type="boolean">false</output></test>
 		<test name="testLessOrEqual22" inputfile="observation-example.xml"><expression>Observation.value &lt;= 200 '[lb_av]'</expression><output type="boolean">true</output></test>
 		<test name="testLessOrEqual23" inputfile="patient-example.xml"><expression>@2018-03 &lt;= @2018-03-01</expression></test>
-		<test name="testLessOrEqual24" inputfile="patient-example.xml"><expression>@2018-03-01T10 &lt;= @2018-03-01T10:30</expression></test>
-		<test name="testLessOrEqual25" inputfile="patient-example.xml"><expression>@T10 &lt;= @T10:30</expression></test>
+		<test name="testLessOrEqual24" inputfile="patient-example.xml"><expression>@2018-03-01T10:30 &lt;= @2018-03-01T10:30:00</expression></test>
+		<test name="testLessOrEqual25" inputfile="patient-example.xml"><expression>@T10:30 &lt;= @T10:30:00</expression></test>
 		<test name="testLessOrEqual26" inputfile="patient-example.xml"><expression>@2018-03-01T10:30:00  &lt;= @2018-03-01T10:30:00.0</expression><output type="boolean">true</output></test>
 		<test name="testLessOrEqual27" inputfile="patient-example.xml"><expression>@T10:30:00 &lt;= @T10:30:00.0</expression><output type="boolean">true</output></test>
 	</group>
@@ -881,8 +883,8 @@
 		<test name="testGreatorOrEqual21" inputfile="patient-example.xml"><expression>@T12:00:01 >= @T12:00:00</expression><output type="boolean">true</output></test>
 		<test name="testGreatorOrEqual22" inputfile="observation-example.xml"><expression>Observation.value &gt;= 100 '[lb_av]'</expression><output type="boolean">true</output></test>
 		<test name="testGreatorOrEqual23" inputfile="patient-example.xml"><expression>@2018-03 >= @2018-03-01</expression></test>
-		<test name="testGreatorOrEqual24" inputfile="patient-example.xml"><expression>@2018-03-01T10 >= @2018-03-01T10:30</expression></test>
-		<test name="testGreatorOrEqual25" inputfile="patient-example.xml"><expression>@T10 >= @T10:30</expression></test>
+		<test name="testGreatorOrEqual24" inputfile="patient-example.xml"><expression>@2018-03-01T10:30 >= @2018-03-01T10:30:00</expression></test>
+		<test name="testGreatorOrEqual25" inputfile="patient-example.xml"><expression>@T10:30 >= @T10:30:00</expression></test>
 		<test name="testGreatorOrEqual26" inputfile="patient-example.xml"><expression>@2018-03-01T10:30:00 >= @2018-03-01T10:30:00.0</expression><output type="boolean">true</output></test>
 		<test name="testGreatorOrEqual27" inputfile="patient-example.xml"><expression>@T10:30:00 >= @T10:30:00.0</expression><output type="boolean">true</output></test>
 	</group>
@@ -911,8 +913,8 @@
 		<test name="testGreaterThan21" inputfile="patient-example.xml"><expression>@T12:00:01 > @T12:00:00</expression><output type="boolean">true</output></test>
 		<test name="testGreaterThan22" inputfile="observation-example.xml"><expression>Observation.value &gt; 100 '[lb_av]'</expression><output type="boolean">true</output></test>
 		<test name="testGreaterThan23" inputfile="patient-example.xml"><expression>@2018-03 > @2018-03-01</expression></test>
-		<test name="testGreaterThan24" inputfile="patient-example.xml"><expression>@2018-03-01T10 > @2018-03-01T10:30</expression></test>
-		<test name="testGreaterThan25" inputfile="patient-example.xml"><expression>@T10 > @T10:30</expression></test>
+		<test name="testGreaterThan24" inputfile="patient-example.xml"><expression>@2018-03-01T10:30 > @2018-03-01T10:30:00</expression></test>
+		<test name="testGreaterThan25" inputfile="patient-example.xml"><expression>@T10:30 > @T10:30:00</expression></test>
 		<test name="testGreaterThan26" inputfile="patient-example.xml"><expression>@2018-03-01T10:30:00 > @2018-03-01T10:30:00.0</expression><output type="boolean">false</output></test>
 		<test name="testGreaterThan27" inputfile="patient-example.xml"><expression>@T10:30:00 > @T10:30:00.0</expression><output type="boolean">false</output></test>
 	</group>
@@ -1036,7 +1038,7 @@
 		<test name="testDivide2" inputfile="patient-example.xml"><expression>4 / 2 = 2</expression><output type="boolean">true</output></test>
 		<test name="testDivide3" inputfile="patient-example.xml"><expression>4.0 / 2.0 = 2.0</expression><output type="boolean">true</output></test>
 		<test name="testDivide4" inputfile="patient-example.xml"><expression>1 / 2 = 0.5</expression><output type="boolean">true</output></test>
-		<test name="testDivide5" inputfile="patient-example.xml"><expression>1.2 / 1.8 = 0.66666667</expression><output type="boolean">true</output></test>
+		<test name="testDivide5" inputfile="patient-example.xml"><expression>1.2 / 1.8 = 0.67</expression><output type="boolean">true</output></test>
 		<test name="testDivide6" inputfile="patient-example.xml"><expression>1 / 0</expression></test>
 	</group>
 
@@ -1058,7 +1060,7 @@
 
 	<group name="testRound">
 		<test name="testRound1" inputfile="patient-example.xml"><expression>1.round() = 1</expression><output type="boolean">true</output></test>
-		<test name="testRound2" inputfile="patient-example.xml"><expression>3.14159.round(3) = 2</expression><output type="boolean">true</output></test>
+		<test name="testRound2" inputfile="patient-example.xml"><expression>3.14159.round(3) = 3.142</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testSqrt">
@@ -1174,7 +1176,7 @@
 		<test inputfile="patient-example.xml"><expression	invalid="true">contained.select(('#'+id in %resource.descendants().reference).not()).empty()");
 	</group>
 -->
-	<group> name="from-Zulip">
+	<group name="from-Zulip">
 		<test inputfile="patient-example.xml"><expression>(true and 'foo').empty()</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>(true | 'foo').allTrue()</expression><output type="boolean">false</output></test>
 	</group>
