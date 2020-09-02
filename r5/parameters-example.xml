@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Parameters xmlns="http://hl7.org/fhir" xmlns:f="http://hl7.org/fhir" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../src-generated/schemas/fhir-single.xsd">
+	<id value="example-tpr-response"/>
+	<!-- The actual instance would have a UUID as the id -->
+	<meta>
+		<profile value="http://telus.com/fhir/StructureDefinition/profile-parameters-tpr-response"/>
+		<!-- Lloyd, Anne, should we have a tag
+		<tag>
+			<system value="http://telus.com/fhir/CodeSystem/telus-version"/>
+			<code value="eServices2.1"/>
+		</tag> -->
+	</meta>
+	<parameter>
+		<name value="over100flag"/>
+		<valueBoolean value="false"/>
+	</parameter>
+	<parameter>
+		<name value="address"/>
+		<part>
+			<name value="number"/>
+			<valueInteger value="1"/>
+		</part>
+		<part>
+			<name value="resources"/>
+			<resource>
+				<PractitionerRole>
+					<id value="PractitionerRoleDestinationTPRID"/>
+					<practitioner>
+						<reference value="https://webservices.telus.com/rest/v1/THP/TPR/v1/Practitioner/CDXPP12345"/>
+						<display value="Dr Medical Clinic ABC General Inbox (CDX)"/>
+					</practitioner>
+					<organization>
+						<reference value="https://webservices.telus.com/rest/v1/THP/TPR/v1/Organization/CDXORG12345"/>
+					</organization>
+					<code>
+						<coding>
+							<system value="http://terminology.hl7.org/CodeSystem/practitioner-role"/>
+							<code value="doctor"/>
+							<display value="Doctor">
+								<extension url="http://hl7.org/fhir/StructureDefinition/translation">
+									<extension url="lang">
+										<valueCode value="fr-CA"/>
+									</extension>
+									<extension url="content">
+										<valueString value="Médecin"/>
+									</extension>
+								</extension>
+							</display>
+						</coding>
+						<text value="Doctor"/>
+					</code>
+					<specialty>
+						<coding>
+							<system value="http://snomed.info/sct"/>
+							<code value="90655003"/>
+							<display value="Geriatrics specialist"/>
+						</coding>
+						<text value="Geriatrics specialist">
+							<extension url="http://hl7.org/fhir/StructureDefinition/translation">
+								<extension url="lang">
+									<valueCode value="fr-CA"/>
+								</extension>
+								<extension url="content">
+									<valueString value="Spécialiste en Gériatrie"/>
+								</extension>
+							</extension>
+						</text>
+					</specialty>
+				</PractitionerRole>
+			</resource>
+		</part>
+		<part>
+			<name value="resources"/>
+			<resource>
+				<Practitioner>
+					<id value="CDXPP12345"/>
+					<identifier>
+						<type>
+							<coding>
+								<system value="http://terminology.hl7.org/CodeSystem/v2-0203"/>
+								<code value="PRN"/>
+							</coding>
+						</type>
+						<system value="http://telus.com/fhir/Identifiers/TPR"/>
+						<value value="CDXPP12345-bad"/>
+					</identifier>
+					<name>
+						<use value="official"/>
+						<family value="General Inbox (CDX)"/>
+						<given value="Medical Clinic ABC"/>
+						<prefix value="Dr"/>
+					</name>
+					<telecom>
+						<system value="phone"/>
+						<value value="(222) 456-7890"/>
+						<use value="work"/>
+					</telecom>
+					<telecom>
+						<system value="phone"/>
+						<value value="(263) 222-2222"/>
+						<use value="mobile"/>
+					</telecom>
+					<qualification>
+						<identifier>
+							<type>
+								<coding>
+									<system value="http://terminology.hl7.org/CodeSystem/v2-0203"/>
+									<code value="LN"/>
+								</coding>
+								<text value="College of Physicians and Surgeons of British Columbia"/>
+							</type>
+							<system value="urn:oid:2.16.840.1.113883.4.756"/>
+							<value value="0000000"/>
+						</identifier>
+						<code>
+							<coding>
+								<system value="http://terminology.hl7.org/CodeSystem/v2-0360|2.7"/>
+								<code value="BS"/>
+								<display value="Bachelor of Science"/>
+							</coding>
+							<text value="Bachelor of Science"/>
+						</code>
+					</qualification>
+					<communication>
+						<coding>
+							<system value="urn:ietf:bcp:47"/>
+							<code value="fr-CA"/>
+						</coding>
+					</communication>
+				</Practitioner>
+			</resource>
+		</part>
+		<part>
+			<name value="resources"/>
+			<resource>
+				<Organization>
+					<id value="CDXORG12345"/>
+					<identifier>
+						<system value="http://telus.com/fhir/Identifiers/TPR"/>
+						<value value="CDXORG12345"/>
+					</identifier>
+					<type>
+						<coding>
+							<system value="http://terminology.hl7.org/CodeSystem/v3-RoleCode"/>
+							<code value="PROFF"/>
+							<display value="Provider's Office"/>
+						</coding>
+					</type>
+					<name value="Medical Clinic ABC"/>
+					<telecom>
+						<system value="phone"/>
+						<value value="+1 555 234 1234"/>
+						<use value="work"/>
+					</telecom>
+					<telecom>
+						<system value="email"/>
+						<value value="contact@erad.acme.org"/>
+						<use value="work"/>
+					</telecom>
+					<address>
+						<type value="physical"/>
+						<line value="55 Test Ave"/>
+						<city value="Vancouver"/>
+						<state value="British Columbia"/>
+						<postalCode value="B1C 1B1"/>
+						<country value="Canada"/>
+					</address>
+				</Organization>
+			</resource>
+		</part>
+		<part>
+			<name value="recipientHealthcareService"/>
+			<valueCode value="eServices"/>
+		</part>
+	</parameter>
+</Parameters>
