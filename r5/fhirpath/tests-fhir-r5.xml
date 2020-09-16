@@ -200,7 +200,7 @@
 		<test name="testLiteralInteger1" inputfile="patient-example.xml"><expression>1.convertsToInteger()</expression><output type="boolean">true</output></test>
 		<test name="testLiteralInteger0" inputfile="patient-example.xml"><expression>0.convertsToInteger()</expression><output type="boolean">true</output></test>
 		<test name="testLiteralIntegerNegative1" inputfile="patient-example.xml"><expression>(-1).convertsToInteger()</expression><output type="boolean">true</output></test>
-		<test name="testLiteralIntegerNegative1Invalid" inputfile="patient-example.xml"><expression invalid="true">-1.convertsToInteger()</expression></test>
+		<test name="testLiteralIntegerNegative1Invalid" inputfile="patient-example.xml"><expression invalid="execution">-1.convertsToInteger()</expression></test>
 		<test name="testLiteralIntegerMax" inputfile="patient-example.xml"><expression>2147483647.convertsToInteger()</expression><output type="boolean">true</output></test>
 
 		<test name="testLiteralString" inputfile="patient-example.xml"><expression>'test'.convertsToString()</expression><output type="boolean">true</output></test>
@@ -213,7 +213,7 @@
 		<test name="testLiteralDecimal01" inputfile="patient-example.xml"><expression>0.1.convertsToDecimal()</expression><output type="boolean">true</output></test>
 		<test name="testLiteralDecimal00" inputfile="patient-example.xml"><expression>0.0.convertsToDecimal()</expression><output type="boolean">true</output></test>
 		<test name="testLiteralDecimalNegative01" inputfile="patient-example.xml"><expression>(-0.1).convertsToDecimal()</expression><output type="boolean">true</output></test>
-		<test name="testLiteralDecimalNegative01Invalid" inputfile="patient-example.xml"><expression invalid="true">-0.1.convertsToDecimal()</expression></test>
+		<test name="testLiteralDecimalNegative01Invalid" inputfile="patient-example.xml"><expression invalid="execution">-0.1.convertsToDecimal()</expression></test>
 		<test name="testLiteralDecimalMax" inputfile="patient-example.xml"><expression>1234567890987654321.0.convertsToDecimal()</expression><output type="boolean">true</output></test>
 		<test name="testLiteralDecimalStep" inputfile="patient-example.xml"><expression>0.00000001.convertsToDecimal()</expression><output type="boolean">true</output></test>
 
@@ -235,8 +235,8 @@
 		<test name="testLiteralTimeMinute" inputfile="patient-example.xml"><expression>@T14:34.is(Time)</expression><output type="boolean">true</output></test>
 		<test name="testLiteralTimeSecond" inputfile="patient-example.xml"><expression>@T14:34:28.is(Time)</expression><output type="boolean">true</output></test>
 		<test name="testLiteralTimeMillisecond" inputfile="patient-example.xml"><expression>@T14:34:28.123.is(Time)</expression><output type="boolean">true</output></test>
-		<test name="testLiteralTimeUTC" inputfile="patient-example.xml"><expression invalid="true">@T14:34:28Z.is(Time)</expression></test>
-		<test name="testLiteralTimeTimezoneOffset" inputfile="patient-example.xml"><expression invalid="true">@T14:34:28+10:00.is(Time)</expression></test>
+		<test name="testLiteralTimeUTC" inputfile="patient-example.xml"><expression invalid="execution">@T14:34:28Z.is(Time)</expression></test>
+		<test name="testLiteralTimeTimezoneOffset" inputfile="patient-example.xml"><expression invalid="execution">@T14:34:28+10:00.is(Time)</expression></test>
 
 		<test name="testLiteralQuantityDecimal" inputfile="patient-example.xml"><expression>10.1 'mg'.convertsToQuantity()</expression><output type="boolean">true</output></test>
 		<test name="testLiteralQuantityInteger" inputfile="patient-example.xml"><expression>10 'mg'.convertsToQuantity()</expression><output type="boolean">true</output></test>
@@ -256,7 +256,7 @@
 		<test name="testLiteralDecimalGreaterThanZeroTrue" inputfile="observation-example.xml"><expression>Observation.value.value &gt; 0.0</expression><output type="boolean">true</output></test>
 		<test name="testLiteralDecimalGreaterThanIntegerTrue" inputfile="observation-example.xml"><expression>Observation.value.value &gt; 0</expression><output type="boolean">true</output></test>
 		<test name="testLiteralDecimalLessThanInteger" inputfile="observation-example.xml"><expression>Observation.value.value &lt; 190</expression><output type="boolean">true</output></test>
-		<test name="testLiteralDecimalLessThanInvalid" inputfile="observation-example.xml"><expression invalid="semantic">Observation.value.value &lt; 'test'</expression><!-- no output - empty set --></test>
+		<test name="testLiteralDecimalLessThanInvalid" inputfile="observation-example.xml"><expression invalid="execution">Observation.value.value &lt; 'test'</expression><!-- no output - empty set --></test>
 
 		<test name="testDateEqual" inputfile="patient-example.xml"><expression>Patient.birthDate = @1974-12-25</expression><output type="boolean">true</output></test>
 		<test name="testDateNotEqual" inputfile="patient-example.xml"><expression>Patient.birthDate != @1974-12-25T12:34:00</expression></test>
@@ -296,7 +296,7 @@
 		<test name="testLiteralNotFalse" inputfile="patient-example.xml"><expression>false.not() = true</expression><output type="boolean">true</output></test>
 		<test name="testIntegerBooleanNotTrue" inputfile="patient-example.xml"><expression>(0).not() = true</expression><output type="boolean">true</output></test>
 		<test name="testIntegerBooleanNotFalse" inputfile="patient-example.xml"><expression>(1).not() = false</expression><output type="boolean">true</output></test>
-		<test name="testNotInvalid" inputfile="patient-example.xml"><expression invalid="semantic">(1|2).not() = false</expression></test>
+		<test name="testNotInvalid" inputfile="patient-example.xml"><expression invalid="execution">(1|2).not() = false</expression></test>
 	</group>
 
 	<group name="testTypes">
@@ -454,7 +454,7 @@
 	</group>
 
 	<group name="testCollectionBoolean">
-		<test name="testCollectionBoolean1" inputfile="patient-example.xml"><expression invalid="semantic">iif(1 | 2 | 3, true, false)</expression></test>
+		<test name="testCollectionBoolean1" inputfile="patient-example.xml"><expression invalid="execution">iif(1 | 2 | 3, true, false)</expression></test>
 		<test name="testCollectionBoolean2" inputfile="patient-example.xml"><expression>iif({}, true, false)</expression><output type="boolean">false</output></test>
 		<test name="testCollectionBoolean3" inputfile="patient-example.xml"><expression>iif(true, true, false)</expression><output type="boolean">true</output></test>
 		<test name="testCollectionBoolean4" inputfile="patient-example.xml"><expression>iif({} | true, true, false)</expression><output type="boolean">true</output></test>
@@ -526,7 +526,7 @@
 
 	<group name="testSingle">
 		<test name="testSingle1" inputfile="patient-example.xml"><expression>Patient.name.first().single().exists()</expression><output type="boolean">true</output></test>
-		<test name="testSingle2" inputfile="patient-example.xml"><expression	invalid="semantic">Patient.name.single().exists()</expression></test>
+		<test name="testSingle2" inputfile="patient-example.xml"><expression invalid="execution">Patient.name.single().exists()</expression></test>
 	</group>
 
 	<group name="testFirstLast">
@@ -1019,14 +1019,14 @@
 		<test name="testConcatenate1" inputfile="patient-example.xml"><expression>'a' &amp; 'b' = 'ab'</expression><output type="boolean">true</output></test>
 		<test name="testConcatenate2" inputfile="patient-example.xml"><expression>'1' &amp; {} = '1'</expression><output type="boolean">true</output></test>
 		<test name="testConcatenate3" inputfile="patient-example.xml"><expression>{} &amp; 'b' = 'b'</expression><output type="boolean">true</output></test>
-		<test name="testConcatenate4" inputfile="patient-example.xml"><expression invalid="semantic">(1 | 2 | 3) &amp; 'b' = '1,2,3b'</expression></test>
+		<test name="testConcatenate4" inputfile="patient-example.xml"><expression invalid="execution">(1 | 2 | 3) &amp; 'b' = '1,2,3b'</expression></test>
 	</group>
 
 	<group name="testMinus">
 		<test name="testMinus1" inputfile="patient-example.xml"><expression>1 - 1 = 0</expression><output type="boolean">true</output></test>
 		<test name="testMinus2" inputfile="patient-example.xml"><expression>1 - 0 = 1</expression><output type="boolean">true</output></test>
 		<test name="testMinus3" inputfile="patient-example.xml"><expression>1.8 - 1.2 = 0.6</expression><output type="boolean">true</output></test>
-		<test name="testMinus4" inputfile="patient-example.xml"><expression invalid="semantic">'a'-'b' = 'ab'</expression></test>
+		<test name="testMinus4" inputfile="patient-example.xml"><expression invalid="execution">'a'-'b' = 'ab'</expression></test>
 	</group>
 
 	<group name="testMultiply">
@@ -1117,7 +1117,7 @@
 
 	<group name="testPrecedence">
 		<test name="testPrecedence1" description="test unary precedence" inputfile="patient-example.xml">
-			<expression invalid="semantic">-1.convertsToInteger()</expression>
+			<expression invalid="execution">-1.convertsToInteger()</expression>
 			<!-- should error because unary does not work on boolean: -(1.convertsToInteger()) -->
 		</test>
 
@@ -1168,7 +1168,7 @@
 	<group name="testConformsTo">
 		<test name="testConformsTo1" inputfile="patient-example.xml"><expression>conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')</expression><output type="boolean">true</output></test>
 		<test name="testConformsTo2" inputfile="patient-example.xml"><expression>conformsTo('http://hl7.org/fhir/StructureDefinition/Person')</expression><output type="boolean">false</output></test>
-		<test name="testConformsTo3" inputfile="patient-example.xml"><expression invalid="true">conformsTo('http://trash')</expression></test>
+		<test name="testConformsTo3" inputfile="patient-example.xml"><expression invalid="execution">conformsTo('http://trash')</expression></test>
 	</group>
 
 <!--
@@ -1182,4 +1182,20 @@
 		<test inputfile="patient-example.xml"><expression>(true and 'foo').empty()</expression><output type="boolean">true</output></test>
 		<test inputfile="patient-example.xml"><expression>(true | 'foo').allTrue()</expression><output type="boolean">false</output></test>
 	</group>
+  
+  <group name="polymorphics">
+    <!--
+      The way FHIRpath works, it treats polymorphic values e.g. Observation.value[x] as 
+      Observation.value. This catches people out - they often write Observation.valueString. 
+      
+      For this reason, some engines have a non-strict mode where this is allowed, but it's not 
+      technical conformant. While this might change in the future, it's not legal in strict mode.
+      these tests test this out. 
+    -->
+		<test name="testPolymorphicsA" inputfile="observation-example.xml"><expression>Observation.value.exists()</expression><output type="boolean">true</output></test>
+		<test name="testPolymorphicsB" inputfile="observation-example.xml"><expression invalid="semantic">Observation.valueQuantity.exists()</expression><output type="string">false</output></test>
+		<modeTest mode="lenient/polymorphics" name="testPolymorphicsC" inputfile="observation-example.xml"><expression>Observation.valueQuantity.exists()</expression><output type="boolean">true</output></modeTest>
+		<modeTest mode="lenient/polymorphics" name="testPolymorphicsD" inputfile="observation-example.xml"><expression>Observation.valueString.exists()</expression><output type="boolean">false</output></modeTest>
+  </group>
+  
 </tests>
