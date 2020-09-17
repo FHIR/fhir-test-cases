@@ -1182,8 +1182,8 @@
 		<notes>These tests are based on the discussion here: https://chat.fhir.org/#narrow/stream/179266-fhirpath/topic/Singleton.20Evaluation.20of.20Collections
 		In particular, per Singleton Evaluation of Collections, if an argument does not implicitly convert to a boolean, it is considered true if there is a single element, empty otherwise, so `true and 'foo'` evaluates to `true`, which is not empty,
 		but `true | 'foo'` is a collection, which results in an error because `'foo'` cannot be converted to a boolean for consideration in `allTrue()`.</notes>
-		<test inputfile="patient-example.xml"><expression>(true and 'foo').empty()</expression><output type="boolean">false</output></test>
-		<test inputfile="patient-example.xml"><expression invalid="semantic">(true | 'foo').allTrue()</expression><output type="boolean">false</output></test>
+		<test name="from-zulip-1" inputfile="patient-example.xml"><expression>(true and 'foo').empty()</expression><output type="boolean">false</output></test>
+		<test name="from-zulip-2" inputfile="patient-example.xml"><expression invalid="execution">(true | 'foo').allTrue()</expression><output type="boolean">false</output></test>
 	</group>
   
   <group name="polymorphics">
