@@ -294,7 +294,7 @@
 
 		<test name="testLiteralNotTrue" inputfile="patient-example.xml"><expression>true.not() = false</expression><output type="boolean">true</output></test>
 		<test name="testLiteralNotFalse" inputfile="patient-example.xml"><expression>false.not() = true</expression><output type="boolean">true</output></test>
-		<test name="testIntegerBooleanNotTrue" inputfile="patient-example.xml"><expression>(0).not() = true</expression><output type="boolean">true</output></test>
+		<test name="testIntegerBooleanNotTrue" inputfile="patient-example.xml"><expression>(0).not() = false</expression><output type="boolean">true</output></test>
 		<test name="testIntegerBooleanNotFalse" inputfile="patient-example.xml"><expression>(1).not() = false</expression><output type="boolean">true</output></test>
 		<test name="testNotInvalid" inputfile="patient-example.xml"><expression invalid="execution">(1|2).not() = false</expression></test>
 	</group>
@@ -645,37 +645,37 @@
 	</group>
 
 	<group name="testEncodeDecode">
-		<test inputfile="patient-example.xml"><expression>'test'.encode('base64')</expression><output type="string">dGVzdA==</output></test>
-		<test inputfile="patient-example.xml"><expression>'test'.encode('hex')</expression><output type="string">74657374</output></test>
-		<test inputfile="patient-example.xml"><expression>'subjects?_d'.encode('base64')</expression><output type="string">c3ViamVjdHM/X2Q=</output></test>
-		<test inputfile="patient-example.xml"><expression>'subjects?_d'.encode('urlbase64')</expression><output type="string">c3ViamVjdHM_X2Q=</output></test>
+		<test name="testEncodeBase64A" version="2.1.0" inputfile="patient-example.xml"><expression>'test'.encode('base64')</expression><output type="string">dGVzdA==</output></test>
+		<test name="testEncodeHex" version="2.1.0" inputfile="patient-example.xml"><expression>'test'.encode('hex')</expression><output type="string">74657374</output></test>
+		<test name="testEncodeBase64B" version="2.1.0" inputfile="patient-example.xml"><expression>'subjects?_d'.encode('base64')</expression><output type="string">c3ViamVjdHM/X2Q=</output></test>
+		<test name="testEncodeUrlBase64" version="2.1.0" inputfile="patient-example.xml"><expression>'subjects?_d'.encode('urlbase64')</expression><output type="string">c3ViamVjdHM_X2Q=</output></test>
 
-		<test inputfile="patient-example.xml"><expression>'dGVzdA=='.decode('base64')</expression><output type="string">test</output></test>
-		<test inputfile="patient-example.xml"><expression>'74657374'.decode('hex')</expression><output type="string">test</output></test>
-		<test inputfile="patient-example.xml"><expression>'c3ViamVjdHM/X2Q='.decode('base64')</expression><output type="string">subjects?_d</output></test>
-		<test inputfile="patient-example.xml"><expression>'c3ViamVjdHM_X2Q='.decode('urlbase64')</expression><output type="string">subjects?_d</output></test>
+		<test name="testDecodeBase64A" version="2.1.0" inputfile="patient-example.xml"><expression>'dGVzdA=='.decode('base64')</expression><output type="string">test</output></test>
+		<test name="testDecodeHex" version="2.1.0" inputfile="patient-example.xml"><expression>'74657374'.decode('hex')</expression><output type="string">test</output></test>
+		<test name="testDecodeBase64B" version="2.1.0" inputfile="patient-example.xml"><expression>'c3ViamVjdHM/X2Q='.decode('base64')</expression><output type="string">subjects?_d</output></test>
+		<test name="testDecodeUrlBase64" version="2.1.0" inputfile="patient-example.xml"><expression>'c3ViamVjdHM_X2Q='.decode('urlbase64')</expression><output type="string">subjects?_d</output></test>
 	</group>
 
-	<group name="testExcapeUnescape">
-		<test inputfile="patient-example.xml"><expression>'"1&lt;2"'.escape('html')</expression><output type="string">&amp;quot;1&amp;lt;2&amp;quot;</output></test>
-		<test inputfile="patient-example.xml"><expression>'"1&lt;2"'.escape('json')</expression><output type="string">\"1&lt;2\"</output></test>
-		<test inputfile="patient-example.xml"><expression>'&amp;quot;1&amp;lt;2&amp;quot;'.unescape('html')</expression><output type="string">"1&lt;2"</output></test>
-		<test inputfile="patient-example.xml"><expression>'\"1&lt;2\"'.unescape('json')</expression><output type="string">"1&lt;2"</output></test>
+	<group name="testEscapeUnescape">
+		<test name="testEscapeHtml" version="2.1.0" inputfile="patient-example.xml"><expression>'"1&lt;2"'.escape('html')</expression><output type="string">&amp;quot;1&amp;lt;2&amp;quot;</output></test>
+		<test name="testEscapeJson" version="2.1.0" inputfile="patient-example.xml"><expression>'"1&lt;2"'.escape('json')</expression><output type="string">\"1&lt;2\"</output></test>
+		<test name="testUnescapeHtml" version="2.1.0" inputfile="patient-example.xml"><expression>'&amp;quot;1&amp;lt;2&amp;quot;'.unescape('html')</expression><output type="string">"1&lt;2"</output></test>
+		<test name="testUnescapeJson" version="2.1.0" inputfile="patient-example.xml"><expression>'\"1&lt;2\"'.unescape('json')</expression><output type="string">"1&lt;2"</output></test>
 	</group>
 
 	<group name="testTrim">
-		<test inputfile="patient-example.xml"><expression>'123456'.trim().length() = 6</expression><output type="boolean">true</output></test>
-		<test inputfile="patient-example.xml"><expression>'123 456'.trim().length() = 7</expression><output type="boolean">true</output></test>
-		<test inputfile="patient-example.xml"><expression>' 123456 '.trim().length() = 6</expression><output type="boolean">true</output></test>
-		<test inputfile="patient-example.xml"><expression>'  '.trim().length() = 0</expression><output type="boolean">true</output></test>
+		<test name="testTrim1" version="2.1.0" inputfile="patient-example.xml"><expression>'123456'.trim().length() = 6</expression><output type="boolean">true</output></test>
+		<test name="testTrim2" version="2.1.0" inputfile="patient-example.xml"><expression>'123 456'.trim().length() = 7</expression><output type="boolean">true</output></test>
+		<test name="testTrim3" version="2.1.0" inputfile="patient-example.xml"><expression>' 123456 '.trim().length() = 6</expression><output type="boolean">true</output></test>
+		<test name="testTrim4" version="2.1.0" inputfile="patient-example.xml"><expression>'  '.trim().length() = 0</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testSplit">
-		<test inputfile="patient-example.xml"><expression>'Peter,James,Jim,Peter,James'.split(',').count() = 5</expression><output type="boolean">true</output></test>
+		<test name="testSplit" version="2.1.0" inputfile="patient-example.xml"><expression>'Peter,James,Jim,Peter,James'.split(',').count() = 5</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testJoin">
-		<test inputfile="patient-example.xml"><expression>name.given.join(',')</expression><output type="string">Peter,James,Jim,Peter,James</output></test>
+		<test name="testJoin" version="2.1.0" inputfile="patient-example.xml"><expression>name.given.join(',')</expression><output type="string">Peter,James,Jim,Peter,James</output></test>
 	</group>
 
 	<group name="testTrace">
@@ -1178,9 +1178,12 @@
 		<test inputfile="patient-example.xml"><expression	invalid="true">contained.select(('#'+id in %resource.descendants().reference).not()).empty()");
 	</group>
 -->
-	<group name="from-Zulip">
-		<test inputfile="patient-example.xml"><expression>(true and 'foo').empty()</expression><output type="boolean">true</output></test>
-		<test inputfile="patient-example.xml"><expression>(true | 'foo').allTrue()</expression><output type="boolean">false</output></test>
+	<group name="from-Zulip" reference="http://hl7.org/fhirpath/#singleton-evaluation-of-collections">
+		<notes>These tests are based on the discussion here: https://chat.fhir.org/#narrow/stream/179266-fhirpath/topic/Singleton.20Evaluation.20of.20Collections
+		In particular, per Singleton Evaluation of Collections, if an argument does not implicitly convert to a boolean, it is considered true if there is a single element, empty otherwise, so `true and 'foo'` evaluates to `true`, which is not empty,
+		but `true | 'foo'` is a collection, which results in an error because `'foo'` cannot be converted to a boolean for consideration in `allTrue()`.</notes>
+		<test inputfile="patient-example.xml"><expression>(true and 'foo').empty()</expression><output type="boolean">false</output></test>
+		<test inputfile="patient-example.xml"><expression invalid="semantic">(true | 'foo').allTrue()</expression><output type="boolean">false</output></test>
 	</group>
   
   <group name="polymorphics">
