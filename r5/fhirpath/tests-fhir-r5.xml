@@ -20,7 +20,7 @@
 	<group name="testMiscellaneousAccessorTests" description="Miscellaneous accessor tests">
 		<test name="testExtractBirthDate" description="Extract birthDate" inputfile="patient-example.xml" predicate="false">
 			<expression>birthDate</expression>
-			<output type="date">1974-12-25</output>
+			<output type="date">@1974-12-25</output>
 		</test>
 		<test name="testPatientHasBirthDate" description="patient has a birthDate" inputfile="patient-example.xml" predicate="true">
 			<expression>birthDate</expression>
@@ -1013,8 +1013,31 @@
 		<test name="testPlus2" inputfile="patient-example.xml"><expression>1 + 0 = 1</expression><output type="boolean">true</output></test>
 		<test name="testPlus3" inputfile="patient-example.xml"><expression>1.2 + 1.8 = 3.0</expression><output type="boolean">true</output></test>
 		<test name="testPlus4" inputfile="patient-example.xml"><expression>'a'+'b' = 'ab'</expression><output type="boolean">true</output></test>
-        <test name="testPlus5" inputfile="patient-example.xml"><expression>@1974-12-25 + 7 'days'</expression><output type="date">1975-01-01</output></test>
-        <test name="testPlus6" inputfile="patient-example.xml"><expression invalid="semantic">@1974-12-25 + 7</expression></test>
+   
+    <test name="testPlusDate1" inputfile="patient-example.xml"><expression>@1973-12-25 + 7 days</expression>                             <output type="date">@1974-01-01</output></test>
+    <test name="testPlusDate2" inputfile="patient-example.xml"><expression>@1973-12-25 + 7.7 days</expression>                           <output type="date">@1974-01-01</output></test>
+    <test name="testPlusDate3" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 7 days</expression>          <output type="dateTime">@1974-01-01T00:00:00.000+10:00</output></test>
+    <test name="testPlusDate4" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 7.7 days</expression>        <output type="dateTime">@1974-01-01T00:00:00.000+10:00</output></test>
+    <test name="testPlusDate5" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 1 second</expression>       <output type="dateTime">@1973-12-25T00:00:01.000+10:00</output></test>
+    <test name="testPlusDate6" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 10 millisecond</expression> <output type="dateTime">@1973-12-25T00:00:00.010+10:00</output></test>
+    <test name="testPlusDate7" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 1 minute</expression>       <output type="dateTime">@1973-12-25T00:01:00.000+10:00</output></test>
+    <test name="testPlusDate8" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 1 hour</expression>         <output type="dateTime">@1973-12-25T01:00:00.000+10:00</output></test>
+    <test name="testPlusDate9" inputfile="patient-example.xml"><expression>@1973-12-25 + 1 day</expression>                             <output type="date">@1973-12-26</output></test>
+    <test name="testPlusDate10" inputfile="patient-example.xml"><expression>@1973-12-25 + 1 month</expression>                           <output type="date">@1974-01-25</output></test>
+    <test name="testPlusDate11" inputfile="patient-example.xml"><expression>@1973-12-25 + 1 week</expression>                            <output type="date">@1974-01-01</output></test>
+    <test name="testPlusDate12" inputfile="patient-example.xml"><expression>@1973-12-25 + 1 year</expression>                            <output type="date">@1974-12-25</output></test>
+    <test name="testPlusDate13" inputfile="patient-example.xml"><expression>@1973-12-25 + 1 'd'</expression>                              <output type="date">@1973-12-26</output></test>
+    <test name="testPlusDate14" inputfile="patient-example.xml"><expression invalid="execution">@1973-12-25 + 1 'mo'</expression>        </test>
+    <test name="testPlusDate15" inputfile="patient-example.xml"><expression>@1973-12-25 + 1 'wk'</expression>                            <output type="date">@1974-01-01</output></test>
+    <test name="testPlusDate16" inputfile="patient-example.xml"><expression invalid="execution">@1973-12-25 + 1 'a'</expression>        </test>
+    <test name="testPlusDate17" inputfile="patient-example.xml"><expression invalid="execution">@1975-12-25 + 1 'a'</expression>        </test>
+    <test name="testPlusDate18" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 1 's'</expression>           <output type="dateTime">@1973-12-25T00:00:01.000+10:00</output></test>
+    <test name="testPlusDate19" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 0.1 's'</expression>         <output type="dateTime">@1973-12-25T00:00:00.000+10:00</output></test>
+    <test name="testPlusDate20" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 10 'ms'</expression>         <output type="dateTime">@1973-12-25T00:00:00.010+10:00</output></test>
+    <test name="testPlusDate21" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 1 'min'</expression>         <output type="dateTime">@1973-12-25T00:01:00.000+10:00</output></test>
+    <test name="testPlusDate22" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 1 'h'</expression>           <output type="dateTime">@1973-12-25T01:00:00.000+10:00</output></test>
+    
+    <test name="testPlus6" inputfile="patient-example.xml"><expression invalid="semantic">@1974-12-25 + 7</expression></test>
 	</group>
 
 	<group name="testConcatenate">
@@ -1029,8 +1052,8 @@
 		<test name="testMinus2" inputfile="patient-example.xml"><expression>1 - 0 = 1</expression><output type="boolean">true</output></test>
 		<test name="testMinus3" inputfile="patient-example.xml"><expression>1.8 - 1.2 = 0.6</expression><output type="boolean">true</output></test>
 		<test name="testMinus4" inputfile="patient-example.xml"><expression invalid="execution">'a'-'b' = 'ab'</expression></test>
-		<test name="testMinus5" inputfile="patient-example.xml"><expression>@1974-12-25 - 1 'month'</expression><output type="date">1974-11-25</output></test>
-        <test name="testMinus6" inputfile="patient-example.xml"><expression invalid="semantic">@1974-12-25 - 1 'cm'</expression></test>
+		<test name="testMinus5" inputfile="patient-example.xml"><expression>@1974-12-25 - 1 'month'</expression><output type="date">@1974-11-25</output></test>
+    <test name="testMinus6" inputfile="patient-example.xml"><expression invalid="execution">@1974-12-25 - 1 'cm'</expression></test>
 	</group>
 
 	<group name="testMultiply">
