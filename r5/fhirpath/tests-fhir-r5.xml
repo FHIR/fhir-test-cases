@@ -17,6 +17,33 @@
   The test schema for this test suite is maintained in the FHIRPath specification repository:
   https://github.com/HL7/FHIRPath/blob/master/tests/testSchema.xsd
  -->
+  <group name="comments" description="Check various comment syntaxes">
+		<test name="testComment1" inputfile="patient-example.xml"><expression>2 + 2 // This is a single-line comment + 4</expression><output type="integer">4</output></test>
+		<test name="testComment2" inputfile="patient-example.xml"><expression>// This is a multi line comment using // that
+  // should not fail during parsing
+  2+2</expression><output type="integer">4</output></test>
+		<test name="testComment3" inputfile="patient-example.xml"><expression>2 + 2 
+      /*
+This is a multi-line comment
+Any text enclosed within is ignored
++2
+*/</expression><output type="integer">4</output></test>
+		<test name="testComment4" inputfile="patient-example.xml"><expression>2 + 2 
+      /*
+This is a multi-line comment
+Any text enclosed within is ignored
+*/
++2</expression><output type="integer">6</output></test>
+		<test name="testComment5" inputfile="patient-example.xml"><expression>/*
+This is a multi-line comment
+Any text enclosed within is ignored
+*/
+2+2</expression><output type="integer">4</output></test>
+		<test name="testComment6" inputfile="patient-example.xml"><expression>2 // comment
+/ 2</expression><output type="decimal">1</output></test>
+		<test name="testComment7" inputfile="patient-example.xml"><expression invalid="syntax">2 + 2 /</expression></test>
+		<test name="testComment8" inputfile="patient-example.xml"><expression invalid="syntax">2 + 2 /* not finished</expression></test>    
+  </group>
 	<group name="testMiscellaneousAccessorTests" description="Miscellaneous accessor tests">
 		<test name="testExtractBirthDate" description="Extract birthDate" inputfile="patient-example.xml" predicate="false">
 			<expression>birthDate</expression>
