@@ -265,8 +265,8 @@
     },
     "list-empty2.json": {
       "java": {
-        "errorCount": 0,
-        "output": []
+        "errorCount": 1,
+        "output": ["ERROR: List.entry: Array cannot be empty - the property should not be present if it has no values"]
       }
     },
     "list-extension1.json": {
@@ -483,12 +483,12 @@
     "medication-atc.json": {
       "allowed-extension-domain": "https://api-v8-r4.hspconsortium.org/DrugFormulary0/open",
       "java": {
-        "errorCount": 1,
-        "warningCount": 3,
+        "errorCount": 0,
+        "warningCount": 4,
         "infoCount" : 1,
         "output": [
           "WARNING: Medication.extension[0].value.ofType(CodeableConcept).coding[0]: A code with no system has no defined meaning. A system should be provided",
-          "ERROR: Medication.extension[1].value.ofType(CodeableConcept).coding[0]: The code \"N02AA\" is not valid in the system http://www.whocc.no/atc; The code provided (http://www.whocc.no/atc#N02AA) is not valid in the value set 'All codes known to the system' (from http://local.fhir.org:960/r4) for 'http://www.whocc.no/atc#N02AA'",
+          "WARNING: Medication.extension[1].value.ofType(CodeableConcept).coding[0]: Internal error: The display \"Barbiturates and derivatives\" is not a valid display for the code {http://www.whocc.no/atc}N02AA - should be one of [\"Natural opium alkaloids\"] (from http://tx.fhir.org/r4)",
           "INFORMATION: Medication.extension[2].value.ofType(CodeableConcept).coding[0]: Code System URI 'https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/CodeSystem/usdrugformulary-DrugTierCS' is unknown so the code cannot be validated",
           "WARNING: Medication.code.coding[0]: Internal error: The display \"Acetaminophen 325 MG / Oxycodone Hydrochloride 5 MG Oral Tablet [Percocet]\" is not a valid display for the code {http://www.nlm.nih.gov/research/umls/rxnorm}1049640 - should be one of [\"Percocet 5 MG / 325 MG Oral Tablet","Percocet 5/325 Oral Tablet","Percocet 5/325 (oxycodone hydrochloride / APAP) Oral Tablet","APAP 325 MG / Oxycodone Hydrochloride 5 MG Oral Tablet [Percocet]\"] (from http://local.fhir.org:960/r4)",
           "WARNING: Medication.meta.profile[0]: Profile reference 'https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/StructureDefinition/usdrugformulary-FormularyDrug' could not be resolved, so has not been checked"
@@ -4524,9 +4524,6 @@
     },
     "profile-parameters-complex.xml": {
       "version": "4.0",
-      "profiles": [
-        "profile-parameters-complex.profile.xml"
-      ],
       "profile": {
         "source": "profile-parameters-complex.profile.xml",
         "java": {
@@ -4537,6 +4534,21 @@
       "java": {
         "errorCount": 0,
         "output" : []
+      }
+    },
+    "containedToContainer.xml" : {
+      "version": "4.0",
+      "java": {
+        "errorCount": 0,
+        "output": [ 
+        ]
+      }
+    },
+    "empty-array.json" : {
+      "version": "4.0",
+      "java": {
+        "errorCount": 1,
+        "output": [ "ERROR: DocumentReference.category[0].coding: Array cannot be empty - the property should not be present if it has no values" ]
       }
     }
   }
