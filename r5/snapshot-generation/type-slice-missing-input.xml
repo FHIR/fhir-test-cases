@@ -1,0 +1,49 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="type-slice-missing"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/type-slice-missing"/>
+  <status value="draft"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.effective[x]">
+      <path value="Observation.effective[x]"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+      <min value="1"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Period"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Observation.effective[x]:effectivePeriod">
+      <path value="Observation.effective[x]"/>
+      <sliceName value="effectivePeriod"/>
+      <type>
+        <code value="Period"/>
+      </type>
+    </element>
+    <element id="Observation.effective[x]:effectivePeriod.start">
+      <path value="Observation.effective[x].start"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Observation.effective[x]:effectivePeriod.end">
+      <path value="Observation.effective[x].end"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+  </differential>
+</StructureDefinition>
+
