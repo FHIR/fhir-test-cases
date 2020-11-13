@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="eob-nested"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/eob-nested"/>
+  <status value="active"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="ExplanationOfBenefit"/>
+  <baseDefinition value="http://hl7.org/fhir/test/StructureDefinition/eob-base"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="ExplanationOfBenefit.item.adjudication">
+      <path value="ExplanationOfBenefit.item.adjudication"/>
+      <slicing>
+        <discriminator>
+          <type value="pattern"/>
+          <path value="category"/>
+        </discriminator>
+        <description value="Slice based on value pattern"/>
+        <ordered value="false"/>
+        <rules value="closed"/>
+      </slicing>
+      <min value="1"/>
+    </element>
+    <element id="ExplanationOfBenefit.item.adjudication:adjudicationamounttype">
+      <path value="ExplanationOfBenefit.item.adjudication"/>
+      <sliceName value="adjudicationamounttype"/>
+      <short value="Describes the various amount fields used when payers receive and adjudicate a claim. (187)"/>
+      <definition value="Describes the various amount fields used when payers receive and adjudicate a claim. (187)"/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="ExplanationOfBenefit.item.adjudication:adjudicationamounttype.category">
+      <path value="ExplanationOfBenefit.item.adjudication.category"/>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://hl7.org/fhir/us/carin-bb/ValueSet/C4BBAdjudication"/>
+      </binding>
+    </element>
+    <element id="ExplanationOfBenefit.item.adjudication:adjudicationamounttype.amount">
+      <path value="ExplanationOfBenefit.item.adjudication.amount"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="ExplanationOfBenefit.item.adjudication:denialreason">
+      <path value="ExplanationOfBenefit.item.adjudication"/>
+      <sliceName value="denialreason"/>
+      <short value="Reason codes used to interpret the Non-Covered Amount that are provided to the Provider. (92)"/>
+      <definition value="Reason codes used to interpret the Non-Covered Amount that are provided to the Provider. (92)"/>
+      <min value="0"/>
+      <max value="*"/>
+    </element>
+    <element id="ExplanationOfBenefit.item.adjudication:denialreason.category">
+      <path value="ExplanationOfBenefit.item.adjudication.category"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudicationDiscriminator"/>
+          <code value="denialreason"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="ExplanationOfBenefit.item.adjudication:denialreason.reason">
+      <path value="ExplanationOfBenefit.item.adjudication.reason"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://hl7.org/fhir/us/carin-bb/ValueSet/X12ClaimAdjustmentReasonCodesCMSRemittanceAdviceRemarkCodes"/>
+      </binding>
+    </element>
+    <element id="ExplanationOfBenefit.item.adjudication:allowedunits">
+      <path value="ExplanationOfBenefit.item.adjudication"/>
+      <sliceName value="allowedunits"/>
+      <short value="The quantity of units, times, days, visits, services, or treatments allowed for the service described by the HCPCS code, revenue code or procedure code, submitted by the provider. (149)"/>
+      <definition value="The quantity of units, times, days, visits, services, or treatments allowed for the service described by the HCPCS code, revenue code or procedure code, submitted by the provider. (149)"/>
+      <min value="0"/>
+      <max value="1"/>
+    </element>
+    <element id="ExplanationOfBenefit.item.adjudication:allowedunits.category">
+      <path value="ExplanationOfBenefit.item.adjudication.category"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudicationDiscriminator"/>
+          <code value="allowedunits"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="ExplanationOfBenefit.item.adjudication:allowedunits.value">
+      <path value="ExplanationOfBenefit.item.adjudication.value"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="ExplanationOfBenefit.adjudication">
+      <path value="ExplanationOfBenefit.adjudication"/>
+      <slicing>
+        <discriminator>
+          <type value="pattern"/>
+          <path value="category"/>
+        </discriminator>
+        <description value="Slice based on value pattern"/>
+        <ordered value="false"/>
+        <rules value="closed"/>
+      </slicing>
+      <min value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="ExplanationOfBenefit.adjudication.category">
+      <path value="ExplanationOfBenefit.adjudication.category"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="ExplanationOfBenefit.adjudication:adjudicationamounttype">
+      <path value="ExplanationOfBenefit.adjudication"/>
+      <sliceName value="adjudicationamounttype"/>
+      <short value="Describes the various amount fields used when payers receive and adjudicate a claim. (187)"/>
+      <definition value="Describes the various amount fields used when payers receive and adjudicate a claim. (187)"/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="ExplanationOfBenefit.adjudication:adjudicationamounttype.category">
+      <path value="ExplanationOfBenefit.adjudication.category"/>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://hl7.org/fhir/us/carin-bb/ValueSet/C4BBAdjudication"/>
+      </binding>
+    </element>
+    <element id="ExplanationOfBenefit.adjudication:adjudicationamounttype.amount">
+      <path value="ExplanationOfBenefit.adjudication.amount"/>
+      <min value="1"/>
+    </element>
+    <element id="ExplanationOfBenefit.adjudication:denialreason">
+      <path value="ExplanationOfBenefit.adjudication"/>
+      <sliceName value="denialreason"/>
+      <short value="Reason codes used to interpret the Non-Covered Amount that are provided to the Provider. (92)"/>
+      <definition value="Reason codes used to interpret the Non-Covered Amount that are provided to the Provider. (92)"/>
+      <min value="0"/>
+      <max value="*"/>
+    </element>
+    <element id="ExplanationOfBenefit.adjudication:denialreason.category">
+      <path value="ExplanationOfBenefit.adjudication.category"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudicationDiscriminator"/>
+          <code value="denialreason"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="ExplanationOfBenefit.adjudication:denialreason.reason">
+      <path value="ExplanationOfBenefit.adjudication.reason"/>
+      <short value="Reason codes used to interpret the Non-Covered Amount that are provided to the Provider. (92)"/>
+      <definition value="Reason codes used to interpret the Non-Covered Amount that are provided to the Provider. (92)"/>
+      <mustSupport value="true"/>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://hl7.org/fhir/us/carin-bb/ValueSet/X12ClaimAdjustmentReasonCodesCMSRemittanceAdviceRemarkCodes"/>
+      </binding>
+    </element>
+  </differential>
+</StructureDefinition>

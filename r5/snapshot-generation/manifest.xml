@@ -182,6 +182,7 @@
   <test gen="true" sort="true" id="t33" description="Test disappearing slice definition">
     <rule text="Snapshot contains referenced item children with correct path'" fhirpath="fixture('t33-output').snapshot.element.where(id = 'ExplanationOfBenefit.addItem.adjudication.extension').exists()"/>
   </test>
+  <test gen="true" sort="true" id="t34a" description="Referencing a custom extension"/>
   <test gen="true" sort="true" id="t34" register="t34-defn" description="Referencing a custom extension">
     <rule text="There must be 2 elements on Basic.identifier.extension in the snapshot" fhirpath="fixture('t34-output').snapshot.element.where(path = 'Basic.identifier.extension').count() = 2"/>
     <rule text="The narrative must mention the extension URL (http://www.fhir.org/guides/test3/StructureDefinition/extension-identifier-status)" fhirpath="fixture('t34-output').text.div.contains('http://www.fhir.org/guides/test3/StructureDefinition/extension-identifier-status')"/>
@@ -282,5 +283,7 @@
   <test gen="true" id="params-nested-slices" debug="false" description="Complex nested slices test case"/>
   <test gen="true" id="cond" debug="false" register="cond-us-core" description="Slice cardinality test case"/>
   <test gen="true" id="cond2" debug="false" register="cond-us-core" description="Slice cardinality test case - second slice"/>
-<!--  <test gen="true" id="type-slice-missing" debug="false" register="cond-us-core" description="Missing slice on type slicing"/> -->
+  <test gen="true" id="eob-base" debug="false" description="Base profiles on adjudication"/>
+  <test gen="true" id="eob-nested" debug="true" register="eob-base-input" description="more profiling on adjudication"/>
+  <test gen="true" id="type-slice-missing" debug="false" register="cond-us-core" description="Missing slice on type slicing"/> 
 </snapshot-generation-tests>
