@@ -1,0 +1,1 @@
+* Update test cases for enforcing bundle rules around the presence of fullUrl
