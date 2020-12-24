@@ -1330,17 +1330,15 @@
         "java" : {
           "errorCount" : 0,
           "warningCount" : 1,
-          "hintCount" : 1,
+          "infoCount" : 0,
           "output" : [
-            "WARNING: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language",
-            "INFORMATION: Communication.status: Could not verify slice for profile http://hl7.org/fhir/StructureDefinition/slice-by-polymorphic-type"
-          ]
+            "WARNING: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/or language"]
         }
       },
       "java" : {
         "errorCount" : 0,
         "warningCount" : 1,
-        "hintCount" : 0,
+        "infoCount" : 0,
         "output" : [
           "WARNING: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language"
         ]
@@ -3766,7 +3764,9 @@
       "version" : "4.0",
       "examples" : false,
       "java" : {
-        "errorCount" : 1
+        "errorCount" : 0,
+        "warning" : 1,
+        "output" : ["WARNING: DocumentReference.content[0].attachment.url: URL value 'http://repository.example.org/fhir/DocumentReference/example' does not resolve"]
       }
     },
     {
@@ -4694,6 +4694,23 @@
       }
     },
     {
+      "name" : "tx-extensible-suppression-meta",
+      "description" :  "If there's a profile, and the profile does a required binding on an extensible binding, then we don't want to produce the extensible binding warning",
+      "file" : "tx-extensible-suppression-meta.xml",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 1,
+        "output" : [
+          "WARNING: ValueSet.compose[0].include[0]: Unknown System specified, so Concepts and Filters can't be checked"
+        ]
+      },
+      "supporting" : [
+        "tx-extensible-suppression-cs.xml",
+        "tx-extensible-suppression-profile.xml"
+      ]
+    },
+    {
       "name" : "vs-jurisdiction",
       "file" : "vs-jurisdiction.json",
       "version" : "4.0",
@@ -5105,7 +5122,7 @@
       ],
       "java" : {
         "errorCount" : 0,
-        "hintCount" : 2,
+        "infoCount" : 2,
         "output" : [
           "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/StructureDefinition/Patient",
           "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/test/StructureDefinition/patient-ig-sd - a global profile in http://hl7.org/fhir/test/ImplementationGuide/patient-ig-ig"
@@ -5123,7 +5140,7 @@
       ],
       "java" : {
         "errorCount" : 1,
-        "hintCount" : 2,
+        "infoCount" : 2,
         "output" : [
           "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/StructureDefinition/Patient",
           "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/test/StructureDefinition/patient-ig-sd - a global profile in http://hl7.org/fhir/test/ImplementationGuide/patient-ig-ig",
@@ -5735,13 +5752,14 @@
       "name" : "hakan-se",
       "file" : "hakan-se.json",
       "fetcher" : "standalone",
-      "discussion" : "This set of haken-* of tests is actually checking the standalone validator used when the validator is running in stand alone mode - that it handles contained references ok, and also reports errors correctly",
+      "discussion" : "This set of haken-* of tests is actually checking the standalone validator used when the validator is running in stand alone mode - that it handles contained references ok, and also reports errors correctly. Note that these are not HL7 URLs, so are just warnings not errors",
       "version" : "4.0",
       "java" : {
-        "errorCount" : 5,
+        "errorCount" : 4,
         "warningCount" : 1,
+        "infoCount" : 1,
         "output" : [ "ERROR: MedicationRequest: MedicationRequest.medication[x]: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/MedicationRequest)",
-                     "ERROR: MedicationRequest.meta.profile[0]: URL value 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' does not resolve",
+                     "INFORMATION: MedicationRequest.meta.profile[0]: URL value 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' does not resolve",
                      "ERROR: MedicationRequest.authoredOn: if a date has a time, it must have a timezone",
                      "ERROR: MedicationRequest.requester: Unable to resolve resource '#1505724e-2d13-4790-ab25-e9ae2fa8d272'",
                      "ERROR: MedicationRequest.requester: ref-1: SHALL have a contained resource if a local reference is provided ( (url: 1505724e-2d13-4790-ab25-e9ae2fa8d272; ids: )) [(reference = '#') or reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))]",
@@ -5751,11 +5769,11 @@
     {
       "name" : "hakan-se-nofetch",
       "file" : "hakan-se.json",
-      "discussion" : "This set of haken-* of tests is actually checking the standalone validator used when the validator is running in stand alone mode - that it handles contained references ok, and also reports errors correctly",
       "version" : "4.0",
       "java" : {
         "errorCount" : 4,
         "warningCount" : 1,
+        "infoCount" : 0,
         "output" : [ "ERROR: MedicationRequest: MedicationRequest.medication[x]: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/MedicationRequest)",
                      "ERROR: MedicationRequest.authoredOn: if a date has a time, it must have a timezone",
                      "ERROR: MedicationRequest.requester: Unable to resolve resource '#1505724e-2d13-4790-ab25-e9ae2fa8d272'",
@@ -5769,12 +5787,55 @@
       "fetcher" : "standalone",
       "version" : "4.0",
       "java" : {
-        "errorCount" : 3,
+        "errorCount" : 2,
         "warningCount" : 1,
+        "infoCount" : 1,
         "output" : [ "ERROR: MedicationRequest: MedicationRequest.medication[x]: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/MedicationRequest)",
-                     "ERROR: MedicationRequest.meta.profile[0]: URL value 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' does not resolve",
+                     "INFORMATION: MedicationRequest.meta.profile[0]: URL value 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' does not resolve",
                      "ERROR: MedicationRequest.authoredOn: if a date has a time, it must have a timezone",
-                     "WARNING: MedicationRequest.meta.profile[0]: Profile reference 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' has not been checked because it is unknown, and fetching it resulted in the error Error sending Http Request: electronichealth.se", ]
+                     "WARNING: MedicationRequest.meta.profile[0]: Profile reference 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' has not been checked because it is unknown, and fetching it resulted in the error Error sending Http Request: electronichealth.se"]
+      }
+    },
+    {
+      "name" : "qr-bad-ref1",
+      "file" : "qr-bad-ref1.json",
+      "description": "these qr-bad-ref tests check the same as the hakan-* tests above, but with canonicals. HL7.org references are errors, others are hints",
+      "fetcher" : "standalone",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 1,
+        "infoCount" : 1,
+        "output" : [ "INFORMATION: QuestionnaireResponse.questionnaire: Canonical URL 'http://random.org/fhir/uv/sdc/Questionnaire/54127-6|2015' does not resolve",
+                     "WARNING: QuestionnaireResponse: The questionnaire 'http://random.org/fhir/uv/sdc/Questionnaire/54127-6|2015' could not be resolved, so no validation can be performed against the base questionnaire" ]
+      }
+    },
+    {
+      "name" : "qr-bad-ref2",
+      "file" : "qr-bad-ref2.json",
+      "description": "",
+      "fetcher" : "standalone",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 1,
+        "warningCount" : 1,
+        "infoCount" : 0,
+        "output" : [ "ERROR: QuestionnaireResponse.questionnaire: Canonical URL 'http://hl7.org/fhir/ValueSet/example-extensional' refers to a resource that has the wrong type. Found ValueSet expecting one of [Questionnaire]",
+                     "WARNING: QuestionnaireResponse: The questionnaire 'http://hl7.org/fhir/ValueSet/example-extensional' could not be resolved, so no validation can be performed against the base questionnaire"]
+      }
+    },
+    {
+      "name" : "qr-bad-ref3",
+      "file" : "qr-bad-ref3.json",
+      "description": "",
+      "fetcher" : "standalone",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 1,
+        "infoCount" : 1,
+        "output" : [ "INFORMATION: QuestionnaireResponse.questionnaire: Canonical URL 'http://hl7.org/fhir/uv/sdc/Questionnaire/54127-6|2015' does not resolve",
+                     "WARNING: QuestionnaireResponse: The questionnaire 'http://hl7.org/fhir/uv/sdc/Questionnaire/54127-6|2015' could not be resolved, so no validation can be performed against the base questionnaire" ]
       }
     }
   ]
