@@ -10,7 +10,7 @@
     " * 'best-practice': How to treat best practice warnings. missing: ignored, else one of Hint, Warning, or Error",
     " * 'language': the language to validate with. If unspecified, this defaults to the language of the resource, then to english",
     " * 'packages': An array of String, packages to load for this validation. format id#version, where the version part is optional",
-    " * 'supporting': An array of string, other files to load before doing the validation",
+    " * 'supportingAn array of string, other files to load before doing the validation",
     " * 'profiles': An alias for supporting",
     " * 'bundle-param' : A string that functions as a bundle parameter - this is specifically for testing the parameter functionality",
     " * 'examples': if to allow http://example.org and http://acme.com references without validating them (spec mode)",
@@ -5868,6 +5868,44 @@
         "infoCount" : 1,
         "output" : [ "INFORMATION: QuestionnaireResponse.questionnaire: Canonical URL 'http://hl7.org/fhir/uv/sdc/Questionnaire/54127-6|2015' does not resolve",
                      "WARNING: QuestionnaireResponse: The questionnaire 'http://hl7.org/fhir/uv/sdc/Questionnaire/54127-6|2015' could not be resolved, so no validation can be performed against the base questionnaire" ]
+      }
+    },
+    {
+      "name" : "supplement-1",
+      "file" : "supplement-obs.json",
+      "description": "Can't use a code defined in a supplement",
+      "version" : "4.0",
+      "supporting" : ["supplement-cs.json"],
+      "java" : {
+        "errorCount" : 1,
+        "warningCount" : 0,
+        "infoCount" : 0,
+        "output" : [ "Observation.code.coding[0]: CodeSystem http://hl7.org/fhir/test/CodeSystem/supplement-cs is a supplement, so cant be used as a value in Coding.system for 'http://hl7.org/fhir/test/CodeSystem/supplement-cs#test'" ]
+      }
+    },
+    {
+      "name" : "supplement-2",
+      "file" : "supplement-cs.json",
+      "description": "Supplement can't define new codes",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 1,
+        "warningCount" : 0,
+        "infoCount" : 0,
+        "output" : [ "ERROR: CodeSystem.concept[0]: The code 'test' is not declared in the base CodeSystem http://loinc.org so is not valid in the supplement" ]
+      }
+    },
+    {
+      "name" : "qr-validation-issue",
+      "file" : "me-qr.json",
+      "supporting" : ["me-vs.json", "me-q.json"],
+      "description": "Reported Issue validating an answer in a questionnaire",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "infoCount" : 0,
+        "output" : [ ]
       }
     }
   ]
