@@ -10,7 +10,7 @@
     " * 'best-practice': How to treat best practice warnings. missing: ignored, else one of Hint, Warning, or Error",
     " * 'language': the language to validate with. If unspecified, this defaults to the language of the resource, then to english",
     " * 'packages': An array of String, packages to load for this validation. format id#version, where the version part is optional",
-    " * 'supporting': An array of string, other files to load before doing the validation",
+    " * 'supportingAn array of string, other files to load before doing the validation",
     " * 'profiles': An alias for supporting",
     " * 'bundle-param' : A string that functions as a bundle parameter - this is specifically for testing the parameter functionality",
     " * 'examples': if to allow http://example.org and http://acme.com references without validating them (spec mode)",
@@ -75,13 +75,40 @@
         "java" : {
           "errorCount" : 1,
           "output" : [
+            "INFORMATION: Observation.code.coding[0]: Code System URI 'http://example.org' is unknown so the code cannot be validated",
+            "ERROR: Observation.value.ofType(Quantity): Error processing Unit: 'whatever': The unit \"whatever\" is unknown at character 1; The code \"whatever\" is not valid in the system http://unitsofmeasure.org; The code provided (http://unitsofmeasure.org#whatever) is not valid in the value set 'All codes known to the system' (from http://tx.fhir.org/r4) for 'http://unitsofmeasure.org#whatever'"
           ]
         }
       },
       "java" : {
         "errorCount" : 1,
         "output" : [
-          "ERROR: Observation: As specified by profile Profile https://bb/StructureDefinition/BBDemographicAge, Element 'Observation.value[x]', Element \"https://bb/StructureDefinition/BBDemographicAge\" must not be of type \"Observation.value[x]\""
+          "INFORMATION: Observation.code.coding[0]: Code System URI 'http://example.org' is unknown so the code cannot be validated",
+          "ERROR: Observation.value.ofType(Quantity): Error processing Unit: 'whatever': The unit \"whatever\" is unknown at character 1; The code \"whatever\" is not valid in the system http://unitsofmeasure.org; The code provided (http://unitsofmeasure.org#whatever) is not valid in the value set 'All codes known to the system' (from http://tx.fhir.org/r4) for 'http://unitsofmeasure.org#whatever'"
+        ]
+      }
+    },
+    {
+      "name" : "fixed-quantity-binding-observation-2",
+      "file" : "fixed-quantity-binding-observation-2.json",
+      "version" : "4.0",
+      "profiles" : [
+        "fixed-quantity-binding-structuredef.json"
+      ],
+      "profile" : {
+        "source" : "fixed-quantity-binding-structuredef.json",
+        "java" : {
+          "errorCount" : 1,
+          "output" : [
+            "INFORMATION: Observation.code.coding[0]: Code System URI 'http://example.org' is unknown so the code cannot be validated",
+            "ERROR: Observation.value.ofType(Quantity): Error processing Unit: 'whatever': The unit \"whatever\" is unknown at character 1; The code \"whatever\" is not valid in the system http://unitsofmeasure.org; The code provided (http://unitsofmeasure.org#whatever) is not valid in the value set 'All codes known to the system' (from http://tx.fhir.org/r4) for 'http://unitsofmeasure.org#whatever'"          
+          ]
+        }
+      },
+      "java" : {
+        "errorCount" : 0,
+        "output" : [
+          "INFORMATION: Observation.code.coding[0]: Code System URI 'http://example.org' is unknown so the code cannot be validated"
         ]
       }
     },
@@ -321,19 +348,24 @@
       "name" : "list-extension1",
       "file" : "list-extension1.json",
       "java" : {
-        "errorCount" : 0,
+        "errorCount" : 2,
         "output" : [
-        ]
+          "ERROR: List.id: Unrecognised property '@fhir_comments'",
+          "ERROR: List: Unrecognised property '@fhir_comments'"
+        ],
+        "todo": "Eliminate the second duplicate error"
       }
     },
     {
       "name" : "list-extension2",
       "file" : "list-extension2.json",
       "java" : {
-        "errorCount" : 2,
+        "errorCount" : 4,
         "output" : [
           "ERROR: List.status.extension[0]: Unrecognised property '@valueCodeX'",
-          "ERROR: List.status.extension[0]: ext-1: Must have either extensions or value[x], not both [extension.exists() != value.exists()]"
+          "ERROR: List.status.extension[0]: ext-1: Must have either extensions or value[x], not both [extension.exists() != value.exists()]",
+          "ERROR: List.id: Unrecognised property '@fhir_comments'",
+          "ERROR: List: Unrecognised property '@fhir_comments'"
         ]
       }
     },
@@ -811,9 +843,11 @@
       "version" : "1.0",
       "error" : "bad extension url",
       "java" : {
-        "errorCount" : 1,
+        "errorCount" : 2,
         "output" : [
-          "ERROR: Observation.extension[0][url='http://hl7.org/fhir/4.0/StructureDefinition/extension-Observation.nnote']: Extension url 'http://hl7.org/fhir/4.0/StructureDefinition/extension-Observation.nnote' is not valid (unknown Element id \"Observation.nnote\")"
+          "ERROR: Observation.extension[0][url='http://hl7.org/fhir/4.0/StructureDefinition/extension-Observation.nnote']: Extension url 'http://hl7.org/fhir/4.0/StructureDefinition/extension-Observation.nnote' is not valid (invalid Element id 'Observation.nnote')",
+          "ERROR: Observation.extension[0]: The extension http://hl7.org/fhir/4.0/StructureDefinition/extension-Observation.nnote is unknown, and not allowed here",
+          "INFORMATION: Observation.code.coding[2]: Code System URI 'http://acme.org/devices/clinical-codes' is unknown so the code cannot be validated"
         ]
       }
     },
@@ -1328,17 +1362,15 @@
         "java" : {
           "errorCount" : 0,
           "warningCount" : 1,
-          "hintCount" : 1,
+          "infoCount" : 0,
           "output" : [
-            "WARNING: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language",
-            "INFORMATION: Communication.status: Could not verify slice for profile http://hl7.org/fhir/StructureDefinition/slice-by-polymorphic-type"
-          ]
+            "WARNING: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/or language"]
         }
       },
       "java" : {
         "errorCount" : 0,
         "warningCount" : 1,
-        "hintCount" : 0,
+        "infoCount" : 0,
         "output" : [
           "WARNING: Communication.payload[1].content.ofType(Attachment): Attachments have data and/or url, or else must have either contentType and/oor language"
         ]
@@ -3764,7 +3796,9 @@
       "version" : "4.0",
       "examples" : false,
       "java" : {
-        "errorCount" : 1
+        "errorCount" : 0,
+        "warning" : 1,
+        "output" : ["WARNING: DocumentReference.content[0].attachment.url: URL value 'http://repository.example.org/fhir/DocumentReference/example' does not resolve"]
       }
     },
     {
@@ -3923,10 +3957,11 @@
       "version" : "4.0",
       "java" : {
         "errorCount" : 1,
-        "warningCount" : 2,
+        "warningCount" : 3,
         "output" : [
           "WARNING: StructureDefinition.date: The value \"3017-09-06T06:30:54+00:00\" is outside the range of reasonable years - check for data entry error",
           "ERROR: StructureDefinition.differential.element[0]: eld-13: Types must be unique by code [type.select(code).isDistinct()]",
+          "WARNING: StructureDefinition.differential.element.where(path = 'HealthcareService.endpoint'): Cannot check whether the target profile http://hl7.org.au/fhir/pd/StructureDefinition/au-pd-sm-endpoint is valid constraint on the base because it is not known",
           "WARNING: StructureDefinition.differential.element.where(path = 'HealthcareService.endpoint'): Connect check whether the target profile http://hl7.org.au/fhir/pd/StructureDefinition/au-pd-sm-endpoint is valid constraint on the base because it is not known"
         ]
       }
@@ -4691,6 +4726,23 @@
       }
     },
     {
+      "name" : "tx-extensible-suppression-meta",
+      "description" :  "If there's a profile, and the profile does a required binding on an extensible binding, then we don't want to produce the extensible binding warning",
+      "file" : "tx-extensible-suppression-meta.xml",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 1,
+        "output" : [
+          "WARNING: ValueSet.compose[0].include[0]: Unknown System specified, so Concepts and Filters can't be checked"
+        ]
+      },
+      "supporting" : [
+        "tx-extensible-suppression-cs.xml",
+        "tx-extensible-suppression-profile.xml"
+      ]
+    },
+    {
       "name" : "vs-jurisdiction",
       "file" : "vs-jurisdiction.json",
       "version" : "4.0",
@@ -5102,7 +5154,7 @@
       ],
       "java" : {
         "errorCount" : 0,
-        "hintCount" : 2,
+        "infoCount" : 2,
         "output" : [
           "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/StructureDefinition/Patient",
           "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/test/StructureDefinition/patient-ig-sd - a global profile in http://hl7.org/fhir/test/ImplementationGuide/patient-ig-ig"
@@ -5120,7 +5172,7 @@
       ],
       "java" : {
         "errorCount" : 1,
-        "hintCount" : 2,
+        "infoCount" : 2,
         "output" : [
           "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/StructureDefinition/Patient",
           "INFORMATION: Patient: Validate resource against profile http://hl7.org/fhir/test/StructureDefinition/patient-ig-sd - a global profile in http://hl7.org/fhir/test/ImplementationGuide/patient-ig-ig",
@@ -5732,13 +5784,14 @@
       "name" : "hakan-se",
       "file" : "hakan-se.json",
       "fetcher" : "standalone",
-      "discussion" : "This set of haken-* of tests is actually checking the standalone validator used when the validator is running in stand alone mode - that it handles contained references ok, and also reports errors correctly",
+      "discussion" : "This set of haken-* of tests is actually checking the standalone validator used when the validator is running in stand alone mode - that it handles contained references ok, and also reports errors correctly. Note that these are not HL7 URLs, so are just warnings not errors",
       "version" : "4.0",
       "java" : {
-        "errorCount" : 5,
+        "errorCount" : 4,
         "warningCount" : 1,
+        "infoCount" : 1,
         "output" : [ "ERROR: MedicationRequest: MedicationRequest.medication[x]: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/MedicationRequest)",
-                     "ERROR: MedicationRequest.meta.profile[0]: URL value 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' does not resolve",
+                     "INFORMATION: MedicationRequest.meta.profile[0]: URL value 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' does not resolve",
                      "ERROR: MedicationRequest.authoredOn: if a date has a time, it must have a timezone",
                      "ERROR: MedicationRequest.requester: Unable to resolve resource '#1505724e-2d13-4790-ab25-e9ae2fa8d272'",
                      "ERROR: MedicationRequest.requester: ref-1: SHALL have a contained resource if a local reference is provided ( (url: 1505724e-2d13-4790-ab25-e9ae2fa8d272; ids: )) [(reference = '#') or reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))]",
@@ -5748,11 +5801,11 @@
     {
       "name" : "hakan-se-nofetch",
       "file" : "hakan-se.json",
-      "discussion" : "This set of haken-* of tests is actually checking the standalone validator used when the validator is running in stand alone mode - that it handles contained references ok, and also reports errors correctly",
       "version" : "4.0",
       "java" : {
         "errorCount" : 4,
         "warningCount" : 1,
+        "infoCount" : 0,
         "output" : [ "ERROR: MedicationRequest: MedicationRequest.medication[x]: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/MedicationRequest)",
                      "ERROR: MedicationRequest.authoredOn: if a date has a time, it must have a timezone",
                      "ERROR: MedicationRequest.requester: Unable to resolve resource '#1505724e-2d13-4790-ab25-e9ae2fa8d272'",
@@ -5766,12 +5819,105 @@
       "fetcher" : "standalone",
       "version" : "4.0",
       "java" : {
-        "errorCount" : 3,
+        "errorCount" : 2,
         "warningCount" : 1,
+        "infoCount" : 1,
         "output" : [ "ERROR: MedicationRequest: MedicationRequest.medication[x]: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/MedicationRequest)",
-                     "ERROR: MedicationRequest.meta.profile[0]: URL value 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' does not resolve",
+                     "INFORMATION: MedicationRequest.meta.profile[0]: URL value 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' does not resolve",
                      "ERROR: MedicationRequest.authoredOn: if a date has a time, it must have a timezone",
-                     "WARNING: MedicationRequest.meta.profile[0]: Profile reference 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' has not been checked because it is unknown, and fetching it resulted in the error Error sending Http Request: electronichealth.se", ]
+                     "WARNING: MedicationRequest.meta.profile[0]: Profile reference 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' has not been checked because it is unknown, and fetching it resulted in the error Error sending Http Request: electronichealth.se"]
+      }
+    },
+    {
+      "name" : "qr-bad-ref1",
+      "file" : "qr-bad-ref1.json",
+      "description": "these qr-bad-ref tests check the same as the hakan-* tests above, but with canonicals. HL7.org references are errors, others are hints",
+      "fetcher" : "standalone",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 1,
+        "infoCount" : 1,
+        "output" : [ "INFORMATION: QuestionnaireResponse.questionnaire: Canonical URL 'http://random.org/fhir/uv/sdc/Questionnaire/54127-6|2015' does not resolve",
+                     "WARNING: QuestionnaireResponse: The questionnaire 'http://random.org/fhir/uv/sdc/Questionnaire/54127-6|2015' could not be resolved, so no validation can be performed against the base questionnaire" ]
+      }
+    },
+    {
+      "name" : "qr-bad-ref2",
+      "file" : "qr-bad-ref2.json",
+      "description": "",
+      "fetcher" : "standalone",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 1,
+        "warningCount" : 1,
+        "infoCount" : 0,
+        "output" : [ "ERROR: QuestionnaireResponse.questionnaire: Canonical URL 'http://hl7.org/fhir/ValueSet/example-extensional' refers to a resource that has the wrong type. Found ValueSet expecting one of [Questionnaire]",
+                     "WARNING: QuestionnaireResponse: The questionnaire 'http://hl7.org/fhir/ValueSet/example-extensional' could not be resolved, so no validation can be performed against the base questionnaire"]
+      }
+    },
+    {
+      "name" : "qr-bad-ref3",
+      "file" : "qr-bad-ref3.json",
+      "description": "",
+      "fetcher" : "standalone",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 1,
+        "infoCount" : 1,
+        "output" : [ "INFORMATION: QuestionnaireResponse.questionnaire: Canonical URL 'http://hl7.org/fhir/uv/sdc/Questionnaire/54127-6|2015' does not resolve",
+                     "WARNING: QuestionnaireResponse: The questionnaire 'http://hl7.org/fhir/uv/sdc/Questionnaire/54127-6|2015' could not be resolved, so no validation can be performed against the base questionnaire" ]
+      }
+    },
+    {
+      "name" : "supplement-1",
+      "file" : "supplement-obs.json",
+      "description": "Can't use a code defined in a supplement",
+      "version" : "4.0",
+      "supporting" : ["supplement-cs.json"],
+      "java" : {
+        "errorCount" : 1,
+        "warningCount" : 0,
+        "infoCount" : 0,
+        "output" : [ "Observation.code.coding[0]: CodeSystem http://hl7.org/fhir/test/CodeSystem/supplement-cs is a supplement, so cant be used as a value in Coding.system for 'http://hl7.org/fhir/test/CodeSystem/supplement-cs#test'" ]
+      }
+    },
+    {
+      "name" : "supplement-2",
+      "file" : "supplement-cs.json",
+      "description": "Supplement can't define new codes",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 1,
+        "warningCount" : 0,
+        "infoCount" : 0,
+        "output" : [ "ERROR: CodeSystem.concept[0]: The code 'test' is not declared in the base CodeSystem http://loinc.org so is not valid in the supplement" ]
+      }
+    },
+    {
+      "name" : "qr-validation-issue",
+      "file" : "me-qr.json",
+      "supporting" : ["me-vs.json", "me-q.json"],
+      "description": "Reported Issue validating an answer in a questionnaire",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
+        "infoCount" : 0,
+        "output" : [ ]
+      }
+    },
+    {
+      "name" : "pat-dob-ext",
+      "file" : "pat-dob-ext.json",
+      "description": "Testing primitive extensions",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 1,
+        "warningCount" : 0,
+        "infoCount" : 0,
+        "output" : [ "ERROR: Patient.birthDate.extension[0]: The extension http://validitron.unimelb.edu.au/fhir/StructureDefinition/age is unknown, and not allowed here" ]
       }
     },
     {
