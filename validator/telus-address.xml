@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../../framework/forge-schemas/fhir-single.xsd">
+	<id value="dtprofile-address"/>
+	<url value="http://sharedhealth.exchange/fhir/StructureDefinition/dtprofile-address"/>
+	<name value="Shared Health Address"/>
+	<status value="draft"/>
+	<date value="2015-09-22T20:02:49+10:00"/>
+	<description value="Constraints on the Address data type"/>
+	<fhirVersion value="1.0.2"/>
+	<kind value="datatype"/>
+	<abstract value="false"/>
+	<baseType value="Address"/>
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Address"/>
+	<derivation value="constraint"/>
+	<differential>
+		<element>
+			<path value="Address"/>
+		</element>
+		<element>
+			<path value="Address.use"/>
+			<mustSupport value="false"/>
+		</element>
+		<element>
+			<path value="Address.type"/>
+			<mustSupport value="true"/>
+		</element>
+		<element>
+			<path value="Address.line"/>
+			<max value="2"/>
+			<mustSupport value="true"/>
+		</element>
+		<element>
+			<path value="Address.city"/>
+			<mustSupport value="true"/>
+		</element>
+		<element>
+			<path value="Address.state"/>
+			<mustSupport value="true"/>
+			<binding>
+				<strength value="required"/>
+				<valueSetReference>
+					<reference value="https://fhir.infoway-inforoute.ca/ValueSet/canadianjurisdiction|20170626"/>
+				</valueSetReference>
+			</binding>
+		</element>
+		<element>
+			<path value="Address.postalCode"/>
+			<mustSupport value="true"/>
+		</element>
+		<element>
+			<path value="Address.country"/>
+			<mustSupport value="true"/>
+		</element>
+	</differential>
+</StructureDefinition>

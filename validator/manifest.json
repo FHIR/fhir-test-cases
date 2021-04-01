@@ -10,7 +10,7 @@
     " * 'best-practice': How to treat best practice warnings. missing: ignored, else one of Hint, Warning, or Error",
     " * 'language': the language to validate with. If unspecified, this defaults to the language of the resource, then to english",
     " * 'packages': An array of String, packages to load for this validation. format id#version, where the version part is optional",
-    " * 'supportingAn array of string, other files to load before doing the validation",
+    " * 'supporting': An array of string, other files to load before doing the validation",
     " * 'profiles': An alias for supporting",
     " * 'bundle-param' : A string that functions as a bundle parameter - this is specifically for testing the parameter functionality",
     " * 'examples': if to allow http://example.org and http://acme.com references without validating them (spec mode)",
@@ -5918,6 +5918,20 @@
         "warningCount" : 0,
         "infoCount" : 0,
         "output" : [ "ERROR: Patient.birthDate.extension[0]: The extension http://validitron.unimelb.edu.au/fhir/StructureDefinition/age is unknown, and not allowed here" ]
+      }
+    },
+    {
+      "name" : "example-organization-search",
+      "file" : "example-organization-search.xml",
+      "description": "ID validation in r2b, and validating unknown code systems against expansions",
+      "supporting": ["telus-profile-org.xml", "telus-address.xml", "telus-states.json"],
+      "version" : "1.4",
+      "java" : {
+        "errorCount" : 2,
+        "output" : [ 
+           "ERROR: Organization.id: id value 'CPR1000991_' is not valid",
+           "ERROR: Organization.address[0].state: The value provided ('Foo') is not in the value set https://fhir.infoway-inforoute.ca/ValueSet/canadianjurisdiction|20170626 (https://fhir.infoway-inforoute.ca/ValueSet/canadianjurisdiction), and a code is required from this value set) (error message = The code provided (http://canadapost.ca/CodeSystem/ProvinceCodes) is not in the value set https://fhir.infoway-inforoute.ca/ValueSet/canadianjurisdiction, and a code is required from this value set. The system Foo is unknown.)"
+        ]
       }
     }
   ]
