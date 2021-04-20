@@ -36,8 +36,10 @@
       "file" : "allergy.json",
       "version" : "4.0",
       "java" : {
-        "errorCount" : 0,
+        "errorCount" : 1,
         "output" : [
+          "INFORMATION: AllergyIntolerance.clinicalStatus.coding[0]: Code System URI 'http://fhir.whatever.com/codes/AllergyClinicalStatus' is unknown so the code cannot be validated",
+          "ERROR: AllergyIntolerance.category[0]: No code provided, and a code is required from the value set"
         ]
       }
     },
@@ -5952,6 +5954,23 @@
           "ERROR: MedicationRequest.extension[6]: The extension http://fkcfhir.org/fhir/StructureDefinition/MedRequestPriorAuthStart is unknown, and not allowed here",
           "ERROR: MedicationRequest.reasonCode[0].coding[0]: Code \"C12\" not found; The code \"C12\" is not valid in the system http://hl7.org/fhir/sid/icd-10; The code provided (http://hl7.org/fhir/sid/icd-10#C12) is not valid in the value set 'All codes known to the system' (from http://tx.fhir.org/r4) for 'http://hl7.org/fhir/sid/icd-10#C12'",
           "WARNING: MedicationRequest.meta.profile[0]: Profile reference 'http://fkcfhir.org/fhir/StructureDefinition/FreseniusMirceraMedRequest' has not been checked because it is unknown, and fetching it resulted in the error Error parsing response message: This does not appear to be a FHIR resource (wrong namespace 'http://www.w3.org/1999/xhtml') (@ /)"
+        ]
+      }
+    },
+    {
+      "name" : "us-docref.json",
+      "file" : "us-docref.json",
+      "description": "Reported as a problem here: https://chat.fhir.org/#narrow/stream/179166-implementers/topic/Must.20Support.20.2F.20Mandatory. A code with a mandatory binding SHALL have a value (http://hl7.org/fhir/R4/terminologies.html#required)",
+      "version" : "4.0",
+      "packages" : [
+        "hl7.fhir.us.core#3.1.0"
+      ],
+      "java" : {
+        "errorCount" : 2,
+        "output" : [  
+          "ERROR: DocumentReference.status: No code provided, and a code is required from the value set",
+          "INFORMATION: DocumentReference.type: None of the codings provided are in the value set http://hl7.org/fhir/ValueSet/c80-doc-typecodes (http://hl7.org/fhir/ValueSet/c80-doc-typecodes), and a coding is recommended to come from this value set) (codes = http://terminology.hl7.org/CodeSystem/v3-NullFlavor#UNK)",
+          "ERROR: DocumentReference.content[0].attachment.contentType: No code provided, and a code is required from the value set"        
         ]
       }
     }
