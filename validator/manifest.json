@@ -5973,6 +5973,82 @@
           "ERROR: DocumentReference.content[0].attachment.contentType: No code provided, and a code is required from the value set"        
         ]
       }
+    },
+    {
+      "name" : "cvx",
+      "file" : "cvx.json",
+      "description": "Check CVX Covid codes validate (many definitional issues around CVX in THO)",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 1,
+        "output" : [  
+          "WARNING: Immunization.vaccineCode.coding[0]: The display \"X SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 100 mcg/0.5mL dose\" is not a valid display for the code {http://hl7.org/fhir/sid/cvx}207 - should be one of [\"SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 100 mcg/0.5mL dose\"] (from http://tx.fhir.org/r4) for 'http://hl7.org/fhir/sid/cvx#207'"
+        ]
+      }
+    },
+    {
+      "name" : "bundle-id-1",
+      "file" : "bundle-id-search-1.json",
+      "description": "Checks for IDs on search set: operation outcome with no id",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "warningCount" : 2,
+        "output" : [  
+          "WARNING: Bundle: SearchSet Bundles should have a self link that specifies what the search was",
+          "WARNING: Bundle: SearchSet bundles should have search modes on the entries"
+        ]
+      }
+    },
+    {
+      "name" : "bundle-id-2",
+      "file" : "bundle-id-search-2.json",
+      "description": "Checks for IDs on search set: operation outcome marked as an operation",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "output" : [  
+        ]
+      }
+    },
+    {
+      "name" : "bundle-id-3",
+      "file" : "bundle-id-search-3.json",
+      "description": "Checks for IDs on search set: non-outcome with no id",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 2,
+        "output" : [  
+          "ERROR: Bundle.entry[0].resource: Search results must have ids",
+          "ERROR: Bundle.entry[0].resource: This is not a matching resource type for the specified search (Immunization expecting [Patient])"
+        ]
+      }
+    },
+    {
+      "name" : "bundle-id-4",
+      "file" : "bundle-id-search-4.json",
+      "description": "Checks for IDs on search set: non-outcome which is an operation outcome, and outcome which is not",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 3,
+        "output" : [  
+          "ERROR: Bundle.entry[0].resource: This is not an OperationOutcome (Immunization)",
+          "ERROR: Bundle.entry[1].resource: Search results must have ids",
+          "ERROR: Bundle.entry[1].resource: This is not a matching resource type for the specified search (OperationOutcome expecting [Observation, DocumentReference])"
+        ]
+      }
+    },
+    {
+      "name" : "bundle-id-5",
+      "file" : "bundle-id-collection.json",
+      "description": "Checks for IDs on collection - not required",
+      "version" : "4.0",
+      "java" : {
+        "errorCount" : 0,
+        "output" : [  
+        ]
+      }
     }
   ]
 }
