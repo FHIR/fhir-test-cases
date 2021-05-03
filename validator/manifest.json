@@ -5865,6 +5865,97 @@
           "WARNING: MedicationRequest.meta.profile[0]: Profile reference 'http://fkcfhir.org/fhir/StructureDefinition/FreseniusMirceraMedRequest' has not been checked because it is unknown, and fetching it resulted in the error Error parsing response message: This does not appear to be a FHIR resource (wrong namespace 'http://www.w3.org/1999/xhtml') (@ /)"
         ]
       }
+    },
+    {
+      "name": "us-docref.json",
+      "file": "us-docref.json",
+      "description": "Reported as a problem here: https://chat.fhir.org/#narrow/stream/179166-implementers/topic/Must.20Support.20.2F.20Mandatory. A code with a mandatory binding SHALL have a value (http://hl7.org/fhir/R4/terminologies.html#required)",
+      "version": "4.0",
+      "packages": [
+        "hl7.fhir.us.core#3.1.0"
+      ],
+      "java": {
+        "errorCount": 2,
+        "output": [
+          "ERROR: DocumentReference.status: No code provided, and a code is required from the value set",
+          "INFORMATION: DocumentReference.type: None of the codings provided are in the value set http://hl7.org/fhir/ValueSet/c80-doc-typecodes (http://hl7.org/fhir/ValueSet/c80-doc-typecodes), and a coding is recommended to come from this value set) (codes = http://terminology.hl7.org/CodeSystem/v3-NullFlavor#UNK)",
+          "ERROR: DocumentReference.content[0].attachment.contentType: No code provided, and a code is required from the value set"
+        ]
+      }
+    },
+    {
+      "name": "cvx",
+      "file": "cvx.json",
+      "description": "Check CVX Covid codes validate (many definitional issues around CVX in THO)",
+      "version": "4.0",
+      "java": {
+        "errorCount": 0,
+        "warningCount": 1,
+        "output": [
+          "WARNING: Immunization.vaccineCode.coding[0]: The display \"X SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 100 mcg/0.5mL dose\" is not a valid display for the code {http://hl7.org/fhir/sid/cvx}207 - should be one of [\"SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 100 mcg/0.5mL dose\"] (from http://tx.fhir.org/r4) for 'http://hl7.org/fhir/sid/cvx#207'"
+        ]
+      }
+    },
+    {
+      "name": "bundle-id-1",
+      "file": "bundle-id-search-1.json",
+      "description": "Checks for IDs on search set: operation outcome with no id",
+      "version": "4.0",
+      "java": {
+        "errorCount": 0,
+        "warningCount": 2,
+        "output": [
+          "WARNING: Bundle: SearchSet Bundles should have a self link that specifies what the search was",
+          "WARNING: Bundle: SearchSet bundles should have search modes on the entries"
+        ]
+      }
+    },
+    {
+      "name": "bundle-id-2",
+      "file": "bundle-id-search-2.json",
+      "description": "Checks for IDs on search set: operation outcome marked as an operation",
+      "version": "4.0",
+      "java": {
+        "errorCount": 0,
+        "output": []
+      }
+    },
+    {
+      "name": "bundle-id-3",
+      "file": "bundle-id-search-3.json",
+      "description": "Checks for IDs on search set: non-outcome with no id",
+      "version": "4.0",
+      "java": {
+        "errorCount": 2,
+        "output": [
+          "ERROR: Bundle.entry[0].resource: Search results must have ids",
+          "ERROR: Bundle.entry[0].resource: This is not a matching resource type for the specified search (Immunization expecting [Patient])"
+        ]
+      }
+    },
+    {
+      "name": "bundle-id-4",
+      "file": "bundle-id-search-4.json",
+      "description": "Checks for IDs on search set: non-outcome which is an operation outcome, and outcome which is not",
+      "version": "4.0",
+      "java": {
+        "errorCount": 3,
+        "output": [
+          "ERROR: Bundle.entry[0].resource: This is not an OperationOutcome (Immunization)",
+          "ERROR: Bundle.entry[1].resource: Search results must have ids",
+          "ERROR: Bundle.entry[1].resource: This is not a matching resource type for the specified search (OperationOutcome expecting [Observation, DocumentReference])"
+        ]
+      }
+    },
+    {
+      "name": "bundle-id-5",
+      "file": "bundle-id-collection.json",
+      "description": "Checks for IDs on collection - not required",
+      "version": "4.0",
+      "java": {
+        "errorCount": 0,
+        "output": []
+      }
     }
   ]
 }
