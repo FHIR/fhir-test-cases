@@ -1,0 +1,1 @@
+test autoloading code systems + add test for bundle references not being flagged as suspicious
