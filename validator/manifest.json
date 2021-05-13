@@ -9001,6 +9001,35 @@
         "errorCount": 0,
         "output": []
       }
+    },
+    {
+      "name": "bundle-ref-2",
+      "file": "bundle-ref-2.xml",
+      "description": "Any kind of URL is allowed for internal resolution within a bundle",
+      "version": "3.0",
+      "java": {
+        "errorCount": 1,
+        "output": [
+          "ERROR: Bundle.entry[5].resource.ofType(MedicationRequest).dosageInstruction[0].dose.ofType(Quantity): Error processing Unit: 'tbl': The unit \"tbl\" is unknown at character 1; The code \"tbl\" is not valid in the system http://unitsofmeasure.org; The code provided (http://unitsofmeasure.org#tbl) is not valid in the value set 'All codes known to the system' (from http://tx.fhir.org/r3) for 'http://unitsofmeasure.org#tbl'",
+          "INFORMATION: Bundle.entry[7].resource.ofType(AllergyIntolerance).reaction[0].manifestation[0].coding[0]: Code System URI 'http://example.org/system' is unknown so the code cannot be validated"
+        ]
+      }
+    },
+    {
+      "name": "us-cond",
+      "file": "us-cond.json",
+      "description": "Reported issue with http://hl7.org/fhir/us/core/CodeSystem/condition-category - but doesn't appear to be an issue",
+      "version": "4.0",
+       "packages": [
+        "hl7.fhir.us.core#3.1.1"
+      ],
+      "java": {
+        "errorCount": 0,
+        "warningCount": 1,
+        "output": [
+          "WARNING: Condition.code: No code provided, and a code should be provided from the value set http://hl7.org/fhir/us/core/ValueSet/us-core-condition-code (http://hl7.org/fhir/us/core/ValueSet/us-core-condition-code)"
+        ]
+      }
     }
   ]
 }
