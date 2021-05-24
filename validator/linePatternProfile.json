@@ -1,0 +1,114 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "PatternTest",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-category",
+      "valueString": "Base.Individuals"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-security-category",
+      "valueCode": "patient"
+    }
+  ],
+  "url": "http://example.org/StructureDefinition/PatternTest",
+  "version": "1.0",
+  "name": "PatternTest",
+  "status": "active",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    },
+    {
+      "identity": "cda",
+      "uri": "http://hl7.org/v3/cda",
+      "name": "CDA (R2)"
+    },
+    {
+      "identity": "w5",
+      "uri": "http://hl7.org/fhir/fivews",
+      "name": "FiveWs Pattern Mapping"
+    },
+    {
+      "identity": "v2",
+      "uri": "http://hl7.org/v2",
+      "name": "HL7 v2 Mapping"
+    },
+    {
+      "identity": "loinc",
+      "uri": "http://loinc.org",
+      "name": "LOINC code for the element"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient.address",
+        "path": "Patient.address",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "pattern",
+              "path": "$this"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Patient.address:Strassenanschrift",
+        "path": "Patient.address",
+        "sliceName": "Strassenanschrift",
+        "min": 0,
+        "max": "*",
+        "patternAddress": {
+          "type": "both"
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.address:Strassenanschrift.type",
+        "path": "Patient.address.type",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.address:Strassenanschrift.line",
+        "path": "Patient.address.line",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.address:Postfach",
+        "path": "Patient.address",
+        "sliceName": "Postfach",
+        "min": 0,
+        "max": "*",
+        "patternAddress": {
+          "type": "postal"
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.address:Postfach.type",
+        "path": "Patient.address.type",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.address:Postfach.line",
+        "path": "Patient.address.line",
+        "min": 1,
+        "mustSupport": true
+      }
+    ]
+  }
+}
