@@ -9071,6 +9071,30 @@
           "ERROR: Patient.birthDate.extension[0].url: Example URLs are not allowed in this context (http://example.org/fhir/StructureDefinition/something)"
         ]
       }
+    },
+    {
+      "name": "inv-checks",
+      "file": "inv-check.xml",
+      "version": "4.0",
+      "java": {
+        "errorCount": 0
+      },
+      "profiles": [
+        "inv-check-profile-patient.xml",
+        "inv-check-profile-name1.xml",
+        "inv-check-profile-name2.xml"
+      ],
+      "profile": {
+        "source": "inv-check-profile-patient.xml",
+        "java": {
+          "errorCount": 3,
+          "output": [
+            "ERROR: Patient.name[0]: Unable to find a match for the specified profile among choices: ; [http://example.org/StructureDefinition/inv-profile-name1, http://example.org/StructureDefinition/inv-profile-name2]",
+            "ERROR: Patient.name[0].given[0]: test1: 'Always fail' Rule 'Always fail' Failed (validating against http://example.org/StructureDefinition/inv-profile-name2|0.1.0 [InvariantProfileName2]) (validating against http://example.org/StructureDefinition/inv-profile-name1|0.1.0 [InvariantProfileName1])",
+            "ERROR: Patient.name[0].given[0]: test2: 'Always fail' Rule 'Always fail' Failed (validating against http://example.org/StructureDefinition/inv-profile-name2|0.1.0 [InvariantProfileName2]) (validating against http://example.org/StructureDefinition/inv-profile-name1|0.1.0 [InvariantProfileName1])"
+          ]
+        }
+      }    
     }
   ]
 }
