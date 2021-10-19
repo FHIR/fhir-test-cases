@@ -2789,9 +2789,34 @@
     {
       "name": "demo-example-1",
       "file": "demo-example-1.xml",
+      "java": {
+        "errorCount": 3,
+        "warningCount": 1,
+        "output": [
+          "ERROR: Composition.type: Version 'current' of the code system 'http://loinc.org' is not known (encountered paired with code = '56445-0'). ValidVersions = [2.71]; The code provided (http://loinc.org#56445-0) is not valid in the value set 'FHIRDocumentTypeCodes' (from http://local.fhir.org:960/r4)",
+          "ERROR: Composition.type.coding[0]: Version 'current' of the code system 'http://loinc.org' is not known (encountered paired with code = '56445-0'). ValidVersions = [2.71]; The code provided (http://loinc.org#56445-0) is not valid in the value set 'All codes known to the system' (from http://local.fhir.org:960/r4) for 'http://loinc.org#56445-0'",
+          "ERROR: Composition.section[0].code.coding[0]: Version 'current' of the code system 'http://loinc.org' is not known (encountered paired with code = '48765-2'). ValidVersions = [2.71]; The code provided (http://loinc.org#48765-2) is not valid in the value set 'All codes known to the system' (from http://local.fhir.org:960/r4) for 'http://loinc.org#48765-2'",
+          "WARNING: Composition.meta.profile[0]: Profile reference 'http://example.org/fhir/StructureDefinition/demo-profile-1' has not been checked because it is unknown, and the validator is set to not fetch unknown profiles",
+        
+        ]
+      }
+    },
+    {
+      "name": "demo-example-2",
+      "file": "demo-example-2.xml",
+      "java": {
+        "errorCount": 0,
+        "output": [
+        ]
+      }
+    },
+    {
+      "name": "demo-example-3",
+      "file": "demo-example-1.xml",
+      "default-version" : true,
       "profile": {
         "source": "demo-profile-1.xml",
-        "explanation": "test | version | display in 2 places",
+        "explanation": "test | version | display in 2 places, and override invalid version (must be last of these three because it loads the profile)",
         "java": {
           "errorCount": 6,
           "output": [
@@ -2808,8 +2833,6 @@
       "java": {
         "errorCount": 0,
         "output": [
-          "WARNING: Composition.meta.profile[0]: StructureDefinition reference \"http://example.org/fhir/StructureDefinition/demo-profile-1\" could not be resolved",
-          "WARNING: Composition.section[0].code.coding[0]: The display \"Allergies and adverse reactions\" is not a valid display for the code {http://loinc.org}48765-2 - should be one of [\"Allergies and adverse reactions Document\",\"Allergies &or adverse reactions Doc\"]"
         ]
       }
     },
@@ -9374,6 +9397,19 @@
 "INFORMATION: Bundle.entry[1].resource.ofType(Organization).type[0].coding[0]: Code System URI 'http://example.org/fhir/us/spl/CodeSystem/codesystem-organizationTypes' is unknown so the code cannot be validated"
         ]
       }
-    }
+    }, 
+    {
+      "name" : "sct-version-issue",
+      "file" : "sct-version-issue.json",
+      "version" : "4.0",
+      "description" : "The version in this example is not valid - was neve released",
+      "java": {
+        "errorCount": 1,
+        "warningCount" : 0,
+        "output" : [
+          "ERROR: Observation.code.coding[0]: Version 'http://snomed.info/sct/900000000000207008/version/20210731' of the code system 'http://snomed.info/sct' is not known (encountered paired with code = '459231000124102'); The code provided (http://snomed.info/sct#459231000124102) is not valid in the value set 'All codes known to the system' (from http://local.fhir.org:960/r4) for 'http://snomed.info/sct#459231000124102'"
+        ]
+      }
+    }  
   ]
 }
