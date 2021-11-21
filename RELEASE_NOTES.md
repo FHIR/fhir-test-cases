@@ -1,1 +1,0 @@
-* Fix up snapshot generation test for fixing xver modifier extension handling.
