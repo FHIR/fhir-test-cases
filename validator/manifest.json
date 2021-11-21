@@ -3351,13 +3351,40 @@
       }
     },
     {
-      "name": "patient-xver",
-      "file": "patient-xver.xml",
+      "name": "patient-animal",
+      "file": "patient-animal.xml",
       "version": "4.0",
       "java": {
         "errorCount": 0,
         "output": [
-          "WARNING: Patient.identifier[0].type: No code provided, and a code should be provided from the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type)"
+          "INFORMATION: Patient.extension[0].extension[1].value.ofType(CodeableConcept).coding[1]: Code System URI 'http://example.org/fhir/animal-breed' is unknown so the code cannot be validated",
+          "WARNING: Patient.identifier[0].type: No code provided, and a code should be provided from the value set \"IdentifierType\" (http://hl7.org/fhir/ValueSet/identifier-type)"
+        ]
+      },
+      "firely-sdk-current": {
+        "errorCount": 0,
+        "warningCount": 0,
+        "output": [
+        ]
+      },
+      "firely-sdk-wip": {
+        "errorCount": 0,
+        "warningCount": 0,
+        "output": [
+        ]
+      }
+    },
+    {
+      "name": "patient-xver",
+      "file": "patient-xver.xml",
+      "version": "4.0",
+      "java": {
+        "errorCount": 1,
+        "warningCount" : 1,
+        "output": [
+          "ERROR: Patient.extension[0][url='http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal']: The Extension 'http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal' must not be used as an extension (it's a modifierExtension)",
+          "INFORMATION: Patient.extension[0].extension[1].value.ofType(CodeableConcept).coding[1]: Code System URI 'http://example.org/fhir/animal-breed' is unknown so the code cannot be validated",
+          "WARNING: Patient.identifier[0].type: No code provided, and a code should be provided from the value set 'IdentifierType' (http://hl7.org/fhir/ValueSet/identifier-type)"
         ]
       },
       "firely-sdk-current": {
@@ -3381,11 +3408,14 @@
       "version": "4.0",
       "explanation": "one of the inner extensions is renamed and not valid",
       "java": {
-        "errorCount": 1,
+        "errorCount": 2,
+        "warningCount": 1,
         "output": [
-          "INFORMATION: Patient.extension[0].extension[1]: This element does not match any known slice for the profile http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal",
+          "ERROR: Patient.extension[0][url='http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal']: The Extension 'http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal' must not be used as an extension (it's a modifierExtension)",
+          "INFORMATION: Patient.extension[0].extension[1]: This element does not match any known slice defined in the profile http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal",
           "ERROR: Patient.extension[0].extension[1][url='x-breed']: Sub-extension url 'x-breed' is not defined by the Extension http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal",
-          "WARNING: Patient.identifier[0].type: No code provided, and a code should be provided from the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type)"
+          "INFORMATION: Patient.extension[0].extension[1].value.ofType(CodeableConcept).coding[1]: Code System URI 'http://example.org/fhir/animal-breed' is unknown so the code cannot be validated",
+          "WARNING: Patient.identifier[0].type: No code provided, and a code should be provided from the value set 'IdentifierType' (http://hl7.org/fhir/ValueSet/identifier-type)"
         ]
       },
       "firely-sdk-current": {
@@ -9530,7 +9560,7 @@
       "file" : "uk-msg.json",
       "version" : "4.0",
       "allowed-extension-domain" : "https://fhir.nhs.uk/StructureDefinition",
-     "java": {
+      "java": {
         "errorCount": 2,
         "warningCount" : 3,
         "output" : [
@@ -9539,6 +9569,36 @@
           "WARNING: Bundle.entry[6].resource.ofType(MedicationRequest).medication.ofType(CodeableConcept).coding[0]: The display \"Ibuprofen 200mg tablets\" is not a valid display for the code {http://snomed.info/sct}329652003 - should be one of ['Ibuprofen 200 mg oral tablet', 'Product containing precisely ibuprofen 200 milligram/1 each conventional release oral tablet (clinical drug)'] (from http://tx.fhir.org/r4) for 'http://snomed.info/sct#329652003'",
           "ERROR: Bundle.entry[7].resource.ofType(MedicationRequest).medication.ofType(CodeableConcept).coding[0]: Unable to find code 39695211000001102 in http://snomed.info/sct (version http://snomed.info/sct/900000000000207008/version/20210731); The code \"39695211000001102\" is not valid in the system http://snomed.info/sct; The code provided (http://snomed.info/sct#39695211000001102) is not valid in the value set 'All codes known to the system' (from http://tx.fhir.org/r4) for 'http://snomed.info/sct#39695211000001102'",
           "WARNING: Bundle.entry[10]: Entry 'urn:uuid:c7d942f2-3c1d-4d93-9ba8-ba57db83cdc0' isn't reachable by traversing forwards from first Bundle entry, and isn't a resource type that is typically used that way - check this is not missed somewhere"
+        ]
+      }
+    },
+    {
+      "name" : "ext-xver-modifier-1",
+      "file" : "ext-xver-modifier-1.json",
+      "version" : "4.0",
+      "supporting" : [ "ext-xver-modifier-definition.json" ],
+      "description": "check modifier extensions are checked correctly",
+      "java": {
+        "errorCount": 0,
+        "warningCount" : 1,
+        "output" : [
+          "WARNING: DeviceRequest.extension[0].value.ofType(CodeableConcept): ValueSet http://hl7.org/fhir/us/qicore/ValueSet/qicore-negation-reason not found by validator"
+        ]
+      }
+    },
+    {
+      "name" : "ext-xver-modifier-2",
+      "file" : "ext-xver-modifier-2.json",
+      "version" : "4.0",
+      "profiles" : [ "ext-xver-modifier-definition.json" ],
+      "description" : "flip the extensions - both are wrong",
+      "java": {
+        "errorCount": 2,
+        "warningCount" : 1,
+        "output" : [
+          "ERROR: DeviceRequest.extension[0][url='http://hl7.org/fhir/5.0/StructureDefinition/extension-DeviceRequest.doNotPerform']: The Extension 'http://hl7.org/fhir/5.0/StructureDefinition/extension-DeviceRequest.doNotPerform' must not be used as an extension (it's a modifierExtension)",
+          "ERROR: DeviceRequest.modifierExtension[0][url='http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-doNotPerformReason']: The Extension 'http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-doNotPerformReason' must be used as a modifierExtension",
+          "WARNING: DeviceRequest.modifierExtension[0].value.ofType(CodeableConcept): ValueSet http://hl7.org/fhir/us/qicore/ValueSet/qicore-negation-reason not found by validator"
         ]
       }
     }
