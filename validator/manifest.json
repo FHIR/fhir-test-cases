@@ -3351,13 +3351,40 @@
       }
     },
     {
-      "name": "patient-xver",
-      "file": "patient-xver.xml",
+      "name": "patient-animal",
+      "file": "patient-animal.xml",
       "version": "4.0",
       "java": {
         "errorCount": 0,
         "output": [
-          "WARNING: Patient.identifier[0].type: No code provided, and a code should be provided from the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type)"
+          "INFORMATION: Patient.extension[0].extension[1].value.ofType(CodeableConcept).coding[1]: Code System URI 'http://example.org/fhir/animal-breed' is unknown so the code cannot be validated",
+          "WARNING: Patient.identifier[0].type: No code provided, and a code should be provided from the value set \"IdentifierType\" (http://hl7.org/fhir/ValueSet/identifier-type)"
+        ]
+      },
+      "firely-sdk-current": {
+        "errorCount": 0,
+        "warningCount": 0,
+        "output": [
+        ]
+      },
+      "firely-sdk-wip": {
+        "errorCount": 0,
+        "warningCount": 0,
+        "output": [
+        ]
+      }
+    },
+    {
+      "name": "patient-xver",
+      "file": "patient-xver.xml",
+      "version": "4.0",
+      "java": {
+        "errorCount": 1,
+        "warningCount" : 1,
+        "output": [
+          "ERROR: Patient.extension[0][url='http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal']: The Extension 'http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal' must not be used as an extension (it's a modifierExtension)",
+          "INFORMATION: Patient.extension[0].extension[1].value.ofType(CodeableConcept).coding[1]: Code System URI 'http://example.org/fhir/animal-breed' is unknown so the code cannot be validated",
+          "WARNING: Patient.identifier[0].type: No code provided, and a code should be provided from the value set 'IdentifierType' (http://hl7.org/fhir/ValueSet/identifier-type)"
         ]
       },
       "firely-sdk-current": {
@@ -3381,11 +3408,14 @@
       "version": "4.0",
       "explanation": "one of the inner extensions is renamed and not valid",
       "java": {
-        "errorCount": 1,
+        "errorCount": 2,
+        "warningCount": 1,
         "output": [
-          "INFORMATION: Patient.extension[0].extension[1]: This element does not match any known slice for the profile http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal",
+          "ERROR: Patient.extension[0][url='http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal']: The Extension 'http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal' must not be used as an extension (it's a modifierExtension)",
+          "INFORMATION: Patient.extension[0].extension[1]: This element does not match any known slice defined in the profile http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal",
           "ERROR: Patient.extension[0].extension[1][url='x-breed']: Sub-extension url 'x-breed' is not defined by the Extension http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal",
-          "WARNING: Patient.identifier[0].type: No code provided, and a code should be provided from the value set http://hl7.org/fhir/ValueSet/identifier-type (http://hl7.org/fhir/ValueSet/identifier-type)"
+          "INFORMATION: Patient.extension[0].extension[1].value.ofType(CodeableConcept).coding[1]: Code System URI 'http://example.org/fhir/animal-breed' is unknown so the code cannot be validated",
+          "WARNING: Patient.identifier[0].type: No code provided, and a code should be provided from the value set 'IdentifierType' (http://hl7.org/fhir/ValueSet/identifier-type)"
         ]
       },
       "firely-sdk-current": {
@@ -8806,10 +8836,11 @@
       "description": "Supplement can't define new codes",
       "version": "4.0",
       "java": {
-        "errorCount": 1,
+        "errorCount": 2,
         "warningCount": 0,
         "infoCount": 0,
         "output": [
+          "ERROR: CodeSystem.content: CodeSystem Supplements SHALL have a content value of 'supplement'",
           "ERROR: CodeSystem.concept[0]: The code 'test' is not declared in the base CodeSystem http://loinc.org so is not valid in the supplement"
         ]
       },
