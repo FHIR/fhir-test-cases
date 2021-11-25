@@ -7931,6 +7931,7 @@
       "name": "obs-hgvs",
       "file": "obs-hgvs.json",
       "version": "4.0",
+      "validateReference": "IGNORE",
       "packages": [
         "hl7.fhir.us.core#3.1.0",
         "hl7.fhir.us.mcode#1.0.0"
@@ -8756,6 +8757,7 @@
       "file": "qr-bad-ref2.json",
       "description": "",
       "fetcher": "standalone",
+      "validateReference": "CHECK_EXISTS_AND_TYPE",
       "version": "4.0",
       "java": {
         "errorCount": 1,
@@ -9603,13 +9605,31 @@
       }
     },
     {
-      "name" : "contained-resource",
+      "name" : "contained-resource-bad-id",
       "file" : "contained-resource.json",
       "version" : "4.0",
+      "validateContains": "CHECK_VALID",
+      "description" : "65 character long ID on contained resource, set validateContains to CHECK_VALID should yield 2 errors",
       "java": {
-        "errorCount": 0,
+        "errorCount": 2,
         "warningCount": 0,
         "output" : [
+          "ERROR: Condition: dom-3: 'If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource' 'If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource' ( (unmatched: 12345678901234567890123456789012345678901234567890123456789012345))",
+          "ERROR: Condition.contained[0].ofType(Practitioner).id: Invalid Resource id"
+        ]
+      }
+    },
+    {
+      "name" : "contained-resource-bad-id-ignore",
+      "file" : "contained-resource.json",
+      "version" : "4.0",
+      "validateContains": "IGNORE",
+      "description" : "65 character long ID on contained resource, set validateContains to IGNORE should yield no errors",
+      "java": {
+        "errorCount": 2,
+        "warningCount": 0,
+        "output" : [
+          "ERROR: Condition: dom-3: 'If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource' 'If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource' ( (unmatched: 12345678901234567890123456789012345678901234567890123456789012345))",
         ]
       }
     }
