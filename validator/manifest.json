@@ -22,8 +22,7 @@
     " * 'profile': in addition to performing validation against the specification, validate against a particular profile",
     "   * 'source' : the profile to validate against",
     "   * also allowed in the profile step: 'supporting', and 'debug'",
-    " * 'logical' : to document. (for CDA etc)",
-    "For each test, including on the profile element, there's additional elements that specify the expected outcomes",
+    " * 'logical' : to document. (for CDA etc)","For each test, including on the profile element, there's additional elements that specify the expected outcomes",
     "Because the variability between them, there's different outcome expectations for each validator",
     "The intent is not to allow for different interpretations of what is valid, but to allow for ",
     "different ways of describing the issue, and also for incomplete implementations. If there's no ",
@@ -9691,6 +9690,21 @@
       "java": {
         "errorCount": 0,
         "warningCount" : 0
+      }
+    },
+    {
+      "name": "bundle-conformsto",
+      "file": "bundle-conformsto.json",
+      "version" : "4.0",
+      "profiles" : [ "bundle-conformsto-patient.json", "bundle-conformsto-bundle.json", "bundle-conformsto-composition.json" ],
+      "java": {
+        "errorCount": 1,
+        "output" : [
+          "ERROR: Bundle.entry:Composition: minimum required = 1, but only found 0 (from http://ahdis.ch/ig/bundleconformsto/StructureDefinition/BundleConformsTo)",
+          "INFORMATION: Bundle.entry[0].resource.ofType(Composition).type: None of the codings provided are in the value set 'FHIR Document Type Codes' (http://hl7.org/fhir/ValueSet/doc-typecodes), and a coding is recommended to come from this value set) (codes = http://snomed.info/sct#721912009)",
+          "INFORMATION: Bundle.entry[1]: This element does not match any known slice defined in the profile http://ahdis.ch/ig/bundleconformsto/StructureDefinition/BundleConformsTo",
+          "INFORMATION: Bundle.entry[0].resource.type: None of the codings provided are in the value set 'FHIR Document Type Codes' (http://hl7.org/fhir/ValueSet/doc-typecodes), and a coding is recommended to come from this value set) (codes = http://snomed.info/sct#721912009)"
+       ]
       }
     }
   ]
