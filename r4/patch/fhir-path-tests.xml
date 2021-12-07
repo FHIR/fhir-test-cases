@@ -1378,6 +1378,82 @@
     </output>
   </case>
 
+  <case name="Operation on missing element" mode="forwards">
+    <input> 
+      <Patient xmlns="http://hl7.org/fhir">
+        <identifier>
+          <use value="official"/>
+          <value value="123"/>
+        </identifier>
+      </Patient>       
+    </input>
+    <diff>
+      <Parameters xmlns="http://hl7.org/fhir">
+        <parameter>
+          <name value="operation"/>
+          <part>
+            <name value="type"/>
+            <valueCode value="add"/>
+          </part>
+          <part>
+            <name value="path"/>
+            <valueString value="Patient.identifier.where(use = &apos;official&apos;).period"/>
+          </part>
+          <part>
+            <name value="name"/>
+            <valueString value="end"/>
+          </part>
+          <part>
+            <name value="value"/>
+            <valueDate value="2021-12-01"/>
+          </part>
+        </parameter>
+      </Parameters>            
+    </diff>
+    <error msg="No content found at Patient.identifier.where(use = 'official').period when adding"/>
+  </case>
+  
+  <case name="Operation on missing element #2" mode="forwards">
+    <input> 
+      <Patient xmlns="http://hl7.org/fhir">
+      </Patient>       
+    </input>
+    <diff>
+      <Parameters xmlns="http://hl7.org/fhir">
+        <parameter>
+          <name value="operation"/>
+          <part>
+            <name value="type"/>
+            <valueCode value="add"/>
+          </part>
+          <part>
+            <name value="path"/>
+            <valueString value="Patient"/>
+          </part>
+          <part>
+            <name value="name"/>
+            <valueString value="identifier"/>
+          </part>
+          <part>
+            <name value="value"/>
+            <valueIdentifier>
+              <system value="http://example.org"/>
+              <value value="value 3"/>
+            </valueIdentifier>
+          </part>
+        </parameter>
+      </Parameters>          
+    </diff>
+    <output> 
+      <Patient xmlns="http://hl7.org/fhir">
+        <identifier>
+          <system value="http://example.org"/>
+          <value value="value 3"/>
+        </identifier>
+      </Patient>       
+    </output>
+  </case>
+    
   <case name="Full Resource" mode="both">
     <input> 
       <Patient xmlns="http://hl7.org/fhir">
