@@ -1,1 +1,0 @@
-* Make date/time match backward compatible Java formatting in conceptmap narrative tests 
