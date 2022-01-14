@@ -1,1 +1,0 @@
-Update changes to comparison outcomes after discussion at Jan 2022 connectathon
