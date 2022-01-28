@@ -10036,6 +10036,54 @@
           "WARNING: AuditEvent.agent[0].extension[0].value.ofType(Reference).identifier.type: None of the codings provided are in the value set 'IdentifierType' (http://hl7.org/fhir/ValueSet/identifier-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://terminology.hl7.org/CodeSystem/v2-0203#NPI)"        
         ]
       }
-    }    
+    },  
+    {
+      "name": "mimic",
+      "file": "mimic/encounter.json",
+      "packages" : ["mimic/mimic-0.1.2.tgz"],
+      "version" : "4.0",    
+      "java": {
+        "errorCount": 0,
+        "warningCount": 4,
+        "output": [
+          "INFORMATION: Encounter.class: Code System URI 'http://fhir.mimic.mit.edu/CodeSystem/admission-class' is unknown so the code cannot be validated",
+          "WARNING: Encounter.class: The Coding provided (http://fhir.mimic.mit.edu/CodeSystem/admission-class#URGENT) is not in the value set http://terminology.hl7.org/ValueSet/v3-ActEncounterCode, and a code should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable).  (error message = Not in value set http://terminology.hl7.org/ValueSet/v3-ActEncounterCode)",
+          "INFORMATION: Encounter.type[0].coding[0]: Code System URI 'http://fhir.mimic.mit.edu/CodeSystem/admission-type' is unknown so the code cannot be validated",
+          "WARNING: Encounter.period.start: The value '2158-09-28T01:21:00-04:00' is outside the range of reasonable years - check for data entry error",
+          "WARNING: Encounter.period.end: The value '2158-09-28T12:10:00-04:00' is outside the range of reasonable years - check for data entry error",
+          "INFORMATION: Encounter.hospitalization.admitSource: None of the codings provided are in the value set 'Admit source' (http://hl7.org/fhir/ValueSet/encounter-admit-source), and a coding is recommended to come from this value set) (codes = http://fhir.mimic.mit.edu/CodeSystem/admit-source#null)",
+          "WARNING: Encounter.meta.profile[0]: Profile reference 'http://fhir.mimic.mit.edu/StructureDefinition/mimic-encounter' has not been checked because it is unknown, and the validator is set to not fetch unknown profiles"
+        ]
+      }
+    },  
+    {
+      "name": "ext-context1",
+      "file": "ext_context1_bundle.xml",
+      "supporting" : ["ext_context1_profile_bundle.xml", "ext_context1_profile_composition.xml", "ext_context1_profile_condition.xml"],
+      "packages" : ["kbv.basis#1.2.0", "de.basisprofil.r4#0.9.13"],
+      "version" : "4.0",    
+      "java": {
+        "errorCount": 13,
+        "warningCount": 1,
+        "output": [
+          "ERROR: Bundle.entry[0].resource.ofType(Composition): Composition.status: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/Composition)",
+          "ERROR: Bundle.entry[0].resource.ofType(Composition): Composition.type: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/Composition)",
+          "ERROR: Bundle.entry[0].resource.ofType(Composition): Composition.date: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/Composition)",
+          "ERROR: Bundle.entry[0].resource.ofType(Composition): Composition.author: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/Composition)",
+          "ERROR: Bundle.entry[0].resource.ofType(Composition): Composition.title: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/Composition)",
+          "ERROR: Bundle.entry[0].resource.ofType(Composition): Composition.status: minimum required = 1, but only found 0 (from https://fhir.kbv.de/StructureDefinition/KBV_PR_Base_Test_COMP)",
+          "ERROR: Bundle.entry[0].resource.ofType(Composition): Composition.type: minimum required = 1, but only found 0 (from https://fhir.kbv.de/StructureDefinition/KBV_PR_Base_Test_COMP)",
+          "ERROR: Bundle.entry[0].resource.ofType(Composition): Composition.date: minimum required = 1, but only found 0 (from https://fhir.kbv.de/StructureDefinition/KBV_PR_Base_Test_COMP)",
+          "ERROR: Bundle.entry[0].resource.ofType(Composition): Composition.author: minimum required = 1, but only found 0 (from https://fhir.kbv.de/StructureDefinition/KBV_PR_Base_Test_COMP)",
+          "ERROR: Bundle.entry[0].resource.ofType(Composition): Composition.title: minimum required = 1, but only found 0 (from https://fhir.kbv.de/StructureDefinition/KBV_PR_Base_Test_COMP)",
+          "ERROR: Bundle.entry[1].resource.ofType(Condition): con-4: 'If condition is abated, then clinicalStatus must be either inactive, resolved, or remission' Rule 'If condition is abated, then clinicalStatus must be either inactive, resolved, or remission' Failed",
+          "ERROR: Bundle.entry[1].resource.ofType(Condition): Condition.subject: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/Condition)",
+          "INFORMATION: Bundle.entry[1].resource.ofType(Condition).code.coding[0]: Code System URI 'http://fhir.de/CodeSystem/dimdi/icd-10-gm' is unknown so the code cannot be validated",
+          "WARNING: Bundle.entry[1].resource.ofType(Condition).code.coding[0].extension[0].value.ofType(Coding): icd-5: 'Wenn die Diagnosesicherheit \"G (Gesichert)\" verwendet wird, dann muss clinicalStatus auf \"active\" und verificationStatus auf \"confirmed\" gesetzt werden.' Rule 'Wenn die Diagnosesicherheit \"G (Gesichert)\" verwendet wird, dann muss clinicalStatus auf \"active\" und verificationStatus auf \"confirmed\" gesetzt werden.' Failed",
+          "INFORMATION: Bundle.entry[1].resource.ofType(Condition).code.coding[0].extension[0].value.ofType(Coding): Code System URI 'https://fhir.kbv.de/CodeSystem/KBV_CS_SFHIR_ICD_DIAGNOSESICHERHEIT' is unknown so the code cannot be validated",
+          "ERROR: Bundle.entry[1].resource.ofType(Condition): Condition.subject: minimum required = 1, but only found 0 (from https://bla/StructureDefinition/MyKBV_PR_Base_Diagnosis)"
+        ]
+      }
+    }
   ]
 }
