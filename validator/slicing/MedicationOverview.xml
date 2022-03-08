@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="MedicationOverview" />
+  <url value="http://nictiz.nl/fhir/StructureDefinition/MedicationOverview" />
+  <version value="2.0.1" />
+  <name value="Medication Overview" />
+  <status value="active" />
+  <publisher value="Nictiz" />
+  <contact>
+    <name value="Nictiz" />
+    <telecom>
+      <system value="email" />
+      <value value="info@nictiz.nl" />
+      <use value="work" />
+    </telecom>
+  </contact>
+  <description value="Profile on the List resource which represents the medication overview conform information standard ['Medication Proces'](https://www.nictiz.nl/Paginas/Informatiestandaard-Medicatieprocess.aspx)" />
+  <purpose value="To define the medication overview as stated in the information standard Medication Process." />
+  <copyright value="CC0" />
+  <fhirVersion value="3.0.2" />
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="List" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/List" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="List.entry">
+      <path value="List.entry" />
+      <slicing>
+        <discriminator>
+          <type value="profile" />
+          <path value="item.reference.resolve()" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="List.entry:MedicationAgreement">
+      <path value="List.entry" />
+      <sliceName value="MedicationAgreement" />
+    </element>
+    <element id="List.entry:MedicationAgreement.item">
+      <path value="List.entry.item" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/zib-MedicationAgreement" />
+        <aggregation value="bundled" />
+      </type>
+    </element>
+    <element id="List.entry:AdministrationAgreement">
+      <path value="List.entry" />
+      <sliceName value="AdministrationAgreement" />
+    </element>
+    <element id="List.entry:AdministrationAgreement.item">
+      <path value="List.entry.item" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/zib-AdministrationAgreement" />
+        <aggregation value="bundled" />
+      </type>
+    </element>
+    <element id="List.entry:MedicationUsage">
+      <path value="List.entry" />
+      <sliceName value="MedicationUsage" />
+    </element>
+    <element id="List.entry:MedicationUsage.item">
+      <path value="List.entry.item" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/zib-MedicationUse" />
+        <aggregation value="bundled" />
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

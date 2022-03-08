@@ -1,0 +1,167 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "TypeSubtypeSlicingstructuredef",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-category",
+      "valueString": "Clinical.Diagnostics"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-security-category",
+      "valueCode": "patient"
+    }
+  ],
+  "url": "http://example.org/fhir/StructureDefinition/TypeSubtypeSlicingstructuredef",
+  "version": "4.0.1",
+  "name": "TypeSubtypeSlicingstructuredef",
+  "title": "TypeSubtypeSlicingstructuredef",
+  "status": "active",
+  "description": "TypeSubtypeSlicingstructuredef profile for testing type/subtype validation where subtype is not required for all slices.",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "workflow",
+      "uri": "http://hl7.org/fhir/workflow",
+      "name": "Workflow Pattern"
+    },
+    {
+      "identity": "sct-concept",
+      "uri": "http://snomed.info/conceptdomain",
+      "name": "SNOMED CT Concept Domain Binding"
+    },
+    {
+      "identity": "v2",
+      "uri": "http://hl7.org/v2",
+      "name": "HL7 v2 Mapping"
+    },
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    },
+    {
+      "identity": "w5",
+      "uri": "http://hl7.org/fhir/fivews",
+      "name": "FiveWs Pattern Mapping"
+    },
+    {
+      "identity": "sct-attr",
+      "uri": "http://snomed.org/attributebinding",
+      "name": "SNOMED CT Attribute Binding"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.referenceRange",
+        "path": "Observation.referenceRange",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "pattern",
+              "path": "type"
+            },
+            {
+              "type": "pattern",
+              "path": "appliesTo"
+            }
+          ],
+          "rules": "open",
+          "description": "Slicing for testing type/subtype validation where subtype is not required for all slices."
+        },
+        "min": 3
+      },
+      {
+        "id": "Observation.referenceRange:Slice1",
+        "path": "Observation.referenceRange",
+        "sliceName": "Slice1",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Observation.referenceRange:Slice1.type",
+        "path": "Observation.referenceRange.type",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "normal",
+              "system": "http://terminology.hl7.org/CodeSystem/referencerange-meaning"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.referenceRange:Slice1.appliesTo",
+        "path": "Observation.referenceRange.appliesTo",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "2036-2",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-Race"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.referenceRange:Slice2",
+        "path": "Observation.referenceRange",
+        "sliceName": "Slice2",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Observation.referenceRange:Slice2.type",
+        "path": "Observation.referenceRange.type",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "normal",
+              "system": "http://terminology.hl7.org/CodeSystem/referencerange-meaning"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.referenceRange:Slice2.appliesTo",
+        "path": "Observation.referenceRange.appliesTo",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "2038-8",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-Race"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.referenceRange:Slice3",
+        "path": "Observation.referenceRange",
+        "sliceName": "Slice3",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Observation.referenceRange:Slice3.type",
+        "path": "Observation.referenceRange.type",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "treatment",
+              "system": "http://terminology.hl7.org/CodeSystem/referencerange-meaning"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
