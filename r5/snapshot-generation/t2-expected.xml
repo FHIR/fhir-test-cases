@@ -95,6 +95,7 @@
         <human value="Name should be usable as an identifier for the module by machine processing applications such as code generation"/>
         <expression value="name.matches(&#39;[A-Z]([A-Za-z0-9_]){0,254}&#39;)"/>
         <xpath value="not(exists(f:name/@value)) or matches(f:name/@value, &#39;[A-Z]([A-Za-z0-9_]){0,254}&#39;)"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/ValueSet"/>
       </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
@@ -1151,6 +1152,7 @@
         <human value="A value set include/exclude SHALL have a value set or a system"/>
         <expression value="valueSet.exists() or system.exists()"/>
         <xpath value="exists(f:valueSet) or exists(f:system)"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/ValueSet"/>
       </constraint>
       <constraint>
         <key value="vsd-2"/>
@@ -1158,6 +1160,7 @@
         <human value="A value set with concepts or filters SHALL include a system"/>
         <expression value="(concept.exists() or filter.exists()) implies system.exists()"/>
         <xpath value="not(exists(f:concept) or exists(f:filter)) or exists(f:system)"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/ValueSet"/>
       </constraint>
       <constraint>
         <key value="vsd-3"/>
@@ -1165,6 +1168,7 @@
         <human value="Cannot have both concept and filter"/>
         <expression value="concept.empty() or filter.empty()"/>
         <xpath value="not(exists(f:concept)) or not(exists(f:filter))"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/ValueSet"/>
       </constraint>
       <isModifier value="false"/>
       <isSummary value="true"/>
@@ -2545,6 +2549,7 @@
         <human value="SHALL have a code or a display"/>
         <expression value="code.exists() or display.exists()"/>
         <xpath value="exists(f:code) or exists(f:display)"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/ValueSet"/>
       </constraint>
       <constraint>
         <key value="vsd-9"/>
@@ -2552,6 +2557,7 @@
         <human value="Must have a code if not abstract"/>
         <expression value="code.exists() or abstract = true"/>
         <xpath value="exists(f:code) or (f:abstract/@value = true())"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/ValueSet"/>
       </constraint>
       <constraint>
         <key value="vsd-10"/>
@@ -2559,6 +2565,7 @@
         <human value="Must have a system if a code is present"/>
         <expression value="code.empty() or system.exists()"/>
         <xpath value="exists(f:system) or not(exists(f:code))"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/ValueSet"/>
       </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>

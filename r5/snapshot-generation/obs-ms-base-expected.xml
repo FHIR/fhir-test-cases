@@ -6,29 +6,29 @@
     <status value="extensions"/>
     <div xmlns="http://www.w3.org/1999/xhtml">
       <table border="0" cellpadding="0" cellspacing="0" style="border: 0px #F0F0F0 solid; font-size: 11px; font-family: verdana; vertical-align: top;">
-        <tr style="border: 1px #F0F0F0 solid; font-size: 11px; font-family: verdana; vertical-align: top;">
+        <tr style="border: 1px #F0F0F0 solid; font-size: 11px; font-family: verdana; vertical-align: top">
           <th style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <a href="http://hl7.org/fhirformats.html#table" title="The logical name of the element">Name</a>
+            <a href="http://hl7.org/fhir/formats.html#table" title="The logical name of the element">Name</a>
           </th>
           <th style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <a href="http://hl7.org/fhirformats.html#table" title="Information about the use of the element">Flags</a>
+            <a href="http://hl7.org/fhir/formats.html#table" title="Information about the use of the element">Flags</a>
           </th>
           <th style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <a href="http://hl7.org/fhirformats.html#table" title="Minimum and Maximum # of times the the element can appear in the instance">Card.</a>
+            <a href="http://hl7.org/fhir/formats.html#table" title="Minimum and Maximum # of times the the element can appear in the instance">Card.</a>
           </th>
           <th style="width: 100px" class="hierarchy">
-            <a href="http://hl7.org/fhirformats.html#table" title="Reference to the type of the element">Type</a>
+            <a href="http://hl7.org/fhir/formats.html#table" title="Reference to the type of the element">Type</a>
           </th>
           <th style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <a href="http://hl7.org/fhirformats.html#table" title="Additional information about the element">Description &amp; Constraints</a>
+            <a href="http://hl7.org/fhir/formats.html#table" title="Additional information about the element">Description &amp; Constraints</a>
             <span style="float: right">
-              <a href="http://hl7.org/fhirformats.html#table" title="Legend for this format">
-                <img src="http://hl7.org/fhirhelp16.png" alt="doco" style="background-color: inherit"/>
+              <a href="http://hl7.org/fhir/formats.html#table" title="Legend for this format">
+                <img src="http://hl7.org/fhir/help16.png" alt="doco" style="background-color: inherit"/>
               </a>
             </span>
           </th>
         </tr>
-        <tr style="border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: white;">
+        <tr style="border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: white">
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck1.png)" class="hierarchy">
             <img src="tbl_spacer.png" alt="." style="background-color: inherit" class="hierarchy"/>
             <img src="icon_resource.png" alt="." style="background-color: white; background-color: inherit" title="Resource" class="hierarchy"/> Observation
@@ -40,7 +40,7 @@
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
         </tr>
 
-        <tr style="border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: #F7F7F7;">
+        <tr style="border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: #F7F7F7">
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck00.png)" class="hierarchy">
             <img src="tbl_spacer.png" alt="." style="background-color: inherit" class="hierarchy"/>
             <img src="tbl_vjoin_end.png" alt="." style="background-color: inherit" class="hierarchy"/>
@@ -86,8 +86,8 @@
         <tr>
           <td colspan="5" class="hierarchy">
             <br/>
-            <a href="http://hl7.org/fhirformats.html#table" title="Legend for this format">
-              <img src="http://hl7.org/fhirhelp16.png" alt="doco" style="background-color: inherit"/> Documentation for this format
+            <a href="http://hl7.org/fhir/formats.html#table" title="Legend for this format">
+              <img src="http://hl7.org/fhir/help16.png" alt="doco" style="background-color: inherit"/> Documentation for this format
             </a>
           </td>
         </tr>
@@ -202,6 +202,7 @@
         <human value="dataAbsentReason SHALL only be present if Observation.value[x] is not present"/>
         <expression value="dataAbsentReason.empty() or value.empty()"/>
         <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), &#39;value&#39;)])))"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Observation"/>
       </constraint>
       <constraint>
         <key value="obs-7"/>
@@ -209,6 +210,7 @@
         <human value="If Observation.code is the same as an Observation.component.code then the value element associated with the code SHALL NOT be present"/>
         <expression value="value.empty() or component.code.where(coding.intersect(%resource.code.coding).exists()).empty()"/>
         <xpath value="not(f:*[starts-with(local-name(.), &#39;value&#39;)] and (for $coding in f:code/f:coding return f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value] [f:system/@value=$coding/f:system/@value]))"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Observation"/>
       </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
@@ -682,7 +684,7 @@
       <path value="Observation.category"/>
       <short value="Classification of  type of observation"/>
       <definition value="A code that classifies the general type of observation being made."/>
-      <comment value="In addition to the required category valueset, this element allows various categorization schemes based on the owner&#x2019;s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set."/>
+      <comment value="In addition to the required category valueset, this element allows various categorization schemes based on the owner’s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set."/>
       <requirements value="Used for filtering what observations are retrieved and displayed."/>
       <min value="0"/>
       <max value="*"/>
@@ -980,7 +982,7 @@
       <path value="Observation.issued"/>
       <short value="Date/Time this version was made available"/>
       <definition value="The date and time this version of the observation was made available to providers, typically after the results have been reviewed and verified."/>
-      <comment value="For Observations that don&#x2019;t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R4/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn&#x2019;t require the new version to be reviewed and verified again."/>
+      <comment value="For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R4/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1478,6 +1480,7 @@
         <human value="Must have at least a low or a high or text"/>
         <expression value="low.exists() or high.exists() or text.exists()"/>
         <xpath value="(exists(f:low) or exists(f:high)or exists(f:text))"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Observation"/>
       </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>

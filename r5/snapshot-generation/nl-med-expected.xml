@@ -23,7 +23,7 @@
             <a href="http://hl7.org/fhir/formats.html#table" title="Additional information about the element">Description &amp; Constraints</a>
             <span style="float: right">
               <a href="http://hl7.org/fhir/formats.html#table" title="Legend for this format">
-                <img src="http://hl7.org/fhirhelp16.png" alt="doco" style="background-color: inherit"/>
+                <img src="http://hl7.org/fhir/help16.png" alt="doco" style="background-color: inherit"/>
               </a>
             </span>
           </th>
@@ -90,7 +90,7 @@
             <img src="tbl_spacer.png" alt="." style="background-color: inherit" class="hierarchy"/>
             <img src="tbl_vjoin_end.png" alt="." style="background-color: inherit" class="hierarchy"/>
             <img src="icon_slice.png" alt="." style="background-color: #F7F7F7; background-color: inherit" title="Slice Definition" class="hierarchy"/> 
-            <span style="font-style: italic">entry</span>
+            <span style="font-style: italic">Slices for entry</span>
             <a name="Bundle.entry"> </a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
@@ -101,7 +101,7 @@
             <span style="opacity: 0.5; font-style: italic">*</span>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <a style="font-style: italic" href="http://hl7.org/fhirprofiling.html#slicing">(Slice Definition)</a>
+            <a style="opacity: 0.5; font-style: italic" href="http://hl7.org/fhir/datatypes.html#BackboneElement">BackboneElement</a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
             <span style="opacity: 0.5; font-style: italic">Entry in the bundle - will have a resource or information</span>
@@ -232,7 +232,7 @@
           <td colspan="5" class="hierarchy">
             <br/>
             <a href="http://hl7.org/fhir/formats.html#table" title="Legend for this format">
-              <img src="http://hl7.org/fhirhelp16.png" alt="doco" style="background-color: inherit"/> Documentation for this format
+              <img src="http://hl7.org/fhir/help16.png" alt="doco" style="background-color: inherit"/> Documentation for this format
             </a>
           </td>
         </tr>
@@ -305,6 +305,7 @@
         <human value="total only when a search or history"/>
         <expression value="total.empty() or (type = &#39;searchset&#39;) or (type = &#39;history&#39;)"/>
         <xpath value="not(f:total) or (f:type/@value = &#39;searchset&#39;) or (f:type/@value = &#39;history&#39;)"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-2"/>
@@ -312,6 +313,7 @@
         <human value="entry.search only when a search"/>
         <expression value="entry.search.empty() or (type = &#39;searchset&#39;)"/>
         <xpath value="not(f:entry/f:search) or (f:type/@value = &#39;searchset&#39;)"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-3"/>
@@ -319,6 +321,7 @@
         <human value="entry.request mandatory for batch/transaction/history, otherwise prohibited"/>
         <expression value="entry.all(request.exists() = (%resource.type = &#39;batch&#39; or %resource.type = &#39;transaction&#39; or %resource.type = &#39;history&#39;))"/>
         <xpath value="not(f:entry/f:request) or (f:type/@value = &#39;batch&#39;) or (f:type/@value = &#39;transaction&#39;) or (f:type/@value = &#39;history&#39;)"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-4"/>
@@ -326,6 +329,7 @@
         <human value="entry.response mandatory for batch-response/transaction-response/history, otherwise prohibited"/>
         <expression value="entry.all(response.exists() = (%resource.type = &#39;batch-response&#39; or %resource.type = &#39;transaction-response&#39; or %resource.type = &#39;history&#39;))"/>
         <xpath value="not(f:entry/f:response) or (f:type/@value = &#39;batch-response&#39;) or (f:type/@value = &#39;transaction-response&#39;) or (f:type/@value = &#39;history&#39;)"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-7"/>
@@ -333,6 +337,7 @@
         <human value="FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId (except in history bundles)"/>
         <expression value="(type = &#39;history&#39;) or entry.where(fullUrl.exists()).select(fullUrl&amp;resource.meta.versionId).isDistinct()"/>
         <xpath value="(f:type/@value = &#39;history&#39;) or (count(for $entry in f:entry[f:resource] return $entry[count(parent::f:Bundle/f:entry[f:fullUrl/@value=$entry/f:fullUrl/@value and ((not(f:resource/*/f:meta/f:versionId/@value) and not($entry/f:resource/*/f:meta/f:versionId/@value)) or f:resource/*/f:meta/f:versionId/@value=$entry/f:resource/*/f:meta/f:versionId/@value)])!=1])=0)"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-9"/>
@@ -340,6 +345,7 @@
         <human value="A document must have an identifier with a system and a value"/>
         <expression value="type = &#39;document&#39; implies (identifier.system.exists() and identifier.value.exists())"/>
         <xpath value="not(f:type/@value = &#39;document&#39;) or exists(f:identifier/f:system) or exists(f:identifier/f:value)"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-10"/>
@@ -347,6 +353,7 @@
         <human value="A document must have a date"/>
         <expression value="type = &#39;document&#39; implies (timestamp.hasValue())"/>
         <xpath value="not(f:type/@value = &#39;document&#39;) or exists(f:timestamp/@value)"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-11"/>
@@ -354,6 +361,7 @@
         <human value="A document must have a Composition as the first resource"/>
         <expression value="type = &#39;document&#39; implies entry.first().resource.is(Composition)"/>
         <xpath value="not(f:type/@value=&#39;document&#39;) or f:entry[1]/f:resource/f:Composition"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-12"/>
@@ -361,6 +369,7 @@
         <human value="A message must have a MessageHeader as the first resource"/>
         <expression value="type = &#39;message&#39; implies entry.first().resource.is(MessageHeader)"/>
         <xpath value="not(f:type/@value=&#39;message&#39;) or f:entry[1]/f:resource/f:MessageHeader"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
@@ -2053,7 +2062,7 @@
         <human value="A list can only have an emptyReason if it is empty"/>
         <expression value="emptyReason.empty() or entry.empty()"/>
         <xpath value="not(exists(f:emptyReason) and exists(f:entry))"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/List"/>
       </constraint>
       <constraint>
         <key value="lst-2"/>
@@ -2061,7 +2070,7 @@
         <human value="The deleted flag can only be used if the mode of the list is &quot;changes&quot;"/>
         <expression value="mode = &#39;changes&#39; or entry.deleted.empty()"/>
         <xpath value="(f:mode/@value = &#39;changes&#39;) or not(exists(f:entry/f:deleted))"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/List"/>
       </constraint>
       <constraint>
         <key value="lst-3"/>
@@ -2069,7 +2078,7 @@
         <human value="An entry date can only be used if the mode of the list is &quot;working&quot;"/>
         <expression value="mode = &#39;working&#39; or entry.date.empty()"/>
         <xpath value="(f:mode/@value = &#39;working&#39;) or not(exists(f:entry/f:date))"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/List"/>
       </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
@@ -2331,7 +2340,7 @@
       <mapping>
         <identity value="Medication-Overview"/>
         <map value="mp-dataelement900-22970"/>
-        <comment value="Verificatie pati&#xEB;nt"/>
+        <comment value="Verificatie patiënt"/>
       </mapping>
       <mapping>
         <identity value="Medication-Overview"/>
@@ -2448,7 +2457,7 @@
       <mapping>
         <identity value="Medication-Overview"/>
         <map value="mp-dataelement900-22971"/>
-        <comment value="Geverifieerd met pati&#xEB;nt?"/>
+        <comment value="Geverifieerd met patiënt?"/>
       </mapping>
     </element>
     <element id="Bundle.entry:List.resource.extension:Verification.extension:VerificationPatientDate">
