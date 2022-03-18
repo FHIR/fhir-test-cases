@@ -1,0 +1,96 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "dental-findings",
+  "meta" : {
+    "versionId" : "38",
+    "lastUpdated" : "2021-07-29T14:05:16.541+00:00",
+    "source" : "#3gIafL4PyHr9dDIB"
+  },
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/dental-findings",
+  "version" : "1.0.0",
+  "name" : "DentalFindings",
+  "title" : "Dental Findings",
+  "status" : "active",
+  "date" : "2021-11-02T16:19:30+00:00",
+  "description" : "This profile is used to convey point-in-time oral findings including findings of an odontogram, periodontal assessment, tooth-specific measurement, intraoral or extraoral soft tissue exam, TMJ, TMD, or occlusion assessment. Findings in this profile often support associated Dental Conditions/Problems. See the FHIR base resource descriptions for comparisons of [Condition](https://www.hl7.org/fhir/condition.html) and [Observation](https://www.hl7.org/fhir/observation.html).\n\nAs multiple tooth surfaces, tooth numbers, and oral cavity areas may be applicable for a single observation, yet only a single Observation.bodySite is allowed, see SNOMED CT [Composition Grammar Syntax](http://hl7.org/fhir/snomedct.html#4.3.1.0.5) for correct use of post-coordinated concepts. ",
+  "jurisdiction" : [
+    {
+      "coding" : [
+        {
+          "system" : "urn:iso:std:iso:3166",
+          "code" : "US",
+          "display" : "United States of America"
+        }
+      ],
+      "text" : "US"
+    }
+  ],
+  "fhirVersion" : "4.0.1",
+  "mapping" : [
+    {
+      "identity" : "workflow",
+      "uri" : "http://hl7.org/fhir/workflow",
+      "name" : "Workflow Pattern"
+    },
+    {
+      "identity" : "sct-concept",
+      "uri" : "http://snomed.info/conceptdomain",
+      "name" : "SNOMED CT Concept Domain Binding"
+    },
+    {
+      "identity" : "v2",
+      "uri" : "http://hl7.org/v2",
+      "name" : "HL7 v2 Mapping"
+    },
+    {
+      "identity" : "rim",
+      "uri" : "http://hl7.org/v3",
+      "name" : "RIM Mapping"
+    },
+    {
+      "identity" : "w5",
+      "uri" : "http://hl7.org/fhir/fivews",
+      "name" : "FiveWs Pattern Mapping"
+    },
+    {
+      "identity" : "sct-attr",
+      "uri" : "http://snomed.org/attributebinding",
+      "name" : "SNOMED CT Attribute Binding"
+    }
+  ],
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Observation",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [
+      {
+        "id" : "Observation",
+        "path" : "Observation"
+      },
+      {
+        "id" : "Observation.code",
+        "path" : "Observation.code",
+        "mustSupport" : true,
+        "binding" : {
+          "strength" : "required",
+          "valueSet" : "http://hl7.org/fhir/us/dental-data-exchange/ValueSet/dental-anatomy"
+        }
+      },
+      {
+        "id" : "Observation.subject",
+        "path" : "Observation.subject",
+        "type" : [
+          {
+            "code" : "Reference",
+            "targetProfile" : [
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"
+            ]
+          }
+        ],
+        "mustSupport" : true
+      }
+    ]
+  }
+}
