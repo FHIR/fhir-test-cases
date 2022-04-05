@@ -531,6 +531,7 @@ Any text enclosed within is ignored
 	<group name="testSelect">
 		<test name="testSelect1" inputfile="patient-example.xml"><expression>Patient.name.select(given).count() = 5</expression><output type="boolean">true</output></test>
 		<test name="testSelect2" inputfile="patient-example.xml"><expression>Patient.name.select(given | family).count() = 7 </expression><output type="boolean">true</output></test>
+		<test name="testSelect3" inputfile="patient-example.xml"><expression>name.select(use.contains(given)).count()</expression><output type="integer">3</output></test> <!-- three booleans, all false -->
 	</group>
 
 	<group name="testRepeat">
@@ -538,6 +539,7 @@ Any text enclosed within is ignored
 		<test name="testRepeat2" inputfile="questionnaire-example.xml"><expression>Questionnaire.repeat(item).code.count() = 11</expression><output type="boolean">true</output></test>
 		<test name="testRepeat3" inputfile="questionnaire-example.xml"><expression>Questionnaire.descendants().code.count() = 23</expression><output type="boolean">true</output></test>
 		<test name="testRepeat4" inputfile="questionnaire-example.xml"><expression>Questionnaire.children().code.count() = 2</expression><output type="boolean">true</output></test>
+		<test name="testRepeat5" inputfile="patient-example.xml"><expression>Patient.name.repeat('test')</expression><output type="string">test</output></test>
 	</group>
 
 	<group name="testAggregate">
@@ -979,6 +981,9 @@ Any text enclosed within is ignored
 		<test name="testUnion6" inputfile="patient-example.xml"><expression>(1 | 2).combine(2).count() = 3</expression><output type="boolean">true</output></test> <!-- do not merge duplicates -->
 		<test name="testUnion7" inputfile="patient-example.xml"><expression>1.combine(1).count() = 2</expression><output type="boolean">true</output></test> <!-- do not merge duplicates -->
 		<test name="testUnion8" inputfile="patient-example.xml"><expression>1.combine(1).union(2).count() = 2</expression><output type="boolean">true</output></test> <!-- do not merge duplicates -->
+		<test name="testUnion9" inputfile="patient-example.xml"><expression>name.select(use | given).count()</expression><output type="integer">8</output></test>
+		<test name="testUnion10" inputfile="patient-example.xml"><expression>name.select(use.union($this.given)).count()</expression><output type="integer">8</output></test>
+		<test name="testUnion11" inputfile="patient-example.xml"><expression>name.select(use.union(given)).count()</expression><output type="integer">8</output></test>
 	</group>
 
 	<group name="testIntersect">

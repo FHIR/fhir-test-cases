@@ -10165,6 +10165,55 @@
           ]
         }
       }
+    },
+    {
+      "name" : "AuditEvent-slice23-first",
+      "file" : "slice23/AuditEvent-ex-FirstSliceProfile.json",
+      "version" : "4.0",
+      "java" : {
+        "errorCount": 0,
+        "warningCount": 2,
+        "output" : [
+          "INFORMATION: AuditEvent.subtype[0]: Code System URI 'urn:ietf:rfc:1438' is unknown so the code cannot be validated",
+          "WARNING: AuditEvent.subtype[0]: The Coding provided (urn:ietf:rfc:1438#poke) is not in the value set http://hl7.org/fhir/ValueSet/audit-event-sub-type, and a code should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable).  (error message = Not in value set http://hl7.org/fhir/ValueSet/audit-event-sub-type ([]))",
+          "WARNING: AuditEvent.meta.profile[0]: Profile reference 'http://hl7.org/fhir/test/StructureDefinition/Slice23' has not been checked because it is unknown, and the validator is set to not fetch unknown profiles"               
+        ]
+      }
+    },
+    {
+      "name" : "AuditEvent-slice23-second",
+      "file" : "slice23/AuditEvent-ex-SecondSliceProfile.json",
+      "version" : "4.0",
+      "java" : {
+        "debug" : true,
+        "errorCount": 2,
+        "warningCount": 3,
+        "output" : [
+          "INFORMATION: AuditEvent.subtype[0]: Code System URI 'urn:ietf:rfc:1438' is unknown so the code cannot be validated",
+          "WARNING: AuditEvent.subtype[0]: The Coding provided (urn:ietf:rfc:1438#poke) is not in the value set http://hl7.org/fhir/ValueSet/audit-event-sub-type, and a code should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable).  (error message = Not in value set http://hl7.org/fhir/ValueSet/audit-event-sub-type ([]))",
+          "ERROR: AuditEvent.agent[0].extension[0]: The extension http://hl7.org/fhir/test/StructureDefinition/OtherId is unknown, and not allowed here",
+          "WARNING: AuditEvent.agent[0].extension[0].value.ofType(Identifier).type: None of the codings provided are in the value set 'IdentifierType' (http://hl7.org/fhir/ValueSet/identifier-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://terminology.hl7.org/CodeSystem/v2-0203#NPI)",
+          "ERROR: AuditEvent.agent[0].extension[1]: The extension http://hl7.org/fhir/test/StructureDefinition/OtherId is unknown, and not allowed here",
+          "WARNING: AuditEvent.meta.profile[0]: Profile reference 'http://hl7.org/fhir/test/StructureDefinition/Slice23' has not been checked because it is unknown, and the validator is set to not fetch unknown profiles"
+        ]
+      },
+      "profile" : {
+        "source" : "slice23/StructureDefinition-Slice23.json",
+        "supporting" : [ "slice23/StructureDefinition-OtherId.json"],
+        "java" : {
+          "errorCount": 4,
+          "warningCount": 2,
+          "output" : [
+            "INFORMATION: AuditEvent.subtype[0]: Code System URI 'urn:ietf:rfc:1438' is unknown so the code cannot be validated",
+            "WARNING: AuditEvent.subtype[0]: The Coding provided (urn:ietf:rfc:1438#poke) is not in the value set http://hl7.org/fhir/ValueSet/audit-event-sub-type, and a code should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable).  (error message = Not in value set http://hl7.org/fhir/ValueSet/audit-event-sub-type ([]))",
+            "WARNING: AuditEvent.agent[0].extension[0].value.ofType(Identifier).type: None of the codings provided are in the value set 'IdentifierType' (http://hl7.org/fhir/ValueSet/identifier-type), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://terminology.hl7.org/CodeSystem/v2-0203#NPI)",
+            "ERROR: AuditEvent.agent[0].extension[0]: Profile http://hl7.org/fhir/test/StructureDefinition/Slice23, Element matches more than one slice - extOtherId, extOtherId/npi",
+            "ERROR: AuditEvent.agent[0].extension[1]: Profile http://hl7.org/fhir/test/StructureDefinition/Slice23, Element matches more than one slice - extOtherId, extOtherId/npi",
+            "ERROR: AuditEvent.agent[0].extension[0]: Profile http://hl7.org/fhir/test/StructureDefinition/Slice23, Element matches more than one slice - extOtherId, extOtherId/provider-id",
+            "ERROR: AuditEvent.agent[0].extension[1]: Profile http://hl7.org/fhir/test/StructureDefinition/Slice23, Element matches more than one slice - extOtherId, extOtherId/provider-id"
+          ]
+        }
+      }
     }
   ]
 }
