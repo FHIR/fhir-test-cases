@@ -972,6 +972,10 @@ Any text enclosed within is ignored
 		<test name="testGreaterThan27" inputfile="patient-example.xml"><expression>@T10:30:00 > @T10:30:00.0</expression><output type="boolean">false</output></test>
 	</group>
 
+  <group name="testCombine()">
+		<test name="testCombine" inputfile="codesystem-example.xml"><expression>concept.code.combine($this.descendants().concept.code).isDistinct()</expression><output type="boolean">false</output></test>
+	</group>
+
 	<group name="testUnion">
 		<test name="testUnion1" inputfile="patient-example.xml"><expression>(1 | 2 | 3).count() = 3</expression><output type="boolean">true</output></test>
 		<test name="testUnion2" inputfile="patient-example.xml"><expression>(1 | 2 | 2).count() = 2</expression><output type="boolean">true</output></test> <!-- merge duplicates -->
