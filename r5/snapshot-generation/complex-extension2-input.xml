@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="sdc-questionnaire-choiceColumn"/>
+  <url value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"/>
+  <version value="3.0.0"/>
+  <name value="ChoiceColumnExtension"/>
+  <title value="Choice column"/>
+  <status value="draft"/>
+  <date value="2022-03-08T18:37:19+00:00"/>
+  <publisher value="HL7 International - FHIR Infrastructure Work Group"/>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="http://hl7.org/Special/committees/fiwg"/>
+    </telecom>
+  </contact>
+  <description value="Provides guidelines for rendering multi-column choices.  I.e. when displaying a list of codes (for `choice` or `open-choice` items) or a list of resources (for `reference` items), this extension allows the drop-down to have multiple columns.  For codes, the author can pick additional code system properties to display - such as alternate display names strength or form for drug codes, etc.  For references, the author can choose particular columns from the resource (e.g. first name, last name, specialty, address)."/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="complex-type"/>
+  <abstract value="false"/>
+  <context>
+    <type value="element"/>
+    <expression value="Questionnaire.item"/>
+  </context>
+  <contextInvariant value="type=&#39;choice&#39; or type=&#39;open-choice&#39; or type=&#39;reference&#39;"/>
+  <type value="Extension"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Extension">
+      <path value="Extension"/>
+      <short value="Guide for rendering multi-column choices"/>
+      <definition value="Provides guidelines for rendering multi-column choices.  I.e. when displaying a list of codes (for `choice` or `open-choice` items) or a list of resources (for `reference` items), this extension allows the drop-down to have multiple columns.  For codes, the author can pick additional code system properties to display - such as alternate display names strength or form for drug codes, etc.  For references, the author can choose particular columns from the resource (e.g. first name, last name, specialty, address)."/>
+      <comment value="Each repetition represents a column to display."/>
+      <min value="0"/>
+      <max value="*"/>
+    </element> 
+    <element id="Extension.extension:path">
+      <path value="Extension.extension"/>
+      <sliceName value="path"/>
+      <short value="Column path"/>
+      <definition value="The element to display within the column (see notes)."/>
+      <comment value="When the question has a type of choice or open-choice, the path will be interpreted as the &#39;code&#39; of a property for the code that is available from the answerValueSet.  For code systems that have alternate designations, the path can also indicate the language or designation use, provided that the code system only has one designation for each language or use within the code system.  A path of &#39;display&#39; will refer to the default displayname for the code as specified in CodeSystem.concept.display. When the question has a type of reference, the path will be interpreted as a FHIRPath evaluated against the candidate resources."/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="Extension.extension:path.url">
+      <path value="Extension.extension.url"/>
+      <fixedUri value="path"/>
+    </element>
+    <element id="Extension.extension:path.value[x]">
+      <path value="Extension.extension.value[x]"/>
+      <min value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="Extension.extension:label">
+      <path value="Extension.extension"/>
+      <sliceName value="label"/>
+      <short value="Column label"/>
+      <definition value="The label to appear at the top of the column."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="Extension.extension:label.url">
+      <path value="Extension.extension.url"/>
+      <fixedUri value="label"/>
+    </element>
+    <element id="Extension.extension:label.value[x]">
+      <path value="Extension.extension.value[x]"/>
+      <min value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="Extension.extension:width">
+      <path value="Extension.extension"/>
+      <sliceName value="width"/>
+      <short value="Width of column"/>
+      <definition value="The size to allocate for the column within the table showing the choices."/>
+      <comment value="code missing = pixels; code = % = percentage."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="Extension.extension:width.url">
+      <path value="Extension.extension.url"/>
+      <fixedUri value="width"/>
+    </element>
+    <element id="Extension.extension:width.value[x]">
+      <path value="Extension.extension.value[x]"/>
+      <min value="1"/>
+      <type>
+        <code value="Quantity"/>
+      </type>
+    </element>
+    <element id="Extension.extension:forDisplay">
+      <path value="Extension.extension"/>
+      <sliceName value="forDisplay"/>
+      <short value="Use for display ?"/>
+      <definition value="If true, indicates that this column should be used as (or as part of) the display value for the coding or reference once selected.  I.e. Coding.display or Reference.display as stored in the QuestionnaireResponse and displayed to the user as the selected answer."/>
+      <comment value="For codes, only one column can be picked and it must be a column that corresponds to a legal display name for the code from the value set.  For references, multiple columns can be picked.  If more than one column is chosen, the Reference.display will contain concatenate the column values in the order defined separating them with a single space."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+      </type>
+    </element>
+    <element id="Extension.extension:forDisplay.url">
+      <path value="Extension.extension.url"/>
+      <fixedUri value="forDisplay"/>
+    </element>
+    <element id="Extension.extension:forDisplay.value[x]">
+      <path value="Extension.extension.value[x]"/>
+      <min value="1"/>
+      <type>
+        <code value="boolean"/>
+      </type>
+    </element>
+    <element id="Extension.url">
+      <path value="Extension.url"/>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-choiceColumn"/>
+    </element>
+    <element id="Extension.value[x]">
+      <path value="Extension.value[x]"/>
+      <max value="0"/>
+    </element>
+  </differential>
+</StructureDefinition>
