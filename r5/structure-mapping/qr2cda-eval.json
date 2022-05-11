@@ -1,0 +1,50 @@
+﻿{
+  "resourceType" : "StructureMap",
+  "url" : "http://github.com/hapifhir/org.hl7.fhir.core/org.hl7.fhir.r4.tests/qr2cda",
+  "name" : "qr2cda",
+  "structure" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+    "mode" : "source",
+    "alias" : "QuestionnaireResponse"
+  },
+  {
+    "url" : "http://hl7.org/fhir/cdatest/StructureDefinition/ClinicalDocument",
+    "mode" : "target",
+    "alias" : "ClinicalDocument"
+  }],
+  "group" : [{
+    "name" : "QuestionnaireResponse",
+    "input" : [{
+      "name" : "src",
+      "type" : "QuestionnaireResponse",
+      "mode" : "source"
+    },
+    {
+      "name" : "tgt",
+      "type" : "ClinicalDocument",
+      "mode" : "target"
+    }],
+    "rule" : [{
+      "name" : "eval",
+      "source" : [{
+        "context" : "src"
+      }],
+      "target" : [{
+        "context" : "tgt",
+        "element" : "title",
+        "variable" : "title"
+      },
+      {
+        "context" : "title",
+        "element" : "data",
+        "transform" : "evaluate",
+        "parameter" : [{
+          "valueId" : "src"
+        },
+        {
+          "valueString" : "iif(src.is(QuestionnaireResponse), 'Hello CDA', 'badbadbad')"
+        }]
+      }]
+    }]
+  }]
+}
