@@ -1256,6 +1256,28 @@ Any text enclosed within is ignored
 		<test name="testConformsTo3" inputfile="patient-example.xml"><expression invalid="execution">conformsTo('http://trash')</expression></test>
 	</group>
 
+	<group name="LowBoundary">
+		<test name="LowBoundaryDecimal"><expression>1.587.lowBoundary(8)</expression><output>1.58650000</output></test>
+		<test name="LowBoundaryDateMonth"><expression>@2014.lowBoundary(6)</expression><output>@2014-01</output></test>
+		<test name="LowBoundaryDateTimeMillisecond"><expression>@2014-01-01T08.lowBoundary(17)</expression><output>@2014-01-01T08:00:00.000</output></test>
+		<test name="LowBoundaryTimeMillisecond"><expression>@T10:30.lowBoundary(9)</expression><output>@T10:30:00.000</output></test>
+	</group>
+
+	<group name="HighBoundary">
+		<test name="HighBoundaryDecimal"><expression>1.587.highBoundary(8)</expression><output>1.58750000</output></test>
+		<test name="HighBoundaryDateMonth"><expression>@2014.highBoundary(6)</expression><output>@2014-12</output></test>
+		<test name="HighBoundaryDateTimeMillisecond"><expression>@2014-01-01T08.highBoundary(17)</expression><output>@2014-01-01T08:00:59.999</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
+		<test name="HighBoundaryTimeMillisecond">	<expression>@T10:30.highBoundary(9)</expression><output>@T10:30:59.999</output></test>
+	</group>
+
+	<group name="Precision">
+		<test name="PrecisionDecimal"><expression>1.58700.precision()</expression><output>5</output></test>
+		<test name="PrecisionYear"><expression>@2014.precision()</expression><output>4</output></test>
+		<test name="PrecisionDateTimeMilliseconds"><expression>@2014-01-05T10:30:00.000.precision()</expression><output>17</output></test>
+		<test name="PrecisionTimeMinutes"><expression>@T10:30.precision()</expression><output>4</output></test>
+		<test name="PrecisionTimeMilliseconds"><expression>@T10:30:00.000.precision()</expression><output>9</output></test>
+	</group>
+
 <!--
 	<group name="testDollarResource">
 		testBoolean(patient(), patient().getManagingOrganization(), "Reference", "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))</expression><output type="boolean">true</output></test>
