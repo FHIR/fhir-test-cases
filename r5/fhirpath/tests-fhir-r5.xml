@@ -1312,4 +1312,16 @@ Any text enclosed within is ignored
 		<test name="testIndex" inputfile="patient-example.xml"><expression>Patient.telecom.select(iif(value='(03) 3410 5613', $index, {} ))</expression><output type="integer">2</output></test>
   </group>
 
+
+  <group name="period">
+		<test name="testPeriodInvariantOld" inputfile="patient-example-period.xml">
+		  <expression>Patient.identifier.period.all(start.hasValue().not() or end.hasValue().not() or (start &lt;= end))</expression>
+			<output type="boolean">false</output>
+		</test>
+		<test name="testPeriodInvariantNew" inputfile="patient-example-period.xml">
+		  <expression>Patient.identifier.period.all(start.empty() or end.empty() or (start.lowBoundary() &lt; end.highBoundary()))</expression>
+			<output type="boolean">true</output>
+		</test>
+  </group>
+
 </tests>
