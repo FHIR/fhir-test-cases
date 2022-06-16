@@ -1,3 +1,18 @@
+<!---
+ ____________________
+|                    |
+|  N  O  T  I  C  E  |
+|____________________|
+
+Please maintain this README.md as a linkable document, as other documentation may link back to it. The following sections should appear consistently in all updates to this document to maintain linkability:
+
+## Building this Project
+## Releases
+## CI/CD
+## Maintenance
+
+--->
+
 # fhir-test-cases
 
 | CI Status (master) | Release Pipeline | Current Release | Latest SNAPSHOT |
