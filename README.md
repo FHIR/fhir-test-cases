@@ -54,7 +54,7 @@ Releases and release notes are published to [GitHub][Link-GitHubReleases], and c
 
 ## CI/CD
 
-This project has pipelines hosted on [Azure Pipelines](https://dev.azure.com/fhir-pipelines/fhir-test-cases)). 
+This project has pipelines hosted on [Azure Pipelines][Link-AzurePipelines]. 
 
 * **Pull Request Pipeline** is automatically run for every Pull Request to ensure that the project can be built via maven. [[Azure Pipeline]][Link-AzurePullRequestPipeline] [[source]](pull-request-pipeline.yml)
 * **Master Branch Pipeline** is automatically run whenever code is merged to the master branch and builds the SNAPSHOT binaries distributed to OSSRH [[Azure Pipeline]][Link-AzureMasterPipeline][[source]](master-branch-pipeline.yml)
