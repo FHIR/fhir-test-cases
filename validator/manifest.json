@@ -176,7 +176,7 @@
           "errorCount": 1,
           "output": [
             "INFORMATION: Observation.code.coding[0]: Code System URI 'http://example.org' is unknown so the code cannot be validated",
-            "ERROR: Observation.value.ofType(Quantity): Error processing Unit: 'whatever': The unit \"whatever\" is unknown at character 1; The code \"whatever\" is not valid in the system http://unitsofmeasure.org; The code provided (http://unitsofmeasure.org#whatever) is not valid in the value set 'All codes known to the system' (from http://tx.fhir.org/r4) for 'http://unitsofmeasure.org#whatever'"          
+            "ERROR: Observation.value.ofType(Quantity): Error processing Unit: 'whatever': The unit \"whatever\" is unknown at character 1; The code \"whatever\" is not valid in the system http://unitsofmeasure.org; The code provided (http://unitsofmeasure.org#whatever) is not valid in the value set 'All codes known to the system' (from http://tx.fhir.org/r4) for 'http://unitsofmeasure.org#whatever'"
           ]
         },
         "firely-sdk-current": {
@@ -1740,7 +1740,7 @@
     {
       "name": "qr",
       "file": "qr.xml",
-      "version" : "4.0",
+      "version": "4.0",
       "supporting": [
         "q.xml"
       ],
@@ -1749,6 +1749,19 @@
         "output": [
           "ERROR: QuestionnaireResponse: LinkId \"3\" not found in questionnaire",
           "ERROR: QuestionnaireResponse.item[0].answer[0]: Option list has no option values of type string"
+        ]
+      },
+      "firely-sdk-current": {
+        "errorCount": 0,
+        "warningCount": 0,
+        "output": []
+      },
+      "firely-sdk-wip": {
+        "errorCount": 0,
+        "warningCount": 2,
+        "output": [
+          "[WARNING] Cannot resolve reference Patient/25a53703-27f9-4354-8f1b-a8b2f8f3ee86 (at QuestionnaireResponse.subject[0])",
+          "[WARNING] Cannot resolve reference Patient/25a53703-27f9-4354-8f1b-a8b2f8f3ee86 (at QuestionnaireResponse.source[0])"
         ]
       }
     },
@@ -5144,9 +5157,11 @@
           "errorCount": 0
         },
         "firely-sdk-current": {
-          "errorCount": 0,
+          "errorCount": 1,
           "warningCount": 0,
-          "output": []
+          "output": [
+            "[ERROR] Encountered unknown child elements 'start' for definition 'MedicationStatement.effective[x]' (at MedicationStatement.effectivePeriod[0])"
+          ]
         },
         "firely-sdk-wip": {
           "errorCount": 1,
@@ -6398,7 +6413,7 @@
         "warningCount": 0,
         "output": []
       }
-      },
+    },
     {
       "name": "tx-extensible-suppression-meta",
       "file": "tx-extensible-suppression-meta.xml",
@@ -6502,10 +6517,10 @@
           "errorCount": 0
         },
         "firely-sdk-current": {
-          "errorCount": 0,
-          "warningCount": 1,
+          "errorCount": 1,
+          "warningCount": 0,
           "output": [
-            "[WARNING] A type discriminator should have at least one 'type' element with a code set on 'http://hl7.org/fhir/StructureDefinition/Condition#Condition (Condition)'. (at List)"
+            "[FATAL] Internal logic failure: Unknown symbol 'resolve' (at List)"
           ]
         },
         "firely-sdk-wip": {
@@ -6550,10 +6565,10 @@
           ]
         },
         "firely-sdk-current": {
-          "errorCount": 0,
-          "warningCount": 1,
+          "errorCount": 1,
+          "warningCount": 0,
           "output": [
-            "[WARNING] A type discriminator should have at least one 'type' element with a code set on 'http://hl7.org/fhir/StructureDefinition/Condition#Condition (Condition)'. (at List)"
+            "[FATAL] Internal logic failure: Unknown symbol 'resolve' (at List)"
           ]
         },
         "firely-sdk-wip": {
@@ -6838,7 +6853,7 @@
         "errorCount": 1,
         "warningCount": 0,
         "output": [
-          "[FATAL] Internal logic failure: Type checking the data: Encountered unknown element 'script' at location 'Patient.name[0].text[0].script[0]' while parsing (at Patient.name[0].text[0])"
+          "[ERROR] Type checking the data: Encountered unknown element 'script' at location 'Patient.name[0].text[0].script[0]' while parsing (at Patient.name[0].text[0])"
         ]
       },
       "firely-sdk-wip": {
@@ -6898,7 +6913,7 @@
         "errorCount": 1,
         "warningCount": 1,
         "output": [
-          "[FATAL] Internal logic failure: Sequence contains no elements (at Bundle.entry[0].resource[0])",
+          "[FATAL] Internal logic failure: Unknown symbol 'resolve' (at Bundle.entry[0].resource[0])",
           "[WARNING] Terminology service failed while validating code 'application/pdf' (system ''): Cannot resolve canonical reference 'urn:ietf:bcp:13' to CodeSystem (at Bundle.entry[1].resource[0].content[0].attachment[0].contentType[0])"
         ]
       },
@@ -8646,10 +8661,10 @@
         "infoCount": 1,
         "output": [
           "ERROR: MedicationRequest: MedicationRequest.medication[x]: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/MedicationRequest)",
-                     "INFORMATION: MedicationRequest.meta.profile[0]: URL value 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' does not resolve",
-                     "ERROR: MedicationRequest.authoredOn: if a date has a time, it must have a timezone",
-                     "ERROR: MedicationRequest.requester: Unable to resolve resource '#1505724e-2d13-4790-ab25-e9ae2fa8d272'",
-                     "ERROR: MedicationRequest.requester: ref-1: SHALL have a contained resource if a local reference is provided ( (url: 1505724e-2d13-4790-ab25-e9ae2fa8d272; ids: )) [(reference = '#') or reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))]",
+          "INFORMATION: MedicationRequest.meta.profile[0]: URL value 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' does not resolve",
+          "ERROR: MedicationRequest.authoredOn: if a date has a time, it must have a timezone",
+          "ERROR: MedicationRequest.requester: Unable to resolve resource '#1505724e-2d13-4790-ab25-e9ae2fa8d272'",
+          "ERROR: MedicationRequest.requester: ref-1: SHALL have a contained resource if a local reference is provided ( (url: 1505724e-2d13-4790-ab25-e9ae2fa8d272; ids: )) [(reference = '#') or reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))]",
           "WARNING: MedicationRequest.meta.profile[0]: Profile reference 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' has not been checked because it is unknown, and fetching it resulted in the error Error sending Http Request: electronichealth.se"
         ]
       },
@@ -8682,9 +8697,9 @@
         "infoCount": 0,
         "output": [
           "ERROR: MedicationRequest: MedicationRequest.medication[x]: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/MedicationRequest)",
-                     "ERROR: MedicationRequest.authoredOn: if a date has a time, it must have a timezone",
-                     "ERROR: MedicationRequest.requester: Unable to resolve resource '#1505724e-2d13-4790-ab25-e9ae2fa8d272'",
-                     "ERROR: MedicationRequest.requester: ref-1: SHALL have a contained resource if a local reference is provided ( (url: 1505724e-2d13-4790-ab25-e9ae2fa8d272; ids: )) [(reference = '#') or reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))]",
+          "ERROR: MedicationRequest.authoredOn: if a date has a time, it must have a timezone",
+          "ERROR: MedicationRequest.requester: Unable to resolve resource '#1505724e-2d13-4790-ab25-e9ae2fa8d272'",
+          "ERROR: MedicationRequest.requester: ref-1: SHALL have a contained resource if a local reference is provided ( (url: 1505724e-2d13-4790-ab25-e9ae2fa8d272; ids: )) [(reference = '#') or reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))]",
           "WARNING: MedicationRequest.meta.profile[0]: Profile reference 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' has not been checked because it is unknown, and the validator is set to not fetch unknown profiles"
         ]
       },
@@ -8718,8 +8733,8 @@
         "infoCount": 1,
         "output": [
           "ERROR: MedicationRequest: MedicationRequest.medication[x]: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/MedicationRequest)",
-                     "INFORMATION: MedicationRequest.meta.profile[0]: URL value 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' does not resolve",
-                     "ERROR: MedicationRequest.authoredOn: if a date has a time, it must have a timezone",
+          "INFORMATION: MedicationRequest.meta.profile[0]: URL value 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' does not resolve",
+          "ERROR: MedicationRequest.authoredOn: if a date has a time, it must have a timezone",
           "WARNING: MedicationRequest.meta.profile[0]: Profile reference 'http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest' has not been checked because it is unknown, and fetching it resulted in the error Error sending Http Request: electronichealth.se"
         ]
       },
@@ -8937,8 +8952,8 @@
       "java": {
         "errorCount": 2,
         "output": [
-           "ERROR: Organization.id: id value 'CPR1000991_' is not valid",
-           "ERROR: Organization.address[0].state: The value provided ('Foo') is not in the value set https://fhir.infoway-inforoute.ca/ValueSet/canadianjurisdiction|20170626 (https://fhir.infoway-inforoute.ca/ValueSet/canadianjurisdiction), and a code is required from this value set) (error message = The code provided (http://canadapost.ca/CodeSystem/ProvinceCodes) is not in the value set https://fhir.infoway-inforoute.ca/ValueSet/canadianjurisdiction, and a code is required from this value set. The system Foo is unknown.)"
+          "ERROR: Organization.id: id value 'CPR1000991_' is not valid",
+          "ERROR: Organization.address[0].state: The value provided ('Foo') is not in the value set https://fhir.infoway-inforoute.ca/ValueSet/canadianjurisdiction|20170626 (https://fhir.infoway-inforoute.ca/ValueSet/canadianjurisdiction), and a code is required from this value set) (error message = The code provided (http://canadapost.ca/CodeSystem/ProvinceCodes) is not in the value set https://fhir.infoway-inforoute.ca/ValueSet/canadianjurisdiction, and a code is required from this value set. The system Foo is unknown.)"
         ]
       }
     },
@@ -9001,7 +9016,23 @@
         "output": [
           "ERROR: DocumentReference.status: No code provided, and a code is required from the value set",
           "INFORMATION: DocumentReference.type: None of the codings provided are in the value set http://hl7.org/fhir/ValueSet/c80-doc-typecodes (http://hl7.org/fhir/ValueSet/c80-doc-typecodes), and a coding is recommended to come from this value set) (codes = http://terminology.hl7.org/CodeSystem/v3-NullFlavor#UNK)",
-          "ERROR: DocumentReference.content[0].attachment.contentType: No code provided, and a code is required from the value set"        
+          "ERROR: DocumentReference.content[0].attachment.contentType: No code provided, and a code is required from the value set"
+        ]
+      },
+      "firely-sdk-current": {
+        "errorCount": 1,
+        "warningCount": 0,
+        "output": [
+          "[ERROR] Unable to resolve reference to profile 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-documentreference' (at DocumentReference)"
+        ]
+      },
+      "firely-sdk-wip": {
+        "errorCount": 2,
+        "warningCount": 1,
+        "output": [
+          "[ERROR] No code found in code with a required binding. (at DocumentReference.status[0])",
+          "[WARNING] Cannot resolve reference Patient/example (at DocumentReference.subject[0])",
+          "[ERROR] No code found in code with a required binding. (at DocumentReference.content[0].attachment[0].contentType[0])"
         ]
       }
     },
@@ -9015,6 +9046,18 @@
         "warningCount": 1,
         "output": [
           "WARNING: Immunization.vaccineCode.coding[0]: The display \"X SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 100 mcg/0.5mL dose\" is not a valid display for the code {http://hl7.org/fhir/sid/cvx}207 - should be one of [\"SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 100 mcg/0.5mL dose\"] (from http://tx.fhir.org/r4) for 'http://hl7.org/fhir/sid/cvx#207'"
+        ]
+      },
+      "firely-sdk-current": {
+        "errorCount": 0,
+        "warningCount": 0,
+        "output": []
+      },
+      "firely-sdk-wip": {
+        "errorCount": 0,
+        "warningCount": 1,
+        "output": [
+          "[WARNING] Cannot resolve reference Patient/something (at Immunization.patient[0])"
         ]
       }
     },
@@ -9030,6 +9073,16 @@
           "WARNING: Bundle: SearchSet Bundles should have a self link that specifies what the search was",
           "WARNING: Bundle: SearchSet bundles should have search modes on the entries"
         ]
+      },
+      "firely-sdk-current": {
+        "errorCount": 0,
+        "warningCount": 0,
+        "output": []
+      },
+      "firely-sdk-wip": {
+        "errorCount": 0,
+        "warningCount": 0,
+        "output": []
       }
     },
     {
@@ -9039,6 +9092,16 @@
       "version": "4.0",
       "java": {
         "errorCount": 0,
+        "output": []
+      },
+      "firely-sdk-current": {
+        "errorCount": 0,
+        "warningCount": 0,
+        "output": []
+      },
+      "firely-sdk-wip": {
+        "errorCount": 0,
+        "warningCount": 0,
         "output": []
       }
     },
@@ -9052,6 +9115,18 @@
         "output": [
           "ERROR: Bundle.entry[0].resource: Search results must have ids",
           "ERROR: Bundle.entry[0].resource: This is not a matching resource type for the specified search (Immunization expecting [Patient])"
+        ]
+      },
+      "firely-sdk-current": {
+        "errorCount": 0,
+        "warningCount": 0,
+        "output": []
+      },
+      "firely-sdk-wip": {
+        "errorCount": 0,
+        "warningCount": 1,
+        "output": [
+          "[WARNING] Cannot resolve reference Patient/something (at Bundle.entry[0].resource[0].patient[0])"
         ]
       }
     },
@@ -9067,6 +9142,18 @@
           "ERROR: Bundle.entry[1].resource: Search results must have ids",
           "ERROR: Bundle.entry[1].resource: This is not a matching resource type for the specified search (OperationOutcome expecting [Observation, DocumentReference])"
         ]
+      },
+      "firely-sdk-current": {
+        "errorCount": 0,
+        "warningCount": 0,
+        "output": []
+      },
+      "firely-sdk-wip": {
+        "errorCount": 0,
+        "warningCount": 1,
+        "output": [
+          "[WARNING] Cannot resolve reference Patient/something (at Bundle.entry[0].resource[0].patient[0])"
+        ]
       }
     },
     {
@@ -9077,6 +9164,51 @@
       "java": {
         "errorCount": 0,
         "output": []
+      },
+      "firely-sdk-current": {
+        "errorCount": 0,
+        "warningCount": 0,
+        "output": []
+      },
+      "firely-sdk-wip": {
+        "errorCount": 0,
+        "warningCount": 1,
+        "output": [
+          "[WARNING] Cannot resolve reference Patient/something (at Bundle.entry[0].resource[0].patient[0])"
+        ]
+      }
+    },
+    {
+      "name": "issue1654/observation-issue-1654",
+      "file": "issue1654/observation-issue-1654.json",
+      "description": "A profile with a target profile on a reference type and other child definitions on that reference",
+      "version": "4.0",
+      "profile": {
+        "source": "issue1654/observation-sd-issue-1654.json",
+        "firely-sdk-current": {
+          "errorCount": 0,
+          "warningCount": 0,
+          "output": []
+        },
+        "firely-sdk-wip": {
+          "errorCount": 0,
+          "warningCount": 1,
+          "output": [
+            "[WARNING] Cannot resolve reference http://example.org/Patient/example (at Observation.subject[0])"
+          ]
+        }
+      },
+      "firely-sdk-current": {
+        "errorCount": 0,
+        "warningCount": 0,
+        "output": []
+      },
+      "firely-sdk-wip": {
+        "errorCount": 0,
+        "warningCount": 1,
+        "output": [
+          "[WARNING] Cannot resolve reference http://example.org/Patient/example (at Observation.subject[0])"
+        ]
       }
     }
   ]
