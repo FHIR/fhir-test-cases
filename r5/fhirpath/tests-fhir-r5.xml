@@ -532,7 +532,7 @@ Any text enclosed within is ignored
 	<group name="testSelect">
 		<test name="testSelect1" inputfile="patient-example.xml"><expression>Patient.name.select(given).count() = 5</expression><output type="boolean">true</output></test>
 		<test name="testSelect2" inputfile="patient-example.xml"><expression>Patient.name.select(given | family).count() = 7 </expression><output type="boolean">true</output></test>
-		<test name="testSelect3" inputfile="patient-example.xml"><expression>name.select(use.contains(given)).count()</expression><output type="integer">3</output></test> <!-- three booleans, all false -->
+		<test name="testSelect3" inputfile="patient-example.xml"><expression>name.select(use.contains('i')).count()</expression><output type="integer">3</output></test> <!-- three booleans, all false -->
 	</group>
 
 	<group name="testRepeat">
@@ -659,6 +659,9 @@ Any text enclosed within is ignored
 		<test name="testStartsWith7" inputfile="patient-example.xml"><expression>'12345'.startsWith('') = true</expression><output type="boolean">true</output></test>
 		<test name="testStartsWith8" inputfile="patient-example.xml"><expression>{}.startsWith('1').empty() = true</expression><output type="boolean">true</output></test>
 		<test name="testStartsWith9" inputfile="patient-example.xml"><expression>{}.startsWith('').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testStartsWith10" inputfile="patient-example.xml"><expression>''.startsWith('') = true</expression><output type="boolean">true</output></test>
+		<test name="testStartsWith11" inputfile="patient-example.xml"><expression>{}.startsWith('').exists() = false</expression><output type="boolean">true</output></test>
+		<test name="testStartsWithNonString1" inputfile="appointment-examplereq.json"><expression invalid="semantic">Appointment.identifier.startsWith('rand')</expression></test>
 	</group>
 
 	<group name="testEndsWith">
@@ -671,6 +674,7 @@ Any text enclosed within is ignored
 		<test name="testEndsWith7" inputfile="patient-example.xml"><expression>'12345'.endsWith('') = true</expression><output type="boolean">true</output></test>
 		<test name="testEndsWith8" inputfile="patient-example.xml"><expression>{}.endsWith('1').empty() = true</expression><output type="boolean">true</output></test>
 		<test name="testEndsWith9" inputfile="patient-example.xml"><expression>{}.endsWith('').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testEndsWithNonString1" inputfile="appointment-examplereq.json"><expression invalid="semantic">Appointment.identifier.endsWith('rand')</expression></test>
 	</group>
 
 	<group name="testContainsString">
@@ -683,6 +687,7 @@ Any text enclosed within is ignored
 		<test name="testContainsString7" inputfile="patient-example.xml"><expression>'12345'.contains('') = true</expression><output type="boolean">true</output></test>
 		<test name="testContainsString8" inputfile="patient-example.xml"><expression>{}.contains('a').empty() = true</expression><output type="boolean">true</output></test>
 		<test name="testContainsString9" inputfile="patient-example.xml"><expression>{}.contains('').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testContainsNonString1" inputfile="appointment-examplereq.json"><expression invalid="semantic">Appointment.identifier.contains('rand')</expression></test>
 	</group>
 
 	<group name="testMatches">
@@ -712,7 +717,7 @@ Any text enclosed within is ignored
 		<test name="testReplaceMatches4" inputfile="patient-example.xml"><expression>{}.replaceMatches('234', 'X').empty() = true</expression><output type="boolean">true</output></test>
 		<test name="testReplaceMatches5" inputfile="patient-example.xml"><expression>'123'.replaceMatches({}, 'X').empty() = true</expression><output type="boolean">true</output></test>
 		<test name="testReplaceMatches6" inputfile="patient-example.xml"><expression>'123'.replaceMatches('2', {}).empty() = true</expression><output type="boolean">true</output></test>
-		<test name="testReplaceMatches7" inputfile="patient-example.xml"><expression>'abc123'.replaceMatches('[0-9]', '-')</expression><output type="string">abc111</output></test>
+		<test name="testReplaceMatches7" inputfile="patient-example.xml"><expression>'abc123'.replaceMatches('[0-9]', '-')</expression><output type="string">abc---</output></test>
 	</group>
 
 	<group name="testReplace">
