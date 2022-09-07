@@ -1,0 +1,215 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "au-medicationstatement",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/au-med",
+  "version" : "1.1.0",
+  "name" : "AUBaseMedicationStatement",
+  "title" : "AU Base Medication Statement",
+  "status" : "draft",
+  "date" : "2017-05-05T10:53:27+10:00",
+  "publisher" : "Health Level Seven Australia (Medications WG)",
+  "contact" : [
+    {
+      "telecom" : [
+        {
+          "system" : "url",
+          "value" : "http://hl7.org.au/fhir",
+          "use" : "work"
+        }
+      ]
+    }
+  ],
+  "description" : "This profile defines a medication statement structure including core localisation concepts for use in an Australian context.",
+  "fhirVersion" : "3.0.1",
+  "mapping" : [
+    {
+      "identity" : "workflow",
+      "uri" : "http://hl7.org/fhir/workflow",
+      "name" : "Workflow Mapping"
+    },
+    {
+      "identity" : "rim",
+      "uri" : "http://hl7.org/v3",
+      "name" : "RIM Mapping"
+    },
+    {
+      "identity" : "w5",
+      "uri" : "http://hl7.org/fhir/w5",
+      "name" : "W5 Mapping"
+    },
+    {
+      "identity" : "v2",
+      "uri" : "http://hl7.org/v2",
+      "name" : "HL7 v2 Mapping"
+    }
+  ],
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "MedicationStatement",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/MedicationStatement",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [
+      {
+        "id" : "MedicationStatement",
+        "path" : "MedicationStatement",
+        "short" : "A record of medication being taken by a patient in an Australian healthcare context"
+      },
+      {
+        "id" : "MedicationStatement.medication[x]",
+        "path" : "MedicationStatement.medication[x]",
+        "slicing" : {
+          "discriminator" : [
+            {
+              "type" : "type",
+              "path" : "$this"
+            }
+          ],
+          "rules" : "closed"
+        },
+        "short" : "Medication Detail"
+      },
+      {
+        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept",
+        "path" : "MedicationStatement.medication[x]",
+        "sliceName" : "medicationCodeableConcept",
+        "short" : "Coded Medication",
+        "min" : 0,
+        "type" : [
+          {
+            "code" : "CodeableConcept"
+          }
+        ]
+      },
+      {
+        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding",
+        "path" : "MedicationStatement.medication[x].coding",
+        "slicing" : {
+          "discriminator" : [
+            {
+              "type" : "value",
+              "path" : "system"
+            }
+          ],
+          "rules" : "open"
+        },
+        "short" : "Medication Codes"
+      },
+      {
+        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:pbs",
+        "path" : "MedicationStatement.medication[x].coding",
+        "sliceName" : "pbs",
+        "short" : "PBS Item Code",
+        "definition" : "PBS code from http://pbs.gov.au/code/item. Use of PBS as a code to refer to a type of medication, this excludes implication of context based on the PBS code. Where context is to be implied or stated PBS code needs to be associated with recording a prescription (MedicationRequest) or dispense record(MedicationDispense)",
+        "binding" : {
+          "strength" : "preferred",
+          "valueSetReference" : {
+            "reference" : "http://hl7.org.au/fhir/ValueSet/pbs-item"
+          }
+        }
+      },
+      {
+        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:pbs.system",
+        "path" : "MedicationStatement.medication[x].coding.system",
+        "min" : 1,
+        "fixedUri" : "http://pbs.gov.au/code/item"
+      },
+      {
+        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:gtin",
+        "path" : "MedicationStatement.medication[x].coding",
+        "sliceName" : "gtin",
+        "short" : "Medication Package Global Trade Item Number (GTIN)",
+        "definition" : "GTIN value from http://www.gs1.org/gtin.",
+        "binding" : {
+          "strength" : "preferred",
+          "valueSetReference" : {
+            "reference" : "http://hl7.org.au/fhir/ValueSet/gtin"
+          }
+        }
+      },
+      {
+        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:gtin.system",
+        "path" : "MedicationStatement.medication[x].coding.system",
+        "min" : 1,
+        "fixedUri" : "http://pbs.gov.au/code/item"
+      },
+      {
+        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:amt",
+        "path" : "MedicationStatement.medication[x].coding",
+        "sliceName" : "amt",
+        "short" : "AMT Medicines",
+        "binding" : {
+          "strength" : "preferred",
+          "valueSetReference" : {
+            "reference" : "https://healthterminologies.gov.au/fhir/ValueSet/australian-medication-1"
+          }
+        }
+      },
+      {
+        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:amt.extension",
+        "path" : "MedicationStatement.medication[x].coding.extension",
+        "slicing" : {
+          "discriminator" : [
+            {
+              "type" : "value",
+              "path" : "url"
+            }
+          ],
+          "rules" : "open"
+        }
+      },
+      {
+        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:amt.extension:medicationClass",
+        "path" : "MedicationStatement.medication[x].coding.extension",
+        "sliceName" : "medicationClass",
+        "short" : "Class of Medication Coding",
+        "definition" : "General category of coding to allow usage of codes to be distinguished from the same CodeSystem",
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "Extension",
+            "profile" : ["http://hl7.org.au/fhir/StructureDefinition/medication-type"]
+          }
+        ]
+      },
+      {
+        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:amt.system",
+        "path" : "MedicationStatement.medication[x].coding.system",
+        "min" : 1,
+        "fixedUri" : "http://snomed.info/sct"
+      },
+      {
+        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:mimsPackage",
+        "path" : "MedicationStatement.medication[x].coding",
+        "sliceName" : "mimsPackage",
+        "short" : "MIMS Package",
+        "max" : "1",
+        "binding" : {
+          "strength" : "preferred",
+          "valueSetReference" : {
+            "reference" : "http://hl7.org.au/fhir/ValueSet/mims"
+          }
+        }
+      },
+      {
+        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:mimsPackage.system",
+        "path" : "MedicationStatement.medication[x].coding.system",
+        "min" : 1,
+        "fixedUri" : "http://www.mims.com.au/codes"
+      },
+      {
+        "id" : "MedicationStatement.medication[x]:medicationReference",
+        "path" : "MedicationStatement.medication[x]",
+        "sliceName" : "medicationReference",
+        "short" : "Medication Reference",
+        "min" : 0,
+        "type" : [
+          {
+            "code" : "Reference",
+            "targetProfile" : ["http://hl7.org.au/fhir/StructureDefinition/au-medication"]
+          }
+        ]
+      }
+    ]
+  }
+}
