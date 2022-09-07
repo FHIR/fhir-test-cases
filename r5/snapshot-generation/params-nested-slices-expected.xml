@@ -665,6 +665,11 @@
     <uri value="http://hl7.org/v3"/>
     <name value="RIM Mapping"/>
   </mapping>
+  <mapping>
+    <identity value="w5"/>
+    <uri value="http://hl7.org/fhir/fivews"/>
+    <name value="FiveWs Pattern Mapping"/>
+  </mapping>
   <kind value="resource"/>
   <abstract value="false"/>
   <type value="Parameters"/>
@@ -674,7 +679,7 @@
     <element id="Parameters">
       <path value="Parameters"/>
       <short value="Operation Request or Response"/>
-      <definition value="This resource is a non-persisted resource used to pass information into and back from an [operation](http://hl7.org/fhir/R4/operations.html). It has no other use, and there is no RESTful endpoint associated with it."/>
+      <definition value="This resource is a non-persisted resource used to pass information into and back from an [operation](http://build.fhir.org/operations.html). It has no other use, and there is no RESTful endpoint associated with it."/>
       <comment value="The parameters that may be used are defined by the OperationDefinition resource."/>
       <min value="0"/>
       <max value="*"/>
@@ -683,6 +688,7 @@
         <min value="0"/>
         <max value="*"/>
       </base>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -697,12 +703,16 @@
         <identity value="rim"/>
         <map value="n/a"/>
       </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="infrastructure.exchange"/>
+      </mapping>
     </element>
     <element id="Parameters.id">
       <path value="Parameters.id"/>
       <short value="Logical id of this artifact"/>
       <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes."/>
-      <comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
+      <comment value="Within the context of the FHIR RESTful interactions, the resource has an id except for cases like the create and conditional update. Otherwise, the use of the resouce id depends on the given use case."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -716,6 +726,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -741,6 +752,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -748,7 +760,7 @@
       <path value="Parameters.implicitRules"/>
       <short value="A set of rules under which this content was created"/>
       <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content. Often, this is a reference to an implementation guide that defines the special rules along with other profiles etc."/>
-      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of it&#39;s narrative along with other profiles, value sets, etc."/>
+      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of it's narrative along with other profiles, value sets, etc."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -767,8 +779,9 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="true"/>
-      <isModifierReason value="This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it&#39;s meaning or interpretation"/>
+      <isModifierReason value="This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation"/>
       <isSummary value="true"/>
     </element>
     <element id="Parameters.language">
@@ -794,6 +807,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -807,7 +821,7 @@
           <valueBoolean value="true"/>
         </extension>
         <strength value="preferred"/>
-        <description value="A human language."/>
+        <description value="IETF language tag"/>
         <valueSet value="http://hl7.org/fhir/ValueSet/languages"/>
       </binding>
     </element>
@@ -845,9 +859,10 @@
         <severity value="error"/>
         <human value="A parameter must have one and only one of (value, resource, part)"/>
         <expression value="(part.exists() and value.empty() and resource.empty()) or (part.empty() and (value.exists() xor resource.exists()))"/>
-        <xpath value="(exists(f:resource) or exists(f:part) or exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) and not(exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) and exists(f:resource))) and not(exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) and exists(f:part))) and not(exists(f:part) and exists(f:resource))"/>
+        <xpath value="(exists(f:resource) or exists(f:part) or exists(f:*[starts-with(local-name(.), 'value')])) and not(exists(f:*[starts-with(local-name(.), 'value')])) and exists(f:resource))) and not(exists(f:*[starts-with(local-name(.), 'value')])) and exists(f:part))) and not(exists(f:part) and exists(f:resource))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Parameters"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -919,9 +934,9 @@
     <element id="Parameters.parameter.modifierExtension">
       <path value="Parameters.parameter.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -981,13 +996,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Parameters.parameter.value[x]">
       <path value="Parameters.parameter.value[x]"/>
       <short value="If parameter is a data type"/>
-      <definition value="If the parameter is a data type."/>
+      <definition value="Conveys the content if the parameter is a data type."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1024,6 +1040,9 @@
       </type>
       <type>
         <code value="integer"/>
+      </type>
+      <type>
+        <code value="integer64"/>
       </type>
       <type>
         <code value="markdown"/>
@@ -1068,6 +1087,9 @@
         <code value="CodeableConcept"/>
       </type>
       <type>
+        <code value="CodeableReference"/>
+      </type>
+      <type>
         <code value="Coding"/>
       </type>
       <type>
@@ -1102,6 +1124,9 @@
       </type>
       <type>
         <code value="Ratio"/>
+      </type>
+      <type>
+        <code value="RatioRange"/>
       </type>
       <type>
         <code value="Reference"/>
@@ -1154,14 +1179,15 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Parameters.parameter.resource">
       <path value="Parameters.parameter.resource"/>
       <short value="If parameter is a whole resource"/>
-      <definition value="If the parameter is a whole resource."/>
-      <comment value="When resolving references in resources, the operation definition may specify how references may be resolved between parameters. If a reference cannot be resolved between the parameters, the application should fall back to it&#39;s general resource resolution methods."/>
+      <definition value="Conveys the content if the parameter is a whole resource."/>
+      <comment value="When resolving references in resources, the operation definition may specify how references may be resolved between parameters. If a reference cannot be resolved between the parameters, the application should fall back to it's general resource resolution methods."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1173,6 +1199,7 @@
         <code value="Resource"/>
       </type>
       <condition value="inv-1"/>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1197,6 +1224,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1228,9 +1256,10 @@
         <severity value="error"/>
         <human value="A parameter must have one and only one of (value, resource, part)"/>
         <expression value="(part.exists() and value.empty() and resource.empty()) or (part.empty() and (value.exists() xor resource.exists()))"/>
-        <xpath value="(exists(f:resource) or exists(f:part) or exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) and not(exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) and exists(f:resource))) and not(exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) and exists(f:part))) and not(exists(f:part) and exists(f:resource))"/>
+        <xpath value="(exists(f:resource) or exists(f:part) or exists(f:*[starts-with(local-name(.), 'value')])) and not(exists(f:*[starts-with(local-name(.), 'value')])) and exists(f:resource))) and not(exists(f:*[starts-with(local-name(.), 'value')])) and exists(f:part))) and not(exists(f:part) and exists(f:resource))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Parameters"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1302,9 +1331,9 @@
     <element id="Parameters.parameter:over100flag.modifierExtension">
       <path value="Parameters.parameter.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -1365,13 +1394,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Parameters.parameter:over100flag.value[x]">
       <path value="Parameters.parameter.value[x]"/>
       <short value="If parameter is a data type"/>
-      <definition value="If the parameter is a data type."/>
+      <definition value="Conveys the content if the parameter is a data type."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -1391,14 +1421,15 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Parameters.parameter:over100flag.resource">
       <path value="Parameters.parameter.resource"/>
       <short value="If parameter is a whole resource"/>
-      <definition value="If the parameter is a whole resource."/>
-      <comment value="When resolving references in resources, the operation definition may specify how references may be resolved between parameters. If a reference cannot be resolved between the parameters, the application should fall back to it&#39;s general resource resolution methods."/>
+      <definition value="Conveys the content if the parameter is a whole resource."/>
+      <comment value="When resolving references in resources, the operation definition may specify how references may be resolved between parameters. If a reference cannot be resolved between the parameters, the application should fall back to it's general resource resolution methods."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1410,6 +1441,7 @@
         <code value="Resource"/>
       </type>
       <condition value="inv-1"/>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1434,6 +1466,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1465,9 +1498,10 @@
         <severity value="error"/>
         <human value="A parameter must have one and only one of (value, resource, part)"/>
         <expression value="(part.exists() and value.empty() and resource.empty()) or (part.empty() and (value.exists() xor resource.exists()))"/>
-        <xpath value="(exists(f:resource) or exists(f:part) or exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) and not(exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) and exists(f:resource))) and not(exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) and exists(f:part))) and not(exists(f:part) and exists(f:resource))"/>
+        <xpath value="(exists(f:resource) or exists(f:part) or exists(f:*[starts-with(local-name(.), 'value')])) and not(exists(f:*[starts-with(local-name(.), 'value')])) and exists(f:resource))) and not(exists(f:*[starts-with(local-name(.), 'value')])) and exists(f:part))) and not(exists(f:part) and exists(f:resource))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Parameters"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1539,9 +1573,9 @@
     <element id="Parameters.parameter:address.modifierExtension">
       <path value="Parameters.parameter.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -1602,13 +1636,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Parameters.parameter:address.value[x]">
       <path value="Parameters.parameter.value[x]"/>
       <short value="If parameter is a data type"/>
-      <definition value="If the parameter is a data type."/>
+      <definition value="Conveys the content if the parameter is a data type."/>
       <min value="0"/>
       <max value="0"/>
       <base>
@@ -1645,6 +1680,9 @@
       </type>
       <type>
         <code value="integer"/>
+      </type>
+      <type>
+        <code value="integer64"/>
       </type>
       <type>
         <code value="markdown"/>
@@ -1689,6 +1727,9 @@
         <code value="CodeableConcept"/>
       </type>
       <type>
+        <code value="CodeableReference"/>
+      </type>
+      <type>
         <code value="Coding"/>
       </type>
       <type>
@@ -1723,6 +1764,9 @@
       </type>
       <type>
         <code value="Ratio"/>
+      </type>
+      <type>
+        <code value="RatioRange"/>
       </type>
       <type>
         <code value="Reference"/>
@@ -1775,14 +1819,15 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Parameters.parameter:address.resource">
       <path value="Parameters.parameter.resource"/>
       <short value="If parameter is a whole resource"/>
-      <definition value="If the parameter is a whole resource."/>
-      <comment value="When resolving references in resources, the operation definition may specify how references may be resolved between parameters. If a reference cannot be resolved between the parameters, the application should fall back to it&#39;s general resource resolution methods."/>
+      <definition value="Conveys the content if the parameter is a whole resource."/>
+      <comment value="When resolving references in resources, the operation definition may specify how references may be resolved between parameters. If a reference cannot be resolved between the parameters, the application should fall back to it's general resource resolution methods."/>
       <min value="0"/>
       <max value="0"/>
       <base>
@@ -1794,6 +1839,7 @@
         <code value="Resource"/>
       </type>
       <condition value="inv-1"/>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1825,6 +1871,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1852,6 +1899,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1923,9 +1971,9 @@
     <element id="Parameters.parameter:address.part:number.modifierExtension">
       <path value="Parameters.parameter.part.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -1986,13 +2034,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Parameters.parameter:address.part:number.value[x]">
       <path value="Parameters.parameter.part.value[x]"/>
       <short value="If parameter is a data type"/>
-      <definition value="If the parameter is a data type."/>
+      <definition value="Conveys the content if the parameter is a data type."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -2012,14 +2061,15 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Parameters.parameter:address.part:number.resource">
       <path value="Parameters.parameter.part.resource"/>
       <short value="If parameter is a whole resource"/>
-      <definition value="If the parameter is a whole resource."/>
-      <comment value="When resolving references in resources, the operation definition may specify how references may be resolved between parameters. If a reference cannot be resolved between the parameters, the application should fall back to it&#39;s general resource resolution methods."/>
+      <definition value="Conveys the content if the parameter is a whole resource."/>
+      <comment value="When resolving references in resources, the operation definition may specify how references may be resolved between parameters. If a reference cannot be resolved between the parameters, the application should fall back to it's general resource resolution methods."/>
       <min value="0"/>
       <max value="0"/>
       <base>
@@ -2031,6 +2081,7 @@
         <code value="Resource"/>
       </type>
       <condition value="inv-1"/>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -2055,6 +2106,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -2082,6 +2134,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -2153,9 +2206,9 @@
     <element id="Parameters.parameter:address.part:resources.modifierExtension">
       <path value="Parameters.parameter.part.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -2216,13 +2269,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Parameters.parameter:address.part:resources.value[x]">
       <path value="Parameters.parameter.part.value[x]"/>
       <short value="If parameter is a data type"/>
-      <definition value="If the parameter is a data type."/>
+      <definition value="Conveys the content if the parameter is a data type."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -2242,14 +2296,15 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Parameters.parameter:address.part:resources.resource">
       <path value="Parameters.parameter.part.resource"/>
       <short value="If parameter is a whole resource"/>
-      <definition value="If the parameter is a whole resource."/>
-      <comment value="When resolving references in resources, the operation definition may specify how references may be resolved between parameters. If a reference cannot be resolved between the parameters, the application should fall back to it&#39;s general resource resolution methods."/>
+      <definition value="Conveys the content if the parameter is a whole resource."/>
+      <comment value="When resolving references in resources, the operation definition may specify how references may be resolved between parameters. If a reference cannot be resolved between the parameters, the application should fall back to it's general resource resolution methods."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -2267,6 +2322,7 @@
         <code value="Organization"/>
       </type>
       <condition value="inv-1"/>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -2291,6 +2347,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -2318,6 +2375,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -2389,9 +2447,9 @@
     <element id="Parameters.parameter:address.part:recipientHealthcareService.modifierExtension">
       <path value="Parameters.parameter.part.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -2452,13 +2510,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Parameters.parameter:address.part:recipientHealthcareService.value[x]">
       <path value="Parameters.parameter.part.value[x]"/>
       <short value="If parameter is a data type"/>
-      <definition value="If the parameter is a data type."/>
+      <definition value="Conveys the content if the parameter is a data type."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -2485,8 +2544,8 @@
     <element id="Parameters.parameter:address.part:recipientHealthcareService.resource">
       <path value="Parameters.parameter.part.resource"/>
       <short value="If parameter is a whole resource"/>
-      <definition value="If the parameter is a whole resource."/>
-      <comment value="When resolving references in resources, the operation definition may specify how references may be resolved between parameters. If a reference cannot be resolved between the parameters, the application should fall back to it&#39;s general resource resolution methods."/>
+      <definition value="Conveys the content if the parameter is a whole resource."/>
+      <comment value="When resolving references in resources, the operation definition may specify how references may be resolved between parameters. If a reference cannot be resolved between the parameters, the application should fall back to it's general resource resolution methods."/>
       <min value="0"/>
       <max value="0"/>
       <base>
@@ -2498,6 +2557,7 @@
         <code value="Resource"/>
       </type>
       <condition value="inv-1"/>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -2522,6 +2582,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>

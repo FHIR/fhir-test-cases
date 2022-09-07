@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="workflow-reason"/> 
+  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-wg">
+    <valueCode value="fhir"/> 
+  </extension> 
+  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm">
+    <valueInteger value="1"/> 
+  </extension> 
+  <url value="http://hl7.org/fhir/StructureDefinition/workflow-reason"/> 
+  <version value="5.0.0-ballot"/> 
+  <name value="reason"/> 
+  <status value="draft"/> 
+  <experimental value="false"/> 
+  <date value="2017-12-06"/> 
+  <publisher value="Health Level Seven, Inc. - FHIR WG"/> 
+  <contact> 
+    <telecom> 
+      <system value="url"/> 
+      <value value="http://hl7.org/special/committees/fwg"/> 
+    </telecom> 
+  </contact> 
+  <description value="References a resource or provides a code or text that explains why this event occurred
+   or request was created."/> 
+  <fhirVersion value="5.0.0-ballot"/> 
+  <mapping> 
+    <identity value="workflow"/> 
+    <uri value="http://hl7.org/fhir/workflow"/> 
+    <name value="Workflow Pattern"/> 
+  </mapping> 
+  <mapping> 
+    <identity value="v2"/> 
+    <uri value="http://hl7.org/v2"/> 
+    <name value="HL7 v2 Mapping"/> 
+  </mapping> 
+  <mapping> 
+    <identity value="rim"/> 
+    <uri value="http://hl7.org/v3"/> 
+    <name value="RIM Mapping"/> 
+  </mapping> 
+  <kind value="complex-type"/> 
+  <abstract value="false"/> 
+  <context> 
+    <type value="element"/> 
+    <expression value="Observation"/> 
+  </context> 
+  <context> 
+    <type value="element"/> 
+    <expression value="DiagnosticReport"/> 
+  </context> 
+  <context> 
+    <type value="element"/> 
+    <expression value="DocumentReference"/> 
+  </context> 
+  <context> 
+    <type value="element"/> 
+    <expression value="NutritionOrder"/> 
+  </context> 
+  <type value="Extension"/> 
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension"/> 
+  <derivation value="constraint"/> 
+  <differential> 
+    <element id="Extension">
+      <path value="Extension"/> 
+      <short value="Why is/was resource necessary?"/> 
+      <definition value="References a resource or provides a code or text that explains why this event occurred
+       or request was created."/> 
+      <comment value="For free text (uncoded data) use reasonCode.text."/> 
+      <min value="0"/> 
+      <max value="*"/> 
+      <mapping> 
+        <identity value="workflow"/> 
+        <map value="Event.reason
+Request.reason"/> 
+      </mapping> 
+      <mapping> 
+        <identity value="v2"/> 
+        <map value="EVN.4 or by domain"/> 
+      </mapping> 
+      <mapping> 
+        <identity value="rim"/> 
+        <map value=".reasonCode or .outboundRelationship[typeCode=RSON].target"/> 
+      </mapping> 
+    </element> 
+    <element id="Extension.extension">
+      <path value="Extension.extension"/> 
+      <max value="0"/> 
+    </element> 
+    <element id="Extension.url">
+      <path value="Extension.url"/> 
+      <fixedUri value="http://hl7.org/fhir/StructureDefinition/workflow-reason"/> 
+    </element> 
+    <element id="Extension.value[x]">
+      <path value="Extension.value[x]"/> 
+      <min value="1"/> 
+      <type> 
+        <code value="CodeableReference"/> 
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/> 
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DiagnosticReport"/> 
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/> 
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/> 
+      </type> 
+      <binding> 
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="EventReason"/> 
+        </extension> 
+        <strength value="example"/> 
+        <valueSet value="http://hl7.org/fhir/ValueSet/condition-cause"/> 
+      </binding> 
+    </element> 
+  </differential> 
+</StructureDefinition> 

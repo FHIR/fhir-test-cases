@@ -41,7 +41,9 @@
             <span style="opacity: 0.5">1</span>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">CDAR2.Section</td>
-          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
+          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
+            <span style="opacity: 0.5">Base for all types and resources</span>
+          </td>
         </tr>
 
         <tr style="border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: #F7F7F7">
@@ -58,7 +60,7 @@
             <span style="opacity: 0.5">*</span>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <span style="opacity: 0.5">Element</span>
+            <a style="opacity: 0.5" href="http://hl7.org/fhir/datatypes.html#Element">Element</a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
         </tr>
@@ -115,6 +117,11 @@
     </coding>
   </jurisdiction>
   <fhirVersion value="4.0.1"/>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM Mapping"/>
+  </mapping>
   <kind value="resource"/>
   <abstract value="false"/>
   <type value="Section"/>
@@ -123,6 +130,8 @@
   <snapshot>
     <element id="Section">
       <path value="Section"/>
+      <short value="Base for all types and resources"/>
+      <definition value="Base definition for all types defined in FHIR type system."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -130,7 +139,19 @@
         <min value="0"/>
         <max value="*"/>
       </base>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
       <isModifier value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
     </element>
     <element id="Section.classCode">
       <path value="Section.classCode"/>

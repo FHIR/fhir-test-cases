@@ -57,7 +57,7 @@
             <a style="opacity: 0.5" href="http://hl7.org/fhir/datatypes.html#code">code</a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <span style="opacity: 0.5">document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection</span>
+            <span style="opacity: 0.5">document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection | subscription-notification</span>
             <br/>
             <span style="font-weight:bold">Fixed Value: </span>
             <span style="color: darkgreen">searchset</span>
@@ -252,7 +252,7 @@
       <use value="work"/>
     </telecom>
   </contact>
-  <description value="Profile on the Bundle resource which represents the structure of the retrieve medication overview response transaction. The output of the [&#39;$medication-overiew&#39;](https://simplifier.net/NictizSTU3/Medication-Overview) operation SHALL conform to this profile."/>
+  <description value="Profile on the Bundle resource which represents the structure of the retrieve medication overview response transaction. The output of the ['$medication-overiew'](https://simplifier.net/NictizSTU3/Medication-Overview) operation SHALL conform to this profile."/>
   <purpose value="To define the body of the retrieve medication overview response transaction. This profile should provide guidance for servers in constructing the medication-overview operation outcome and enableling validation against it. For clients this profile should be helpfull in expecting the response format of the medication-overview outcome."/>
   <copyright value="CC0"/>
   <fhirVersion value="3.0.1"/>
@@ -303,74 +303,91 @@
         <key value="bdl-1"/>
         <severity value="error"/>
         <human value="total only when a search or history"/>
-        <expression value="total.empty() or (type = &#39;searchset&#39;) or (type = &#39;history&#39;)"/>
-        <xpath value="not(f:total) or (f:type/@value = &#39;searchset&#39;) or (f:type/@value = &#39;history&#39;)"/>
+        <expression value="total.empty() or (type = 'searchset') or (type = 'history')"/>
+        <xpath value="not(f:total) or (f:type/@value = 'searchset') or (f:type/@value = 'history')"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-2"/>
         <severity value="error"/>
         <human value="entry.search only when a search"/>
-        <expression value="entry.search.empty() or (type = &#39;searchset&#39;)"/>
-        <xpath value="not(f:entry/f:search) or (f:type/@value = &#39;searchset&#39;)"/>
+        <expression value="entry.search.empty() or (type = 'searchset')"/>
+        <xpath value="not(f:entry/f:search) or (f:type/@value = 'searchset')"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-3"/>
         <severity value="error"/>
-        <human value="entry.request mandatory for batch/transaction/history, otherwise prohibited"/>
-        <expression value="entry.all(request.exists() = (%resource.type = &#39;batch&#39; or %resource.type = &#39;transaction&#39; or %resource.type = &#39;history&#39;))"/>
-        <xpath value="not(f:entry/f:request) or (f:type/@value = &#39;batch&#39;) or (f:type/@value = &#39;transaction&#39;) or (f:type/@value = &#39;history&#39;)"/>
+        <human value="entry.request mandatory for batch/transaction/history, allowed for subscription-notification, otherwise prohibited"/>
+        <expression value="entry.all(request.exists() = (%resource.type = 'batch' or %resource.type = 'transaction' or %resource.type = 'history')) or (type='subscription-notification')"/>
+        <xpath value="not(f:entry/f:request) or (f:type/@value = 'batch') or (f:type/@value = 'transaction') or (f:type/@value = 'history') or (f:type/@value = 'subscription-notification)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-4"/>
         <severity value="error"/>
-        <human value="entry.response mandatory for batch-response/transaction-response/history, otherwise prohibited"/>
-        <expression value="entry.all(response.exists() = (%resource.type = &#39;batch-response&#39; or %resource.type = &#39;transaction-response&#39; or %resource.type = &#39;history&#39;))"/>
-        <xpath value="not(f:entry/f:response) or (f:type/@value = &#39;batch-response&#39;) or (f:type/@value = &#39;transaction-response&#39;) or (f:type/@value = &#39;history&#39;)"/>
+        <human value="entry.response mandatory for batch-response/transaction-response/history, allowed for subscription-notification, otherwise prohibited"/>
+        <expression value="entry.all(response.exists() = (%resource.type = 'batch-response' or %resource.type = 'transaction-response' or %resource.type = 'history')) or (type='subscription-notification')"/>
+        <xpath value="not(f:entry/f:response) or (f:type/@value = 'batch-response') or (f:type/@value = 'transaction-response') or (f:type/@value = 'history') or (f:type/@value = 'subscription-notification)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-7"/>
         <severity value="error"/>
         <human value="FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId (except in history bundles)"/>
-        <expression value="(type = &#39;history&#39;) or entry.where(fullUrl.exists()).select(fullUrl&amp;resource.meta.versionId).isDistinct()"/>
-        <xpath value="(f:type/@value = &#39;history&#39;) or (count(for $entry in f:entry[f:resource] return $entry[count(parent::f:Bundle/f:entry[f:fullUrl/@value=$entry/f:fullUrl/@value and ((not(f:resource/*/f:meta/f:versionId/@value) and not($entry/f:resource/*/f:meta/f:versionId/@value)) or f:resource/*/f:meta/f:versionId/@value=$entry/f:resource/*/f:meta/f:versionId/@value)])!=1])=0)"/>
+        <expression value="(type = 'history') or entry.where(fullUrl.exists()).select(fullUrl&amp;resource.meta.versionId).isDistinct()"/>
+        <xpath value="(f:type/@value = 'history') or (count(for $entry in f:entry[f:resource] return $entry[count(parent::f:Bundle/f:entry[f:fullUrl/@value=$entry/f:fullUrl/@value and ((not(f:resource/*/f:meta/f:versionId/@value) and not($entry/f:resource/*/f:meta/f:versionId/@value)) or f:resource/*/f:meta/f:versionId/@value=$entry/f:resource/*/f:meta/f:versionId/@value)])!=1])=0)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-9"/>
         <severity value="error"/>
         <human value="A document must have an identifier with a system and a value"/>
-        <expression value="type = &#39;document&#39; implies (identifier.system.exists() and identifier.value.exists())"/>
-        <xpath value="not(f:type/@value = &#39;document&#39;) or exists(f:identifier/f:system) or exists(f:identifier/f:value)"/>
+        <expression value="type = 'document' implies (identifier.system.exists() and identifier.value.exists())"/>
+        <xpath value="not(f:type/@value = 'document') or exists(f:identifier/f:system) or exists(f:identifier/f:value)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-10"/>
         <severity value="error"/>
         <human value="A document must have a date"/>
-        <expression value="type = &#39;document&#39; implies (timestamp.hasValue())"/>
-        <xpath value="not(f:type/@value = &#39;document&#39;) or exists(f:timestamp/@value)"/>
+        <expression value="type = 'document' implies (timestamp.hasValue())"/>
+        <xpath value="not(f:type/@value = 'document') or exists(f:timestamp/f:value)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-11"/>
         <severity value="error"/>
         <human value="A document must have a Composition as the first resource"/>
-        <expression value="type = &#39;document&#39; implies entry.first().resource.is(Composition)"/>
-        <xpath value="not(f:type/@value=&#39;document&#39;) or f:entry[1]/f:resource/f:Composition"/>
+        <expression value="type = 'document' implies entry.first().resource.is(Composition)"/>
+        <xpath value="not(f:type/@value='document') or f:entry[1]/f:resource/f:Composition"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
         <key value="bdl-12"/>
         <severity value="error"/>
         <human value="A message must have a MessageHeader as the first resource"/>
-        <expression value="type = &#39;message&#39; implies entry.first().resource.is(MessageHeader)"/>
-        <xpath value="not(f:type/@value=&#39;message&#39;) or f:entry[1]/f:resource/f:MessageHeader"/>
+        <expression value="type = 'message' implies entry.first().resource.is(MessageHeader)"/>
+        <xpath value="not(f:type/@value='message') or f:entry[1]/f:resource/f:MessageHeader"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
+      <constraint>
+        <key value="bdl-13"/>
+        <severity value="error"/>
+        <human value="A subscription-notification must have a SubscriptionStatus as the first resource"/>
+        <expression value="type = 'subscription-notification' implies entry.first().resource.is(SubscriptionStatus)"/>
+        <xpath value="not(f:type/@value='subscription-notification') or f:entry[1]/f:resource/f:SubscriptionStatus"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+      </constraint>
+      <constraint>
+        <key value="bdl-14"/>
+        <severity value="error"/>
+        <human value="entry.request.method PATCH not allowed for history"/>
+        <expression value="type = 'history' implies entry.request.method != 'PATCH'"/>
+        <xpath value="(f:type/@value = 'history') and not(f:entry/request/method/@value = 'PATCH')"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+      </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -389,12 +406,16 @@
         <identity value="cda"/>
         <map value="ClinicalDocument, if bundle.type = document"/>
       </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="infrastructure.structure"/>
+      </mapping>
     </element>
     <element id="Bundle.id">
       <path value="Bundle.id"/>
       <short value="Logical id of this artifact"/>
       <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes."/>
-      <comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
+      <comment value="Within the context of the FHIR RESTful interactions, the resource has an id except for cases like the create and conditional update. Otherwise, the use of the resouce id depends on the given use case."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -408,6 +429,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -433,6 +455,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -440,7 +463,7 @@
       <path value="Bundle.implicitRules"/>
       <short value="A set of rules under which this content was created"/>
       <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content. Often, this is a reference to an implementation guide that defines the special rules along with other profiles etc."/>
-      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of it&#39;s narrative along with other profiles, value sets, etc."/>
+      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of it's narrative along with other profiles, value sets, etc."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -459,8 +482,9 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="true"/>
-      <isModifierReason value="This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it&#39;s meaning or interpretation"/>
+      <isModifierReason value="This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.language">
@@ -486,6 +510,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -499,14 +524,14 @@
           <valueBoolean value="true"/>
         </extension>
         <strength value="preferred"/>
-        <description value="A human language."/>
+        <description value="IETF language tag"/>
         <valueSet value="http://hl7.org/fhir/ValueSet/languages"/>
       </binding>
     </element>
     <element id="Bundle.identifier">
       <path value="Bundle.identifier"/>
       <short value="Persistent identifier for the bundle"/>
-      <definition value="A persistent identifier for the bundle that won&#39;t change as a bundle is copied from server to server."/>
+      <definition value="A persistent identifier for the bundle that won't change as a bundle is copied from server to server."/>
       <comment value="Persistent identity generally only matters for batches of type Document, Message, and Collection. It would not normally be populated for search and history results and servers ignore Bundle.identifier when processing batches and transactions. For Documents  the .identifier SHALL be populated such that the .identifier is globally unique."/>
       <min value="0"/>
       <max value="1"/>
@@ -526,6 +551,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -539,9 +565,9 @@
     </element>
     <element id="Bundle.type">
       <path value="Bundle.type"/>
-      <short value="document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection"/>
+      <short value="document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection | subscription-notification"/>
       <definition value="Indicates the purpose of this bundle - how it is intended to be used."/>
-      <comment value="It&#39;s possible to use a bundle for other purposes (e.g. a document can be accepted as a transaction). This is primarily defined so that there can be specific rules for some of the bundle types."/>
+      <comment value="It's possible to use a bundle for other purposes (e.g. a document can be accepted as a transaction). This is primarily defined so that there can be specific rules for some of the bundle types."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -561,6 +587,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
@@ -569,7 +596,7 @@
         </extension>
         <strength value="required"/>
         <description value="Indicates the purpose of a bundle - how it is intended to be used."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/bundle-type|4.0.1"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/bundle-type|4.6.0"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -599,6 +626,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -613,7 +641,7 @@
     <element id="Bundle.total">
       <path value="Bundle.total"/>
       <short value="If search, the total number of matches"/>
-      <definition value="If a set of search matches, this is the total number of entries of type &#39;match&#39; across all pages in the search.  It does not include search.mode = &#39;include&#39; or &#39;outcome&#39; entries and it does not provide a count of the number of entries in the Bundle."/>
+      <definition value="If a set of search matches, this is the total number of entries of type 'match' across all pages in the search.  It does not include search.mode = 'include' or 'outcome' entries and it does not provide a count of the number of entries in the Bundle."/>
       <comment value="The total value contains the number of matching HCIMs: MedicationUse, AdministrationAgreement and MedicationAgreement. Other included resources, such as Medication resources, are not included in the total."/>
       <min value="0"/>
       <max value="1"/>
@@ -634,6 +662,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -641,7 +670,7 @@
       <path value="Bundle.link"/>
       <short value="Links related to this Bundle"/>
       <definition value="A series of links that provide context to this bundle."/>
-      <comment value="Both Bundle.link and Bundle.entry.link are defined to support providing additional context when Bundles are used (e.g. [HATEOAS](http://en.wikipedia.org/wiki/HATEOAS)). &#xA;&#xA;Bundle.entry.link corresponds to links found in the HTTP header if the resource in the entry was [read](http://hl7.org/fhir/R4/http.html#read) directly.&#xA;&#xA;This specification defines some specific uses of Bundle.link for [searching](http://hl7.org/fhir/R4/search.html#conformance) and [paging](http://hl7.org/fhir/R4/http.html#paging), but no specific uses for Bundle.entry.link, and no defined function in a transaction - the meaning is implementation specific."/>
+      <comment value="Both Bundle.link and Bundle.entry.link are defined to support providing additional context when Bundles are used (e.g. [HATEOAS](http://en.wikipedia.org/wiki/HATEOAS)). &#xA;&#xA;Bundle.entry.link corresponds to links found in the HTTP header if the resource in the entry was [read](http://build.fhir.org/http.html#read) directly.&#xA;&#xA;This specification defines some specific uses of Bundle.link for [searching](http://build.fhir.org/search.html#conformance) and [paging](http://build.fhir.org/http.html#paging), but no specific uses for Bundle.entry.link, and no defined function in a transaction - the meaning is implementation specific."/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -660,6 +689,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -731,9 +761,9 @@
     <element id="Bundle.link.modifierExtension">
       <path value="Bundle.link.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -793,6 +823,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -818,6 +849,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -842,11 +874,11 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <orderMeaning value="For bundles of type &#39;document&#39; and &#39;message&#39;, the first resource is special (must be Composition or MessageHeader respectively). For all bundles, the meaning of the order of entries depends on the bundle type"/>
+      <orderMeaning value="For bundles of type 'document' and 'message', the first resource is special (must be Composition or MessageHeader respectively). For all bundles, the meaning of the order of entries depends on the bundle type"/>
       <constraint>
         <key value="bdl-5"/>
         <severity value="error"/>
-        <human value="must be a resource unless there&#39;s a request or response"/>
+        <human value="must be a resource unless there's a request or response"/>
         <expression value="resource.exists() or request.exists() or response.exists()"/>
         <xpath value="exists(f:resource) or exists(f:request) or exists(f:response)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
@@ -855,8 +887,8 @@
         <key value="bdl-8"/>
         <severity value="error"/>
         <human value="fullUrl cannot be a version specific reference"/>
-        <expression value="fullUrl.contains(&#39;/_history/&#39;).not()"/>
-        <xpath value="not(exists(f:fullUrl[contains(string(@value), &#39;/_history/&#39;)]))"/>
+        <expression value="fullUrl.exists() implies fullUrl.contains('/_history/').not()"/>
+        <xpath value="not(exists(f:fullUrl[contains(string(@value), '/_history/')]))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
@@ -867,6 +899,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -938,9 +971,9 @@
     <element id="Bundle.entry.modifierExtension">
       <path value="Bundle.entry.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -998,6 +1031,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1005,7 +1039,7 @@
       <path value="Bundle.entry.fullUrl"/>
       <short value="URI for resource (Absolute URL server address or URI for UUID/OID)"/>
       <definition value="The Absolute URL for the resource.  The fullUrl SHALL NOT disagree with the id in the resource - i.e. if the fullUrl is not a urn:uuid, the URL shall be version-independent URL consistent with the Resource.id. The fullUrl is a version independent reference to the resource. The fullUrl element SHALL have a value except that: &#xA;* fullUrl can be empty on a POST (although it does not need to when specifying a temporary id for reference in the bundle)&#xA;* Results from operations might involve resources that are not identified."/>
-      <comment value="fullUrl might not be [unique in the context of a resource](http://hl7.org/fhir/R4/bundle.html#bundle-unique). Note that since [FHIR resources do not need to be served through the FHIR API](http://hl7.org/fhir/R4/references.html), the fullURL might be a URN or an absolute URL that does not end with the logical id of the resource (Resource.id). However, but if the fullUrl does look like a RESTful server URL (e.g. meets the [regex](http://hl7.org/fhir/R4/references.html#regex), then the &#39;id&#39; portion of the fullUrl SHALL end with the Resource.id.&#xA;&#xA;Note that the fullUrl is not the same as the canonical URL - it&#39;s an absolute url for an endpoint serving the resource (these will happen to have the same value on the canonical server for the resource with the canonical URL)."/>
+      <comment value="fullUrl might not be [unique in the context of a resource](http://build.fhir.org/bundle.html#bundle-unique). Note that since [FHIR resources do not need to be served through the FHIR API](http://build.fhir.org/references.html), the fullURL might be a URN or an absolute URL that does not end with the logical id of the resource (Resource.id). However, but if the fullUrl does look like a RESTful server URL (e.g. meets the [regex](http://build.fhir.org/references.html#regex), then the 'id' portion of the fullUrl SHALL end with the Resource.id.&#xA;&#xA;Note that the fullUrl is not the same as the canonical URL - it's an absolute url for an endpoint serving the resource (these will happen to have the same value on the canonical server for the resource with the canonical URL)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1024,6 +1058,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1041,6 +1076,7 @@
       <type>
         <code value="Resource"/>
       </type>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1067,6 +1103,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1138,9 +1175,9 @@
     <element id="Bundle.entry.search.modifierExtension">
       <path value="Bundle.entry.search.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -1181,8 +1218,8 @@
     <element id="Bundle.entry.search.mode">
       <path value="Bundle.entry.search.mode"/>
       <short value="match | include | outcome - why this is in the result set"/>
-      <definition value="Why this entry is in the result set - whether it&#39;s included as a match or because of an _include requirement, or to convey information or warning information about the search process."/>
-      <comment value="There is only one mode. In some corner cases, a resource may be included because it is both a match and an include. In these circumstances, &#39;match&#39; takes precedence."/>
+      <definition value="Why this entry is in the result set - whether it's included as a match or because of an _include requirement, or to convey information or warning information about the search process."/>
+      <comment value="There is only one mode. In some corner cases, a resource may be included because it is both a match and an include. In these circumstances, 'match' takes precedence."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1201,6 +1238,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
@@ -1208,15 +1246,15 @@
           <valueString value="SearchEntryMode"/>
         </extension>
         <strength value="required"/>
-        <description value="Why an entry is in the result set - whether it&#39;s included as a match or because of an _include requirement, or to convey information or warning information about the search process."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/search-entry-mode|4.0.1"/>
+        <description value="Why an entry is in the result set - whether it's included as a match or because of an _include requirement, or to convey information or warning information about the search process."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/search-entry-mode|4.6.0"/>
       </binding>
     </element>
     <element id="Bundle.entry.search.score">
       <path value="Bundle.entry.search.score"/>
       <short value="Search ranking (between 0 and 1)"/>
-      <definition value="When searching, the server&#39;s search ranking score for the entry."/>
-      <comment value="Servers are not required to return a ranking score. 1 is most relevant, and 0 is least relevant. Often, search results are sorted by score, but the client may specify a different sort order.&#xA;&#xA;See [Patient Match](http://hl7.org/fhir/R4/patient-operation-match.html) for the EMPI search which relates to this element."/>
+      <definition value="When searching, the server's search ranking score for the entry."/>
+      <comment value="Servers are not required to return a ranking score. 1 is most relevant, and 0 is least relevant. Often, search results are sorted by score, but the client may specify a different sort order.&#xA;&#xA;See [Patient Match](http://build.fhir.org/patient-operation-match.html) for the EMPI search which relates to this element."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1235,6 +1273,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1261,6 +1300,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1332,9 +1372,9 @@
     <element id="Bundle.entry.request.modifierExtension">
       <path value="Bundle.entry.request.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -1394,6 +1434,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
@@ -1402,7 +1443,7 @@
         </extension>
         <strength value="required"/>
         <description value="HTTP verbs (in the HTTP command line). See [HTTP rfc](https://tools.ietf.org/html/rfc7231) for details."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/http-verb|4.0.1"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/http-verb|4.6.0"/>
       </binding>
     </element>
     <element id="Bundle.entry.request.url">
@@ -1428,13 +1469,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry.request.ifNoneMatch">
       <path value="Bundle.entry.request.ifNoneMatch"/>
       <short value="For managing cache currency"/>
-      <definition value="If the ETag values match, return a 304 Not Modified status. See the API documentation for [&quot;Conditional Read&quot;](http://hl7.org/fhir/R4/http.html#cread)."/>
+      <definition value="If the ETag values match, return a 304 Not Modified status. See the API documentation for [&quot;Conditional Read&quot;](http://build.fhir.org/http.html#cread)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1453,13 +1495,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry.request.ifModifiedSince">
       <path value="Bundle.entry.request.ifModifiedSince"/>
       <short value="For managing cache currency"/>
-      <definition value="Only perform the operation if the last updated date matches. See the API documentation for [&quot;Conditional Read&quot;](http://hl7.org/fhir/R4/http.html#cread)."/>
+      <definition value="Only perform the operation if the last updated date matches. See the API documentation for [&quot;Conditional Read&quot;](http://build.fhir.org/http.html#cread)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1478,13 +1521,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry.request.ifMatch">
       <path value="Bundle.entry.request.ifMatch"/>
       <short value="For managing update contention"/>
-      <definition value="Only perform the operation if the Etag value matches. For more information, see the API section [&quot;Managing Resource Contention&quot;](http://hl7.org/fhir/R4/http.html#concurrency)."/>
+      <definition value="Only perform the operation if the Etag value matches. For more information, see the API section [&quot;Managing Resource Contention&quot;](http://build.fhir.org/http.html#concurrency)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1503,13 +1547,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry.request.ifNoneExist">
       <path value="Bundle.entry.request.ifNoneExist"/>
       <short value="For conditional creates"/>
-      <definition value="Instruct the server not to perform the create if a specified resource already exists. For further information, see the API documentation for [&quot;Conditional Create&quot;](http://hl7.org/fhir/R4/http.html#ccreate). This is just the query portion of the URL - what follows the &quot;?&quot; (not including the &quot;?&quot;)."/>
+      <definition value="Instruct the server not to perform the create if a specified resource already exists. For further information, see the API documentation for [&quot;Conditional Create&quot;](http://build.fhir.org/http.html#ccreate). This is just the query portion of the URL - what follows the &quot;?&quot; (not including the &quot;?&quot;)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1528,13 +1573,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry.response">
       <path value="Bundle.entry.response"/>
       <short value="Results of execution (transaction/batch/history)"/>
-      <definition value="Indicates the results of processing the corresponding &#39;request&#39; entry in the batch or transaction being responded to or what the results of an operation where when returning history."/>
+      <definition value="Indicates the results of processing the corresponding 'request' entry in the batch or transaction being responded to or what the results of an operation where when returning history."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1554,6 +1600,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1625,9 +1672,9 @@
     <element id="Bundle.entry.response.modifierExtension">
       <path value="Bundle.entry.response.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -1687,6 +1734,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1712,13 +1760,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry.response.etag">
       <path value="Bundle.entry.response.etag"/>
       <short value="The Etag for the resource (if relevant)"/>
-      <definition value="The Etag for the resource, if the operation for the entry produced a versioned resource (see [Resource Metadata and Versioning](http://hl7.org/fhir/R4/http.html#versioning) and [Managing Resource Contention](http://hl7.org/fhir/R4/http.html#concurrency))."/>
+      <definition value="The Etag for the resource, if the operation for the entry produced a versioned resource (see [Resource Metadata and Versioning](http://build.fhir.org/http.html#versioning) and [Managing Resource Contention](http://build.fhir.org/http.html#concurrency))."/>
       <comment value="Etags match the Resource.meta.versionId. The ETag has to match the version id in the header if a resource is included."/>
       <min value="0"/>
       <max value="1"/>
@@ -1738,12 +1787,13 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry.response.lastModified">
       <path value="Bundle.entry.response.lastModified"/>
-      <short value="Server&#39;s date time modified"/>
+      <short value="Server's date time modified"/>
       <definition value="The date/time that the resource was modified on the server."/>
       <comment value="This has to match the same time in the meta header (meta.lastUpdated) if a resource is included."/>
       <min value="0"/>
@@ -1764,6 +1814,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1782,6 +1833,7 @@
       <type>
         <code value="Resource"/>
       </type>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1802,11 +1854,11 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <orderMeaning value="For bundles of type &#39;document&#39; and &#39;message&#39;, the first resource is special (must be Composition or MessageHeader respectively). For all bundles, the meaning of the order of entries depends on the bundle type"/>
+      <orderMeaning value="For bundles of type 'document' and 'message', the first resource is special (must be Composition or MessageHeader respectively). For all bundles, the meaning of the order of entries depends on the bundle type"/>
       <constraint>
         <key value="bdl-5"/>
         <severity value="error"/>
-        <human value="must be a resource unless there&#39;s a request or response"/>
+        <human value="must be a resource unless there's a request or response"/>
         <expression value="resource.exists() or request.exists() or response.exists()"/>
         <xpath value="exists(f:resource) or exists(f:request) or exists(f:response)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
@@ -1815,8 +1867,8 @@
         <key value="bdl-8"/>
         <severity value="error"/>
         <human value="fullUrl cannot be a version specific reference"/>
-        <expression value="fullUrl.contains(&#39;/_history/&#39;).not()"/>
-        <xpath value="not(exists(f:fullUrl[contains(string(@value), &#39;/_history/&#39;)]))"/>
+        <expression value="fullUrl.exists() implies fullUrl.contains('/_history/').not()"/>
+        <xpath value="not(exists(f:fullUrl[contains(string(@value), '/_history/')]))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
@@ -1827,6 +1879,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -1903,9 +1956,9 @@
     <element id="Bundle.entry:List.modifierExtension">
       <path value="Bundle.entry.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -1963,6 +2016,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -1970,7 +2024,7 @@
       <path value="Bundle.entry.fullUrl"/>
       <short value="URI for resource (Absolute URL server address or URI for UUID/OID)"/>
       <definition value="The Absolute URL for the resource.  The fullUrl SHALL NOT disagree with the id in the resource - i.e. if the fullUrl is not a urn:uuid, the URL shall be version-independent URL consistent with the Resource.id. The fullUrl is a version independent reference to the resource. The fullUrl element SHALL have a value except that: &#xA;* fullUrl can be empty on a POST (although it does not need to when specifying a temporary id for reference in the bundle)&#xA;* Results from operations might involve resources that are not identified."/>
-      <comment value="fullUrl might not be [unique in the context of a resource](http://hl7.org/fhir/R4/bundle.html#bundle-unique). Note that since [FHIR resources do not need to be served through the FHIR API](http://hl7.org/fhir/R4/references.html), the fullURL might be a URN or an absolute URL that does not end with the logical id of the resource (Resource.id). However, but if the fullUrl does look like a RESTful server URL (e.g. meets the [regex](http://hl7.org/fhir/R4/references.html#regex), then the &#39;id&#39; portion of the fullUrl SHALL end with the Resource.id.&#xA;&#xA;Note that the fullUrl is not the same as the canonical URL - it&#39;s an absolute url for an endpoint serving the resource (these will happen to have the same value on the canonical server for the resource with the canonical URL)."/>
+      <comment value="fullUrl might not be [unique in the context of a resource](http://build.fhir.org/bundle.html#bundle-unique). Note that since [FHIR resources do not need to be served through the FHIR API](http://build.fhir.org/references.html), the fullURL might be a URN or an absolute URL that does not end with the logical id of the resource (Resource.id). However, but if the fullUrl does look like a RESTful server URL (e.g. meets the [regex](http://build.fhir.org/references.html#regex), then the 'id' portion of the fullUrl SHALL end with the Resource.id.&#xA;&#xA;Note that the fullUrl is not the same as the canonical URL - it's an absolute url for an endpoint serving the resource (these will happen to have the same value on the canonical server for the resource with the canonical URL)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1989,6 +2043,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -2022,8 +2077,8 @@
         <key value="dom-3"/>
         <severity value="error"/>
         <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"/>
-        <expression value="contained.where(((&#39;#&#39;+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists()).not()).trace(&#39;unmatched&#39;, id).empty()"/>
-        <xpath value="not(exists(for $id in f:contained/*/f:id/@value return $contained[not(parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $contained/*/id/@value) or descendant::f:reference[@value=&#39;#&#39;])]))"/>
+        <expression value="contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()"/>
+        <xpath value="not(exists(for $contained in f:contained return $contained[not(exists(parent::*/descendant::f:reference/@value=concat('#', $contained/*/f:id/@value)) or exists(descendant::f:reference[@value='#']))]))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
       <constraint>
@@ -2068,18 +2123,19 @@
         <key value="lst-2"/>
         <severity value="error"/>
         <human value="The deleted flag can only be used if the mode of the list is &quot;changes&quot;"/>
-        <expression value="mode = &#39;changes&#39; or entry.deleted.empty()"/>
-        <xpath value="(f:mode/@value = &#39;changes&#39;) or not(exists(f:entry/f:deleted))"/>
+        <expression value="mode = 'changes' or entry.deleted.empty()"/>
+        <xpath value="(f:mode/@value = 'changes') or not(exists(f:entry/f:deleted))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/List"/>
       </constraint>
       <constraint>
         <key value="lst-3"/>
         <severity value="error"/>
         <human value="An entry date can only be used if the mode of the list is &quot;working&quot;"/>
-        <expression value="mode = &#39;working&#39; or entry.date.empty()"/>
-        <xpath value="(f:mode/@value = &#39;working&#39;) or not(exists(f:entry/f:date))"/>
+        <expression value="mode = 'working' or entry.date.empty()"/>
+        <xpath value="(f:mode/@value = 'working') or not(exists(f:entry/f:date))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/List"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -2090,12 +2146,16 @@
         <identity value="rim"/>
         <map value="Act[classCode&lt;ORG,moodCode=EVN]"/>
       </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="infrastructure.documents"/>
+      </mapping>
     </element>
     <element id="Bundle.entry:List.resource.id">
       <path value="Bundle.entry.resource.id"/>
       <short value="Logical id of this artifact"/>
       <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes."/>
-      <comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
+      <comment value="Within the context of the FHIR RESTful interactions, the resource has an id except for cases like the create and conditional update. Otherwise, the use of the resouce id depends on the given use case."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -2109,6 +2169,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -2134,6 +2195,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -2141,7 +2203,7 @@
       <path value="Bundle.entry.resource.implicitRules"/>
       <short value="A set of rules under which this content was created"/>
       <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content. Often, this is a reference to an implementation guide that defines the special rules along with other profiles etc."/>
-      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of it&#39;s narrative along with other profiles, value sets, etc."/>
+      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of it's narrative along with other profiles, value sets, etc."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -2160,8 +2222,9 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="true"/>
-      <isModifierReason value="This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it&#39;s meaning or interpretation"/>
+      <isModifierReason value="This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry:List.resource.language">
@@ -2187,6 +2250,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -2200,7 +2264,7 @@
           <valueBoolean value="true"/>
         </extension>
         <strength value="preferred"/>
-        <description value="A human language."/>
+        <description value="IETF language tag"/>
         <valueSet value="http://hl7.org/fhir/ValueSet/languages"/>
       </binding>
     </element>
@@ -2208,7 +2272,7 @@
       <path value="Bundle.entry.resource.text"/>
       <short value="Text summary of the resource, for human interpretation"/>
       <definition value="A human-readable narrative that contains a summary of the resource and can be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety."/>
-      <comment value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded information is added later."/>
+      <comment value="Contained resources do not have a narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded information is added later."/>
       <alias value="narrative"/>
       <alias value="html"/>
       <alias value="xhtml"/>
@@ -2231,6 +2295,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -2241,7 +2306,7 @@
     <element id="Bundle.entry:List.resource.contained">
       <path value="Bundle.entry.resource.contained"/>
       <short value="Contained, inline Resources"/>
-      <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope."/>
+      <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope."/>
       <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again. Contained resources may have profiles and tags In their meta elements, but SHALL NOT have security labels."/>
       <alias value="inline resources"/>
       <alias value="anonymous resources"/>
@@ -2256,6 +2321,7 @@
       <type>
         <code value="Resource"/>
       </type>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -2300,6 +2366,7 @@
         <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
@@ -2335,6 +2402,7 @@
         <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -2362,7 +2430,7 @@
       </base>
       <type>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
+          <valueUrl value="id"/>
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
@@ -2606,7 +2674,7 @@
     <element id="Bundle.entry:List.resource.extension:Verification.value[x]">
       <path value="Bundle.entry.resource.extension.value[x]"/>
       <short value="Value of extension"/>
-      <definition value="Value of extension - must be one of a constrained set of the data types (see [Extensibility](http://hl7.org/fhir/R4/extensibility.html) for a list)."/>
+      <definition value="Value of extension - must be one of a constrained set of the data types (see [Extensibility](http://build.fhir.org/extensibility.html) for a list)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -2643,6 +2711,9 @@
       </type>
       <type>
         <code value="integer"/>
+      </type>
+      <type>
+        <code value="integer64"/>
       </type>
       <type>
         <code value="markdown"/>
@@ -2687,6 +2758,9 @@
         <code value="CodeableConcept"/>
       </type>
       <type>
+        <code value="CodeableReference"/>
+      </type>
+      <type>
         <code value="Coding"/>
       </type>
       <type>
@@ -2721,6 +2795,9 @@
       </type>
       <type>
         <code value="Ratio"/>
+      </type>
+      <type>
+        <code value="RatioRange"/>
       </type>
       <type>
         <code value="Reference"/>
@@ -2782,9 +2859,9 @@
     <element id="Bundle.entry:List.resource.modifierExtension">
       <path value="Bundle.entry.resource.modifierExtension"/>
       <short value="Extensions that cannot be ignored"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -2813,6 +2890,7 @@
         <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="true"/>
       <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the resource that contains them"/>
       <isSummary value="false"/>
@@ -2843,6 +2921,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -2882,6 +2961,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="true"/>
       <isModifierReason value="This element is labeled as a modifier because it is a status element that contains status entered-in-error which means that the resource should not be treated as valid"/>
       <isSummary value="true"/>
@@ -2891,7 +2971,7 @@
         </extension>
         <strength value="required"/>
         <description value="The current state of the list."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-status|4.0.1"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-status|4.6.0"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -2926,6 +3006,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="true"/>
       <isModifierReason value="If set to &quot;changes&quot;, the list is considered incomplete, while the other two codes indicate the list is complete, which changes the understanding of the elements listed"/>
       <isSummary value="true"/>
@@ -2935,7 +3016,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this list."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|4.0.1"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|4.6.0"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -2963,7 +3044,7 @@
       </type>
       <example>
         <label value="General"/>
-        <valueString value="Dr. Jane&#39;s Patients"/>
+        <valueString value="Dr. Jane's Patients"/>
       </example>
       <constraint>
         <key value="ele-1"/>
@@ -2973,6 +3054,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -3004,6 +3086,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
@@ -3037,7 +3120,7 @@
       </base>
       <type>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
+          <valueUrl value="id"/>
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
@@ -3149,7 +3232,7 @@
       </base>
       <type>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
+          <valueUrl value="id"/>
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
@@ -3212,7 +3295,7 @@
       <path value="Bundle.entry.resource.code.coding.system"/>
       <short value="Identity of the terminology system"/>
       <definition value="The identification of the code system that defines the meaning of the symbol in the code."/>
-      <comment value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7&#39;s list of FHIR defined special URIs or it should reference to some definition that establishes the system clearly and unambiguously."/>
+      <comment value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should reference to some definition that establishes the system clearly and unambiguously."/>
       <requirements value="Need to be unambiguous about the source of the definition of the symbol."/>
       <min value="1"/>
       <max value="1"/>
@@ -3287,6 +3370,9 @@
       </mapping>
     </element>
     <element id="Bundle.entry:List.resource.code.coding.code">
+      <extension url="http://hl7.org/fhir/build/StructureDefinition/no-binding">
+        <valueBoolean value="true"/>
+      </extension>
       <path value="Bundle.entry.resource.code.coding.code"/>
       <short value="Symbol in syntax defined by the system"/>
       <definition value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)."/>
@@ -3370,7 +3456,7 @@
       <path value="Bundle.entry.resource.code.coding.userSelected"/>
       <short value="If this coding was chosen directly by the user"/>
       <definition value="Indicates that this coding was chosen by a user directly - e.g. off a pick list of available items (codes or displays)."/>
-      <comment value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly &#39;directly chosen&#39; implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely."/>
+      <comment value="Amongst a set of alternatives, a directly chosen code is the most appropriate starting point for new translations. There is some ambiguity about what exactly 'directly chosen' implies, and trading partner agreement may be needed to clarify the use of this element and its consequences more completely."/>
       <requirements value="This has been identified as a clinical safety criterium - that this exact system/code pair was chosen explicitly, rather than inferred by the system based on some rules or language processing."/>
       <min value="0"/>
       <max value="1"/>
@@ -3406,6 +3492,9 @@
       </mapping>
     </element>
     <element id="Bundle.entry:List.resource.code.text">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true"/>
+      </extension>
       <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
         <valueBoolean value="true"/>
       </extension>
@@ -3473,6 +3562,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -3516,6 +3606,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -3552,6 +3643,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -3602,6 +3694,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -3632,7 +3725,7 @@
       </base>
       <type>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
+          <valueUrl value="id"/>
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
@@ -3738,7 +3831,7 @@
       </base>
       <type>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
+          <valueUrl value="id"/>
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
@@ -3834,7 +3927,7 @@
         <rules value="closed"/>
       </slicing>
       <short value="Value of extension"/>
-      <definition value="Value of extension - must be one of a constrained set of the data types (see [Extensibility](http://hl7.org/fhir/R4/extensibility.html) for a list)."/>
+      <definition value="Value of extension - must be one of a constrained set of the data types (see [Extensibility](http://build.fhir.org/extensibility.html) for a list)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -3864,7 +3957,7 @@
       <path value="Bundle.entry.resource.source.extension.value[x]"/>
       <sliceName value="valueReference"/>
       <short value="Value of extension"/>
-      <definition value="Value of extension - must be one of a constrained set of the data types (see [Extensibility](http://hl7.org/fhir/R4/extensibility.html) for a list)."/>
+      <definition value="Value of extension - must be one of a constrained set of the data types (see [Extensibility](http://build.fhir.org/extensibility.html) for a list)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -3915,6 +4008,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -3952,6 +4046,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -3981,6 +4076,7 @@
       <type>
         <code value="BackboneElement"/>
       </type>
+      <orderMeaning value="Order has no meaning unless specifically asserted by List.orderedBy, in which case the List SHALL be interpreted as being ordered as specified by List.orderedBy."/>
       <condition value="lst-1"/>
       <constraint>
         <key value="ele-1"/>
@@ -3990,6 +4086,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -4065,9 +4162,9 @@
     <element id="List.entry.modifierExtension">
       <path value="List.entry.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -4129,6 +4226,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -4160,7 +4258,7 @@
       <type>
         <code value="boolean"/>
       </type>
-      <meaningWhenMissing value="List items are generally only treated as deleted when this element explicitly carries a value of true. Systems SHOULD always populate this value when mode is &#39;changes&#39;"/>
+      <meaningWhenMissing value="List items are generally only treated as deleted when this element explicitly carries a value of true. Systems SHOULD always populate this value when mode is 'changes'"/>
       <condition value="lst-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -4170,8 +4268,9 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="true"/>
-      <isModifierReason value="If deleted is true, then the item included in the list isn&#39;t actually part of the list anymore"/>
+      <isModifierReason value="If deleted is true, then the item included in the list isn't actually part of the list anymore"/>
       <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
@@ -4201,6 +4300,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -4231,6 +4331,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -4254,6 +4355,7 @@
       <type>
         <code value="BackboneElement"/>
       </type>
+      <orderMeaning value="Order has no meaning unless specifically asserted by List.orderedBy, in which case the List SHALL be interpreted as being ordered as specified by List.orderedBy."/>
       <condition value="lst-1"/>
       <constraint>
         <key value="ele-1"/>
@@ -4263,6 +4365,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -4343,9 +4446,9 @@
     <element id="Bundle.entry:List.resource.entry:MedicationAgreement.modifierExtension">
       <path value="Bundle.entry.resource.entry.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -4407,6 +4510,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -4438,7 +4542,7 @@
       <type>
         <code value="boolean"/>
       </type>
-      <meaningWhenMissing value="List items are generally only treated as deleted when this element explicitly carries a value of true. Systems SHOULD always populate this value when mode is &#39;changes&#39;"/>
+      <meaningWhenMissing value="List items are generally only treated as deleted when this element explicitly carries a value of true. Systems SHOULD always populate this value when mode is 'changes'"/>
       <condition value="lst-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -4448,8 +4552,9 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="true"/>
-      <isModifierReason value="If deleted is true, then the item included in the list isn&#39;t actually part of the list anymore"/>
+      <isModifierReason value="If deleted is true, then the item included in the list isn't actually part of the list anymore"/>
       <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
@@ -4479,6 +4584,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -4510,6 +4616,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -4533,6 +4640,7 @@
       <type>
         <code value="BackboneElement"/>
       </type>
+      <orderMeaning value="Order has no meaning unless specifically asserted by List.orderedBy, in which case the List SHALL be interpreted as being ordered as specified by List.orderedBy."/>
       <condition value="lst-1"/>
       <constraint>
         <key value="ele-1"/>
@@ -4542,6 +4650,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -4622,9 +4731,9 @@
     <element id="Bundle.entry:List.resource.entry:AdministrationAgreement.modifierExtension">
       <path value="Bundle.entry.resource.entry.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -4686,6 +4795,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -4717,7 +4827,7 @@
       <type>
         <code value="boolean"/>
       </type>
-      <meaningWhenMissing value="List items are generally only treated as deleted when this element explicitly carries a value of true. Systems SHOULD always populate this value when mode is &#39;changes&#39;"/>
+      <meaningWhenMissing value="List items are generally only treated as deleted when this element explicitly carries a value of true. Systems SHOULD always populate this value when mode is 'changes'"/>
       <condition value="lst-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -4727,8 +4837,9 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="true"/>
-      <isModifierReason value="If deleted is true, then the item included in the list isn&#39;t actually part of the list anymore"/>
+      <isModifierReason value="If deleted is true, then the item included in the list isn't actually part of the list anymore"/>
       <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
@@ -4758,6 +4869,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -4789,6 +4901,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -4817,6 +4930,7 @@
       <type>
         <code value="BackboneElement"/>
       </type>
+      <orderMeaning value="Order has no meaning unless specifically asserted by List.orderedBy, in which case the List SHALL be interpreted as being ordered as specified by List.orderedBy."/>
       <condition value="lst-1"/>
       <constraint>
         <key value="ele-1"/>
@@ -4826,6 +4940,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -4906,9 +5021,9 @@
     <element id="Bundle.entry:List.resource.entry:MedicationUsage.modifierExtension">
       <path value="Bundle.entry.resource.entry.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -4970,6 +5085,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -5001,7 +5117,7 @@
       <type>
         <code value="boolean"/>
       </type>
-      <meaningWhenMissing value="List items are generally only treated as deleted when this element explicitly carries a value of true. Systems SHOULD always populate this value when mode is &#39;changes&#39;"/>
+      <meaningWhenMissing value="List items are generally only treated as deleted when this element explicitly carries a value of true. Systems SHOULD always populate this value when mode is 'changes'"/>
       <condition value="lst-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -5011,8 +5127,9 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="true"/>
-      <isModifierReason value="If deleted is true, then the item included in the list isn&#39;t actually part of the list anymore"/>
+      <isModifierReason value="If deleted is true, then the item included in the list isn't actually part of the list anymore"/>
       <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
@@ -5042,6 +5159,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -5073,6 +5191,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -5110,6 +5229,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -5148,6 +5268,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -5219,9 +5340,9 @@
     <element id="Bundle.entry:List.search.modifierExtension">
       <path value="Bundle.entry.search.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -5262,8 +5383,8 @@
     <element id="Bundle.entry:List.search.mode">
       <path value="Bundle.entry.search.mode"/>
       <short value="match | include | outcome - why this is in the result set"/>
-      <definition value="Why this entry is in the result set - whether it&#39;s included as a match or because of an _include requirement, or to convey information or warning information about the search process."/>
-      <comment value="There is only one mode. In some corner cases, a resource may be included because it is both a match and an include. In these circumstances, &#39;match&#39; takes precedence."/>
+      <definition value="Why this entry is in the result set - whether it's included as a match or because of an _include requirement, or to convey information or warning information about the search process."/>
+      <comment value="There is only one mode. In some corner cases, a resource may be included because it is both a match and an include. In these circumstances, 'match' takes precedence."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -5282,6 +5403,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
@@ -5289,15 +5411,15 @@
           <valueString value="SearchEntryMode"/>
         </extension>
         <strength value="required"/>
-        <description value="Why an entry is in the result set - whether it&#39;s included as a match or because of an _include requirement, or to convey information or warning information about the search process."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/search-entry-mode|4.0.1"/>
+        <description value="Why an entry is in the result set - whether it's included as a match or because of an _include requirement, or to convey information or warning information about the search process."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/search-entry-mode|4.6.0"/>
       </binding>
     </element>
     <element id="Bundle.entry:List.search.score">
       <path value="Bundle.entry.search.score"/>
       <short value="Search ranking (between 0 and 1)"/>
-      <definition value="When searching, the server&#39;s search ranking score for the entry."/>
-      <comment value="Servers are not required to return a ranking score. 1 is most relevant, and 0 is least relevant. Often, search results are sorted by score, but the client may specify a different sort order.&#xA;&#xA;See [Patient Match](http://hl7.org/fhir/R4/patient-operation-match.html) for the EMPI search which relates to this element."/>
+      <definition value="When searching, the server's search ranking score for the entry."/>
+      <comment value="Servers are not required to return a ranking score. 1 is most relevant, and 0 is least relevant. Often, search results are sorted by score, but the client may specify a different sort order.&#xA;&#xA;See [Patient Match](http://build.fhir.org/patient-operation-match.html) for the EMPI search which relates to this element."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -5316,6 +5438,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -5342,6 +5465,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -5413,9 +5537,9 @@
     <element id="Bundle.entry:List.request.modifierExtension">
       <path value="Bundle.entry.request.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -5475,6 +5599,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
@@ -5483,7 +5608,7 @@
         </extension>
         <strength value="required"/>
         <description value="HTTP verbs (in the HTTP command line). See [HTTP rfc](https://tools.ietf.org/html/rfc7231) for details."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/http-verb|4.0.1"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/http-verb|4.6.0"/>
       </binding>
     </element>
     <element id="Bundle.entry:List.request.url">
@@ -5509,13 +5634,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry:List.request.ifNoneMatch">
       <path value="Bundle.entry.request.ifNoneMatch"/>
       <short value="For managing cache currency"/>
-      <definition value="If the ETag values match, return a 304 Not Modified status. See the API documentation for [&quot;Conditional Read&quot;](http://hl7.org/fhir/R4/http.html#cread)."/>
+      <definition value="If the ETag values match, return a 304 Not Modified status. See the API documentation for [&quot;Conditional Read&quot;](http://build.fhir.org/http.html#cread)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -5534,13 +5660,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry:List.request.ifModifiedSince">
       <path value="Bundle.entry.request.ifModifiedSince"/>
       <short value="For managing cache currency"/>
-      <definition value="Only perform the operation if the last updated date matches. See the API documentation for [&quot;Conditional Read&quot;](http://hl7.org/fhir/R4/http.html#cread)."/>
+      <definition value="Only perform the operation if the last updated date matches. See the API documentation for [&quot;Conditional Read&quot;](http://build.fhir.org/http.html#cread)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -5559,13 +5686,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry:List.request.ifMatch">
       <path value="Bundle.entry.request.ifMatch"/>
       <short value="For managing update contention"/>
-      <definition value="Only perform the operation if the Etag value matches. For more information, see the API section [&quot;Managing Resource Contention&quot;](http://hl7.org/fhir/R4/http.html#concurrency)."/>
+      <definition value="Only perform the operation if the Etag value matches. For more information, see the API section [&quot;Managing Resource Contention&quot;](http://build.fhir.org/http.html#concurrency)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -5584,13 +5712,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry:List.request.ifNoneExist">
       <path value="Bundle.entry.request.ifNoneExist"/>
       <short value="For conditional creates"/>
-      <definition value="Instruct the server not to perform the create if a specified resource already exists. For further information, see the API documentation for [&quot;Conditional Create&quot;](http://hl7.org/fhir/R4/http.html#ccreate). This is just the query portion of the URL - what follows the &quot;?&quot; (not including the &quot;?&quot;)."/>
+      <definition value="Instruct the server not to perform the create if a specified resource already exists. For further information, see the API documentation for [&quot;Conditional Create&quot;](http://build.fhir.org/http.html#ccreate). This is just the query portion of the URL - what follows the &quot;?&quot; (not including the &quot;?&quot;)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -5609,13 +5738,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry:List.response">
       <path value="Bundle.entry.response"/>
       <short value="Results of execution (transaction/batch/history)"/>
-      <definition value="Indicates the results of processing the corresponding &#39;request&#39; entry in the batch or transaction being responded to or what the results of an operation where when returning history."/>
+      <definition value="Indicates the results of processing the corresponding 'request' entry in the batch or transaction being responded to or what the results of an operation where when returning history."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -5635,6 +5765,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -5706,9 +5837,9 @@
     <element id="Bundle.entry:List.response.modifierExtension">
       <path value="Bundle.entry.response.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -5768,6 +5899,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -5793,13 +5925,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry:List.response.etag">
       <path value="Bundle.entry.response.etag"/>
       <short value="The Etag for the resource (if relevant)"/>
-      <definition value="The Etag for the resource, if the operation for the entry produced a versioned resource (see [Resource Metadata and Versioning](http://hl7.org/fhir/R4/http.html#versioning) and [Managing Resource Contention](http://hl7.org/fhir/R4/http.html#concurrency))."/>
+      <definition value="The Etag for the resource, if the operation for the entry produced a versioned resource (see [Resource Metadata and Versioning](http://build.fhir.org/http.html#versioning) and [Managing Resource Contention](http://build.fhir.org/http.html#concurrency))."/>
       <comment value="Etags match the Resource.meta.versionId. The ETag has to match the version id in the header if a resource is included."/>
       <min value="0"/>
       <max value="1"/>
@@ -5819,12 +5952,13 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
     <element id="Bundle.entry:List.response.lastModified">
       <path value="Bundle.entry.response.lastModified"/>
-      <short value="Server&#39;s date time modified"/>
+      <short value="Server's date time modified"/>
       <definition value="The date/time that the resource was modified on the server."/>
       <comment value="This has to match the same time in the meta header (meta.lastUpdated) if a resource is included."/>
       <min value="0"/>
@@ -5845,6 +5979,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -5863,6 +5998,7 @@
       <type>
         <code value="Resource"/>
       </type>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
@@ -5872,7 +6008,7 @@
       </extension>
       <path value="Bundle.signature"/>
       <short value="Digital Signature"/>
-      <definition value="Digital Signature - base64 encoded. XML-DSig or a JWT."/>
+      <definition value="Digital Signature - base64 encoded. XML-DSig or a JWS."/>
       <comment value="The signature could be created by the &quot;author&quot; of the bundle or by the originating device.   Requirements around inclusion of a signature, verification of signatures and treatment of signed/non-signed bundles is implementation-environment specific."/>
       <requirements value="A Signature holds an electronic representation of a signature and its supporting context in a FHIR accessible form. The signature may either be a cryptographic type (XML DigSig or a JWS), which is able to provide non-repudiation proof, or it may be a graphical image that represents a signature or a signature process. This element allows capturing signatures on documents, messages, transactions or even search responses, to support content-authentication, non-repudiation or other business cases. This is primarily relevant where the bundle may travel through multiple hops or via other mechanisms where HTTPS non-repudiation is insufficient."/>
       <min value="0"/>
@@ -5893,6 +6029,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
