@@ -1,1 +1,0 @@
-* adjust tests for adding img.alt everywhere (HTML compliance)
