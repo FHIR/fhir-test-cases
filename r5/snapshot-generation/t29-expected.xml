@@ -257,7 +257,7 @@
     <element id="Parameters">
       <path value="Parameters"/>
       <short value="Operation Request or Response"/>
-      <definition value="This resource is a non-persisted resource used to pass information into and back from an [operation](http://build.fhir.org/operations.html). It has no other use, and there is no RESTful endpoint associated with it."/>
+      <definition value="This resource is used to pass information into and back from an operation (whether invoked directly from REST or within a messaging environment).  It is not persisted or allowed to be referenced by other resources."/>
       <comment value="The parameters that may be used are defined by the OperationDefinition resource."/>
       <min value="0"/>
       <max value="*"/>
@@ -715,9 +715,6 @@
         <code value="ContactDetail"/>
       </type>
       <type>
-        <code value="Contributor"/>
-      </type>
-      <type>
         <code value="DataRequirement"/>
       </type>
       <type>
@@ -734,6 +731,12 @@
       </type>
       <type>
         <code value="UsageContext"/>
+      </type>
+      <type>
+        <code value="Availability"/>
+      </type>
+      <type>
+        <code value="ExtendedContactDetail"/>
       </type>
       <type>
         <code value="Dosage"/>
@@ -785,7 +788,6 @@
       </slicing>
       <short value="Named part of a multi-part parameter"/>
       <definition value="A named part of a multi-part parameter."/>
-      <comment value="Only one level of nested parameters is allowed."/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -811,7 +813,6 @@
       <sliceName value="foo"/>
       <short value="Named part of a multi-part parameter"/>
       <definition value="A named part of a multi-part parameter."/>
-      <comment value="Only one level of nested parameters is allowed."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -1109,7 +1110,7 @@
       <path value="Parameters.parameter.part.value[x].system"/>
       <short value="Identity of the terminology system"/>
       <definition value="The identification of the code system that defines the meaning of the symbol in the code."/>
-      <comment value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should reference to some definition that establishes the system clearly and unambiguously."/>
+      <comment value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should be an absolute reference to some definition that establishes the system clearly and unambiguously."/>
       <requirements value="Need to be unambiguous about the source of the definition of the symbol."/>
       <min value="0"/>
       <max value="1"/>
@@ -1330,7 +1331,6 @@
       <path value="Parameters.parameter.part.part"/>
       <short value="Named part of a multi-part parameter"/>
       <definition value="A named part of a multi-part parameter."/>
-      <comment value="Only one level of nested parameters is allowed."/>
       <min value="0"/>
       <max value="*"/>
       <base>

@@ -187,7 +187,7 @@
         <key value="dom-3"/>
         <severity value="error"/>
         <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"/>
-        <expression value="contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()"/>
+        <expression value="contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().ofType(canonical) | %resource.descendants().ofType(uri) | %resource.descendants().ofType(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()"/>
         <xpath value="not(exists(for $contained in f:contained return $contained[not(exists(parent::*/descendant::f:reference/@value=concat('#', $contained/*/f:id/@value)) or exists(descendant::f:reference[@value='#']))]))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
@@ -392,8 +392,8 @@
     <element id="ExplanationOfBenefit.contained">
       <path value="ExplanationOfBenefit.contained"/>
       <short value="Contained, inline Resources"/>
-      <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope."/>
-      <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again. Contained resources may have profiles and tags In their meta elements, but SHALL NOT have security labels."/>
+      <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope. This is allowed to be a Parameters resource if and only if it is referenced by a resource that provides context/meaning."/>
+      <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again. Contained resources may have profiles and tags in their meta elements, but SHALL NOT have security labels."/>
       <alias value="inline resources"/>
       <alias value="anonymous resources"/>
       <alias value="contained resources"/>
@@ -493,7 +493,7 @@
       <mustSupport value="false"/>
       <isModifier value="true"/>
       <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the resource that contains them"/>
-      <isSummary value="false"/>
+      <isSummary value="true"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
@@ -568,7 +568,7 @@
         </extension>
         <strength value="required"/>
         <description value="A code specifying the state of the resource instance."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/explanationofbenefit-status|4.6.0"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/explanationofbenefit-status|5.0.0-ballot"/>
       </binding>
       <mapping>
         <identity value="workflow"/>
@@ -666,7 +666,7 @@
     <element id="ExplanationOfBenefit.use">
       <path value="ExplanationOfBenefit.use"/>
       <short value="claim | preauthorization | predetermination"/>
-      <definition value="A code to indicate whether the nature of the request is: to request adjudication of products and services previously rendered; or requesting authorization and adjudication for provision in the future; or requesting the non-binding adjudication of the listed products and services which could be provided in the future."/>
+      <definition value="A code to indicate whether the nature of the request is: Claim - A request to an Insurer to adjudicate the supplied charges for health care goods and services under the identified policy and to pay the determined Benefit amount, if any; Preauthorization - A request to an Insurer to adjudicate the supplied proposed future charges for health care goods and services under the identified policy and to approve the services and provide the expected benefit amounts and potentially to reserve funds to pay the benefits when Claims for the indicated services are later submitted; or, Pre-determination - A request to an Insurer to adjudicate the supplied 'what if' charges for health care goods and services under the identified policy and report back what the Benefit payable would be had the services actually been provided."/>
       <requirements value="This element is required to understand the nature of the request for adjudication."/>
       <min value="1"/>
       <max value="1"/>
@@ -695,7 +695,7 @@
         </extension>
         <strength value="required"/>
         <description value="Complete, proposed, exploratory, other."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/claim-use|4.6.0"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/claim-use|5.0.0-ballot"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -826,6 +826,8 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/PractitionerRole"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -852,11 +854,11 @@
       <short value="Party responsible for reimbursement"/>
       <definition value="The party responsible for authorization, adjudication and reimbursement."/>
       <requirements value="To be a valid claim, preauthorization or predetermination there must be a party who is responsible for adjudicating the contents against a policy which provides benefits for the patient."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="ExplanationOfBenefit.insurer"/>
-        <min value="1"/>
+        <min value="0"/>
         <max value="1"/>
       </base>
       <type>
@@ -887,12 +889,12 @@
       <path value="ExplanationOfBenefit.provider"/>
       <short value="Party responsible for the claim"/>
       <definition value="The provider which is responsible for the claim, predetermination or preauthorization."/>
-      <comment value="Typically this field would be 1..1 where this party is responsible for the claim but not necessarily professionally responsible for the provision of the individual products and services listed below."/>
-      <min value="1"/>
+      <comment value="This party is responsible for the claim but not necessarily professionally responsible for the provision of the individual products and services listed below. This field is the Billing Provider, for example, a facility, provider group, lab or practitioner."/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="ExplanationOfBenefit.provider"/>
-        <min value="1"/>
+        <min value="0"/>
         <max value="1"/>
       </base>
       <type>
@@ -920,8 +922,8 @@
     <element id="ExplanationOfBenefit.priority">
       <path value="ExplanationOfBenefit.priority"/>
       <short value="Desired processing urgency"/>
-      <definition value="The provider-required urgency of processing the request. Typical values include: stat, routine deferred."/>
-      <comment value="If a claim processor is unable to complete the processing as per the priority then they should generate and error and not process the request."/>
+      <definition value="The provider-required urgency of processing the request. Typical values include: stat, normal deferred."/>
+      <comment value="If a claim processor is unable to complete the processing as per the priority then they should generate an error and not process the request."/>
       <requirements value="The provider may need to indicate their processing requirements so that the processor can indicate if they are unable to comply."/>
       <min value="0"/>
       <max value="1"/>
@@ -1270,7 +1272,7 @@
     <element id="ExplanationOfBenefit.prescription">
       <path value="ExplanationOfBenefit.prescription"/>
       <short value="Prescription authorizing services or products"/>
-      <definition value="Prescription to support the dispensing of pharmacy, device or vision products."/>
+      <definition value="Prescription is the document/authorization given to the claim author for them to provide products and services for which consideration (reimbursement) is sought. Could be a RX for medications, an 'order' for oxygen or wheelchair or physiotherapy treatments."/>
       <requirements value="Required to authorize the dispensing of controlled substances and devices."/>
       <min value="0"/>
       <max value="1"/>
@@ -1538,7 +1540,7 @@
     <element id="ExplanationOfBenefit.referral">
       <path value="ExplanationOfBenefit.referral"/>
       <short value="Treatment Referral"/>
-      <definition value="A reference to a referral resource."/>
+      <definition value="The referral information received by the claim author, it is not to be used when the author generates a referral for a patient. A copy of that referral may be provided as supporting information. Some insurers require proof of referral to pay for services or to pay specialist rates for services."/>
       <comment value="The referral resource which lists the date, practitioner, reason and other supporting information."/>
       <requirements value="Some insurers require proof of referral to pay for services or to pay specialist rates for services."/>
       <min value="0"/>
@@ -1568,6 +1570,34 @@
         <map value="FiveWs.cause"/>
       </mapping>
     </element>
+    <element id="ExplanationOfBenefit.encounter">
+      <path value="ExplanationOfBenefit.encounter"/>
+      <short value="Encounters related to this billed item"/>
+      <definition value="A billed item may include goods or services provided in multiple encounters."/>
+      <requirements value="Used in some jurisdictions to link clinical events to claim items."/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="ExplanationOfBenefit.encounter"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Encounter"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="ExplanationOfBenefit.facility">
       <path value="ExplanationOfBenefit.facility"/>
       <short value="Servicing Facility"/>
@@ -1583,6 +1613,7 @@
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Location"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -1668,7 +1699,7 @@
       <path value="ExplanationOfBenefit.outcome"/>
       <short value="queued | complete | error | partial"/>
       <definition value="The outcome of the claim, predetermination, or preauthorization processing."/>
-      <comment value="The resource may be used to indicate that: the request has been held (queued) for processing; that it has been processed and errors found (error); that no errors were found and that some of the adjudication has been undertaken (partial) or that all of the adjudication has been undertaken (complete)."/>
+      <comment value="The resource may be used to indicate that the Claim/Preauthorization/Pre-determination has been received but processing has not begun (queued); that it has been processed and one or more errors have been detected (error); no errors were detected and some of the adjudication processing has been performed (partial); or all of the adjudication processing has completed without errors (complete)."/>
       <requirements value="To advise the requestor of an overall processing outcome."/>
       <min value="1"/>
       <max value="1"/>
@@ -1697,7 +1728,42 @@
         </extension>
         <strength value="required"/>
         <description value="The result of the claim processing."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/claim-outcome|4.6.0"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/claim-outcome|5.0.0-ballot"/>
+      </binding>
+    </element>
+    <element id="ExplanationOfBenefit.decision">
+      <path value="ExplanationOfBenefit.decision"/>
+      <short value="Result of the adjudication"/>
+      <definition value="The result of the claim, predetermination, or preauthorization adjudication."/>
+      <comment value="The element is used to indicate the current state of the adjudication overall for the claim resource, for example: the request has been held (pended) for adjudication processing, for manual review or other reasons; that it has been processed and will be paid, or the outstanding paid, as submitted (approved); that no amount will be paid (denied); or that some amount between zero and the submitted amoutn will be paid (partial)."/>
+      <requirements value="To advise the requestor of the result of the adjudication process."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.decision"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="AdjudicationDecision"/>
+        </extension>
+        <strength value="example"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/claim-decision"/>
       </binding>
     </element>
     <element id="ExplanationOfBenefit.disposition">
@@ -1782,6 +1848,41 @@
       <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
+    </element>
+    <element id="ExplanationOfBenefit.diagnosisRelatedGroup">
+      <path value="ExplanationOfBenefit.diagnosisRelatedGroup"/>
+      <short value="Package billing code"/>
+      <definition value="A package billing code or bundle code used to group products and services to a particular health condition (such as heart attack) which is based on a predetermined grouping code system."/>
+      <comment value="For example DRG (Diagnosis Related Group) or a bundled billing code. A patient may have a diagnosis of a Myocardial Infarction and a DRG for HeartAttack would be assigned. The Claim item (and possible subsequent claims) would refer to the DRG for those line items that were for services related to the heart attack event."/>
+      <requirements value="Required to relate the current diagnosis to a package billing code that is then referenced on the individual claim items which are specific to the health condition covered by the package code."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.diagnosisRelatedGroup"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="DiagnosisRelatedGroup"/>
+        </extension>
+        <strength value="example"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/ex-diagnosisrelatedgroup"/>
+      </binding>
     </element>
     <element id="ExplanationOfBenefit.careTeam">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
@@ -2046,15 +2147,15 @@
         <valueSet value="http://hl7.org/fhir/ValueSet/claim-careteamrole"/>
       </binding>
     </element>
-    <element id="ExplanationOfBenefit.careTeam.qualification">
-      <path value="ExplanationOfBenefit.careTeam.qualification"/>
-      <short value="Practitioner credential or specialization"/>
-      <definition value="The qualification of the practitioner which is applicable for this service."/>
-      <requirements value="Need to specify which qualification a provider is delivering the product or service under."/>
+    <element id="ExplanationOfBenefit.careTeam.specialty">
+      <path value="ExplanationOfBenefit.careTeam.specialty"/>
+      <short value="Practitioner or provider specialization"/>
+      <definition value="The specialization of the practitioner or provider which is applicable for this service."/>
+      <requirements value="Need to specify which specialization a practitioner or provider acting under when delivering the product or service."/>
       <min value="0"/>
       <max value="1"/>
       <base>
-        <path value="ExplanationOfBenefit.careTeam.qualification"/>
+        <path value="ExplanationOfBenefit.careTeam.specialty"/>
         <min value="0"/>
         <max value="1"/>
       </base>
@@ -2077,7 +2178,6 @@
           <valueString value="ProviderQualification"/>
         </extension>
         <strength value="example"/>
-        <description value="Provider professional qualifications."/>
         <valueSet value="http://hl7.org/fhir/ValueSet/provider-qualification"/>
       </binding>
     </element>
@@ -2376,6 +2476,9 @@
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
+      </type>
+      <type>
+        <code value="Identifier"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -2699,42 +2802,6 @@
         <strength value="example"/>
         <description value="Present on admission."/>
         <valueSet value="http://hl7.org/fhir/ValueSet/ex-diagnosis-on-admission"/>
-      </binding>
-    </element>
-    <element id="ExplanationOfBenefit.diagnosis.packageCode">
-      <path value="ExplanationOfBenefit.diagnosis.packageCode"/>
-      <short value="Package billing code"/>
-      <definition value="A package billing code or bundle code used to group products and services to a particular health condition (such as heart attack) which is based on a predetermined grouping code system."/>
-      <comment value="For example, DRG (Diagnosis Related Group) or a bundled billing code. A patient may have a diagnosis of a Myocardio-infarction and a DRG for HeartAttack would assigned. The Claim item (and possible subsequent claims) would refer to the DRG for those line items that were for services related to the heart attack event."/>
-      <requirements value="Required to relate the current  diagnosis to a package billing code that is then referenced on the individual claim items which are specific to the health condition covered by the package code."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="ExplanationOfBenefit.diagnosis.packageCode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="CodeableConcept"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="DiagnosisRelatedGroup"/>
-        </extension>
-        <strength value="example"/>
-        <description value="The DRG codes associated with the diagnosis."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/ex-diagnosisrelatedgroup"/>
       </binding>
     </element>
     <element id="ExplanationOfBenefit.procedure">
@@ -3067,11 +3134,11 @@
       <definition value="Financial instruments for reimbursement for the health care products and services specified on the claim."/>
       <comment value="All insurance coverages for the patient which may be applicable for reimbursement, of the products and services listed in the claim, are typically provided in the claim to allow insurers to confirm the ordering of the insurance coverages relative to local 'coordination of benefit' rules. One coverage (and only one) with 'focal=true' is to be used in the adjudication of this claim. Coverages appearing before the focal Coverage in the list, and where 'Coverage.subrogation=false', should provide a reference to the ClaimResponse containing the adjudication results of the prior claim."/>
       <requirements value="At least one insurer is required for a claim to be a claim."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="*"/>
       <base>
         <path value="ExplanationOfBenefit.insurance"/>
-        <min value="1"/>
+        <min value="0"/>
         <max value="*"/>
       </base>
       <type>
@@ -3517,6 +3584,33 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
+    <element id="ExplanationOfBenefit.patientPaid">
+      <path value="ExplanationOfBenefit.patientPaid"/>
+      <short value="Paid by the patient"/>
+      <definition value="The amount paid by the patient, in total at the claim claim level or specifically for the item and detail level, to the provider for goods and services."/>
+      <requirements value="Necessary to demonstrate that copayments, co-insurance and similar patient payments have been made or accounted for."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.patientPaid"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Money"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="ExplanationOfBenefit.item">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
         <valueString value="Item"/>
@@ -3864,17 +3958,17 @@
     <element id="ExplanationOfBenefit.item.productOrService">
       <path value="ExplanationOfBenefit.item.productOrService"/>
       <short value="Billing, service, product, or drug code"/>
-      <definition value="When the value is a group code then this item collects a set of related claim details, otherwise this contains the product, service, drug or other billing code for the item."/>
+      <definition value="When the value is a group code then this item collects a set of related item details, otherwise this contains the product, service, drug or other billing code for the item. This element may be the start of a range of .productOrService codes used in conjunction with .productOrServiceEnd or it may be a solo element where .productOrServiceEnd is not used."/>
       <comment value="If this is an actual service or product line, i.e. not a Group, then use code to indicate the Professional Service or Product supplied (e.g. CTP, HCPCS, USCLS, ICD10, NCPDP, DIN, RxNorm, ACHI, CCI). If a grouping item then use a group code to indicate the type of thing being grouped e.g. 'glasses' or 'compound'."/>
       <requirements value="Necessary to state what was provided or done."/>
       <alias value="Drug Code"/>
       <alias value="Bill Code"/>
       <alias value="Service Code"/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="ExplanationOfBenefit.item.productOrService"/>
-        <min value="1"/>
+        <min value="0"/>
         <max value="1"/>
       </base>
       <type>
@@ -3897,6 +3991,40 @@
         </extension>
         <strength value="example"/>
         <description value="Allowable service and product codes."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/service-uscls"/>
+      </binding>
+    </element>
+    <element id="ExplanationOfBenefit.item.productOrServiceEnd">
+      <path value="ExplanationOfBenefit.item.productOrServiceEnd"/>
+      <short value="End of a range of codes"/>
+      <definition value="This contains the end of a range of product, service, drug or other billing codes for the item. This element is not used when the .productOrService is a group code. This value may only be present when a .productOfService code has been provided to convey the start of the range. Typically this value may be used only with preauthorizations and not with claims."/>
+      <alias value="End of a range of Drug Code; Bill Code; Service Cod"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.item.productOrServiceEnd"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ServiceProduct"/>
+        </extension>
+        <strength value="example"/>
         <valueSet value="http://hl7.org/fhir/ValueSet/service-uscls"/>
       </binding>
     </element>
@@ -4052,6 +4180,33 @@
         <map value="FiveWs.where[x]"/>
       </mapping>
     </element>
+    <element id="ExplanationOfBenefit.item.patientPaid">
+      <path value="ExplanationOfBenefit.item.patientPaid"/>
+      <short value="Paid by the patient"/>
+      <definition value="The amount paid by the patient, in total at the claim claim level or specifically for the item and detail level, to the provider for goods and services."/>
+      <requirements value="Necessary to demonstrate that copayments, co-insurance and similar patient payments have been made or accounted for."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.item.patientPaid"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Money"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="ExplanationOfBenefit.item.quantity">
       <path value="ExplanationOfBenefit.item.quantity"/>
       <short value="Count of products or services"/>
@@ -4135,6 +4290,33 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
+    <element id="ExplanationOfBenefit.item.tax">
+      <path value="ExplanationOfBenefit.item.tax"/>
+      <short value="Total tax"/>
+      <definition value="The total of taxes applicable for this product or service."/>
+      <requirements value="Required when taxes are not embedded in the unit price or provided as a separate service."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.item.tax"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Money"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="ExplanationOfBenefit.item.net">
       <path value="ExplanationOfBenefit.item.net"/>
       <short value="Total item cost"/>
@@ -4192,20 +4374,161 @@
       <isSummary value="false"/>
     </element>
     <element id="ExplanationOfBenefit.item.bodySite">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-display-hint">
+        <valueString value="720;600"/>
+      </extension>
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="BodySite"/>
+      </extension>
       <path value="ExplanationOfBenefit.item.bodySite"/>
       <short value="Anatomical location"/>
-      <definition value="Physical service site on the patient (limb, tooth, etc.)."/>
-      <comment value="For example: Providing a tooth code, allows an insurer to identify a provider performing a filling on a tooth that was previously removed."/>
-      <requirements value="Allows insurer to validate specific procedures."/>
+      <definition value="Physical location where the service is performed or applies."/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="ExplanationOfBenefit.item.bodySite"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="ExplanationOfBenefit.item.bodySite.id">
+      <path value="ExplanationOfBenefit.item.bodySite.id"/>
+      <representation value="xmlAttr"/>
+      <short value="Unique id for inter-element referencing"/>
+      <definition value="Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
       <min value="0"/>
       <max value="1"/>
       <base>
-        <path value="ExplanationOfBenefit.item.bodySite"/>
+        <path value="Element.id"/>
         <min value="0"/>
         <max value="1"/>
       </base>
       <type>
-        <code value="CodeableConcept"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
+          <valueUrl value="string"/>
+        </extension>
+        <code value="http://hl7.org/fhirpath/System.String"/>
+      </type>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="ExplanationOfBenefit.item.bodySite.extension">
+      <path value="ExplanationOfBenefit.item.bodySite.extension"/>
+      <short value="Additional content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <constraint>
+        <key value="ext-1"/>
+        <severity value="error"/>
+        <human value="Must have either extensions or value[x], not both"/>
+        <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+      </constraint>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="ExplanationOfBenefit.item.bodySite.modifierExtension">
+      <path value="ExplanationOfBenefit.item.bodySite.modifierExtension"/>
+      <short value="Extensions that cannot be ignored even if unrecognized"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <constraint>
+        <key value="ext-1"/>
+        <severity value="error"/>
+        <human value="Must have either extensions or value[x], not both"/>
+        <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+      </constraint>
+      <isModifier value="true"/>
+      <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the element that contains them"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ExplanationOfBenefit.item.bodySite.site">
+      <path value="ExplanationOfBenefit.item.bodySite.site"/>
+      <short value="Location"/>
+      <definition value="Physical service site on the patient (limb, tooth, etc.)."/>
+      <comment value="For example: Providing a tooth code, allows an insurer to identify a provider performing a filling on a tooth that was previously removed."/>
+      <requirements value="Allows insurer to validate specific procedures."/>
+      <min value="1"/>
+      <max value="*"/>
+      <base>
+        <path value="ExplanationOfBenefit.item.bodySite.site"/>
+        <min value="1"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="CodeableReference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/BodyStructure"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -4223,19 +4546,18 @@
           <valueString value="OralSites"/>
         </extension>
         <strength value="example"/>
-        <description value="The code for the teeth, quadrant, sextant and arch."/>
         <valueSet value="http://hl7.org/fhir/ValueSet/tooth"/>
       </binding>
     </element>
-    <element id="ExplanationOfBenefit.item.subSite">
-      <path value="ExplanationOfBenefit.item.subSite"/>
-      <short value="Anatomical sub-location"/>
+    <element id="ExplanationOfBenefit.item.bodySite.subSite">
+      <path value="ExplanationOfBenefit.item.bodySite.subSite"/>
+      <short value="Sub-location"/>
       <definition value="A region or surface of the bodySite, e.g. limb region or tooth surface(s)."/>
       <requirements value="Allows insurer to validate specific procedures."/>
       <min value="0"/>
       <max value="*"/>
       <base>
-        <path value="ExplanationOfBenefit.item.subSite"/>
+        <path value="ExplanationOfBenefit.item.bodySite.subSite"/>
         <min value="0"/>
         <max value="*"/>
       </base>
@@ -4258,7 +4580,6 @@
           <valueString value="Surface"/>
         </extension>
         <strength value="example"/>
-        <description value="The code for the tooth surface and surface combinations."/>
         <valueSet value="http://hl7.org/fhir/ValueSet/surface"/>
       </binding>
     </element>
@@ -4316,6 +4637,41 @@
       <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
+    </element>
+    <element id="ExplanationOfBenefit.item.decision">
+      <path value="ExplanationOfBenefit.item.decision"/>
+      <short value="Result of the adjudication"/>
+      <definition value="The result of the claim, predetermination, or preauthorization adjudication."/>
+      <comment value="The element is used to indicate the current state of the adjudication overall for the claim resource, for example: the request has been held (pended) for adjudication processing, for manual review or other reasons; that it has been processed and will be paid, or the outstanding paid, as submitted (approved); that no amount will be paid (denied); or that some amount between zero and the submitted amoutn will be paid (partial)."/>
+      <requirements value="To advise the requestor of the result of the adjudication process."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.item.decision"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="AdjudicationDecision"/>
+        </extension>
+        <strength value="example"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/claim-decision"/>
+      </binding>
     </element>
     <element id="ExplanationOfBenefit.item.adjudication">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
@@ -4821,17 +5177,17 @@
     <element id="ExplanationOfBenefit.item.detail.productOrService">
       <path value="ExplanationOfBenefit.item.detail.productOrService"/>
       <short value="Billing, service, product, or drug code"/>
-      <definition value="When the value is a group code then this item collects a set of related claim details, otherwise this contains the product, service, drug or other billing code for the item."/>
+      <definition value="When the value is a group code then this item collects a set of related item details, otherwise this contains the product, service, drug or other billing code for the item. This element may be the start of a range of .productOrService codes used in conjunction with .productOrServiceEnd or it may be a solo element where .productOrServiceEnd is not used."/>
       <comment value="If this is an actual service or product line, i.e. not a Group, then use code to indicate the Professional Service or Product supplied (e.g. CTP, HCPCS, USCLS, ICD10, NCPDP, DIN, RxNorm, ACHI, CCI). If a grouping item then use a group code to indicate the type of thing being grouped e.g. 'glasses' or 'compound'."/>
       <requirements value="Necessary to state what was provided or done."/>
       <alias value="Drug Code"/>
       <alias value="Bill Code"/>
       <alias value="Service Code"/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="ExplanationOfBenefit.item.detail.productOrService"/>
-        <min value="1"/>
+        <min value="0"/>
         <max value="1"/>
       </base>
       <type>
@@ -4854,6 +5210,40 @@
         </extension>
         <strength value="example"/>
         <description value="Allowable service and product codes."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/service-uscls"/>
+      </binding>
+    </element>
+    <element id="ExplanationOfBenefit.item.detail.productOrServiceEnd">
+      <path value="ExplanationOfBenefit.item.detail.productOrServiceEnd"/>
+      <short value="End of a range of codes"/>
+      <definition value="This contains the end of a range of product, service, drug or other billing codes for the item. This element is not used when the .productOrService is a group code. This value may only be present when a .productOfService code has been provided to convey the start of the range. Typically this value may be used only with preauthorizations and not with claims."/>
+      <alias value="End of a range of Drug Code; Bill Code; Service Cod"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.item.detail.productOrServiceEnd"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ServiceProduct"/>
+        </extension>
+        <strength value="example"/>
         <valueSet value="http://hl7.org/fhir/ValueSet/service-uscls"/>
       </binding>
     </element>
@@ -4929,6 +5319,33 @@
         <valueSet value="http://hl7.org/fhir/ValueSet/ex-program-code"/>
       </binding>
     </element>
+    <element id="ExplanationOfBenefit.item.detail.patientPaid">
+      <path value="ExplanationOfBenefit.item.detail.patientPaid"/>
+      <short value="Paid by the patient"/>
+      <definition value="The amount paid by the patient, in total at the claim claim level or specifically for the item and detail level, to the provider for goods and services."/>
+      <requirements value="Necessary to demonstrate that copayments, co-insurance and similar patient payments have been made or accounted for."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.item.detail.patientPaid"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Money"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="ExplanationOfBenefit.item.detail.quantity">
       <path value="ExplanationOfBenefit.item.detail.quantity"/>
       <short value="Count of products or services"/>
@@ -4999,6 +5416,33 @@
       </base>
       <type>
         <code value="decimal"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="ExplanationOfBenefit.item.detail.tax">
+      <path value="ExplanationOfBenefit.item.detail.tax"/>
+      <short value="Total tax"/>
+      <definition value="The total of taxes applicable for this product or service."/>
+      <requirements value="Required when taxes are not embedded in the unit price or provided as a separate service."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.item.detail.tax"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Money"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -5094,6 +5538,41 @@
       <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
+    </element>
+    <element id="ExplanationOfBenefit.item.detail.decision">
+      <path value="ExplanationOfBenefit.item.detail.decision"/>
+      <short value="Result of the adjudication"/>
+      <definition value="The result of the claim, predetermination, or preauthorization adjudication."/>
+      <comment value="The element is used to indicate the current state of the adjudication overall for the claim resource, for example: the request has been held (pended) for adjudication processing, for manual review or other reasons; that it has been processed and will be paid, or the outstanding paid, as submitted (approved); that no amount will be paid (denied); or that some amount between zero and the submitted amoutn will be paid (partial)."/>
+      <requirements value="To advise the requestor of the result of the adjudication process."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.item.detail.decision"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="AdjudicationDecision"/>
+        </extension>
+        <strength value="example"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/claim-decision"/>
+      </binding>
     </element>
     <element id="ExplanationOfBenefit.item.detail.adjudication">
       <path value="ExplanationOfBenefit.item.detail.adjudication"/>
@@ -5357,17 +5836,17 @@
     <element id="ExplanationOfBenefit.item.detail.subDetail.productOrService">
       <path value="ExplanationOfBenefit.item.detail.subDetail.productOrService"/>
       <short value="Billing, service, product, or drug code"/>
-      <definition value="When the value is a group code then this item collects a set of related claim details, otherwise this contains the product, service, drug or other billing code for the item."/>
+      <definition value="When the value is a group code then this item collects a set of related item details, otherwise this contains the product, service, drug or other billing code for the item. This element may be the start of a range of .productOrService codes used in conjunction with .productOrServiceEnd or it may be a solo element where .productOrServiceEnd is not used."/>
       <comment value="If this is an actual service or product line, i.e. not a Group, then use code to indicate the Professional Service or Product supplied (e.g. CTP, HCPCS, USCLS, ICD10, NCPDP, DIN, RxNorm, ACHI, CCI). If a grouping item then use a group code to indicate the type of thing being grouped e.g. 'glasses' or 'compound'."/>
       <requirements value="Necessary to state what was provided or done."/>
       <alias value="Drug Code"/>
       <alias value="Bill Code"/>
       <alias value="Service Code"/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="ExplanationOfBenefit.item.detail.subDetail.productOrService"/>
-        <min value="1"/>
+        <min value="0"/>
         <max value="1"/>
       </base>
       <type>
@@ -5390,6 +5869,40 @@
         </extension>
         <strength value="example"/>
         <description value="Allowable service and product codes."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/service-uscls"/>
+      </binding>
+    </element>
+    <element id="ExplanationOfBenefit.item.detail.subDetail.productOrServiceEnd">
+      <path value="ExplanationOfBenefit.item.detail.subDetail.productOrServiceEnd"/>
+      <short value="End of a range of codes"/>
+      <definition value="This contains the end of a range of product, service, drug or other billing codes for the item. This element is not used when the .productOrService is a group code. This value may only be present when a .productOfService code has been provided to convey the start of the range. Typically this value may be used only with preauthorizations and not with claims."/>
+      <alias value="End of a range of Drug Code; Bill Code; Service Cod"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.item.detail.subDetail.productOrServiceEnd"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ServiceProduct"/>
+        </extension>
+        <strength value="example"/>
         <valueSet value="http://hl7.org/fhir/ValueSet/service-uscls"/>
       </binding>
     </element>
@@ -5465,6 +5978,33 @@
         <valueSet value="http://hl7.org/fhir/ValueSet/ex-program-code"/>
       </binding>
     </element>
+    <element id="ExplanationOfBenefit.item.detail.subDetail.patientPaid">
+      <path value="ExplanationOfBenefit.item.detail.subDetail.patientPaid"/>
+      <short value="Paid by the patient"/>
+      <definition value="The amount paid by the patient, in total at the claim claim level or specifically for the item and detail level, to the provider for goods and services."/>
+      <requirements value="Necessary to demonstrate that copayments, co-insurance and similar patient payments have been made or accounted for."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.item.detail.subDetail.patientPaid"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Money"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="ExplanationOfBenefit.item.detail.subDetail.quantity">
       <path value="ExplanationOfBenefit.item.detail.subDetail.quantity"/>
       <short value="Count of products or services"/>
@@ -5535,6 +6075,33 @@
       </base>
       <type>
         <code value="decimal"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="ExplanationOfBenefit.item.detail.subDetail.tax">
+      <path value="ExplanationOfBenefit.item.detail.subDetail.tax"/>
+      <short value="Total tax"/>
+      <definition value="The total of taxes applicable for this product or service."/>
+      <requirements value="Required when taxes are not embedded in the unit price or provided as a separate service."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.item.detail.subDetail.tax"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Money"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -5630,6 +6197,41 @@
       <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
+    </element>
+    <element id="ExplanationOfBenefit.item.detail.subDetail.decision">
+      <path value="ExplanationOfBenefit.item.detail.subDetail.decision"/>
+      <short value="Result of the adjudication"/>
+      <definition value="The result of the claim, predetermination, or preauthorization adjudication."/>
+      <comment value="The element is used to indicate the current state of the adjudication overall for the claim resource, for example: the request has been held (pended) for adjudication processing, for manual review or other reasons; that it has been processed and will be paid, or the outstanding paid, as submitted (approved); that no amount will be paid (denied); or that some amount between zero and the submitted amoutn will be paid (partial)."/>
+      <requirements value="To advise the requestor of the result of the adjudication process."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.item.detail.subDetail.decision"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="AdjudicationDecision"/>
+        </extension>
+        <strength value="example"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/claim-decision"/>
+      </binding>
     </element>
     <element id="ExplanationOfBenefit.item.detail.subDetail.adjudication">
       <path value="ExplanationOfBenefit.item.detail.subDetail.adjudication"/>
@@ -5911,20 +6513,55 @@
         <map value="FiveWs.source"/>
       </mapping>
     </element>
+    <element id="ExplanationOfBenefit.addItem.revenue">
+      <path value="ExplanationOfBenefit.addItem.revenue"/>
+      <short value="Revenue or cost center code"/>
+      <definition value="The type of revenue or cost center providing the product and/or service."/>
+      <requirements value="Needed in the processing of institutional claims."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.revenue"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="RevenueCenter"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Codes for the revenue or cost centers supplying the service and/or products."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/ex-revenue-center"/>
+      </binding>
+    </element>
     <element id="ExplanationOfBenefit.addItem.productOrService">
       <path value="ExplanationOfBenefit.addItem.productOrService"/>
       <short value="Billing, service, product, or drug code"/>
-      <definition value="When the value is a group code then this item collects a set of related claim details, otherwise this contains the product, service, drug or other billing code for the item."/>
+      <definition value="When the value is a group code then this item collects a set of related item details, otherwise this contains the product, service, drug or other billing code for the item. This element may be the start of a range of .productOrService codes used in conjunction with .productOrServiceEnd or it may be a solo element where .productOrServiceEnd is not used."/>
       <comment value="If this is an actual service or product line, i.e. not a Group, then use code to indicate the Professional Service or Product supplied (e.g. CTP, HCPCS, USCLS, ICD10, NCPDP, DIN, RxNorm, ACHI, CCI). If a grouping item then use a group code to indicate the type of thing being grouped e.g. 'glasses' or 'compound'."/>
       <requirements value="Necessary to state what was provided or done."/>
       <alias value="Drug Code"/>
       <alias value="Bill Code"/>
       <alias value="Service Code"/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="ExplanationOfBenefit.addItem.productOrService"/>
-        <min value="1"/>
+        <min value="0"/>
         <max value="1"/>
       </base>
       <type>
@@ -5947,6 +6584,40 @@
         </extension>
         <strength value="example"/>
         <description value="Allowable service and product codes."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/service-uscls"/>
+      </binding>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.productOrServiceEnd">
+      <path value="ExplanationOfBenefit.addItem.productOrServiceEnd"/>
+      <short value="End of a range of codes"/>
+      <definition value="This contains the end of a range of product, service, drug or other billing codes for the item. This element is not used when the .productOrService is a group code. This value may only be present when a .productOfService code has been provided to convey the start of the range. Typically this value may be used only with preauthorizations and not with claims."/>
+      <alias value="End of a range of Drug Code; Bill Code; Service Cod"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.productOrServiceEnd"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ServiceProduct"/>
+        </extension>
+        <strength value="example"/>
         <valueSet value="http://hl7.org/fhir/ValueSet/service-uscls"/>
       </binding>
     </element>
@@ -6102,6 +6773,33 @@
         <map value="FiveWs.where[x]"/>
       </mapping>
     </element>
+    <element id="ExplanationOfBenefit.addItem.patientPaid">
+      <path value="ExplanationOfBenefit.addItem.patientPaid"/>
+      <short value="Paid by the patient"/>
+      <definition value="The amount paid by the patient, in total at the claim claim level or specifically for the item and detail level, to the provider for goods and services."/>
+      <requirements value="Necessary to demonstrate that copayments, co-insurance and similar patient payments have been made or accounted for."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.patientPaid"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Money"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="ExplanationOfBenefit.addItem.quantity">
       <path value="ExplanationOfBenefit.addItem.quantity"/>
       <short value="Count of products or services"/>
@@ -6185,6 +6883,33 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
+    <element id="ExplanationOfBenefit.addItem.tax">
+      <path value="ExplanationOfBenefit.addItem.tax"/>
+      <short value="Total tax"/>
+      <definition value="The total of taxes applicable for this product or service."/>
+      <requirements value="Required when taxes are not embedded in the unit price or provided as a separate service."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.tax"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Money"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="ExplanationOfBenefit.addItem.net">
       <path value="ExplanationOfBenefit.addItem.net"/>
       <short value="Total item cost"/>
@@ -6214,20 +6939,161 @@
       <isSummary value="false"/>
     </element>
     <element id="ExplanationOfBenefit.addItem.bodySite">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-display-hint">
+        <valueString value="780;600"/>
+      </extension>
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="BodySite"/>
+      </extension>
       <path value="ExplanationOfBenefit.addItem.bodySite"/>
       <short value="Anatomical location"/>
-      <definition value="Physical service site on the patient (limb, tooth, etc.)."/>
-      <comment value="For example, providing a tooth code allows an insurer to identify a provider performing a filling on a tooth that was previously removed."/>
-      <requirements value="Allows insurer to validate specific procedures."/>
+      <definition value="Physical location where the service is performed or applies."/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.bodySite"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.bodySite.id">
+      <path value="ExplanationOfBenefit.addItem.bodySite.id"/>
+      <representation value="xmlAttr"/>
+      <short value="Unique id for inter-element referencing"/>
+      <definition value="Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
       <min value="0"/>
       <max value="1"/>
       <base>
-        <path value="ExplanationOfBenefit.addItem.bodySite"/>
+        <path value="Element.id"/>
         <min value="0"/>
         <max value="1"/>
       </base>
       <type>
-        <code value="CodeableConcept"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
+          <valueUrl value="string"/>
+        </extension>
+        <code value="http://hl7.org/fhirpath/System.String"/>
+      </type>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.bodySite.extension">
+      <path value="ExplanationOfBenefit.addItem.bodySite.extension"/>
+      <short value="Additional content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <constraint>
+        <key value="ext-1"/>
+        <severity value="error"/>
+        <human value="Must have either extensions or value[x], not both"/>
+        <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+      </constraint>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.bodySite.modifierExtension">
+      <path value="ExplanationOfBenefit.addItem.bodySite.modifierExtension"/>
+      <short value="Extensions that cannot be ignored even if unrecognized"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <constraint>
+        <key value="ext-1"/>
+        <severity value="error"/>
+        <human value="Must have either extensions or value[x], not both"/>
+        <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+      </constraint>
+      <isModifier value="true"/>
+      <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the element that contains them"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.bodySite.site">
+      <path value="ExplanationOfBenefit.addItem.bodySite.site"/>
+      <short value="Location"/>
+      <definition value="Physical service site on the patient (limb, tooth, etc.)."/>
+      <comment value="For example, providing a tooth code allows an insurer to identify a provider performing a filling on a tooth that was previously removed."/>
+      <requirements value="Allows insurer to validate specific procedures."/>
+      <min value="1"/>
+      <max value="*"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.bodySite.site"/>
+        <min value="1"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="CodeableReference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/BodyStructure"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -6245,19 +7111,18 @@
           <valueString value="OralSites"/>
         </extension>
         <strength value="example"/>
-        <description value="The code for the teeth, quadrant, sextant and arch."/>
         <valueSet value="http://hl7.org/fhir/ValueSet/tooth"/>
       </binding>
     </element>
-    <element id="ExplanationOfBenefit.addItem.subSite">
-      <path value="ExplanationOfBenefit.addItem.subSite"/>
-      <short value="Anatomical sub-location"/>
+    <element id="ExplanationOfBenefit.addItem.bodySite.subSite">
+      <path value="ExplanationOfBenefit.addItem.bodySite.subSite"/>
+      <short value="Sub-location"/>
       <definition value="A region or surface of the bodySite, e.g. limb region or tooth surface(s)."/>
       <requirements value="Allows insurer to validate specific procedures."/>
       <min value="0"/>
       <max value="*"/>
       <base>
-        <path value="ExplanationOfBenefit.addItem.subSite"/>
+        <path value="ExplanationOfBenefit.addItem.bodySite.subSite"/>
         <min value="0"/>
         <max value="*"/>
       </base>
@@ -6280,7 +7145,6 @@
           <valueString value="Surface"/>
         </extension>
         <strength value="example"/>
-        <description value="The code for the tooth surface and surface combinations."/>
         <valueSet value="http://hl7.org/fhir/ValueSet/surface"/>
       </binding>
     </element>
@@ -6310,6 +7174,41 @@
       <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.decision">
+      <path value="ExplanationOfBenefit.addItem.decision"/>
+      <short value="Result of the adjudication"/>
+      <definition value="The result of the claim, predetermination, or preauthorization adjudication."/>
+      <comment value="The element is used to indicate the current state of the adjudication overall for the claim resource, for example: the request has been held (pended) for adjudication processing, for manual review or other reasons; that it has been processed and will be paid, or the outstanding paid, as submitted (approved); that no amount will be paid (denied); or that some amount between zero and the submitted amoutn will be paid (partial)."/>
+      <requirements value="To advise the requestor of the result of the adjudication process."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.decision"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="AdjudicationDecision"/>
+        </extension>
+        <strength value="example"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/claim-decision"/>
+      </binding>
     </element>
     <element id="ExplanationOfBenefit.addItem.adjudication">
       <path value="ExplanationOfBenefit.addItem.adjudication"/>
@@ -6475,20 +7374,55 @@
         <map value="N/A"/>
       </mapping>
     </element>
+    <element id="ExplanationOfBenefit.addItem.detail.revenue">
+      <path value="ExplanationOfBenefit.addItem.detail.revenue"/>
+      <short value="Revenue or cost center code"/>
+      <definition value="The type of revenue or cost center providing the product and/or service."/>
+      <requirements value="Needed in the processing of institutional claims."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.detail.revenue"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="RevenueCenter"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Codes for the revenue or cost centers supplying the service and/or products."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/ex-revenue-center"/>
+      </binding>
+    </element>
     <element id="ExplanationOfBenefit.addItem.detail.productOrService">
       <path value="ExplanationOfBenefit.addItem.detail.productOrService"/>
       <short value="Billing, service, product, or drug code"/>
-      <definition value="When the value is a group code then this item collects a set of related claim details, otherwise this contains the product, service, drug or other billing code for the item."/>
+      <definition value="When the value is a group code then this item collects a set of related item details, otherwise this contains the product, service, drug or other billing code for the item. This element may be the start of a range of .productOrService codes used in conjunction with .productOrServiceEnd or it may be a solo element where .productOrServiceEnd is not used."/>
       <comment value="If this is an actual service or product line, i.e. not a Group, then use code to indicate the Professional Service or Product supplied (e.g. CTP, HCPCS, USCLS, ICD10, NCPDP, DIN, RxNorm, ACHI, CCI). If a grouping item then use a group code to indicate the type of thing being grouped e.g. 'glasses' or 'compound'."/>
       <requirements value="Necessary to state what was provided or done."/>
       <alias value="Drug Code"/>
       <alias value="Bill Code"/>
       <alias value="Service Code"/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="ExplanationOfBenefit.addItem.detail.productOrService"/>
-        <min value="1"/>
+        <min value="0"/>
         <max value="1"/>
       </base>
       <type>
@@ -6511,6 +7445,40 @@
         </extension>
         <strength value="example"/>
         <description value="Allowable service and product codes."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/service-uscls"/>
+      </binding>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.detail.productOrServiceEnd">
+      <path value="ExplanationOfBenefit.addItem.detail.productOrServiceEnd"/>
+      <short value="End of a range of codes"/>
+      <definition value="This contains the end of a range of product, service, drug or other billing codes for the item. This element is not used when the .productOrService is a group code. This value may only be present when a .productOfService code has been provided to convey the start of the range. Typically this value may be used only with preauthorizations and not with claims."/>
+      <alias value="End of a range of Drug Code; Bill Code; Service Cod"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.detail.productOrServiceEnd"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ServiceProduct"/>
+        </extension>
+        <strength value="example"/>
         <valueSet value="http://hl7.org/fhir/ValueSet/service-uscls"/>
       </binding>
     </element>
@@ -6549,6 +7517,33 @@
         <description value="Item type or modifiers codes, eg for Oral whether the treatment is cosmetic or associated with TMJ, or an appliance was lost or stolen."/>
         <valueSet value="http://hl7.org/fhir/ValueSet/claim-modifiers"/>
       </binding>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.detail.patientPaid">
+      <path value="ExplanationOfBenefit.addItem.detail.patientPaid"/>
+      <short value="Paid by the patient"/>
+      <definition value="The amount paid by the patient, in total at the claim claim level or specifically for the item and detail level, to the provider for goods and services."/>
+      <requirements value="Necessary to demonstrate that copayments, co-insurance and similar patient payments have been made or accounted for."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.detail.patientPaid"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Money"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
     </element>
     <element id="ExplanationOfBenefit.addItem.detail.quantity">
       <path value="ExplanationOfBenefit.addItem.detail.quantity"/>
@@ -6633,6 +7628,33 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
+    <element id="ExplanationOfBenefit.addItem.detail.tax">
+      <path value="ExplanationOfBenefit.addItem.detail.tax"/>
+      <short value="Total tax"/>
+      <definition value="The total of taxes applicable for this product or service."/>
+      <requirements value="Required when taxes are not embedded in the unit price or provided as a separate service."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.detail.tax"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Money"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="ExplanationOfBenefit.addItem.detail.net">
       <path value="ExplanationOfBenefit.addItem.detail.net"/>
       <short value="Total item cost"/>
@@ -6687,6 +7709,41 @@
       <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.detail.decision">
+      <path value="ExplanationOfBenefit.addItem.detail.decision"/>
+      <short value="Result of the adjudication"/>
+      <definition value="The result of the claim, predetermination, or preauthorization adjudication."/>
+      <comment value="The element is used to indicate the current state of the adjudication overall for the claim resource, for example: the request has been held (pended) for adjudication processing, for manual review or other reasons; that it has been processed and will be paid, or the outstanding paid, as submitted (approved); that no amount will be paid (denied); or that some amount between zero and the submitted amoutn will be paid (partial)."/>
+      <requirements value="To advise the requestor of the result of the adjudication process."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.detail.decision"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="AdjudicationDecision"/>
+        </extension>
+        <strength value="example"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/claim-decision"/>
+      </binding>
     </element>
     <element id="ExplanationOfBenefit.addItem.detail.adjudication">
       <path value="ExplanationOfBenefit.addItem.detail.adjudication"/>
@@ -6852,20 +7909,55 @@
         <map value="N/A"/>
       </mapping>
     </element>
+    <element id="ExplanationOfBenefit.addItem.detail.subDetail.revenue">
+      <path value="ExplanationOfBenefit.addItem.detail.subDetail.revenue"/>
+      <short value="Revenue or cost center code"/>
+      <definition value="The type of revenue or cost center providing the product and/or service."/>
+      <requirements value="Needed in the processing of institutional claims."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.detail.subDetail.revenue"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="RevenueCenter"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Codes for the revenue or cost centers supplying the service and/or products."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/ex-revenue-center"/>
+      </binding>
+    </element>
     <element id="ExplanationOfBenefit.addItem.detail.subDetail.productOrService">
       <path value="ExplanationOfBenefit.addItem.detail.subDetail.productOrService"/>
       <short value="Billing, service, product, or drug code"/>
-      <definition value="When the value is a group code then this item collects a set of related claim details, otherwise this contains the product, service, drug or other billing code for the item."/>
+      <definition value="When the value is a group code then this item collects a set of related item details, otherwise this contains the product, service, drug or other billing code for the item. This element may be the start of a range of .productOrService codes used in conjunction with .productOrServiceEnd or it may be a solo element where .productOrServiceEnd is not used."/>
       <comment value="If this is an actual service or product line, i.e. not a Group, then use code to indicate the Professional Service or Product supplied (e.g. CTP, HCPCS, USCLS, ICD10, NCPDP, DIN, RxNorm, ACHI, CCI). If a grouping item then use a group code to indicate the type of thing being grouped e.g. 'glasses' or 'compound'."/>
       <requirements value="Necessary to state what was provided or done."/>
       <alias value="Drug Code"/>
       <alias value="Bill Code"/>
       <alias value="Service Code"/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="ExplanationOfBenefit.addItem.detail.subDetail.productOrService"/>
-        <min value="1"/>
+        <min value="0"/>
         <max value="1"/>
       </base>
       <type>
@@ -6888,6 +7980,40 @@
         </extension>
         <strength value="example"/>
         <description value="Allowable service and product codes."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/service-uscls"/>
+      </binding>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.detail.subDetail.productOrServiceEnd">
+      <path value="ExplanationOfBenefit.addItem.detail.subDetail.productOrServiceEnd"/>
+      <short value="End of a range of codes"/>
+      <definition value="This contains the end of a range of product, service, drug or other billing codes for the item. This element is not used when the .productOrService is a group code. This value may only be present when a .productOfService code has been provided to convey the start of the range. Typically this value may be used only with preauthorizations and not with claims."/>
+      <alias value="End of a range of Drug Code; Bill Code; Service Cod"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.detail.subDetail.productOrServiceEnd"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="ServiceProduct"/>
+        </extension>
+        <strength value="example"/>
         <valueSet value="http://hl7.org/fhir/ValueSet/service-uscls"/>
       </binding>
     </element>
@@ -6926,6 +8052,33 @@
         <description value="Item type or modifiers codes, eg for Oral whether the treatment is cosmetic or associated with TMJ, or an appliance was lost or stolen."/>
         <valueSet value="http://hl7.org/fhir/ValueSet/claim-modifiers"/>
       </binding>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.detail.subDetail.patientPaid">
+      <path value="ExplanationOfBenefit.addItem.detail.subDetail.patientPaid"/>
+      <short value="Paid by the patient"/>
+      <definition value="The amount paid by the patient, in total at the claim claim level or specifically for the item and detail level, to the provider for goods and services."/>
+      <requirements value="Necessary to demonstrate that copayments, co-insurance and similar patient payments have been made or accounted for."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.detail.subDetail.patientPaid"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Money"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
     </element>
     <element id="ExplanationOfBenefit.addItem.detail.subDetail.quantity">
       <path value="ExplanationOfBenefit.addItem.detail.subDetail.quantity"/>
@@ -7010,6 +8163,33 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
+    <element id="ExplanationOfBenefit.addItem.detail.subDetail.tax">
+      <path value="ExplanationOfBenefit.addItem.detail.subDetail.tax"/>
+      <short value="Total tax"/>
+      <definition value="The total of taxes applicable for this product or service."/>
+      <requirements value="Required when taxes are not embedded in the unit price or provided as a separate service."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.detail.subDetail.tax"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Money"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="ExplanationOfBenefit.addItem.detail.subDetail.net">
       <path value="ExplanationOfBenefit.addItem.detail.subDetail.net"/>
       <short value="Total item cost"/>
@@ -7064,6 +8244,41 @@
       <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
+    </element>
+    <element id="ExplanationOfBenefit.addItem.detail.subDetail.decision">
+      <path value="ExplanationOfBenefit.addItem.detail.subDetail.decision"/>
+      <short value="Result of the adjudication"/>
+      <definition value="The result of the claim, predetermination, or preauthorization adjudication."/>
+      <comment value="The element is used to indicate the current state of the adjudication overall for the claim resource, for example: the request has been held (pended) for adjudication processing, for manual review or other reasons; that it has been processed and will be paid, or the outstanding paid, as submitted (approved); that no amount will be paid (denied); or that some amount between zero and the submitted amoutn will be paid (partial)."/>
+      <requirements value="To advise the requestor of the result of the adjudication process."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="ExplanationOfBenefit.addItem.detail.subDetail.decision"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="AdjudicationDecision"/>
+        </extension>
+        <strength value="example"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/claim-decision"/>
+      </binding>
     </element>
     <element id="ExplanationOfBenefit.addItem.detail.subDetail.adjudication">
       <path value="ExplanationOfBenefit.addItem.detail.subDetail.adjudication"/>
@@ -7907,7 +9122,7 @@
         </extension>
         <strength value="required"/>
         <description value="The presentation types of notes."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/note-type|4.6.0"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/note-type|5.0.0-ballot"/>
       </binding>
     </element>
     <element id="ExplanationOfBenefit.processNote.text">

@@ -164,7 +164,7 @@
         <key value="dom-3"/>
         <severity value="error"/>
         <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"/>
-        <expression value="contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()"/>
+        <expression value="contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().ofType(canonical) | %resource.descendants().ofType(uri) | %resource.descendants().ofType(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()"/>
         <xpath value="not(exists(for $contained in f:contained return $contained[not(exists(parent::*/descendant::f:reference/@value=concat('#', $contained/*/f:id/@value)) or exists(descendant::f:reference[@value='#']))]))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
@@ -397,8 +397,8 @@
     <element id="Observation.contained">
       <path value="Observation.contained"/>
       <short value="Contained, inline Resources"/>
-      <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope."/>
-      <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again. Contained resources may have profiles and tags In their meta elements, but SHALL NOT have security labels."/>
+      <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope. This is allowed to be a Parameters resource if and only if it is referenced by a resource that provides context/meaning."/>
+      <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again. Contained resources may have profiles and tags in their meta elements, but SHALL NOT have security labels."/>
       <alias value="inline resources"/>
       <alias value="anonymous resources"/>
       <alias value="contained resources"/>
@@ -498,7 +498,7 @@
       <mustSupport value="false"/>
       <isModifier value="true"/>
       <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the resource that contains them"/>
-      <isSummary value="false"/>
+      <isSummary value="true"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
@@ -540,7 +540,7 @@
       </mapping>
       <mapping>
         <identity value="v2"/>
-        <map value="OBX.21  For OBX segments from systems without OBX-21 support a combination of ORC/OBR and OBX must be negotiated between trading partners to uniquely identify the OBX segment. Depending on how V2 has been implemented each of these may be an option: 1) OBR-3 + OBX-3 + OBX-4 or 2) OBR-3 + OBR-4 + OBX-3 + OBX-4 or 2) some other way to uniquely ID the OBR/ORC + OBX-3 + OBX-4."/>
+        <map value="OBX-21  For OBX segments from systems without OBX-21 support a combination of ORC/OBR and OBX must be negotiated between trading partners to uniquely identify the OBX segment. Depending on how V2 has been implemented each of these may be an option: 1) OBR-3 + OBX-3 + OBX-4 or 2) OBR-3 + OBR-4 + OBX-3 + OBX-4 or 3) some other way to uniquely ID the OBR/ORC + OBX-3 + OBX-4."/>
       </mapping>
       <mapping>
         <identity value="rim"/>
@@ -837,7 +837,7 @@
         </extension>
         <strength value="required"/>
         <description value="The type of TriggeredBy Observation."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/observation-triggeredbytype|4.6.0"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/observation-triggeredbytype|5.0.0-ballot"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -895,6 +895,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Immunization"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/ImagingStudy"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/GenomicStudy"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -957,7 +958,7 @@
         </extension>
         <strength value="required"/>
         <description value="Codes providing the status of an observation."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/observation-status|4.6.0"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/observation-status|5.0.0-ballot"/>
       </binding>
       <mapping>
         <identity value="workflow"/>
@@ -1323,7 +1324,7 @@
       </mapping>
       <mapping>
         <identity value="v2"/>
-        <map value="OBR.22 (or MSH.7), or perhaps OBX-19 (depends on who observation made)"/>
+        <map value="OBR-22 (or MSH-7), or perhaps OBX-19 (depends on who observation made)"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
@@ -1372,7 +1373,7 @@
       </mapping>
       <mapping>
         <identity value="v2"/>
-        <map value="OBX.15 / (Practitioner)  OBX-16,  PRT-5:PRT-4='RO' /  (Device)  OBX-18 , PRT-10:PRT-4='EQUIP' / (Organization)  OBX-23,  PRT-8:PRT-4='PO'"/>
+        <map value="OBX-15 / (Practitioner)  OBX-16,  PRT-5:PRT-4='RO' /  (Device)  OBX-18 , PRT-10:PRT-4='EQUIP' / (Organization)  OBX-23,  PRT-8:PRT-4='PO'"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
@@ -1446,7 +1447,7 @@
       </mapping>
       <mapping>
         <identity value="v2"/>
-        <map value="OBX.2, OBX.5, OBX.6"/>
+        <map value="OBX-2, OBX-5, OBX-6"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
@@ -1587,7 +1588,7 @@
       <isSummary value="false"/>
       <mapping>
         <identity value="v2"/>
-        <map value="NTE.3 (partner NTE to OBX, or sometimes another (child?) OBX)"/>
+        <map value="NTE-3 (partner NTE to OBX, or sometimes another (child?) OBX)"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
@@ -1747,6 +1748,7 @@
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Specimen"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -1755,6 +1757,14 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <constraint>
+        <key value="obs-9"/>
+        <severity value="error"/>
+        <human value="If Observation.specimen is a reference to Group, the group can only have specimens"/>
+        <expression value="reference = 'Group' implies member.entity.resolve() is Specimen"/>
+        <xpath value="starts-with(f:member/f:entity/f:reference/@value, 'Specimen/') or contains(f:member/f:entity/f:reference/@value, '/Specimen/') or not(f:specimen/@value = 'Specimen')"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Observation"/>
       </constraint>
       <mustSupport value="false"/>
       <isModifier value="false"/>
@@ -1858,7 +1868,7 @@
       <isSummary value="false"/>
       <mapping>
         <identity value="v2"/>
-        <map value="OBX.7"/>
+        <map value="OBX-7"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
@@ -2307,6 +2317,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/MolecularSequence"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/GenomicStudy"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -2590,7 +2601,7 @@
       </mapping>
       <mapping>
         <identity value="v2"/>
-        <map value="OBX.2, OBX.5, OBX.6"/>
+        <map value="OBX-2, OBX-5, OBX-6"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
@@ -2729,7 +2740,7 @@
       <isSummary value="false"/>
       <mapping>
         <identity value="v2"/>
-        <map value="OBX.7"/>
+        <map value="OBX-7"/>
       </mapping>
       <mapping>
         <identity value="rim"/>

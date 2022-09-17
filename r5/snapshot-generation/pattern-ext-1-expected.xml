@@ -61,7 +61,7 @@
             <a href="http://hl7.org/fhir/datatypes.html#Coding">Coding</a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <span style="opacity: 0.5">Code for the event this message represents or link to event definition</span>
+            <span style="opacity: 0.5">Event code or link to EventDefinition</span>
             <br/>
             <span style="font-weight:bold">Binding: </span>
             <a href="MessageHeader.eventCoding/something.html">something</a> (
@@ -141,7 +141,7 @@
         <key value="dom-3"/>
         <severity value="error"/>
         <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"/>
-        <expression value="contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()"/>
+        <expression value="contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().ofType(canonical) | %resource.descendants().ofType(uri) | %resource.descendants().ofType(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()"/>
         <xpath value="not(exists(for $contained in f:contained return $contained[not(exists(parent::*/descendant::f:reference/@value=concat('#', $contained/*/f:id/@value)) or exists(descendant::f:reference[@value='#']))]))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
@@ -350,8 +350,8 @@
     <element id="MessageHeader.contained">
       <path value="MessageHeader.contained"/>
       <short value="Contained, inline Resources"/>
-      <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope."/>
-      <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again. Contained resources may have profiles and tags In their meta elements, but SHALL NOT have security labels."/>
+      <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope. This is allowed to be a Parameters resource if and only if it is referenced by a resource that provides context/meaning."/>
+      <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again. Contained resources may have profiles and tags in their meta elements, but SHALL NOT have security labels."/>
       <alias value="inline resources"/>
       <alias value="anonymous resources"/>
       <alias value="contained resources"/>
@@ -451,7 +451,7 @@
       <mustSupport value="false"/>
       <isModifier value="true"/>
       <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the resource that contains them"/>
-      <isSummary value="false"/>
+      <isSummary value="true"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
@@ -467,8 +467,8 @@
         <ordered value="false"/>
         <rules value="closed"/>
       </slicing>
-      <short value="Code for the event this message represents or link to event definition"/>
-      <definition value="Code that identifies the event this message represents and connects it with its definition. Events defined as part of the FHIR specification have the system value &quot;http://terminology.hl7.org/CodeSystem/message-events&quot;.  Alternatively uri to the EventDefinition."/>
+      <short value="Event code or link to EventDefinition"/>
+      <definition value="Code that identifies the event this message represents and connects it with its definition. Events defined as part of the FHIR specification have the system value &quot;http://terminology.hl7.org/CodeSystem/message-events&quot;.  Alternatively a canonical uri to the EventDefinition."/>
       <comment value="The time of the event will be found in the focus resource. The time of the message will be found in [Bundle.timestamp](http://build.fhir.org/bundle-definitions.html#Bundle.timestamp)."/>
       <requirements value="Drives the behavior associated with this message."/>
       <min value="1"/>
@@ -519,8 +519,8 @@
     <element id="MessageHeader.event[x]:eventCoding">
       <path value="MessageHeader.event[x]"/>
       <sliceName value="eventCoding"/>
-      <short value="Code for the event this message represents or link to event definition"/>
-      <definition value="Code that identifies the event this message represents and connects it with its definition. Events defined as part of the FHIR specification have the system value &quot;http://terminology.hl7.org/CodeSystem/message-events&quot;.  Alternatively uri to the EventDefinition."/>
+      <short value="Event code or link to EventDefinition"/>
+      <definition value="Code that identifies the event this message represents and connects it with its definition. Events defined as part of the FHIR specification have the system value &quot;http://terminology.hl7.org/CodeSystem/message-events&quot;.  Alternatively a canonical uri to the EventDefinition."/>
       <comment value="The time of the event will be found in the focus resource. The time of the message will be found in [Bundle.timestamp](http://build.fhir.org/bundle-definitions.html#Bundle.timestamp)."/>
       <requirements value="Drives the behavior associated with this message."/>
       <min value="1"/>
@@ -1614,7 +1614,7 @@
         </extension>
         <strength value="required"/>
         <description value="The kind of response to a message."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/response-code|4.6.0"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/response-code|5.0.0-ballot"/>
       </binding>
       <mapping>
         <identity value="v2"/>
@@ -1665,7 +1665,7 @@
     <element id="MessageHeader.focus">
       <path value="MessageHeader.focus"/>
       <short value="The actual content of the message"/>
-      <definition value="The actual data of the message - a reference to the root/focus class of the event."/>
+      <definition value="The actual data of the message - a reference to the root/focus class of the event. This is allowed to be a Parameters resource."/>
       <comment value="The data is defined where the transaction type is defined. The transaction data is always included in the bundle that is the full message.  Only the root resource is specified.  The resources it references should be contained in the bundle but are not also listed here.  Multiple repetitions are allowed to cater for merges and other situations with multiple focal targets."/>
       <requirements value="Every message event is about actual data, a single resource, that is identified in the definition of the event, and perhaps some or all linked resources."/>
       <min value="0"/>
