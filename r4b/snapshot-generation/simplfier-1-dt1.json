@@ -1,0 +1,69 @@
+{
+  "resourceType": "StructureDefinition",
+  "url": "http://fhir.de/StructureDefinition/identifier-kvid-10",
+  "version": "0.9.6",
+  "name": "IdentifierKvid10",
+  "title": "Identifier-Profil für die 10-stellige Krankenversichertennummer",
+  "status": "draft",
+  "date": "2019-07-06",
+  "description": "Identifier-Profil für die 10-stellige Krankenversichertennummer",
+  "fhirVersion": "4.0.1",
+  "kind": "complex-type",
+  "abstract": false,
+  "type": "Identifier",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Identifier",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Identifier.use",
+        "path": "Identifier.use",
+        "fixedCode": "official"
+      },
+      {
+        "id": "Identifier.type.coding",
+        "path": "Identifier.type.coding",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1
+      },
+      {
+        "id": "Identifier.type.coding:GKV-Type",
+        "path": "Identifier.type.coding",
+        "sliceName": "GKV-Type",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Identifier.type.coding:GKV-Type.system",
+        "path": "Identifier.type.coding.system",
+        "min": 1,
+        "fixedUri": "http://fhir.de/CodeSystem/identifier-type-de-basis"
+      },
+      {
+        "id": "Identifier.type.coding:GKV-Type.code",
+        "path": "Identifier.type.coding.code",
+        "min": 1,
+        "fixedCode": "GKV"
+      },
+      {
+        "id": "Identifier.system",
+        "path": "Identifier.system",
+        "min": 1,
+        "fixedUri": "http://fhir.de/NamingSystem/gkv/kvid-10"
+      },
+      {
+        "id": "Identifier.value",
+        "path": "Identifier.value",
+        "min": 1
+      }
+    ]
+  }
+}

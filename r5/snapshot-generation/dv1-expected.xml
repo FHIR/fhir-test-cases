@@ -62,7 +62,7 @@
             <span style="opacity: 0.5">1</span>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <span style="opacity: 0.5">Element</span>
+            <a style="opacity: 0.5" href="http://hl7.org/fhir/datatypes.html#Element">Element</a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
             <span style="opacity: 0.5">When the event is to occur</span>
@@ -161,7 +161,7 @@
             <a style="opacity: 0.5" href="http://hl7.org/fhir/datatypes.html#decimal">decimal</a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <span style="opacity: 0.5">Event occurs frequency times per period</span>
+            <span style="opacity: 0.5">The duration to which the frequency applies. I.e. Event occurs frequency times per period</span>
           </td>
         </tr>
 
@@ -327,7 +327,7 @@
       <path value="Timing"/>
       <short value="A timing schedule that specifies an event that may occur multiple times"/>
       <definition value="Specifies an event that may occur multiple times. Timing schedules are used to record when things are planned, expected or requested to occur. The most common usage is in dosage instructions for medications. They are also used when planning care of various kinds, and may be used for reporting the schedule to which past regular activities were carried out."/>
-      <comment value="Describes the occurrence of an event that may occur multiple times. Timing schedules are used for specifying when events are expected or requested to occur, and may also be used to represent the summary of a past or ongoing event.  For simplicity, the definitions of Timing components are expressed as &#39;future&#39; events, but such components can also be used to describe historic or ongoing events.&#xA;&#xA;A Timing schedule can be a list of events and/or criteria for when the event happens, which can be expressed in a structured form and/or as a code. When both event and a repeating specification are provided, the list of events should be understood as an interpretation of the information in the repeat structure."/>
+      <comment value="Describes the occurrence of an event that may occur multiple times. Timing schedules are used for specifying when events are expected or requested to occur, and may also be used to represent the summary of a past or ongoing event.  For simplicity, the definitions of Timing components are expressed as 'future' events, but such components can also be used to describe historic or ongoing events.&#xA;&#xA;A Timing schedule can be a list of events and/or criteria for when the event happens, which can be expressed in a structured form and/or as a code. When both event and a repeating specification are provided, the list of events should be understood as an interpretation of the information in the repeat structure."/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -372,7 +372,7 @@
       </base>
       <type>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
+          <valueUrl value="id"/>
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
@@ -434,16 +434,16 @@
     <element id="Timing.modifierExtension">
       <path value="Timing.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
       <min value="0"/>
       <max value="*"/>
       <base>
-        <path value="BackboneElement.modifierExtension"/>
+        <path value="BackboneType.modifierExtension"/>
         <min value="0"/>
         <max value="*"/>
       </base>
@@ -530,7 +530,7 @@
       <constraint>
         <key value="tim-1"/>
         <severity value="error"/>
-        <human value="if there&#39;s a duration, there needs to be duration units"/>
+        <human value="if there's a duration, there needs to be duration units"/>
         <expression value="duration.empty() or durationUnit.exists()"/>
         <xpath value="not(exists(f:duration)) or exists(f:durationUnit)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Timing"/>
@@ -538,7 +538,7 @@
       <constraint>
         <key value="tim-2"/>
         <severity value="error"/>
-        <human value="if there&#39;s a period, there needs to be period units"/>
+        <human value="if there's a period, there needs to be period units"/>
         <expression value="period.empty() or periodUnit.exists()"/>
         <xpath value="not(exists(f:period)) or exists(f:periodUnit)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Timing"/>
@@ -562,7 +562,7 @@
       <constraint>
         <key value="tim-6"/>
         <severity value="error"/>
-        <human value="If there&#39;s a periodMax, there must be a period"/>
+        <human value="If there's a periodMax, there must be a period"/>
         <expression value="periodMax.empty() or period.exists()"/>
         <xpath value="not(exists(f:periodMax)) or exists(f:period)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Timing"/>
@@ -570,7 +570,7 @@
       <constraint>
         <key value="tim-7"/>
         <severity value="error"/>
-        <human value="If there&#39;s a durationMax, there must be a duration"/>
+        <human value="If there's a durationMax, there must be a duration"/>
         <expression value="durationMax.empty() or duration.exists()"/>
         <xpath value="not(exists(f:durationMax)) or exists(f:duration)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Timing"/>
@@ -578,7 +578,7 @@
       <constraint>
         <key value="tim-8"/>
         <severity value="error"/>
-        <human value="If there&#39;s a countMax, there must be a count"/>
+        <human value="If there's a countMax, there must be a count"/>
         <expression value="countMax.empty() or count.exists()"/>
         <xpath value="not(exists(f:countMax)) or exists(f:count)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Timing"/>
@@ -586,15 +586,15 @@
       <constraint>
         <key value="tim-9"/>
         <severity value="error"/>
-        <human value="If there&#39;s an offset, there must be a when (and not C, CM, CD, CV)"/>
-        <expression value="offset.empty() or (when.exists() and ((when in (&#39;C&#39; | &#39;CM&#39; | &#39;CD&#39; | &#39;CV&#39;)).not()))"/>
+        <human value="If there's an offset, there must be a when (and not C, CM, CD, CV)"/>
+        <expression value="offset.empty() or (when.exists() and when.select($this in ('C' | 'CM' | 'CD' | 'CV')).allFalse())"/>
         <xpath value="not(exists(f:offset)) or exists(f:when)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Timing"/>
       </constraint>
       <constraint>
         <key value="tim-10"/>
         <severity value="error"/>
-        <human value="If there&#39;s a timeOfDay, there cannot be a when, or vice versa"/>
+        <human value="If there's a timeOfDay, there cannot be a when, or vice versa"/>
         <expression value="timeOfDay.empty() or when.empty()"/>
         <xpath value="not(exists(f:timeOfDay)) or not(exists(f:when))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Timing"/>
@@ -818,7 +818,7 @@
       <path value="Timing.repeat.duration"/>
       <short value="How long when it happens"/>
       <definition value="How long this thing happens for when it happens. If durationMax is present, this element indicates the lower bound of the allowed range of the duration."/>
-      <comment value="For some events the duration is part of the definition of the event (e.g. IV infusions, where the duration is implicit in the specified quantity and rate). For others, it&#39;s part of the timing specification (e.g. exercise)."/>
+      <comment value="For some events the duration is part of the definition of the event (e.g. IV infusions, where the duration is implicit in the specified quantity and rate). For others, it's part of the timing specification (e.g. exercise)."/>
       <requirements value="Some activities are not instantaneous and need to be maintained for a period of time."/>
       <min value="0"/>
       <max value="1"/>
@@ -850,7 +850,7 @@
       <path value="Timing.repeat.durationMax"/>
       <short value="How long when it happens (Max)"/>
       <definition value="If present, indicates that the duration is a range - so to perform the action between [duration] and [durationMax] time length."/>
-      <comment value="For some events the duration is part of the definition of the event (e.g. IV infusions, where the duration is implicit in the specified quantity and rate). For others, it&#39;s part of the timing specification (e.g. exercise)."/>
+      <comment value="For some events the duration is part of the definition of the event (e.g. IV infusions, where the duration is implicit in the specified quantity and rate). For others, it's part of the timing specification (e.g. exercise)."/>
       <requirements value="Some activities are not instantaneous and need to be maintained for a period of time."/>
       <min value="0"/>
       <max value="1"/>
@@ -880,7 +880,7 @@
     <element id="Timing.repeat.durationUnit">
       <path value="Timing.repeat.durationUnit"/>
       <short value="s | min | h | d | wk | mo | a - unit of time (UCUM)"/>
-      <definition value="The units of time for the duration, in UCUM units."/>
+      <definition value="The units of time for the duration, in UCUM units&#xA;Normal practice is to use the 'mo' code as a calendar month when calculating the next occurrence."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -903,12 +903,14 @@
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
+        <extension url="http://hl7.org/fhir/build/StructureDefinition/binding-definition">
+          <valueString value="A unit of time (units from UCUM)."/>
+        </extension>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="UnitsOfTime"/>
         </extension>
         <strength value="required"/>
-        <description value="A unit of time (units from UCUM)."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/units-of-time|4.0.1"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/units-of-time|5.0.0-ballot"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -917,7 +919,7 @@
     </element>
     <element id="Timing.repeat.frequency">
       <path value="Timing.repeat.frequency"/>
-      <short value="Event occurs frequency times per period"/>
+      <short value="Indicates the number of repetitions that should occur within a period. I.e. Event occurs frequency times per period"/>
       <definition value="The number of times to repeat the action within the specified period. If frequencyMax is present, this element indicates the lower bound of the allowed range of the frequency."/>
       <min value="0"/>
       <max value="1"/>
@@ -976,7 +978,7 @@
     </element>
     <element id="Timing.repeat.period">
       <path value="Timing.repeat.period"/>
-      <short value="Event occurs frequency times per period"/>
+      <short value="The duration to which the frequency applies. I.e. Event occurs frequency times per period"/>
       <definition value="Indicates the duration of time over which repetitions are to occur; e.g. to express &quot;3 times per day&quot;, 3 would be the frequency and &quot;1 day&quot; would be the period. If periodMax is present, this element indicates the lower bound of the allowed range of the period length."/>
       <min value="0"/>
       <max value="1"/>
@@ -1036,7 +1038,7 @@
     <element id="Timing.repeat.periodUnit">
       <path value="Timing.repeat.periodUnit"/>
       <short value="s | min | h | d | wk | mo | a - unit of time (UCUM)"/>
-      <definition value="The units of time for the period in UCUM units."/>
+      <definition value="The units of time for the period in UCUM units&#xA;Normal practice is to use the 'mo' code as a calendar month when calculating the next occurrence."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1059,12 +1061,14 @@
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
+        <extension url="http://hl7.org/fhir/build/StructureDefinition/binding-definition">
+          <valueString value="A unit of time (units from UCUM)."/>
+        </extension>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="UnitsOfTime"/>
         </extension>
         <strength value="required"/>
-        <description value="A unit of time (units from UCUM)."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/units-of-time|4.0.1"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/units-of-time|5.0.0-ballot"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -1075,7 +1079,7 @@
       <path value="Timing.repeat.dayOfWeek"/>
       <short value="mon | tue | wed | thu | fri | sat | sun"/>
       <definition value="If one or more days of week is provided, then the action happens only on the specified day(s)."/>
-      <comment value="If no days are specified, the action is assumed to happen every day as otherwise specified. The elements frequency and period cannot be used as well as dayOfWeek."/>
+      <comment value="If no days are specified, the action is assumed to happen every day as otherwise specified."/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -1102,7 +1106,7 @@
           <valueString value="DayOfWeek"/>
         </extension>
         <strength value="required"/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/days-of-week|4.0.1"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/days-of-week|5.0.0-ballot"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -1165,7 +1169,7 @@
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <isModifier value="false"/>
@@ -1200,7 +1204,7 @@
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1221,10 +1225,10 @@
       </base>
       <type>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
+          <valueUrl value="code"/>
         </extension>
         <extension url="http://hl7.org/fhir/StructureDefinition/regex">
-          <valueString value="[^\s]+(\s[^\s]+)*"/>
+          <valueString value="[^\s]+( [^\s]+)*"/>
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
@@ -1235,7 +1239,7 @@
       <path value="Timing.repeat.timeOfDay"/>
       <short value="Time of day for action"/>
       <definition value="Specified time of day for action to take place."/>
-      <comment value="When time of day is specified, it is inferred that the action happens every day (as filtered by dayofWeek) on the specified times. The elements when, frequency and period cannot be used as well as timeOfDay."/>
+      <comment value="When time of day is specified, it is inferred that the action happens every day (as filtered by dayofWeek) on the specified times. If there's a timeOfDay, there cannot be a when, or vice versa."/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -1289,12 +1293,14 @@
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
+        <extension url="http://hl7.org/fhir/build/StructureDefinition/binding-definition">
+          <valueString value="Real world event relating to the schedule."/>
+        </extension>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="EventTiming"/>
         </extension>
         <strength value="required"/>
-        <description value="Real world event relating to the schedule."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/event-timing|4.0.1"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/event-timing|5.0.0-ballot"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -1357,7 +1363,7 @@
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <isModifier value="false"/>
@@ -1392,7 +1398,7 @@
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1413,10 +1419,10 @@
       </base>
       <type>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
+          <valueUrl value="code"/>
         </extension>
         <extension url="http://hl7.org/fhir/StructureDefinition/regex">
-          <valueString value="[^\s]+(\s[^\s]+)*"/>
+          <valueString value="[^\s]+( [^\s]+)*"/>
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
@@ -1454,9 +1460,9 @@
     </element>
     <element id="Timing.code">
       <path value="Timing.code"/>
-      <short value="BID | TID | QID | AM | PM | QD | QOD | +"/>
+      <short value="C | BID | TID | QID | AM | PM | QD | QOD | +"/>
       <definition value="A code for the timing schedule (or just text in code.text). Some codes such as BID are ubiquitous, but many institutions define their own additional codes. If a code is provided, the code is understood to be a complete statement of whatever is specified in the structured timing data, and either the code or the data may be used to interpret the Timing, with the exception that .repeat.bounds still applies over the code (and is not contained in the code)."/>
-      <comment value="BID etc. are defined as &#39;at institutionally specified times&#39;. For example, an institution may choose that BID is &quot;always at 7am and 6pm&quot;.  If it is inappropriate for this choice to be made, the code BID should not be used. Instead, a distinct organization-specific code should be used in place of the HL7-defined BID code and/or a structured representation should be used (in this case, specifying the two event times)."/>
+      <comment value="BID etc. are defined as 'at institutionally specified times'. For example, an institution may choose that BID is &quot;always at 7am and 6pm&quot;.  If it is inappropriate for this choice to be made, the code BID should not be used. Instead, a distinct organization-specific code should be used in place of the HL7-defined BID code and/or a structured representation should be used (in this case, specifying the two event times)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1478,11 +1484,13 @@
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
+        <extension url="http://hl7.org/fhir/build/StructureDefinition/binding-definition">
+          <valueString value="Code for a known / defined timing pattern."/>
+        </extension>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="TimingAbbreviation"/>
         </extension>
         <strength value="preferred"/>
-        <description value="Code for a known / defined timing pattern."/>
         <valueSet value="http://hl7.org/fhir/ValueSet/timing-abbreviation"/>
       </binding>
       <mapping>

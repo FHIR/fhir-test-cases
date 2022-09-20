@@ -1,10 +1,10 @@
 {
   "resourceType" : "StructureDefinition",
-  "id" : "au-medicationstatement",
+  "id" : "au-MedicationUsage",
   "url" : "http://hl7.org/fhir/test/StructureDefinition/au-med",
   "version" : "1.1.0",
-  "name" : "AUBaseMedicationStatement",
-  "title" : "AU Base Medication Statement",
+  "name" : "AUBaseMedicationUsage",
+  "title" : "AU Base Medication Usage",
   "status" : "draft",
   "date" : "2017-05-05T10:53:27+10:00",
   "publisher" : "Health Level Seven Australia (Medications WG)",
@@ -45,33 +45,24 @@
   ],
   "kind" : "resource",
   "abstract" : false,
-  "type" : "MedicationStatement",
-  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/MedicationStatement",
+  "type" : "MedicationUsage",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/MedicationUsage",
   "derivation" : "constraint",
   "differential" : {
     "element" : [
       {
-        "id" : "MedicationStatement",
-        "path" : "MedicationStatement",
+        "id" : "MedicationUsage",
+        "path" : "MedicationUsage",
         "short" : "A record of medication being taken by a patient in an Australian healthcare context"
       },
       {
-        "id" : "MedicationStatement.medication[x]",
-        "path" : "MedicationStatement.medication[x]",
-        "slicing" : {
-          "discriminator" : [
-            {
-              "type" : "type",
-              "path" : "$this"
-            }
-          ],
-          "rules" : "closed"
-        },
+        "id" : "MedicationUsage.medication",
+        "path" : "MedicationUsage.medication",
         "short" : "Medication Detail"
       },
       {
-        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept",
-        "path" : "MedicationStatement.medication[x]",
+        "id" : "MedicationUsage.medication.concept",
+        "path" : "MedicationUsage.medication.concept",
         "sliceName" : "medicationCodeableConcept",
         "short" : "Coded Medication",
         "min" : 0,
@@ -82,8 +73,8 @@
         ]
       },
       {
-        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding",
-        "path" : "MedicationStatement.medication[x].coding",
+        "id" : "MedicationUsage.medication.concept.coding",
+        "path" : "MedicationUsage.medication.concept.coding",
         "slicing" : {
           "discriminator" : [
             {
@@ -96,8 +87,8 @@
         "short" : "Medication Codes"
       },
       {
-        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:pbs",
-        "path" : "MedicationStatement.medication[x].coding",
+        "id" : "MedicationUsage.medication.concept.coding:pbs",
+        "path" : "MedicationUsage.medication.concept.coding",
         "sliceName" : "pbs",
         "short" : "PBS Item Code",
         "definition" : "PBS code from http://pbs.gov.au/code/item. Use of PBS as a code to refer to a type of medication, this excludes implication of context based on the PBS code. Where context is to be implied or stated PBS code needs to be associated with recording a prescription (MedicationRequest) or dispense record(MedicationDispense)",
@@ -109,14 +100,14 @@
         }
       },
       {
-        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:pbs.system",
-        "path" : "MedicationStatement.medication[x].coding.system",
+        "id" : "MedicationUsage.medication.concept.coding:pbs.system",
+        "path" : "MedicationUsage.medication.concept.coding.system",
         "min" : 1,
         "fixedUri" : "http://pbs.gov.au/code/item"
       },
       {
-        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:gtin",
-        "path" : "MedicationStatement.medication[x].coding",
+        "id" : "MedicationUsage.medication.concept.coding:gtin",
+        "path" : "MedicationUsage.medication.concept.coding",
         "sliceName" : "gtin",
         "short" : "Medication Package Global Trade Item Number (GTIN)",
         "definition" : "GTIN value from http://www.gs1.org/gtin.",
@@ -128,14 +119,14 @@
         }
       },
       {
-        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:gtin.system",
-        "path" : "MedicationStatement.medication[x].coding.system",
+        "id" : "MedicationUsage.medication.concept.coding:gtin.system",
+        "path" : "MedicationUsage.medication.concept.coding.system",
         "min" : 1,
         "fixedUri" : "http://pbs.gov.au/code/item"
       },
       {
-        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:amt",
-        "path" : "MedicationStatement.medication[x].coding",
+        "id" : "MedicationUsage.medication.concept.coding:amt",
+        "path" : "MedicationUsage.medication.concept.coding",
         "sliceName" : "amt",
         "short" : "AMT Medicines",
         "binding" : {
@@ -146,8 +137,8 @@
         }
       },
       {
-        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:amt.extension",
-        "path" : "MedicationStatement.medication[x].coding.extension",
+        "id" : "MedicationUsage.medication.concept.coding:amt.extension",
+        "path" : "MedicationUsage.medication.concept.coding.extension",
         "slicing" : {
           "discriminator" : [
             {
@@ -159,8 +150,8 @@
         }
       },
       {
-        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:amt.extension:medicationClass",
-        "path" : "MedicationStatement.medication[x].coding.extension",
+        "id" : "MedicationUsage.medication.concept.coding:amt.extension:medicationClass",
+        "path" : "MedicationUsage.medication.concept.coding.extension",
         "sliceName" : "medicationClass",
         "short" : "Class of Medication Coding",
         "definition" : "General category of coding to allow usage of codes to be distinguished from the same CodeSystem",
@@ -173,14 +164,14 @@
         ]
       },
       {
-        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:amt.system",
-        "path" : "MedicationStatement.medication[x].coding.system",
+        "id" : "MedicationUsage.medication.concept.coding:amt.system",
+        "path" : "MedicationUsage.medication.concept.coding.system",
         "min" : 1,
         "fixedUri" : "http://snomed.info/sct"
       },
       {
-        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:mimsPackage",
-        "path" : "MedicationStatement.medication[x].coding",
+        "id" : "MedicationUsage.medication.concept.coding:mimsPackage",
+        "path" : "MedicationUsage.medication.concept.coding",
         "sliceName" : "mimsPackage",
         "short" : "MIMS Package",
         "max" : "1",
@@ -192,15 +183,14 @@
         }
       },
       {
-        "id" : "MedicationStatement.medication[x]:medicationCodeableConcept.coding:mimsPackage.system",
-        "path" : "MedicationStatement.medication[x].coding.system",
+        "id" : "MedicationUsage.medication.concept.coding:mimsPackage.system",
+        "path" : "MedicationUsage.medication.concept.coding.system",
         "min" : 1,
         "fixedUri" : "http://www.mims.com.au/codes"
       },
       {
-        "id" : "MedicationStatement.medication[x]:medicationReference",
-        "path" : "MedicationStatement.medication[x]",
-        "sliceName" : "medicationReference",
+        "id" : "MedicationUsage.medication.reference",
+        "path" : "MedicationUsage.medication.reference",
         "short" : "Medication Reference",
         "min" : 0,
         "type" : [

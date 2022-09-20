@@ -31,12 +31,12 @@
         <tr style="border: 0px #F0F0F0 solid; padding:0px; vertical-align: top; background-color: white">
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px; white-space: nowrap; background-image: url(tbl_bck1.png)" class="hierarchy">
             <img src="tbl_spacer.png" alt="." style="background-color: inherit" class="hierarchy"/>
-            <img src="icon_resource.png" alt="." style="background-color: white; background-color: inherit" title="Resource" class="hierarchy"/> MedicationStatement
-            <a name="MedicationStatement"> </a>
+            <img src="icon_resource.png" alt="." style="background-color: white; background-color: inherit" title="Resource" class="hierarchy"/> MedicationUsage
+            <a name="MedicationUsage"> </a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
-          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">MedicationStatement</td>
+          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">MedicationUsage</td>
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy"/>
         </tr>
 
@@ -45,7 +45,7 @@
             <img src="tbl_spacer.png" alt="." style="background-color: inherit" class="hierarchy"/>
             <img src="tbl_vjoin_end.png" alt="." style="background-color: inherit" class="hierarchy"/>
             <img src="icon_element.gif" alt="." style="background-color: #F7F7F7; background-color: inherit" title="Element" class="hierarchy"/> effective[x]
-            <a name="MedicationStatement.effective_x_"> </a>
+            <a name="MedicationUsage.effective_x_"> </a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
             <span style="padding-left: 3px; padding-right: 3px; color: white; background-color: red" title="This element must be supported">S</span>
@@ -68,7 +68,7 @@
             <img src="tbl_vjoin_end.png" alt="." style="background-color: inherit" class="hierarchy"/>
             <img src="icon_extension_simple.png" alt="." style="background-color: white; background-color: inherit" title="Simple Extension" class="hierarchy"/> 
             <span title="Extension URL = http://hl7.org/fhir/StructureDefinition/data-absent-reason">data-absent-reason</span>
-            <a name="MedicationStatement.effective_x_.extension"> </a>
+            <a name="MedicationUsage.effective_x_.extension"> </a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
             <span style="padding-left: 3px; padding-right: 3px; color: white; background-color: red" title="This element must be supported">S</span>
@@ -84,10 +84,8 @@
             <span style="font-weight:bold">URL: </span>http://hl7.org/fhir/StructureDefinition/data-absent-reason
             <br/>
             <span style="font-weight:bold">Binding: </span>
-            <a href="MedicationStatement.effective[x].extension/something.html">something</a> (
-            <a href="http://hl7.org/fhirterminologies.html#required" title="To be conformant, the concept in this element SHALL be from the specified value set.">required</a>): Used to specify why the normally expected content of the data element is missing.
-            <br/>
-            <br/>
+            <a href="MedicationUsage.effective[x].extension/something.html">something</a> (
+            <a href="http://hl7.org/fhirterminologies.html#required" title="To be conformant, the concept in this element SHALL be from the specified value set.">required</a>)
           </td>
         </tr>
 
@@ -127,19 +125,19 @@
   </mapping>
   <kind value="resource"/>
   <abstract value="false"/>
-  <type value="MedicationStatement"/>
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/MedicationStatement"/>
+  <type value="MedicationUsage"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/MedicationUsage"/>
   <derivation value="constraint"/>
   <snapshot>
-    <element id="MedicationStatement">
-      <path value="MedicationStatement"/>
+    <element id="MedicationUsage">
+      <path value="MedicationUsage"/>
       <short value="Record of medication being taken by a patient"/>
-      <definition value="A record of a medication that is being consumed by a patient.   A MedicationStatement may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay.   The medication information may come from sources such as the patient&#39;s memory, from a prescription bottle,  or from a list of medications the patient, clinician or other party maintains. &#xA;&#xA;The primary difference between a medication statement and a medication administration is that the medication administration has complete administration information and is based on actual administration information from the person who administered the medication.  A medication statement is often, if not always, less specific.  There is no required date/time when the medication was administered, in fact we only know that a source has reported the patient is taking this medication, where details such as time, quantity, or rate or even medication product may be incomplete or missing or less precise.  As stated earlier, the medication statement information may come from the patient&#39;s memory, from a prescription bottle or from a list of medications the patient, clinician or other party maintains.  Medication administration is more formal and is not missing detailed information."/>
-      <comment value="When interpreting a medicationStatement, the value of the status and NotTaken needed to be considered:&#xD;MedicationStatement.status + MedicationStatement.wasNotTaken&#xD;Status=Active + NotTaken=T = Not currently taking&#xD;Status=Completed + NotTaken=T = Not taken in the past&#xD;Status=Intended + NotTaken=T = No intention of taking&#xD;Status=Active + NotTaken=F = Taking, but not as prescribed&#xD;Status=Active + NotTaken=F = Taking&#xD;Status=Intended +NotTaken= F = Will be taking (not started)&#xD;Status=Completed + NotTaken=F = Taken in past&#xD;Status=In Error + NotTaken=N/A = In Error."/>
+      <definition value="A record of a medication that is being consumed by a patient.   A MedicationUsage may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay.   The medication information may come from sources such as the patient's memory, from a prescription bottle,  or from a list of medications the patient, clinician or other party maintains. &#xA;&#xA;The primary difference between a medicationusage and a medicationadministration is that the medication administration has complete administration information and is based on actual administration information from the person who administered the medication.  A medicationusage is often, if not always, less specific.  There is no required date/time when the medication was administered, in fact we only know that a source has reported the patient is taking this medication, where details such as time, quantity, or rate or even medication product may be incomplete or missing or less precise.  As stated earlier, the Medication Usage information may come from the patient's memory, from a prescription bottle or from a list of medications the patient, clinician or other party maintains.  Medication administration is more formal and is not missing detailed information.&#xA;&#xA;The MedicationUsage resource was previously called MedicationStatement."/>
+      <alias value="MedicationStatement"/>
       <min value="0"/>
       <max value="*"/>
       <base>
-        <path value="MedicationStatement"/>
+        <path value="MedicationUsage"/>
         <min value="0"/>
         <max value="*"/>
       </base>
@@ -155,8 +153,8 @@
         <key value="dom-3"/>
         <severity value="error"/>
         <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"/>
-        <expression value="contained.where(((&#39;#&#39;+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists()).not()).trace(&#39;unmatched&#39;, id).empty()"/>
-        <xpath value="not(exists(for $id in f:contained/*/f:id/@value return $contained[not(parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $contained/*/id/@value) or descendant::f:reference[@value=&#39;#&#39;])]))"/>
+        <expression value="contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().ofType(canonical) | %resource.descendants().ofType(uri) | %resource.descendants().ofType(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()"/>
+        <xpath value="not(exists(for $contained in f:contained return $contained[not(exists(parent::*/descendant::f:reference/@value=concat('#', $contained/*/f:id/@value)) or exists(descendant::f:reference[@value='#']))]))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
       <constraint>
@@ -189,6 +187,7 @@
         <xpath value="exists(f:text/h:div)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -203,12 +202,16 @@
         <identity value="rim"/>
         <map value="SubstanceAdministration"/>
       </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="clinical.medication"/>
+      </mapping>
     </element>
-    <element id="MedicationStatement.id">
-      <path value="MedicationStatement.id"/>
+    <element id="MedicationUsage.id">
+      <path value="MedicationUsage.id"/>
       <short value="Logical id of this artifact"/>
       <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes."/>
-      <comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation."/>
+      <comment value="Within the context of the FHIR RESTful interactions, the resource has an id except for cases like the create and conditional update. Otherwise, the use of the resouce id depends on the given use case."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -218,15 +221,16 @@
       </base>
       <type>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
+          <valueUrl value="id"/>
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
-    <element id="MedicationStatement.meta">
-      <path value="MedicationStatement.meta"/>
+    <element id="MedicationUsage.meta">
+      <path value="MedicationUsage.meta"/>
       <short value="Metadata about the resource"/>
       <definition value="The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content might not always be associated with version changes to the resource."/>
       <min value="0"/>
@@ -247,14 +251,15 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
     </element>
-    <element id="MedicationStatement.implicitRules">
-      <path value="MedicationStatement.implicitRules"/>
+    <element id="MedicationUsage.implicitRules">
+      <path value="MedicationUsage.implicitRules"/>
       <short value="A set of rules under which this content was created"/>
       <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content. Often, this is a reference to an implementation guide that defines the special rules along with other profiles etc."/>
-      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of it&#39;s narrative along with other profiles, value sets, etc."/>
+      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of it's narrative along with other profiles, value sets, etc."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -273,12 +278,13 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="true"/>
-      <isModifierReason value="This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it&#39;s meaning or interpretation"/>
+      <isModifierReason value="This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation"/>
       <isSummary value="true"/>
     </element>
-    <element id="MedicationStatement.language">
-      <path value="MedicationStatement.language"/>
+    <element id="MedicationUsage.language">
+      <path value="MedicationUsage.language"/>
       <short value="Language of the resource content"/>
       <definition value="The base language in which the resource is written."/>
       <comment value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource. Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)."/>
@@ -300,6 +306,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
@@ -313,15 +320,15 @@
           <valueBoolean value="true"/>
         </extension>
         <strength value="preferred"/>
-        <description value="A human language."/>
+        <description value="IETF language tag"/>
         <valueSet value="http://hl7.org/fhir/ValueSet/languages"/>
       </binding>
     </element>
-    <element id="MedicationStatement.text">
-      <path value="MedicationStatement.text"/>
+    <element id="MedicationUsage.text">
+      <path value="MedicationUsage.text"/>
       <short value="Text summary of the resource, for human interpretation"/>
       <definition value="A human-readable narrative that contains a summary of the resource and can be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety."/>
-      <comment value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded information is added later."/>
+      <comment value="Contained resources do not have a narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded information is added later."/>
       <alias value="narrative"/>
       <alias value="html"/>
       <alias value="xhtml"/>
@@ -344,6 +351,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -351,11 +359,11 @@
         <map value="Act.text?"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.contained">
-      <path value="MedicationStatement.contained"/>
+    <element id="MedicationUsage.contained">
+      <path value="MedicationUsage.contained"/>
       <short value="Contained, inline Resources"/>
-      <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope."/>
-      <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again. Contained resources may have profiles and tags In their meta elements, but SHALL NOT have security labels."/>
+      <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope. This is allowed to be a Parameters resource if and only if it is referenced by a resource that provides context/meaning."/>
+      <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again. Contained resources may have profiles and tags in their meta elements, but SHALL NOT have security labels."/>
       <alias value="inline resources"/>
       <alias value="anonymous resources"/>
       <alias value="contained resources"/>
@@ -369,6 +377,7 @@
       <type>
         <code value="Resource"/>
       </type>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -376,8 +385,8 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.extension">
-      <path value="MedicationStatement.extension"/>
+    <element id="MedicationUsage.extension">
+      <path value="MedicationUsage.extension"/>
       <short value="Additional content defined by implementations"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
@@ -409,6 +418,7 @@
         <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -416,12 +426,12 @@
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.modifierExtension">
-      <path value="MedicationStatement.modifierExtension"/>
+    <element id="MedicationUsage.modifierExtension">
+      <path value="MedicationUsage.modifierExtension"/>
       <short value="Extensions that cannot be ignored"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/R4/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -450,23 +460,24 @@
         <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="true"/>
       <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the resource that contains them"/>
-      <isSummary value="false"/>
+      <isSummary value="true"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.identifier">
-      <path value="MedicationStatement.identifier"/>
+    <element id="MedicationUsage.identifier">
+      <path value="MedicationUsage.identifier"/>
       <short value="External identifier"/>
-      <definition value="Identifiers associated with this Medication Statement that are defined by business processes and/or used to refer to it when a direct URL reference to the resource itself is not appropriate. They are business identifiers assigned to this resource by the performer or other systems and remain constant as the resource is updated and propagates from server to server."/>
+      <definition value="Identifiers associated with this Medication Usage that are defined by business processes and/or used to refer to it when a direct URL reference to the resource itself is not appropriate. They are business identifiers assigned to this resource by the performer or other systems and remain constant as the resource is updated and propagates from server to server."/>
       <comment value="This is a business identifier, not a resource identifier."/>
       <min value="0"/>
       <max value="*"/>
       <base>
-        <path value="MedicationStatement.identifier"/>
+        <path value="MedicationUsage.identifier"/>
         <min value="0"/>
         <max value="*"/>
       </base>
@@ -481,6 +492,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -496,62 +508,20 @@
         <map value=".id"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.basedOn">
-      <path value="MedicationStatement.basedOn"/>
-      <short value="Fulfils plan, proposal or order"/>
-      <definition value="A plan, proposal or order that is fulfilled in whole or in part by this event."/>
-      <requirements value="Allows tracing of authorization for the event and tracking whether proposals/recommendations were acted upon."/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="MedicationStatement.basedOn"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationRequest"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/CarePlan"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/ServiceRequest"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <isModifier value="false"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="workflow"/>
-        <map value="Event.basedOn"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outboundRelationship[typeCode=FLFS].target[classCode=SBADM or PROC or PCPR or OBS, moodCode=RQO orPLAN or PRP]"/>
-      </mapping>
-    </element>
-    <element id="MedicationStatement.partOf">
-      <path value="MedicationStatement.partOf"/>
+    <element id="MedicationUsage.partOf">
+      <path value="MedicationUsage.partOf"/>
       <short value="Part of referenced event"/>
-      <definition value="A larger event of which this particular event is a component or step."/>
-      <requirements value="This should not be used when indicating which resource a MedicationStatement has been derived from.  If that is the use case, then MedicationStatement.derivedFrom should be used."/>
+      <definition value="A larger event of which this particular MedicationUsage is a component or step."/>
       <min value="0"/>
       <max value="*"/>
       <base>
-        <path value="MedicationStatement.partOf"/>
+        <path value="MedicationUsage.partOf"/>
         <min value="0"/>
         <max value="*"/>
       </base>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationAdministration"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationDispense"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationStatement"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -561,26 +531,23 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="workflow"/>
-        <map value="Event.partOf"/>
-      </mapping>
+      <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value=".outboundRelationship[typeCode=COMP]/target[classCode=SPLY or SBADM or PROC or OBS,moodCode=EVN]"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.status">
-      <path value="MedicationStatement.status"/>
-      <short value="active | completed | entered-in-error | intended | stopped | on-hold | unknown | not-taken"/>
-      <definition value="A code representing the patient or other source&#39;s judgment about the state of the medication used that this statement is about.  Generally, this will be active or completed."/>
-      <comment value="MedicationStatement is a statement at a point in time.  The status is only representative at the point when it was asserted.  The value set for MedicationStatement.status contains codes that assert the status of the use of the medication by the patient (for example, stopped or on hold) as well as codes that assert the status of the medication statement itself (for example, entered in error).&#xD;&#xD;This element is labeled as a modifier because the status contains codes that mark the resource as not currently valid."/>
+    <element id="MedicationUsage.status">
+      <path value="MedicationUsage.status"/>
+      <short value="recorded | entered-in-error | draft"/>
+      <definition value="A code representing the status of recording the medication usage."/>
+      <comment value="This status concerns just the recording of the medication usage.  MedicationUsage.adherence should be used for indicating a patient's adherence to the information in this resource.  Note, the statuses are different than in previous releases for MedicationUsage or MedicationStatement.&#xA;&#xA;This element is labeled as a modifier because the status contains codes that mark the resource as not currently valid."/>
       <min value="1"/>
       <max value="1"/>
       <base>
-        <path value="MedicationStatement.status"/>
+        <path value="MedicationUsage.status"/>
         <min value="1"/>
         <max value="1"/>
       </base>
@@ -595,16 +562,17 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="true"/>
       <isModifierReason value="This element is labelled as a modifier because it is a status element that contains status entered-in-error which means that the resource should not be treated as valid"/>
       <isSummary value="true"/>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="MedicationStatementStatus"/>
+          <valueString value="MedicationUsageStatus"/>
         </extension>
         <strength value="required"/>
-        <description value="A coded concept indicating the current status of a MedicationStatement."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/medication-statement-status|4.0.1"/>
+        <description value="A coded concept indicating the current status of a MedicationUsage."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/medication-usage-status|5.0.0-ballot"/>
       </binding>
       <mapping>
         <identity value="workflow"/>
@@ -619,15 +587,14 @@
         <map value=".statusCode"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.statusReason">
-      <path value="MedicationStatement.statusReason"/>
-      <short value="Reason for current status"/>
-      <definition value="Captures the reason for the current state of the MedicationStatement."/>
-      <comment value="This is generally only used for &quot;exception&quot; statuses such as &quot;not-taken&quot;, &quot;on-hold&quot;, &quot;cancelled&quot; or &quot;entered-in-error&quot;. The reason for performing the event at all is captured in reasonCode, not here."/>
+    <element id="MedicationUsage.category">
+      <path value="MedicationUsage.category"/>
+      <short value="Type of medication usage"/>
+      <definition value="Type of medication usage (for example, drug classification like ATC, where meds would be administered, legal category of the medication.)."/>
       <min value="0"/>
       <max value="*"/>
       <base>
-        <path value="MedicationStatement.statusReason"/>
+        <path value="MedicationUsage.category"/>
         <min value="0"/>
         <max value="*"/>
       </base>
@@ -642,56 +609,16 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="MedicationStatementStatusReason"/>
-        </extension>
-        <strength value="example"/>
-        <description value="A coded concept indicating the reason for the status of the statement."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/reason-medication-status-codes"/>
-      </binding>
-      <mapping>
-        <identity value="workflow"/>
-        <map value="Event.statusReason"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=CACT, moodCode=EVN].reasonCOde"/>
-      </mapping>
-    </element>
-    <element id="MedicationStatement.category">
-      <path value="MedicationStatement.category"/>
-      <short value="Type of medication usage"/>
-      <definition value="Indicates where the medication is expected to be consumed or administered."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="MedicationStatement.category"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="CodeableConcept"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="MedicationStatementCategory"/>
+          <valueString value="MedicationUsageAdministrationLocation"/>
         </extension>
-        <strength value="preferred"/>
-        <description value="A coded concept identifying where the medication included in the MedicationStatement is expected to be consumed or administered."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/medication-statement-category"/>
+        <strength value="example"/>
+        <description value="A coded concept identifying where the medication included in the MedicationUsage is expected to be consumed or administered."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/medicationrequest-admin-location"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -702,23 +629,20 @@
         <map value=".inboundRelationship[typeCode=COMP].source[classCode=OBS, moodCode=EVN, code=&quot;type of medication usage&quot;].value"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.medication[x]">
-      <path value="MedicationStatement.medication[x]"/>
+    <element id="MedicationUsage.medication">
+      <path value="MedicationUsage.medication"/>
       <short value="What medication was taken"/>
       <definition value="Identifies the medication being administered. This is either a link to a resource representing the details of the medication or a simple attribute carrying a code that identifies the medication from a known list of medications."/>
       <comment value="If only a code is specified, then it needs to be a code for a specific product. If more information is required, then the use of the medication resource is recommended.  For example, if you require form or lot number, then you must reference the Medication resource."/>
       <min value="1"/>
       <max value="1"/>
       <base>
-        <path value="MedicationStatement.medication[x]"/>
+        <path value="MedicationUsage.medication"/>
         <min value="1"/>
         <max value="1"/>
       </base>
       <type>
-        <code value="CodeableConcept"/>
-      </type>
-      <type>
-        <code value="Reference"/>
+        <code value="CodeableReference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Medication"/>
       </type>
       <constraint>
@@ -729,6 +653,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
@@ -752,14 +677,14 @@
         <map value=".participation[typeCode=CSM].role[classCode=ADMM or MANU]"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.subject">
-      <path value="MedicationStatement.subject"/>
+    <element id="MedicationUsage.subject">
+      <path value="MedicationUsage.subject"/>
       <short value="Who is/was taking  the medication"/>
       <definition value="The person, animal or group who is/was taking the medication."/>
       <min value="1"/>
       <max value="1"/>
       <base>
-        <path value="MedicationStatement.subject"/>
+        <path value="MedicationUsage.subject"/>
         <min value="1"/>
         <max value="1"/>
       </base>
@@ -776,6 +701,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -788,7 +714,7 @@
       </mapping>
       <mapping>
         <identity value="v2"/>
-        <map value="PID-3-Patient ID List"/>
+        <map value="PID-3 Patient ID List"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
@@ -799,21 +725,20 @@
         <map value="FiveWs.subject"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.context">
-      <path value="MedicationStatement.context"/>
-      <short value="Encounter / Episode associated with MedicationStatement"/>
-      <definition value="The encounter or episode of care that establishes the context for this MedicationStatement."/>
+    <element id="MedicationUsage.encounter">
+      <path value="MedicationUsage.encounter"/>
+      <short value="Encounter associated with MedicationUsage"/>
+      <definition value="The encounter that establishes the context for this MedicationUsage."/>
       <min value="0"/>
       <max value="1"/>
       <base>
-        <path value="MedicationStatement.context"/>
+        <path value="MedicationUsage.encounter"/>
         <min value="0"/>
         <max value="1"/>
       </base>
       <type>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Encounter"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/EpisodeOfCare"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -823,6 +748,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -834,15 +760,15 @@
         <map value=".inboundRelationship[typeCode=COMP].source[classCode=ENC, moodCode=EVN, code=&quot;type of encounter or episode&quot;]"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.effective[x]">
-      <path value="MedicationStatement.effective[x]"/>
+    <element id="MedicationUsage.effective[x]">
+      <path value="MedicationUsage.effective[x]"/>
       <short value="The date/time or interval when the medication is/was/will be taken"/>
-      <definition value="The interval of time during which it is being asserted that the patient is/was/will be taking the medication (or was not taking, when the MedicationStatement.taken element is No)."/>
-      <comment value="This attribute reflects the period over which the patient consumed the medication and is expected to be populated on the majority of Medication Statements. If the medication is still being taken at the time the statement is recorded, the &quot;end&quot; date will be omitted.  The date/time attribute supports a variety of dates - year, year/month and exact date.  If something more than this is required, this should be conveyed as text."/>
+      <definition value="The interval of time during which it is being asserted that the patient is/was/will be taking the medication (or was not taking, when the MedicationUsage.adherence element is Not Taking)."/>
+      <comment value="This attribute reflects the period over which the patient consumed the medication and is expected to be populated on the majority of Medication Usages. If the medication is still being taken and is expected to continue indefinitely at the time the usage is recorded, the &quot;end&quot; date will be omitted.  If the end date is known, then it is included as the &quot;end date&quot;.  The date/time attribute supports a variety of dates - year, year/month and exact date.  If something more than this is required, this should be conveyed as text."/>
       <min value="1"/>
       <max value="1"/>
       <base>
-        <path value="MedicationStatement.effective[x]"/>
+        <path value="MedicationUsage.effective[x]"/>
         <min value="0"/>
         <max value="1"/>
       </base>
@@ -876,8 +802,8 @@
         <map value=".effectiveTime"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.effective[x].id">
-      <path value="MedicationStatement.effective[x].id"/>
+    <element id="MedicationUsage.effective[x].id">
+      <path value="MedicationUsage.effective[x].id"/>
       <representation value="xmlAttr"/>
       <short value="Unique id for inter-element referencing"/>
       <definition value="Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
@@ -890,7 +816,7 @@
       </base>
       <type>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="string"/>
+          <valueUrl value="id"/>
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
@@ -901,8 +827,8 @@
         <map value="n/a"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.effective[x].extension">
-      <path value="MedicationStatement.effective[x].extension"/>
+    <element id="MedicationUsage.effective[x].extension">
+      <path value="MedicationUsage.effective[x].extension"/>
       <slicing>
         <discriminator>
           <type value="value"/>
@@ -948,14 +874,14 @@
         <map value="ANY.nullFlavor"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.dateAsserted">
-      <path value="MedicationStatement.dateAsserted"/>
-      <short value="When the statement was asserted?"/>
-      <definition value="The date when the medication statement was asserted by the information source."/>
+    <element id="MedicationUsage.dateAsserted">
+      <path value="MedicationUsage.dateAsserted"/>
+      <short value="When the usage was asserted?"/>
+      <definition value="The date when the Medication Usage was asserted by the information source."/>
       <min value="0"/>
       <max value="1"/>
       <base>
-        <path value="MedicationStatement.dateAsserted"/>
+        <path value="MedicationUsage.dateAsserted"/>
         <min value="0"/>
         <max value="1"/>
       </base>
@@ -970,6 +896,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -981,16 +908,16 @@
         <map value=".participation[typeCode=AUT].time"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.informationSource">
-      <path value="MedicationStatement.informationSource"/>
+    <element id="MedicationUsage.informationSource">
+      <path value="MedicationUsage.informationSource"/>
       <short value="Person or organization that provided the information about the taking of this medication"/>
-      <definition value="The person or organization that provided the information about the taking of this medication. Note: Use derivedFrom when a MedicationStatement is derived from other resources, e.g. Claim or MedicationRequest."/>
+      <definition value="The person or organization that provided the information about the taking of this medication. Note: Use derivedFrom when a MedicationUsage is derived from other resources, e.g. Claim or MedicationRequest."/>
       <min value="0"/>
-      <max value="1"/>
+      <max value="*"/>
       <base>
-        <path value="MedicationStatement.informationSource"/>
+        <path value="MedicationUsage.informationSource"/>
         <min value="0"/>
-        <max value="1"/>
+        <max value="*"/>
       </base>
       <type>
         <code value="Reference"/>
@@ -1008,6 +935,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -1016,18 +944,18 @@
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".participation[typeCode=INF].role[classCode=PAT, or codes for Practioner or Related Person (if PAT is the informer, then syntax for self-reported =true)"/>
+        <map value=".participation[typeCode=INF].role[classCode=PAT, or codes for Practitioner or Related Person (if PAT is the informer, then syntax for self-reported =true)"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.derivedFrom">
-      <path value="MedicationStatement.derivedFrom"/>
-      <short value="Additional supporting information"/>
-      <definition value="Allows linking the MedicationStatement to the underlying MedicationRequest, or to other information that supports or is used to derive the MedicationStatement."/>
-      <comment value="Likely references would be to MedicationRequest, MedicationDispense, Claim, Observation or QuestionnaireAnswers.  The most common use cases for deriving a MedicationStatement comes from creating a MedicationStatement from a MedicationRequest or from a lab observation or a claim.  it should be noted that the amount of information that is available varies from the type resource that you derive the MedicationStatement from."/>
+    <element id="MedicationUsage.derivedFrom">
+      <path value="MedicationUsage.derivedFrom"/>
+      <short value="Link to information used to derive the MedicationUsage"/>
+      <definition value="Allows linking the MedicationUsage to the underlying MedicationRequest, or to other information that supports or is used to derive the MedicationUsage."/>
+      <comment value="Likely references would be to MedicationRequest, MedicationDispense, Claim, Observation or QuestionnaireAnswers.  The most common use cases for deriving a MedicationUsage comes from creating a MedicationUsage from a MedicationRequest or from a lab observation or a claim.  it should be noted that the amount of information that is available varies from the type resource that you derive the MedicationUsage from."/>
       <min value="0"/>
       <max value="*"/>
       <base>
-        <path value="MedicationStatement.derivedFrom"/>
+        <path value="MedicationUsage.derivedFrom"/>
         <min value="0"/>
         <max value="*"/>
       </base>
@@ -1043,6 +971,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -1050,66 +979,20 @@
         <map value=".outboundRelationship[typeCode=SPRT]/target[classCode=ACT,moodCode=EVN]"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.reasonCode">
-      <path value="MedicationStatement.reasonCode"/>
+    <element id="MedicationUsage.reason">
+      <path value="MedicationUsage.reason"/>
       <short value="Reason for why the medication is being/was taken"/>
-      <definition value="A reason for why the medication is being/was taken."/>
+      <definition value="A concept, Condition or observation that supports why the medication is being/was taken."/>
       <comment value="This could be a diagnosis code. If a full condition record exists or additional detail is needed, use reasonForUseReference."/>
       <min value="0"/>
       <max value="*"/>
       <base>
-        <path value="MedicationStatement.reasonCode"/>
+        <path value="MedicationUsage.reason"/>
         <min value="0"/>
         <max value="*"/>
       </base>
       <type>
-        <code value="CodeableConcept"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="MedicationReason"/>
-        </extension>
-        <strength value="example"/>
-        <description value="A coded concept identifying why the medication is being taken."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/condition-code"/>
-      </binding>
-      <mapping>
-        <identity value="workflow"/>
-        <map value="Event.reasonCode"/>
-      </mapping>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.why[x]"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".reasonCode"/>
-      </mapping>
-    </element>
-    <element id="MedicationStatement.reasonReference">
-      <path value="MedicationStatement.reasonReference"/>
-      <short value="Condition or observation that supports why the medication is being/was taken"/>
-      <definition value="Condition or observation that supports why the medication is being/was taken."/>
-      <comment value="This is a reference to a condition that is the reason why the medication is being/was taken.  If only a code exists, use reasonForUseCode."/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="MedicationStatement.reasonReference"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Reference"/>
+        <code value="CodeableReference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DiagnosticReport"/>
@@ -1122,11 +1005,20 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="MedicationReason"/>
+        </extension>
+        <strength value="example"/>
+        <description value="A coded concept identifying why the medication is being taken."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/condition-code"/>
+      </binding>
       <mapping>
         <identity value="workflow"/>
-        <map value="Event.reasonReference"/>
+        <map value="Event.reason"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
@@ -1134,17 +1026,17 @@
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".outboundRelationship[typeCode=RSON]/target[classCode=OBS,moodCode=EVN, code=&quot;reason for use&quot;].value"/>
+        <map value=".reasonCode"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.note">
-      <path value="MedicationStatement.note"/>
-      <short value="Further information about the statement"/>
-      <definition value="Provides extra information about the medication statement that is not conveyed by the other attributes."/>
+    <element id="MedicationUsage.note">
+      <path value="MedicationUsage.note"/>
+      <short value="Further information about the usage"/>
+      <definition value="Provides extra information about the Medication Usage that is not conveyed by the other attributes."/>
       <min value="0"/>
       <max value="*"/>
       <base>
-        <path value="MedicationStatement.note"/>
+        <path value="MedicationUsage.note"/>
         <min value="0"/>
         <max value="*"/>
       </base>
@@ -1159,6 +1051,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -1170,15 +1063,78 @@
         <map value=".inboundRelationship[typeCode=SUBJ]/source[classCode=OBS,moodCode=EVN,code=&quot;annotation&quot;].value"/>
       </mapping>
     </element>
-    <element id="MedicationStatement.dosage">
-      <path value="MedicationStatement.dosage"/>
-      <short value="Details of how medication is/was taken or should be taken"/>
-      <definition value="Indicates how the medication is/was or should be taken by the patient."/>
-      <comment value="The dates included in the dosage on a Medication Statement reflect the dates for a given dose.  For example, &quot;from November 1, 2016 to November 3, 2016, take one tablet daily and from November 4, 2016 to November 7, 2016, take two tablets daily.&quot;  It is expected that this specificity may only be populated where the patient brings in their labeled container or where the Medication Statement is derived from a MedicationRequest."/>
+    <element id="MedicationUsage.relatedClinicalInformation">
+      <path value="MedicationUsage.relatedClinicalInformation"/>
+      <short value="Link to information relevant to the usage of a medication"/>
+      <definition value="Link to information that is relevant to a medication usage, for example, illicit drug use, gestational age, etc."/>
       <min value="0"/>
       <max value="*"/>
       <base>
-        <path value="MedicationStatement.dosage"/>
+        <path value="MedicationUsage.relatedClinicalInformation"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="TBD"/>
+      </mapping>
+    </element>
+    <element id="MedicationUsage.renderedDosageInstruction">
+      <path value="MedicationUsage.renderedDosageInstruction"/>
+      <short value="Full representation of the dosage instructions"/>
+      <definition value="The full representation of the dose of the medication included in all dosage instructions.  To be used when multiple dosage instructions are included to represent complex dosing such as increasing or tapering doses."/>
+      <requirements value="The content of the renderedDosageInstructions must not be different than the dose represented in the dosageInstruction content."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="MedicationUsage.renderedDosageInstruction"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="SubstanceAdministration.text"/>
+      </mapping>
+    </element>
+    <element id="MedicationUsage.dosage">
+      <path value="MedicationUsage.dosage"/>
+      <short value="Details of how medication is/was taken or should be taken"/>
+      <definition value="Indicates how the medication is/was or should be taken by the patient."/>
+      <comment value="The dates included in the dosage on a Medication Usage reflect the dates for a given dose.  For example, &quot;from November 1, 2016 to November 3, 2016, take one tablet daily and from November 4, 2016 to November 7, 2016, take two tablets daily.&quot;  It is expected that this specificity may only be populated where the patient brings in their labeled container or where the Medication Usage is derived from a MedicationRequest."/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="MedicationUsage.dosage"/>
         <min value="0"/>
         <max value="*"/>
       </base>
@@ -1193,6 +1149,7 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -1200,16 +1157,229 @@
         <map value="refer dosageInstruction mapping"/>
       </mapping>
     </element>
+    <element id="MedicationUsage.adherence">
+      <path value="MedicationUsage.adherence"/>
+      <short value="Indicates if the medication is being consumed or administered as instructed"/>
+      <definition value="Indicates if the medication is being consumed or administered as instructed."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="MedicationUsage.adherence"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="outboundRelationship[typeCode=PERT].target[classCode=OBV,moodCode=EVN].value[xsi:type=BL]"/>
+      </mapping>
+    </element>
+    <element id="MedicationUsage.adherence.id">
+      <path value="MedicationUsage.adherence.id"/>
+      <representation value="xmlAttr"/>
+      <short value="Unique id for inter-element referencing"/>
+      <definition value="Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
+          <valueUrl value="string"/>
+        </extension>
+        <code value="http://hl7.org/fhirpath/System.String"/>
+      </type>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="MedicationUsage.adherence.extension">
+      <path value="MedicationUsage.adherence.extension"/>
+      <short value="Additional content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <constraint>
+        <key value="ext-1"/>
+        <severity value="error"/>
+        <human value="Must have either extensions or value[x], not both"/>
+        <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+      </constraint>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="MedicationUsage.adherence.modifierExtension">
+      <path value="MedicationUsage.adherence.modifierExtension"/>
+      <short value="Extensions that cannot be ignored even if unrecognized"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://build.fhir.org/extensibility.html#modifierExtension)."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <alias value="modifiers"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="BackboneElement.modifierExtension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <constraint>
+        <key value="ext-1"/>
+        <severity value="error"/>
+        <human value="Must have either extensions or value[x], not both"/>
+        <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+      </constraint>
+      <isModifier value="true"/>
+      <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the element that contains them"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="MedicationUsage.adherence.code">
+      <path value="MedicationUsage.adherence.code"/>
+      <short value="Type of adherence"/>
+      <definition value="Type of the adherence for the medication."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="MedicationUsage.adherence.code"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="MedicationUsageAdherence"/>
+        </extension>
+        <strength value="example"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/medication-usage-adherence"/>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value="outboundRelationship[typeCode=PERT].target[classCode=OBV,moodCode=EVN].value[xsi:type=BL]"/>
+      </mapping>
+    </element>
+    <element id="MedicationUsage.adherence.reason">
+      <path value="MedicationUsage.adherence.reason"/>
+      <short value="Details of the reason for the current use of the medication"/>
+      <definition value="Captures the reason for the current use or adherence of a medication."/>
+      <comment value="This is generally only used for &quot;exception&quot; statuses such as &quot;entered-in-error&quot;. The reason for performing the event at all is captured in reasonCode, not here."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="MedicationUsage.adherence.reason"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="MedicationUsageStatusReason"/>
+        </extension>
+        <strength value="example"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/reason-medication-status-codes"/>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".inboundRelationship[typeCode=SUBJ].source[classCode=CACT, moodCode=EVN].reasonCode"/>
+      </mapping>
+    </element>
   </snapshot>
   <differential>
-    <element id="MedicationStatement.effective[x]">
-      <path value="MedicationStatement.effective[x]"/>
+    <element id="MedicationUsage.effective[x]">
+      <path value="MedicationUsage.effective[x]"/>
       <min value="1"/>
       <max value="1"/>
       <mustSupport value="true"/>
     </element>
-    <element id="MedicationStatement.effective[x].extension">
-      <path value="MedicationStatement.effective[x].extension"/>
+    <element id="MedicationUsage.effective[x].extension">
+      <path value="MedicationUsage.effective[x].extension"/>
       <short value="effective[x] absence reason"/>
       <definition value="Provides a reason why the effectiveTime is missing."/>
       <max value="1"/>
