@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="Patient" />
+  <url value="https://fhir.kbv.de/StructureDefinition/Patient" />
+  <version value="0.0.0" />
+  <name value="Patient" />
+  <status value="active" />
+  <fhirVersion value="4.0.1" />
+  <mapping>
+    <identity value="rim" />
+    <uri value="http://hl7.org/v3" />
+    <name value="RIM Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="cda" />
+    <uri value="http://hl7.org/v3/cda" />
+    <name value="CDA (R2)" />
+  </mapping>
+  <mapping>
+    <identity value="w5" />
+    <uri value="http://hl7.org/fhir/fivews" />
+    <name value="FiveWs Pattern Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="v2" />
+    <uri value="http://hl7.org/v2" />
+    <name value="HL7 v2 Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="loinc" />
+    <uri value="http://loinc.org" />
+    <name value="LOINC code for the element" />
+  </mapping>
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Patient" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Patient">
+      <path value="Patient" />
+      <constraint>
+        <key value="pat-de-kbv-1" />
+        <severity value="error" />
+        <human value="Test, ob auf den Straßennamen in der erster Adresszeile zugegriffen werden kann." />
+        <expression value="(address.line[0].extension('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName').value as String) = 'Musterstr.'" />
+        <source value="https://fhir.kbv.de/StructureDefinition/Patient" />
+      </constraint>
+    </element>
+        <element id="Patient.address.extension">
+            <path value="Patient.address.extension" />
+            <slicing>
+                <discriminator>
+                    <type value="value" />
+                    <path value="url" />
+                </discriminator>
+                <rules value="open" />
+            </slicing>
+        </element>
+        <element id="Patient.address.extension:Stadtteil">
+            <path value="Patient.address.extension" />
+            <sliceName value="Stadtteil" />
+            <short value="Stadt- oder Ortsteil" />
+            <max value="1" />
+            <type>
+                <code value="Extension" />
+                <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-precinct" />
+            </type>
+        </element>
+        <element id="Patient.address.type">
+            <path value="Patient.address.type" />
+            <mapping>
+                <identity value="BDT" />
+                <map value="1202 (1=physical, 2=postal)" />
+            </mapping>
+        </element>
+        <element id="Patient.address.line">
+            <path value="Patient.address.line" />
+            <short value="Stra&#223;enname mit Hausnummer oder Postfach sowie weitere Angaben zur Zustellung" />
+            <definition value="Diese Komponente kann Stra&#223;ennamen, Hausnummer, Appartmentnummer, Postfach, c/o sowie weitere Zustellungshinweise enthalten. Die Informationen k&#246;nnen in mehrere line-Komponenten aufgeteilt werden.\nBei Verwendung der Extensions, um Stra&#223;e, Hausnnummer und Postleitzahl strukturiert zu &#252;bermitteln, m&#252;ssen diese Informationen stets vollst&#228;ndig auch in der line-Komponente, die sie erweitern, enthalten sein, um es Systemen, die diese Extensions nicht verwenden zu erm&#246;glichen, auf diese Informationen zugreifen zu k&#246;nnen." />
+            <max value="3" />
+            <example>
+                <label value="Beipiel f&#252;r Adresszeile mit Extensions f&#252;r Stra&#223;e und Hausnummer" />
+                <valueString value="Musterweg 42">
+                    <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName">
+                        <valueString value="Musterweg" />
+                    </extension>
+                    <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber">
+                        <valueString value="42" />
+                    </extension>
+                </valueString>
+            </example>
+            <mapping>
+                <identity value="KVDT" />
+                <map value="3107 + 3109 + 3115 oder 3123" />
+            </mapping>
+            <mapping>
+                <identity value="BDT" />
+                <map value="3107 + 3109 + 3115 oder 3123" />
+            </mapping>
+        </element>
+        <element id="Patient.address.line.extension">
+            <path value="Patient.address.line.extension" />
+            <slicing>
+                <discriminator>
+                    <type value="value" />
+                    <path value="url" />
+                </discriminator>
+                <rules value="open" />
+            </slicing>
+        </element>
+        <element id="Patient.address.line.extension:Strasse">
+            <path value="Patient.address.line.extension" />
+            <sliceName value="Strasse" />
+            <short value="Strassenname (ohne Hausnummer)" />
+            <definition value="Strassenname (ohne Hausnummer)\nBei Angabe einer Strasse in dieser Extension muss diese auch in Patient.address.line angegeben werden um die Interoperabilit&#228;t mit Systemen zu gew&#228;hrleisten, die diese Extension nicht verwenden." />
+            <max value="1" />
+            <type>
+                <code value="Extension" />
+                <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName" />
+            </type>
+            <mapping>
+                <identity value="KVDT" />
+                <map value="3107" />
+            </mapping>
+            <mapping>
+                <identity value="BDT" />
+                <map value="3107" />
+            </mapping>
+        </element>
+        <element id="Patient.address.line.extension:Hausnummer">
+            <path value="Patient.address.line.extension" />
+            <sliceName value="Hausnummer" />
+            <short value="Hausnummer" />
+            <definition value="Hausnummer, sowie Zus&#228;tze (Appartmentnummer, Etage...)\nBei Angabe einer Hausnummer in dieser Extension muss diese auch in Patient.address.line angegeben werden um die Interoperabilit&#228;t mit Systemen zu gew&#228;hrleisten, die diese Extension nicht verwenden." />
+            <max value="1" />
+            <type>
+                <code value="Extension" />
+                <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber" />
+            </type>
+            <mapping>
+                <identity value="KVDT" />
+                <map value="3109" />
+            </mapping>
+            <mapping>
+                <identity value="BDT" />
+                <map value="3109" />
+            </mapping>
+        </element>
+        <element id="Patient.address.line.extension:Adresszusatz">
+            <path value="Patient.address.line.extension" />
+            <sliceName value="Adresszusatz" />
+            <short value="Adresszusatz" />
+            <definition value="Zus&#228;tzliche Informationen, wie z.B. &quot;3. Etage&quot;, &quot;Appartment C&quot;\nBei Angabe einer Zusatzinformation in dieser Extension muss diese auch in Patient.address.line angegeben werden um die Interoperabilit&#228;t mit Systemen zu gew&#228;hrleisten, die diese Extension nicht verwenden." />
+            <max value="1" />
+            <type>
+                <code value="Extension" />
+                <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator" />
+            </type>
+            <mapping>
+                <identity value="KVDT" />
+                <map value="3115" />
+            </mapping>
+            <mapping>
+                <identity value="BDT" />
+                <map value="3115" />
+            </mapping>
+        </element>
+        <element id="Patient.address.line.extension:Postfach">
+            <path value="Patient.address.line.extension" />
+            <sliceName value="Postfach" />
+            <short value="Postfach" />
+            <definition value="Postfach-Adresse.\nBei Angabe eines Postfaches in dieser Extension muss das Postfach auch in Patient.address.line angegeben werden um die Interoperabilit&#228;t mit Systemen zu gew&#228;hrleisten, die diese Extension nicht verwenden.\nEine Postfach-Adresse darf nicht in Verbindung mit Patient.address.type &quot;physical&quot; oder &quot;both&quot; verwendet werden." />
+            <max value="1" />
+            <type>
+                <code value="Extension" />
+                <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-postBox" />
+            </type>
+            <mapping>
+                <identity value="KVDT" />
+                <map value="3123" />
+            </mapping>
+            <mapping>
+                <identity value="BDT" />
+                <map value="3123" />
+            </mapping>
+        </element>
+        <element id="Patient.address.city">
+            <path value="Patient.address.city" />
+            <mapping>
+                <identity value="BDT" />
+                <map value="3113 oder 3122 (Postfach)" />
+            </mapping>
+            <mapping>
+                <identity value="KVDT" />
+                <map value="3113 oder 3122 (Postfach)" />
+            </mapping>
+        </element>
+  </differential>
+</StructureDefinition>
