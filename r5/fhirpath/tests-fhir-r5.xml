@@ -1271,7 +1271,9 @@ Any text enclosed within is ignored
 
 	<group name="testType">
 		<test name="testType1" inputfile="patient-example.xml"><expression>1.type().namespace = 'System'</expression><output type="boolean">true</output></test>
-		<test name="testType2" inputfile="patient-example.xml"><expression>1.type().name = 'Integer'</expression><output type="boolean">true</output></test>
+		<test name="testType1a" inputfile="patient-example.xml"><expression>1.type().name = 'Integer'</expression><output type="boolean">true</output></test>
+		<test name="testType2" inputfile="patient-example.xml"><expression>'1'.type().namespace = 'System'</expression><output type="boolean">true</output></test>
+		<test name="testType2a" inputfile="patient-example.xml"><expression>'1'.type().name = 'String'</expression><output type="boolean">true</output></test>
 		<test name="testType3" inputfile="patient-example.xml"><expression>true.type().namespace = 'System'</expression><output type="boolean">true</output></test>
 		<test name="testType4" inputfile="patient-example.xml"><expression>true.type().name = 'Boolean'</expression><output type="boolean">true</output></test>
 		<test name="testType5" inputfile="patient-example.xml"><expression>true.is(Boolean)</expression><output type="boolean">true</output></test>
@@ -1293,6 +1295,12 @@ Any text enclosed within is ignored
 		<test name="testType21" inputfile="patient-example.xml"><expression>Patient.ofType(FHIR.Patient).type().name</expression><output type="string">Patient</output></test>
 		<test name="testType22" inputfile="patient-example.xml"><expression>Patient.is(System.Patient).not()</expression><output type="boolean">true</output></test>
 		<test name="testType23" inputfile="patient-example.xml"><expression>Patient.ofType(FHIR.`Patient`).type().name</expression><output type="string">Patient</output></test>
+
+		<test name="testTypeA1" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[0].value.is(FHIR.string)</expression><output type="boolean">true</output></test>
+		<test name="testTypeA2" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[1].value.is(FHIR.integer)</expression><output type="boolean">true</output></test>
+		<test name="testTypeA3" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[2].value.is(FHIR.uuid)</expression><output type="boolean">true</output></test>
+		<test name="testTypeA4" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[2].value.is(FHIR.uri)</expression><output type="boolean">true</output></test>
+		<test name="testTypeA3" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[3].value.is(FHIR.decimal)</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testConformsTo">
