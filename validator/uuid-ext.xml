@@ -1,0 +1,83 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="ext-medication" />
+  <url value="https://example.com/StructureDefinition/ext-medication" />
+  <name value="ExtMedication" />
+  <title value="Ext Medication"/>
+  <version value="1.0.0"/>
+  <status value="draft" />
+  <fhirVersion value="4.0.1" />
+  <kind value="complex-type" />
+  <abstract value="false" />
+  <context>
+    <type value="element" />
+    <expression value="Medication" />
+  </context>
+  <type value="Extension" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Extension">
+      <path value="Extension" />
+      <max value="1" />
+    </element>
+    <element id="Extension.extension">
+      <path value="Extension.extension" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+      <min value="0" />
+    </element>
+    <element id="Extension.extension:drug-code">
+      <path value="Extension.extension" />
+      <sliceName value="drug-code" />
+      <min value="0" />
+      <max value="1" />
+    </element>
+    <element id="Extension.extension:drug-code.extension">
+      <path value="Extension.extension.extension" />
+      <max value="0" />
+    </element>
+    <element id="Extension.extension:drug-code.url">
+      <path value="Extension.extension.url" />
+      <fixedUri value="drug-code" />
+    </element>
+    <element id="Extension.extension:drug-code.value[x]">
+      <path value="Extension.extension.value[x]" />
+      <type>
+        <code value="string" />
+      </type>
+    </element>
+    <element id="Extension.extension:product-id">
+      <path value="Extension.extension" />
+      <sliceName value="product-id" />
+      <min value="0" />
+      <max value="1" />
+    </element>
+    <element id="Extension.extension:product-id.extension">
+      <path value="Extension.extension.extension" />
+      <max value="0" />
+    </element>
+    <element id="Extension.extension:product-id.url">
+      <path value="Extension.extension.url" />
+      <fixedUri value="product-id" />
+    </element>
+    <element id="Extension.extension:product-id.value[x]">
+      <path value="Extension.extension.value[x]" />
+      <type>
+        <code value="uuid" />
+      </type>
+    </element>
+    <element id="Extension.url">
+      <path value="Extension.url" />
+      <fixedUri value="https://example.com/StructureDefinition/ext-medication" />
+    </element>
+    <element id="Extension.value[x]">
+      <path value="Extension.value[x]" />
+      <max value="0" />
+    </element>
+  </differential>
+</StructureDefinition>

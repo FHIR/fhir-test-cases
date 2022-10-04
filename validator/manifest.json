@@ -3974,11 +3974,11 @@
               "severity": "fatal",
               "code": "structure",
               "details": {
-                "text": "org.xml.sax.SAXParseException; lineNumber: 7; columnNumber: 3; The element type \"id\" must be terminated by the matching end-tag \"</id>\"."
+                "text": "The element type \"id\" must be terminated by the matching end-tag \"</id>\"."
               },
-              "diagnostics": "[0,0]",
+              "diagnostics": "[7,3]",
               "expression": [
-                "(syntax)"
+                "(xml)"
               ]
             }
           ]
@@ -4471,11 +4471,11 @@
               "severity": "fatal",
               "code": "structure",
               "details": {
-                "text": "org.xml.sax.SAXParseException; lineNumber: 1; columnNumber: 10; DOCTYPE is disallowed when the feature \"http://apache.org/xml/features/disallow-doctype-decl\" set to true."
+                "text": "DOCTYPE is disallowed when the feature \"http://apache.org/xml/features/disallow-doctype-decl\" set to true."
               },
-              "diagnostics": "[0,0]",
+              "diagnostics": "[1,10]",
               "expression": [
-                "(syntax)"
+                "(xml)"
               ]
             }
           ]
@@ -4497,7 +4497,7 @@
               },
               "diagnostics": "[0,0]",
               "expression": [
-                "(syntax)"
+                "(xml)"
               ]
             }
           ]
@@ -8167,11 +8167,11 @@
               "severity": "fatal",
               "code": "structure",
               "details": {
-                "text": "org.xml.sax.SAXParseException; lineNumber: 28; columnNumber: 34; An invalid XML character (Unicode: 0xb) was found in the element content of the document."
+                "text": "An invalid XML character (Unicode: 0xb) was found in the element content of the document."
               },
-              "diagnostics": "[0,0]",
+              "diagnostics": "[28,34]",
               "expression": [
-                "(syntax)"
+                "(xml)"
               ]
             }
           ]
@@ -13497,11 +13497,11 @@
               "severity": "fatal",
               "code": "structure",
               "details": {
-                "text": "org.xml.sax.SAXParseException; lineNumber: 1; columnNumber: 40; Content is not allowed in prolog."
+                "text": "Content is not allowed in prolog."
               },
-              "diagnostics": "[0,0]",
+              "diagnostics": "[1,40]",
               "expression": [
-                "(syntax)"
+                "(xml)"
               ]
             }
           ]
@@ -13530,11 +13530,11 @@
               "severity": "fatal",
               "code": "structure",
               "details": {
-                "text": "org.xml.sax.SAXParseException; lineNumber: 1; columnNumber: 1; Content is not allowed in prolog."
+                "text": "Content is not allowed in prolog."
               },
-              "diagnostics": "[0,0]",
+              "diagnostics": "[1,1]",
               "expression": [
-                "(syntax)"
+                "(xml)"
               ]
             }
           ]
@@ -27274,6 +27274,36 @@
               ]
             }
           ]
+        }
+      }
+    },
+    {
+      "name": "uuid-extension",
+      "file": "uuid.json",
+      "documentation": "Reported problem with UUID extension",
+      "version": "4.0",
+      "supporting": ["uuid-ext.xml"],
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "The extension https://example.com/StructureDefinition/is-extemp is unknown, and not allowed here"
+            },
+            "diagnostics" : "[5,6]",
+            "expression" : ["Medication.extension[0]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "code-invalid",
+            "details" : {
+              "text" : "Unable to find code 56248011000036107 in http://snomed.info/sct (version http://snomed.info/sct/900000000000207008/version/20220731); The code \"56248011000036107\" is not valid in the system http://snomed.info/sct; The code provided (http://snomed.info/sct#56248011000036107) is not valid in the value set 'All codes known to the system' (from http://tx.fhir.org/r4) for 'http://snomed.info/sct#56248011000036107'"
+            },
+            "diagnostics" : "[31,8]",
+            "expression" : ["Medication.code.coding[0]"]
+          }]
         }
       }
     }
