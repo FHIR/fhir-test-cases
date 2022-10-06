@@ -319,6 +319,7 @@ Any text enclosed within is ignored
 		<test name="testNotEmpty" inputfile="patient-example.xml"><expression>Patient.name.empty().not()</expression><output type="boolean">true</output></test>
 		<test name="testEmpty" inputfile="patient-example.xml"><expression>Patient.link.empty()</expression><output type="boolean">true</output></test>
 
+		<test name="testLiteralNotOnEmpty" inputfile="patient-example.xml"><expression>{}.not().empty()</expression><output type="boolean">true</output></test>
 		<test name="testLiteralNotTrue" inputfile="patient-example.xml"><expression>true.not() = false</expression><output type="boolean">true</output></test>
 		<test name="testLiteralNotFalse" inputfile="patient-example.xml"><expression>false.not() = true</expression><output type="boolean">true</output></test>
 		<test name="testIntegerBooleanNotTrue" inputfile="patient-example.xml"><expression>(0).not() = false</expression><output type="boolean">true</output></test>
@@ -459,6 +460,7 @@ Any text enclosed within is ignored
 	<group name="testSubSetOf">
 		<test name="testSubSetOf1" inputfile="patient-example.xml"><expression>Patient.name.first().subsetOf($this.name)</expression><output type="boolean">true</output></test>
 		<test name="testSubSetOf2" inputfile="patient-example.xml"><expression>Patient.name.subsetOf($this.name.first()).not()</expression><output type="boolean">true</output></test>
+		<test name="testSubSetOf3" inputfile="explanationofbenefit-example.json"><expression>supportingInfo.where(category.coding.code = 'additionalbodysite').sequence.subsetOf($this.item.informationSequence)</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testSuperSetOf">
@@ -530,6 +532,7 @@ Any text enclosed within is ignored
 	<group name="testSelect">
 		<test name="testSelect1" inputfile="patient-example.xml"><expression>Patient.name.select(given).count() = 5</expression><output type="boolean">true</output></test>
 		<test name="testSelect2" inputfile="patient-example.xml"><expression>Patient.name.select(given | family).count() = 7 </expression><output type="boolean">true</output></test>
+		<test name="testSelect3" inputfile="patient-example.xml"><expression>name.select(use.contains('i')).count()</expression><output type="integer">3</output></test> <!-- three booleans, all false -->
 	</group>
 
 	<group name="testRepeat">
@@ -537,6 +540,7 @@ Any text enclosed within is ignored
 		<test name="testRepeat2" inputfile="questionnaire-example.xml"><expression>Questionnaire.repeat(item).code.count() = 11</expression><output type="boolean">true</output></test>
 		<test name="testRepeat3" inputfile="questionnaire-example.xml"><expression>Questionnaire.descendants().code.count() = 23</expression><output type="boolean">true</output></test>
 		<test name="testRepeat4" inputfile="questionnaire-example.xml"><expression>Questionnaire.children().code.count() = 2</expression><output type="boolean">true</output></test>
+		<test name="testRepeat5" inputfile="patient-example.xml"><expression>Patient.name.repeat('test')</expression><output type="string">test</output></test>
 	</group>
 
 	<group name="testAggregate">
@@ -625,12 +629,24 @@ Any text enclosed within is ignored
 		<test name="testToChars1" inputfile="patient-example.xml"><expression>'t2'.toChars() = 't' | '2'</expression><output type="boolean">true</output></test>
 	</group>
 
+	<group name="testIndexOf">
+		<test name="testIndexOf1" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.indexOf('-')</expression><output type="integer">12</output></test>
+		<test name="testIndexOf2" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.indexOf('z')</expression><output type="integer">-1</output></test>
+		<test name="testIndexOf3" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.indexOf('')</expression><output type="integer">0</output></test>
+		<test name="testIndexOf5" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.indexOf({}).empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testIndexOf4" inputfile="patient-example.xml"><expression>{}.indexOf('-').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testIndexOf5" inputfile="patient-example.xml"><expression>{}.indexOf({}).empty() = true</expression><output type="boolean">true</output></test>
+	</group>
+
 	<group name="testSubstring">
 		<test name="testSubstring1" inputfile="patient-example.xml"><expression>'12345'.substring(2) = '345'</expression><output type="boolean">true</output></test>
 		<test name="testSubstring2" inputfile="patient-example.xml"><expression>'12345'.substring(2,1) = '3'</expression><output type="boolean">true</output></test>
 		<test name="testSubstring3" inputfile="patient-example.xml"><expression>'12345'.substring(2,5) = '345'</expression><output type="boolean">true</output></test>
 		<test name="testSubstring4" inputfile="patient-example.xml"><expression>'12345'.substring(25).empty()</expression><output type="boolean">true</output></test>
 		<test name="testSubstring5" inputfile="patient-example.xml"><expression>'12345'.substring(-1).empty()</expression><output type="boolean">true</output></test>
+		<test name="testSubstring7" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.substring(0, 12)</expression><output type="string">LogicalModel</output></test>
+		<test name="testSubstring8" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.substring(0, 'LogicalModel-Person'.indexOf('-'))</expression><output type="string">LogicalModel</output></test>
+		<test name="testSubstring4" inputfile="patient-example.xml"><expression>{}.substring(25).empty() = true</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testStartsWith">
@@ -641,6 +657,11 @@ Any text enclosed within is ignored
 		<test name="testStartsWith5" inputfile="patient-example.xml"><expression>'12345'.startsWith('12345') = true</expression><output type="boolean">true</output></test>
 		<test name="testStartsWith6" inputfile="patient-example.xml"><expression>'12345'.startsWith('123456') = false</expression><output type="boolean">true</output></test>
 		<test name="testStartsWith7" inputfile="patient-example.xml"><expression>'12345'.startsWith('') = true</expression><output type="boolean">true</output></test>
+		<test name="testStartsWith8" inputfile="patient-example.xml"><expression>{}.startsWith('1').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testStartsWith9" inputfile="patient-example.xml"><expression>{}.startsWith('').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testStartsWith10" inputfile="patient-example.xml"><expression>''.startsWith('') = true</expression><output type="boolean">true</output></test>
+		<test name="testStartsWith11" inputfile="patient-example.xml"><expression>{}.startsWith('').exists() = false</expression><output type="boolean">true</output></test>
+		<test name="testStartsWithNonString1" inputfile="appointment-examplereq.json"><expression invalid="semantic">Appointment.identifier.startsWith('rand')</expression></test>
 	</group>
 
 	<group name="testEndsWith">
@@ -651,6 +672,9 @@ Any text enclosed within is ignored
 		<test name="testEndsWith5" inputfile="patient-example.xml"><expression>'12345'.endsWith('12345') = true</expression><output type="boolean">true</output></test>
 		<test name="testEndsWith6" inputfile="patient-example.xml"><expression>'12345'.endsWith('012345') = false</expression><output type="boolean">true</output></test>
 		<test name="testEndsWith7" inputfile="patient-example.xml"><expression>'12345'.endsWith('') = true</expression><output type="boolean">true</output></test>
+		<test name="testEndsWith8" inputfile="patient-example.xml"><expression>{}.endsWith('1').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testEndsWith9" inputfile="patient-example.xml"><expression>{}.endsWith('').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testEndsWithNonString1" inputfile="appointment-examplereq.json"><expression invalid="semantic">Appointment.identifier.endsWith('rand')</expression></test>
 	</group>
 
 	<group name="testContainsString">
@@ -661,6 +685,48 @@ Any text enclosed within is ignored
 		<test name="testContainsString5" inputfile="patient-example.xml"><expression>'12345'.contains('12345') = true</expression><output type="boolean">true</output></test>
 		<test name="testContainsString6" inputfile="patient-example.xml"><expression>'12345'.contains('012345') = false</expression><output type="boolean">true</output></test>
 		<test name="testContainsString7" inputfile="patient-example.xml"><expression>'12345'.contains('') = true</expression><output type="boolean">true</output></test>
+		<test name="testContainsString8" inputfile="patient-example.xml"><expression>{}.contains('a').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testContainsString9" inputfile="patient-example.xml"><expression>{}.contains('').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testContainsNonString1" inputfile="appointment-examplereq.json"><expression invalid="semantic">Appointment.identifier.contains('rand')</expression></test>
+	</group>
+
+	<group name="testMatches">
+		<test name="testMatchesCaseSensitive1"><expression>'FHIR'.matches('FHIR')</expression><output type="boolean">true</output></test>
+		<test name="testMatchesCaseSensitive2"><expression>'FHIR'.matches('fhir')</expression><output type="boolean">false</output></test>
+		<test name="testMatchesEmpty"><expression>'FHIR'.matches({}).empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testMatchesEmpty2"><expression>{}.matches('FHIR').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testMatchesEmpty3"><expression>{}.matches({}).empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testMatchesSingleLineMode1"><expression>'A
+			B'.matches('A.*B')</expression><output type="boolean">true</output></test>
+		<test name="testMatchesWithinUrl1"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matches('library')</expression><output type="boolean">false</output></test>
+		<test name="testMatchesWithinUrl1"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matches('Library')</expression><output type="boolean">true</output></test>
+		<test name="testMatchesWithinUrl1"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matches('^Library$')</expression><output type="boolean">false</output></test>
+		<test name="testMatchesWithinUrl1a"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matches('.*Library.*')</expression><output type="boolean">true</output></test>
+		<test name="testMatchesWithinUrl2"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matches('Measure')</expression><output type="boolean">false</output></test>
+		<test name="testMatchesFullWithinUrl1"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matchesFull('library')</expression><output type="boolean">false</output></test>
+		<test name="testMatchesFullWithinUrl1"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matchesFull('Library')</expression><output type="boolean">false</output></test>
+		<test name="testMatchesFullWithinUrl1"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matchesFull('^Library$')</expression><output type="boolean">false</output></test>
+		<test name="testMatchesFullWithinUrl1a"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matchesFull('.*Library.*')</expression><output type="boolean">true</output></test>
+		<test name="testMatchesFullWithinUrl2"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matchesFull('Measure')</expression><output type="boolean">false</output></test>
+<!--		<test name="testMatchesUnicodeCharacters"><expression>'🔥🔥🔥'.matches('🔥+')</expression><output type="boolean">true</output></test> -->
+	</group>
+	<group name="testReplaceMatches">
+		<test name="testReplaceMatches1" inputfile="patient-example.xml"><expression>'123456'.replaceMatches('234', 'X')</expression><output type="string">1X56</output></test>
+		<test name="testReplaceMatches2" inputfile="patient-example.xml"><expression>'abc'.replaceMatches('', 'x')</expression><output type="string">abc</output></test>
+		<test name="testReplaceMatches3" inputfile="patient-example.xml"><expression>'123456'.replaceMatches('234', '')</expression><output type="string">156</output></test>
+		<test name="testReplaceMatches4" inputfile="patient-example.xml"><expression>{}.replaceMatches('234', 'X').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testReplaceMatches5" inputfile="patient-example.xml"><expression>'123'.replaceMatches({}, 'X').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testReplaceMatches6" inputfile="patient-example.xml"><expression>'123'.replaceMatches('2', {}).empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testReplaceMatches7" inputfile="patient-example.xml"><expression>'abc123'.replaceMatches('[0-9]', '-')</expression><output type="string">abc---</output></test>
+	</group>
+
+	<group name="testReplace">
+		<test name="testReplace1" inputfile="patient-example.xml"><expression>'123456'.replace('234', 'X')</expression><output type="string">1X56</output></test>
+		<test name="testReplace2" inputfile="patient-example.xml"><expression>'abc'.replace('', 'x')</expression><output type="string">xaxbxcx</output></test>
+		<test name="testReplace3" inputfile="patient-example.xml"><expression>'123456'.replace('234', '')</expression><output type="string">156</output></test>
+		<test name="testReplace4" inputfile="patient-example.xml"><expression>{}.replace('234', 'X').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testReplace5" inputfile="patient-example.xml"><expression>'123'.replace({}, 'X').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testReplace6" inputfile="patient-example.xml"><expression>'123'.replace('2', {}).empty() = true</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testLength">
@@ -669,6 +735,7 @@ Any text enclosed within is ignored
 		<test name="testLength3" inputfile="patient-example.xml"><expression>'123'.length() = 3</expression><output type="boolean">true</output></test>
 		<test name="testLength4" inputfile="patient-example.xml"><expression>'1'.length() = 1</expression><output type="boolean">true</output></test>
 		<test name="testLength5" inputfile="patient-example.xml"><expression>''.length() = 0</expression><output type="boolean">true</output></test>
+		<test name="testLength6" inputfile="patient-example.xml"><expression>{}.length().empty() = true</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testEncodeDecode">
@@ -695,6 +762,7 @@ Any text enclosed within is ignored
 		<test name="testTrim2" version="2.1.0" inputfile="patient-example.xml"><expression>'123 456'.trim().length() = 7</expression><output type="boolean">true</output></test>
 		<test name="testTrim3" version="2.1.0" inputfile="patient-example.xml"><expression>' 123456 '.trim().length() = 6</expression><output type="boolean">true</output></test>
 		<test name="testTrim4" version="2.1.0" inputfile="patient-example.xml"><expression>'  '.trim().length() = 0</expression><output type="boolean">true</output></test>
+		<test name="testTrim5" version="2.1.0" inputfile="patient-example.xml"><expression>{}.trim().empty() = true</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testSplit">
@@ -948,6 +1016,10 @@ Any text enclosed within is ignored
 		<test name="testGreaterThan27" inputfile="patient-example.xml"><expression>@T10:30:00 > @T10:30:00.0</expression><output type="boolean">false</output></test>
 	</group>
 
+  <group name="testCombine()">
+		<test name="testCombine" inputfile="codesystem-example.xml"><expression>concept.code.combine($this.descendants().concept.code).isDistinct()</expression><output type="boolean">false</output></test>
+	</group>
+
 	<group name="testUnion">
 		<test name="testUnion1" inputfile="patient-example.xml"><expression>(1 | 2 | 3).count() = 3</expression><output type="boolean">true</output></test>
 		<test name="testUnion2" inputfile="patient-example.xml"><expression>(1 | 2 | 2).count() = 2</expression><output type="boolean">true</output></test> <!-- merge duplicates -->
@@ -957,6 +1029,9 @@ Any text enclosed within is ignored
 		<test name="testUnion6" inputfile="patient-example.xml"><expression>(1 | 2).combine(2).count() = 3</expression><output type="boolean">true</output></test> <!-- do not merge duplicates -->
 		<test name="testUnion7" inputfile="patient-example.xml"><expression>1.combine(1).count() = 2</expression><output type="boolean">true</output></test> <!-- do not merge duplicates -->
 		<test name="testUnion8" inputfile="patient-example.xml"><expression>1.combine(1).union(2).count() = 2</expression><output type="boolean">true</output></test> <!-- do not merge duplicates -->
+		<test name="testUnion9" inputfile="patient-example.xml"><expression>name.select(use | given).count()</expression><output type="integer">8</output></test>
+		<test name="testUnion10" inputfile="patient-example.xml"><expression>name.select(use.union($this.given)).count()</expression><output type="integer">8</output></test>
+		<test name="testUnion11" inputfile="patient-example.xml"><expression>name.select(use.union(given)).count()</expression><output type="integer">8</output></test>
 	</group>
 
 	<group name="testIntersect">
@@ -1139,6 +1214,7 @@ Any text enclosed within is ignored
 	<group name="testExp">
 		<test name="testExp1" inputfile="patient-example.xml"><expression>0.exp() = 1</expression><output type="boolean">true</output></test>
 		<test name="testExp2" inputfile="patient-example.xml"><expression>(-0.0).exp() = 1</expression><output type="boolean">true</output></test>
+		<test name="testExp3" inputfile="patient-example.xml"><expression>{}.exp().empty() = true</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testFloor">
@@ -1195,7 +1271,9 @@ Any text enclosed within is ignored
 
 	<group name="testType">
 		<test name="testType1" inputfile="patient-example.xml"><expression>1.type().namespace = 'System'</expression><output type="boolean">true</output></test>
-		<test name="testType2" inputfile="patient-example.xml"><expression>1.type().name = 'Integer'</expression><output type="boolean">true</output></test>
+		<test name="testType1a" inputfile="patient-example.xml"><expression>1.type().name = 'Integer'</expression><output type="boolean">true</output></test>
+		<test name="testType2" inputfile="patient-example.xml"><expression>'1'.type().namespace = 'System'</expression><output type="boolean">true</output></test>
+		<test name="testType2a" inputfile="patient-example.xml"><expression>'1'.type().name = 'String'</expression><output type="boolean">true</output></test>
 		<test name="testType3" inputfile="patient-example.xml"><expression>true.type().namespace = 'System'</expression><output type="boolean">true</output></test>
 		<test name="testType4" inputfile="patient-example.xml"><expression>true.type().name = 'Boolean'</expression><output type="boolean">true</output></test>
 		<test name="testType5" inputfile="patient-example.xml"><expression>true.is(Boolean)</expression><output type="boolean">true</output></test>
@@ -1217,12 +1295,40 @@ Any text enclosed within is ignored
 		<test name="testType21" inputfile="patient-example.xml"><expression>Patient.ofType(FHIR.Patient).type().name</expression><output type="string">Patient</output></test>
 		<test name="testType22" inputfile="patient-example.xml"><expression>Patient.is(System.Patient).not()</expression><output type="boolean">true</output></test>
 		<test name="testType23" inputfile="patient-example.xml"><expression>Patient.ofType(FHIR.`Patient`).type().name</expression><output type="string">Patient</output></test>
+
+		<test name="testTypeA1" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[0].value.is(FHIR.string)</expression><output type="boolean">true</output></test>
+		<test name="testTypeA2" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[1].value.is(FHIR.integer)</expression><output type="boolean">true</output></test>
+		<test name="testTypeA3" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[2].value.is(FHIR.uuid)</expression><output type="boolean">true</output></test>
+		<test name="testTypeA4" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[2].value.is(FHIR.uri)</expression><output type="boolean">true</output></test>
+		<test name="testTypeA3" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[3].value.is(FHIR.decimal)</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testConformsTo">
 		<test name="testConformsTo1" inputfile="patient-example.xml"><expression>conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')</expression><output type="boolean">true</output></test>
 		<test name="testConformsTo2" inputfile="patient-example.xml"><expression>conformsTo('http://hl7.org/fhir/StructureDefinition/Person')</expression><output type="boolean">false</output></test>
 		<test name="testConformsTo3" inputfile="patient-example.xml"><expression invalid="execution">conformsTo('http://trash')</expression></test>
+	</group>
+
+	<group name="LowBoundary">
+		<test name="LowBoundaryDecimal"><expression>1.587.lowBoundary(8)</expression><output>1.58650000</output></test>
+		<test name="LowBoundaryDateMonth"><expression>@2014.lowBoundary(6)</expression><output>@2014-01</output></test>
+		<test name="LowBoundaryDateTimeMillisecond"><expression>@2014-01-01T08.lowBoundary(17)</expression><output>@2014-01-01T08:00:00.000</output></test>
+		<test name="LowBoundaryTimeMillisecond"><expression>@T10:30.lowBoundary(9)</expression><output>@T10:30:00.000</output></test>
+	</group>
+
+	<group name="HighBoundary">
+		<test name="HighBoundaryDecimal"><expression>1.587.highBoundary(8)</expression><output>1.58750000</output></test>
+		<test name="HighBoundaryDateMonth"><expression>@2014.highBoundary(6)</expression><output>@2014-12</output></test>
+		<test name="HighBoundaryDateTimeMillisecond"><expression>@2014-01-01T08.highBoundary(17)</expression><output>@2014-01-01T08:00:59.999</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
+		<test name="HighBoundaryTimeMillisecond">	<expression>@T10:30.highBoundary(9)</expression><output>@T10:30:59.999</output></test>
+	</group>
+
+	<group name="Precision">
+		<test name="PrecisionDecimal"><expression>1.58700.precision()</expression><output>5</output></test>
+		<test name="PrecisionYear"><expression>@2014.precision()</expression><output>4</output></test>
+		<test name="PrecisionDateTimeMilliseconds"><expression>@2014-01-05T10:30:00.000.precision()</expression><output>17</output></test>
+		<test name="PrecisionTimeMinutes"><expression>@T10:30.precision()</expression><output>4</output></test>
+		<test name="PrecisionTimeMilliseconds"><expression>@T10:30:00.000.precision()</expression><output>9</output></test>
 	</group>
 
 <!--
@@ -1250,9 +1356,44 @@ Any text enclosed within is ignored
       these tests test this out.
     -->
 		<test name="testPolymorphicsA" inputfile="observation-example.xml"><expression>Observation.value.exists()</expression><output type="boolean">true</output></test>
-		<test name="testPolymorphicsB" inputfile="observation-example.xml"><expression invalid="semantic">Observation.valueQuantity.exists()</expression><output type="string">false</output></test>
+		<test name="testPolymorphicsB" inputfile="observation-example.xml"><expression invalid="semantic">Observation.valueQuantity.exists()</expression><output type="boolean">false</output></test>
 		<modeTest mode="lenient/polymorphics" name="testPolymorphicsC" inputfile="observation-example.xml"><expression>Observation.valueQuantity.exists()</expression><output type="boolean">true</output></modeTest>
 		<modeTest mode="lenient/polymorphics" name="testPolymorphicsD" inputfile="observation-example.xml"><expression>Observation.valueString.exists()</expression><output type="boolean">false</output></modeTest>
   </group>
+
+  <group name="index-part">
+		<test name="testIndex" inputfile="patient-example.xml"><expression>Patient.telecom.select(iif(value='(03) 3410 5613', $index, {} ))</expression><output type="integer">2</output></test>
+  </group>
+
+
+  <group name="period">
+		<test name="testPeriodInvariantOld" inputfile="patient-example-period.xml">
+		  <expression>Patient.identifier.period.all(start.hasValue().not() or end.hasValue().not() or (start &lt;= end))</expression>
+			<output type="boolean">false</output>
+		</test>
+		<test name="testPeriodInvariantNew" inputfile="patient-example-period.xml">
+		  <expression>Patient.identifier.period.all(start.empty() or end.empty() or (start.lowBoundary() &lt; end.highBoundary()))</expression>
+			<output type="boolean">true</output>
+		</test>
+  </group>
+
+
+	<group name="testInheritance">
+		<test name="testFHIRPathIsFunction1" inputfile="patient-example.xml"><expression>Patient.gender.is(code)</expression><output type="boolean">true</output></test>
+		<test name="testFHIRPathIsFunction2" inputfile="patient-example.xml"><expression>Patient.gender.is(string)</expression><output type="boolean">true</output></test>
+		<test name="testFHIRPathIsFunction3" inputfile="patient-example.xml"><expression>Patient.gender.is(id)</expression><output type="boolean">false</output></test>
+		<test name="testFHIRPathIsFunction4" inputfile="questionnaire-example.xml"><expression>Questionnaire.url.is(uri)</expression><output type="boolean">true</output></test>
+		<test name="testFHIRPathIsFunction5" inputfile="questionnaire-example.xml"><expression>Questionnaire.url.is(url)</expression><output type="boolean">false</output></test>
+		<test name="testFHIRPathIsFunction6" inputfile="valueset-example-expansion.xml"><expression>ValueSet.version.is(string)</expression><output type="boolean">true</output></test>
+		<test name="testFHIRPathIsFunction7" inputfile="valueset-example-expansion.xml"><expression>ValueSet.version.is(code)</expression><output type="boolean">false</output></test>
+		<test name="testFHIRPathIsFunction8" inputfile="observation-example.xml"><expression>Observation.extension('http://example.com/fhir/StructureDefinition/patient-age').value is Age</expression><output type="boolean">true</output></test>
+		<test name="testFHIRPathIsFunction9" inputfile="observation-example.xml"><expression>Observation.extension('http://example.com/fhir/StructureDefinition/patient-age').value is Quantity</expression><output type="boolean">true</output></test>
+		<test name="testFHIRPathIsFunction10" inputfile="observation-example.xml"><expression>Observation.extension('http://example.com/fhir/StructureDefinition/patient-age').value is Duration</expression><output type="boolean">false</output></test>
+		<test name="testFHIRPathAsFunction1" inputfile="patient-example.xml"><expression>Patient.gender.as(string)</expression><output type="code">male</output></test>
+		<test name="testFHIRPathAsFunction2" inputfile="patient-example.xml"><expression>Patient.gender.as(code)</expression><output type="code">male</output></test>
+		<test name="testFHIRPathAsFunction3" inputfile="patient-example.xml"><expression>Patient.gender.as(id)</expression></test>
+		<test name="testFHIRPathAsFunction4" inputfile="valueset-example-expansion.xml"><expression>ValueSet.version.as(string)</expression><output type="string">20150622</output></test>
+		<test name="testFHIRPathAsFunction5" inputfile="valueset-example-expansion.xml"><expression>ValueSet.version.as(code)</expression></test>
+	</group>
 
 </tests>
