@@ -3,26 +3,28 @@
     "The file contains a series of test cases",
     "Each test case is identified by the name of the source file to validate",
     "and has information about how to set up the validation:",
+    " * 'module': which module this is in. See below for modules",
     " * 'use-test': set to false and the test will be ignored",
     " * 'version': the version being validated. values: 1.0, 1.4, 3.0, 4.0. If no version specified, that means current R5",
     " * 'assumeValidRestReferences' : default = false",
-    " * 'allowed-extension-domain' : Extension URls from this omain are ok",
+    " * 'allowed-extension-domain' : Extension URls from this domain are ok",
     " * 'best-practice': How to treat best practice warnings. missing: ignored, else one of Hint, Warning, or Error",
     " * 'language': the language to validate with. If unspecified, this defaults to the language of the resource, then to english",
     " * 'packages': An array of String, packages to load for this validation. format id#version, where the version part is optional",
     " * 'supporting': An array of string, other files to load before doing the validation",
     " * 'profiles': An alias for supporting",
+    " * 'logical': For some logical models, they cannot be automatically recognized; they have to configured in advance. This is the URL of the logical model to parse with (e..g the base model)",
     " * 'bundle-param' : A string that functions as a bundle parameter - this is specifically for testing the parameter functionality",
     " * 'examples': if to allow http://example.org and http://acme.com references without validating them (spec mode)",
     " * 'security-checks': to turn out security check mode (off by default)",
-    "For documentation about some of these, see the validator documetation",
+    "For documentation about some of these, see the validator documentation",
     " * 'debug': produce debug output - leave this to false when committing",
     " * 'txLog': the name a file to produce a log of interactions with the txserver - for debugging purposes; doesn't make any difference to test outcomes",
-    " * 'crumb-trail': produce a record of the validations that occured. For debugging purposes",
+    " * 'crumb-trail': produce a record of the validations that occurred. For debugging purposes",
     " * 'profile': in addition to performing validation against the specification, validate against a particular profile",
     "   * 'source' : the profile to validate against",
     "   * also allowed in the profile step: 'supporting', and 'debug'",
-    " * 'logical' : to document. (for CDA etc)",
+    "   * 'logical' : to document. (for CDA etc)",
     "For each test, including on the profile element, there's additional elements that specify the expected outcomes",
     "Because the variability between them, there's different outcome expectations for each validator",
     "The intent is not to allow for different interpretations of what is valid, but to allow for ",
@@ -30,6 +32,13 @@
     "entry for a particular implementation, then the test doesn't apply, and functionality isn't known",
     " * 'java': expectations for the java reference implementation"
   ],
+  "modules" : {
+    "(default)" : "If no module is specified, then the test is assumed to be base functionality that all validators must implement",
+    "cda" : "Tests related to parsing & validating CDA documents using the CDA logical model",
+    "cdshooks" : "Tests related to parsing & validating CDS Hooks Json documents using the CDSHooks logical model",
+    "shc" : "Tests related to parsing & validating Smart Health Cards",
+    "notes:" : "Modules are a work in progress, existing tests need to be allocated to modules, and additional modules defined"
+  },
   "test-cases": [
     {
       "name": "allergy",
@@ -604,7 +613,7 @@
       "java": {
         "errorCount": 2,
         "output": [
-          "ERROR: Group.characteristic[0]: Unrecognised property '@value'",
+          "ERROR: Group.characteristic[0]: Unrecognized property '@value'",
           "ERROR: Group.characteristic[0]: Profile http://hl7.org/fhir/StructureDefinition/Group, Element 'Group.characteristic[0].value[x]': minimum required = 1, but only found 0",
           "INFORMATION: Group.characteristic[0].code: Binding for path Group.characteristic[0].code has no source, so can't be checked"
         ]
@@ -621,7 +630,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Unrecognised property '@valueInteger'"
+                "text": "Unrecognized property '@valueInteger'"
               },
               "diagnostics": "[10,25]",
               "expression": [
@@ -786,7 +795,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Unrecognised property '@fhir_comments'"
+                "text": "Unrecognized property '@fhir_comments'"
               },
               "diagnostics": "[8,23]",
               "expression": [
@@ -797,7 +806,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Unrecognised property '@fhir_comments'"
+                "text": "Unrecognized property '@fhir_comments'"
               },
               "diagnostics": "[3,21]",
               "expression": [
@@ -819,7 +828,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Unrecognised property '@fhir_comments'"
+                "text": "Unrecognized property '@fhir_comments'"
               },
               "diagnostics": "[8,23]",
               "expression": [
@@ -830,7 +839,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Unrecognised property '@valueCodeX'"
+                "text": "Unrecognized property '@valueCodeX'"
               },
               "diagnostics": "[18,8]",
               "expression": [
@@ -841,7 +850,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Unrecognised property '@fhir_comments'"
+                "text": "Unrecognized property '@fhir_comments'"
               },
               "diagnostics": "[3,21]",
               "expression": [
@@ -882,7 +891,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Unrecognised property '@other'"
+                "text": "Unrecognized property '@other'"
               },
               "diagnostics": "[4,23]",
               "expression": [
@@ -10142,6 +10151,7 @@
     {
       "name": "cda/example",
       "file": "cda/example.xml",
+      "module": "cda",
       "version": "4.0",
       "explanation": "can't read a logical model..",
       "logical": {
@@ -15616,7 +15626,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Unrecognised property '@TODO'"
+                "text": "Unrecognized property '@TODO'"
               },
               "diagnostics": "[106,10]",
               "expression": [
@@ -15627,7 +15637,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Unrecognised property '@TODO'"
+                "text": "Unrecognized property '@TODO'"
               },
               "diagnostics": "[359,18]",
               "expression": [
@@ -19659,6 +19669,7 @@
     {
       "name": "cda/example-no-styles",
       "file": "cda/example-no-styles.xml",
+      "module": "cda",
       "version": "4.0",
       "explanation": "can't read a logical model..",
       "logical": {
@@ -27292,6 +27303,99 @@
             "expression" : ["Medication.code.coding[0]"]
           }]
         }
+      }
+    },
+    {
+      "name": "cdshooks-services-good",
+      "file": "cdshooks-services-good.json",
+      "module": "cdshooks",
+      "version": "4.0",
+      "logical": {
+        "packages": [
+          "hl7.fhir.uv.tools#current"
+        ],
+        "format" : "http://hl7.org/fhir/tools/StructureDefinition/CDSHooksServices",
+        "java": {
+          "outcome": {
+            "resourceType" : "OperationOutcome"
+          }
+        }
+      },
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "fatal",
+            "code" : "structure",
+            "details" : {
+              "text" : "Unable to find resourceType property"
+            },
+            "diagnostics" : "[1,2]",
+            "expression" : ["$"]
+          }]
+        }        
+      }
+    },
+    {
+      "name": "cdshooks-request-pv-good",
+      "file": "cdshooks-request-pv-good.json",
+      "module": "cdshooks",
+      "version": "4.0",
+      "logical": {
+        "packages": [
+          "hl7.fhir.uv.tools#current"
+        ],
+        "format" : "http://hl7.org/fhir/tools/StructureDefinition/CDSHooksRequest",
+        "java": {
+          "outcome": {
+            "resourceType" : "OperationOutcome"
+          }
+        }
+      },
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "fatal",
+            "code" : "structure",
+            "details" : {
+              "text" : "Unable to find resourceType property"
+            },
+            "diagnostics" : "[1,2]",
+            "expression" : ["$"]
+          }]
+        }        
+      }
+    },
+    {
+      "name": "cdshooks-response-good",
+      "file": "cdshooks-response-good.json",
+      "module": "cdshooks",
+      "version": "4.0",
+      "logical": {
+        "packages": [
+          "hl7.fhir.uv.tools#current"
+        ],
+        "format" : "http://hl7.org/fhir/tools/StructureDefinition/CDSHooksResponse",
+        "java": {
+          "outcome": {
+            "resourceType" : "OperationOutcome"
+          }
+        }
+      },
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "fatal",
+            "code" : "structure",
+            "details" : {
+              "text" : "Unable to find resourceType property"
+            },
+            "diagnostics" : "[1,2]",
+            "expression" : ["$"]
+          }]
+        }        
       }
     }
   ]
