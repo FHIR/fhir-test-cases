@@ -1,1 +1,0 @@
-* Add test case for slices with max = 0
