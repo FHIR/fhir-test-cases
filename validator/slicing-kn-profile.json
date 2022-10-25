@@ -1,6 +1,6 @@
 {
   "resourceType": "StructureDefinition",
-  "id": "SampleFixedPointPatient",
+  "id": "PatientSlicingExample",
   "extension": [
     {
       "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-category",
@@ -11,11 +11,11 @@
       "valueCode": "patient"
     }
   ],
-  "url": "http://example.org/StructureDefinition/SampleFixedPointPatient",
+  "url": "http://example.org/StructureDefinition/PatientSlicingExample",
   "version": "0.1.0",
-  "name": "SampleFixedPointPatient",
+  "name": "PatientSlicingExample",
   "status": "active",
-  "description": "Profile that a Sample Fixed Point Patient Instance must meet",
+  "description": "From https://www.hl7.org/fhir/profiling-examples.html#contacts",
   "fhirVersion": "4.0.1",
   "mapping": [
     {
@@ -52,43 +52,6 @@
   "differential": {
     "element": [
       {
-        "id": "Patient.name",
-        "path": "Patient.name",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "family"
-            }
-          ],
-          "rules": "closed",
-          "description": "fixed name, no aliases",
-          "ordered": true
-        },
-        "min": 1,
-        "max": "1"
-      },
-      {
-        "id": "Patient.name:anypersonJohn",
-        "path": "Patient.name",
-        "sliceName": "anypersonJohn",
-        "min": 1,
-        "max": "1",
-        "fixedHumanName": {
-          "family": "Anyperson",
-          "given": [
-            "John",
-            "B."
-          ]
-        }
-      },
-      {
-        "id": "Patient.name:anypersonJohn.family",
-        "path": "Patient.name.family",
-        "min": 1,
-        "fixedString": "Anyperson"
-      },
-      {
         "id": "Patient.telecom",
         "path": "Patient.telecom",
         "slicing": {
@@ -96,137 +59,87 @@
             {
               "type": "value",
               "path": "system"
+            },
+            {
+              "type": "value",
+              "path": "use"
             }
           ],
-          "rules": "closed",
-          "description": "fixed phone and email",
-          "ordered": false
+          "rules": "closed"
         },
-        "min": 2,
-        "max": "2"
+        "min": 1,
+        "max": "3"
       },
       {
         "id": "Patient.telecom:homePhone",
         "path": "Patient.telecom",
         "sliceName": "homePhone",
         "min": 1,
-        "max": "1",
-        "fixedContactPoint": {
-          "system": "phone",
-          "value": "555-555-5555",
-          "use": "home"
-        }
+        "max": "1"
       },
       {
         "id": "Patient.telecom:homePhone.system",
         "path": "Patient.telecom.system",
+        "min": 1,
         "fixedCode": "phone"
+      },
+      {
+        "id": "Patient.telecom:homePhone.value",
+        "path": "Patient.telecom.value",
+        "min": 1
+      },
+      {
+        "id": "Patient.telecom:homePhone.use",
+        "path": "Patient.telecom.use",
+        "min": 1,
+        "fixedCode": "home"
+      },
+      {
+        "id": "Patient.telecom:workPhone",
+        "path": "Patient.telecom",
+        "sliceName": "workPhone",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Patient.telecom:workPhone.system",
+        "path": "Patient.telecom.system",
+        "min": 1,
+        "fixedCode": "phone"
+      },
+      {
+        "id": "Patient.telecom:workPhone.value",
+        "path": "Patient.telecom.value",
+        "min": 1
+      },
+      {
+        "id": "Patient.telecom:workPhone.use",
+        "path": "Patient.telecom.use",
+        "min": 1,
+        "fixedCode": "work"
       },
       {
         "id": "Patient.telecom:email",
         "path": "Patient.telecom",
         "sliceName": "email",
-        "min": 1,
-        "max": "1",
-        "fixedContactPoint": {
-          "system": "email",
-          "value": "john.anyperson@example.com"
-        }
+        "min": 0,
+        "max": "1"
       },
       {
         "id": "Patient.telecom:email.system",
         "path": "Patient.telecom.system",
+        "min": 1,
         "fixedCode": "email"
       },
       {
-        "id": "Patient.gender",
-        "path": "Patient.gender",
-        "patternCode": "male"
+        "id": "Patient.telecom:email.value",
+        "path": "Patient.telecom.value",
+        "min": 1
       },
       {
-        "id": "Patient.birthDate",
-        "path": "Patient.birthDate",
-        "fixedDate": "1951-01-20"
-      },
-      {
-        "id": "Patient.address",
-        "path": "Patient.address",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "postalCode"
-            }
-          ],
-          "rules": "closed",
-          "description": "fixed address, only one",
-          "ordered": true
-        },
-        "min": 1,
-        "max": "1"
-      },
-      {
-        "id": "Patient.address:123Main",
-        "path": "Patient.address",
-        "sliceName": "123Main",
-        "min": 1,
-        "max": "1",
-        "fixedAddress": {
-          "line": [
-            "123 Main St"
-          ],
-          "city": "Anytown",
-          "postalCode": "12345",
-          "country": "US"
-        }
-      },
-      {
-        "id": "Patient.address:123Main.postalCode",
-        "path": "Patient.address.postalCode",
-        "fixedString": "12345"
-      },
-      {
-        "id": "Patient.communication",
-        "path": "Patient.communication",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "language.coding.code"
-            }
-          ],
-          "rules": "closed",
-          "description": "fixed language",
-          "ordered": true
-        },
-        "min": 1,
-        "max": "1"
-      },
-      {
-        "id": "Patient.communication:enUS",
-        "path": "Patient.communication",
-        "sliceName": "enUS",
-        "min": 1,
-        "max": "1"
-      },
-      {
-        "id": "Patient.communication:enUS.language",
-        "path": "Patient.communication.language",
-        "fixedCodeableConcept": {
-          "coding": [
-            {
-              "code": "en-US",
-              "system": "urn:ietf:bcp:47",
-              "display": "English (Region=United States)"
-            }
-          ],
-          "text": "English"
-        }
-      },
-      {
-        "id": "Patient.communication:enUS.language.coding.code",
-        "path": "Patient.communication.language.coding.code",
-        "fixedCode": "en-US"
+        "id": "Patient.telecom:email.use",
+        "path": "Patient.telecom.use",
+        "max": "0"
       }
     ]
   }
