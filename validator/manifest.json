@@ -27512,7 +27512,7 @@
       "name": "cdshooks-request-order-select-extensions",
       "file": "cdshooks/cdshooks-request-order-select-extensions.json",
       "module": "cdshooks",
-      "use-test" : false,
+      "use-test" : true,
       "version": "4.0",
       "logical": {
         "packages": [
@@ -27521,8 +27521,44 @@
         "format" : "http://hl7.org/fhir/tools/StructureDefinition/CDSHooksServices",
         "java": {
           "outcome": {
-            "resourceType" : "OperationOutcome"
-          }
+            "resourceType" : "OperationOutcome",
+            "issue" : [{
+              "severity" : "error",
+              "code" : "structure",
+              "details" : {
+                "text" : "Invalid type string for the element default; valid types = integer | boolean"
+              },
+              "diagnostics" : "[25,10]",
+              "expression" : ["CDSHooksServices.services[0].extension.DaVinciConfigOptions[1]"]
+            },
+            {
+              "severity" : "error",
+              "code" : "structure",
+              "details" : {
+                "text" : "Invalid type decimal for the element default; valid types = integer | boolean"
+              },
+              "diagnostics" : "[31,10]",
+              "expression" : ["CDSHooksServices.services[0].extension.DaVinciConfigOptions[2]"]
+            },
+            {
+              "severity" : "error",
+              "code" : "structure",
+              "details" : {
+                "text" : "Unrecognized property 'nameX'"
+              },
+              "diagnostics" : "[34,41]",
+              "expression" : ["CDSHooksServices.services[0].extension.DaVinciConfigOptions[3]"]
+            },
+            {
+              "severity" : "error",
+              "code" : "structure",
+              "details" : {
+                "text" : "Unrecognized property 'no-valid'"
+              },
+              "diagnostics" : "[46,6]",
+              "expression" : ["CDSHooksServices.services[0].extension"]
+            }]
+          }          
         }
       },
       "java": {
