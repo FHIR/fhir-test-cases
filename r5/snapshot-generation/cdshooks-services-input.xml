@@ -1,0 +1,130 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="CDSHooksServices"/>
+  <url value="http://hl7.org/fhir/tools/StructureDefinition/CDSHooksServices"/>
+  <version value="0.1.0"/>
+  <name value="CDSHooksServices"/>
+  <title value="CDSHooks Services Request (Logical Definition)"/>
+  <status value="draft"/>
+  <date value="2022-10-28T12:22:51+11:00"/>
+  <publisher value="HL7 International / FHIR Infrastructure"/>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="http://hl7.org/Special/committees/fhir-i"/>
+    </telecom>
+  </contact>
+  <description value="This structure is defined to allow the FHIR Validator to validate a CDSHooks Services response body"/>
+  <jurisdiction>
+    <coding>
+      <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
+      <code value="001"/>
+    </coding>
+  </jurisdiction>
+  <fhirVersion value="4.0.1"/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="CDSHooksServices"/>
+  <baseDefinition value="http://hl7.org/fhir/tools/StructureDefinition/CDSHooksElement"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="CDSHooksServices">
+      <path value="CDSHooksServices"/>
+      <short value="The response to the discovery endpoint"/>
+      <definition value="The response to the discovery endpoint"/>
+    </element>
+    <element id="CDSHooksServices.services">
+      <path value="CDSHooksServices.services"/>
+      <short value="A list of CDS services"/>
+      <definition value="A list of CDS services"/>
+      <comment value="If the CDS server hosts no CDS services, the discovery endpoint should return a 200 HTTP response with an empty array of services"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://hl7.org/fhir/tools/StructureDefinition/CDSHooksElement"/>
+      </type>
+    </element>
+    <element id="CDSHooksServices.services.hook">
+      <path value="CDSHooksServices.services.hook"/>
+      <short value="The hook this Services should be invoked on"/>
+      <definition value="The hook this Services should be invoked on"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="CDSHooksServices.services.title">
+      <path value="CDSHooksServices.services.title"/>
+      <short value="The human-friendly name of this Services (Recommended)"/>
+      <definition value="The human-friendly name of this Services (Recommended)"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="CDSHooksServices.services.id">
+      <path value="CDSHooksServices.services.id"/>
+      <short value="The URL to this service which is available at: {baseUrl}/cds-services/{id}"/>
+      <definition value="The {id} portion of the URL to this service which is available at ```{baseUrl}/cds-services/{id}```"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+    </element>
+    <element id="CDSHooksServices.services.description">
+      <path value="CDSHooksServices.services.description"/>
+      <short value="The description of this Services"/>
+      <definition value="The description of this Services"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="CDSHooksServices.services.usageRequirements">
+      <path value="CDSHooksServices.services.usageRequirements"/>
+      <short value="Human-friendly description of any preconditions for the use of this CDS Services"/>
+      <definition value="Human-friendly description of any preconditions for the use of this CDS Services"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="CDSHooksServices.services.prefetch">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/json-property-key">
+        <valueCode value="key"/>
+      </extension>
+      <path value="CDSHooksServices.services.prefetch"/>
+      <short value="Key/value pairs of FHIR queries the CDS Client provides on each call"/>
+      <definition value="An object containing key/value pairs of FHIR queries that this Services is requesting the CDS Client to perform and provide on each Services call. The key is a string that describes the type of data being requested and the value is a string representing the FHIR query"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Base"/>
+      </type>
+    </element>
+    <element id="CDSHooksServices.services.prefetch.key">
+      <path value="CDSHooksServices.services.prefetch.key"/>
+      <short value="Key of FHIR query - name for client to use when sending to Services"/>
+      <definition value="Key of FHIR query - name for client to use when sending to Services"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+    </element>
+    <element id="CDSHooksServices.services.prefetch.value">
+      <path value="CDSHooksServices.services.prefetch.value"/>
+      <short value="Value of FHIR query - FHIR Query for client to perform"/>
+      <definition value="Value of FHIR query - FHIR Query for client to perform"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>
