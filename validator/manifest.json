@@ -27509,8 +27509,8 @@
       }
     },
     {
-      "name": "cdshooks-request-order-select-extensions",
-      "file": "cdshooks/cdshooks-request-order-select-extensions.json",
+      "name": "cdshooks-services-order-select-extensions",
+      "file": "cdshooks/cdshooks-services-order-select-extensions.json",
       "module": "cdshooks",
       "use-test" : true,
       "version": "4.0",
@@ -27559,6 +27559,56 @@
               "expression" : ["CDSHooksServices.services[0].extension"]
             }]
           }          
+        }
+      },
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "fatal",
+            "code" : "structure",
+            "details" : {
+              "text" : "Unable to find resourceType property"
+            },
+            "diagnostics" : "[1,2]",
+            "expression" : ["$"]
+          }]
+        }        
+      }
+    },
+    {
+      "name": "cdshooks-request-order-select-extensions",
+      "file": "cdshooks/cdshooks-request-order-select-extensions.json",
+      "module": "cdshooks",
+      "use-test" : true,
+      "version": "4.0",
+      "logical": {
+        "packages": [
+          "hl7.fhir.uv.tools#current"
+        ],
+        "format" : "http://hl7.org/fhir/tools/StructureDefinition/CDSHooksRequest",
+        "java": {
+          "outcome": {
+            "resourceType" : "OperationOutcome",
+            "issue" : [{
+              "severity" : "error",
+              "code" : "structure",
+              "details" : {
+                "text" : "Invalid type string for the element value; valid types = integer | boolean, JSON type = string"
+              },
+              "diagnostics" : "[25,27]",
+              "expression" : ["CDSHooksRequest.extension"]
+            },
+            {
+              "severity" : "error",
+              "code" : "structure",
+              "details" : {
+                "text" : "CDSHookOrderSelectContext.draftOrders: minimum required = 1, but only found 0 (from http://hl7.org/fhir/tools/StructureDefinition/CDSHookOrderSelectContext)"
+              },
+              "diagnostics" : "[6,38]",
+              "expression" : ["CDSHooksRequest.context"]
+            }]
+          }
         }
       },
       "java": {
