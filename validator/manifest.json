@@ -28205,7 +28205,7 @@
       }
     },
     {
-      "name" : "maxvalue-example.xml",
+      "name" : "maxvalue-example",
       "file" : "maxvalue-example.xml",
       "description" : "Check decimal max is enforced",
       "version" : "4.0",
@@ -28224,6 +28224,124 @@
           }]
         }
       }      
+    },
+    {
+      "name" : "logical-boo-good",
+      "file" : "logical-boo-good.xml",
+      "description" : "Base case for logical models",
+      "module" : "logical",
+      "version" : "4.0",
+      "supporting" : [ "logical-foo.xml" ],
+      "java" : {
+        "outcome": {
+          "resourceType" : "OperationOutcome"
+        }
+      }
+    },
+    {
+      "name" : "logical-boo-bad1",
+      "file" : "logical-boo-bad1.xml",
+      "description" : "Non namespaced name",
+      "module" : "logical",
+      "version" : "4.0",
+      "supporting" : [ "logical-foo.xml" ],
+      "java" : {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "The type Boo is not legal because it is not defined in the FHIR specification. Other types must have a namespace on them"
+            },
+            "diagnostics" : "[91,22]",
+            "expression" : ["StructureDefinition.type"]
+          }]
+        }
+      }
+    },
+    {
+      "name" : "logical-boo-bad2",
+      "file" : "logical-boo-bad2.xml",
+      "description" : "Type is wrong - matches inherited and doesn't match paths",
+      "module" : "logical",
+      "version" : "4.0",
+      "supporting" : [ "logical-foo.xml" ],
+      "java" : {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "not-found",
+            "details" : {
+              "text" : "The type http://example.org/StructureDefinition/Foo must not be the same as the type in the base structure http://example.org/StructureDefinition/Foo that is being specialised"
+            },
+            "expression" : ["StructureDefinition"]
+          },
+          {
+            "severity" : "error",
+            "code" : "not-found",
+            "details" : {
+              "text" : "The path Boo must start with the type of the structure Foo"
+            },
+            "expression" : ["StructureDefinition.differential.element[0]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "not-found",
+            "details" : {
+              "text" : "The path Boo.b must start with the type of the structure Foo"
+            },
+            "expression" : ["StructureDefinition.differential.element[1]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "not-found",
+            "details" : {
+              "text" : "The path Boo must start with the type of the structure Foo"
+            },
+            "expression" : ["StructureDefinition.snapshot.element[0]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "not-found",
+            "details" : {
+              "text" : "The path Boo.a must start with the type of the structure Foo"
+            },
+            "expression" : ["StructureDefinition.snapshot.element[1]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "not-found",
+            "details" : {
+              "text" : "The path Boo.b must start with the type of the structure Foo"
+            },
+            "expression" : ["StructureDefinition.snapshot.element[2]"]
+          }]
+        }
+      }
+    },
+    {
+      "name" : "logical-boo-bad3",
+      "file" : "logical-boo-bad3.xml",
+      "description" : "Type namespace is wrong",
+      "module" : "logical",
+      "version" : "4.0",
+      "supporting" : [ "logical-foo.xml" ],
+      "java" : {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "warning",
+            "code" : "structure",
+            "details" : {
+              "text" : "The type namespace http://example2.org/Boo SHOULD match the url namespace http://example.org/StructureDefinition/Boo for the definition of the type"
+            },
+            "diagnostics" : "[91,42]",
+            "expression" : ["StructureDefinition.type"]
+          }]
+        }
+      }
     }
   ]
 }
