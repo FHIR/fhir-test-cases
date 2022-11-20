@@ -1,0 +1,1 @@
+* Adjust narrative test case for using nbsp
