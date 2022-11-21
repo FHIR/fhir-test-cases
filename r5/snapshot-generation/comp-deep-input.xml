@@ -1,0 +1,1417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="Composition-surpass-eu-pcsp"/>
+  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-category">
+    <valueString value="Foundation.Documents"/>
+  </extension>
+  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-security-category">
+    <valueCode value="not-classified"/>
+  </extension>
+  <url value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Composition-surpass-eu-pcsp"/>
+  <version value="0.1.0"/>
+  <name value="CompositionSurpassPcsp"/>
+  <title value="Composition: Survivor Passport"/>
+  <status value="active"/>
+  <description value="This profile defines how to represent a PCSP Survivor Passport by using a HL7 FHIR Composition for the purpose of the PanCareSurPass project."/>
+  <fhirVersion value="4.0.1"/>
+  <mapping>
+    <identity value="workflow"/>
+    <uri value="http://hl7.org/fhir/workflow"/>
+    <name value="Workflow Pattern"/>
+  </mapping>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="cda"/>
+    <uri value="http://hl7.org/v3/cda"/>
+    <name value="CDA (R2)"/>
+  </mapping>
+  <mapping>
+    <identity value="fhirdocumentreference"/>
+    <uri value="http://hl7.org/fhir/documentreference"/>
+    <name value="FHIR DocumentReference"/>
+  </mapping>
+  <mapping>
+    <identity value="w5"/>
+    <uri value="http://hl7.org/fhir/fivews"/>
+    <name value="FiveWs Pattern Mapping"/>
+  </mapping>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Composition"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Composition"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Composition.identifier">
+      <path value="Composition.identifier"/>
+      <short value="Business identifier for this SurPass"/>
+    </element>
+    <element id="Composition.status">
+      <path value="Composition.status"/>
+      <short value="preliminary|final|amended|entered-in-error"/>
+    </element>
+    <element id="Composition.type">
+      <path value="Composition.type"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.eu/fhir/ig/pcsp/CodeSystem/cs-generic-eu-pcsp"/>
+          <code value="surpass"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.type.coding.display">
+      <path value="Composition.type.coding.display"/>
+      <short value="Childhood Cancer Survivor Passport"/>
+    </element>
+    <element id="Composition.subject">
+      <path value="Composition.subject"/>
+      <min value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Patient-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.date">
+      <path value="Composition.date"/>
+      <short value="SurPass Composition editing time"/>
+    </element>
+    <element id="Composition.author">
+      <path value="Composition.author"/>
+      <short value="Who and/or what authored this SurPass"/>
+    </element>
+    <element id="Composition.title">
+      <path value="Composition.title"/>
+      <short value="Childhood Cancer Survivor Passport"/>
+    </element>
+    <element id="Composition.attester">
+      <path value="Composition.attester"/>
+      <short value="Who attested the accuracy of this SurPass"/>
+    </element>
+    <element id="Composition.section">
+      <path value="Composition.section"/>
+      <slicing>
+        <discriminator>
+          <type value="pattern"/>
+          <path value="code"/>
+        </discriminator>
+        <description value="Slice based on the coding.code pattern"/>
+        <rules value="open"/>
+      </slicing>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt">
+      <path value="Composition.section"/>
+      <sliceName value="flt"/>
+      <short value="Cancer diagnosis Narrative"/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="Composition.section:flt.title">
+      <path value="Composition.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.code">
+      <path value="Composition.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="72135-7"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.text">
+      <path value="Composition.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.entry">
+      <path value="Composition.section.entry"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <discriminator>
+          <type value="profile"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Tumor FLT detail"/>
+      <definition value="Entrdescribing the primary cancer and optionally FLT anmetastasis."/>
+      <min value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.entry:primaryCancer">
+      <path value="Composition.section.entry"/>
+      <sliceName value="primaryCancer"/>
+      <short value="Primary Cancer"/>
+      <definition value="Primary Cancer or relapse during the treatment"/>
+      <min value="1"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-primaryCancer-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.entry:metastasis">
+      <path value="Composition.section.entry"/>
+      <sliceName value="metastasis"/>
+      <short value="Metastasis"/>
+      <definition value="Metastasis"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-secondaryCancer-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.entry:flt">
+      <path value="Composition.section.entry"/>
+      <sliceName value="flt"/>
+      <short value="FLT"/>
+      <definition value="FronLine Treatment"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-flt-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.emptyReason">
+      <path value="Composition.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+    <element id="Composition.section:flt.section">
+      <path value="Composition.section.section"/>
+      <slicing>
+        <discriminator>
+          <type value="pattern"/>
+          <path value="code"/>
+        </discriminator>
+        <description value="Slice based on the coding.code pattern"/>
+        <rules value="open"/>
+      </slicing>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:chemotherapy">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Section"/>
+      </extension>
+      <path value="Composition.section.section"/>
+      <sliceName value="chemotherapy"/>
+      <short value="Chemotherapy"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:chemotherapy.title">
+      <path value="Composition.section.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:chemotherapy.code">
+      <path value="Composition.section.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="11486-8"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.section:chemotherapy.text">
+      <path value="Composition.section.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:chemotherapy.entry">
+      <path value="Composition.section.section.entry"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <discriminator>
+          <type value="profile"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Chemotherapy"/>
+      <definition value="Chemotherapy"/>
+      <min value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationAdministration"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationStatement"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:chemotherapy.entry:medicationAdministration">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="medicationAdministration"/>
+      <short value="MedicationAdministration Chemotherapy"/>
+      <definition value="MedicationAdministration Chemotherapy"/>
+      <min value="1"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/MedicationAdministration-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:chemotherapy.entry:medicationStatement">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="medicationStatement"/>
+      <short value="MedicationStatement: Chemotherapy"/>
+      <definition value="MedicationStatementChemotherapy"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/MedicationStatement-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:chemotherapy.emptyReason">
+      <path value="Composition.section.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+    <element id="Composition.section:flt.section:stemCellTransplantation">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Section"/>
+      </extension>
+      <path value="Composition.section.section"/>
+      <sliceName value="stemCellTransplantation"/>
+      <short value="Stem Cell Transplantation"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:stemCellTransplantation.title">
+      <path value="Composition.section.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:stemCellTransplantation.code">
+      <path value="Composition.section.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.eu/fhir/ig/pcsp/CodeSystem/cs-generic-eu-pcsp"/>
+          <code value="section-sct"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.section:stemCellTransplantation.text">
+      <path value="Composition.section.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:stemCellTransplantation.entry">
+      <path value="Composition.section.section.entry"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <discriminator>
+          <type value="profile"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Stem CelTransplantation"/>
+      <definition value="Stem Cell Transplantation"/>
+      <min value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:stemCellTransplantation.entry:sct">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="sct"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-sct-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:stemCellTransplantation.entry:gvdh-prophylaxis">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="gvdh-prophylaxis"/>
+      <short value="GVHD prophylaxis"/>
+      <definition value="GVHD prophylaxis"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-sct-prophylaxis-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:stemCellTransplantation.entry:gvdh">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="gvdh"/>
+      <short value="GvHD"/>
+      <definition value="Grafversus host disease (GvHD)"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-gvhd-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:stemCellTransplantation.entry:blood-abo">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="blood-abo"/>
+      <short value="Blootype/RH"/>
+      <definition value="Blood type/RH"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Observation-bld-abo-rh-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:stemCellTransplantation.emptyReason">
+      <path value="Composition.section.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+    <element id="Composition.section:flt.section:radiotherapy">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Section"/>
+      </extension>
+      <path value="Composition.section.section"/>
+      <sliceName value="radiotherapy"/>
+      <short value="Radiotherapy"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:radiotherapy.title">
+      <path value="Composition.section.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:radiotherapy.code">
+      <path value="Composition.section.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.eu/fhir/ig/pcsp/CodeSystem/cs-generic-eu-pcsp"/>
+          <code value="section-rt"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.section:radiotherapy.text">
+      <path value="Composition.section.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:radiotherapy.entry">
+      <path value="Composition.section.section.entry"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <discriminator>
+          <type value="profile"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Radiotherapy"/>
+      <definition value="Radiotherapy"/>
+      <min value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:radiotherapy.entry:radiotherapy">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="radiotherapy"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-radiotheraphy-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:radiotherapy.entry:boost">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="boost"/>
+      <short value="Radiotherapy Boost"/>
+      <definition value="Radiotherapy Boost"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-radiotheraphyBoost-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:radiotherapy.entry:shield">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="shield"/>
+      <short value="Radiotherapy Shielding"/>
+      <definition value="Radiotherapy Shielding"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-radiotheraphyShield-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:radiotherapy.emptyReason">
+      <path value="Composition.section.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+    <element id="Composition.section:flt.section:majorSurgery">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Section"/>
+      </extension>
+      <path value="Composition.section.section"/>
+      <sliceName value="majorSurgery"/>
+      <short value="History of Surgical procedures"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:majorSurgery.title">
+      <path value="Composition.section.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:majorSurgery.code">
+      <path value="Composition.section.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="8690-0"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.section:majorSurgery.text">
+      <path value="Composition.section.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:majorSurgery.entry">
+      <path value="Composition.section.section.entry"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <discriminator>
+          <type value="profile"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Major Surgery"/>
+      <definition value="Major Surgery"/>
+      <min value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:majorSurgery.entry:procedure">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="procedure"/>
+      <short value="Surgical procedure"/>
+      <definition value="Surgical procedure"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-surgery-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:majorSurgery.emptyReason">
+      <path value="Composition.section.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+    <element id="Composition.section:flt.section:otherInfos">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Section"/>
+      </extension>
+      <path value="Composition.section.section"/>
+      <sliceName value="otherInfos"/>
+      <short value="Other Medical Information"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:otherInfos.title">
+      <path value="Composition.section.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:otherInfos.code">
+      <path value="Composition.section.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.eu/fhir/ig/pcsp/CodeSystem/cs-generic-eu-pcsp"/>
+          <code value="section-otherInfos"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.section:otherInfos.text">
+      <path value="Composition.section.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:otherInfos.entry">
+      <path value="Composition.section.section.entry"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <discriminator>
+          <type value="profile"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Other infos"/>
+      <definition value="Other infos"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:otherInfos.entry:conditionToxicity">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="conditionToxicity"/>
+      <short value="Condition: Severe Toxicity"/>
+      <definition value="Condition: Severe Toxicity"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-toxicity-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:otherInfos.entry:conditionOtherInfos">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="conditionOtherInfos"/>
+      <short value="Other Conditions"/>
+      <definition value="Other Conditions"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-otherinfos-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:otherInfos.entry:procedureCVC">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="procedureCVC"/>
+      <short value="Procedure: Catheter"/>
+      <definition value="Procedure: Catheter"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-cvc-otherinfos-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:otherInfos.entry:procedureTransfusion">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="procedureTransfusion"/>
+      <short value="Procedure: Transfusion"/>
+      <definition value="Procedure: Transfusion"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-transfusion-otherinfos-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:otherInfos.entry:procedureCryopreservation">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="procedureCryopreservation"/>
+      <short value="Procedure: Cryopreservation"/>
+      <definition value="Procedure: Cryopreservation"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-cryopreservation-otherinfos-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:otherInfos.entry:procedureOtherTreatment">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="procedureOtherTreatment"/>
+      <short value="Procedure: Other Treatments"/>
+      <definition value="Procedure: Other Treatments"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-treatment-otherinfos-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:otherInfos.emptyReason">
+      <path value="Composition.section.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+    <element id="Composition.section:flt.section:medicalSuggestion">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Section"/>
+      </extension>
+      <path value="Composition.section.section"/>
+      <sliceName value="medicalSuggestion"/>
+      <short value="Medical Suggestions"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:medicalSuggestion.title">
+      <path value="Composition.section.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:medicalSuggestion.code">
+      <path value="Composition.section.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.eu/fhir/ig/pcsp/CodeSystem/cs-generic-eu-pcsp"/>
+          <code value="section-suggestion"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.section:medicalSuggestion.text">
+      <path value="Composition.section.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:medicalSuggestion.emptyReason">
+      <path value="Composition.section.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT">
+      <path value="Composition.section.section"/>
+      <sliceName value="relapseAfterEOT"/>
+      <short value="Relapse After EOT"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.code">
+      <path value="Composition.section.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.eu/fhir/ig/pcsp/CodeSystem/cs-generic-eu-pcsp"/>
+          <code value="section-relapseAfterEOT"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.entry">
+      <path value="Composition.section.section.entry"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <discriminator>
+          <type value="profile"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Tumor FLT detail"/>
+      <definition value="Entry describing the primary cancer and optionally FLT and metastasis."/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.entry:primaryCancer">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="primaryCancer"/>
+      <short value="Relapse"/>
+      <definition value="Relapse or progression after the end of treatment"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-primaryCancer-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.entry:metastasis">
+      <path value="Composition.section.section.entry"/>
+      <sliceName value="metastasis"/>
+      <short value="Metastasis"/>
+      <definition value="Metastasis"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-secondaryCancer-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section">
+      <path value="Composition.section.section.section"/>
+      <slicing>
+        <discriminator>
+          <type value="pattern"/>
+          <path value="code"/>
+        </discriminator>
+        <description value="Slice based on the coding.code pattern"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Chemo, Radio, SCT and other subsections"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:chemotherapy">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Section"/>
+      </extension>
+      <path value="Composition.section.section.section"/>
+      <sliceName value="chemotherapy"/>
+      <short value="Chemotherapy"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:chemotherapy.title">
+      <path value="Composition.section.section.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:chemotherapy.code">
+      <path value="Composition.section.section.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="11486-8"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:chemotherapy.text">
+      <path value="Composition.section.section.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:chemotherapy.entry">
+      <path value="Composition.section.section.section.entry"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <discriminator>
+          <type value="profile"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Chemotherapy"/>
+      <definition value="Chemotherapy"/>
+      <min value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationAdministration"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/MedicationStatement"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:chemotherapy.entry:medicationAdministration">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="medicationAdministration"/>
+      <short value="MedicationAdministration Chemotherapy"/>
+      <definition value="MedicationAdministration Chemotherapy"/>
+      <min value="1"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/MedicationAdministration-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:chemotherapy.entry:medicationStatement">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="medicationStatement"/>
+      <short value="MedicationStatement: Chemotherapy"/>
+      <definition value="MedicationStatementChemotherapy"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/MedicationStatement-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:chemotherapy.emptyReason">
+      <path value="Composition.section.section.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:stemCellTransplantation">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Section"/>
+      </extension>
+      <path value="Composition.section.section.section"/>
+      <sliceName value="stemCellTransplantation"/>
+      <short value="Stem Cell Transplantation"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:stemCellTransplantation.title">
+      <path value="Composition.section.section.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:stemCellTransplantation.code">
+      <path value="Composition.section.section.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.eu/fhir/ig/pcsp/CodeSystem/cs-generic-eu-pcsp"/>
+          <code value="section-sct"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:stemCellTransplantation.text">
+      <path value="Composition.section.section.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:stemCellTransplantation.entry">
+      <path value="Composition.section.section.section.entry"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <discriminator>
+          <type value="profile"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Stem CelTransplantation"/>
+      <definition value="Stem Cell Transplantation"/>
+      <min value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:stemCellTransplantation.entry:sct">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="sct"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-sct-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:stemCellTransplantation.entry:gvdh-prophylaxis">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="gvdh-prophylaxis"/>
+      <short value="GVHD prophylaxis"/>
+      <definition value="GVHD prophylaxis"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-sct-prophylaxis-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:stemCellTransplantation.entry:gvdh">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="gvdh"/>
+      <short value="GvHD"/>
+      <definition value="Grafversus host disease (GvHD)"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-gvhd-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:stemCellTransplantation.entry:blood-abo">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="blood-abo"/>
+      <short value="Blootype/RH"/>
+      <definition value="Blood type/RH"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Observation-bld-abo-rh-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:stemCellTransplantation.emptyReason">
+      <path value="Composition.section.section.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:radiotherapy">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Section"/>
+      </extension>
+      <path value="Composition.section.section.section"/>
+      <sliceName value="radiotherapy"/>
+      <short value="Radiotherapy"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:radiotherapy.title">
+      <path value="Composition.section.section.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:radiotherapy.code">
+      <path value="Composition.section.section.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.eu/fhir/ig/pcsp/CodeSystem/cs-generic-eu-pcsp"/>
+          <code value="section-rt"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:radiotherapy.text">
+      <path value="Composition.section.section.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:radiotherapy.entry">
+      <path value="Composition.section.section.section.entry"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <discriminator>
+          <type value="profile"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Radiotherapy"/>
+      <definition value="Radiotherapy"/>
+      <min value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:radiotherapy.entry:radiotherapy">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="radiotherapy"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-radiotheraphy-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:radiotherapy.entry:boost">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="boost"/>
+      <short value="Radiotherapy Boost"/>
+      <definition value="Radiotherapy Boost"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-radiotheraphyBoost-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:radiotherapy.entry:shield">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="shield"/>
+      <short value="Radiotherapy Shielding"/>
+      <definition value="Radiotherapy Shielding"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-radiotheraphyShield-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:radiotherapy.emptyReason">
+      <path value="Composition.section.section.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:majorSurgery">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Section"/>
+      </extension>
+      <path value="Composition.section.section.section"/>
+      <sliceName value="majorSurgery"/>
+      <short value="History of Surgical procedures"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:majorSurgery.title">
+      <path value="Composition.section.section.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:majorSurgery.code">
+      <path value="Composition.section.section.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="8690-0"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:majorSurgery.text">
+      <path value="Composition.section.section.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:majorSurgery.entry">
+      <path value="Composition.section.section.section.entry"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <discriminator>
+          <type value="profile"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Major Surgery"/>
+      <definition value="Major Surgery"/>
+      <min value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:majorSurgery.entry:procedure">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="procedure"/>
+      <short value="Surgical procedure"/>
+      <definition value="Surgical procedure"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-surgery-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:majorSurgery.emptyReason">
+      <path value="Composition.section.section.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Section"/>
+      </extension>
+      <path value="Composition.section.section.section"/>
+      <sliceName value="otherInfos"/>
+      <short value="Other Medical Information"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.title">
+      <path value="Composition.section.section.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.code">
+      <path value="Composition.section.section.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.eu/fhir/ig/pcsp/CodeSystem/cs-generic-eu-pcsp"/>
+          <code value="section-otherInfos"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.text">
+      <path value="Composition.section.section.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.entry">
+      <path value="Composition.section.section.section.entry"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <discriminator>
+          <type value="profile"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Other infos"/>
+      <definition value="Other infos"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.entry:conditionToxicity">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="conditionToxicity"/>
+      <short value="Condition: Severe Toxicity"/>
+      <definition value="Condition: Severe Toxicity"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-toxicity-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.entry:conditionOtherInfos">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="conditionOtherInfos"/>
+      <short value="Other Conditions"/>
+      <definition value="Other Conditions"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-otherinfos-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.entry:procedureCVC">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="procedureCVC"/>
+      <short value="Procedure: Catheter"/>
+      <definition value="Procedure: Catheter"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-cvc-otherinfos-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.entry:procedureTransfusion">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="procedureTransfusion"/>
+      <short value="Procedure: Transfusion"/>
+      <definition value="Procedure: Transfusion"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-transfusion-otherinfos-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.entry:procedureCryopreservation">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="procedureCryopreservation"/>
+      <short value="Procedure: Cryopreservation"/>
+      <definition value="Procedure: Cryopreservation"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-cryopreservation-otherinfos-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.entry:procedureOtherTreatment">
+      <path value="Composition.section.section.section.entry"/>
+      <sliceName value="procedureOtherTreatment"/>
+      <short value="Procedure: Other Treatments"/>
+      <definition value="Procedure: Other Treatments"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-treatment-otherinfos-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.emptyReason">
+      <path value="Composition.section.section.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:medicalSuggestion">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Section"/>
+      </extension>
+      <path value="Composition.section.section.section"/>
+      <sliceName value="medicalSuggestion"/>
+      <short value="Medical Suggestions"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:medicalSuggestion.title">
+      <path value="Composition.section.section.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:medicalSuggestion.code">
+      <path value="Composition.section.section.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.eu/fhir/ig/pcsp/CodeSystem/cs-generic-eu-pcsp"/>
+          <code value="section-suggestion"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:medicalSuggestion.text">
+      <path value="Composition.section.section.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:relapseAfterEOT.section:medicalSuggestion.emptyReason">
+      <path value="Composition.section.section.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+    <element id="Composition.section:flt.section:otherConditions">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+        <valueString value="Section"/>
+      </extension>
+      <path value="Composition.section.section"/>
+      <sliceName value="otherConditions"/>
+      <short value="Other Health Conditions"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <element id="Composition.section:flt.section:otherConditions.title">
+      <path value="Composition.section.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:otherConditions.code">
+      <path value="Composition.section.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.eu/fhir/ig/pcsp/CodeSystem/cs-generic-eu-pcsp"/>
+          <code value="section-otherConditions"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:flt.section:otherConditions.text">
+      <path value="Composition.section.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:flt.section:otherConditions.emptyReason">
+      <path value="Composition.section.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+    <element id="Composition.section:carePlan">
+      <path value="Composition.section"/>
+      <sliceName value="carePlan"/>
+      <short value="Plan of Care Section"/>
+      <min value="0"/>
+      <max value="1"/>
+    </element>
+    <element id="Composition.section:carePlan.title">
+      <path value="Composition.section.title"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:carePlan.code">
+      <path value="Composition.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="18776-5"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Composition.section:carePlan.text">
+      <path value="Composition.section.text"/>
+      <min value="1"/>
+    </element>
+    <element id="Composition.section:carePlan.entry">
+      <path value="Composition.section.entry"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <discriminator>
+          <type value="profile"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Care Plan"/>
+      <definition value="Care Plan"/>
+      <min value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/CarePlan"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
+      </type>
+    </element>
+    <element id="Composition.section:carePlan.entry:carePlan">
+      <path value="Composition.section.entry"/>
+      <sliceName value="carePlan"/>
+      <min value="1"/>
+      <max value="*"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/CarePlan-eu-pcsp"/>
+      </type>
+    </element>
+    <element id="Composition.section:carePlan.emptyReason">
+      <path value="Composition.section.emptyReason"/>
+      <short value="Why this section is empty"/>
+    </element>
+  </differential>
+</StructureDefinition>
