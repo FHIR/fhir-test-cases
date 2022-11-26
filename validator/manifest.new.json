@@ -37,8 +37,7 @@
     "cda": "Tests related to parsing & validating CDA documents using the CDA logical model",
     "cdshooks": "Tests related to parsing & validating CDS Hooks Json documents using the CDSHooks logical model",
     "shc": "Tests related to parsing & validating Smart Health Cards",
-    "notes:": "Modules are a work in progress, existing tests need to be allocated to modules, and additional modules defined",
-    "json5" : "Use JSON 5 techniques to provide more robust json validation"
+    "notes:": "Modules are a work in progress, existing tests need to be allocated to modules, and additional modules defined"
   },
   "test-cases": [
     {
@@ -13654,43 +13653,19 @@
       ],
       "java": {
         "outcome": {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "There is an extra comma at the end of the Object in the JSON"
-            },
-            "diagnostics" : "[10,39]",
-            "expression" : ["QuestionnaireResponse.item[0].answer[0]"]
-          },
-          {
-            "severity" : "error",
-            "code" : "invariant",
-            "details" : {
-              "text" : "Rule qrs-1: 'Nested item can't be beneath both item and answer' Failed"
-            },
-            "diagnostics" : "[7,6]",
-            "expression" : ["QuestionnaireResponse.item[0]"]
-          },
-          {
-            "severity" : "error",
-            "code" : "required",
-            "details" : {
-              "text" : "No response answer found for required item 'rating'"
-            },
-            "diagnostics" : "[9,39]",
-            "expression" : ["QuestionnaireResponse.item[0]"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "Items not of type group should not have items outside answers (use answer.item not .item)"
-            },
-            "diagnostics" : "[7,6]",
-            "expression" : ["QuestionnaireResponse.item[0]"]
-          }]
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "text": "Error parsing JSON: Error parsing JSON source: JSON syntax error - found Close expecting String at Line 11 (path=[//item[]/item/answer[]/answer2020-03-23])"
+              },
+              "expression": [
+                "(document)"
+              ]
+            }
+          ]
         }
       }
     },
@@ -14149,16 +14124,19 @@
       "file": "mcode-pat-bad.json",
       "java": {
         "outcome": {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "There is an extra comma at the end of the Object in the JSON"
-            },
-            "diagnostics" : "[3,51]",
-            "expression" : ["Patient"]
-          }]
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "text": "Error parsing JSON: Error parsing JSON source: JSON syntax error - found Close expecting String at Line 4 (path=[/2020-03-20T00:00:00+03:00])"
+              },
+              "expression": [
+                "(document)"
+              ]
+            }
+          ]
         }
       }
     },
@@ -28950,205 +28928,6 @@
               ]
             }
           ]
-        }
-      }
-    },
-    {
-      "name": "json-good",
-      "file": "json-good.json",
-      "version": "4.0",
-      "java": {
-        "outcome": {
-          "resourceType": "OperationOutcome"
-        }
-      }
-    },
-    {
-      "name": "json-comments-1-no",
-      "file": "json-comments-1.json",
-      "module" : "json5",
-      "version": "4.0",
-      "java": {
-        "outcome": {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "Comments are not allowed in JSON"
-            },
-            "diagnostics" : "[1,1]",
-            "expression" : ["Patient"]
-          }]
-        }
-      }
-    },
-    {
-      "name": "json-comments-1-yes",
-      "file": "json-comments-1.json",
-      "module" : "json5",
-      "version": "4.0",
-      "allow-comments" : true,
-      "java": {
-        "outcome": {
-          "resourceType": "OperationOutcome"
-        }
-      }
-    },
-    {
-      "name": "json-comments-2-no",
-      "file": "json-comments-2.json",
-      "module" : "json5",
-      "version": "4.0",
-      "java": {
-        "outcome": {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "Comments are not allowed in JSON"
-            },
-            "diagnostics" : "[3,3]",
-            "expression" : ["Patient.id"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "Comments are not allowed in JSON"
-            },
-            "diagnostics" : "[11,5]",
-            "expression" : ["Patient.gender"]
-          }]
-        }
-      }
-    },
-    {
-      "name": "json-comments-2-yes",
-      "file": "json-comments-2.json",
-      "module" : "json5",
-      "allow-comments" : true,
-      "version": "4.0",
-      "java": {
-        "outcome": {
-          "resourceType" : "OperationOutcome"
-        }
-      }
-    },
-    {
-      "name": "json-comma-bad-1",
-      "file": "json-comma-bad-1.json",
-      "module" : "json5",
-      "version": "4.0",
-      "java": {
-        "outcome": {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "A Comma is missing in the JSON"
-            },
-            "diagnostics" : "[7,8]",
-            "expression" : ["Patient.name[0]"]
-          }]
-        }
-      }
-    },
-    {
-      "name": "json-comma-bad-2",
-      "file": "json-comma-bad-2.json",     
-      "module" : "json5",
-      "version": "4.0",
-      "java": {
-        "outcome": {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "There is an extra comma at the end of the Array in the JSON"
-            },
-            "diagnostics" : "[8,17]",
-            "expression" : ["Patient.name[0].given"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "A Comma is missing in the JSON"
-            },
-            "diagnostics" : "[19,25]",
-            "expression" : ["Patient.address[0]"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "There is an extra comma at the end of the Object in the JSON"
-            },
-            "diagnostics" : "[22,24]",
-            "expression" : ["Patient.address[0]"]
-          }]
-        }
-      }
-    },
-    {
-      "name": "json-no-quotes-1",
-      "file": "json-no-quotes-1.json",
-      "module" : "json5",
-      "version": "4.0",
-      "java": {
-        "outcome": {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "The JSON property 'resourceType' has no quotes around the name of the property"
-            },
-            "diagnostics" : "[2,27]",
-            "expression" : ["Patient"]
-          }]
-        }
-      }
-    },
-    {
-      "name": "json-no-quotes-2",
-      "file": "json-no-quotes-2.json",
-      "module" : "json5",
-      "version": "4.0",
-      "java": {
-        "outcome": {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "The JSON property 'item' has no quotes around the value of the property 'Sarah'"
-            },
-            "diagnostics" : "[8,14]",
-            "expression" : ["Patient.name[0].given[0]"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "The JSON property 'line' has no quotes around the name of the property"
-            },
-            "diagnostics" : "[16,8]",
-            "expression" : ["Patient.address[0]"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "The JSON property 'city' has no quotes around the value of the property 'Strahan'"
-            },
-            "diagnostics" : "[19,23]",
-            "expression" : ["Patient.address[0]"]
-          }]
         }
       }
     }
