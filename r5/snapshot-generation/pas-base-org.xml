@@ -91,7 +91,7 @@
         <human
                value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
         <expression value="contained.contained.empty()"/>
-        <xpath value="not(parent::f:contained and f:contained)"/>
+       
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
       <constraint>
@@ -101,7 +101,6 @@
                value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"/>
         <expression
                     value="contained.where(((&#39;#&#39;+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists()).not()).trace(&#39;unmatched&#39;, id).empty()"/>
-        <xpath
                value="not(exists(for $id in f:contained/*/f:id/@value return $contained[not(parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $contained/*/id/@value) or descendant::f:reference[@value=&#39;#&#39;])]))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
@@ -112,7 +111,6 @@
                value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
         <expression
                     value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
-        <xpath
                value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
@@ -122,7 +120,7 @@
         <human
                value="If a resource is contained in another resource, it SHALL NOT have a security label"/>
         <expression value="contained.meta.security.empty()"/>
-        <xpath value="not(exists(f:contained/*/f:meta/f:security))"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
       <constraint>
@@ -139,7 +137,7 @@
         <severity value="warning"/>
         <human value="A resource should have narrative for robust management"/>
         <expression value="text.`div`.exists()"/>
-        <xpath value="exists(f:text/h:div)"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
       <constraint>
@@ -148,7 +146,6 @@
         <human
                value="The organization SHALL at least have a name or an identifier, and possibly more than one"/>
         <expression value="(identifier.count() + name.count()) &gt; 0"/>
-        <xpath value="count(f:identifier | f:name) &gt; 0"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Organization"/>
       </constraint>
       <mustSupport value="false"/>
@@ -215,7 +212,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -243,7 +240,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="true"/>
@@ -272,7 +269,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -321,7 +318,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -382,7 +379,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
@@ -390,7 +387,6 @@
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
-        <xpath
                value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
@@ -429,7 +425,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
@@ -437,7 +433,6 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
-        <xpath
                value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
@@ -481,7 +476,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -567,7 +562,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
@@ -575,7 +570,6 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
-        <xpath
                value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
@@ -609,7 +603,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="true"/>
@@ -659,7 +653,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -714,7 +708,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -759,7 +753,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -799,7 +793,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -840,7 +834,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -886,7 +880,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -941,7 +935,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="false"/>
@@ -997,7 +991,7 @@ This element is labeled as a modifier because it may be used to mark that the re
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1050,7 +1044,7 @@ We expect that some jurisdictions will profile this optionality to be a single c
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1105,7 +1099,7 @@ We expect that some jurisdictions will profile this optionality to be a single c
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1155,7 +1149,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1188,7 +1182,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
@@ -1197,7 +1191,6 @@ For searching knowing previous names that the organization was known by can be v
         <human
                value="The telecom of an organization can never be of use &#39;home&#39;"/>
         <expression value="where(use = &#39;home&#39;).empty()"/>
-        <xpath value="count(f:use[@value=&#39;home&#39;]) = 0"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Organization"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1240,7 +1233,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
@@ -1249,7 +1242,6 @@ For searching knowing previous names that the organization was known by can be v
         <human
                value="An address of an organization can never be of use &#39;home&#39;"/>
         <expression value="where(use = &#39;home&#39;).empty()"/>
-        <xpath value="count(f:use[@value=&#39;home&#39;]) = 0"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Organization"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1331,7 +1323,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
@@ -1339,7 +1331,6 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
-        <xpath
                value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
@@ -1378,7 +1369,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="true"/>
@@ -1433,7 +1424,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1487,7 +1478,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1531,7 +1522,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1580,7 +1571,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1629,7 +1620,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1665,7 +1656,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1723,7 +1714,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1768,7 +1759,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1818,7 +1809,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1864,7 +1855,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1905,7 +1896,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1966,7 +1957,7 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
@@ -1974,7 +1965,6 @@ For searching knowing previous names that the organization was known by can be v
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
-        <xpath
                value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
@@ -2014,7 +2004,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
@@ -2022,7 +2012,6 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
-        <xpath
                value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
@@ -2057,7 +2046,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -2097,7 +2086,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -2133,7 +2122,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -2168,7 +2157,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -2206,7 +2195,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
