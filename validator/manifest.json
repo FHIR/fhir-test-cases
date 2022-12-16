@@ -29081,6 +29081,83 @@
           }]
         }
       }
+    },
+    {
+      "name": "comments-4",
+      "file": "json-comments.json",
+      "version": "4.0",
+      "explanation": "fhir_comments not allowed in FHIR 3+",
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "Unrecognized property 'fhir_comments'"
+            },
+            "diagnostics" : "[4,74]",
+            "expression" : ["Patient"]
+          }]
+        }        
+      }
+    },
+    {
+      "name": "comments-2",
+      "file": "json-comments.json",
+      "version": "1.0",
+      "explanation": "fhir_comments are allowed in FHIR 2",
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "The fhir_comments property must be an array of strings"
+            },
+            "diagnostics" : "[4,74]",
+            "expression" : ["Patient"]
+          }]
+        }
+      }
+    },
+    {
+      "name": "versioned-extension",
+      "file": "versioned-extension.json",
+      "version": "4.0",
+      "explanation": "extension URLs not allowed |{version} (+ extension with no URL to make sure validator doesn't blow up)",
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "The extension URL must not contain a version. The extension was validated against version 4.0.1 of the extension"
+            },
+            "diagnostics" : "[7,4]",
+            "expression" : ["Patient.extension[1][url='http://hl7.org/fhir/StructureDefinition/patient-congregation|4.0.0']"]
+          },
+          {
+            "severity" : "error",
+            "code" : "value",
+            "details" : {
+              "text" : "Value is 'http://hl7.org/fhir/StructureDefinition/patient-congregation|4.0.0' but must be 'http://hl7.org/fhir/StructureDefinition/patient-congregation'"
+            },
+            "diagnostics" : "[8,81]",
+            "expression" : ["Patient.extension[1].url"]
+          },
+          {
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "Extension.url is required"
+            },
+            "expression" : ["Patient.extension[2]"]
+          }]
+        }
+      }
     }
   ]
 }
