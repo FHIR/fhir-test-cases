@@ -1,0 +1,224 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "pe-extension-complex",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/pe-extension-complex",
+  "version" : "0.1",
+  "name" : "TestComplexExtension",
+  "title" : "Test Complex Extension",
+  "status" : "active",
+  "date" : "2019-05-21",
+  "publisher" : "HL7 International - Tool Tests",
+  "description" : "A simple extension, an extension with 2 levels of nested extension",
+  "fhirVersion" : "5.0.0",
+  "kind" : "complex-type",
+  "abstract": false,
+  "context" : [
+    {
+      "type" : "element",
+      "expression" : "Observation"
+    }
+  ],
+  "type" : "Extension",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Extension",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [
+      {
+        "path" : "Extension",
+        "short" : "A complex extension",
+        "definition" : "A complex extension - an extension with 2 levels",
+        "min" : 0,
+        "max" : "1"
+      },
+      {
+        "path" : "Extension.extension",
+        "sliceName" : "slice1",
+        "short" : "A code",
+        "definition" : "A code for the extension",
+        "min" : 0,
+        "max" : "2",
+        "type" : [
+          {
+            "code" : "Extension"
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "path" : "Extension.extension.url",
+        "min" : 1,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "uri"
+          }
+        ],
+        "fixedUri" : "slice1"
+      },
+      {
+        "path" : "Extension.extension.value[x]",
+        "min" : 1,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "Coding"
+          }
+        ],
+        "binding" : {
+          "strength" : "required",
+          "description" : "A code",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/example-intensional"
+        }
+      },
+      {
+        "path" : "Extension.extension",
+        "sliceName" : "slice2",
+        "short" : "More Details",
+        "definition" : "More details",
+        "min" : 0,
+        "max" : "*",
+        "type" : [
+          {
+            "code" : "Extension"
+          }
+        ]
+      },
+      {
+        "path" : "Extension.extension.url",
+        "min" : 1,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "uri"
+          }
+        ],
+        "fixedUri" : "slice2"
+      },
+      {
+        "path" : "Extension.extension.value[x]",
+        "min" : 1,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "string"
+          }
+        ]
+      },
+      {
+        "path" : "Extension.extension",
+        "sliceName" : "slice3",
+        "short" : "Justification Details",
+        "definition" : "Justification Details.",
+        "min" : 1,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "Extension"
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "path" : "Extension.extension.extension",
+        "sliceName" : "slice3a",
+        "short" : "A code",
+        "definition" : "A code for the extension",
+        "min" : 0,
+        "max" : "2",
+        "type" : [
+          {
+            "code" : "Extension"
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "path" : "Extension.extension.extension.url",
+        "min" : 1,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "uri"
+          }
+        ],
+        "fixedUri" : "slice3a"
+      },
+      {
+        "path" : "Extension.extension.extension.value[x]",
+        "min" : 1,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "Coding"
+          }
+        ],
+        "binding" : {
+          "strength" : "required",
+          "description" : "A code",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/example-intensional"
+        }
+      },
+      {
+        "path" : "Extension.extension.extension",
+        "sliceName" : "slice3b",
+        "short" : "More Details",
+        "definition" : "More details",
+        "min" : 0,
+        "max" : "*",
+        "type" : [
+          {
+            "code" : "Extension"
+          }
+        ]
+      },
+      {
+        "path" : "Extension.extension.extension.url",
+        "min" : 1,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "uri"
+          }
+        ],
+        "fixedUri" : "slice3b"
+      },
+      {
+        "path" : "Extension.extension.extension.value[x]",
+        "min" : 1,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "string"
+          }
+        ]
+      },      
+      {
+        "path" : "Extension.extension.url",
+        "min" : 1,
+        "max" : "1",
+        "fixedUri" : "slice3"
+      },
+      {
+        "path" : "Extension.extension.value[x]",
+        "min" : 0,
+        "max" : "0",
+        "type" : [
+          {
+            "code" : "string"
+          }
+        ]
+      },
+      {
+        "path" : "Extension.url",
+        "min" : 1,
+        "max" : "1",
+        "fixedUri" : "http://hl7.org/fhir/test/StructureDefinition/pe-extension-complex"
+      },
+      {
+        "path" : "Extension.value[x]",
+        "min" : 0,
+        "max" : "0"
+      }
+    ]
+  }
+}
