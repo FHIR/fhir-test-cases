@@ -1,0 +1,183 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="AllergyIntolerance-uv-ips"/>
+  <url value="http://hl7.org/fhir/uv/ips/StructureDefinition/AllergyIntolerance-uv-ips"/>
+  <version value="1.1.0"/>
+  <name value="AllergyIntoleranceUvIps"/>
+  <title value="Allergy Intolerance (IPS)"/>
+  <status value="active"/>
+  <date value="2022-12-07T16:31:31+00:00"/>
+  <publisher value="Health Level Seven International - Patient Care Work Group"/>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="http://www.hl7.org/Special/committees/patientcare"/>
+    </telecom>
+  </contact>
+  <description value="This profile represents the constraints applied to the AllergyIntolerance resource by the International Patient Summary (IPS) FHIR Implementation Guide. A record of an allergy or intolerance is represented in the patient summary as an instance of an AllergyIntolerance resource constrained by this profile. It documents the relevant allergies or intolerances (conditions) for a patient, describing the kind of reaction (e.g. rash, anaphylaxis,..); preferably the agents that cause it; and optionally the criticality and the certainty of the allergy."/>
+  <jurisdiction>
+    <coding>
+      <system value="http://unstats.un.org/unsd/methods/m49/m49.htm"/>
+      <code value="001"/>
+    </coding>
+  </jurisdiction>
+  <purpose value="This profile constrains the representation of a record of an allergy or intolerance of the patient, in the context of the international patient summary as specified by the IPS project of HL7 International."/>
+  <fhirVersion value="4.0.1"/>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="w5"/>
+    <uri value="http://hl7.org/fhir/fivews"/>
+    <name value="FiveWs Pattern Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="v2"/>
+    <uri value="http://hl7.org/v2"/>
+    <name value="HL7 v2 Mapping"/>
+  </mapping>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="AllergyIntolerance"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/AllergyIntolerance"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="AllergyIntolerance">
+      <path value="AllergyIntolerance"/>
+    </element>
+    <element id="AllergyIntolerance.extension:abatement-datetime">
+      <path value="AllergyIntolerance.extension"/>
+      <sliceName value="abatement-datetime"/>
+      <short value="Abatement datetime"/>
+      <definition value="The date or estimated date that the condition resolved or went into remission."/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/abatement-dateTime-uv-ips"/>
+      </type>
+    </element>
+    <element id="AllergyIntolerance.clinicalStatus">
+      <path value="AllergyIntolerance.clinicalStatus"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/CodeableConcept-uv-ips"/>
+      </type>
+    </element>
+    <element id="AllergyIntolerance.verificationStatus">
+      <path value="AllergyIntolerance.verificationStatus"/>
+      <comment value="In the scope of the IPS the entered-in-error concept is not allowed."/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/CodeableConcept-uv-ips"/>
+      </type>
+    </element>
+    <element id="AllergyIntolerance.type">
+      <path value="AllergyIntolerance.type"/>
+      <mustSupport value="true"/>
+      <obligation>
+        <code>
+          <system value="http://hl7.org/fhir/tools/CodeSystem/obligation"/>
+          <code value="SHALL:will-send+SHOULD:display"/>
+        </code>
+        <documentation value="All Australian applications have to understand this element correctly"/>
+        <usage>
+          <code>
+            <system value="http://terminology.hl7.org/CodeSystem/usage-context-type"/>
+            <code value="jurisdiction"/>
+          </code>
+          <valueCodeableConcept>
+            <coding>
+              <system value="urn:iso:std:iso:3166"/>
+              <code value="AU"/>
+            </coding>
+          </valueCodeableConcept>              
+        </usage>
+      </obligation>
+      <obligation>
+        <code>
+          <system value="http://hl7.org/fhir/tools/CodeSystem/obligation"/>
+          <code value="SHALL:preserve"/>
+        </code>
+        <actor value="http://hl7.org/fhir/test/ActorDefinition/server"/>
+        <documentation value="Servers can't change this value"/>
+        <filter value="where(coding.code.exists())"/>
+        <filterDocumentation value="This only applies to values with a code (not text only)"/>
+      </obligation>      
+    </element>
+    <element id="AllergyIntolerance.criticality">
+      <path value="AllergyIntolerance.criticality"/>
+    </element>
+    <element id="AllergyIntolerance.code">
+      <path value="AllergyIntolerance.code"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/CodeableConcept-uv-ips"/>
+      </type>
+      <mustSupport value="true"/>
+      <binding>
+        <strength value="preferred"/>
+        <description value="Type of the substance/product, allergy or intolerance condition or or a code for absent/unknown allergy."/>
+        <valueSet value="http://hl7.org/fhir/uv/ips/ValueSet/allergy-intolerance-uv-ips"/>
+      </binding>
+    </element>
+    <element id="AllergyIntolerance.patient">
+      <path value="AllergyIntolerance.patient"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/uv/ips/StructureDefinition/Patient-uv-ips"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="AllergyIntolerance.patient.reference">
+      <path value="AllergyIntolerance.patient.reference"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="AllergyIntolerance.onset[x]">
+      <path value="AllergyIntolerance.onset[x]"/>
+      <type>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-type-must-support">
+          <valueBoolean value="true"/>
+        </extension>
+        <code value="dateTime"/>
+      </type>
+      <type>
+        <code value="Age"/>
+      </type>
+      <type>
+        <code value="Period"/>
+      </type>
+      <type>
+        <code value="Range"/>
+      </type>
+      <type>
+        <code value="string"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="AllergyIntolerance.reaction">
+      <path value="AllergyIntolerance.reaction"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="AllergyIntolerance.reaction.manifestation">
+      <path value="AllergyIntolerance.reaction.manifestation"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/CodeableConcept-uv-ips"/>
+      </type>
+      <mustSupport value="true"/>
+      <binding>
+        <strength value="preferred"/>
+        <description value="Code for the allergy or intolerance reaction manifestation from the SNOMED International Patient Set (IPS) subset of SNOMED CT (IPS Free Set)."/>
+        <valueSet value="http://hl7.org/fhir/uv/ips/ValueSet/allergy-reaction-snomed-ct-ips-free-set"/>
+      </binding>
+    </element>
+    <element id="AllergyIntolerance.reaction.severity">
+      <path value="AllergyIntolerance.reaction.severity"/>
+      <mustSupport value="true"/>
+    </element>
+  </differential>
+</StructureDefinition>
