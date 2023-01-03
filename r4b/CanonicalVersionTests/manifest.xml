@@ -1,0 +1,45 @@
+<canonicalversion-tests>
+  <!-- 
+  These tests have been ported from Brian Postlethwaite's C# unit tests
+  https://github.com/brianpos/fhir-net-web-api/blob/feature/r4b/src/Test.WebApi.AspNetCore/CanonicalVersionTests.cs 
+  -->
+  <test name="CurrentCanonicalOperation" url="http://example.org/canonical-active-integer">
+    <rule description="Version expected" expression="resource.version = '10.1'"/>
+    <rule description="Specific resource expected" expression="resource.id = 'q1-ai'"/>
+  </test>
+
+  <test name="CurrentCanonicalOperationByStatus-A" url="http://example.org/canonical-status-integer">
+    <rule description="Version expected" expression="resource.version = '0.3'"/>
+    <rule description="Specific resource expected" expression="resource.id = 'q3-si'"/>
+  </test>
+
+  <test name="CurrentCanonicalOperationByStatus-B" url="http://example.org/canonical-status-integer" status="draft">
+    <rule description="Version expected" expression="resource.version = '2.2'"/>
+    <rule description="Specific resource expected" expression="resource.id = 'q2-si'"/>
+  </test>
+
+  <test name="NumericCanonicalVersions" url="http://example.org/canonical-active-integer">
+    <rule description="Version expected" expression="resource.version = '10.1'"/>
+  </test>
+
+  <test name="SemverCanonicalVersions" url="http://example.org/canonical-semver">
+    <rule description="Version expected" expression="resource.version = '11.0.2'"/>
+  </test>
+
+  <test name="SemverCanonicalVersionsWithPreReleases" url="http://example.org/canonical-semver-pre-release">
+    <rule description="Version expected" expression="resource.version = '2.0.1'"/>
+  </test>
+
+  <test name="FhirpathCanonicalVersions" url="http://example.org/canonical-fhirpath">
+    <rule description="Version expected" expression="resource.version = '2.0.1-alpha2'"/>
+  </test>
+
+  <test name="AlphaCanonicalVersions" url="http://example.org/canonical-alpha">
+    <rule description="Version expected" expression="resource.version = '2.0.1-alpha2'"/>
+  </test>
+
+  <test name="NaturalCanonicalVersions" url="http://example.org/canonical-natural">
+    <rule description="Version expected" expression="resource.version = 'general1000'"/>
+  </test>
+
+</canonicalversion-tests>
