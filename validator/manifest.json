@@ -29158,6 +29158,27 @@
           }]
         }
       }
+    },
+    {
+      "name": "bundle-profiles",
+      "file": "bundle-profiles.json",
+      "version": "4.0",
+      "explanation": "Checking that profiles on resources in bundles are validated",
+      "java": {
+        "outcome" : 
+        {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "warning",
+            "code" : "structure",
+            "details" : {
+              "text" : "Profile reference 'https://gematik.de/fhir/ISiK/StructureDefinition/ISiKPatient' has not been checked because it is unknown, and the validator is set to not fetch unknown profiles"
+            },
+            "diagnostics" : "[21,14]",
+            "expression" : ["Bundle.entry[0].resource.ofType(Patient).meta.profile[0]"]
+          }]
+        }        
+      }
     }
   ]
 }
