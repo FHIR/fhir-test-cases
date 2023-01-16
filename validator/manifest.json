@@ -23285,7 +23285,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "UUIDs must be valid (and lowercase)"
+                "text": "UUIDs must be valid and lowercase (f3b2bd36-199b-4591-b4db-f49db0912b6)"
               },
               "diagnostics": "[14,58]",
               "expression": [
@@ -23306,7 +23306,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "UUIDs must be valid (and lowercase)"
+                "text": "UUIDs must be valid and lowercase (6a2ee390-978e-42c6-8f88-c17dff3bd8a)"
               },
               "diagnostics": "[9,56]",
               "expression": [
@@ -29178,6 +29178,44 @@
             "expression" : ["Bundle.entry[0].resource.ofType(Patient).meta.profile[0]"]
           }]
         }        
+      }
+    },
+    {
+      "name": "bundle-urn",
+      "file": "bundle-urn.json",
+      "version": "4.0",
+      "explanation": "issues related to URN Links in bundles",
+      "java": {
+        "outcome" : {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "The extension http://hl7.org/fhir/StructureDefinition/NarrativeLink is unknown, and not allowed here"
+            },
+            "diagnostics" : "[153,12]",
+            "expression" : ["Bundle.entry[2].resource.ofType(MedicationStatement).extension[0]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "code-invalid",
+            "details" : {
+              "text" : "Unknown Code System 'http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips'"
+            },
+            "diagnostics" : "[202,14]",
+            "expression" : ["Bundle.entry[3].resource.ofType(AllergyIntolerance).code.coding[0]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "code-invalid",
+            "details" : {
+              "text" : "Unknown Code System 'http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips'"
+            },
+            "diagnostics" : "[229,14]",
+            "expression" : ["Bundle.entry[4].resource.ofType(Condition).code.coding[0]"]
+          }]
+        }
       }
     }
   ]
