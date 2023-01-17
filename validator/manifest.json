@@ -29217,6 +29217,42 @@
           }]
         }
       }
+    },
+    {
+      "name": "ext-ccuk",
+      "file": "ext-ccuk.json",
+      "version": "4.0",
+      "explanation": "no slicing on root elements in profiles - check it's an error",
+      "java": {
+        "outcome" : {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "invariant",
+            "details" : {
+              "text" : "Rule sdf-20: 'No slicing on the root element' Failed"
+            },
+            "diagnostics" : "[34,4]",
+            "expression" : ["StructureDefinition.differential"]
+          },
+          {
+            "severity" : "error",
+            "code" : "exception",
+            "details" : {
+              "text" : "Error generating Snapshot: Error: The profile has slicing at the root, which is illegal (this usually arises from a problem in the differential)"
+            },
+            "expression" : ["StructureDefinition"]
+          },
+          {
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "Slicing is not allowed at the root of a profile"
+            },
+            "expression" : ["StructureDefinition.differential.element[0]"]
+          }]
+        }
+      }
     }
   ]
 }
