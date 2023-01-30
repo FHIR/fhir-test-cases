@@ -39,6 +39,8 @@ https://github.com/FHIR/fhir-test-cases/releases/latest/download/testcases.zip
 
 ## Building this Project
 
+You can find detailed instructions on setting up this project in your IDE [here](https://hl7.github.io/docs/fhir-test-cases/getting-started).
+
 This project uses [Apache Maven](http://maven.apache.org) to build. To build:
 
 ```
