@@ -1311,6 +1311,7 @@ Any text enclosed within is ignored
 
 	<group name="LowBoundary">
 		<test name="LowBoundaryDecimal"><expression>1.587.lowBoundary(8)</expression><output>1.58650000</output></test>
+		<test name="LowBoundaryQuantity"><expression>1.587 'cm'.lowBoundary(8)</expression><output>1.58650000 'cm'</output></test>
 		<test name="LowBoundaryDateMonth"><expression>@2014.lowBoundary(6)</expression><output>@2014-01</output></test>
 		<test name="LowBoundaryDateTimeMillisecond"><expression>@2014-01-01T08.lowBoundary(17)</expression><output>@2014-01-01T08:00:00.000</output></test>
 		<test name="LowBoundaryTimeMillisecond"><expression>@T10:30.lowBoundary(9)</expression><output>@T10:30:00.000</output></test>
@@ -1318,9 +1319,15 @@ Any text enclosed within is ignored
 
 	<group name="HighBoundary">
 		<test name="HighBoundaryDecimal"><expression>1.587.highBoundary(8)</expression><output>1.58750000</output></test>
+		<test name="HighBoundaryQuantity"><expression>1.587 'm'.highBoundary(8)</expression><output>1.58750000 'm'</output></test>
 		<test name="HighBoundaryDateMonth"><expression>@2014.highBoundary(6)</expression><output>@2014-12</output></test>
 		<test name="HighBoundaryDateTimeMillisecond"><expression>@2014-01-01T08.highBoundary(17)</expression><output>@2014-01-01T08:00:59.999</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
 		<test name="HighBoundaryTimeMillisecond">	<expression>@T10:30.highBoundary(9)</expression><output>@T10:30:59.999</output></test>
+	</group>
+
+  <group name="Comparable">
+		<test name="Comparable1"><expression>1 'cm'.comparable(1 '[in_i]')</expression><output>true</output></test>
+		<test name="Comparable2"><expression>1 'cm'.comparable(1 '[s]')</expression><output>false</output></test>
 	</group>
 
 	<group name="Precision">
