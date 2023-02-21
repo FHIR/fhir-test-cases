@@ -29554,6 +29554,41 @@
         "errorCount": 0,
         "output": []
       }
+    },
+    {
+      "name" : "bundle-conditional-reference-bad",
+      "file" : "bundle-conditional-reference-bad.json",
+      "java" : {
+        "outcome":   {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "Relative URLs must be of the format [ResourceName]/[id], or a search URL is allowed ([type]?parameters.  Encountered Device?identifier=1234&?==)"
+            },
+            "expression" : ["Bundle.entry[0].resource/*Observation/observation1*/.device"]
+          },
+          {
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "The query part of the conditional reference is not a valid query string (Device?identifier=1234&?==)"
+            },
+            "diagnostics" : "[25,10]",
+            "expression" : ["Bundle.entry[0].resource/*Observation/observation1*/.device"]
+          }]
+        }
+      }
+    },
+    {
+      "name" : "bundle-conditional-reference-good",
+      "file" : "bundle-conditional-reference-good.json",
+      "java" : {
+        "outcome":   {
+          "resourceType" : "OperationOutcome"
+        }
+      }
     }
   ]
 }
