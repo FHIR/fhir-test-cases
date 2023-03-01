@@ -65,52 +65,12 @@
     <rule text="Patient.extension tail must not have a slice name" fhirpath="fixture('t12-output').snapshot.element.where(path = 'Patient.extension').tail().all(sliceName.empty().not())"/>
     <rule text="Patient.extension cardinality must be correct" fhirpath="fixture('t12-output').snapshot.element.where(path = 'Patient.extension')[1].min.exists()"/>
   </test>
-  <test gen="true" id="t12a" description="slicing on extensions, no set up of slicing, single slice">
-    <rule text="Patient.extension must be sliced" fhirpath="fixture('t12a-output').snapshot.element.where(path = 'Patient.extension').first().slicing.exists()"/>
-    <rule text="Patient.extension first must not have a slice name" fhirpath="fixture('t12a-output').snapshot.element.where(path = 'Patient.extension').first().sliceName.empty()"/>
-    <rule text="Patient.extension must be sliced into two slices" fhirpath="fixture('t12a-output').snapshot.element.where(path = 'Patient.extension').count() = 2"/>
-    <rule text="Patient.extension must not have a slice name" fhirpath="fixture('t12a-output').snapshot.element.where(path = 'Patient.extension').tail().slicing.empty()"/>
-    <rule text="Patient.extension tail must not have a slice name" fhirpath="fixture('t12a-output').snapshot.element.where(path = 'Patient.extension').tail().all(sliceName.empty().not())"/>
-  </test>
-  <test gen="true" id="t13" description="complex slicing">
-    <rule text="element 7 (base) path" fhirpath="fixture('t13-output').snapshot.element[7].path = 'Patient.extension'"/>
-    <rule text="element 7 slicing" fhirpath="fixture('t13-output').snapshot.element[7].slicing.exists()"/>
-    <rule text="element 8 (1st slice) path" fhirpath="fixture('t13-output').snapshot.element[8].path = 'Patient.extension'"/>
-    <rule text="element 8 (1st slice) name" fhirpath="fixture('t13-output').snapshot.element[8].sliceName = 't'"/>
-    <rule text="element 9 (2nd slice) profile name" fhirpath="fixture('t13-output').snapshot.element[8].type[0].profile = 'http://hl7.org/fhir/StructureDefinition/patient-birthTime'"/>
-    <rule text="element 9 (2nd slice) path" fhirpath="fixture('t13-output').snapshot.element[9].path = 'Patient.extension'"/>
-    <rule text="element 8 (1st slice) name" fhirpath="fixture('t13-output').snapshot.element[9].sliceName = 'complex'"/>
-    <rule text="element 9 (2nd slice) profile name" fhirpath="fixture('t13-output').snapshot.element[9].type[0].profile = 'http://hl7.org/fhir/StructureDefinition/patient-nationality'"/>
-    <rule text="element 10 (2nd slice).id path" fhirpath="fixture('t13-output').snapshot.element[10].path = 'Patient.extension.id'"/>
-    <rule text="element 11 (2nd slice).extension path" fhirpath="fixture('t13-output').snapshot.element[11].path = 'Patient.extension.extension'"/>
-    <rule text="element 12 (2nd slice).extension path" fhirpath="fixture('t13-output').snapshot.element[12].path = 'Patient.extension.extension'"/>
-    <rule text="element 12 (2nd slice).extension must support" fhirpath="fixture('t13-output').snapshot.element[12].mustSupport"/>
-    <rule text="element 13 (2nd slice).extension.id path" fhirpath="fixture('t13-output').snapshot.element[13].path = 'Patient.extension.extension.id'"/>
-    <rule text="element 14 (2nd slice).extension.extension path" fhirpath="fixture('t13-output').snapshot.element[14].path = 'Patient.extension.extension.extension'"/>
-    <rule text="element 15 (2nd slice).extension.url path" fhirpath="fixture('t13-output').snapshot.element[15].path = 'Patient.extension.extension.url'"/>
-    <rule text="element 16 (2nd slice).extension.value path" fhirpath="fixture('t13-output').snapshot.element[16].path = 'Patient.extension.extension.value[x]'"/>
-    <rule text="element 16 (2nd slice).extension.value id" fhirpath="fixture('t13-output').snapshot.element[16].id = 'Patient.extension:complex.extension:code.value[x]'"/>
-    <!-- Not sure what these things think they are testing? GG 31-10-2019
-    <rule text="element 17 (2nd slice).extension.value(CodeableConcept) path" fhirpath="fixture('t13-output').snapshot.element[17].path.trace('path17') = 'Patient.extension.extension.value[x]'"/>
-    <rule text="element 17 (2nd slice).extension.value(CodeableConcept) id" fhirpath="fixture('t13-output').snapshot.element[17].id = 'Patient.extension:complex.extension:code.value[x]:valueCodeableConcept'"/>
-    <rule text="element 18 (2nd slice).extension path" fhirpath="fixture('t13-output').snapshot.element[18].path = 'Patient.extension.extension'"/>
-    <rule text="element 18 (2nd slice).extension cardinality" fhirpath="fixture('t13-output').snapshot.element[18].max = '0'"/>
-    <rule text="element 19 (2nd slice).extension.id path" fhirpath="fixture('t13-output').snapshot.element[19].path = 'Patient.extension.extension.id'"/>
-    <rule text="element 20 (2nd slice).extension.extension path" fhirpath="fixture('t13-output').snapshot.element[20].path = 'Patient.extension.extension.extension'"/>
-    <rule text="element 21 (2nd slice).extension.url path" fhirpath="fixture('t13-output').snapshot.element[21].path = 'Patient.extension.extension.url'"/>
-    <rule text="element 22 (2nd slice).extension.valuePeriod path" fhirpath="fixture('t13-output').snapshot.element[22].path = 'Patient.extension.extension.value[x]'"/>
-    <rule text="element 24.url path" fhirpath="fixture('t13-output').snapshot.element[24].path.trace('path') = 'Patient.extension.url'"/>
-    <rule text="element 25.value path" fhirpath="fixture('t13-output').snapshot.element[25].path = 'Patient.extension.value[x]'"/> -->
-  </test>
-  <test gen="true" id="t14" description="see task 8742">
-    <rule text="element count increased by 21" fhirpath="fixture('t14-output').snapshot.element.count().trace('output') = fixture('organization').snapshot.element.count().trace('input') + 21"/>
-  </test>
-  <test gen="true" id="t15" description="complex extensions with children">
-    <rule text="element count increased by 27" fhirpath="fixture('t15-output').snapshot.element.count() = fixture('patient').snapshot.element.count() + 27"/>
-  </test>
-  <test gen="true" id="t16" description="extending a complex extension&#39;s children in derived profile">
-    <rule text="element count increased by 17" fhirpath="fixture('t16-output').snapshot.element.count() = fixture('t15-output').snapshot.element.count() + 19"/>
-  </test>
+  <test gen="true" id="t12a" description="slicing on extensions, no set up of slicing, single slice"/>
+  <test gen="true" id="t13" description="complex slicing"/>
+  <test gen="true" id="t14" description="see task 8742"/>
+  <test gen="true" id="t15" description="complex extensions with children"/>
+  <test gen="true" id="t15a" fail="true" description="Unknown extension" allow="none"/>
+  <test gen="true" id="t16" debug="true" description="extending a complex extension&#39;s children in derived profile"/>
   <test gen="true" id="t17" description="use a modifier extension instead">
     <rule text="Patient.modifierExtension must be sliced" fhirpath="fixture('t17-output').snapshot.element.where(path = 'Patient.modifierExtension').first().slicing.exists()"/>
     <rule text="Patient.modifierExtension first must not have a slice name" fhirpath="fixture('t17-output').snapshot.element.where(path = 'Patient.modifierExtension').first().sliceName.empty()"/>
@@ -173,9 +133,7 @@
   <test gen="true" sort="true" id="t30b" include="t30a" description="Profile and derived profile both slice a backbone element; derived profile">
     <rule text="Snapshot doesn't result in an error'" fhirpath="fixture('t30b-output').snapshot.element.count().trace('t30bo')&gt;1"/>
   </test>
-  <test gen="true" sort="true" id="t31" description="Propagate extensions from differential to snapshot">
-    <rule text="Snapshot contains regex extension'" fhirpath="fixture('t31-output').snapshot.element.extension('http://hl7.org/fhir/StructureDefinition/regex').count().trace('t31o ext count')=2"/>
-  </test>
+  <test gen="true" sort="true" id="t31" description="Propagate extensions from differential to snapshot"/>
   <test gen="true" sort="true" id="t32" description="Test disappearing slice definition">
     <rule text="Snapshot Questionnaire.item element has slicing'" fhirpath="fixture('t32-output').snapshot.element.where(id = 'Questionnaire.item').slicing.count().trace('t32o item slicing count')=1"/>
   </test>
@@ -195,9 +153,7 @@
     <rule text="Snapshot generation didn't blow up" fhirpath="fixture('t36-output').snapshot.element.count() &gt; 0"/>
   </test>
   <test gen="true" sort="true" id="t37" fail="true" description="Test bad Path"/>
-  <test gen="true" sort="true" id="t38" description="Deep nesting">
-    <rule text="Snapshot generation didn't blow up" fhirpath="fixture('t38-output').snapshot.element.count() &gt; 0"/>
-  </test>
+  <test gen="true" sort="true" id="t38" description="Deep nesting"/>
   <test gen="true" sort="true" id="t40" description="Choice Types: constrain minimum cardinality">
     <rule text="There should only be one element definition for value[x]" fhirpath="fixture('t40-output').snapshot.element.where(path.startsWith('Observation.value')).count() = 1"/>
     <rule text="The element definition for value[x] should have min = 1" fhirpath="fixture('t40-output').snapshot.element.where(path.startsWith('Observation.value')).min = 1"/>

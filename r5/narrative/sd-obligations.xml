@@ -73,37 +73,47 @@
       </type>
     </element>
     <element id="AllergyIntolerance.type">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/obligation">
+        <extension url="code">
+          <valueCode value="SHALL:will-send+SHOULD:display"/>
+        </extension>
+        <extension url="documentation">
+          <valueMarkdown value="All Australian applications have to understand this element correctly"/>
+        </extension>
+        <extension url="usage">
+          <valueUsageContext>
+            <code>
+              <system value="http://terminology.hl7.org/CodeSystem/usage-context-type"/>
+              <code value="jurisdiction"/>
+            </code>
+            <valueCodeableConcept>
+              <coding>
+                <system value="urn:iso:std:iso:3166"/>
+                <code value="AU"/>
+              </coding>
+            </valueCodeableConcept>              
+          </valueUsageContext>
+        </extension>
+      </extension>
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/obligation">
+        <extension url="code">
+          <valueCode value="SHALL:preserve"/>
+        </extension>
+        <extension url="actor">
+          <valueCanonical value="http://hl7.org/fhir/test/ActorDefinition/server"/>
+        </extension>
+        <extension url="documentation">
+          <valueMarkdown value="Servers can't change this value"/>
+        </extension>
+        <extension url="filter-desc">
+          <valueString value="where(coding.code.exists())"/>
+        </extension>
+        <extension url="filter">
+          <valueMarkdown value="This only applies to values with a code (not text only)"/>
+        </extension>
+      </extension>
       <path value="AllergyIntolerance.type"/>
       <mustSupport value="true"/>
-      <obligation>
-        <code>
-          <system value="http://hl7.org/fhir/tools/CodeSystem/obligation"/>
-          <code value="SHALL:will-send+SHOULD:display"/>
-        </code>
-        <documentation value="All Australian applications have to understand this element correctly"/>
-        <usage>
-          <code>
-            <system value="http://terminology.hl7.org/CodeSystem/usage-context-type"/>
-            <code value="jurisdiction"/>
-          </code>
-          <valueCodeableConcept>
-            <coding>
-              <system value="urn:iso:std:iso:3166"/>
-              <code value="AU"/>
-            </coding>
-          </valueCodeableConcept>              
-        </usage>
-      </obligation>
-      <obligation>
-        <code>
-          <system value="http://hl7.org/fhir/tools/CodeSystem/obligation"/>
-          <code value="SHALL:preserve"/>
-        </code>
-        <actor value="http://hl7.org/fhir/test/ActorDefinition/server"/>
-        <documentation value="Servers can't change this value"/>
-        <filter value="where(coding.code.exists())"/>
-        <filterDocumentation value="This only applies to values with a code (not text only)"/>
-      </obligation>      
     </element>
     <element id="AllergyIntolerance.criticality">
       <path value="AllergyIntolerance.criticality"/>

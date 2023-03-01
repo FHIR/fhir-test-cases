@@ -744,15 +744,48 @@
       }
     },
     {
-      "name": "list-contained-bad",
+      "name": "list-contained-bad-json",
       "file": "list-contained-bad.json",
       "java": {
-        "errorCount": 3,
-        "output": [
-          "ERROR: List: dom-3: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource ( (unmatched: pat2)) [contained.where(((('#' + id) in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()]",
-          "ERROR: List.subject: Unable to resolve resource '#pat'",
-          "ERROR: List.subject: ref-1: SHALL have a contained resource if a local reference is provided ( (url: pat; ids: pat2)) [reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))]"
-        ]
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "This property must be an Array, not an Object"
+            },
+            "diagnostics" : "[12,4]",
+            "expression" : ["List.subject"]
+          },
+          {
+            "severity" : "error",
+            "code" : "invariant",
+            "details" : {
+              "text" : "Rule dom-3: 'If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource' Failed (unmatched: pat2) (log:  (unmatched: pat2))"
+            },
+            "diagnostics" : "[1,2]",
+            "expression" : ["List"]
+          },
+          {
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "Unable to resolve resource with reference '#pat'"
+            },
+            "diagnostics" : "[12,4]",
+            "expression" : ["List.subject[0]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "invariant",
+            "details" : {
+              "text" : "Rule ref-1: 'SHALL have a contained resource if a local reference is provided' Failed (url: pat; ids: pat2) (log:  (url: pat; ids: pat2))"
+            },
+            "diagnostics" : "[12,4]",
+            "expression" : ["List.subject[0]"]
+          }]
+        } 
       }
     },
     {
@@ -901,16 +934,6 @@
             }
           ]
         }
-      }
-    },
-    {
-      "name": "list-wrong-code",
-      "file": "list-wrong-code.json",
-      "java": {
-        "errorCount": 1,
-        "output": [
-          "ERROR: List.status: The value provided ('current1') is not in the value set http://hl7.org/fhir/ValueSet/list-status|4.2.0 (http://hl7.org/fhir/ValueSet/list-status, and a code is required from this value set) (error message = Unknown Code http://hl7.org/fhir/list-status#current1 in http://hl7.org/fhir/list-status)"
-        ]
       }
     },
     {
@@ -4003,44 +4026,37 @@
       "name": "list-contained-bad",
       "file": "list-contained-bad.xml",
       "java": {
-        "outcome": {
-          "resourceType": "OperationOutcome",
-          "issue": [
-            {
-              "severity": "error",
-              "code": "invariant",
-              "details": {
-                "text": "Rule dom-3: 'If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource' Failed (unmatched: pat1) (log:  (unmatched: pat1))"
-              },
-              "diagnostics": "[1,35]",
-              "expression": [
-                "List"
-              ]
+        "outcome": 
+        {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "invariant",
+            "details" : {
+              "text" : "Rule dom-3: 'If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource' Failed (unmatched: pat1) (log:  (unmatched: pat1))"
             },
-            {
-              "severity": "error",
-              "code": "structure",
-              "details": {
-                "text": "Unable to resolve resource with reference '#pat'"
-              },
-              "diagnostics": "[10,12]",
-              "expression": [
-                "List.subject"
-              ]
+            "diagnostics" : "[1,35]",
+            "expression" : ["List"]
+          },
+          {
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "Unable to resolve resource with reference '#pat'"
             },
-            {
-              "severity": "error",
-              "code": "invariant",
-              "details": {
-                "text": "Rule ref-1: 'SHALL have a contained resource if a local reference is provided' Failed (url: pat; ids: pat1) (log:  (url: pat; ids: pat1))"
-              },
-              "diagnostics": "[10,12]",
-              "expression": [
-                "List.subject"
-              ]
-            }
-          ]
-        }
+            "diagnostics" : "[10,12]",
+            "expression" : ["List.subject[0]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "invariant",
+            "details" : {
+              "text" : "Rule ref-1: 'SHALL have a contained resource if a local reference is provided' Failed (url: pat; ids: pat1) (log:  (url: pat; ids: pat1))"
+            },
+            "diagnostics" : "[10,12]",
+            "expression" : ["List.subject[0]"]
+          }]
+        }        
       }
     },
     {
@@ -4207,20 +4223,16 @@
       "file": "list-wrong-code.xml",
       "java": {
         "outcome": {
-          "resourceType": "OperationOutcome",
-          "issue": [
-            {
-              "severity": "error",
-              "code": "code-invalid",
-              "details": {
-                "text": "The value provided ('current1') is not in the value set 'ListStatus' (http://hl7.org/fhir/ValueSet/list-status|5.0.0-snapshot3), and a code is required from this value set) (error message = Unknown Code http://hl7.org/fhir/list-status#current1 in http://hl7.org/fhir/list-status)"
-              },
-              "diagnostics": "[5,29]",
-              "expression": [
-                "List.status"
-              ]
-            }
-          ]
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "code-invalid",
+            "details" : {
+              "text" : "The value provided ('current1') is not in the value set 'List Status' (http://hl7.org/fhir/ValueSet/list-status|5.0.0-snapshot3), and a code is required from this value set) (error message = Unknown Code http://hl7.org/fhir/list-status#current1 in http://hl7.org/fhir/list-status)"
+            },
+            "diagnostics" : "[5,29]",
+            "expression" : ["List.status"]
+          }]
         }
       }
     },
@@ -29598,6 +29610,15 @@
           "resourceType" : "OperationOutcome",
           "issue" : [{
             "severity" : "warning",
+            "code" : "invariant",
+            "details" : {
+              "text" : "Rule cnl-0: 'Name should be usable as an identifier for the module by machine processing applications such as code generation' Failed"
+            },
+            "diagnostics" : "[0,0]",
+            "expression" : ["StructureMap"]
+          },
+          {
+            "severity" : "warning",
             "code" : "structure",
             "details" : {
               "text" : "No maps were found to match http://hl7.org/fhir/StructureMap/*4to3 - validation may be wrong"
@@ -29669,6 +29690,43 @@
             "expression" : ["StructureMap.group[1].input[1]"]
           }]
         }        
+      }
+    },
+    {
+      "name" : "specimendefinition-example-serum-plasma",
+      "file" : "specimendefinition-example-serum-plasma.xml",
+      "description" : "erroneous value attribute",
+      "java" : {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "Undefined attribute '@value' on identifier for type Identifier"
+            },
+            "diagnostics" : "[5,31]",
+            "expression" : ["/f:SpecimenDefinition/f:identifier"]
+          },
+          {
+            "severity" : "information",
+            "code" : "unknown",
+            "details" : {
+              "text" : "Code System URI 'urn:iso:std:iso:6710:2017' is unknown so the code cannot be validated"
+            },
+            "diagnostics" : "[53,17]",
+            "expression" : ["SpecimenDefinition.typeTested[0].container.cap.coding[0]"]
+          },
+          {
+            "severity" : "information",
+            "code" : "unknown",
+            "details" : {
+              "text" : "Code System URI 'urn:iso:std:iso:6710:2017' is unknown so the code cannot be validated"
+            },
+            "diagnostics" : "[142,17]",
+            "expression" : ["SpecimenDefinition.typeTested[1].container.cap.coding[0]"]
+          }]
+        }  
       }
     }
   ]

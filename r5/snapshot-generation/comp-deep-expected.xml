@@ -813,7 +813,7 @@
             <span style="font-style: italic">(</span>
             <span style="font-style: italic">MedicationAdministration</span>
             <span style="font-style: italic"> | </span>
-            <a style="font-style: italic" href="http://hl7.org/fhir/datatypes.html#MedicationStatement">MedicationStatement</a>
+            <span style="font-style: italic">MedicationStatement</span>
             <span style="font-style: italic"> | </span>
             <span style="font-style: italic">Procedure</span>
             <span style="font-style: italic"> | </span>
@@ -2744,7 +2744,7 @@
             <span style="font-style: italic">(</span>
             <span style="font-style: italic">MedicationAdministration</span>
             <span style="font-style: italic"> | </span>
-            <a style="font-style: italic" href="http://hl7.org/fhir/datatypes.html#MedicationStatement">MedicationStatement</a>
+            <span style="font-style: italic">MedicationStatement</span>
             <span style="font-style: italic"> | </span>
             <span style="font-style: italic">Procedure</span>
             <span style="font-style: italic"> | </span>
@@ -4853,7 +4853,7 @@
         <key value="dom-3"/>
         <severity value="error"/>
         <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"/>
-        <expression value="contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().ofType(canonical) | %resource.descendants().ofType(uri) | %resource.descendants().ofType(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()"/>
+        <expression value="contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().ofType(canonical) | %resource.descendants().ofType(uri) | %resource.descendants().ofType(url))) or descendants().where(reference = '#').exists() or descendants().where(ofType(canonical) = '#').exists() or descendants().where(ofType(canonical) = '#').exists()).not()).trace('unmatched', id).empty()"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
       <constraint>
@@ -4962,7 +4962,7 @@
       <path value="Composition.implicitRules"/>
       <short value="A set of rules under which this content was created"/>
       <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content. Often, this is a reference to an implementation guide that defines the special rules along with other profiles etc."/>
-      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of it's narrative along with other profiles, value sets, etc."/>
+      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of its narrative along with other profiles, value sets, etc."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -4982,7 +4982,7 @@
       </constraint>
       <mustSupport value="false"/>
       <isModifier value="true"/>
-      <isModifierReason value="This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it's meaning or interpretation"/>
+      <isModifierReason value="This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies its meaning or interpretation"/>
       <isSummary value="true"/>
     </element>
     <element id="Composition.language">
@@ -5011,18 +5011,19 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
-          <valueCanonical value="http://hl7.org/fhir/ValueSet/all-languages"/>
-        </extension>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
           <valueString value="Language"/>
         </extension>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding">
           <valueBoolean value="true"/>
         </extension>
-        <strength value="preferred"/>
-        <description value="IETF language tag"/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/languages"/>
+        <strength value="required"/>
+        <description value="IETF language tag for a human language"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/all-languages|5.0.0-draft-final"/>
+        <additional>
+          <purpose value="starter"/>
+          <valueSet value="http://hl7.org/fhir/ValueSet/languages"/>
+        </additional>
       </binding>
     </element>
     <element id="Composition.text">
@@ -5044,6 +5045,7 @@
       <type>
         <code value="Narrative"/>
       </type>
+      <condition value="dom-6"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -5077,6 +5079,10 @@
       <type>
         <code value="Resource"/>
       </type>
+      <condition value="dom-2"/>
+      <condition value="dom-4"/>
+      <condition value="dom-3"/>
+      <condition value="dom-5"/>
       <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
@@ -5088,7 +5094,7 @@
     <element id="Composition.extension">
       <path value="Composition.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the resource. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the resource. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -5127,7 +5133,7 @@
     <element id="Composition.modifierExtension">
       <path value="Composition.modifierExtension"/>
       <short value="Extensions that cannot be ignored"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -5309,7 +5315,7 @@
         </extension>
         <strength value="required"/>
         <description value="The workflow/clinical status of the composition."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/composition-status|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/composition-status|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="workflow"/>
@@ -5411,6 +5417,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -5429,7 +5436,7 @@
         <rules value="open"/>
       </slicing>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -5520,6 +5527,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -5538,7 +5546,7 @@
         <rules value="open"/>
       </slicing>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -5666,6 +5674,7 @@
       <type>
         <code value="code"/>
       </type>
+      <condition value="cod-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -5709,6 +5718,7 @@
       <type>
         <code value="string"/>
       </type>
+      <condition value="cod-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -6236,6 +6246,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -6246,7 +6257,7 @@
     <element id="Composition.attester.extension">
       <path value="Composition.attester.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -6284,7 +6295,7 @@
     <element id="Composition.attester.modifierExtension">
       <path value="Composition.attester.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -6576,6 +6587,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -6586,7 +6598,7 @@
     <element id="Composition.event.extension">
       <path value="Composition.event.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -6624,7 +6636,7 @@
     <element id="Composition.event.modifierExtension">
       <path value="Composition.event.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -6855,6 +6867,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -6865,7 +6878,7 @@
     <element id="Composition.section.extension">
       <path value="Composition.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -6903,7 +6916,7 @@
     <element id="Composition.section.modifierExtension">
       <path value="Composition.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -7164,7 +7177,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -7238,6 +7251,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -7315,7 +7329,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -7404,6 +7417,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -7414,7 +7428,7 @@
     <element id="Composition.section:flt.extension">
       <path value="Composition.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -7452,7 +7466,7 @@
     <element id="Composition.section:flt.modifierExtension">
       <path value="Composition.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -7719,7 +7733,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -7807,6 +7821,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -7844,6 +7859,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-primaryCancer-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -7881,6 +7897,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-secondaryCancer-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -7918,6 +7935,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-flt-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -8003,7 +8021,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -8042,7 +8059,6 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -8080,6 +8096,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -8090,7 +8107,7 @@
     <element id="Composition.section:flt.section:chemotherapy.extension">
       <path value="Composition.section.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -8128,7 +8145,7 @@
     <element id="Composition.section:flt.section:chemotherapy.modifierExtension">
       <path value="Composition.section.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -8395,7 +8412,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -8484,6 +8501,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -8521,6 +8539,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/MedicationAdministration-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -8558,6 +8577,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/MedicationStatement-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -8635,7 +8655,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -8674,7 +8693,6 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -8712,6 +8730,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -8722,7 +8741,7 @@
     <element id="Composition.section:flt.section:stemCellTransplantation.extension">
       <path value="Composition.section.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -8760,7 +8779,7 @@
     <element id="Composition.section:flt.section:stemCellTransplantation.modifierExtension">
       <path value="Composition.section.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -9027,7 +9046,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -9116,6 +9135,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -9153,6 +9173,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-sct-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -9190,6 +9211,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-sct-prophylaxis-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -9227,6 +9249,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-gvhd-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -9264,6 +9287,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Observation-bld-abo-rh-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -9341,7 +9365,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -9380,7 +9403,6 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -9418,6 +9440,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -9428,7 +9451,7 @@
     <element id="Composition.section:flt.section:radiotherapy.extension">
       <path value="Composition.section.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -9466,7 +9489,7 @@
     <element id="Composition.section:flt.section:radiotherapy.modifierExtension">
       <path value="Composition.section.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -9733,7 +9756,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -9820,6 +9843,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -9857,6 +9881,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-radiotheraphy-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -9894,6 +9919,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-radiotheraphyBoost-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -9931,6 +9957,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-radiotheraphyShield-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -10008,7 +10035,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -10047,7 +10073,6 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -10085,6 +10110,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -10095,7 +10121,7 @@
     <element id="Composition.section:flt.section:majorSurgery.extension">
       <path value="Composition.section.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -10133,7 +10159,7 @@
     <element id="Composition.section:flt.section:majorSurgery.modifierExtension">
       <path value="Composition.section.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -10400,7 +10426,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -10487,6 +10513,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -10524,6 +10551,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-surgery-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -10601,7 +10629,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -10640,7 +10667,6 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -10678,6 +10704,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -10688,7 +10715,7 @@
     <element id="Composition.section:flt.section:otherInfos.extension">
       <path value="Composition.section.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -10726,7 +10753,7 @@
     <element id="Composition.section:flt.section:otherInfos.modifierExtension">
       <path value="Composition.section.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -10993,7 +11020,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -11081,6 +11108,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -11118,6 +11146,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-toxicity-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -11155,6 +11184,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-otherinfos-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -11192,6 +11222,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-cvc-otherinfos-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -11229,6 +11260,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-transfusion-otherinfos-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -11266,6 +11298,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-cryopreservation-otherinfos-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -11303,6 +11336,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-treatment-otherinfos-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -11380,7 +11414,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -11419,7 +11452,6 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -11457,6 +11489,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -11467,7 +11500,7 @@
     <element id="Composition.section:flt.section:medicalSuggestion.extension">
       <path value="Composition.section.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -11505,7 +11538,7 @@
     <element id="Composition.section:flt.section:medicalSuggestion.modifierExtension">
       <path value="Composition.section.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -11772,7 +11805,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -11846,6 +11879,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -11923,7 +11957,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -11959,7 +11992,6 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -11997,6 +12029,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -12007,7 +12040,7 @@
     <element id="Composition.section:flt.section:relapseAfterEOT.extension">
       <path value="Composition.section.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -12045,7 +12078,7 @@
     <element id="Composition.section:flt.section:relapseAfterEOT.modifierExtension">
       <path value="Composition.section.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -12312,7 +12345,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -12400,6 +12433,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -12437,6 +12471,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-primaryCancer-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -12474,6 +12509,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-secondaryCancer-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -12559,7 +12595,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -12598,7 +12633,6 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -12636,6 +12670,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -12646,7 +12681,7 @@
     <element id="Composition.section:flt.section:relapseAfterEOT.section:chemotherapy.extension">
       <path value="Composition.section.section.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -12684,7 +12719,7 @@
     <element id="Composition.section:flt.section:relapseAfterEOT.section:chemotherapy.modifierExtension">
       <path value="Composition.section.section.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -12951,7 +12986,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -13040,6 +13075,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -13077,6 +13113,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/MedicationAdministration-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -13114,6 +13151,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/MedicationStatement-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -13191,7 +13229,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -13230,7 +13267,6 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -13268,6 +13304,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -13278,7 +13315,7 @@
     <element id="Composition.section:flt.section:relapseAfterEOT.section:stemCellTransplantation.extension">
       <path value="Composition.section.section.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -13316,7 +13353,7 @@
     <element id="Composition.section:flt.section:relapseAfterEOT.section:stemCellTransplantation.modifierExtension">
       <path value="Composition.section.section.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -13583,7 +13620,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -13672,6 +13709,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -13709,6 +13747,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-sct-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -13746,6 +13785,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-sct-prophylaxis-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -13783,6 +13823,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-gvhd-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -13820,6 +13861,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Observation-bld-abo-rh-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -13897,7 +13939,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -13936,7 +13977,6 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -13974,6 +14014,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -13984,7 +14025,7 @@
     <element id="Composition.section:flt.section:relapseAfterEOT.section:radiotherapy.extension">
       <path value="Composition.section.section.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -14022,7 +14063,7 @@
     <element id="Composition.section:flt.section:relapseAfterEOT.section:radiotherapy.modifierExtension">
       <path value="Composition.section.section.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -14289,7 +14330,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -14376,6 +14417,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -14413,6 +14455,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-radiotheraphy-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -14450,6 +14493,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-radiotheraphyBoost-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -14487,6 +14531,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-radiotheraphyShield-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -14564,7 +14609,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -14603,7 +14647,6 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -14641,6 +14684,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -14651,7 +14695,7 @@
     <element id="Composition.section:flt.section:relapseAfterEOT.section:majorSurgery.extension">
       <path value="Composition.section.section.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -14689,7 +14733,7 @@
     <element id="Composition.section:flt.section:relapseAfterEOT.section:majorSurgery.modifierExtension">
       <path value="Composition.section.section.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -14956,7 +15000,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -15043,6 +15087,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -15080,6 +15125,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-surgery-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -15157,7 +15203,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -15196,7 +15241,6 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -15234,6 +15278,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -15244,7 +15289,7 @@
     <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.extension">
       <path value="Composition.section.section.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -15282,7 +15327,7 @@
     <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.modifierExtension">
       <path value="Composition.section.section.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -15549,7 +15594,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -15637,6 +15682,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -15674,6 +15720,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-toxicity-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -15711,6 +15758,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Condition-otherinfos-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -15748,6 +15796,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-cvc-otherinfos-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -15785,6 +15834,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-transfusion-otherinfos-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -15822,6 +15872,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-cryopreservation-otherinfos-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -15859,6 +15910,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/Procedure-treatment-otherinfos-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -15936,7 +15988,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -15975,7 +16026,6 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -16013,6 +16063,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -16023,7 +16074,7 @@
     <element id="Composition.section:flt.section:relapseAfterEOT.section:medicalSuggestion.extension">
       <path value="Composition.section.section.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -16061,7 +16112,7 @@
     <element id="Composition.section:flt.section:relapseAfterEOT.section:medicalSuggestion.modifierExtension">
       <path value="Composition.section.section.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -16328,7 +16379,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -16402,6 +16453,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -16479,7 +16531,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -16518,7 +16569,6 @@
       <type>
         <code value="BackboneElement"/>
       </type>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -16556,6 +16606,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -16566,7 +16617,7 @@
     <element id="Composition.section:flt.section:otherConditions.extension">
       <path value="Composition.section.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -16604,7 +16655,7 @@
     <element id="Composition.section:flt.section:otherConditions.modifierExtension">
       <path value="Composition.section.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -16871,7 +16922,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -16945,6 +16996,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -17022,7 +17074,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -17111,6 +17162,7 @@
         </extension>
         <code value="http://hl7.org/fhirpath/System.String"/>
       </type>
+      <condition value="ele-1"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -17121,7 +17173,7 @@
     <element id="Composition.section:carePlan.extension">
       <path value="Composition.section.extension"/>
       <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <alias value="extensions"/>
       <alias value="user content"/>
@@ -17159,7 +17211,7 @@
     <element id="Composition.section:carePlan.modifierExtension">
       <path value="Composition.section.modifierExtension"/>
       <short value="Extensions that cannot be ignored even if unrecognized"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
       <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
@@ -17426,7 +17478,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-snapshot3"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -17513,6 +17565,7 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/CarePlan"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -17550,6 +17603,7 @@
         <code value="Reference"/>
         <targetProfile value="http://hl7.eu/fhir/ig/pcsp/StructureDefinition/CarePlan-eu-pcsp"/>
       </type>
+      <condition value="cmp-1"/>
       <condition value="cmp-2"/>
       <constraint>
         <key value="ele-1"/>
@@ -17627,7 +17681,6 @@
         <max value="*"/>
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Composition#Composition.section"/>
-      <condition value="cmp-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
