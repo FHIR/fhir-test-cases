@@ -1,1 +1,0 @@
-* More fixes to StructureMap rendering
