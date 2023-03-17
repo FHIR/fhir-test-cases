@@ -1414,6 +1414,7 @@ Any text enclosed within is ignored
 
 	<group name="miscEngineTests">
 		<test name="testContainedId" inputfile="patient-container-example.json"><expression>contained.id</expression><output type="id">1</output></test>
+		<test name="testMultipleResolve" inputfile="diagnosticreport-eric.json" mode="element"><expression>composition.exists() implies (composition.resolve().section.entry.reference.where(resolve() is Observation) in (result.reference | result.reference.resolve().hasMember.reference))</expression><output type="boolean">true</output></test>
 	</group>
 
 </tests>
