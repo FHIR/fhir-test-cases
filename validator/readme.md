@@ -3,10 +3,10 @@ The validator test cases
 These are a set of test cases that test out a validator and ensure it is functioning correctly. 
 The tests depend on using tx.fhir.org as a terminology server for the validator. 
 
-#Introduction
+# Introduction
 
 Notes about the tests:
-* each test provides an exampe that will be validated, and specifies the acceptable outcome from the validator
+* each test provides an example that will be validated, and specifies the acceptable outcome from the validator
 * different validators work slightly differently. There's no need that the different validators produce the same error messages, or even that they produce the same number of errors. Because of this, each different test case has different success or failure rules for different validators. But the validators should agree about what is and isn't valid
 * All tests test the provided example against the base specification
 * in addition the test may specify a profile (with supporting collateral such as value sets) that is also tested
@@ -24,8 +24,8 @@ test is the name of the file to test (relative to this directory).
 
 Tests have the following properties:
 * ```use-test```: a boolean that specifies whether the test is valid (default true - sometimes tests are disabled)
-* ```allowed-extension-domain``` - a string that specifies an extension URL the vlaidator won't insist in validating
-* ```allowed-extension-domains``` - an array of strings that specifies an extension URL the vlaidator won't insist in validating
+* ```allowed-extension-domain``` - a string that specifies an extension URL the validator won't insist in validating
+* ```allowed-extension-domains``` - an array of strings that specifies an extension URL the validator won't insist in validating
 * ```language``` - the langauge context in which to run the evaluation (makes rules both about the output messages and text in the instance e.g. Coding.display)
 * ```questionnaire``` - specifies a questionnaire to use when validating - only applies to QuestionnaireResponses
 * ```codesystems``` - an array of strings that lists filenames of code systems to load 
