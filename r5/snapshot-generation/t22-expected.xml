@@ -620,6 +620,11 @@
   <status value="draft"/>
   <description value="fixture for #22: Constrain base element before slicing"/>
   <mapping>
+    <identity value="w5"/>
+    <uri value="http://hl7.org/fhir/fivews"/>
+    <name value="FiveWs Pattern Mapping"/>
+  </mapping>
+  <mapping>
     <identity value="rim"/>
     <uri value="http://hl7.org/v3"/>
     <name value="RIM Mapping"/>
@@ -633,11 +638,6 @@
     <identity value="cda"/>
     <uri value="http://hl7.org/v3/cda"/>
     <name value="CDA (R2)"/>
-  </mapping>
-  <mapping>
-    <identity value="w5"/>
-    <uri value="http://hl7.org/fhir/fivews"/>
-    <name value="FiveWs Pattern Mapping"/>
   </mapping>
   <mapping>
     <identity value="v2"/>
@@ -713,11 +713,11 @@
       <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
-        <map value="Entity. Role, or Act"/>
+        <map value="Entity, Role, or Act,Patient[classCode=PAT]"/>
       </mapping>
       <mapping>
-        <identity value="rim"/>
-        <map value="Patient[classCode=PAT]"/>
+        <identity value="w5"/>
+        <map value="administrative.individual"/>
       </mapping>
       <mapping>
         <identity value="interface"/>
@@ -726,10 +726,6 @@
       <mapping>
         <identity value="cda"/>
         <map value="ClinicalDocument.recordTarget.patientRole"/>
-      </mapping>
-      <mapping>
-        <identity value="w5"/>
-        <map value="administrative.individual"/>
       </mapping>
     </element>
     <element id="Patient.id">
@@ -840,7 +836,7 @@
         </extension>
         <strength value="required"/>
         <description value="IETF language tag for a human language"/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/all-languages|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/all-languages|5.0.0"/>
         <additional>
           <purpose value="starter"/>
           <valueSet value="http://hl7.org/fhir/ValueSet/languages"/>
@@ -956,7 +952,7 @@
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -1187,7 +1183,7 @@
       <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary id for a permanent one."/>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/build/StructureDefinition/binding-definition">
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/binding-definition">
           <valueString value="Identifies the purpose for this identifier, if known ."/>
         </extension>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
@@ -1195,7 +1191,7 @@
         </extension>
         <strength value="required"/>
         <description value="Identifies the purpose for this identifier, if known ."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-use|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-use|5.0.0"/>
       </binding>
       <mapping>
         <identity value="v2"/>
@@ -1233,7 +1229,7 @@
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/build/StructureDefinition/binding-definition">
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/binding-definition">
           <valueString value="A coded type for an identifier that can be used to determine which identifier to use for a specific purpose."/>
         </extension>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
@@ -1515,7 +1511,7 @@
       </mapping>
     </element>
     <element id="Patient.identifier.type.coding.code">
-      <extension url="http://hl7.org/fhir/build/StructureDefinition/no-binding">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/no-binding">
         <valueBoolean value="true"/>
       </extension>
       <path value="Patient.identifier.type.coding.code"/>
@@ -1729,7 +1725,7 @@
       <path value="Patient.identifier.value"/>
       <short value="The value that is unique"/>
       <definition value="The portion of the identifier typically relevant to the user and which is unique within the context of the system."/>
-      <comment value="If the value is a full URI, then the system SHALL be urn:ietf:rfc:3986.  The value's primary purpose is computational mapping.  As a result, it may be normalized for comparison purposes (e.g. removing non-significant whitespace, dashes, etc.)  A value formatted for human display can be conveyed using the [http://hl7.org/fhir/StructureDefinition/rendered-value](http://hl7.org/fhir/extensions/StructureDefinition-rendered-value.html)). Identifier.value is to be treated as case sensitive unless knowledge of the Identifier.system allows the processer to be confident that non-case-sensitive processing is safe."/>
+      <comment value="If the value is a full URI, then the system SHALL be urn:ietf:rfc:3986.  The value's primary purpose is computational mapping.  As a result, it may be normalized for comparison purposes (e.g. removing non-significant whitespace, dashes, etc.)  A value formatted for human display can be conveyed using the [http://hl7.org/fhir/StructureDefinition/rendered-value](https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-rendered-value.html)). Identifier.value is to be treated as case sensitive unless knowledge of the Identifier.system allows the processer to be confident that non-case-sensitive processing is safe."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -1744,6 +1740,7 @@
         <label value="General"/>
         <valueString value="123456"/>
       </example>
+      <condition value="ident-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -2019,7 +2016,7 @@
       <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary id for a permanent one."/>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/build/StructureDefinition/binding-definition">
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/binding-definition">
           <valueString value="Identifies the purpose for this identifier, if known ."/>
         </extension>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
@@ -2027,7 +2024,7 @@
         </extension>
         <strength value="required"/>
         <description value="Identifies the purpose for this identifier, if known ."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-use|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-use|5.0.0"/>
       </binding>
       <mapping>
         <identity value="v2"/>
@@ -2064,7 +2061,7 @@
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/build/StructureDefinition/binding-definition">
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/binding-definition">
           <valueString value="A coded type for an identifier that can be used to determine which identifier to use for a specific purpose."/>
         </extension>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
@@ -2391,7 +2388,7 @@
       </mapping>
     </element>
     <element id="Patient.identifier:MRN.type.coding:preferredCoding.code">
-      <extension url="http://hl7.org/fhir/build/StructureDefinition/no-binding">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/no-binding">
         <valueBoolean value="true"/>
       </extension>
       <path value="Patient.identifier.type.coding.code"/>
@@ -2604,7 +2601,7 @@
       <path value="Patient.identifier.value"/>
       <short value="The value that is unique"/>
       <definition value="The portion of the identifier typically relevant to the user and which is unique within the context of the system."/>
-      <comment value="If the value is a full URI, then the system SHALL be urn:ietf:rfc:3986.  The value's primary purpose is computational mapping.  As a result, it may be normalized for comparison purposes (e.g. removing non-significant whitespace, dashes, etc.)  A value formatted for human display can be conveyed using the [http://hl7.org/fhir/StructureDefinition/rendered-value](http://hl7.org/fhir/extensions/StructureDefinition-rendered-value.html)). Identifier.value is to be treated as case sensitive unless knowledge of the Identifier.system allows the processer to be confident that non-case-sensitive processing is safe."/>
+      <comment value="If the value is a full URI, then the system SHALL be urn:ietf:rfc:3986.  The value's primary purpose is computational mapping.  As a result, it may be normalized for comparison purposes (e.g. removing non-significant whitespace, dashes, etc.)  A value formatted for human display can be conveyed using the [http://hl7.org/fhir/StructureDefinition/rendered-value](https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-rendered-value.html)). Identifier.value is to be treated as case sensitive unless knowledge of the Identifier.system allows the processer to be confident that non-case-sensitive processing is safe."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -2619,6 +2616,7 @@
         <label value="General"/>
         <valueString value="123456"/>
       </example>
+      <condition value="ident-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -2893,7 +2891,7 @@
       <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary id for a permanent one."/>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/build/StructureDefinition/binding-definition">
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/binding-definition">
           <valueString value="Identifies the purpose for this identifier, if known ."/>
         </extension>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
@@ -2901,7 +2899,7 @@
         </extension>
         <strength value="required"/>
         <description value="Identifies the purpose for this identifier, if known ."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-use|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/identifier-use|5.0.0"/>
       </binding>
       <mapping>
         <identity value="v2"/>
@@ -2938,7 +2936,7 @@
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
-        <extension url="http://hl7.org/fhir/build/StructureDefinition/binding-definition">
+        <extension url="http://hl7.org/fhir/tools/StructureDefinition/binding-definition">
           <valueString value="A coded type for an identifier that can be used to determine which identifier to use for a specific purpose."/>
         </extension>
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
@@ -3265,7 +3263,7 @@
       </mapping>
     </element>
     <element id="Patient.identifier:JHN.type.coding:preferredCoding.code">
-      <extension url="http://hl7.org/fhir/build/StructureDefinition/no-binding">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/no-binding">
         <valueBoolean value="true"/>
       </extension>
       <path value="Patient.identifier.type.coding.code"/>
@@ -3478,7 +3476,7 @@
       <path value="Patient.identifier.value"/>
       <short value="The value that is unique"/>
       <definition value="The portion of the identifier typically relevant to the user and which is unique within the context of the system."/>
-      <comment value="If the value is a full URI, then the system SHALL be urn:ietf:rfc:3986.  The value's primary purpose is computational mapping.  As a result, it may be normalized for comparison purposes (e.g. removing non-significant whitespace, dashes, etc.)  A value formatted for human display can be conveyed using the [http://hl7.org/fhir/StructureDefinition/rendered-value](http://hl7.org/fhir/extensions/StructureDefinition-rendered-value.html)). Identifier.value is to be treated as case sensitive unless knowledge of the Identifier.system allows the processer to be confident that non-case-sensitive processing is safe."/>
+      <comment value="If the value is a full URI, then the system SHALL be urn:ietf:rfc:3986.  The value's primary purpose is computational mapping.  As a result, it may be normalized for comparison purposes (e.g. removing non-significant whitespace, dashes, etc.)  A value formatted for human display can be conveyed using the [http://hl7.org/fhir/StructureDefinition/rendered-value](https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-rendered-value.html)). Identifier.value is to be treated as case sensitive unless knowledge of the Identifier.system allows the processer to be confident that non-case-sensitive processing is safe."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -3493,6 +3491,7 @@
         <label value="General"/>
         <valueString value="123456"/>
       </example>
+      <condition value="ident-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -3755,7 +3754,7 @@
         </extension>
         <strength value="required"/>
         <description value="The gender of a person used for administrative purposes."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/administrative-gender|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/administrative-gender|5.0.0"/>
       </binding>
       <mapping>
         <identity value="v2"/>
@@ -4155,7 +4154,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -4389,7 +4388,7 @@
         </extension>
         <strength value="required"/>
         <description value="The gender of a person used for administrative purposes."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/administrative-gender|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/administrative-gender|5.0.0"/>
       </binding>
       <mapping>
         <identity value="v2"/>
@@ -4585,7 +4584,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -4656,7 +4655,7 @@
         </extension>
         <strength value="required"/>
         <description value="IETF language tag for a human language"/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/all-languages|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/all-languages|5.0.0"/>
         <additional>
           <purpose value="starter"/>
           <valueSet value="http://hl7.org/fhir/ValueSet/languages"/>
@@ -4897,7 +4896,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -4946,6 +4945,9 @@
         <max value="1"/>
       </base>
       <type>
+        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-hierarchy">
+          <valueBoolean value="false"/>
+        </extension>
         <code value="Reference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
@@ -5003,7 +5005,7 @@
         </extension>
         <strength value="required"/>
         <description value="The type of link between this patient resource and another Patient resource, or Patient/RelatedPerson when using the `seealso` code"/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/link-type|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/link-type|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>

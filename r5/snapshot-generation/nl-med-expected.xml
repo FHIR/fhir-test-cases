@@ -263,6 +263,11 @@
     <comment value="Source language is in Dutch."/>
   </mapping>
   <mapping>
+    <identity value="w5"/>
+    <uri value="http://hl7.org/fhir/fivews"/>
+    <name value="FiveWs Pattern Mapping"/>
+  </mapping>
+  <mapping>
     <identity value="v2"/>
     <uri value="http://hl7.org/v2"/>
     <name value="HL7 V2 Mapping"/>
@@ -276,11 +281,6 @@
     <identity value="cda"/>
     <uri value="http://hl7.org/v3/cda"/>
     <name value="CDA (R2)"/>
-  </mapping>
-  <mapping>
-    <identity value="w5"/>
-    <uri value="http://hl7.org/fhir/fivews"/>
-    <name value="FiveWs Pattern Mapping"/>
   </mapping>
   <kind value="resource"/>
   <abstract value="false"/>
@@ -384,6 +384,13 @@
         <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
       </constraint>
       <constraint>
+        <key value="bdl-18"/>
+        <severity value="error"/>
+        <human value="Self link is required for searchsets."/>
+        <expression value="type = 'searchset' implies link.where(relation = 'self' and url.exists()).exists()"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Bundle"/>
+      </constraint>
+      <constraint>
         <key value="bdl-3a"/>
         <severity value="error"/>
         <human value="For collections of type document, message, searchset or collection, all entries must contain resources, and not have request or response elements"/>
@@ -416,23 +423,19 @@
       <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
-        <map value="Entity. Role, or Act"/>
+        <map value="Entity. Role, or Act,N/A"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="infrastructure.structure"/>
       </mapping>
       <mapping>
         <identity value="v2"/>
         <map value="N/A"/>
       </mapping>
       <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
-      <mapping>
         <identity value="cda"/>
         <map value="ClinicalDocument, if bundle.type = document"/>
-      </mapping>
-      <mapping>
-        <identity value="w5"/>
-        <map value="infrastructure.structure"/>
       </mapping>
     </element>
     <element id="Bundle.id">
@@ -543,7 +546,7 @@
         </extension>
         <strength value="required"/>
         <description value="IETF language tag for a human language"/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/all-languages|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/all-languages|5.0.0"/>
         <additional>
           <purpose value="starter"/>
           <valueSet value="http://hl7.org/fhir/ValueSet/languages"/>
@@ -616,6 +619,7 @@
       <condition value="bdl-14"/>
       <condition value="bdl-15"/>
       <condition value="bdl-17"/>
+      <condition value="bdl-18"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -632,7 +636,7 @@
         </extension>
         <strength value="required"/>
         <description value="Indicates the purpose of a bundle - how it is intended to be used."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/bundle-type|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/bundle-type|5.0.0"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -704,8 +708,8 @@
     <element id="Bundle.link">
       <path value="Bundle.link"/>
       <short value="Links related to this Bundle"/>
-      <definition value="A series of links that provide context to this bundle. The behavior of navigation link types (next/prev/first/last) are well defined for searchset and history Bundles but are not currently defined for other types. Implementers who choose to use such link relationships for other bundle types will need to negotiate behavior with their interoperability partners."/>
-      <comment value="Both Bundle.link and Bundle.entry.link are defined to support providing additional context when Bundles are used (e.g. [HATEOAS](http://en.wikipedia.org/wiki/HATEOAS)). &#xA;&#xA;Bundle.entry.link corresponds to links found in the HTTP header if the resource in the entry was [read](http://hl7.org/fhir/5.0.0-draft-final/http.html#read) directly.&#xA;&#xA;This specification defines some specific uses of Bundle.link for [searching](http://hl7.org/fhir/5.0.0-draft-final/search.html#conformance) and [paging](http://hl7.org/fhir/5.0.0-draft-final/http.html#paging), but no specific uses for Bundle.entry.link, and no defined function in a transaction - the meaning is implementation specific."/>
+      <definition value="A series of links that provide context to this bundle."/>
+      <comment value="Both Bundle.link and Bundle.entry.link are defined to support providing additional context when Bundles are used (e.g. [HATEOAS](http://en.wikipedia.org/wiki/HATEOAS)). &#xA;&#xA;Bundle.entry.link corresponds to links found in the HTTP header if the resource in the entry was [read](http://hl7.org/fhir/5.0.0-snapshot3/http.html#read) directly.&#xA;&#xA;This specification defines some specific uses of Bundle.link for [searching](http://hl7.org/fhir/5.0.0-snapshot3/search.html#conformance) and [paging](http://hl7.org/fhir/5.0.0-snapshot3/http.html#paging), but no specific uses for Bundle.entry.link, and no defined function in a transaction - the meaning is implementation specific.  The behavior of navigation link types (next/prev/first/last) are well defined for searchset and history Bundles but are not currently defined for other types. Implementers who choose to use such link relationships for other bundle types will need to negotiate behavior with their interoperability partners."/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -716,6 +720,7 @@
       <type>
         <code value="BackboneElement"/>
       </type>
+      <condition value="bdl-18"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -796,7 +801,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -846,6 +851,7 @@
       <type>
         <code value="code"/>
       </type>
+      <condition value="bdl-18"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -858,7 +864,7 @@
       <isSummary value="true"/>
       <binding>
         <strength value="required"/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/iana-link-relations|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/iana-link-relations|5.0.0"/>
       </binding>
     </element>
     <element id="Bundle.link.url">
@@ -875,6 +881,7 @@
       <type>
         <code value="uri"/>
       </type>
+      <condition value="bdl-18"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -908,17 +915,6 @@
         <code value="BackboneElement"/>
       </type>
       <orderMeaning value="For bundles of type 'document' and 'message', the first resource is special (must be Composition or MessageHeader respectively). For all bundles, the meaning of the order of entries depends on the bundle type"/>
-      <condition value="bdl-2"/>
-      <condition value="bdl-3a"/>
-      <condition value="bdl-3b"/>
-      <condition value="bdl-3c"/>
-      <condition value="bdl-3d"/>
-      <condition value="bdl-7"/>
-      <condition value="bdl-11"/>
-      <condition value="bdl-12"/>
-      <condition value="bdl-13"/>
-      <condition value="bdl-14"/>
-      <condition value="bdl-15"/>
       <constraint>
         <key value="bdl-5"/>
         <severity value="error"/>
@@ -1013,7 +1009,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -1076,7 +1072,7 @@
       <path value="Bundle.entry.fullUrl"/>
       <short value="URI for resource (e.g. the absolute URL server address, URI for UUID/OID, etc.)"/>
       <definition value="The Absolute URL for the resource. Except for transactions and batches, each entry in a Bundle must have a fullUrl. The fullUrl SHALL NOT disagree with the id in the resource - i.e. if the fullUrl is not a urn:uuid, the URL shall be version-independent URL consistent with the Resource.id. The fullUrl is a version independent reference to the resource. Even when not required, fullUrl MAY be set to a urn:uuid to allow referencing entries in a transaction. The fullUrl can be an arbitrary URI and is not limited to urn:uuid, urn:oid, http, and https. The fullUrl element SHALL have a value except when: &#xA;* invoking a create&#xA;* invoking or responding to an operation where the body is not a single identified resource&#xA;* invoking or returning the results of a search or history operation."/>
-      <comment value="fullUrl might not be [unique in the context of a resource](http://hl7.org/fhir/5.0.0-draft-final/bundle.html#bundle-unique). Note that since [FHIR resources do not need to be served through the FHIR API](http://hl7.org/fhir/5.0.0-draft-final/references.html), the fullURL might be a URN or an absolute URL that does not end with the logical id of the resource (Resource.id). However, but if the fullUrl does look like a RESTful server URL (e.g. meets the [regex](http://hl7.org/fhir/5.0.0-draft-final/references.html#regex), then the 'id' portion of the fullUrl SHALL end with the Resource.id.&#xA;&#xA;Note that the fullUrl is not the same as the canonical URL - it's an absolute url for an endpoint serving the resource (these will happen to have the same value on the canonical server for the resource with the canonical URL)."/>
+      <comment value="fullUrl might not be [unique in the context of a resource](http://hl7.org/fhir/5.0.0-snapshot3/bundle.html#bundle-unique). Note that since [FHIR resources do not need to be served through the FHIR API](http://hl7.org/fhir/5.0.0-snapshot3/references.html), the fullURL might be a URN or an absolute URL that does not end with the logical id of the resource (Resource.id). However, but if the fullUrl does look like a RESTful server URL (e.g. meets the [regex](http://hl7.org/fhir/5.0.0-snapshot3/references.html#regex), then the 'id' portion of the fullUrl SHALL end with the Resource.id.&#xA;&#xA;Note that the fullUrl is not the same as the canonical URL - it's an absolute url for an endpoint serving the resource (these will happen to have the same value on the canonical server for the resource with the canonical URL)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1222,7 +1218,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -1289,14 +1285,14 @@
         </extension>
         <strength value="required"/>
         <description value="Why an entry is in the result set - whether it's included as a match or because of an _include requirement, or to convey information or warning information about the search process."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/search-entry-mode|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/search-entry-mode|5.0.0"/>
       </binding>
     </element>
     <element id="Bundle.entry.search.score">
       <path value="Bundle.entry.search.score"/>
       <short value="Search ranking (between 0 and 1)"/>
       <definition value="When searching, the server's search ranking score for the entry."/>
-      <comment value="Servers are not required to return a ranking score. 1 is most relevant, and 0 is least relevant. Often, search results are sorted by score, but the client may specify a different sort order.&#xA;&#xA;See [Patient Match](http://hl7.org/fhir/5.0.0-draft-final/patient-operation-match.html) for the EMPI search which relates to this element."/>
+      <comment value="Servers are not required to return a ranking score. 1 is most relevant, and 0 is least relevant. Often, search results are sorted by score, but the client may specify a different sort order.&#xA;&#xA;See [Patient Match](http://hl7.org/fhir/5.0.0-snapshot3/patient-operation-match.html) for the EMPI search which relates to this element."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1334,9 +1330,6 @@
       </type>
       <condition value="bdl-3a"/>
       <condition value="bdl-3b"/>
-      <condition value="bdl-3c"/>
-      <condition value="bdl-14"/>
-      <condition value="bdl-15"/>
       <condition value="bdl-5"/>
       <constraint>
         <key value="ele-1"/>
@@ -1418,7 +1411,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -1488,7 +1481,7 @@
         </extension>
         <strength value="required"/>
         <description value="HTTP verbs (in the HTTP command line). See [HTTP rfc](https://tools.ietf.org/html/rfc7231) for details."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/http-verb|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/http-verb|5.0.0"/>
       </binding>
     </element>
     <element id="Bundle.entry.request.url">
@@ -1520,7 +1513,7 @@
     <element id="Bundle.entry.request.ifNoneMatch">
       <path value="Bundle.entry.request.ifNoneMatch"/>
       <short value="For managing cache validation"/>
-      <definition value="If the ETag values match, return a 304 Not Modified status. See the API documentation for [&quot;Conditional Read&quot;](http://hl7.org/fhir/5.0.0-draft-final/http.html#cread)."/>
+      <definition value="If the ETag values match, return a 304 Not Modified status. See the API documentation for [&quot;Conditional Read&quot;](http://hl7.org/fhir/5.0.0-snapshot3/http.html#cread)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1545,7 +1538,7 @@
     <element id="Bundle.entry.request.ifModifiedSince">
       <path value="Bundle.entry.request.ifModifiedSince"/>
       <short value="For managing cache currency"/>
-      <definition value="Only perform the operation if the last updated date matches. See the API documentation for [&quot;Conditional Read&quot;](http://hl7.org/fhir/5.0.0-draft-final/http.html#cread)."/>
+      <definition value="Only perform the operation if the last updated date matches. See the API documentation for [&quot;Conditional Read&quot;](http://hl7.org/fhir/5.0.0-snapshot3/http.html#cread)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1570,7 +1563,7 @@
     <element id="Bundle.entry.request.ifMatch">
       <path value="Bundle.entry.request.ifMatch"/>
       <short value="For managing update contention"/>
-      <definition value="Only perform the operation if the Etag value matches. For more information, see the API section [&quot;Managing Resource Contention&quot;](http://hl7.org/fhir/5.0.0-draft-final/http.html#concurrency)."/>
+      <definition value="Only perform the operation if the Etag value matches. For more information, see the API section [&quot;Managing Resource Contention&quot;](http://hl7.org/fhir/5.0.0-snapshot3/http.html#concurrency)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1595,7 +1588,7 @@
     <element id="Bundle.entry.request.ifNoneExist">
       <path value="Bundle.entry.request.ifNoneExist"/>
       <short value="For conditional creates"/>
-      <definition value="Instruct the server not to perform the create if a specified resource already exists. For further information, see the API documentation for [&quot;Conditional Create&quot;](http://hl7.org/fhir/5.0.0-draft-final/http.html#ccreate). This is just the query portion of the URL - what follows the &quot;?&quot; (not including the &quot;?&quot;)."/>
+      <definition value="Instruct the server not to perform the create if a specified resource already exists. For further information, see the API documentation for [&quot;Conditional Create&quot;](http://hl7.org/fhir/5.0.0-snapshot3/http.html#ccreate). This is just the query portion of the URL - what follows the &quot;?&quot; (not including the &quot;?&quot;)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1715,7 +1708,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -1804,7 +1797,7 @@
     <element id="Bundle.entry.response.etag">
       <path value="Bundle.entry.response.etag"/>
       <short value="The Etag for the resource (if relevant)"/>
-      <definition value="The Etag for the resource, if the operation for the entry produced a versioned resource (see [Resource Metadata and Versioning](http://hl7.org/fhir/5.0.0-draft-final/http.html#versioning) and [Managing Resource Contention](http://hl7.org/fhir/5.0.0-draft-final/http.html#concurrency))."/>
+      <definition value="The Etag for the resource, if the operation for the entry produced a versioned resource (see [Resource Metadata and Versioning](http://hl7.org/fhir/5.0.0-snapshot3/http.html#versioning) and [Managing Resource Contention](http://hl7.org/fhir/5.0.0-snapshot3/http.html#concurrency))."/>
       <comment value="Etags match the Resource.meta.versionId. The ETag has to match the version id in the header if a resource is included."/>
       <min value="0"/>
       <max value="1"/>
@@ -1890,17 +1883,6 @@
         <code value="BackboneElement"/>
       </type>
       <orderMeaning value="For bundles of type 'document' and 'message', the first resource is special (must be Composition or MessageHeader respectively). For all bundles, the meaning of the order of entries depends on the bundle type"/>
-      <condition value="bdl-2"/>
-      <condition value="bdl-3a"/>
-      <condition value="bdl-3b"/>
-      <condition value="bdl-3c"/>
-      <condition value="bdl-3d"/>
-      <condition value="bdl-7"/>
-      <condition value="bdl-11"/>
-      <condition value="bdl-12"/>
-      <condition value="bdl-13"/>
-      <condition value="bdl-14"/>
-      <condition value="bdl-15"/>
       <constraint>
         <key value="bdl-5"/>
         <severity value="error"/>
@@ -2000,7 +1982,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -2063,7 +2045,7 @@
       <path value="Bundle.entry.fullUrl"/>
       <short value="URI for resource (e.g. the absolute URL server address, URI for UUID/OID, etc.)"/>
       <definition value="The Absolute URL for the resource. Except for transactions and batches, each entry in a Bundle must have a fullUrl. The fullUrl SHALL NOT disagree with the id in the resource - i.e. if the fullUrl is not a urn:uuid, the URL shall be version-independent URL consistent with the Resource.id. The fullUrl is a version independent reference to the resource. Even when not required, fullUrl MAY be set to a urn:uuid to allow referencing entries in a transaction. The fullUrl can be an arbitrary URI and is not limited to urn:uuid, urn:oid, http, and https. The fullUrl element SHALL have a value except when: &#xA;* invoking a create&#xA;* invoking or responding to an operation where the body is not a single identified resource&#xA;* invoking or returning the results of a search or history operation."/>
-      <comment value="fullUrl might not be [unique in the context of a resource](http://hl7.org/fhir/5.0.0-draft-final/bundle.html#bundle-unique). Note that since [FHIR resources do not need to be served through the FHIR API](http://hl7.org/fhir/5.0.0-draft-final/references.html), the fullURL might be a URN or an absolute URL that does not end with the logical id of the resource (Resource.id). However, but if the fullUrl does look like a RESTful server URL (e.g. meets the [regex](http://hl7.org/fhir/5.0.0-draft-final/references.html#regex), then the 'id' portion of the fullUrl SHALL end with the Resource.id.&#xA;&#xA;Note that the fullUrl is not the same as the canonical URL - it's an absolute url for an endpoint serving the resource (these will happen to have the same value on the canonical server for the resource with the canonical URL)."/>
+      <comment value="fullUrl might not be [unique in the context of a resource](http://hl7.org/fhir/5.0.0-snapshot3/bundle.html#bundle-unique). Note that since [FHIR resources do not need to be served through the FHIR API](http://hl7.org/fhir/5.0.0-snapshot3/references.html), the fullURL might be a URN or an absolute URL that does not end with the logical id of the resource (Resource.id). However, but if the fullUrl does look like a RESTful server URL (e.g. meets the [regex](http://hl7.org/fhir/5.0.0-snapshot3/references.html#regex), then the 'id' portion of the fullUrl SHALL end with the Resource.id.&#xA;&#xA;Note that the fullUrl is not the same as the canonical URL - it's an absolute url for an endpoint serving the resource (these will happen to have the same value on the canonical server for the resource with the canonical URL)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -2159,7 +2141,7 @@
       <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
-        <map value="Entity. Role, or Act,Act[classCode&lt;ORG,moodCode=EVN]"/>
+        <map value="Entity, Role, or Act,Act[classCode&lt;ORG,moodCode=EVN]"/>
       </mapping>
       <mapping>
         <identity value="w5"/>
@@ -2274,7 +2256,7 @@
         </extension>
         <strength value="required"/>
         <description value="IETF language tag for a human language"/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/all-languages|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/all-languages|5.0.0"/>
         <additional>
           <purpose value="starter"/>
           <valueSet value="http://hl7.org/fhir/ValueSet/languages"/>
@@ -2673,7 +2655,7 @@
     <element id="Bundle.entry:List.resource.extension:Verification.value[x]">
       <path value="Bundle.entry.resource.extension.value[x]"/>
       <short value="Value of extension"/>
-      <definition value="Value of extension - must be one of a constrained set of the data types (see [Extensibility](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html) for a list)."/>
+      <definition value="Value of extension - must be one of a constrained set of the data types (see [Extensibility](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html) for a list)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -2863,7 +2845,7 @@
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -2973,7 +2955,7 @@
         </extension>
         <strength value="required"/>
         <description value="The current state of the list."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-status|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-status|5.0.0"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -3021,7 +3003,7 @@
         </extension>
         <strength value="required"/>
         <description value="The processing mode that applies to this list."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -3376,7 +3358,7 @@
       </mapping>
     </element>
     <element id="Bundle.entry:List.resource.code.coding.code">
-      <extension url="http://hl7.org/fhir/build/StructureDefinition/no-binding">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/no-binding">
         <valueBoolean value="true"/>
       </extension>
       <path value="Bundle.entry.resource.code.coding.code"/>
@@ -3570,7 +3552,7 @@
       <isSummary value="true"/>
       <mapping>
         <identity value="w5"/>
-        <map value="FiveWs.subject[x],FiveWs.subject"/>
+        <map value="FiveWs.subject[x]"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
@@ -3931,7 +3913,7 @@
         <rules value="closed"/>
       </slicing>
       <short value="Value of extension"/>
-      <definition value="Value of extension - must be one of a constrained set of the data types (see [Extensibility](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html) for a list)."/>
+      <definition value="Value of extension - must be one of a constrained set of the data types (see [Extensibility](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html) for a list)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -3961,7 +3943,7 @@
       <path value="Bundle.entry.resource.source.extension.value[x]"/>
       <sliceName value="valueReference"/>
       <short value="Value of extension"/>
-      <definition value="Value of extension - must be one of a constrained set of the data types (see [Extensibility](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html) for a list)."/>
+      <definition value="Value of extension - must be one of a constrained set of the data types (see [Extensibility](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html) for a list)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -4168,7 +4150,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -4447,7 +4429,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -4727,7 +4709,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -5012,7 +4994,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -5321,7 +5303,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -5388,14 +5370,14 @@
         </extension>
         <strength value="required"/>
         <description value="Why an entry is in the result set - whether it's included as a match or because of an _include requirement, or to convey information or warning information about the search process."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/search-entry-mode|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/search-entry-mode|5.0.0"/>
       </binding>
     </element>
     <element id="Bundle.entry:List.search.score">
       <path value="Bundle.entry.search.score"/>
       <short value="Search ranking (between 0 and 1)"/>
       <definition value="When searching, the server's search ranking score for the entry."/>
-      <comment value="Servers are not required to return a ranking score. 1 is most relevant, and 0 is least relevant. Often, search results are sorted by score, but the client may specify a different sort order.&#xA;&#xA;See [Patient Match](http://hl7.org/fhir/5.0.0-draft-final/patient-operation-match.html) for the EMPI search which relates to this element."/>
+      <comment value="Servers are not required to return a ranking score. 1 is most relevant, and 0 is least relevant. Often, search results are sorted by score, but the client may specify a different sort order.&#xA;&#xA;See [Patient Match](http://hl7.org/fhir/5.0.0-snapshot3/patient-operation-match.html) for the EMPI search which relates to this element."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -5433,9 +5415,6 @@
       </type>
       <condition value="bdl-3a"/>
       <condition value="bdl-3b"/>
-      <condition value="bdl-3c"/>
-      <condition value="bdl-14"/>
-      <condition value="bdl-15"/>
       <condition value="bdl-5"/>
       <constraint>
         <key value="ele-1"/>
@@ -5517,7 +5496,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -5587,7 +5566,7 @@
         </extension>
         <strength value="required"/>
         <description value="HTTP verbs (in the HTTP command line). See [HTTP rfc](https://tools.ietf.org/html/rfc7231) for details."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/http-verb|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/http-verb|5.0.0"/>
       </binding>
     </element>
     <element id="Bundle.entry:List.request.url">
@@ -5619,7 +5598,7 @@
     <element id="Bundle.entry:List.request.ifNoneMatch">
       <path value="Bundle.entry.request.ifNoneMatch"/>
       <short value="For managing cache validation"/>
-      <definition value="If the ETag values match, return a 304 Not Modified status. See the API documentation for [&quot;Conditional Read&quot;](http://hl7.org/fhir/5.0.0-draft-final/http.html#cread)."/>
+      <definition value="If the ETag values match, return a 304 Not Modified status. See the API documentation for [&quot;Conditional Read&quot;](http://hl7.org/fhir/5.0.0-snapshot3/http.html#cread)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -5644,7 +5623,7 @@
     <element id="Bundle.entry:List.request.ifModifiedSince">
       <path value="Bundle.entry.request.ifModifiedSince"/>
       <short value="For managing cache currency"/>
-      <definition value="Only perform the operation if the last updated date matches. See the API documentation for [&quot;Conditional Read&quot;](http://hl7.org/fhir/5.0.0-draft-final/http.html#cread)."/>
+      <definition value="Only perform the operation if the last updated date matches. See the API documentation for [&quot;Conditional Read&quot;](http://hl7.org/fhir/5.0.0-snapshot3/http.html#cread)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -5669,7 +5648,7 @@
     <element id="Bundle.entry:List.request.ifMatch">
       <path value="Bundle.entry.request.ifMatch"/>
       <short value="For managing update contention"/>
-      <definition value="Only perform the operation if the Etag value matches. For more information, see the API section [&quot;Managing Resource Contention&quot;](http://hl7.org/fhir/5.0.0-draft-final/http.html#concurrency)."/>
+      <definition value="Only perform the operation if the Etag value matches. For more information, see the API section [&quot;Managing Resource Contention&quot;](http://hl7.org/fhir/5.0.0-snapshot3/http.html#concurrency)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -5694,7 +5673,7 @@
     <element id="Bundle.entry:List.request.ifNoneExist">
       <path value="Bundle.entry.request.ifNoneExist"/>
       <short value="For conditional creates"/>
-      <definition value="Instruct the server not to perform the create if a specified resource already exists. For further information, see the API documentation for [&quot;Conditional Create&quot;](http://hl7.org/fhir/5.0.0-draft-final/http.html#ccreate). This is just the query portion of the URL - what follows the &quot;?&quot; (not including the &quot;?&quot;)."/>
+      <definition value="Instruct the server not to perform the create if a specified resource already exists. For further information, see the API documentation for [&quot;Conditional Create&quot;](http://hl7.org/fhir/5.0.0-snapshot3/http.html#ccreate). This is just the query portion of the URL - what follows the &quot;?&quot; (not including the &quot;?&quot;)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -5814,7 +5793,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -5903,7 +5882,7 @@
     <element id="Bundle.entry:List.response.etag">
       <path value="Bundle.entry.response.etag"/>
       <short value="The Etag for the resource (if relevant)"/>
-      <definition value="The Etag for the resource, if the operation for the entry produced a versioned resource (see [Resource Metadata and Versioning](http://hl7.org/fhir/5.0.0-draft-final/http.html#versioning) and [Managing Resource Contention](http://hl7.org/fhir/5.0.0-draft-final/http.html#concurrency))."/>
+      <definition value="The Etag for the resource, if the operation for the entry produced a versioned resource (see [Resource Metadata and Versioning](http://hl7.org/fhir/5.0.0-snapshot3/http.html#versioning) and [Managing Resource Contention](http://hl7.org/fhir/5.0.0-snapshot3/http.html#concurrency))."/>
       <comment value="Etags match the Resource.meta.versionId. The ETag has to match the version id in the header if a resource is included."/>
       <min value="0"/>
       <max value="1"/>

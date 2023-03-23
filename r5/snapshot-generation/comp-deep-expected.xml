@@ -4888,15 +4888,15 @@
       <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
-        <map value="Entity. Role, or Act"/>
+        <map value="Entity, Role, or Act,Document[classCode=&quot;DOC&quot; and moodCode=&quot;EVN&quot; and isNormalAct()]"/>
       </mapping>
       <mapping>
         <identity value="workflow"/>
         <map value="Event"/>
       </mapping>
       <mapping>
-        <identity value="rim"/>
-        <map value="Document[classCode=&quot;DOC&quot; and moodCode=&quot;EVN&quot; and isNormalAct()]"/>
+        <identity value="w5"/>
+        <map value="infrastructure.documents"/>
       </mapping>
       <mapping>
         <identity value="cda"/>
@@ -4905,10 +4905,6 @@
       <mapping>
         <identity value="fhirdocumentreference"/>
         <map value="when described by DocumentReference"/>
-      </mapping>
-      <mapping>
-        <identity value="w5"/>
-        <map value="infrastructure.documents"/>
       </mapping>
     </element>
     <element id="Composition.id">
@@ -5019,7 +5015,7 @@
         </extension>
         <strength value="required"/>
         <description value="IETF language tag for a human language"/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/all-languages|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/all-languages|5.0.0"/>
         <additional>
           <purpose value="starter"/>
           <valueSet value="http://hl7.org/fhir/ValueSet/languages"/>
@@ -5135,7 +5131,7 @@
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -5245,7 +5241,7 @@
       </mapping>
       <mapping>
         <identity value="fhirdocumentreference"/>
-        <map value="DocumentReference.masterIdentifier"/>
+        <map value="DocumentReference.identifier"/>
       </mapping>
     </element>
     <element id="Composition.version">
@@ -5281,6 +5277,10 @@
         <identity value="cda"/>
         <map value=".versionNumber"/>
       </mapping>
+      <mapping>
+        <identity value="fhirdocumentreference"/>
+        <map value="DocumentReference.version"/>
+      </mapping>
     </element>
     <element id="Composition.status">
       <path value="Composition.status"/>
@@ -5315,7 +5315,7 @@
         </extension>
         <strength value="required"/>
         <description value="The workflow/clinical status of the composition."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/composition-status|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/composition-status|5.0.0"/>
       </binding>
       <mapping>
         <identity value="workflow"/>
@@ -5335,7 +5335,7 @@
       </mapping>
       <mapping>
         <identity value="fhirdocumentreference"/>
-        <map value="DocumentReference.status"/>
+        <map value="DocumentReference.docStatus"/>
       </mapping>
     </element>
     <element id="Composition.type">
@@ -5657,7 +5657,7 @@
       </mapping>
     </element>
     <element id="Composition.type.coding.code">
-      <extension url="http://hl7.org/fhir/build/StructureDefinition/no-binding">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/no-binding">
         <valueBoolean value="true"/>
       </extension>
       <path value="Composition.type.coding.code"/>
@@ -5906,7 +5906,7 @@
       </mapping>
       <mapping>
         <identity value="w5"/>
-        <map value="FiveWs.subject[x],FiveWs.subject"/>
+        <map value="FiveWs.subject[x]"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
@@ -5965,7 +5965,7 @@
       </mapping>
       <mapping>
         <identity value="fhirdocumentreference"/>
-        <map value="DocumentReference.context.encounter"/>
+        <map value="DocumentReference.context"/>
       </mapping>
     </element>
     <element id="Composition.date">
@@ -5973,7 +5973,7 @@
       <short value="SurPass Composition editing time"/>
       <definition value="The composition editing time, when the composition was last logically changed by the author."/>
       <comment value="The Last Modified Date on the composition may be after the date of the document was attested without being changed. This means that the date on an amended document is the date of the amendment, not the date of original authorship."/>
-      <requirements value="dateTime is used for tracking, organizing versions and searching. Note that this is the time of authoring this version of the Composition. When packaged in a document, [Bundle.timestamp](http://hl7.org/fhir/5.0.0-draft-final/bundle-definitions.html#Bundle.timestamp) is the date of packaging."/>
+      <requirements value="dateTime is used for tracking, organizing versions and searching. Note that this is the time of authoring this version of the Composition. When packaged in a document, [Bundle.timestamp](http://hl7.org/fhir/5.0.0-snapshot3/bundle-definitions.html#Bundle.timestamp) is the date of packaging."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -6012,7 +6012,7 @@
       </mapping>
       <mapping>
         <identity value="fhirdocumentreference"/>
-        <map value="DocumentReference.content.attachment.date, DocumentReference.created"/>
+        <map value="DocumentReference.content.attachment.date, DocumentReference.date"/>
       </mapping>
     </element>
     <element id="Composition.useContext">
@@ -6091,7 +6091,7 @@
       </mapping>
       <mapping>
         <identity value="fhirdocumentreference"/>
-        <map value="DocumentReference.agent"/>
+        <map value="DocumentReference.author"/>
       </mapping>
     </element>
     <element id="Composition.name">
@@ -6221,7 +6221,7 @@
       </mapping>
       <mapping>
         <identity value="fhirdocumentreference"/>
-        <map value="DocumentReference.authenticator"/>
+        <map value="DocumentReference.attester"/>
       </mapping>
     </element>
     <element id="Composition.attester.id">
@@ -6293,7 +6293,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -6370,6 +6370,10 @@
         <identity value="cda"/>
         <map value="implied by .authenticator/.legalAuthenticator"/>
       </mapping>
+      <mapping>
+        <identity value="fhirdocumentreference"/>
+        <map value="DocumentReference.attester.mode"/>
+      </mapping>
     </element>
     <element id="Composition.attester.time">
       <path value="Composition.attester.time"/>
@@ -6403,6 +6407,10 @@
       <mapping>
         <identity value="cda"/>
         <map value=".authenticator.time"/>
+      </mapping>
+      <mapping>
+        <identity value="fhirdocumentreference"/>
+        <map value="DocumentReference.attester.time"/>
       </mapping>
     </element>
     <element id="Composition.attester.party">
@@ -6446,6 +6454,10 @@
       <mapping>
         <identity value="cda"/>
         <map value=".authenticator.assignedEnttty"/>
+      </mapping>
+      <mapping>
+        <identity value="fhirdocumentreference"/>
+        <map value="DocumentReference.attester.party"/>
       </mapping>
     </element>
     <element id="Composition.custodian">
@@ -6492,7 +6504,7 @@
       <path value="Composition.relatesTo"/>
       <short value="Relationships to other compositions/documents"/>
       <definition value="Relationships that this composition has with other compositions or documents that already exist."/>
-      <comment value="To reference (using relatesTo) a Bundle of type &quot;document&quot; or another Composition where you only have the identifier, use a resourceReference with an identifier.&#xA;Here is an example of using relatesTo to reference another Bundle of type &quot;document&quot; or Composition where you only have the identifier:&#xA;```&#xA;&lt;relatesTo  &gt;&#xA;    &lt;type value=&quot;replaces&quot; /&gt;&#xA;&lt;resourceReference&gt;&#xA;&lt;identifier&gt;&#xA;&lt;system value=&quot;...&quot; /&gt;&#xA;&lt;value value=&quot;...&quot; /&gt;&#xA;&lt;/identifier&gt;&#xA;&lt;/resourceReference&gt;&#xA;&lt;/relatesTo&gt;&#xA;```"/>
+      <comment value="To reference (using relatesTo) a Bundle of type &quot;document&quot; or another Composition where you only have the identifier, use a resourceReference with an identifier.\&#xA;When a Composition is an alternate representation of another type of document e.g. CDA, the other document could be referenced in a DocumentReference resource.  &#xA;Here is an example of using relatesTo to reference another Bundle of type &quot;document&quot; or Composition where you only have the identifier:&#xA;```&#xA;&quot;relatesTo&quot;: [{&#xA;  &quot;type&quot;: &quot;replaces&quot;,&#xA;  &quot;resourceReference&quot;: {&#xA;    &quot;identifier&quot;: { &#xA;      &quot;system&quot;: &quot;...&quot;, &#xA;      &quot;value&quot;: &quot;...&quot;&#xA;    }&#xA;  } &#xA;}]&#xA;```"/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -6559,10 +6571,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".documentationOf.serviceEvent"/>
-      </mapping>
-      <mapping>
-        <identity value="fhirdocumentreference"/>
-        <map value="DocumentReference.event"/>
       </mapping>
     </element>
     <element id="Composition.event.id">
@@ -6634,7 +6642,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -6668,52 +6676,6 @@
       <mapping>
         <identity value="rim"/>
         <map value="N/A"/>
-      </mapping>
-    </element>
-    <element id="Composition.event.code">
-      <path value="Composition.event.code"/>
-      <short value="Code(s) that apply to the event being documented"/>
-      <definition value="This list of codes represents the main clinical acts, such as a colonoscopy or an appendectomy, being documented. In some cases, the event is inherent in the typeCode, such as a &quot;History and Physical Report&quot; in which the procedure being documented is necessarily a &quot;History and Physical&quot; act."/>
-      <comment value="An event can further specialize the act inherent in the typeCode, such as where it is simply &quot;Procedure Report&quot; and the procedure was a &quot;colonoscopy&quot;. If one or more eventCodes are included, they SHALL NOT conflict with the values inherent in the classCode, practiceSettingCode or typeCode, as such a conflict would create an ambiguous situation. This short list of codes is provided to be used as key words for certain types of queries."/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="Composition.event.code"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="CodeableConcept"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="true"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="DocumentEventType"/>
-        </extension>
-        <strength value="example"/>
-        <description value="This list of codes represents the main clinical acts being documented."/>
-        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActCode"/>
-      </binding>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".code"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value=".code"/>
-      </mapping>
-      <mapping>
-        <identity value="fhirdocumentreference"/>
-        <map value="DocumentReference.event.code"/>
       </mapping>
     </element>
     <element id="Composition.event.period">
@@ -6750,13 +6712,14 @@
       </mapping>
       <mapping>
         <identity value="fhirdocumentreference"/>
-        <map value="DocumentReference.event.period"/>
+        <map value="DocumentReference.period"/>
       </mapping>
     </element>
     <element id="Composition.event.detail">
       <path value="Composition.event.detail"/>
-      <short value="The event(s) being documented"/>
-      <definition value="The description and/or reference of the event(s) being documented. For example, this could be used to document such a colonoscopy or an appendectomy."/>
+      <short value="The event(s) being documented, as code(s), reference(s), or both"/>
+      <definition value="Represents the main clinical acts, such as a colonoscopy or an appendectomy, being documented. In some cases, the event is inherent in the typeCode, such as a &quot;History and Physical Report&quot; in which case the procedure being documented is necessarily a &quot;History and Physical&quot; act. The events may be included as a code or as a reference to an other resource."/>
+      <comment value="An event can further specialize the act inherent in the typeCode, such as where it is simply &quot;Procedure Report&quot; and the procedure was a &quot;colonoscopy&quot;. If one or more events are included, they SHALL NOT conflict with the values inherent in the classCode, practiceSettingCode or typeCode, as such a conflict would create an ambiguous situation. This short list of codes is provided to be used as key words for certain types of queries."/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -6765,7 +6728,7 @@
         <max value="*"/>
       </base>
       <type>
-        <code value="Reference"/>
+        <code value="CodeableReference"/>
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
       </type>
       <constraint>
@@ -6778,6 +6741,14 @@
       <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="DocumentEventType"/>
+        </extension>
+        <strength value="example"/>
+        <description value="This list of codes represents the main clinical acts being documented."/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v3-ActCode"/>
+      </binding>
       <mapping>
         <identity value="rim"/>
         <map value=".outboundRelationship[typeCode=&quot;SUBJ&quot;].target"/>
@@ -6785,6 +6756,10 @@
       <mapping>
         <identity value="cda"/>
         <map value="n/a"/>
+      </mapping>
+      <mapping>
+        <identity value="fhirdocumentreference"/>
+        <map value="DocumentReference.event"/>
       </mapping>
     </element>
     <element id="Composition.section">
@@ -6914,7 +6889,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -7139,53 +7114,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section.mode">
-      <path value="Composition.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section.orderedBy">
@@ -7464,7 +7392,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -7695,53 +7623,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.mode">
-      <path value="Composition.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.orderedBy">
@@ -8143,7 +8024,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -8374,53 +8255,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.section:chemotherapy.mode">
-      <path value="Composition.section.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.section:chemotherapy.orderedBy">
@@ -8777,7 +8611,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -9008,53 +8842,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.section:stemCellTransplantation.mode">
-      <path value="Composition.section.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.section:stemCellTransplantation.orderedBy">
@@ -9487,7 +9274,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -9718,53 +9505,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.section:radiotherapy.mode">
-      <path value="Composition.section.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.section:radiotherapy.orderedBy">
@@ -10157,7 +9897,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -10388,53 +10128,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.section:majorSurgery.mode">
-      <path value="Composition.section.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.section:majorSurgery.orderedBy">
@@ -10751,7 +10444,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -10982,53 +10675,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.section:otherInfos.mode">
-      <path value="Composition.section.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.section:otherInfos.orderedBy">
@@ -11536,7 +11182,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -11767,53 +11413,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.section:medicalSuggestion.mode">
-      <path value="Composition.section.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.section:medicalSuggestion.orderedBy">
@@ -12076,7 +11675,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -12307,53 +11906,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.section:relapseAfterEOT.mode">
-      <path value="Composition.section.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.section:relapseAfterEOT.orderedBy">
@@ -12717,7 +12269,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -12948,53 +12500,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.section:relapseAfterEOT.section:chemotherapy.mode">
-      <path value="Composition.section.section.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.section:relapseAfterEOT.section:chemotherapy.orderedBy">
@@ -13351,7 +12856,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -13582,53 +13087,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.section:relapseAfterEOT.section:stemCellTransplantation.mode">
-      <path value="Composition.section.section.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.section:relapseAfterEOT.section:stemCellTransplantation.orderedBy">
@@ -14061,7 +13519,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -14292,53 +13750,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.section:relapseAfterEOT.section:radiotherapy.mode">
-      <path value="Composition.section.section.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.section:relapseAfterEOT.section:radiotherapy.orderedBy">
@@ -14731,7 +14142,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -14962,53 +14373,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.section:relapseAfterEOT.section:majorSurgery.mode">
-      <path value="Composition.section.section.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.section:relapseAfterEOT.section:majorSurgery.orderedBy">
@@ -15325,7 +14689,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -15556,53 +14920,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.mode">
-      <path value="Composition.section.section.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.section:relapseAfterEOT.section:otherInfos.orderedBy">
@@ -16110,7 +15427,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -16341,53 +15658,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.section:relapseAfterEOT.section:medicalSuggestion.mode">
-      <path value="Composition.section.section.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.section:relapseAfterEOT.section:medicalSuggestion.orderedBy">
@@ -16653,7 +15923,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -16884,53 +16154,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:flt.section:otherConditions.mode">
-      <path value="Composition.section.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:flt.section:otherConditions.orderedBy">
@@ -17209,7 +16432,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -17440,53 +16663,6 @@
       <mapping>
         <identity value="cda"/>
         <map value=".text"/>
-      </mapping>
-    </element>
-    <element id="Composition.section:carePlan.mode">
-      <path value="Composition.section.mode"/>
-      <short value="working | snapshot | changes"/>
-      <definition value="How the entry list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted."/>
-      <comment value="This element is labeled as a modifier because a change list must not be misunderstood as a complete list."/>
-      <requirements value="Sections are used in various ways, and it must be known in what way it is safe to use the entries in them."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Composition.section.mode"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="false"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="SectionMode"/>
-        </extension>
-        <strength value="required"/>
-        <description value="The processing mode that applies to this section."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/list-mode|5.0.0-draft-final"/>
-      </binding>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.class"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value=".outBoundRelationship[typeCode=COMP].target[classCode=OBS&quot;].value"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value="n/a"/>
       </mapping>
     </element>
     <element id="Composition.section:carePlan.orderedBy">

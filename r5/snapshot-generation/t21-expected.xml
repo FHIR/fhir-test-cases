@@ -192,14 +192,14 @@
     <name value="Workflow Pattern"/>
   </mapping>
   <mapping>
-    <identity value="rim"/>
-    <uri value="http://hl7.org/v3"/>
-    <name value="RIM Mapping"/>
-  </mapping>
-  <mapping>
     <identity value="w5"/>
     <uri value="http://hl7.org/fhir/fivews"/>
     <name value="FiveWs Pattern Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM Mapping"/>
   </mapping>
   <mapping>
     <identity value="objimpl"/>
@@ -248,16 +248,16 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
+        <identity value="w5"/>
+        <map value="conformance.behavior,clinical.general"/>
+      </mapping>
+      <mapping>
         <identity value="workflow"/>
         <map value="Definition"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
         <map value="Act[classCode=GROUPER;moodCode=DEFN]"/>
-      </mapping>
-      <mapping>
-        <identity value="w5"/>
-        <map value="clinical.general"/>
       </mapping>
     </element>
     <element id="PlanDefinition.id">
@@ -368,7 +368,7 @@
         </extension>
         <strength value="required"/>
         <description value="IETF language tag for a human language"/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/all-languages|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/all-languages|5.0.0"/>
         <additional>
           <purpose value="starter"/>
           <valueSet value="http://hl7.org/fhir/ValueSet/languages"/>
@@ -484,7 +484,7 @@
       <short value="Extensions that cannot be ignored"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <min value="0"/>
@@ -524,7 +524,7 @@
       <path value="PlanDefinition.url"/>
       <short value="Canonical identifier for this plan definition, represented as a URI (globally unique)"/>
       <definition value="An absolute URI that is used to identify this plan definition when it is referenced in a specification, model, design or an instance; also called its canonical identifier. This SHOULD be globally unique and SHOULD be a literal address at which an authoritative instance of this plan definition is (or will be) published. This URL can be the target of a canonical reference. It SHALL remain the same when the plan definition is stored on different servers."/>
-      <comment value="Can be a urn:uuid: or a urn:oid: but real http: addresses are preferred.  Multiple instances may share the same URL if they have a distinct version.&#xA;&#xA;The determination of when to create a new version of a resource (same url, new version) vs. defining a new artifact is up to the author.  Considerations for making this decision are found in [Technical and Business Versions](http://hl7.org/fhir/5.0.0-draft-final/resource.html#versions). &#xA;&#xA;In some cases, the resource can no longer be found at the stated url, but the url itself cannot change. Implementations can use the [meta.source](http://hl7.org/fhir/5.0.0-draft-final/resource.html#meta) element to indicate where the current master source of the resource can be found."/>
+      <comment value="Can be a urn:uuid: or a urn:oid: but real http: addresses are preferred.  Multiple instances may share the same URL if they have a distinct version.&#xA;&#xA;The determination of when to create a new version of a resource (same url, new version) vs. defining a new artifact is up to the author.  Considerations for making this decision are found in [Technical and Business Versions](http://hl7.org/fhir/5.0.0-snapshot3/resource.html#versions). &#xA;&#xA;In some cases, the resource can no longer be found at the stated url, but the url itself cannot change. Implementations can use the [meta.source](http://hl7.org/fhir/5.0.0-snapshot3/resource.html#meta) element to indicate where the current master source of the resource can be found."/>
       <requirements value="Allows the plan definition to be referenced by a single globally unique identifier."/>
       <min value="0"/>
       <max value="1"/>
@@ -613,7 +613,7 @@
       <path value="PlanDefinition.version"/>
       <short value="Business version of the plan definition"/>
       <definition value="The identifier that is used to identify this version of the plan definition when it is referenced in a specification, model, design or instance. This is an arbitrary value managed by the plan definition author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available. There is also no expectation that versions can be placed in a lexicographical sequence. To provide a version consistent with the Decision Support Service specification, use the format Major.Minor.Revision (e.g. 1.0.0). For more information on versioning knowledge assets, refer to the Decision Support Service specification. Note that a version is required for non-experimental active artifacts."/>
-      <comment value="There may be different plan definition instances that have the same identifier but different versions.  The version can be appended to the url in a reference to allow a reference to a particular business version of the plan definition with the format [url]|[version]. The version SHOULD NOT contain a '#' - see [Business Version](http://hl7.org/fhir/5.0.0-draft-final/resource.html#bv-format)."/>
+      <comment value="There may be different plan definition instances that have the same identifier but different versions.  The version can be appended to the url in a reference to allow a reference to a particular business version of the plan definition with the format [url]|[version]. The version SHOULD NOT contain a '#' - see [Business Version](http://hl7.org/fhir/5.0.0-snapshot3/resource.html#bv-format)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -852,7 +852,7 @@
       <path value="PlanDefinition.status"/>
       <short value="draft | active | retired | unknown"/>
       <definition value="The status of this plan definition. Enables tracking the life-cycle of the content."/>
-      <comment value="Allows filtering of plan definitions that are appropriate for use versus not."/>
+      <comment value="Allows filtering of plan definitions that are appropriate for use versus not.&#xA;&#xA;See guidance around (not) making local changes to elements [here](http://hl7.org/fhir/5.0.0-snapshot3/canonicalresource.html#localization)."/>
       <min value="1"/>
       <max value="1"/>
       <base>
@@ -883,7 +883,7 @@
         </extension>
         <strength value="required"/>
         <description value="The lifecycle status of an artifact."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/publication-status|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/publication-status|5.0.0"/>
       </binding>
       <mapping>
         <identity value="workflow"/>
@@ -1001,7 +1001,7 @@
       <path value="PlanDefinition.date"/>
       <short value="Date last changed"/>
       <definition value="The date  (and optionally time) when the plan definition was last significantly changed. The date must change when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the plan definition changes."/>
-      <comment value="The date is often not tracked until the resource is published, but may be present on draft content. Note that this is not the same as the resource last-modified-date, since the resource may be a secondary representation of the plan definition. Additional specific dates may be added as extensions or be found by consulting Provenances associated with past versions of the resource."/>
+      <comment value="The date is often not tracked until the resource is published, but may be present on draft content. Note that this is not the same as the resource last-modified-date, since the resource may be a secondary representation of the plan definition. Additional specific dates may be added as extensions or be found by consulting Provenances associated with past versions of the resource.&#xA;&#xA;See guidance around (not) making local changes to elements [here](http://hl7.org/fhir/5.0.0-snapshot3/canonicalresource.html#localization)."/>
       <alias value="Revision Date"/>
       <min value="0"/>
       <max value="1"/>
@@ -1085,7 +1085,7 @@
       <path value="PlanDefinition.contact"/>
       <short value="Contact details for the publisher"/>
       <definition value="Contact details to assist a user in finding and communicating with the publisher."/>
-      <comment value="May be a web site, an email address, a telephone number, etc."/>
+      <comment value="May be a web site, an email address, a telephone number, etc.&#xA;&#xA;See guidance around (not) making local changes to elements [here](http://hl7.org/fhir/5.0.0-snapshot3/canonicalresource.html#localization)."/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -1191,10 +1191,13 @@
       </mapping>
     </element>
     <element id="PlanDefinition.jurisdiction">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+        <valueCode value="deprecated"/>
+      </extension>
       <path value="PlanDefinition.jurisdiction"/>
       <short value="Intended jurisdiction for plan definition (if applicable)"/>
       <definition value="A legal or geographic region in which the plan definition is intended to be used."/>
-      <comment value="It may be possible for the plan definition to be used in jurisdictions other than those for which it was originally designed or intended."/>
+      <comment value="It may be possible for the plan definition to be used in jurisdictions other than those for which it was originally designed or intended.&#xA;&#xA;DEPRECATION NOTE: For consistency, implementations are encouraged to migrate to using the new 'jurisdiction' code in the useContext element.  (I.e. useContext.code indicating http://terminology.hl7.org/CodeSystem/usage-context-type#jurisdiction and useContext.valueCodeableConcept indicating the jurisdiction.)"/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -1408,7 +1411,7 @@
       <path value="PlanDefinition.approvalDate"/>
       <short value="When the plan definition was approved by publisher"/>
       <definition value="The date on which the resource content was approved by the publisher. Approval happens once when the content is officially approved for usage."/>
-      <comment value="The 'date' element may be more recent than the approval date because of minor changes or editorial corrections."/>
+      <comment value="The 'date' element may be more recent than the approval date because of minor changes or editorial corrections.&#xA;&#xA;See guidance around (not) making local changes to elements [here](http://hl7.org/fhir/5.0.0-snapshot3/canonicalresource.html#localization)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1446,7 +1449,7 @@
       <path value="PlanDefinition.lastReviewDate"/>
       <short value="When the plan definition was last reviewed by the publisher"/>
       <definition value="The date on which the resource content was last reviewed. Review happens periodically after approval but does not change the original approval date."/>
-      <comment value="If specified, this date follows the original approval date."/>
+      <comment value="If specified, this date follows the original approval date.&#xA;&#xA;See guidance around (not) making local changes to elements [here](http://hl7.org/fhir/5.0.0-snapshot3/canonicalresource.html#localization)."/>
       <requirements value="Gives a sense of how &quot;current&quot; the content is.  Resources that have not been reviewed in a long time may have a risk of being less appropriate/relevant."/>
       <min value="0"/>
       <max value="1"/>
@@ -1485,7 +1488,7 @@
       <path value="PlanDefinition.effectivePeriod"/>
       <short value="When the plan definition is expected to be used"/>
       <definition value="The period during which the plan definition content was or is planned to be in active use."/>
-      <comment value="The effective period for a plan definition  determines when the content is applicable for usage and is independent of publication and review dates. For example, a measure intended to be used for the year 2016 might be published in 2015."/>
+      <comment value="The effective period for a plan definition  determines when the content is applicable for usage and is independent of publication and review dates. For example, a plan definition intended to be used for the year 2016 might be published in 2015.&#xA;&#xA;See guidance around (not) making local changes to elements [here](http://hl7.org/fhir/5.0.0-snapshot3/canonicalresource.html#localization)."/>
       <requirements value="Allows establishing a transition before a resource comes into effect and also allows for a sunsetting  process when new versions of the plan definition are or are expected to be used instead."/>
       <min value="0"/>
       <max value="1"/>
@@ -1521,9 +1524,13 @@
       </mapping>
     </element>
     <element id="PlanDefinition.topic">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+        <valueCode value="deprecated"/>
+      </extension>
       <path value="PlanDefinition.topic"/>
       <short value="E.g. Education, Treatment, Assessment"/>
       <definition value="Descriptive topics related to the content of the plan definition. Topics provide a high-level categorization of the definition that can be useful for filtering and searching."/>
+      <comment value="DEPRECATION NOTE: For consistency, implementations are encouraged to migrate to using the new 'topic' code in the useContext element.  (I.e. useContext.code indicating http://terminology.hl7.org/CodeSystem/usage-context-type#topic and useContext.valueCodeableConcept indicating the topic)"/>
       <requirements value="Repositories must be able to determine how to categorize the plan definition so that it can be found by topical searches."/>
       <min value="0"/>
       <max value="*"/>
@@ -1624,6 +1631,7 @@
       <path value="PlanDefinition.reviewer"/>
       <short value="Who reviewed the content"/>
       <definition value="An individual or organization asserted by the publisher to be primarily responsible for review of some aspect of the content."/>
+      <comment value="See guidance around (not) making local changes to elements [here](http://hl7.org/fhir/5.0.0-snapshot3/canonicalresource.html#localization)."/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -1653,6 +1661,7 @@
       <path value="PlanDefinition.endorser"/>
       <short value="Who endorsed the content"/>
       <definition value="An individual or organization asserted by the publisher to be responsible for officially endorsing the content for use in some setting."/>
+      <comment value="See guidance around (not) making local changes to elements [here](http://hl7.org/fhir/5.0.0-snapshot3/canonicalresource.html#localization)."/>
       <min value="0"/>
       <max value="*"/>
       <base>
@@ -1839,7 +1848,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -2188,7 +2197,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -2436,7 +2445,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -2640,7 +2649,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -2706,7 +2715,7 @@
         </extension>
         <strength value="required"/>
         <description value="The type of participant in the activity."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-participant-type|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-participant-type|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -2926,7 +2935,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -3167,7 +3176,7 @@
         </extension>
         <strength value="required"/>
         <description value="Identifies the level of importance to be assigned to actioning the request."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/request-priority|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/request-priority|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -3490,7 +3499,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -3557,7 +3566,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines the kinds of conditions that can appear on actions."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-condition-kind|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-condition-kind|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -3699,7 +3708,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -3936,7 +3945,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -4168,7 +4177,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -4264,7 +4273,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines the types of relationships between actions."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -4301,7 +4310,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines the types of relationships between actions."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -4511,7 +4520,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -4606,7 +4615,7 @@
         </extension>
         <strength value="required"/>
         <description value="The type of participant in the activity."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-participant-type|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-participant-type|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -4809,6 +4818,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no grouping behavior is specified but the action has children (i.e. is a group), the grouping behavior is assumed to be `logical-group`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -4825,7 +4835,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines organization behavior of a group."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-grouping-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-grouping-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -4846,6 +4856,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no selection behavior is specified but the action has children (i.e. is a group), the selection behavior is assumed to be `all`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -4862,7 +4873,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines selection behavior of a group."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-selection-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-selection-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -4883,6 +4894,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no required behavior is specified but the action has children (i.e. is a group), the required behavior is assumed to be `could`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -4899,7 +4911,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines expectations around whether an action or action group is required."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-required-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-required-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -4920,6 +4932,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no precheck behavior is specified but the action has children (i.e. is a group), the precheck behavior is assumed to be `no`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -4936,7 +4949,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines selection frequency behavior for an action or group."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-precheck-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-precheck-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -4957,6 +4970,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no cardinality behavior is specified but the action has children (i.e. is a group), the cardinality behavior is assumed to be `single`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -4973,7 +4987,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines behavior for an action or a group for how many times that item may be repeated."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-cardinality-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-cardinality-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -5149,7 +5163,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -5188,8 +5202,8 @@
     <element id="PlanDefinition.action.dynamicValue.path">
       <path value="PlanDefinition.action.dynamicValue.path"/>
       <short value="The path to the element to be set dynamically"/>
-      <definition value="The path to the element to be customized. This is the path on the resource that will hold the result of the calculation defined by the expression. The specified path SHALL be a FHIRPath resolvable on the specified target type of the ActivityDefinition, and SHALL consist only of identifiers, constant indexers, and a restricted subset of functions. The path is allowed to contain qualifiers (.) to traverse sub-elements, as well as indexers ([x]) to traverse multiple-cardinality sub-elements (see the [Simple FHIRPath Profile](http://hl7.org/fhir/5.0.0-draft-final/fhirpath.html#simple) for full details)."/>
-      <comment value="To specify the path to the current action being realized, the %action environment variable is available in this path. For example, to specify the description element of the target action, the path would be %action.description. The path attribute contains a [Simple FHIRPath Subset](http://hl7.org/fhir/5.0.0-draft-final/fhirpath.html#simple) that allows path traversal, but not calculation."/>
+      <definition value="The path to the element to be customized. This is the path on the resource that will hold the result of the calculation defined by the expression. The specified path SHALL be a FHIRPath resolvable on the specified target type of the ActivityDefinition, and SHALL consist only of identifiers, constant indexers, and a restricted subset of functions. The path is allowed to contain qualifiers (.) to traverse sub-elements, as well as indexers ([x]) to traverse multiple-cardinality sub-elements (see the [Simple FHIRPath Profile](http://hl7.org/fhir/5.0.0-snapshot3/fhirpath.html#simple) for full details)."/>
+      <comment value="To specify the path to the current action being realized, the %action environment variable is available in this path. For example, to specify the description element of the target action, the path would be %action.description. The path attribute contains a [Simple FHIRPath Subset](http://hl7.org/fhir/5.0.0-snapshot3/fhirpath.html#simple) that allows path traversal, but not calculation."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -5386,7 +5400,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -5628,7 +5642,7 @@
         </extension>
         <strength value="required"/>
         <description value="Identifies the level of importance to be assigned to actioning the request."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/request-priority|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/request-priority|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -5951,7 +5965,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -6018,7 +6032,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines the kinds of conditions that can appear on actions."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-condition-kind|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-condition-kind|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -6160,7 +6174,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -6397,7 +6411,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -6629,7 +6643,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -6725,7 +6739,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines the types of relationships between actions."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -6762,7 +6776,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines the types of relationships between actions."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -6972,7 +6986,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -7067,7 +7081,7 @@
         </extension>
         <strength value="required"/>
         <description value="The type of participant in the activity."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-participant-type|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-participant-type|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -7270,6 +7284,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no grouping behavior is specified but the action has children (i.e. is a group), the grouping behavior is assumed to be `logical-group`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -7286,7 +7301,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines organization behavior of a group."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-grouping-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-grouping-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -7307,6 +7322,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no selection behavior is specified but the action has children (i.e. is a group), the selection behavior is assumed to be `all`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -7323,7 +7339,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines selection behavior of a group."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-selection-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-selection-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -7344,6 +7360,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no required behavior is specified but the action has children (i.e. is a group), the required behavior is assumed to be `could`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -7360,7 +7377,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines expectations around whether an action or action group is required."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-required-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-required-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -7381,6 +7398,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no precheck behavior is specified but the action has children (i.e. is a group), the precheck behavior is assumed to be `no`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -7397,7 +7415,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines selection frequency behavior for an action or group."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-precheck-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-precheck-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -7418,6 +7436,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no cardinality behavior is specified but the action has children (i.e. is a group), the cardinality behavior is assumed to be `single`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -7434,7 +7453,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines behavior for an action or a group for how many times that item may be repeated."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-cardinality-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-cardinality-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -7610,7 +7629,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -7649,8 +7668,8 @@
     <element id="PlanDefinition.action.action:subtask1.dynamicValue.path">
       <path value="PlanDefinition.action.action.dynamicValue.path"/>
       <short value="The path to the element to be set dynamically"/>
-      <definition value="The path to the element to be customized. This is the path on the resource that will hold the result of the calculation defined by the expression. The specified path SHALL be a FHIRPath resolvable on the specified target type of the ActivityDefinition, and SHALL consist only of identifiers, constant indexers, and a restricted subset of functions. The path is allowed to contain qualifiers (.) to traverse sub-elements, as well as indexers ([x]) to traverse multiple-cardinality sub-elements (see the [Simple FHIRPath Profile](http://hl7.org/fhir/5.0.0-draft-final/fhirpath.html#simple) for full details)."/>
-      <comment value="To specify the path to the current action being realized, the %action environment variable is available in this path. For example, to specify the description element of the target action, the path would be %action.description. The path attribute contains a [Simple FHIRPath Subset](http://hl7.org/fhir/5.0.0-draft-final/fhirpath.html#simple) that allows path traversal, but not calculation."/>
+      <definition value="The path to the element to be customized. This is the path on the resource that will hold the result of the calculation defined by the expression. The specified path SHALL be a FHIRPath resolvable on the specified target type of the ActivityDefinition, and SHALL consist only of identifiers, constant indexers, and a restricted subset of functions. The path is allowed to contain qualifiers (.) to traverse sub-elements, as well as indexers ([x]) to traverse multiple-cardinality sub-elements (see the [Simple FHIRPath Profile](http://hl7.org/fhir/5.0.0-snapshot3/fhirpath.html#simple) for full details)."/>
+      <comment value="To specify the path to the current action being realized, the %action environment variable is available in this path. For example, to specify the description element of the target action, the path would be %action.description. The path attribute contains a [Simple FHIRPath Subset](http://hl7.org/fhir/5.0.0-snapshot3/fhirpath.html#simple) that allows path traversal, but not calculation."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -7840,7 +7859,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -8082,7 +8101,7 @@
         </extension>
         <strength value="required"/>
         <description value="Identifies the level of importance to be assigned to actioning the request."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/request-priority|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/request-priority|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -8405,7 +8424,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -8472,7 +8491,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines the kinds of conditions that can appear on actions."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-condition-kind|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-condition-kind|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -8614,7 +8633,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -8851,7 +8870,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -9083,7 +9102,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -9179,7 +9198,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines the types of relationships between actions."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -9216,7 +9235,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines the types of relationships between actions."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-relationship-type|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -9426,7 +9445,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -9521,7 +9540,7 @@
         </extension>
         <strength value="required"/>
         <description value="The type of participant in the activity."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-participant-type|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-participant-type|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -9724,6 +9743,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no grouping behavior is specified but the action has children (i.e. is a group), the grouping behavior is assumed to be `logical-group`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -9740,7 +9760,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines organization behavior of a group."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-grouping-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-grouping-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -9761,6 +9781,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no selection behavior is specified but the action has children (i.e. is a group), the selection behavior is assumed to be `all`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -9777,7 +9798,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines selection behavior of a group."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-selection-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-selection-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -9798,6 +9819,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no required behavior is specified but the action has children (i.e. is a group), the required behavior is assumed to be `could`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -9814,7 +9836,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines expectations around whether an action or action group is required."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-required-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-required-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -9835,6 +9857,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no precheck behavior is specified but the action has children (i.e. is a group), the precheck behavior is assumed to be `no`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -9851,7 +9874,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines selection frequency behavior for an action or group."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-precheck-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-precheck-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -9872,6 +9895,7 @@
       <type>
         <code value="code"/>
       </type>
+      <meaningWhenMissing value="If no cardinality behavior is specified but the action has children (i.e. is a group), the cardinality behavior is assumed to be `single`."/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -9888,7 +9912,7 @@
         </extension>
         <strength value="required"/>
         <description value="Defines behavior for an action or a group for how many times that item may be repeated."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/action-cardinality-behavior|5.0.0-draft-final"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/action-cardinality-behavior|5.0.0"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -10064,7 +10088,7 @@
       <short value="Extensions that cannot be ignored even if unrecognized"/>
       <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.&#xA;&#xA;Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)."/>
       <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-draft-final/extensibility.html#modifierExtension)."/>
+      <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](http://hl7.org/fhir/5.0.0-snapshot3/extensibility.html#modifierExtension)."/>
       <alias value="extensions"/>
       <alias value="user content"/>
       <alias value="modifiers"/>
@@ -10103,8 +10127,8 @@
     <element id="PlanDefinition.action.action:subtask2.dynamicValue.path">
       <path value="PlanDefinition.action.action.dynamicValue.path"/>
       <short value="The path to the element to be set dynamically"/>
-      <definition value="The path to the element to be customized. This is the path on the resource that will hold the result of the calculation defined by the expression. The specified path SHALL be a FHIRPath resolvable on the specified target type of the ActivityDefinition, and SHALL consist only of identifiers, constant indexers, and a restricted subset of functions. The path is allowed to contain qualifiers (.) to traverse sub-elements, as well as indexers ([x]) to traverse multiple-cardinality sub-elements (see the [Simple FHIRPath Profile](http://hl7.org/fhir/5.0.0-draft-final/fhirpath.html#simple) for full details)."/>
-      <comment value="To specify the path to the current action being realized, the %action environment variable is available in this path. For example, to specify the description element of the target action, the path would be %action.description. The path attribute contains a [Simple FHIRPath Subset](http://hl7.org/fhir/5.0.0-draft-final/fhirpath.html#simple) that allows path traversal, but not calculation."/>
+      <definition value="The path to the element to be customized. This is the path on the resource that will hold the result of the calculation defined by the expression. The specified path SHALL be a FHIRPath resolvable on the specified target type of the ActivityDefinition, and SHALL consist only of identifiers, constant indexers, and a restricted subset of functions. The path is allowed to contain qualifiers (.) to traverse sub-elements, as well as indexers ([x]) to traverse multiple-cardinality sub-elements (see the [Simple FHIRPath Profile](http://hl7.org/fhir/5.0.0-snapshot3/fhirpath.html#simple) for full details)."/>
+      <comment value="To specify the path to the current action being realized, the %action environment variable is available in this path. For example, to specify the description element of the target action, the path would be %action.description. The path attribute contains a [Simple FHIRPath Subset](http://hl7.org/fhir/5.0.0-snapshot3/fhirpath.html#simple) that allows path traversal, but not calculation."/>
       <min value="0"/>
       <max value="1"/>
       <base>
