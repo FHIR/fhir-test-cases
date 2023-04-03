@@ -200,6 +200,39 @@
         "response" : "language/expand-xform-de-multi-en-hard-response-valueSet.json"
       }
     ]
+  },{
+    "name" : "extensions",
+    "description" : "Testing proper handling of extensions, which depends on the extension",
+    "setup" : ["extensions/codesystem-extensions.json", "extensions/codesystem-supplement.json", "extensions/valueset-extensions-all.json", "extensions/valueset-extensions-bad-supplement.json", "extensions/valueset-extensions-enumerated.json"],
+    "extensions-handled-doco": [
+      "http://hl7.org/fhir/StructureDefinition/valueset-supplement", "http://hl7.org/fhir/StructureDefinition/valueset-deprecated", "http://hl7.org/fhir/StructureDefinition/valueset-concept-definition",
+      "http://hl7.org/fhir/StructureDefinition/coding-sctdescid", "http://hl7.org/fhir/StructureDefinition/valueset-conceptOrder", "http://hl7.org/fhir/StructureDefinition/valueset-label",
+      "http://hl7.org/fhir/StructureDefinition/itemWeight", "http://hl7.org/fhir/StructureDefinition/rendering-style", "http://hl7.org/fhir/StructureDefinition/rendering-xhtml",
+      "http://hl7.org/fhir/StructureDefinition/codesystem-conceptOrder", "http://hl7.org/fhir/StructureDefinition/codesystem-label", "http://hl7.org/fhir/StructureDefinition/codesystem-alternate"],
+    "tests" : [
+      {
+        "name" : "extensions-echo-all",
+        "operation" : "expand",
+        "request" : "extensions/expand-echo-all-parameters.json",
+        "response" : "extensions/expand-echo-all-valueset.json"
+      },
+      {
+        "name" : "extensions-echo-enumerated",
+        "operation" : "expand",
+        "request" : "extensions/expand-echo-enumerated-parameters.json",
+        "response" : "extensions/expand-echo-enumerated-valueset.json"
+      },
+      {
+        "name" : "extensions-echo-bad-supplement",
+        "operation" : "expand",
+        "request" : "extensions/expand-echo-bad-supplement-parameters.json",
+        "response" : "extensions/expand-echo-bad-supplement-outcome.json"
+      }
+    ]
   }],
-  "todo" : "big code system (incomplete), extensions, incomplete code systems"
+  "todo" : "big code system (incomplete), extensions, incomplete code systems",
+  "not-done" : [
+    "At this point, the tests do not cover ConceptMap, nor do they test the http://hl7.org/fhir/tools/StructureDefinition-select-by-map.html extension"
+  ]
 }
+
