@@ -412,10 +412,46 @@
         "operation" : "validate-code",
         "request" : "validation/simple-codeableconcept-bad-language-request-parameters.json",
         "response" : "validation/simple-codeableconcept-bad-language-response-parameters.json"
+      },
+      {
+        "name" : "validation-complex-codeableconcept-full",
+        "operation" : "validate-code",
+        "request" : "validation/complex-codeableconcept-full-request-parameters.json",
+        "response" : "validation/complex-codeableconcept-full-response-parameters.json"
+      },
+      {
+        "name" : "validation-complex-codeableconcept-vsonly",
+        "operation" : "validate-code",
+        "request" : "validation/complex-codeableconcept-vsonly-request-parameters.json",
+        "response" : "validation/complex-codeableconcept-vsonly-response-parameters.json"
       }
     ]
+  },{
+    "name" : "big",
+    "description" : "Testing handling a big code system",
+    "setup" : ["big/codesystem-big.json", "big/valueset-big.json"],
+    "tests" : [
+      {
+        "name" : "big-echo-no-limit",
+        "operation" : "expand",
+        "request" : "big/expand-no-limit-parameters.json",
+        "response" : "big/expand-no-limit-outcome.json"
+      },
+      {
+        "name" : "big-echo-zero-fifty-limit",
+        "operation" : "expand",
+        "request" : "big/expand-zero-fifty-limit-parameters.json",
+        "response" : "big/expand-zero-fifty-limit-valueset.json"
+      },
+      {
+        "name" : "big-echo-fifty-fifty-limit",
+        "operation" : "expand",
+        "request" : "big/expand-fifty-fifty-limit-parameters.json",
+        "response" : "big/expand-fifty-fifty-limit-valueset.json"
+      }       
+    ]
   }],
-  "todo" : "big code system (incomplete), extensions, incomplete code systems, inactive/abstract, filter = notSelectable",
+  "todo" : "incomplete code systems, inactive/abstract, filter = notSelectable",
   "not-done" : [
     "At this point, the tests do not cover ConceptMap, nor do they test the http://hl7.org/fhir/tools/StructureDefinition-select-by-map.html extension"
   ]
