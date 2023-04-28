@@ -754,7 +754,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "This property must be an Array, not an Object"
+                "text": "The property subject  must be a JSON Array, not an Object (at List)"
               },
               "diagnostics": "[12,4]",
               "expression": [
@@ -1146,7 +1146,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "This property must be an Array, not an Object"
+                "text": "The property reasonCode  must be a JSON Array, not an Object (at Encounter)"
               },
               "diagnostics": "[25,4]",
               "expression": [
@@ -13450,7 +13450,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "This property must be an Array, not a Primitive property"
+                "text": "The property profile  must be a JSON Array, not a Primitive property (at CodeSystem.meta)"
               },
               "diagnostics": "[4,77]",
               "expression": [
@@ -29584,40 +29584,40 @@
       "explanation": "no slicing on root elements in profiles - check it's an error",
       "java": {
         "outcome": {
-          "resourceType": "OperationOutcome",
-          "issue": [
-            {
-              "severity": "error",
-              "code": "invariant",
-              "details": {
-                "text": "Rule sdf-20: 'No slicing on the root element' Failed"
-              },
-              "diagnostics": "[34,4]",
-              "expression": [
-                "StructureDefinition.differential"
-              ]
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "invariant",
+            "details" : {
+              "text" : "Rule sdf-20: 'No slicing on the root element' Failed"
             },
-            {
-              "severity": "error",
-              "code": "exception",
-              "details": {
-                "text": "Error generating Snapshot: Error: The profile has slicing at the root, which is illegal (this usually arises from a problem in the differential)"
-              },
-              "expression": [
-                "StructureDefinition"
-              ]
+            "diagnostics" : "[34,4]",
+            "expression" : ["StructureDefinition.differential"]
+          },
+          {
+            "severity" : "warning",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "Review the extension type: extensions should not have a context of Element unless it's really intended that they can be used anywhere"
             },
-            {
-              "severity": "error",
-              "code": "structure",
-              "details": {
-                "text": "Slicing is not allowed at the root of a profile"
-              },
-              "expression": [
-                "StructureDefinition.differential.element[0]"
-              ]
-            }
-          ]
+            "expression" : ["StructureDefinition.context[0]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "exception",
+            "details" : {
+              "text" : "Error generating Snapshot: Error: The profile has slicing at the root, which is illegal (this usually arises from a problem in the differential)"
+            },
+            "expression" : ["StructureDefinition"]
+          },
+          {
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "Slicing is not allowed at the root of a profile"
+            },
+            "expression" : ["StructureDefinition.differential.element[0]"]
+          }]
         }
       }
     },
