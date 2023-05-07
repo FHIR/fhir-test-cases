@@ -23,3 +23,7 @@ parameters, and conpare the outcomes. Some notes about comparisons:
 * for the purposes of comparison *for these tests*, array order never matters (nor does property order, of course)
 * Some fields are never the same between iterations. These fields contina $<{type}$ and get compared to the regex for the type instead 
 * We may consider adding additional json metadata/use of $$ to deal with reasonable variations between different tx servers
+
+The simplest way to execute these is to use the java validator:
+
+java -jar {validator} -txtests -source {root folder for this repo} -tx {server to test}
