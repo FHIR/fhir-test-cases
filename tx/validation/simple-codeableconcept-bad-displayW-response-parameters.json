@@ -5,6 +5,17 @@
     "valueCode" : "code1"
   },
   {
+    "name" : "codeableConcept",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://hl7.org/fhir/test/CodeSystem/version",
+        "version" : "1.0.0",
+        "code" : "code1",
+        "display" : "Display 1 (1.0)"
+      }]
+    }
+  },
+  {
     "name" : "display",
     "valueString" : "Display 1 (1.0)"
   },
@@ -13,12 +24,12 @@
     "resource" : {
       "resourceType" : "OperationOutcome",
       "issue" : [{
-        "severity" : "error",
+        "severity" : "warning",
         "code" : "invalid",
         "details" : {
           "text" : "Wrong Display Name 'Display 1X' for http://hl7.org/fhir/test/CodeSystem/version#code1 - should be 'Display 1 (1.0)' (for the language(s) '--')"
         },
-        "location" : ["code.display"]
+        "location" : ["CodeableConcept.coding[0].display"]
       }]
     }
   },
@@ -28,7 +39,7 @@
   },
   {
     "name" : "result",
-    "valueBoolean" : false
+    "valueBoolean" : true
   },
   {
     "name" : "system",
