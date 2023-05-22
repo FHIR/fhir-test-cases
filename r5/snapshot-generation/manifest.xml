@@ -70,7 +70,7 @@
   <test gen="true" id="t14" description="see task 8742"/>
   <test gen="true" id="t15" description="complex extensions with children"/>
   <test gen="true" id="t15a" fail="true" description="Unknown extension" allow="none"/>
-  <test gen="true" id="t16" debug="true" description="extending a complex extension&#39;s children in derived profile"/>
+  <test gen="true" id="t16" debug="false" description="extending a complex extension&#39;s children in derived profile"/>
   <test gen="true" id="t17" description="use a modifier extension instead">
     <rule text="Patient.modifierExtension must be sliced" fhirpath="fixture('t17-output').snapshot.element.where(path = 'Patient.modifierExtension').first().slicing.exists()"/>
     <rule text="Patient.modifierExtension first must not have a slice name" fhirpath="fixture('t17-output').snapshot.element.where(path = 'Patient.modifierExtension').first().sliceName.empty()"/>
@@ -210,6 +210,7 @@
   <test gen="true" id="pat-msonslice1" register="pat-msonslice1-slicer" description="base slice, then must support on unsliced as well as sliced"/>
   <test gen="true" id="obs-badfixed" fail="true" reason="fixed value type mismatch" description="fixed value type is wrong"/>
   <test gen="true" id="obs-badpattern" fail="true" reason="pattern value type mismatch" description="pattern value type is wrong"/>
+  <test gen="true" id="medstmt-au" debug="false" description="complex slicing and then addition of more slices, layer 1"/>
   <test gen="true" id="medstmt-nsw" register="medstmt-au" description="complex slicing and then addition of more slices"/>
   <test gen="true" id="ca-patient" description="caused a failure in recursion on type slice procesing"/>
   <test gen="true" sort="true" register="ext-sort-issue-base" id="ext-sort-issue" description="sorting this extension differential caused it to get out of order"/>
@@ -259,4 +260,6 @@
   <test gen="true" id="comp-deep" debug="false" description="Deep content references in Composition"/> 
   <test gen="true" id="ext-ccuk" fail="true" reason="trying to slice on the root" description="Unexpected Issues processing extension profile"/> 
   <test gen="true" id="logical-base-child" register="logical-base-parent" description="constraining when specialising"/> 
+  <test gen="true" id="obs-perf" description="Observation.performer generating short description, definition and comments wrong (https://chat.fhir.org/#narrow/stream/179252-IG-creation/topic/Broken.20snapshot.20generation)"/> 
+  <test gen="true" id="pat-cm" debug="false" description="Claimed issue with sparse differential interpretation (https://chat.fhir.org/#narrow/stream/215610-shorthand/topic/.E2.9C.94.20Mapping.20value.5Bx.5D.20in.20extension.20elements)"/> 
 </snapshot-generation-tests>

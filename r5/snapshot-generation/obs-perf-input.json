@@ -1,0 +1,422 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "pa-observation-base",
+  "url" : "http://hl7.org/fhir/us/physical-activity/StructureDefinition/pa-observation-base",
+  "version" : "current",
+  "name" : "PAObservationBase",
+  "title" : "PA Measure Base",
+  "status" : "active",
+  "date" : "2023-05-06T20:51:30+00:00",
+  "publisher" : "HL7 International - Patient Care WG",
+  "contact" : [
+    {
+      "name" : "HL7 International - Patient Care WG",
+      "telecom" : [
+        {
+          "system" : "url",
+          "value" : "http://www.hl7.org/Special/committees/patientcare"
+        }
+      ]
+    }
+  ],
+  "description" : "A profile describing base requirements for all primary physical activity observations.",
+  "jurisdiction" : [
+    {
+      "coding" : [
+        {
+          "system" : "urn:iso:std:iso:3166",
+          "code" : "US"
+        }
+      ]
+    }
+  ],
+  "fhirVersion" : "4.0.1",
+  "mapping" : [
+    {
+      "identity" : "workflow",
+      "uri" : "http://hl7.org/fhir/workflow",
+      "name" : "Workflow Pattern"
+    },
+    {
+      "identity" : "sct-concept",
+      "uri" : "http://snomed.info/conceptdomain",
+      "name" : "SNOMED CT Concept Domain Binding"
+    },
+    {
+      "identity" : "v2",
+      "uri" : "http://hl7.org/v2",
+      "name" : "HL7 v2 Mapping"
+    },
+    {
+      "identity" : "rim",
+      "uri" : "http://hl7.org/v3",
+      "name" : "RIM Mapping"
+    },
+    {
+      "identity" : "w5",
+      "uri" : "http://hl7.org/fhir/fivews",
+      "name" : "FiveWs Pattern Mapping"
+    },
+    {
+      "identity" : "sct-attr",
+      "uri" : "http://snomed.org/attributebinding",
+      "name" : "SNOMED CT Attribute Binding"
+    }
+  ],
+  "kind" : "resource",
+  "abstract" : true,
+  "type" : "Observation",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [
+      {
+        "id" : "Observation",
+        "path" : "Observation",
+        "definition" : "A profile describing base requirements for all primary physical activity observations."
+      },
+      {
+        "id" : "Observation.implicitRules",
+        "path" : "Observation.implicitRules",
+        "max" : "0"
+      },
+      {
+        "id" : "Observation.modifierExtension",
+        "path" : "Observation.modifierExtension",
+        "max" : "0"
+      },
+      {
+        "id" : "Observation.status",
+        "path" : "Observation.status",
+        "short" : "final | amended | corrected | entered-in-error",
+        "comment" : "In the vast majority of cases, the status value will be 'final'.  Systems are not expected to distinguish amended and corrected results.",
+        "mustSupport" : true,
+        "binding" : {
+          "strength" : "required",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/observation-status"
+        }
+      },
+      {
+        "id" : "Observation.category",
+        "path" : "Observation.category",
+        "slicing" : {
+          "discriminator" : [
+            {
+              "type" : "pattern",
+              "path" : "$this"
+            }
+          ],
+          "rules" : "open"
+        },
+        "min" : 1
+      },
+      {
+        "id" : "Observation.category:SocialHistory",
+        "path" : "Observation.category",
+        "sliceName" : "SocialHistory",
+        "min" : 1,
+        "max" : "1",
+        "patternCodeableConcept" : {
+          "coding" : [
+            {
+              "system" : "http://terminology.hl7.org/CodeSystem/observation-category",
+              "code" : "social-history"
+            }
+          ]
+        },
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.category:PhysicalActivity",
+        "path" : "Observation.category",
+        "sliceName" : "PhysicalActivity",
+        "min" : 0,
+        "max" : "1",
+        "patternCodeableConcept" : {
+          "coding" : [
+            {
+              "system" : "http://hl7.org/fhir/us/physical-activity/CodeSystem/pa-temporary-codes",
+              "code" : "PhysicalActivity"
+            }
+          ]
+        }
+      },
+      {
+        "id" : "Observation.code",
+        "path" : "Observation.code",
+        "mustSupport" : true,
+        "binding" : {
+          "strength" : "preferred",
+          "valueSet" : "http://hl7.org/fhir/ValueSet/observation-codes"
+        }
+      },
+      {
+        "id" : "Observation.subject",
+        "path" : "Observation.subject",
+        "min" : 1,
+        "type" : [
+          {
+            "code" : "Reference",
+            "profile" : [
+              "http://hl7.org/fhir/us/physical-activity/StructureDefinition/reference-rest"
+            ],
+            "targetProfile" : [
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"
+            ]
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.focus",
+        "path" : "Observation.focus",
+        "max" : "0"
+      },
+      {
+        "id" : "Observation.effective[x]",
+        "path" : "Observation.effective[x]",
+        "slicing" : {
+          "discriminator" : [
+            {
+              "type" : "type",
+              "path" : "$this"
+            }
+          ],
+          "ordered" : false,
+          "rules" : "open"
+        },
+        "min" : 1,
+        "type" : [
+          {
+            "code" : "dateTime"
+          },
+          {
+            "code" : "Period"
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.effectiveDateTime",
+        "extension" : [
+          {
+            "url" : "http://hl7.org/fhir/StructureDefinition/minLength",
+            "valueInteger" : 10
+          }
+        ],
+        "path" : "Observation.effectiveDateTime",
+        "min" : 0,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "dateTime"
+          }
+        ]
+      },
+      {
+        "id" : "Observation.effectivePeriod",
+        "path" : "Observation.effectivePeriod",
+        "min" : 0,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "Period"
+          }
+        ]
+      },
+      {
+        "id" : "Observation.effectivePeriod.start",
+        "extension" : [
+          {
+            "url" : "http://hl7.org/fhir/StructureDefinition/minLength",
+            "valueInteger" : 10
+          }
+        ],
+        "path" : "Observation.effectivePeriod.start",
+        "min" : 1,
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.effectivePeriod.end",
+        "extension" : [
+          {
+            "url" : "http://hl7.org/fhir/StructureDefinition/minLength",
+            "valueInteger" : 10
+          }
+        ],
+        "path" : "Observation.effectivePeriod.end",
+        "min" : 1,
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.performer",
+        "path" : "Observation.performer",
+        "type" : [
+          {
+            "code" : "Reference",
+            "profile" : [
+              "http://hl7.org/fhir/us/physical-activity/StructureDefinition/reference-rest-or-logical"
+            ],
+            "targetProfile" : [
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient",
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner",
+              "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole",
+              "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+            ],
+            "_targetProfile" : [
+              {
+                "extension" : [
+                  {
+                    "url" : "http://hl7.org/fhir/StructureDefinition/elementdefinition-type-must-support",
+                    "valueBoolean" : true
+                  }
+                ]
+              },
+              {
+                "extension" : [
+                  {
+                    "url" : "http://hl7.org/fhir/StructureDefinition/elementdefinition-type-must-support",
+                    "valueBoolean" : true
+                  }
+                ]
+              },
+              null,
+              null
+            ]
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.value[x]",
+        "path" : "Observation.value[x]",
+        "slicing" : {
+          "discriminator" : [
+            {
+              "type" : "type",
+              "path" : "$this"
+            }
+          ],
+          "ordered" : false,
+          "rules" : "open"
+        },
+        "type" : [
+          {
+            "code" : "Quantity"
+          },
+          {
+            "code" : "CodeableConcept"
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.valueCodeableConcept",
+        "path" : "Observation.valueCodeableConcept",
+        "min" : 0,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "CodeableConcept"
+          }
+        ]
+      },
+      {
+        "id" : "Observation.valueQuantity",
+        "path" : "Observation.valueQuantity",
+        "min" : 0,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "Quantity",
+            "profile" : [
+              "http://hl7.org/fhir/StructureDefinition/SimpleQuantity"
+            ]
+          }
+        ]
+      },
+      {
+        "id" : "Observation.valueQuantity.value",
+        "path" : "Observation.valueQuantity.value",
+        "min" : 1,
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.valueQuantity.system",
+        "path" : "Observation.valueQuantity.system",
+        "patternUri" : "http://unitsofmeasure.org"
+      },
+      {
+        "id" : "Observation.valueQuantity.code",
+        "path" : "Observation.valueQuantity.code",
+        "min" : 1,
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.note",
+        "path" : "Observation.note",
+        "comment" : "...Comments allows supporting and qualifying information",
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.note.author[x]",
+        "path" : "Observation.note.author[x]",
+        "min" : 1,
+        "type" : [
+          {
+            "code" : "Reference",
+            "profile" : [
+              "http://hl7.org/fhir/us/physical-activity/StructureDefinition/reference-rest-or-logical"
+            ],
+            "targetProfile" : [
+              "http://hl7.org/fhir/StructureDefinition/Practitioner",
+              "http://hl7.org/fhir/StructureDefinition/Patient",
+              "http://hl7.org/fhir/StructureDefinition/RelatedPerson"
+            ],
+            "_targetProfile" : [
+              {
+                "extension" : [
+                  {
+                    "url" : "http://hl7.org/fhir/StructureDefinition/elementdefinition-type-must-support",
+                    "valueBoolean" : true
+                  }
+                ]
+              },
+              {
+                "extension" : [
+                  {
+                    "url" : "http://hl7.org/fhir/StructureDefinition/elementdefinition-type-must-support",
+                    "valueBoolean" : true
+                  }
+                ]
+              },
+              null
+            ]
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.note.time",
+        "path" : "Observation.note.time",
+        "min" : 1,
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.note.text",
+        "path" : "Observation.note.text",
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.bodySite",
+        "path" : "Observation.bodySite",
+        "max" : "0"
+      },
+      {
+        "id" : "Observation.specimen",
+        "path" : "Observation.specimen",
+        "max" : "0"
+      }
+    ]
+  }
+}
