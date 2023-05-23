@@ -30338,7 +30338,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Profile http://example.org/reslicedextension/StructureDefinition/MyAuditEventProfile|0.1.0, Element matches more than one slice - altid, altid/npi"
+                "text": "Profile http://example.org/reslicedextension/StructureDefinition/MyAuditEventProfile|0.1.0, Element matches more than one slice - altid/npi, altid/ssn"
               },
               "diagnostics": "[12,10]",
               "expression": [
@@ -30349,7 +30349,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Profile http://example.org/reslicedextension/StructureDefinition/MyAuditEventProfile|0.1.0, Element matches more than one slice - altid, altid/npi"
+                "text": "Profile http://example.org/reslicedextension/StructureDefinition/MyAuditEventProfile|0.1.0, Element matches more than one slice - altid/npi, altid/ssn"
               },
               "diagnostics": "[19,10]",
               "expression": [
@@ -30360,22 +30360,174 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Profile http://example.org/reslicedextension/StructureDefinition/MyAuditEventProfile|0.1.0, Element matches more than one slice - altid, altid/ssn"
+                "text": "AuditEvent.agent.extension:altid/npi: max allowed = 1, but found 2 (from http://example.org/reslicedextension/StructureDefinition/MyAuditEventProfile|0.1.0)"
               },
-              "diagnostics": "[12,10]",
+              "diagnostics": "[10,6]",
               "expression": [
-                "AuditEvent.agent[0].extension[0]"
+                "AuditEvent.agent[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "value",
+              "details": {
+                "text": "Value is 'http://hl7.org/fhir/sid/us-ssn' but must be 'http://hl7.org/fhir/sid/us-npi'"
+              },
+              "diagnostics": "[21,55]",
+              "expression": [
+                "AuditEvent.agent[0].extension[1].value.ofType(Identifier).system"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "reslicing-good-extensions",
+      "file": "reslicing-good-extensions-instance.json",
+      "description": "See https://chat.fhir.org/#narrow/stream/179252-IG-creation/topic/Reslicing.20extensions.20causes.20validator.20errors",
+      "version": "5.0",
+      "profiles": [
+        "reslicing-good-extensions-profile.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      }
+    },
+    {
+      "name": "profile-illegal-elements",
+      "file": "profile-illegal-elements.xml",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "invariant",
+              "details": {
+                "text": "Rule cnl-0: 'Name should be usable as an identifier for the module by machine processing applications such as code generation' Failed"
+              },
+              "diagnostics": "[1,50]",
+              "expression": [
+                "StructureDefinition"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "not-found",
+              "details": {
+                "text": "The element definition for Patient.identifier has a property meaningWhenMissing which is not allowed in a profile"
+              },
+              "expression": [
+                "StructureDefinition.differential.element[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "profile-missing-elements",
+      "file": "profile-missing-elements.xml",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "invariant",
+              "details": {
+                "text": "Rule sdf-0: 'Name should be usable as an identifier for the module by machine processing applications such as code generation' Failed"
+              },
+              "diagnostics": "[1,50]",
+              "expression": [
+                "StructureDefinition"
               ]
             },
             {
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Profile http://example.org/reslicedextension/StructureDefinition/MyAuditEventProfile|0.1.0, Element matches more than one slice - altid, altid/ssn"
+                "text": "ElementDefinition.slicing.discriminator.path: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/ElementDefinition|4.0.1)"
               },
-              "diagnostics": "[19,10]",
+              "diagnostics": "[18,24]",
               "expression": [
-                "AuditEvent.agent[0].extension[1]"
+                "StructureDefinition.differential.element[0].slicing.discriminator[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "code-invalid",
+              "details": {
+                "text": "The value provided ('expression') is not in the value set 'DiscriminatorType' (http://hl7.org/fhir/ValueSet/discriminator-type|4.0.1), and a code is required from this value set) (error message = Unknown Code 'expression' in the system 'http://hl7.org/fhir/discriminator-type'; The provided code http://hl7.org/fhir/discriminator-type#expression is not in the value set 'http://hl7.org/fhir/ValueSet/discriminator-type|4.0.1')"
+              },
+              "diagnostics": "[19,37]",
+              "expression": [
+                "StructureDefinition.differential.element[0].slicing.discriminator[0].type"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "ElementDefinition.slicing.discriminator.path: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/ElementDefinition|4.0.1)"
+              },
+              "diagnostics": "[21,24]",
+              "expression": [
+                "StructureDefinition.differential.element[0].slicing.discriminator[1]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "exception",
+              "details": {
+                "text": "Error generating Snapshot: Unknown DiscriminatorType code 'expression' (this usually arises from a problem in the differential)"
+              },
+              "expression": [
+                "StructureDefinition"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "obs-de",
+      "file": "obs-de.json",
+      "version" : "4.0",
+      "description" : "see https://github.com/hapifhir/org.hl7.fhir.core/issues/1270",
+      "packages": [
+        "kbv.basis#1.2.0",
+        "de.basisprofil.r4#0.9.13",
+        "de.medizininformatikinitiative.kerndatensatz.diagnose#1.0.4"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "None of the codings provided are in the value set 'IdentifierType' (http://hl7.org/fhir/ValueSet/identifier-type|4.0.1), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://terminology.hl7.org/CodeSystem/v2-0203#RI)"
+              },
+              "diagnostics": "[12,8]",
+              "expression": [
+                "Observation.identifier[0].type"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "structure",
+              "details": {
+                "text": "Profile reference 'https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_DIGA_Observation_Body_Weight|1.0.0' has not been checked because it is unknown, and the validator is set to not fetch unknown profiles"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "Observation.meta.profile[0]"
               ]
             }
           ]
