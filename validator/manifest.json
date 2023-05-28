@@ -16404,7 +16404,7 @@
                 "severity": "warning",
                 "code": "business-rule",
                 "details": {
-                  "text": "The code something is not valid in the system http://something/something"
+                  "text": "The code 'something' is not valid in the system http://something/something"
                 },
                 "expression": [
                   "ValueSet.compose[0].include[0].concept[0]"
@@ -16457,7 +16457,7 @@
               "severity": "warning",
               "code": "business-rule",
               "details": {
-                "text": "The code something is not valid in the system http://something/something"
+                "text": "The code 'something' is not valid in the system http://something/something"
               },
               "expression": [
                 "ValueSet.compose[0].include[0].concept[0]"
@@ -16504,7 +16504,7 @@
               "severity": "warning",
               "code": "business-rule",
               "details": {
-                "text": "The code something is not valid in the system http://something/something"
+                "text": "The code 'something' is not valid in the system http://something/something"
               },
               "expression": [
                 "ValueSet.compose[0].include[0].concept[0]"
@@ -17499,7 +17499,7 @@
               "severity": "warning",
               "code": "business-rule",
               "details": {
-                "text": "The code 1 is not valid in the system http://snomed.info/sct"
+                "text": "The code '1' is not valid in the system http://snomed.info/sct"
               },
               "expression": [
                 "ValueSet.compose[0].include[0].concept[0]"
@@ -17519,7 +17519,7 @@
               "severity": "warning",
               "code": "business-rule",
               "details": {
-                "text": "The code 2 is not valid in the system http://snomed.info/sct"
+                "text": "The code '2' is not valid in the system http://snomed.info/sct"
               },
               "expression": [
                 "ValueSet.compose[0].include[0].concept[1]"
@@ -29589,20 +29589,10 @@
               "severity": "error",
               "code": "exception",
               "details": {
-                "text": "Error generating Snapshot: Error: The profile has slicing at the root, which is illegal (this usually arises from a problem in the differential)"
+                "text": "Error generating Snapshot: Error: The profile has slicing at the root ('Extension'), which is illegal (this usually arises from a problem in the differential)"
               },
               "expression": [
                 "StructureDefinition"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "structure",
-              "details": {
-                "text": "Slicing is not allowed at the root of a profile"
-              },
-              "expression": [
-                "StructureDefinition.differential.element[0]"
               ]
             }
           ]
@@ -30502,7 +30492,39 @@
       "packages": [
         "kbv.basis#1.2.0",
         "de.basisprofil.r4#0.9.13",
-        "de.medizininformatikinitiative.kerndatensatz.diagnose#1.0.4"
+        "de.gevko.emdaf#1.2.0",
+        "kbv.mio.diga#1.0.0-festlegung"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "None of the codings provided are in the value set 'IdentifierType' (http://hl7.org/fhir/ValueSet/identifier-type|4.0.1), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://terminology.hl7.org/CodeSystem/v2-0203#RI)"
+              },
+              "diagnostics": "[12,8]",
+              "expression": [
+                "Observation.identifier[0].type"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "obs-de-notx",
+      "file": "obs-de.json",
+      "version": "4.0",
+      "no-tx": "true",
+      "description": "see https://github.com/hapifhir/org.hl7.fhir.core/issues/1270",
+      "packages": [
+        "kbv.basis#1.2.0",
+        "de.basisprofil.r4#0.9.13",
+        "de.gevko.emdaf#1.2.0",
+        "kbv.mio.diga#1.0.0-festlegung"
       ],
       "java": {
         "outcome": {
@@ -30521,13 +30543,249 @@
             },
             {
               "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "Error validating code: running without terminology services"
+              },
+              "diagnostics": "[29,8]",
+              "expression": [
+                "Observation.code.coding[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "Error validating code: running without terminology services"
+              },
+              "diagnostics": "[48,8]",
+              "expression": [
+                "Observation.code.coding[1]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "Error validating code: running without terminology services"
+              },
+              "diagnostics": "[78,4]",
+              "expression": [
+                "Observation.value.ofType(Quantity)"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "Error validating code: running without terminology services"
+              },
+              "diagnostics": "[96,8]",
+              "expression": [
+                "Observation.bodySite.coding[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "code-invalid",
+              "details": {
+                "text": "The value provided ([http://snomed.info/sct#27113001]) could not be validated in the absence of a terminology server"
+              },
+              "diagnostics": "[29,8]",
+              "expression": [
+                "Observation.code.coding[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "code-invalid",
+              "details": {
+                "text": "The value provided ([http://loinc.org#29463-7]) could not be validated in the absence of a terminology server"
+              },
+              "diagnostics": "[48,8]",
+              "expression": [
+                "Observation.code.coding[1]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "code-invalid",
+              "details": {
+                "text": "The value provided ([http://unitsofmeasure.org#kg]) could not be validated in the absence of a terminology server"
+              },
+              "diagnostics": "[78,4]",
+              "expression": [
+                "Observation.value.ofType(Quantity)"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "code-invalid",
+              "details": {
+                "text": "The value provided ('kg') could not be validated in the absence of a terminology server"
+              },
+              "diagnostics": "[82,17]",
+              "expression": [
+                "Observation.value.ofType(Quantity).code"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "attachment-tx",
+      "file": "parameters-attachment.json",
+      "version": "4.0",
+      "description": "see https://github.com/hapifhir/org.hl7.fhir.core/issues/1248",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      }
+    },
+    {
+      "name": "attachment-no-tx",
+      "file": "parameters-attachment.json",
+      "version": "4.0",
+      "no-tx": "true",
+      "description": "see https://github.com/hapifhir/org.hl7.fhir.core/issues/1248",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "code-invalid",
+              "details": {
+                "text": "The value provided ('application/octet-stream') could not be validated in the absence of a terminology server"
+              },
+              "diagnostics": "[8,51]",
+              "expression": [
+                "Parameters.parameter[0].value.ofType(Attachment).contentType"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "profile-patient-op1",
+      "file": "profile-patient-op1.xml",
+      "version": "4.0",
+      "profiles": [
+        "profile-patient-op-base.xml"
+      ],
+      "description": "Obligation Profile #1",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Profile reference 'https://fhir.kbv.de/StructureDefinition/KBV_PR_MIO_DIGA_Observation_Body_Weight|1.0.0' has not been checked because it is unknown, and the validator is set to not fetch unknown profiles"
+                "text": "The element 'Patient.deceased[x]' has a property 'min' which is not allowed in Obligation profiles"
               },
-              "diagnostics": "[1,2]",
               "expression": [
-                "Observation.meta.profile[0]"
+                "StructureDefinition.differential.element[1].min[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "profile-patient-op2",
+      "file": "profile-patient-op2.xml",
+      "version": "4.0",
+      "profiles": [
+        "profile-patient-op-base.xml"
+      ],
+      "description": "Obligation Profile #2",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "The extension http://something is unknown, and not allowed here"
+              },
+              "diagnostics": "[25,41]",
+              "expression": [
+                "StructureDefinition.differential.element[1].extension[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "The element 'Patient.deceased[x]' has a property 'extension#http://something' which is not allowed in Obligation profiles"
+              },
+              "expression": [
+                "StructureDefinition.differential.element[1].extension[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "The element 'Patient.maritalStatus' has a different binding strength ('example') from the base ('extensible') which is not allowed in Obligation profiles"
+              },
+              "expression": [
+                "StructureDefinition.differential.element[2].binding[0].strength[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "The element 'Patient.maritalStatus' has a binding property 'description' which is not allowed in Obligation profiles"
+              },
+              "expression": [
+                "StructureDefinition.differential.element[2].binding[0].description[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "profile-patient-op3",
+      "file": "profile-patient-op3.xml",
+      "version": "4.0",
+      "profiles": [
+        "profile-patient-op-base.xml",
+        "profile-patient-op1.xml",
+        "profile-patient-op2.xml",
+        "profile-patient-op2a.xml",
+        "profile-repeated-type.xml"
+      ],
+      "description": "Obligation Profile that inherits from #1 and #2",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "The profile 'http://hl7.org/fhir/test/StructureDefinition/profile-repeated-type' is not marked as an obligation profile"
+              },
+              "expression": [
+                "StructureDefinition.extension[2]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "The profile 'http://hl7.org/fhir/tests/StructureDefinition/patient-op2a' has a different base 'http://hl7.org/fhir/StructureDefinition/Patient' from that expected 'http://hl7.org/fhir/tests/StructureDefinition/patient-op-base'"
+              },
+              "expression": [
+                "StructureDefinition.extension[3]"
               ]
             }
           ]
