@@ -37,16 +37,16 @@ need to conform to the following requirements:
   * The server SHOULD return a x-caused-by-unknown-system parameter for each code system it did not support
 
 The following extensions should be supported:
-* http://hl7.org/fhir/StructureDefinition/valueset-deprecated - populate if code system concept is deprecated
 * http://hl7.org/fhir/StructureDefinition/codesystem-alternate - if code system has alternate codes
 * http://hl7.org/fhir/StructureDefinition/codesystem-conceptOrder - if code system has order
 * http://hl7.org/fhir/StructureDefinition/codesystem-label - if code system supports 'labels'
-* http://hl7.org/fhir/StructureDefinition/coding-sctdescid - 
-* http://hl7.org/fhir/StructureDefinition/itemWeight - 
-* http://hl7.org/fhir/StructureDefinition/rendering-style - 
-* http://hl7.org/fhir/StructureDefinition/rendering-xhtml - 
-* http://hl7.org/fhir/StructureDefinition/valueset-concept-definition - 
-* http://hl7.org/fhir/StructureDefinition/valueset-deprecated - 
-* http://hl7.org/fhir/StructureDefinition/valueset-supplement - 
-* http://hl7.org/fhir/StructureDefinition/valueset-label - 
-* http://hl7.org/fhir/StructureDefinition/valueset-conceptOrder - 
+* http://hl7.org/fhir/StructureDefinition/coding-sctdescid - if sct is in scope (exact use cases need discussion)
+* http://hl7.org/fhir/StructureDefinition/itemWeight - echo in value set if defined in code system or value set
+* http://hl7.org/fhir/StructureDefinition/rendering-style -  echo in value set if defined in code system or value set
+* http://hl7.org/fhir/StructureDefinition/rendering-xhtml -  echo in value set if defined in code system or value set
+* http://hl7.org/fhir/StructureDefinition/valueset-concept-definition - populate if requested in expansion request
+* http://hl7.org/fhir/StructureDefinition/valueset-deprecated - populate if code system concept is deprecated
+* http://hl7.org/fhir/StructureDefinition/valueset-supplement - check for this, blow up if supplement is properly supported
+* http://hl7.org/fhir/StructureDefinition/valueset-label - echo in value set if defined in code system or value set
+* http://hl7.org/fhir/StructureDefinition/valueset-conceptOrder - echo in value set if defined in code system or value set
+
