@@ -11,25 +11,28 @@ that provides support for a specific set of code systems.
 All systems, whether they only support a their own code systems or not, 
 need to conform to the following requirements:
 
-* The server SHALL support the txResource parameter for passing related 
+* The server SHALL support the [tx-resource](https://jira.hl7.org/browse/FHIR-33944) parameter for passing related 
   value sets, concept maps, naming systems, code system supplements and if relevant, code systems
+  * Which kind of resources the server accepts in this parameter depends on which other kind of functionality that the server implements, but at a minimum, the server SHALL support passing value sets in this parameter, for passing related valuesets using ValueSet.compose.include.valueSet
 
-* The server SHOULD support the cache-id parameter 
+* The server SHOULD support the [cache-id](https://jira.hl7.org/browse/FHIR-33946) parameter 
 
-* The server SHALL support supplements for the purposes of designations in different langauges
+* The server SHALL support supplements for the purposes of designations in different languages
+  * Clarification: Servers SHALL not ignore supplements; if they don't support a relevant supplement, they SHALL return an error. 
+  * Whether servers actually accept supplements for the purposes of designations is a matter for negotiation with the server's relevant user base and whether there are other arrangements in place for supporting translation (e.g. SNOMED CT, LOINC)
 
 * For the expand operation:
   * The server SHALL support the count parameter (offset is used, but will always be 0)
-  * The server SHOULD return heirarchical expansions when possible (this is not a technical requirement, but comes up as important to authors)
+  * The server SHOULD return hierarchical expansions when possible (this is not a technical requirement, but comes up as important to authors)
   * The server SHALL support system-version, check-system-version, and force-system-version
   * The server SHALL echo all parameters (including assumed values) in the expansion parameters, along with all versions of code systems used (in 'version')
   * The server SHALL Support language correctly (both displayLanguage and accept-language header)
-  * The server SHALL support the excludeNested, includeDesignations, activeOnly, includeDefinition, property parameters
+  * The server SHALL support the excludeNested, includeDesignations, activeOnly, includeDefinition and property parameters
 
 
 * For the validate-code operation:
   * The server SHALL support validating code+system(+version)(+display), Coding, and CodeableConcept
-  * The server SHALL support the mode/valueSetMode parameter
+  * The server SHALL support the [mode/valueSetMode](https://jira.hl7.org/browse/FHIR-41229) parameter
   * The server SHALL Support language correctly (both displayLanguage and accept-language header)
   * The server SHALL support the implySystem parameter
   * The server SHALL return an issues parameter 
@@ -50,3 +53,6 @@ The following extensions should be supported:
 * http://hl7.org/fhir/StructureDefinition/valueset-label - echo in value set if defined in code system or value set
 * http://hl7.org/fhir/StructureDefinition/valueset-conceptOrder - echo in value set if defined in code system or value set
 
+Note that some of these extensions may be supported by rejecting instances that contain them, depending on the 
+specific use cases that the server supports. E.g. if the server does not support externally derived code systems 
+then the code system extensions are not relevant.
