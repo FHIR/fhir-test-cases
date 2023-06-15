@@ -1,0 +1,87 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "pqcmc-quality-specification2",
+  "url": "http://example.com/fhir/example/StructureDefinition/pqcmc-quality-specification2",
+  "version": "1.0.0",
+  "name": "QualitySpecification2",
+  "title": "Quality Specification",
+  "status": "active",
+  "description": "A quality specification is for a drug product or drug substance (excipient, API or raw material).",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "PlanDefinition",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/PlanDefinition",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "PlanDefinition.identifier",
+        "path": "PlanDefinition.identifier",
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "PlanDefinition.version",
+        "path": "PlanDefinition.version",
+        "short": "Specification Version",
+        "definition": "The alphanumeric text assigned by the sponsor to a particular edition of a specification. [Source: SME Defined].coding\nExamples: 2.1, 13.2, ST1, 00001, 00002, &lt;companyname&gt;001, etc.\nNote: This value should be unique across all specifications for a given material, not just those with the same name",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "PlanDefinition.title",
+        "path": "PlanDefinition.title",
+        "short": "Specification Title",
+        "definition": "The textual identification for the specification. [Source: SME Defined].coding\n Example: &lt;drug name&gt; 75 mg chewable tablets\n Note: This may include the name of the drug substance, product or the raw material/excipients.",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "PlanDefinition.subtitle",
+        "path": "PlanDefinition.subtitle",
+        "short": "Specification Subtitle",
+        "definition": "An additional textual identification for the specification [Source: SME Defined].coding.",
+        "min": 0,
+        "mustSupport": true
+      },
+      {
+        "id": "PlanDefinition.status",
+        "path": "PlanDefinition.status",
+        "mustSupport": true
+      },
+      {
+        "id": "PlanDefinition.subject[x]",
+        "path": "PlanDefinition.subject[x]",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
+        "min": 1
+      },
+      {
+        "id": "PlanDefinition.subject[x]:subjectReference",
+        "path": "PlanDefinition.subject[x]",
+        "sliceName": "subjectReference",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/MedicinalProductDefinition",
+              "http://hl7.org/fhir/StructureDefinition/SubstanceDefinition"
+            ]
+          }
+        ],
+        "mustSupport": true
+      }
+    ]
+  }
+}
