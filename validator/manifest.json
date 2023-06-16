@@ -30793,6 +30793,323 @@
       }
     },
     {
+      "name": "q-base",
+      "file": "q-base.json",
+      "version": "5.0",
+      "description": "Base Questionnaire",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      }
+    },
+    {
+      "name": "q-derived-complies",
+      "file": "q-derived-complies.json",
+      "version": "5.0",
+      "supporting": [
+        "q-base.json"
+      ],
+      "description": "Derived Questionnaire",
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "The extension http://hl7.org/fhir/StructureDefinition/questionnaire-derivationType is not allowed to be used at this point (allowed = e:Questionnaire.item; this element is [Questionnaire.derivedFrom, canonical])"
+            },
+            "diagnostics" : "[6,67]",
+            "expression" : ["Questionnaire.derivedFrom[0]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "The Extension 'http://hl7.org/fhir/StructureDefinition/questionnaire-derivationType' definition allows for the types [CodeableConcept] but found type Coding"
+            },
+            "diagnostics" : "[8,6]",
+            "expression" : ["Questionnaire.derivedFrom[0].extension[0]"]
+          },
+          {
+            "severity" : "warning",
+            "code" : "code-invalid",
+            "details" : {
+              "text" : "No code provided, and a code should be provided from the value set 'Questionnaire Derivation Type Valueset' (http://hl7.org/fhir/ValueSet/questionnaire-derivationType|1.0.0)"
+            },
+            "diagnostics" : "[10,8]",
+            "expression" : ["Questionnaire.derivedFrom[0].extension[0].value.ofType(Coding)"]
+          },
+          {
+            "severity" : "error",
+            "code" : "not-supported",
+            "details" : {
+              "text" : "This element is not allowed by the profile http://hl7.org/fhir/StructureDefinition/CodeableConcept|5.0.0"
+            },
+            "diagnostics" : "[11,70]",
+            "expression" : ["Questionnaire.derivedFrom[0].extension[0].value.ofType(Coding).system"]
+          },
+          {
+            "severity" : "error",
+            "code" : "not-supported",
+            "details" : {
+              "text" : "This element is not allowed by the profile http://hl7.org/fhir/StructureDefinition/CodeableConcept|5.0.0"
+            },
+            "diagnostics" : "[12,32]",
+            "expression" : ["Questionnaire.derivedFrom[0].extension[0].value.ofType(Coding).code"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'a1' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' has the type 'string', and this cannot change to 'integer'"
+            },
+            "diagnostics" : "[19,23]",
+            "expression" : ["Questionnaire.item[0].type"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'a1' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' does not repeat, so it cannot repeat here"
+            },
+            "diagnostics" : "[21,21]",
+            "expression" : ["Questionnaire.item[0].repeats"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'a2' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' has the type 'display', and this cannot change to 'string'"
+            },
+            "diagnostics" : "[25,22]",
+            "expression" : ["Questionnaire.item[1].type"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'b1' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' does not repeat, so it cannot repeat here"
+            },
+            "diagnostics" : "[36,23]",
+            "expression" : ["Questionnaire.item[2].item[0].repeats"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'b1' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' is required, so it must be required here"
+            },
+            "diagnostics" : "[35,25]",
+            "expression" : ["Questionnaire.item[2].item[0].required"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'b1' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' does not have this answerOption, so it is not valid"
+            },
+            "diagnostics" : "[42,8]",
+            "expression" : ["Questionnaire.item[2].item[0].answerOption[1]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'b2' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' has the type 'date', and this cannot change to 'dateTime'"
+            },
+            "diagnostics" : "[51,26]",
+            "expression" : ["Questionnaire.item[2].item[1].type"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'b3' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' has the type 'boolean', and this cannot change to 'text'"
+            },
+            "diagnostics" : "[57,22]",
+            "expression" : ["Questionnaire.item[2].item[2].type"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'b3' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' is required, so it must be required here"
+            },
+            "diagnostics" : "[58,25]",
+            "expression" : ["Questionnaire.item[2].item[2].required"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'a4' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' has the type 'integer', and this cannot change to 'decimal'"
+            },
+            "diagnostics" : "[64,23]",
+            "expression" : ["Questionnaire.item[3].type"]
+          },
+          {
+            "severity" : "error",
+            "code" : "not-found",
+            "details" : {
+              "text" : "No item with linkId 'a5' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base'"
+            },
+            "expression" : ["Questionnaire.item[4]"]
+          }]
+        }
+      }
+    },
+    {
+      "name": "q-derived-extends",
+      "file": "q-derived-extends.json",
+      "version": "5.0",
+      "supporting": [
+        "q-base.json"
+      ],
+      "description": "Derived Questionnaire",
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "The extension http://hl7.org/fhir/StructureDefinition/questionnaire-derivationType is not allowed to be used at this point (allowed = e:Questionnaire.item; this element is [Questionnaire.derivedFrom, canonical])"
+            },
+            "diagnostics" : "[6,67]",
+            "expression" : ["Questionnaire.derivedFrom[0]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "The Extension 'http://hl7.org/fhir/StructureDefinition/questionnaire-derivationType' definition allows for the types [CodeableConcept] but found type Coding"
+            },
+            "diagnostics" : "[8,6]",
+            "expression" : ["Questionnaire.derivedFrom[0].extension[0]"]
+          },
+          {
+            "severity" : "warning",
+            "code" : "code-invalid",
+            "details" : {
+              "text" : "No code provided, and a code should be provided from the value set 'Questionnaire Derivation Type Valueset' (http://hl7.org/fhir/ValueSet/questionnaire-derivationType|1.0.0)"
+            },
+            "diagnostics" : "[10,8]",
+            "expression" : ["Questionnaire.derivedFrom[0].extension[0].value.ofType(Coding)"]
+          },
+          {
+            "severity" : "error",
+            "code" : "not-supported",
+            "details" : {
+              "text" : "This element is not allowed by the profile http://hl7.org/fhir/StructureDefinition/CodeableConcept|5.0.0"
+            },
+            "diagnostics" : "[11,70]",
+            "expression" : ["Questionnaire.derivedFrom[0].extension[0].value.ofType(Coding).system"]
+          },
+          {
+            "severity" : "error",
+            "code" : "not-supported",
+            "details" : {
+              "text" : "This element is not allowed by the profile http://hl7.org/fhir/StructureDefinition/CodeableConcept|5.0.0"
+            },
+            "diagnostics" : "[12,27]",
+            "expression" : ["Questionnaire.derivedFrom[0].extension[0].value.ofType(Coding).code"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'a1' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' has the type 'string', and this cannot change to 'integer'"
+            },
+            "diagnostics" : "[19,23]",
+            "expression" : ["Questionnaire.item[0].type"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'a1' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' does not repeat, so it cannot repeat here"
+            },
+            "diagnostics" : "[21,21]",
+            "expression" : ["Questionnaire.item[0].repeats"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'a2' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' has the type 'display', and this cannot change to 'string'"
+            },
+            "diagnostics" : "[25,22]",
+            "expression" : ["Questionnaire.item[1].type"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'b1' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' does not repeat, so it cannot repeat here"
+            },
+            "diagnostics" : "[36,23]",
+            "expression" : ["Questionnaire.item[2].item[0].repeats"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'b1' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' is required, so it must be required here"
+            },
+            "diagnostics" : "[35,25]",
+            "expression" : ["Questionnaire.item[2].item[0].required"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'b1' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' does not have this answerOption, so it is not valid"
+            },
+            "diagnostics" : "[42,8]",
+            "expression" : ["Questionnaire.item[2].item[0].answerOption[1]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'b2' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' has the type 'date', and this cannot change to 'dateTime'"
+            },
+            "diagnostics" : "[51,26]",
+            "expression" : ["Questionnaire.item[2].item[1].type"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'b3' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' has the type 'boolean', and this cannot change to 'text'"
+            },
+            "diagnostics" : "[57,22]",
+            "expression" : ["Questionnaire.item[2].item[2].type"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'b3' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' is required, so it must be required here"
+            },
+            "diagnostics" : "[58,25]",
+            "expression" : ["Questionnaire.item[2].item[2].required"]
+          },
+          {
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The item with linkId 'a4' found in questionnaire 'http://hl7.org/fhir/test/Questionnaire/q-base' has the type 'integer', and this cannot change to 'decimal'"
+            },
+            "diagnostics" : "[64,23]",
+            "expression" : ["Questionnaire.item[3].type"]
+          }]
+        }
+      }
+    },
+    {
       "name": "zzz",
       "file": "zzz.json",
       "description": "hack to close ups",
