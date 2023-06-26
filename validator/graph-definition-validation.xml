@@ -1,0 +1,64 @@
+<GraphDefinition xmlns="http://hl7.org/fhir" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../_IGs/davinci-crd/input-cache/schemas/R5/fhir-single.xsd">
+	<id value="bad-graph"/>
+	<url value="http://hl7.org/fhir/test/GraphDefinition/bad-graph"/>
+	<name value="BadGraph"/>
+	<status value="draft"/>
+	<description value="Graph with a bunch of validation issues"/>
+	<start value="foo"/>
+	<node>
+    <!-- Test invalid profile for resource -->
+    <nodeId value="practitioner"/>
+    <type value="Practitioner"/>
+    <profile value="http://hl7.org/fhir/us/core/StructureDefinition/us-core-allergyintolerance"/>
+  </node>
+  <node>
+    <nodeId value="practitionerRole"/>
+    <type value="Practitioner"/>
+  </node>
+  <node>
+    <nodeId value="organization"/>
+    <type value="Organization"/>
+  </node>
+  <node>
+    <nodeId value="patient"/>
+    <type value="Patient"/>
+  </node>
+  <link>
+    <!-- Test bad link target -->
+    <sourceId value="practitioner"/>
+    <targetId value="foo"/>
+  </link>
+  <link>
+    <!-- Test bad link source -->
+    <sourceId value="foo"/>
+    <targetId value="practitioner"/>
+  </link>
+  <link>
+    <!-- Test bad min cardinality-->
+    <min value="2"/>
+    <sourceId value="practitionerRole"/>
+    <path value="practitioner"/>
+    <targetId value="practitioner"/>
+  </link>
+  <link>
+    <!-- Test bad slice name -->
+    <sourceId value="practitionerRole"/>
+    <path value="practitioner"/>
+    <sliceName value="foo"/>
+    <targetId value="practitioner"/>
+  </link>
+  <link>
+    <!-- Test bad path -->
+    <sourceId value="practitionerRole"/>
+    <path value="foo"/>
+    <targetId value="practitioner"/>
+  </link>
+  <link>
+    <!-- Test min conflicts with max, bad search parameter -->
+    <min value="4"/>
+    <max value="2"/>
+    <sourceId value="organization"/>
+    <targetId value="practitionerRole"/>
+    <params value="organization={ref}&amp;foo=bar"/>
+  </link>
+</GraphDefinition>
