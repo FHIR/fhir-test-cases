@@ -31571,6 +31571,55 @@
       }
     },
     {
+      "name": "r3-sd-sd",
+      "file": "r3-sd-sd.json",
+      "version" : "3.0",
+      "description": "Testing error in FHIRPath implementation with DSTU3 data type definitions",
+      "java" : {
+        "outcome" : {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "The extension http://hl7.org/fhir/StructureDefinition/structuredefinition-codegen-super is unknown, and not allowed here"
+            },
+            "diagnostics" : "[74,8]",
+            "expression" : ["StructureDefinition.baseDefinition.extension[0]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "structure",
+            "details" : {
+              "text" : "Error in invariant 'sdf-15' with expression 'kind!='logical' implies snapshot.element.first().type.empty()': Error evaluating FHIRPath expression: The name 'kind' is not valid for any of the possible types: [http://hl7.org/fhir/StructureDefinition/StructureDefinition#StructureDefinition.snapshot] (@char 3)"
+            },
+            "diagnostics" : "[1256,12]",
+            "expression" : ["StructureDefinition.snapshot.element[42].constraint[1]"]
+          }]
+        }
+      }
+    },
+    {
+      "name": "vs-display-mixed",
+      "file": "vs-display-mixed.json",
+      "version" : "5.0",
+      "description": "Testing QA on value set definitions",
+      "java" : {
+        "outcome" : {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "information",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "This SNOMED-CT based include has some concepts with semantic tags (FSN terms) and some without (preferred terms) - check that this is what is intended"
+            },
+            "diagnostics" : "[31,6]",
+            "expression" : ["ValueSet.compose[0].include[0]"]
+          }]
+        }        
+      }
+    },
+    {
       "name": "zzz",
       "file": "zzz.json",
       "description": "hack to close ups",
