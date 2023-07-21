@@ -43,6 +43,7 @@ Any text enclosed within is ignored
 / 2</expression><output type="decimal">1</output></test>
 		<test name="testComment7" inputfile="patient-example.xml"><expression invalid="syntax">2 + 2 /</expression></test>
 		<test name="testComment8" inputfile="patient-example.xml"><expression invalid="syntax">2 + 2 /* not finished</expression></test>    
+		<test name="testComment9" inputfile="patient-example.xml"><expression>2 + /* inline $@%^+ * */ 2 = 4</expression><output type="boolean">true</output></test>    
   </group>
 	<group name="testMiscellaneousAccessorTests" description="Miscellaneous accessor tests">
 		<test name="testExtractBirthDate" description="Extract birthDate" inputfile="patient-example.xml" predicate="false">
@@ -219,7 +220,7 @@ Any text enclosed within is ignored
 		</test>
 
 		<!-- testBoolean(patient(), "Patient.name.given.first() = 'Peter'", true); -->
-		<test name="testLiteralString" inputfile="patient-example.xml">
+		<test name="testLiteralString1" inputfile="patient-example.xml">
 			<expression>Patient.name.given.first() = 'Peter'</expression>
 			<output type="boolean">true</output>
 		</test>
@@ -230,7 +231,7 @@ Any text enclosed within is ignored
 		<test name="testLiteralIntegerNegative1Invalid" inputfile="patient-example.xml"><expression invalid="execution">-1.convertsToInteger()</expression></test>
 		<test name="testLiteralIntegerMax" inputfile="patient-example.xml"><expression>2147483647.convertsToInteger()</expression><output type="boolean">true</output></test>
 
-		<test name="testLiteralString" inputfile="patient-example.xml"><expression>'test'.convertsToString()</expression><output type="boolean">true</output></test>
+		<test name="testLiteralString2" inputfile="patient-example.xml"><expression>'test'.convertsToString()</expression><output type="boolean">true</output></test>
 		<test name="testLiteralStringEscapes" inputfile="patient-example.xml"><expression>'\\\/\f\r\n\t\"\`\'\u002a'.convertsToString()</expression><output type="boolean">true</output></test>
 
 		<test name="testLiteralBooleanTrue" inputfile="patient-example.xml"><expression>true.convertsToBoolean()</expression><output type="boolean">true</output></test>
@@ -443,10 +444,10 @@ Any text enclosed within is ignored
 	</group>
 
 	<group name="testExists">
-		<test inputfile="patient-example.xml"><expression>Patient.name.exists()</expression><output type="boolean">true</output></test>
-		<test inputfile="patient-example.xml"><expression>Patient.name.exists(use = 'nickname')</expression><output type="boolean">false</output></test>
-		<test inputfile="patient-example.xml"><expression>Patient.name.exists(use = 'official')</expression><output type="boolean">true</output></test>
-		<test inputfile="patient-example.xml"><expression>Patient.maritalStatus.coding.exists(code = 'P' and system = 'http://terminology.hl7.org/CodeSystem/v3-MaritalStatus')
+		<test name="testExists1" inputfile="patient-example.xml"><expression>Patient.name.exists()</expression><output type="boolean">true</output></test>
+		<test name="testExists2" inputfile="patient-example.xml"><expression>Patient.name.exists(use = 'nickname')</expression><output type="boolean">false</output></test>
+		<test name="testExists3" inputfile="patient-example.xml"><expression>Patient.name.exists(use = 'official')</expression><output type="boolean">true</output></test>
+		<test name="testExists4" inputfile="patient-example.xml"><expression>Patient.maritalStatus.coding.exists(code = 'P' and system = 'http://terminology.hl7.org/CodeSystem/v3-MaritalStatus')
 			or Patient.maritalStatus.coding.exists(code = 'A' and system = 'http://terminology.hl7.org/CodeSystem/v3-MaritalStatus')</expression><output type="boolean">false</output></test>
 	</group>
 
@@ -635,7 +636,7 @@ Any text enclosed within is ignored
 		<test name="testIndexOf3" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.indexOf('')</expression><output type="integer">0</output></test>
 		<test name="testIndexOf5" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.indexOf({}).empty() = true</expression><output type="boolean">true</output></test>
 		<test name="testIndexOf4" inputfile="patient-example.xml"><expression>{}.indexOf('-').empty() = true</expression><output type="boolean">true</output></test>
-		<test name="testIndexOf5" inputfile="patient-example.xml"><expression>{}.indexOf({}).empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testIndexOf6" inputfile="patient-example.xml"><expression>{}.indexOf({}).empty() = true</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testSubstring">
@@ -646,7 +647,7 @@ Any text enclosed within is ignored
 		<test name="testSubstring5" inputfile="patient-example.xml"><expression>'12345'.substring(-1).empty()</expression><output type="boolean">true</output></test>
 		<test name="testSubstring7" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.substring(0, 12)</expression><output type="string">LogicalModel</output></test>
 		<test name="testSubstring8" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.substring(0, 'LogicalModel-Person'.indexOf('-'))</expression><output type="string">LogicalModel</output></test>
-		<test name="testSubstring4" inputfile="patient-example.xml"><expression>{}.substring(25).empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testSubstring9" inputfile="patient-example.xml"><expression>{}.substring(25).empty() = true</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testStartsWith">
@@ -699,13 +700,13 @@ Any text enclosed within is ignored
 		<test name="testMatchesSingleLineMode1"><expression>'A
 			B'.matches('A.*B')</expression><output type="boolean">true</output></test>
 		<test name="testMatchesWithinUrl1"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matches('library')</expression><output type="boolean">false</output></test>
-		<test name="testMatchesWithinUrl1"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matches('Library')</expression><output type="boolean">true</output></test>
-		<test name="testMatchesWithinUrl1"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matches('^Library$')</expression><output type="boolean">false</output></test>
+		<test name="testMatchesWithinUrl2"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matches('Library')</expression><output type="boolean">true</output></test>
+		<test name="testMatchesWithinUrl3"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matches('^Library$')</expression><output type="boolean">false</output></test>
 		<test name="testMatchesWithinUrl1a"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matches('.*Library.*')</expression><output type="boolean">true</output></test>
-		<test name="testMatchesWithinUrl2"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matches('Measure')</expression><output type="boolean">false</output></test>
+		<test name="testMatchesWithinUrl4"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matches('Measure')</expression><output type="boolean">false</output></test>
 		<test name="testMatchesFullWithinUrl1"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matchesFull('library')</expression><output type="boolean">false</output></test>
-		<test name="testMatchesFullWithinUrl1"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matchesFull('Library')</expression><output type="boolean">false</output></test>
-		<test name="testMatchesFullWithinUrl1"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matchesFull('^Library$')</expression><output type="boolean">false</output></test>
+		<test name="testMatchesFullWithinUrl3"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matchesFull('Library')</expression><output type="boolean">false</output></test>
+		<test name="testMatchesFullWithinUrl4"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matchesFull('^Library$')</expression><output type="boolean">false</output></test>
 		<test name="testMatchesFullWithinUrl1a"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matchesFull('.*Library.*')</expression><output type="boolean">true</output></test>
 		<test name="testMatchesFullWithinUrl2"><expression>'http://fhir.org/guides/cqf/common/Library/FHIR-ModelInfo|4.0.1'.matchesFull('Measure')</expression><output type="boolean">false</output></test>
 <!--		<test name="testMatchesUnicodeCharacters"><expression>'🔥🔥🔥'.matches('🔥+')</expression><output type="boolean">true</output></test> -->
@@ -763,10 +764,13 @@ Any text enclosed within is ignored
 		<test name="testTrim3" version="2.1.0" inputfile="patient-example.xml"><expression>' 123456 '.trim().length() = 6</expression><output type="boolean">true</output></test>
 		<test name="testTrim4" version="2.1.0" inputfile="patient-example.xml"><expression>'  '.trim().length() = 0</expression><output type="boolean">true</output></test>
 		<test name="testTrim5" version="2.1.0" inputfile="patient-example.xml"><expression>{}.trim().empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testTrim6" version="2.1.0" inputfile="patient-example.xml"><expression>'      '.trim() = ''</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testSplit">
-		<test name="testSplit" version="2.1.0" inputfile="patient-example.xml"><expression>'Peter,James,Jim,Peter,James'.split(',').count() = 5</expression><output type="boolean">true</output></test>
+		<test name="testSplit1" version="2.1.0" inputfile="patient-example.xml"><expression>'Peter,James,Jim,Peter,James'.split(',').count() = 5</expression><output type="boolean">true</output></test>
+		<test name="testSplit2" version="2.1.0" inputfile="patient-example.xml"><expression>'A,,C'.split(',').join(',') = 'A,,C'</expression><output type="boolean">true</output></test>
+		<test name="testSplit3" version="2.1.0" inputfile="patient-example.xml"><expression>'[stop]ONE[stop][stop]TWO[stop][stop][stop]THREE[stop][stop]'.split('[stop]').trace('n').count() = 7</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testJoin">
@@ -1300,7 +1304,7 @@ Any text enclosed within is ignored
 		<test name="testTypeA2" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[1].value.is(FHIR.integer)</expression><output type="boolean">true</output></test>
 		<test name="testTypeA3" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[2].value.is(FHIR.uuid)</expression><output type="boolean">true</output></test>
 		<test name="testTypeA4" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[2].value.is(FHIR.uri)</expression><output type="boolean">true</output></test>
-		<test name="testTypeA3" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[3].value.is(FHIR.decimal)</expression><output type="boolean">true</output></test>
+		<test name="testTypeA" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[3].value.is(FHIR.decimal)</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testConformsTo">
@@ -1311,16 +1315,27 @@ Any text enclosed within is ignored
 
 	<group name="LowBoundary">
 		<test name="LowBoundaryDecimal"><expression>1.587.lowBoundary(8)</expression><output>1.58650000</output></test>
+		<test name="LowBoundaryQuantity"><expression>1.587 'cm'.lowBoundary(8)</expression><output>1.58650000 'cm'</output></test>
 		<test name="LowBoundaryDateMonth"><expression>@2014.lowBoundary(6)</expression><output>@2014-01</output></test>
-		<test name="LowBoundaryDateTimeMillisecond"><expression>@2014-01-01T08.lowBoundary(17)</expression><output>@2014-01-01T08:00:00.000</output></test>
+		<test name="LowBoundaryDateTimeMillisecond1"><expression>@2014-01-01T08.lowBoundary(17)</expression><output>@2014-01-01T08:00:00.000+14:00</output></test>
+		<test name="LowBoundaryDateTimeMillisecond1"><expression>@2014-01-01T08:05+08:00.lowBoundary(17)</expression><output>@2014-01-01T08:05:00.000+08:00</output></test>
+		<test name="LowBoundaryDateTimeMillisecond2"><expression>@2014-01-01T08.lowBoundary(8)</expression><output>@2014-01-01</output></test>
 		<test name="LowBoundaryTimeMillisecond"><expression>@T10:30.lowBoundary(9)</expression><output>@T10:30:00.000</output></test>
 	</group>
 
 	<group name="HighBoundary">
 		<test name="HighBoundaryDecimal"><expression>1.587.highBoundary(8)</expression><output>1.58750000</output></test>
+		<test name="HighBoundaryQuantity"><expression>1.587 'm'.highBoundary(8)</expression><output>1.58750000 'm'</output></test>
 		<test name="HighBoundaryDateMonth"><expression>@2014.highBoundary(6)</expression><output>@2014-12</output></test>
-		<test name="HighBoundaryDateTimeMillisecond"><expression>@2014-01-01T08.highBoundary(17)</expression><output>@2014-01-01T08:00:59.999</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
+		<test name="HighBoundaryDateTimeMillisecond"><expression>@2014-01-01T08.highBoundary(17)</expression><output>@2014-01-01T08:00:59.999-12:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
+		<test name="HighBoundaryDateTimeMillisecond"><expression>@2014-01-01T08:05-05:00.highBoundary(17)</expression><output>@2014-01-01T08:05:59.999-05:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
+		<test name="HighBoundaryDateTimeMillisecond"><expression>@2014-01-01T08.highBoundary(17)</expression><output>@2014-01-01T08:00:59.999-12:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
 		<test name="HighBoundaryTimeMillisecond">	<expression>@T10:30.highBoundary(9)</expression><output>@T10:30:59.999</output></test>
+	</group>
+
+  <group name="Comparable">
+		<test name="Comparable1"><expression>1 'cm'.comparable(1 '[in_i]')</expression><output>true</output></test>
+		<test name="Comparable2"><expression>1 'cm'.comparable(1 '[s]')</expression><output>false</output></test>
 	</group>
 
 	<group name="Precision">
@@ -1357,8 +1372,11 @@ Any text enclosed within is ignored
     -->
 		<test name="testPolymorphicsA" inputfile="observation-example.xml"><expression>Observation.value.exists()</expression><output type="boolean">true</output></test>
 		<test name="testPolymorphicsB" inputfile="observation-example.xml"><expression invalid="semantic">Observation.valueQuantity.exists()</expression><output type="boolean">false</output></test>
+<!--
+	lenient polymorphic mode is not supported in R4
 		<modeTest mode="lenient/polymorphics" name="testPolymorphicsC" inputfile="observation-example.xml"><expression>Observation.valueQuantity.exists()</expression><output type="boolean">true</output></modeTest>
 		<modeTest mode="lenient/polymorphics" name="testPolymorphicsD" inputfile="observation-example.xml"><expression>Observation.valueString.exists()</expression><output type="boolean">false</output></modeTest>
+-->		
   </group>
 
   <group name="index-part">
