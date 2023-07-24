@@ -1,1 +1,1 @@
-* Remove parent from pom.xml
+* Restore parent to pom.xml
