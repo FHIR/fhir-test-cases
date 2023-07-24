@@ -1,0 +1,1 @@
+* Remove parent from pom.xml
