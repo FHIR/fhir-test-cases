@@ -9144,7 +9144,7 @@
               "severity": "information",
               "code": "unknown",
               "details": {
-                "text": "Code System URI 'http://www.ama-assn.org/go/cpt' is unknown so the code cannot be validated"
+                "text": "The definition for the Code System with URI 'http://www.ama-assn.org/go/cpt' doesnt provide any codes so the code cannot be validated"
               },
               "diagnostics": "[84,13]",
               "expression": [
@@ -9244,7 +9244,7 @@
               "severity": "information",
               "code": "unknown",
               "details": {
-                "text": "Code System URI 'http://www.ama-assn.org/go/cpt' is unknown so the code cannot be validated"
+                "text": "The definition for the Code System with URI 'http://www.ama-assn.org/go/cpt' doesnt provide any codes so the code cannot be validated"
               },
               "diagnostics": "[84,13]",
               "expression": [
@@ -13473,7 +13473,20 @@
       "file": "xml_v11.xml",
       "java": {
         "outcome": {
-          "resourceType": "OperationOutcome"
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "structure",
+              "details": {
+                "text": "This content includes the character [1d] (hex value). This character is illegal in the XML version of FHIR, and there is generally no valid use for such characters"
+              },
+              "diagnostics": "[23,246]",
+              "expression": [
+                "CodeSystem.concept[0].definition"
+              ]
+            }
+          ]
         }
       }
     },
@@ -18774,7 +18787,7 @@
               "severity": "information",
               "code": "unknown",
               "details": {
-                "text": "Code System URI 'http://www.ncbi.nlm.nih.gov/clinvar' is unknown so the code cannot be validated"
+                "text": "The definition for the Code System with URI 'http://www.ncbi.nlm.nih.gov/clinvar' doesnt provide any codes so the code cannot be validated"
               },
               "diagnostics": "[78,12]",
               "expression": [
@@ -18870,7 +18883,7 @@
               "severity": "information",
               "code": "unknown",
               "details": {
-                "text": "Code System URI 'http://www.ncbi.nlm.nih.gov/clinvar' is unknown so the code cannot be validated"
+                "text": "The definition for the Code System with URI 'http://www.ncbi.nlm.nih.gov/clinvar' doesnt provide any codes so the code cannot be validated"
               },
               "diagnostics": "[78,12]",
               "expression": [
@@ -23393,7 +23406,7 @@
               "severity": "information",
               "code": "unknown",
               "details": {
-                "text": "Code System URI 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl' is unknown so the code cannot be validated"
+                "text": "The definition for the Code System with URI 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl' doesnt provide any codes so the code cannot be validated"
               },
               "diagnostics": "[53,20]",
               "expression": [
@@ -23404,7 +23417,7 @@
               "severity": "information",
               "code": "unknown",
               "details": {
-                "text": "Code System URI 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl' is unknown so the code cannot be validated"
+                "text": "The definition for the Code System with URI 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl' doesnt provide any codes so the code cannot be validated"
               },
               "diagnostics": "[102,20]",
               "expression": [
@@ -23415,7 +23428,7 @@
               "severity": "information",
               "code": "unknown",
               "details": {
-                "text": "Code System URI 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl' is unknown so the code cannot be validated"
+                "text": "The definition for the Code System with URI 'http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl' doesnt provide any codes so the code cannot be validated"
               },
               "diagnostics": "[113,20]",
               "expression": [
@@ -28747,7 +28760,7 @@
               "severity": "information",
               "code": "unknown",
               "details": {
-                "text": "Code System URI 'urn:oid:2.16.840.1.113883.6.238' is unknown so the code cannot be validated"
+                "text": "The definition for the Code System with URI 'urn:oid:2.16.840.1.113883.6.238' doesnt provide any codes so the code cannot be validated"
               },
               "diagnostics": "[143,28]",
               "expression": [
@@ -29022,7 +29035,7 @@
               "severity": "information",
               "code": "unknown",
               "details": {
-                "text": "Code System URI 'https://www.cdc.gov/nhsn/cdaportal/terminology/codesystem/hsloc.html' is unknown so the code cannot be validated"
+                "text": "The definition for the Code System with URI 'https://www.cdc.gov/nhsn/cdaportal/terminology/codesystem/hsloc.html' doesnt provide any codes so the code cannot be validated"
               },
               "diagnostics": "[72,22]",
               "expression": [
@@ -29911,6 +29924,17 @@
         "outcome": {
           "resourceType": "OperationOutcome",
           "issue": [
+            {
+              "severity": "warning",
+              "code": "structure",
+              "details": {
+                "text": "This content includes the characters [b, c] (hex values). These characters are illegal in the XML version of FHIR, and there is generally no valid use for such characters"
+              },
+              "diagnostics": "[5,165]",
+              "expression": [
+                "Parameters.parameter[0].value.ofType(string)"
+              ]
+            },
             {
               "severity": "warning",
               "code": "structure",
@@ -31427,7 +31451,9 @@
       "file": "reslicing-instance.json",
       "version": "5.0",
       "description": "Reslicing Issue",
-      "supporting" : ["reslicing-profile.json"],
+      "supporting": [
+        "reslicing-profile.json"
+      ],
       "java": {
         "outcome" : {
           "resourceType" : "OperationOutcome"
@@ -31440,98 +31466,120 @@
       "version": "4.0",
       "description": "quantity is poorly prohibited (but have to live with that, it's core",
       "java": {
-        "outcome" : {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "Observation.code: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/Observation|4.0.1)"
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "Observation.code: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/Observation|4.0.1)"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "Observation"
+              ]
             },
-            "diagnostics" : "[1,2]",
-            "expression" : ["Observation"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "This element does not match any known slice  defined in the profile http://hl7.org/fhir/StructureDefinition/bp|4.0.1 and slicing is CLOSED: Observation.value.ofType(Quantity): Does not match slice 'valueQuantity' (discriminator: $this.empty())"
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "This element does not match any known slice  defined in the profile http://hl7.org/fhir/StructureDefinition/bp|4.0.1 and slicing is CLOSED: Observation.value.ofType(Quantity): Does not match slice 'valueQuantity' (discriminator: $this.empty())"
+              },
+              "diagnostics": "[6,4]",
+              "expression": [
+                "Observation.value.ofType(Quantity)"
+              ]
             },
-            "diagnostics" : "[6,4]",
-            "expression" : ["Observation.value.ofType(Quantity)"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "Observation.category: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "Observation.category: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "Observation"
+              ]
             },
-            "diagnostics" : "[1,2]",
-            "expression" : ["Observation"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "Observation.category:VSCat: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "Observation.category:VSCat: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "Observation"
+              ]
             },
-            "diagnostics" : "[1,2]",
-            "expression" : ["Observation"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "Observation.code: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "Observation.code: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "Observation"
+              ]
             },
-            "diagnostics" : "[1,2]",
-            "expression" : ["Observation"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "Observation.subject: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "Observation.subject: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "Observation"
+              ]
             },
-            "diagnostics" : "[1,2]",
-            "expression" : ["Observation"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "Observation.effective[x]: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "Observation.effective[x]: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "Observation"
+              ]
             },
-            "diagnostics" : "[1,2]",
-            "expression" : ["Observation"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "Observation.component: minimum required = 2, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "Observation.component: minimum required = 2, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "Observation"
+              ]
             },
-            "diagnostics" : "[1,2]",
-            "expression" : ["Observation"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "Observation.component:SystolicBP: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "Observation.component:SystolicBP: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "Observation"
+              ]
             },
-            "diagnostics" : "[1,2]",
-            "expression" : ["Observation"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "Observation.component:DiastolicBP: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
-            },
-            "diagnostics" : "[1,2]",
-            "expression" : ["Observation"]
-          }]
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "Observation.component:DiastolicBP: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "Observation"
+              ]
+            }
+          ]
         }
       }
     },
@@ -31551,10 +31599,12 @@
       "file": "bundle-invariant-instance.json",
       "version" : "4.0",
       "description": "test %context, %resource, and %rootResource invariants defined on Bundle.entry.resource",
-      "supporting" : ["bundle-invariant-profile.json"],
-      "java" : {
-        "outcome" : {
-          "resourceType" : "OperationOutcome"
+      "supporting": [
+        "bundle-invariant-profile.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
         }
       }
     },
@@ -31563,39 +31613,47 @@
       "file": "contained-invariant-instance.json",
       "version" : "4.0",
       "description": "test %context, %resource, and %rootResource invariants defined on DomainResource.contained",
-      "supporting" : ["contained-invariant-profile.json"],
-      "java" : {
-        "outcome" : {
-          "resourceType" : "OperationOutcome"
+      "supporting": [
+        "contained-invariant-profile.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
         }
       }
     },
     {
       "name": "r3-sd-sd",
       "file": "r3-sd-sd.json",
-      "version" : "3.0",
+      "version": "3.0",
       "description": "Testing error in FHIRPath implementation with DSTU3 data type definitions",
-      "java" : {
-        "outcome" : {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "The extension http://hl7.org/fhir/StructureDefinition/structuredefinition-codegen-super is unknown, and not allowed here"
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "The extension http://hl7.org/fhir/StructureDefinition/structuredefinition-codegen-super is unknown, and not allowed here"
+              },
+              "diagnostics": "[74,8]",
+              "expression": [
+                "StructureDefinition.baseDefinition.extension[0]"
+              ]
             },
-            "diagnostics" : "[74,8]",
-            "expression" : ["StructureDefinition.baseDefinition.extension[0]"]
-          },
-          {
-            "severity" : "error",
-            "code" : "structure",
-            "details" : {
-              "text" : "Error in invariant 'sdf-15' with expression 'kind!='logical' implies snapshot.element.first().type.empty()': Error evaluating FHIRPath expression: The name 'kind' is not valid for any of the possible types: [http://hl7.org/fhir/StructureDefinition/StructureDefinition#StructureDefinition.snapshot] (@char 3)"
-            },
-            "diagnostics" : "[1256,12]",
-            "expression" : ["StructureDefinition.snapshot.element[42].constraint[1]"]
-          }]
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "Error in invariant 'sdf-15' with expression 'kind!='logical' implies snapshot.element.first().type.empty()': Error evaluating FHIRPath expression: The name 'kind' is not valid for any of the possible types: [http://hl7.org/fhir/StructureDefinition/StructureDefinition#StructureDefinition.snapshot] (@char 3)"
+              },
+              "diagnostics": "[1256,12]",
+              "expression": [
+                "StructureDefinition.snapshot.element[42].constraint[1]"
+              ]
+            }
+          ]
         }
       }
     },
@@ -31640,17 +31698,21 @@
       "description": "Control Characters <32 are illegal in xml",
       "java": {
         "outcome": {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "fatal",
-            "code" : "structure",
-            "details" : {
-              "text" : "Character reference \"&#x0013\" is an invalid XML character."
-            },
-            "diagnostics" : "[4,42]",
-            "expression" : ["(xml)"]
-          }]
-        }        
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "text": "Character reference \"&#x0013\" is an invalid XML character."
+              },
+              "diagnostics": "[4,42]",
+              "expression": [
+                "(xml)"
+              ]
+            }
+          ]
+        }
       }
     },
     {
@@ -31659,17 +31721,116 @@
       "description": "Control Characters <32 are illegal in xml",
       "java": {
         "outcome": {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "fatal",
-            "code" : "structure",
-            "details" : {
-              "text" : "Character reference \"&#x0013\" is an invalid XML character."
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "structure",
+              "details": {
+                "text": "This content includes the character [13] (hex value). This character is illegal in the XML version of FHIR, and there is generally no valid use for such characters"
+              },
+              "diagnostics": "[5,60]",
+              "expression": [
+                "Parameters.parameter[0].value.ofType(string)"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "med-example",
+      "file": "med-example.json",
+      "description": "Test relating to reported problems with simplifier packages - but turns out to be about code systems with codes not provided",
+      "version": "4.0",
+      "packages": [
+        "de.medizininformatikinitiative.kerndatensatz.medikation#2.0.0-ballot1",
+        "basisprofil.de#0.2.40",
+        "de.basisprofil.r4#1.0.0"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "unknown",
+              "details": {
+                "text": "The definition for the Code System with URI 'http://fhir.de/CodeSystem/ifa/pzn' doesnt provide any codes so the code cannot be validated"
+              },
+              "diagnostics": "[22,26]",
+              "expression": [
+                "Bundle.entry[0].resource/*Medication/12345*/.code.coding[1]"
+              ]
             },
-            "diagnostics" : "[4,42]",
-            "expression" : ["(xml)"]
-          }]
-        }        
+            {
+              "severity": "information",
+              "code": "unknown",
+              "details": {
+                "text": "The definition for the Code System with URI 'http://fhir.de/CodeSystem/ask' doesnt provide any codes so the code cannot be validated"
+              },
+              "diagnostics": "[33,34]",
+              "expression": [
+                "Bundle.entry[0].resource/*Medication/12345*/.ingredient[0].item.ofType(CodeableConcept).coding[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "unknown",
+              "details": {
+                "text": "The definition for the Code System with URI 'http://fhir.de/CodeSystem/ask' doesnt provide any codes so the code cannot be validated"
+              },
+              "diagnostics": "[44,34]",
+              "expression": [
+                "Bundle.entry[0].resource/*Medication/12345*/.ingredient[1].item.ofType(CodeableConcept).coding[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "unknown",
+              "details": {
+                "text": "The definition for the Code System with URI 'http://fhir.de/CodeSystem/ask' doesnt provide any codes so the code cannot be validated"
+              },
+              "diagnostics": "[55,34]",
+              "expression": [
+                "Bundle.entry[0].resource/*Medication/12345*/.ingredient[2].item.ofType(CodeableConcept).coding[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "unknown",
+              "details": {
+                "text": "The definition for the Code System with URI 'http://fhir.de/CodeSystem/ask' doesnt provide any codes so the code cannot be validated"
+              },
+              "diagnostics": "[66,34]",
+              "expression": [
+                "Bundle.entry[0].resource/*Medication/12345*/.ingredient[3].item.ofType(CodeableConcept).coding[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "unknown",
+              "details": {
+                "text": "The definition for the Code System with URI 'http://fhir.de/CodeSystem/ask' doesnt provide any codes so the code cannot be validated"
+              },
+              "diagnostics": "[77,34]",
+              "expression": [
+                "Bundle.entry[0].resource/*Medication/12345*/.ingredient[4].item.ofType(CodeableConcept).coding[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "unknown",
+              "details": {
+                "text": "The definition for the Code System with URI 'http://fhir.de/CodeSystem/ask' doesnt provide any codes so the code cannot be validated"
+              },
+              "diagnostics": "[88,34]",
+              "expression": [
+                "Bundle.entry[0].resource/*Medication/12345*/.ingredient[5].item.ofType(CodeableConcept).coding[0]"
+              ]
+            }
+          ]
+        }
       }
     },
     {
