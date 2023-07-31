@@ -1,0 +1,1 @@
+* Remove parent pom from build
