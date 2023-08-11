@@ -41,7 +41,8 @@
         "name" : "parameters-expand-all-hierarchy",
         "operation" : "expand",
         "request" : "parameters/parameters-expand-all-hierarchy-request-parameters.json",
-        "response" : "parameters/parameters-expand-all-hierarchy-response-valueSet.json"
+        "response" : "parameters/parameters-expand-all-hierarchy-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-all-hierarchy-response-flat-valueSet.json"
       },{
         "name" : "parameters-expand-enum-hierarchy",
         "operation" : "expand",
@@ -556,7 +557,8 @@
   },{
     "name" : "deprecated",
     "description" : "Testing Deprecated+Withdrawn warnings",
-    "setup" : ["deprecated/codesystem-deprecated.json","deprecated/valueset-withdrawn.json","deprecated/valueset-not-withdrawn.json"],
+    "setup" : ["deprecated/codesystem-deprecated.json","deprecated/valueset-withdrawn.json","deprecated/valueset-not-withdrawn.json", 
+               "deprecated/codesystem-experimental.json","deprecated/valueset-experimental.json"],
     "tests" : [
       {
         "name" : "withdrawn",
@@ -578,7 +580,18 @@
         "operation" : "validate-code",
         "request" : "deprecated/validate-not-withdrawn-request-parameters.json",
         "response" : "deprecated/validate-not-withdrawn-response-parameters.json"
-      }      
+      },
+      {
+        "name" : "experimental",
+        "operation" : "expand",
+        "request" : "deprecated/expand-experimental-request-parameters.json",
+        "response" : "deprecated/expand-experimental-response-valueSet.json"
+      } ,{
+        "name" : "experimental-validate",
+        "operation" : "validate-code",
+        "request" : "deprecated/validate-experimental-request-parameters.json",
+        "response" : "deprecated/validate-experimental-response-parameters.json"
+      }
     ]
   },{
     "name" : "inactive",
