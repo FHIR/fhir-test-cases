@@ -16915,6 +16915,17 @@
               "expression": [
                 "Patient.address[0].country.extension[3]"
               ]
+            },
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "Reference to experimental item urn:oid:2.16.840.1.113883.2.4.4.16.34"
+              },
+              "diagnostics": "[10,39]",
+              "expression": [
+                "Patient.address[0].country.extension[0].value.ofType(CodeableConcept)"
+              ]
             }
           ]
         }
@@ -31864,6 +31875,46 @@
             }
           ]
         }
+      }
+    },
+    {
+      "name": "capstmt-deprecated",
+      "file": "capstmt-deprecated.json",
+      "description": "Warning when using a deprecated extension",
+      "supporting" : ["capstmt-extension-something.xml"],
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "information",
+            "code" : "expired",
+            "details" : {
+              "text" : "The extension http://hl7.org/fhir/test/StructureDefinition/something|5.0.0 is deprecated"
+            },
+            "diagnostics" : "[11,6]",
+            "expression" : ["CapabilityStatement.rest[0].extension[0]"]
+          }]
+        }
+      }
+    },
+    {
+      "name": "capstmt-deprecated-profile",
+      "file": "capstmt-deprecated-profile.json",
+      "description": "Warning when using a deprecated extension in a profile",
+      "supporting" : ["capstmt-extension-something.xml"],
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "information",
+            "code" : "expired",
+            "details" : {
+              "text" : "The extension http://hl7.org/fhir/test/StructureDefinition/something|5.0.0 is deprecated"
+            },
+            "diagnostics" : "[25,78]",
+            "expression" : ["CapabilityStatement.rest.extension"]
+          }]
+        }        
       }
     },
     {
