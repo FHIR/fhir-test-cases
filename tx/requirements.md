@@ -65,7 +65,7 @@ If the server chooses to make them available elsewhere, it SHALL populate the ex
   * The server SHALL support validating code+system(+version)(+display), Coding, and CodeableConcept
   * The server SHALL support the [mode/valueSetMode](https://jira.hl7.org/browse/FHIR-41229) parameter
   * The server SHALL Support language correctly (both displayLanguage and accept-language header)
-  * The server SHALL support the [implySystem](https://jira.hl7.org/browse/FHIR-41431) parameter
+  * The server SHALL support the [inferSystem](https://jira.hl7.org/browse/FHIR-41431) parameter
   * The server SHALL return an issues parameter 
   * The server SHALL return system, code and display for the code that it considered valid, along with the version if this is known
   * The server SHOULD return a x-caused-by-unknown-system parameter for each code system it did not support
