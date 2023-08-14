@@ -31881,19 +31881,25 @@
       "name": "capstmt-deprecated",
       "file": "capstmt-deprecated.json",
       "description": "Warning when using a deprecated extension",
-      "supporting" : ["capstmt-extension-something.xml"],
+      "supporting": [
+        "capstmt-extension-something.xml"
+      ],
       "java": {
         "outcome": {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "information",
-            "code" : "expired",
-            "details" : {
-              "text" : "The extension http://hl7.org/fhir/test/StructureDefinition/something|5.0.0 is deprecated"
-            },
-            "diagnostics" : "[11,6]",
-            "expression" : ["CapabilityStatement.rest[0].extension[0]"]
-          }]
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "expired",
+              "details": {
+                "text": "The extension http://hl7.org/fhir/test/StructureDefinition/something|5.0.0 is deprecated"
+              },
+              "diagnostics": "[11,6]",
+              "expression": [
+                "CapabilityStatement.rest[0].extension[0]"
+              ]
+            }
+          ]
         }
       }
     },
@@ -31901,20 +31907,114 @@
       "name": "capstmt-deprecated-profile",
       "file": "capstmt-deprecated-profile.json",
       "description": "Warning when using a deprecated extension in a profile",
-      "supporting" : ["capstmt-extension-something.xml"],
+      "supporting": [
+        "capstmt-extension-something.xml"
+      ],
       "java": {
         "outcome": {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "information",
-            "code" : "expired",
-            "details" : {
-              "text" : "The extension http://hl7.org/fhir/test/StructureDefinition/something|5.0.0 is deprecated"
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "expired",
+              "details": {
+                "text": "The extension http://hl7.org/fhir/test/StructureDefinition/something|5.0.0 is deprecated"
+              },
+              "diagnostics": "[25,78]",
+              "expression": [
+                "CapabilityStatement.rest.extension"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ext-stds-status-normative",
+      "file": "ext-stds-status-normative.json",
+      "description": "Checking consistency between standards status and status",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "Reference to deprecated item http://hl7.org/fhir/ValueSet/jurisdiction|5.0.0"
+              },
+              "diagnostics": "[43,4]",
+              "expression": [
+                "StructureDefinition.jurisdiction[0]"
+              ]
             },
-            "diagnostics" : "[25,78]",
-            "expression" : ["CapabilityStatement.rest.extension"]
-          }]
-        }        
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "The resource status 'draft' amd the standards status 'normative' are not consistent"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "StructureDefinition"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "The fixed value for the extension URL is http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status which doesn't match the canonical URL http://hl7.org/fhir/test/StructureDefinition/structuredefinition-standards-status"
+              },
+              "expression": [
+                "StructureDefinition"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ext-stds-status-deprecated",
+      "file": "ext-stds-status-deprecated.json",
+      "description": "Checking consistency between standards status and status",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "Reference to deprecated item http://hl7.org/fhir/ValueSet/jurisdiction|5.0.0"
+              },
+              "diagnostics": "[43,4]",
+              "expression": [
+                "StructureDefinition.jurisdiction[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "The resource status 'active' amd the standards status 'deprecated' are not consistent"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "StructureDefinition"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "The fixed value for the extension URL is http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status which doesn't match the canonical URL http://hl7.org/fhir/test/StructureDefinition/structuredefinition-standards-status"
+              },
+              "expression": [
+                "StructureDefinition"
+              ]
+            }
+          ]
+        }
       }
     },
     {
