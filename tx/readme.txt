@@ -21,7 +21,7 @@ To use these tests, load the dependencies, execute the operations with the provi
 parameters, and conpare the outcomes. Some notes about comparisons:
 
 * for the purposes of comparison *for these tests*, array order never matters (nor does property order, of course)
-* Some fields are never the same between iterations. These fields contina $<{type}$ and get compared to the regex for the type instead 
+* Some fields are never the same between iterations. These fields contain $<{type}$ and get compared to the regex for the type instead 
 * We may consider adding additional json metadata/use of $$ to deal with reasonable variations between different tx servers
 
 The simplest way to execute these is to use the java validator:
