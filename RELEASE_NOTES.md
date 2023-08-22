@@ -11,11 +11,14 @@
 * rename implySystem to inferSystem
 * fix tests to allow code/system to be returned in more cases (optional)
 * Allow for Ontoserver to always return flat expansions
+* change how inactive codes are handled
+* change return pattern for value set exceptions validating
 
 ## Validation Test Cases
 * Add tests for CodeSystem count and content implied rules
 * Add new tests for consistency between status and standards status
 * Add test cases for checking for deprecated resources
+* Add tests around code status, and report warnings from terminology server
 
 ## Comparison and Rendering
 * update tests for improvements in rendering
