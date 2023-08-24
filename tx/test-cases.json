@@ -173,53 +173,136 @@
   },{
     "name" : "language",
     "description" : "Testing returning language by request, getting the right designation",
-    "notes" : "In these test cases, the language of the parameters is used as a proxy for the Accept-Language header - test frameworks might want to remove this and put it in the header if that's appropriate",
-    "setup" : ["language/codesystem-de-multi.json", "language/codesystem-de-single.json", "language/codesystem-en-multi.json", "language/codesystem-en-single.json",
-              "language/valueset-de-multi.json", "language/valueset-de-single.json", "language/valueset-en-multi.json", "language/valueset-en-single.json"],
+    "notes" : "see languages.md for an explanation",
+    "setup" : [
+      "language/codesystem-de-multi.json", "language/codesystem-de-single.json", 
+      "language/codesystem-en-multi.json", "language/codesystem-en-single.json",
+
+     "language/valueset-de-multi.json", "language/valueset-de-single.json", "language/valueset-de-de-single.json", 
+     "language/valueset-en-multi.json", "language/valueset-en-en-multi.json",  "language/valueset-en-single.json", "language/valueset-en-en-single.json",
+     "language/valueset-en-de-soft-multi.json", "language/valueset-en-de-hard-multi.json"],
     "tests" : [
       {
         "name" : "language-echo-en-none",
         "operation" : "expand",
         "request" : "language/expand-echo-en-none-request-parameters.json",
         "response" : "language/expand-echo-en-none-response-valueSet.json"
-      },{
-        "name" : "language-echo-en-en",
+      },
+      
+      {
+        "name" : "language-echo-en-en-param",
         "operation" : "expand",
-        "request" : "language/expand-echo-en-en-request-parameters.json",
-        "response" : "language/expand-echo-en-en-response-valueSet.json"
+        "request" : "language/expand-echo-en-en-param-request-parameters.json",
+        "response" : "language/expand-echo-en-en-param-response-valueSet.json"
       },{
+        "name" : "language-echo-en-en-vs",
+        "operation" : "expand",
+        "request" : "language/expand-echo-en-en-vs-request-parameters.json",
+        "response" : "language/expand-echo-en-en-vs-response-valueSet.json"
+      },{
+        "name" : "language-echo-en-en-header",
+        "operation" : "expand",
+        "Accept-Language" : "en",
+        "request" : "language/expand-echo-en-en-header-request-parameters.json",
+        "response" : "language/expand-echo-en-en-header-response-valueSet.json"
+      },
+      
+      {
         "name" : "language-echo-de-none",
         "operation" : "expand",
         "request" : "language/expand-echo-de-none-request-parameters.json",
         "response" : "language/expand-echo-de-none-response-valueSet.json"
-      },{
-        "name" : "language-echo-de-de",
+      },
+      
+      
+      {
+        "name" : "language-echo-de-de-param",
         "operation" : "expand",
-        "request" : "language/expand-echo-de-de-request-parameters.json",
-        "response" : "language/expand-echo-de-de-response-valueSet.json"
-      },{
+        "request" : "language/expand-echo-de-de-param-request-parameters.json",
+        "response" : "language/expand-echo-de-de-param-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-de-de-vs",
+        "operation" : "expand",
+        "request" : "language/expand-echo-de-de-vs-request-parameters.json",
+        "response" : "language/expand-echo-de-de-vs-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-de-de-header",
+        "operation" : "expand",
+        "Accept-Language" : "de",
+        "request" : "language/expand-echo-de-de-header-request-parameters.json",
+        "response" : "language/expand-echo-de-de-header-response-valueSet.json"
+      },
+      
+      {
         "name" : "language-echo-en-multi-none",
         "operation" : "expand",
         "request" : "language/expand-echo-en-multi-none-request-parameters.json",
         "response" : "language/expand-echo-en-multi-none-response-valueSet.json"
-      },{
-        "name" : "language-echo-en-multi-en",
+      },
+      
+      {
+        "name" : "language-echo-en-multi-en-param",
         "operation" : "expand",
-        "request" : "language/expand-echo-en-multi-en-request-parameters.json",
-        "response" : "language/expand-echo-en-multi-en-response-valueSet.json"
-      },{
-        "description" : "Time to get interesting - so far we've pretty much just echoed stuff. Now, we're going to start asking for transformation - we ask for de twice- one soft, and then hard",
-        "name" : "language-xform-en-multi-de-soft",
+        "request" : "language/expand-echo-en-multi-en-param-request-parameters.json",
+        "response" : "language/expand-echo-en-multi-en-param-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-en-multi-en-vs",
         "operation" : "expand",
-        "request" : "language/expand-xform-en-multi-de-soft-request-parameters.json",
-        "response" : "language/expand-xform-en-multi-de-soft-response-valueSet.json"
-      },{
-        "description" : "The difference between this one and the last one is that this specifies the return language of the resource. If there are codes with no display, it won't fall back to some other language",
-        "name" : "language-xform-en-multi-de-hard",
+        "request" : "language/expand-echo-en-multi-en-vs-request-parameters.json",
+        "response" : "language/expand-echo-en-multi-en-vs-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-en-multi-en-header",
         "operation" : "expand",
-        "request" : "language/expand-xform-en-multi-de-hard-request-parameters.json",
-        "response" : "language/expand-xform-en-multi-de-hard-response-valueSet.json"
-      },{
+        "Accept-Language" : "en",
+        "request" : "language/expand-echo-en-multi-en-header-request-parameters.json",
+        "response" : "language/expand-echo-en-multi-en-header-response-valueSet.json"
+      },
+      
+      {
+        "name" : "language-xform-en-multi-de-soft-param",
+        "operation" : "expand",
+        "request" : "language/expand-xform-en-multi-de-soft-param-request-parameters.json",
+        "response" : "language/expand-xform-en-multi-de-soft-param-response-valueSet.json"
+      },
+      {
+        "name" : "language-xform-en-multi-de-soft-vs",
+        "operation" : "expand",
+        "request" : "language/expand-xform-en-multi-de-soft-vs-request-parameters.json",
+        "response" : "language/expand-xform-en-multi-de-soft-vs-response-valueSet.json"
+      },
+      {
+        "name" : "language-xform-en-multi-de-soft-header",
+        "operation" : "expand",
+        "Accept-Language" : "de,*",
+        "request" : "language/expand-xform-en-multi-de-soft-header-request-parameters.json",
+        "response" : "language/expand-xform-en-multi-de-soft-header-response-valueSet.json"
+      },
+
+      {
+        "name" : "language-xform-en-multi-de-hard-param",
+        "operation" : "expand",
+        "request" : "language/expand-xform-en-multi-de-hard-param-request-parameters.json",
+        "response" : "language/expand-xform-en-multi-de-hard-param-response-valueSet.json"
+      },
+      {
+        "name" : "language-xform-en-multi-de-hard-vs",
+        "operation" : "expand",
+        "request" : "language/expand-xform-en-multi-de-hard-vs-request-parameters.json",
+        "response" : "language/expand-xform-en-multi-de-hard-vs-response-valueSet.json"
+      },
+      {
+        "name" : "language-xform-en-multi-de-hard-header",
+        "operation" : "expand",
+        "Accept-Language" : "de,*",
+        "request" : "language/expand-xform-en-multi-de-hard-header-request-parameters.json",
+        "response" : "language/expand-xform-en-multi-de-hard-header-response-valueSet.json"
+      },
+
+      {
         "description" : "Do them all again, but the other way around",
         "name" : "language-echo-de-multi-none",
         "operation" : "expand",
@@ -231,7 +314,7 @@
         "request" : "language/expand-echo-de-multi-de-request-parameters.json",
         "response" : "language/expand-echo-de-multi-de-response-valueSet.json"
       },{
-        "name" : "language-xform-de-multi-en-soft",
+        "name" : "language-xform-de-multi-en-hard",
         "operation" : "expand",
         "request" : "language/expand-xform-de-multi-en-soft-request-parameters.json",
         "response" : "language/expand-xform-de-multi-en-soft-response-valueSet.json"
