@@ -34,9 +34,9 @@ http://hl7.org/fhir/tools/StructureDefinion/valueset-expansion-param extension
 * Using the http Accept-Language header 
 * ValueSet.language
 
-All accept multiple languages with weights per the Accept-Language specification; which to use is a matter 
-of operational control on the client. These tests require that a server support all four. The sequence of 
-pre-eminance is as in the list given above.
+The first three may contain multiple languages with weights per the Accept-Language specification; which to use is a matter 
+of operational control on the client. ValueSet Language is a single language code as described in BCP-47. These tests require 
+that a server support all four approaches. The sequence of pre-eminance is as in the list given above.
 
 Each of the tests below comes as a set of variants, depending on how the language is specified:
 * -param: using the displayLanguage parameter
