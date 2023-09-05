@@ -33645,7 +33645,102 @@
       }
     },
     {
-      "todo": "inactive codes: active, inactive, retired against all three valuesets, and without a value set",
+      "name": "cm",
+      "file": "cm.json",
+      "supporting": [
+        "cm-vs.json", "cm-cs.json"
+      ],
+      "description": "ConceptMap maps something not in the value set",
+      "version" : "4.0",
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "required",
+            "details" : {
+              "text" : "The source code 'med' is not valid in the value set http://fhir.ch/ig/ch-ig/ValueSet/ch-ig-example|0.1.0"
+            },
+            "diagnostics" : "[38,21]",
+            "expression" : ["ConceptMap.group[0].element[0].code"]
+          }]
+        }
+      }
+    },
+    {
+      "name": "cm2",
+      "file": "cm.json",
+      "supporting": [
+        "cm-vs2.json", "cm-cs.json"
+      ],
+      "description": "ConceptMap maps something not in the value set *in snomed*",
+      "version" : "4.0",
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The code '46224007' in the system http://snomed.info/sct version http://snomed.info/sct/2011000195101 is not valid in the value set 'http://fhir.ch/ig/ch-ig/ValueSet/OrganizationType'"
+            },
+            "diagnostics" : "[47,28]",
+            "expression" : ["ConceptMap.group[0].element[1].target[0].code"]
+          }]
+        }
+      }
+    },
+    {
+      "name": "mi-use-derived",
+      "file": "mi-use-derived.xml",
+      "supporting": [
+        "mi-defn-base.xml", "mi-use-base.xml", "mi-defn-derived.xml"
+      ],
+      "description": "Profiling to a derived profile",
+      "version" : "5.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      }
+    },
+    {
+      "name": "mi-use-distinct",
+      "file": "mi-use-distinct.xml",
+      "supporting": [
+        "mi-defn-base.xml", "mi-use-base.xml", "mi-defn-distinct.xml"
+      ],
+      "description": "Profiling to a distinct profile (illegal)",
+      "version" : "5.0",
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "error",
+            "code" : "exception",
+            "details" : {
+              "text" : "Error generating Snapshot: StructureDefinition http://hl7.org/fhir/test/StructureDefinition/mi-use-distinct at Observation.subject: invalid constrained type Reference(http://hl7.org/fhir/test/StructureDefinition/mi-defn-distinct) from Reference(http://hl7.org/fhir/test/StructureDefinition/mi-defn-base) in http://hl7.org/fhir/test/StructureDefinition/mi-use-distinct (this usually arises from a problem in the differential)"
+            },
+            "expression" : ["StructureDefinition"]
+          }]
+        }
+      }
+    },
+    {
+      "name": "mi-use-imposed",
+      "file": "mi-use-imposed.xml",
+      "supporting": [
+        "mi-defn-base.xml", "mi-use-base.xml", "mi-defn-imposed.xml"
+      ],
+      "description": "Profiling to a imposed profile",
+      "version" : "5.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      }
+    },
+    {
       "name": "zzz",
       "file": "zzz.json",
       "description": "hack to close ups",
