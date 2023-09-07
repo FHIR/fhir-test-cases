@@ -23187,6 +23187,63 @@
       }
     },
     {
+      "name": "shc-dd",
+      "file": "shc-dd.txt",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "not-found",
+              "details": {
+                "text": "Implied profile http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-bundle-dm not known to validator"
+              },
+              "expression": [
+                "Payload"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "The signature is valid, but the issuer https://test.fhir.org/icao is not a trusted issuer"
+              },
+              "diagnostics": "[1,1]",
+              "expression": [
+                "jwt"
+              ]
+            }
+          ]
+        }
+      },
+      "profile": {
+        "packages": [
+          "hl7.fhir.uv.shc-vaccination#0.6.2"
+        ],
+        "source": "http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-bundle-dm",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "warning",
+                "code": "business-rule",
+                "details": {
+                  "text": "The signature is valid, but the issuer https://test.fhir.org/icao is not a trusted issuer"
+                },
+                "diagnostics": "[1,1]",
+                "expression": [
+                  "jwt"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
       "name": "shc.jwt",
       "file": "shc.jwt",
       "version": "4.0",
@@ -23198,14 +23255,36 @@
           "resourceType": "OperationOutcome",
           "issue": [
             {
-              "severity": "information",
-              "code": "informational",
+              "severity": "error",
+              "code": "not-found",
               "details": {
-                "text": "The FHIR Validator does not check the JWT signature (see https://demo-portals.smarthealth.cards/VerifierPortal.html or https://github.com/smart-on-fhir/health-cards-dev-tools) (Issuer = 'http://local.fhir.org:960/r4/')"
+                "text": "JWT iss 'http://local.fhir.org:960/r4/' must start with https://"
               },
               "diagnostics": "[1,1]",
               "expression": [
-                "JWT"
+                "jwt"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "not-found",
+              "details": {
+                "text": "JWT iss 'http://local.fhir.org:960/r4/' must not have trailing /"
+              },
+              "diagnostics": "[1,1]",
+              "expression": [
+                "jwt"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "not-found",
+              "details": {
+                "text": "Unable to verify the signature, because unable to retrieve JWKS from http://local.fhir.org:960/r4/.well-known/jwks.json: Connection refused"
+              },
+              "diagnostics": "[1,1]",
+              "expression": [
+                "jwt"
               ]
             },
             {
@@ -23356,14 +23435,36 @@
           "resourceType": "OperationOutcome",
           "issue": [
             {
-              "severity": "information",
-              "code": "informational",
+              "severity": "error",
+              "code": "not-found",
               "details": {
-                "text": "The FHIR Validator does not check the JWT signature (see https://demo-portals.smarthealth.cards/VerifierPortal.html or https://github.com/smart-on-fhir/health-cards-dev-tools) (Issuer = 'http://local.fhir.org:960/r4/')"
+                "text": "JWT iss 'http://local.fhir.org:960/r4/' must start with https://"
               },
               "diagnostics": "[1,1]",
               "expression": [
-                "JWT"
+                "jwt"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "not-found",
+              "details": {
+                "text": "JWT iss 'http://local.fhir.org:960/r4/' must not have trailing /"
+              },
+              "diagnostics": "[1,1]",
+              "expression": [
+                "jwt"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "not-found",
+              "details": {
+                "text": "Unable to verify the signature, because unable to retrieve JWKS from http://local.fhir.org:960/r4/.well-known/jwks.json: Connection refused"
+              },
+              "diagnostics": "[1,1]",
+              "expression": [
+                "jwt"
               ]
             },
             {
@@ -23514,14 +23615,36 @@
           "resourceType": "OperationOutcome",
           "issue": [
             {
-              "severity": "information",
-              "code": "informational",
+              "severity": "error",
+              "code": "not-found",
               "details": {
-                "text": "The FHIR Validator does not check the JWT signature (see https://demo-portals.smarthealth.cards/VerifierPortal.html or https://github.com/smart-on-fhir/health-cards-dev-tools) (Issuer = 'http://local.fhir.org:960/r4/')"
+                "text": "JWT iss 'http://local.fhir.org:960/r4/' must start with https://"
               },
               "diagnostics": "[1,1]",
               "expression": [
-                "verifiableCredential[0].JWT"
+                "jwt"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "not-found",
+              "details": {
+                "text": "JWT iss 'http://local.fhir.org:960/r4/' must not have trailing /"
+              },
+              "diagnostics": "[1,1]",
+              "expression": [
+                "jwt"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "not-found",
+              "details": {
+                "text": "Unable to verify the signature, because unable to retrieve JWKS from http://local.fhir.org:960/r4/.well-known/jwks.json: Connection refused"
+              },
+              "diagnostics": "[1,1]",
+              "expression": [
+                "jwt"
               ]
             },
             {
@@ -32568,6 +32691,7 @@
       "file": "shlink.txt",
       "description": "SHLink validation",
       "version": "4.0",
+      "use-test": false,
       "java": {
         "outcome": {
           "resourceType": "OperationOutcome",
