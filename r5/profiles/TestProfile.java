@@ -1,4 +1,4 @@
-﻿package org.hl7.fhir.r5.profiles;
+package org.hl7.fhir.r5.profiles;
 
 /*
  * Licensed under CC0 1.0 Universal (CC0 1.0).
