@@ -145,7 +145,7 @@ public class TestProfile extends PEGeneratedBase {
   }
 
   /**
-   * Save this profile class into an existing resource (overwriting enything that 
+   * Save this profile class into an existing resource (overwriting anything that 
    * exists in the profile) 
    *
    */
