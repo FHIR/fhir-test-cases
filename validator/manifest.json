@@ -20696,17 +20696,6 @@
                 ]
               },
               {
-                "severity": "information",
-                "code": "code-invalid",
-                "details": {
-                  "text": "Binding has no source, so can''t be checked"
-                },
-                "diagnostics": "[755,34]",
-                "expression": [
-                  "ClinicalDocument.component.structuredBody.component[6].section.component[1].section.entry[0].observation.entryRelationship[0].regionOfInterest.code"
-                ]
-              },
-              {
                 "severity": "error",
                 "code": "structure",
                 "details": {
@@ -34426,6 +34415,34 @@
       "java": {
         "outcome": {
           "resourceType": "OperationOutcome"
+        }
+      }
+    },
+    {
+      "name": "slice-instance",
+      "file": "slice-instance.json",      
+      "description": "Checking .slice() in constraints",
+      "version": "5.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      },
+      "profile" : {
+        "source" : "slice-profile.json",
+        "java": {
+          "outcome": {
+            "resourceType" : "OperationOutcome",
+            "issue" : [{
+              "severity" : "error",
+              "code" : "invariant",
+              "details" : {
+                "text" : "Constraint failed: spt-1: 'Phone numbers must have a use'"
+              },
+              "diagnostics" : "[11,4]",
+              "expression" : ["Patient.telecom[2]"]
+            }]
+          }          
         }
       }
     },
