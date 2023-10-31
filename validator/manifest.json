@@ -30433,7 +30433,7 @@
               "severity": "warning",
               "code": "business-rule",
               "details": {
-                "text": "Review the extension type: extensions should not have a context of Element unless it's really intended that they can be used anywhere"
+                "text": "Review the extension type for Extension-CareConnect-EncounterTransport-1: extensions should not have a context of Element unless it's really intended that they can be used anywhere"
               },
               "expression": [
                 "StructureDefinition.context[0]"
@@ -34420,7 +34420,7 @@
     },
     {
       "name": "slice-instance",
-      "file": "slice-instance.json",      
+      "file": "slice-instance.json",
       "description": "Checking .slice() in constraints",
       "version": "5.0",
       "java": {
@@ -34428,21 +34428,49 @@
           "resourceType": "OperationOutcome"
         }
       },
-      "profile" : {
-        "source" : "slice-profile.json",
+      "profile": {
+        "source": "slice-profile.json",
         "java": {
           "outcome": {
-            "resourceType" : "OperationOutcome",
-            "issue" : [{
-              "severity" : "error",
-              "code" : "invariant",
-              "details" : {
-                "text" : "Constraint failed: spt-1: 'Phone numbers must have a use'"
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "invariant",
+                "details": {
+                  "text": "Constraint failed: spt-1: 'Phone numbers must have a use'"
+                },
+                "diagnostics": "[11,4]",
+                "expression": [
+                  "Patient.telecom[2]"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "list-xhtml-empty",
+      "file": "list-xhtml-empty.xml",
+      "description": "Checking htmlChecks() covers non-empty xhtml",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "invariant",
+              "details": {
+                "text": "Constraint failed: txt-2: 'The narrative SHALL have some non-whitespace content'"
               },
-              "diagnostics" : "[11,4]",
-              "expression" : ["Patient.telecom[2]"]
-            }]
-          }          
+              "diagnostics": "[7,47]",
+              "expression": [
+                "List.text.div"
+              ]
+            }
+          ]
         }
       }
     },
