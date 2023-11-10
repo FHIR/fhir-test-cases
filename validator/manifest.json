@@ -35623,6 +35623,47 @@
       }
     },
     {
+      "name": "profile-slicing-missing-instance",
+      "file": "profile-slicing-missing-instance.xml",
+      "description": "Checking profile based slicing with missing entries",
+      "profiles": [
+        "profile-slicing-missing-profile1.xml", "profile-slicing-missing-profile2.xml", "profile-slicing-missing-profile3.xml", "profile-slicing-missing-profile4.xml", "profile-slicing-missing-profile5.xml"
+      ],
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "information",
+            "code" : "code-invalid",
+            "details" : {
+              "text" : "None of the codings provided are in the value set 'Observation Category Codes' (http://hl7.org/fhir/ValueSet/observation-category|4.0.1), and a coding is recommended to come from this value set) (codes = http://example.org/profile2#code2)"
+            },
+            "diagnostics" : "[9,13]",
+            "expression" : ["Observation.category[0]"]
+          },
+          {
+            "severity" : "information",
+            "code" : "code-invalid",
+            "details" : {
+              "text" : "None of the codings provided are in the value set 'Observation Category Codes' (http://hl7.org/fhir/ValueSet/observation-category|4.0.1), and a coding is recommended to come from this value set) (codes = http://example.org/profile3#code3)"
+            },
+            "diagnostics" : "[17,13]",
+            "expression" : ["Observation.category[1]"]
+          },
+          {
+            "severity" : "information",
+            "code" : "informational",
+            "details" : {
+              "text" : "This element does not match any known slice defined in the profile http://hl7.org/fhir/test/StructureDefinition/profile-slicing-missing-profile1|0.1.0 (this may not be a problem, but you should check that it's not intended to match a slice)"
+            },
+            "diagnostics" : "[31,13]",
+            "expression" : ["Observation.category[3]"]
+          }]
+        }
+      }
+    },
+    {
       "name": "zzz",
       "file": "zzz.json",
       "description": "hack to close ups",
