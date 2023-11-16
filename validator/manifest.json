@@ -18,6 +18,7 @@
     " * 'examples': if to allow http://example.org and http://acme.com references without validating them (spec mode)",
     " * 'security-checks': to turn out security check mode (off by default)",
     " * 'for-publication': turn on extra validation associated with publishing IGs",
+    " * 'ips': which ips to validate against (uv, au, nz...)",
     "For documentation about some of these, see the validator documentation",
     " * 'debug': produce debug output - leave this to false when committing",
     " * 'txLog': the name a file to produce a log of interactions with the txserver - for debugging purposes; doesn't make any difference to test outcomes",
@@ -37795,6 +37796,30 @@
       "name": "profile-default-value",
       "file": "profile-default-value.xml",
       "description": "Check default values are not allowed",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "invariant",
+              "details": {
+                "text": "Constraint failed: sdf-21: 'Default values can only be specified on specializations'"
+              },
+              "diagnostics": "[1,50]",
+              "expression": [
+                "StructureDefinition"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ips-nz-pj",
+      "file": "ips-nz-pj.json",
+      "ips" : "uv",
       "version": "4.0",
       "java": {
         "outcome": {
