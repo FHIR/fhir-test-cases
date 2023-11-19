@@ -484,7 +484,7 @@ Any text enclosed within is ignored
 	</group>
 
 	<group name="testCollectionBoolean">
-		<test name="testCollectionBoolean1" inputfile="patient-example.xml"><expression invalid="execution">iif(1 | 2 | 3, true, false)</expression></test>
+		<test name="testCollectionBoolean1" inputfile="patient-example.xml"><expression invalid="semantic">iif(1 | 2 | 3, true, false)</expression></test>
 		<test name="testCollectionBoolean2" inputfile="patient-example.xml"><expression>iif({}, true, false)</expression><output type="boolean">false</output></test>
 		<test name="testCollectionBoolean3" inputfile="patient-example.xml"><expression>iif(true, true, false)</expression><output type="boolean">true</output></test>
 		<test name="testCollectionBoolean4" inputfile="patient-example.xml"><expression>iif({} | true, true, false)</expression><output type="boolean">true</output></test>
@@ -593,6 +593,45 @@ Any text enclosed within is ignored
 		<test name="testIif2" inputfile="patient-example.xml"><expression>iif(Patient.name.empty(), 'unnamed', 'named') = 'named'</expression><output type="boolean">true</output></test>
 		<test name="testIif3" inputfile="patient-example.xml"><expression>iif(true, true, (1 | 2).toString())</expression><output type="boolean">true</output></test>
 		<test name="testIif4" inputfile="patient-example.xml"><expression>iif(false, (1 | 2).toString(), true)</expression><output type="boolean">true</output></test>
+		
+			<!-- optional false criteria -->
+		<test name="testIif5" inputfile="patient-example.xml">
+		    <expression>iif(false, 'true-result').empty()</expression>
+		    <output type="boolean">true</output>
+		</test>
+
+		<!-- Non boolean criteria -->
+		<test name="testIif6" inputfile="patient-example.xml">
+		    <expression mode="strict" invalid="semantic">iif('non boolean criteria', 'true-result', 'true-result')</expression>
+		</test>
+
+		<!-- No input collection -->
+		<test name="testIif7" inputfile="patient-example.xml">
+		    <expression>{}.iif(true, 'true-result', 'false-result')</expression>
+		    <output type="string">true-result</output>
+		</test>
+
+		<!-- Single item input collection -->
+		<test name="testIif8" inputfile="patient-example.xml">
+		    <expression>('item').iif(true, 'true-result', 'false-result')</expression>
+		    <output type="string">true-result</output>
+		</test>
+
+		<!-- Single item input collection $this verification-->
+		<test name="testIif9" inputfile="patient-example.xml">
+		    <expression>('context').iif(true, select($this), 'false-result')</expression>
+		    <output type="string">context</output>
+		</test>
+
+		<!-- Multiple item collection -->
+		<test name="testIif10" inputfile="patient-example.xml">
+		    <expression invalid="execution">('item1' | 'item2').iif(true, 'true-result', 'false-result')</expression>
+		</test>
+<!-- Verify the input collection is being set as the iterator for the iif function (on the single item) -->
+<test name="testIif11" inputfile="patient-example.xml">
+    <expression>('context').iif(true, $this, 'false-result')</expression>
+    <output type="string">context</output>
+</test>
 	</group>
 
 	<group name="testToInteger">
