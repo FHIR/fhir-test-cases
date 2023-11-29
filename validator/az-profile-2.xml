@@ -1,0 +1,207 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="VitalSignDE" />
+  <url value="http://fhir.de/StructureDefinition/observation-de-vitalsign" />
+  <version value="1.4.0" />
+  <name value="VitalSignDE" />
+  <status value="active" />
+  <date value="2020-05-14" />
+  <publisher value="HL7 Deutschland e.V. (Technisches Komitee FHIR)" />
+  <contact>
+    <telecom>
+      <system value="url" />
+      <value value="http://hl7.de/technische-komitees/fhir/" />
+    </telecom>
+  </contact>
+  <copyright value="HL7 Deutschland e.V." />
+  <fhirVersion value="4.0.1" />
+  <mapping>
+    <identity value="workflow" />
+    <uri value="http://hl7.org/fhir/workflow" />
+    <name value="Workflow Pattern" />
+  </mapping>
+  <mapping>
+    <identity value="sct-concept" />
+    <uri value="http://snomed.info/conceptdomain" />
+    <name value="SNOMED CT Concept Domain Binding" />
+  </mapping>
+  <mapping>
+    <identity value="v2" />
+    <uri value="http://hl7.org/v2" />
+    <name value="HL7 v2 Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="rim" />
+    <uri value="http://hl7.org/v3" />
+    <name value="RIM Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="w5" />
+    <uri value="http://hl7.org/fhir/fivews" />
+    <name value="FiveWs Pattern Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="sct-attr" />
+    <uri value="http://snomed.org/attributebinding" />
+    <name value="SNOMED CT Attribute Binding" />
+  </mapping>
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Observation" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Observation">
+      <path value="Observation" />
+      <constraint>
+        <key value="vs-de-2" />
+        <severity value="error" />
+        <human value="If there is no component or hasMember element then either a value[x] or a data absent reason must be present" />
+        <expression value="(component.empty() and hasMember.empty()) implies (dataAbsentReason.exists() or value.exists())" />
+        <source value="http://fhir.de/StructureDefinition/observation-de-vitalsign" />
+      </constraint>
+    </element>
+    <element id="Observation.category">
+      <path value="Observation.category" />
+      <slicing>
+        <discriminator>
+          <type value="pattern" />
+          <path value="$this" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+      <min value="1" />
+    </element>
+    <element id="Observation.category:vs-cat">
+      <path value="Observation.category" />
+      <sliceName value="vs-cat" />
+      <min value="1" />
+      <max value="1" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/observation-category" />
+          <code value="vital-signs" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.subject">
+      <path value="Observation.subject" />
+      <min value="1" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group" />
+      </type>
+    </element>
+    <element id="Observation.effective[x]">
+      <path value="Observation.effective[x]" />
+      <slicing>
+        <discriminator>
+          <type value="type" />
+          <path value="$this" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+      <min value="1" />
+    </element>
+    <element id="Observation.effective[x]:effectiveDateTime">
+      <path value="Observation.effective[x]" />
+      <sliceName value="effectiveDateTime" />
+      <type>
+        <code value="dateTime" />
+      </type>
+      <constraint>
+        <key value="vs-de-1" />
+        <severity value="error" />
+        <human value="If Observation.effective[x] is dateTime and has a value then that value shall be precise to the day" />
+        <expression value="$this.toString().length() &gt;= 8" />
+        <source value="http://fhir.de/StructureDefinition/observation-de-vitalsign" />
+      </constraint>
+    </element>
+    <element id="Observation.value[x]">
+      <path value="Observation.value[x]" />
+      <slicing>
+        <discriminator>
+          <type value="type" />
+          <path value="$this" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Observation.value[x]:valueQuantity">
+      <path value="Observation.value[x]" />
+      <sliceName value="valueQuantity" />
+      <type>
+        <code value="Quantity" />
+      </type>
+      <binding>
+        <strength value="required" />
+        <valueSet value="http://fhir.de/ValueSet/UcumVitalsCommonDE" />
+      </binding>
+    </element>
+    <element id="Observation.value[x]:valueQuantity.value">
+      <path value="Observation.value[x].value" />
+      <min value="1" />
+    </element>
+    <element id="Observation.value[x]:valueQuantity.unit">
+      <path value="Observation.value[x].unit" />
+      <min value="1" />
+    </element>
+    <element id="Observation.value[x]:valueQuantity.system">
+      <path value="Observation.value[x].system" />
+      <min value="1" />
+      <patternUri value="http://unitsofmeasure.org" />
+    </element>
+    <element id="Observation.value[x]:valueQuantity.code">
+      <path value="Observation.value[x].code" />
+      <min value="1" />
+    </element>
+    <element id="Observation.component">
+      <path value="Observation.component" />
+      <constraint>
+        <key value="vs-de-3" />
+        <severity value="error" />
+        <human value="If there is no a value a data absent reason must be present" />
+        <expression value="value.exists() xor dataAbsentReason.exists()" />
+        <source value="http://fhir.de/StructureDefinition/observation-de-vitalsign" />
+      </constraint>
+    </element>
+    <element id="Observation.component.value[x]">
+      <path value="Observation.component.value[x]" />
+      <slicing>
+        <discriminator>
+          <type value="type" />
+          <path value="$this" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Observation.component.value[x]:valueQuantity">
+      <path value="Observation.component.value[x]" />
+      <sliceName value="valueQuantity" />
+      <type>
+        <code value="Quantity" />
+      </type>
+      <binding>
+        <strength value="required" />
+        <valueSet value="http://fhir.de/ValueSet/UcumVitalsCommonDE" />
+      </binding>
+    </element>
+    <element id="Observation.component.value[x]:valueQuantity.value">
+      <path value="Observation.component.value[x].value" />
+      <min value="1" />
+    </element>
+    <element id="Observation.component.value[x]:valueQuantity.unit">
+      <path value="Observation.component.value[x].unit" />
+      <min value="1" />
+    </element>
+    <element id="Observation.component.value[x]:valueQuantity.system">
+      <path value="Observation.component.value[x].system" />
+      <min value="1" />
+      <patternUri value="http://unitsofmeasure.org" />
+    </element>
+    <element id="Observation.component.value[x]:valueQuantity.code">
+      <path value="Observation.component.value[x].code" />
+      <min value="1" />
+    </element>
+  </differential>
+</StructureDefinition>

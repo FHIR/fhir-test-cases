@@ -2,28 +2,56 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>ca.uhn.hapi.fhir</groupId>
-		<artifactId>hapi-deployable-pom</artifactId>
-		<version>4.0.0</version>
-	</parent>
 
-	<!--
-	Note: Version of this project and the version of HAPI FHIR are not locked to
-	each other. It is fine to bump the point version of this POM without affecting
-	HAPI FHIR.
-	-->
 	<groupId>org.hl7.fhir.testcases</groupId>
 	<artifactId>fhir-test-cases</artifactId>
-	<version>1.1.63-SNAPSHOT</version>
+	<version>1.4.19-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>HL7 FHIR Test Cases</name>
+	<description>An open-source implementation of the FHIR specification in Java.</description>
+	<url>https://hapifhir.io/hapi-deployable-pom/fhir-test-cases</url>
 
 	<organization>
 		<name>Health Level 7</name>
 		<url>http://hl7.org</url>
 	</organization>
+
+	<licenses>
+		<license>
+			<name>Apache Software License 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>jamesagnew</id>
+			<name>James Agnew</name>
+			<organization>Smile CDR</organization>
+		</developer>
+		<developer>
+			<id>grahamegrieve</id>
+			<name>Grahame Grieve</name>
+			<organization>Health Intersections</organization>
+		</developer>
+		<developer>
+			<id>markiantorno</id>
+			<name>Mark Iantorno</name>
+			<organization>Smile CDR</organization>
+		</developer>
+		<developer>
+			<id>davidotasek</id>
+			<name>David Otasek</name>
+			<organization>Smile CDR</organization>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git@github.com/FHIR/fhir-test-cases.git</connection>
+		<url>scm:git:git@github.com:FHIR/fhir-test-cases.git</url>
+		<developerConnection>scm:git:git@github.com:FHIR/fhir-test-cases.git</developerConnection>
+	</scm>
 
 	<dependencies>
 		<!-- Use logback for tests -->
@@ -36,6 +64,21 @@
 	</dependencies>
 
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.owasp</groupId>
+					<artifactId>dependency-check-maven</artifactId>
+					<version>8.2.1</version>
+					<configuration>
+						<suppressionFiles>
+							<suppressionFile>cve-suppression.xml</suppressionFile>
+						</suppressionFiles>
+						<formats>sarif,html</formats>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -98,6 +141,10 @@
 								<configuration>
 									<keyname>${gpg.keyname}</keyname>
 									<passphraseServerId>${gpg.keyname}</passphraseServerId>
+									<gpgArguments>
+									    <arg>--pinentry-mode</arg>
+									    <arg>loopback</arg>
+									</gpgArguments>
 								</configuration>
 							</execution>
 						</executions>
@@ -150,6 +197,37 @@
 								<configuration>
 									<keyname>${gpg.keyname}</keyname>
 									<passphraseServerId>${gpg.keyname}</passphraseServerId>
+									<gpgArguments>
+									    <arg>--pinentry-mode</arg>
+									    <arg>loopback</arg>
+									</gpgArguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>OWASP_CHECK</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.owasp</groupId>
+						<artifactId>dependency-check-maven</artifactId>
+						<configuration>
+							<suppressionFiles>
+								<suppressionFile>owasp-suppression-file.xml</suppressionFile>
+							</suppressionFiles>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>check</goal>
+								</goals>
+								<configuration>
+									<failBuildOnCVSS>10</failBuildOnCVSS>
+									<skipTestScope>true</skipTestScope>
 								</configuration>
 							</execution>
 						</executions>

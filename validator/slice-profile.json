@@ -1,0 +1,43 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "slice-profile",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/slice-profile",
+  "name": "SliceTestProfile",
+  "status": "draft",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [{
+      "path" : "Patient.telecom",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "system"
+        }],
+        "rules" : "open"
+      },
+      "constraint" : [{
+        "key" : "spt-1",
+        "severity" : "error",
+        "human" : "Phone numbers must have a use",
+        "expression" : "slice(%profile, 'phone').all(use.exists())"
+      }]
+    },{
+      "path" : "Patient.telecom",
+      "sliceName" : "phone"
+    },{
+      "path" : "Patient.telecom.system",
+      "fixedCode" : "phone"
+    },{
+      "path" : "Patient.telecom",
+      "sliceName" : "email"
+    },{
+      "path" : "Patient.telecom.system",
+      "fixedCode" : "email"
+    }]
+  }
+}

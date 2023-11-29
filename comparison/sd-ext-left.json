@@ -1,0 +1,196 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "allergyintolerance-substanceExposureRisk",
+  "text" : {
+    "status" : "extensions",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\">Placeholder</div>"
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "pc"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm",
+    "valueInteger" : 3
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status",
+    "valueCode" : "trial-use"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-type-characteristics",
+    "valueCode" : "can-bind"
+  }],
+  "url" : "http://hl7.org/fhir/StructureDefinition/allergyintolerance-substanceExposureRisk",
+  "identifier" : [{
+    "system" : "urn:ietf:rfc:3986",
+    "value" : "urn:oid:2.16.840.1.113883.4.642.5.1296"
+  }],
+  "version" : "1.1.0-cibuild",
+  "name" : "AISubstanceExposureRisk",
+  "title" : "AllergyIntolerance Substance Exposure Risk",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2015-02-21",
+  "publisher" : "HL7 International / FHIR Infrastructure",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/fiwg"
+    }]
+  }],
+  "description" : "A complex extension allowing structured capture of the exposure risk of the patient for an adverse reaction (allergy or intolerance) to the specified substance/product.",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001"
+    }]
+  }],
+  "fhirVersion" : "5.0.0",
+  "mapping" : [{
+    "identity" : "v2",
+    "uri" : "http://hl7.org/v2",
+    "name" : "HL7 v2 Mapping"
+  },
+  {
+    "identity" : "rim",
+    "uri" : "http://hl7.org/v3",
+    "name" : "RIM Mapping"
+  }],
+  "kind" : "complex-type",
+  "abstract" : false,
+  "context" : [{
+    "type" : "element",
+    "expression" : "AllergyIntolerance"
+  }],
+  "type" : "Extension",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Extension",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Extension",
+      "path" : "Extension",
+      "short" : "Exposure risk of adverse reaction (allergy or intolerance) to the specified substance/product",
+      "definition" : "A complex extension allowing structured capture of the exposure risk of the patient for an adverse reaction (allergy or intolerance) to the specified substance/product.",
+      "comment" : "This extension is available and is intended to be used as a more completely structured and flexible alternative to the 'code' element for representing positive and negative allergy and intolerance statements.  If this extension element is present, the AllergyIntolerance.code element SHALL be omitted (see invariant \"code or substanceExposureRisk\").",
+      "min" : 0,
+      "max" : "1",
+      "constraint" : [{
+        "key" : "inv-1",
+        "severity" : "error",
+        "human" : "If the substanceExposureRisk extension element is present, the AllergyIntolerance.code element must be omitted.",
+        "expression" : "substanceExposureRisk.exists() and code.empty()"
+      },{
+        "key" : "inv-2",
+        "severity" : "error",
+        "human" : "Something",
+        "expression" : "substanceExposureRisk.exists()"
+      }]
+    },
+    {
+      "id" : "Extension.extension:substance",
+      "path" : "Extension.extension",
+      "sliceName" : "substance",
+      "short" : "Substance (or pharmaceutical product)",
+      "definition" : "Code for a substance or pharmaceutical product that is considered to be responsible for the adverse reaction risk or is known not to have an associated risk of an adverse reaction upon exposure.",
+      "comment" : "It is strongly recommended that this element be populated using a terminology, where possible. For example, some terminologies used include RxNorm, SNOMED CT, DM+D, NDFRT, UNII, and ATC. Plain text should only be used if there is no appropriate terminology available. Additional details can be specified in the text.",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "Extension"
+      }],
+      "mapping" : [{
+        "identity" : "v2",
+        "map" : "AL1-3 / IAM-3"
+      },
+      {
+        "identity" : "rim",
+        "map" : ".participation[typeCode=CAGNT].role[classCode=ADMM].player[classCode=MAT, determinerCode=KIND, code <= ExposureAgentEntityType]"
+      }]
+    },
+    {
+      "id" : "Extension.extension:substance.extension",
+      "path" : "Extension.extension.extension",
+      "max" : "0"
+    },
+    {
+      "id" : "Extension.extension:substance.url",
+      "path" : "Extension.extension.url",
+      "type" : [{
+        "code" : "uri"
+      }],
+      "fixedUri" : "substance"
+    },
+    {
+      "id" : "Extension.extension:substance.value[x]",
+      "path" : "Extension.extension.value[x]",
+      "min" : 1,
+      "type" : [{
+        "code" : "Coding"
+      }],
+      "binding" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+          "valueString" : "SubstanceCode"
+        }],
+        "strength" : "example",
+        "description" : "Codes defining the type of the substance (including pharmaceutical products).",
+        "valueSet" : "http://hl7.org/fhir/ValueSet/substance-code"
+      }
+    },
+    {
+      "id" : "Extension.extension:exposureRisk",
+      "path" : "Extension.extension",
+      "sliceName" : "exposureRisk",
+      "short" : "known-reaction-risk | no-known-reaction-risk",
+      "definition" : "The presence or absence of a known exposure risk of the patient for an adverse reaction (allergy or intolerance) to the specified substance/product.",
+      "comment" : "exposureRisk is a modifier of the substance.",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "Extension"
+      }]
+    },
+    {
+      "id" : "Extension.extension:exposureRisk.extension",
+      "path" : "Extension.extension.extension",
+      "max" : "0"
+    },
+    {
+      "id" : "Extension.extension:exposureRisk.url",
+      "path" : "Extension.extension.url",
+      "type" : [{
+        "code" : "uri"
+      }],
+      "fixedUri" : "exposureRisk"
+    },
+    {
+      "id" : "Extension.extension:exposureRisk.value[x]",
+      "path" : "Extension.extension.value[x]",
+      "min" : 1,
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "binding" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+          "valueString" : "AllergyIntoleranceSubstanceExposureRisk"
+        }],
+        "strength" : "required",
+        "description" : "The risk of an adverse reaction (allergy or intolerance) for this patient upon exposure to the substance (including pharmaceutical products).",
+        "valueSet" : "http://hl7.org/fhir/ValueSet/allerg-intol-substance-exp-risk"
+      }
+    },
+    {
+      "id" : "Extension.url",
+      "path" : "Extension.url",
+      "fixedUri" : "http://hl7.org/fhir/StructureDefinition/allergyintolerance-substanceExposureRisk"
+    },
+    {
+      "id" : "Extension.value[x]",
+      "path" : "Extension.value[x]",
+      "min" : 0,
+      "max" : "0"
+    }]
+  }
+}

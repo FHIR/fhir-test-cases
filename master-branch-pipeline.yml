@@ -4,7 +4,7 @@ trigger:
 - master
 
 pool:
-  vmImage: "ubuntu-16.04"
+  vmImage: "ubuntu-20.04"
 
 variables:
 - group: PGP_VAR_GROUP
@@ -78,10 +78,11 @@ steps:
 
   # Import both the private and public keys into gpg for signing.
   - bash: |
-      gpg --import --no-tty --batch --yes $(Agent.TempDirectory)/public.key
-      gpg --import --no-tty --batch --yes $(Agent.TempDirectory)/private.key
+      gpg --import --batch --yes $(Agent.TempDirectory)/public.key
+      gpg --import --batch --yes $(Agent.TempDirectory)/private.key
       gpg --list-keys --keyid-format LONG
       gpg --list-secret-keys --keyid-format LONG
+      echo gpg --clearsign '$(System.DefaultWorkingDirectory)/pom.xml'
     displayName: 'Import signing keys.'
 
   # Deploy the SNAPSHOT artifact to sonatype nexus.

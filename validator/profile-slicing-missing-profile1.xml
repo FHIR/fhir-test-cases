@@ -1,0 +1,82 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="profile-slicing-missing-profile1"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/profile-slicing-missing-profile1"/>
+  <version value="0.1.0"/>
+  <name value="TestMissingProfile1"/>
+  <title value="Test Missing Profile #1"/>
+  <status value="draft"/>
+  <date value="2023-11-11T06:30:54+00:00"/>
+  <publisher value="HL7"/>
+  <fhirVersion value="4.0.0"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Observation.category"/>
+      <slicing>
+        <discriminator>
+          <type value="profile"/>
+          <path value="coding"/>
+        </discriminator>
+        <discriminator>
+          <type value="profile"/>
+          <path value="text"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+
+    <element>
+      <path value="Observation.category"/>
+      <sliceName value="slice1"/>
+      <min value="1"/>
+    </element>
+    <element>
+      <path value="Observation.category.coding"/>
+      <min value="1"/>
+      <type>
+        <code value="Coding"/>
+        <profile value="http://hl7.org/fhir/test/StructureDefinition/profile-slicing-missing-profile2"/>
+      </type>
+    </element>
+
+    <element>
+      <path value="Observation.category"/>
+      <sliceName value="slice2"/>
+      <min value="1"/>
+    </element>
+    <element>
+      <path value="Observation.category.coding"/>
+      <min value="1"/>
+      <type>
+        <code value="Coding"/>
+        <profile value="http://hl7.org/fhir/test/StructureDefinition/profile-slicing-missing-profile3"/>
+      </type>
+    </element>
+    <element>
+      <path value="Observation.category.text"/>
+      <type>
+        <code value="string"/>
+        <profile value="http://hl7.org/fhir/test/StructureDefinition/profile-slicing-missing-profile4"/>
+      </type>
+    </element>
+
+    <element>
+      <path value="Observation.category"/>
+      <sliceName value="slice3"/>
+      <min value="1"/>
+    </element>
+    <element>
+      <path value="Observation.category.text"/>
+      <min value="1"/>
+      <type>
+        <code value="string"/>
+        <profile value="http://hl7.org/fhir/test/StructureDefinition/profile-slicing-missing-profile5"/>
+      </type>
+    </element>
+
+  </differential>
+</StructureDefinition>

@@ -1,0 +1,56 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "pe-extension-simple",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/pe-extension-simple",
+  "version" : "0.1",
+  "name" : "TestSimpleExtension",
+  "title" : "Test Simple Extension",
+  "status" : "active",
+  "date" : "2019-05-21",
+  "publisher" : "HL7 International - Tooling Testing",
+  "description" : "A simple extension, an extension with just a value",
+  "copyright" : "CC0 Hl7",
+  "fhirVersion" : "5.0.0",
+  "kind" : "complex-type",
+  "abstract" : false,
+  "context" : [
+    {
+      "type" : "element",
+      "expression" : "Observation"
+    }
+  ],
+  "type" : "Extension",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Extension",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [
+      {
+        "path" : "Extension",
+        "short" : "A simple extension",
+        "definition" : "A simple extension - an extension with just a value",
+        "min" : 0,
+        "max" : "1",
+        "isModifier" : false
+      },
+      {
+        "path" : "Extension.url",
+        "fixedUri" : "http://hl7.org/fhir/test/StructureDefinition/pe-extension-simple"
+      },
+      {
+        "path" : "Extension.value[x]",
+        "min" : 1,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "code"
+          }
+        ],
+        "binding" : {
+          "strength" : "required",
+          "description" : "Code from a base value set",
+          "valueSet" : "http://hl7.org/fhir/example"
+        }
+      }
+    ]
+  }
+}

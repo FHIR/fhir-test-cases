@@ -1,0 +1,203 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "Slice23",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-category",
+      "valueString": "Foundation.Security"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-security-category",
+      "valueCode": "not-classified"
+    }
+  ],
+  "url": "http://hl7.org/fhir/test/StructureDefinition/Slice23",
+  "version": "0.1.1-current",
+  "name": "ThirdSliceProfile",
+  "title": "Profile defines one slice on .agent for user",
+  "status": "active",
+  "description": "Simple profile to set the stage",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "workflow",
+      "uri": "http://hl7.org/fhir/workflow",
+      "name": "Workflow Pattern"
+    },
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    },
+    {
+      "identity": "dicom",
+      "uri": "http://nema.org/dicom",
+      "name": "DICOM Tag Mapping"
+    },
+    {
+      "identity": "w5",
+      "uri": "http://hl7.org/fhir/fivews",
+      "name": "FiveWs Pattern Mapping"
+    },
+    {
+      "identity": "w3c.prov",
+      "uri": "http://www.w3.org/ns/prov",
+      "name": "W3C PROV"
+    },
+    {
+      "identity": "fhirprovenance",
+      "uri": "http://hl7.org/fhir/provenance",
+      "name": "FHIR Provenance Mapping"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "AuditEvent",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/AuditEvent",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "AuditEvent.agent",
+        "path": "AuditEvent.agent",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "pattern",
+              "path": "type"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "AuditEvent.agent.extension",
+        "path": "AuditEvent.agent.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "AuditEvent.agent.extension:extOtherId",
+        "path": "AuditEvent.agent.extension",
+        "sliceName": "extOtherId",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/test/StructureDefinition/OtherId"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "AuditEvent.agent.extension:extOtherId/npi",
+        "path": "AuditEvent.agent.extension",
+        "sliceName": "extOtherId/npi",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "AuditEvent.agent.extension:extOtherId/npi.valueIdentifier",
+        "path": "AuditEvent.agent.extension.valueIdentifier"
+      },
+      {
+        "id": "AuditEvent.agent.extension:extOtherId/npi.valueIdentifier.type",
+        "path": "AuditEvent.agent.extension.valueIdentifier.type",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "NPI",
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0203"
+            }
+          ]
+        }
+      },
+      {
+        "id": "AuditEvent.agent.extension:extOtherId/provider-id",
+        "path": "AuditEvent.agent.extension",
+        "sliceName": "extOtherId/provider-id",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "AuditEvent.agent.extension:extOtherId/provider-id.valueIdentifier",
+        "path": "AuditEvent.agent.extension.valueIdentifier"
+      },
+      {
+        "id": "AuditEvent.agent.extension:extOtherId/provider-id.valueIdentifier.type",
+        "path": "AuditEvent.agent.extension.valueIdentifier.type",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "PRN",
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0203"
+            }
+          ]
+        }
+      },
+      {
+        "id": "AuditEvent.agent:user",
+        "path": "AuditEvent.agent",
+        "sliceName": "user",
+        "min": 1,
+        "max": "*"
+      },
+      {
+        "id": "AuditEvent.agent:user.type",
+        "path": "AuditEvent.agent.type",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "IRCP",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ParticipationType",
+              "display": "information recipient"
+            }
+          ]
+        }
+      },
+      {
+        "id": "AuditEvent.agent:user.who",
+        "path": "AuditEvent.agent.who",
+        "min": 1
+      },
+      {
+        "id": "AuditEvent.agent:userorg",
+        "path": "AuditEvent.agent",
+        "sliceName": "userorg",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "AuditEvent.agent:userorg.type",
+        "path": "AuditEvent.agent.type",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "PROV",
+              "system": "http://terminology.hl7.org/CodeSystem/v3-RoleClass",
+              "display": "healthcare provider"
+            }
+          ]
+        }
+      },
+      {
+        "id": "AuditEvent.agent:userorg.who",
+        "path": "AuditEvent.agent.who",
+        "min": 1
+      }
+    ]
+  }
+}
