@@ -20852,7 +20852,7 @@
               "severity": "error",
               "code": "structure",
               "details": {
-                "text": "Invalid element name inside in a paragraph in the XHTML ('p')"
+                "text": "Invalid element name inside a paragraph in the XHTML ('p')"
               },
               "diagnostics": "[7,47]",
               "expression": [
@@ -33032,17 +33032,6 @@
               ]
             },
             {
-              "severity": "information",
-              "code": "not-found",
-              "details": {
-                "text": "Can't find 'urn:uuid:a6a8a8e6-415c-42e1-abf7-f8d876e5908b#MedicationSummary-d41ac499-c7e8-45fa-9246-69028bae178f' in the bundle (Bundle.entry[2].resource.extension[0].value[x])"
-              },
-              "diagnostics": "[1,2]",
-              "expression": [
-                "Bundle"
-              ]
-            },
-            {
               "severity": "error",
               "code": "structure",
               "details": {
@@ -33076,6 +33065,17 @@
               ]
             },
             {
+              "severity": "warning",
+              "code": "structure",
+              "details": {
+                "text": "Entry 'urn:uuid:d41ac499-c7e8-45fa-9246-69028bae178f' isn't reachable by traversing forwards from the Composition. Only Provenance is approved to be used this way (R4 section 3.3.1)"
+              },
+              "diagnostics": "[142,6]",
+              "expression": [
+                "Bundle.entry[7]"
+              ]
+            },
+            {
               "severity": "error",
               "code": "informational",
               "details": {
@@ -33084,17 +33084,6 @@
               "diagnostics": "[102,6]",
               "expression": [
                 "Bundle.entry[2]"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "informational",
-              "details": {
-                "text": "Entry 'urn:uuid:d41ac499-c7e8-45fa-9246-69028bae178f' isn't reachable by traversing links (forward or backward) from the Composition"
-              },
-              "diagnostics": "[142,6]",
-              "expression": [
-                "Bundle.entry[3]"
               ]
             },
             {
@@ -38342,6 +38331,91 @@
             }
           ]
         }
+      }
+    },
+    {
+      "name": "ips-htmlrefs-backwards",
+      "file": "ips-htmlrefs-backwards.json",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "The Extension 'http://hl7.org/fhir/StructureDefinition/narrativeLink' definition allows for the types [url] but found type uri"
+              },
+              "diagnostics": "[131,8]",
+              "expression": [
+                "Bundle.entry[2].resource/*AllergyIntolerance/null*/.extension[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "The Extension 'http://hl7.org/fhir/StructureDefinition/narrativeLink' definition allows for the types [url] but found type uri"
+              },
+              "diagnostics": "[170,8]",
+              "expression": [
+                "Bundle.entry[3].resource/*AllergyIntolerance/null*/.extension[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "not-found",
+              "details": {
+                "text": "Can't find 'urn:uuid:8ce7db7b-9b9b-41ae-b1d7-3f2d1c728a13' in the bundle (AllergyIntolerance-urn:uuid:edf25255-bfcd-4e29-a797-e89ea4ef000cXX)"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "Bundle"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "Found 2 matches for fragment AllergyIntolerance-urn:uuid:01ea6a58-df5f-4455-b6b2-7a31492be6b1 in resource 'urn:uuid:8ce7db7b-9b9b-41ae-b1d7-3f2d1c728a13' in the bundle (Bundle.entry[3].resource.extension[0].value[x])"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "Bundle"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ips-htmlrefs-forwards",
+      "file": "ips-htmlrefs-forwards.json",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "warning",
+            "code" : "structure",
+            "details" : {
+              "text" : "The target of the HTML idref attribute 'ai2' was not found in the resource"
+            },
+            "diagnostics" : "[15,701]",
+            "expression" : ["Bundle.entry[0].resource/*Composition/null*/.text.div"]
+          },
+          {
+            "severity" : "warning",
+            "code" : "structure",
+            "details" : {
+              "text" : "The target of the HTML idref attribute 'ai2' was not found in the resource"
+            },
+            "diagnostics" : "[45,635]",
+            "expression" : ["Bundle.entry[0].resource/*Composition/null*/.section[0].text.div"]
+          }]
+        }
+        
       }
     },
     {
