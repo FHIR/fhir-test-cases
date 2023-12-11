@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="ehealth-appointment" />
+  <url value="http://ehealth.sundhed.dk/fhir/StructureDefinition/ehealth-appointment" />
+  <name value="ehealth-appointment" />
+  <title value="eHealth Appointment" />
+  <status value="draft" />
+  <publisher value="ehealth.sundhed.dk" />
+  <description value="This profile models an ehealth appointment. It is only necessary to create one appointment even though it spans more than one participant. Allowed appointment participants are patients, practitioners, relatedpersons, and locations" />
+  <fhirVersion value="3.0.1" />
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Appointment" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Appointment" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Appointment">
+      <path value="Appointment" />
+      <short value="A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s)." />
+      <definition value="A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s)" />
+      <constraint>
+        <key value="responsible-1" />
+        <severity value="error" />
+        <human value="Ensuring that responsible entity is a participating party" />
+        <expression value="(extension('http://ehealth.sundhed.dk/fhir/StructureDefinition/ehealth-responsible').value.reference in participant.extension('http://ehealth.sundhed.dk/fhir/StructureDefinition/ehealth-ext-careteam').value.reference) or (extension('http://ehealth.sundhed.dk/fhir/StructureDefinition/ehealth-responsible').value.reference in participant.actor.reference)" />
+      </constraint>
+    </element>
+    <element id="Appointment.extension">
+      <path value="Appointment.extension" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Appointment.extension:legalBasis">
+      <path value="Appointment.extension" />
+      <sliceName value="legalBasis" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://ehealth.sundhed.dk/fhir/StructureDefinition/ehealth-legalBasis" />
+      </type>
+    </element>
+    <element id="Appointment.extension:legalBasis.valueCodeableConcept:valueCodeableConcept">
+      <path value="Appointment.extension.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <constraint>
+        <key value="governance-1" />
+        <severity value="error" />
+        <human value="When extension is used a Episode of Care MUST be referenced" />
+        <expression value="%resource.supportingInformation.reference.contains('EpisodeOfCare/')" />
+      </constraint>
+      <binding>
+        <strength value="required" />
+        <valueSet value="http://ehealth.sundhed.dk/vs/jurisdiction" />
+      </binding>
+    </element>
+  </differential>
+</StructureDefinition>

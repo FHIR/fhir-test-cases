@@ -9,13 +9,16 @@
         "source" : "cs-base-right.json",
         "version" : "4.0"
       },
+      "version" : {
+        "stated" : "1.0.0",
+        "filename" : "cs-base-diff.html"
+      },
       "output" : {
-        "errorCount" : 2,
+        "errorCount" : 1,
         "warningCount" : 1,
         "infoCount" : 4,
         "output" : [
           "Error	CodeSystem.url	Values for url differ: 'http://hl7.org/fhir/medication-admin-status' vs 'http://terminology.hl7.org/CodeSystem/medication-admin-status'",
-          "Error	CodeSystem.version	Values for version differ: '3.0.2' vs '4.0.1'",
           "Information	CodeSystem.name	Values for name differ: 'MedicationAdministrationStatus' vs 'MedicationAdministration Status Codes'",
           "Information	CodeSystem.publisher	Values for publisher differ: 'HL7 (FHIR Project)' vs 'FHIR Project team'",
           "Information	CodeSystem.concept.where(code='on-hold').definition	Changed value for definition: 'Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called 'suspended'.' vs 'Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called 'suspended'.'",
@@ -33,17 +36,25 @@
         "source" : "vs-base-right.json",
         "version" : "4.0"
       },
+      "version" : {
+        "stated" : "1.0.0",
+        "filename" : "vs-base-diff.html"
+      },
       "output" : {
-        "errorCount" : 2,
-        "warningCount" : 2,
-        "infoCount" : 2,
+        "errorCount" : 5,
+        "warningCount" : 4,
+        "infoCount" : 1,
         "output" : [
-          "Error	ValueSet.url	Values for url differ: 'http://hl7.org/fhir/test/ValueSet/vs-base-left' vs 'http://hl7.org/fhir/test/ValueSet/vs-base-right'",
-          "Error	ValueSet.version	Values for version differ: '1.0.2' vs '4.4.0'",
-          "Information	ValueSet.status	Values for status differ: 'draft' vs 'active'",
-          "Warning	ValueSet.experimental	Values for experimental differ: 'true' vs 'false'",
-          "Information	ValueSet.date	Values for date differ: '2015-10-24T07:41:03+11:00' vs '2020-05-03T08:43:35+10:00'",
-          "Warning	ValueSet.expansion.contains.name	Changed value for display: 'Low' vs 'Extra Low'"
+          "ERROR: ValueSet.url: Values for url differ: 'http://hl7.org/fhir/test/ValueSet/vs-base-left' vs 'http://hl7.org/fhir/test/ValueSet/vs-base-right'",
+          "INFORMATION: ValueSet.status: Values for status differ: 'draft' vs 'active'",
+          "WARNING: ValueSet.experimental: Values for experimental differ: 'true' vs 'false'",
+          "ERROR: ValueSet.compose.exclude[0]: Code A removed",
+          "ERROR: ValueSet.compose.exclude[0]: Code AA removed",
+          "WARNING: ValueSet.compose.exclude[0].concept[2]: Code L display 'Extra Low' added",
+          "WARNING: ValueSet.compose.exclude[0].concept[4]: Code P display 'Post' removed",
+          "WARNING: ValueSet.compose.exclude[0].concept[3]: Code H display changed from 'high' to 'higher'",
+          "ERROR: ValueSet.compose.exclude[0]: Code LL added",
+          "ERROR: ValueSet.compose.exclude[0]: Code HH added"
         ]
       }
     },
@@ -56,16 +67,51 @@
         "source" : "sd-simple-1-right.json",
         "version" : "4.0"
       },
+      "version" : {
+        "stated" : "1.0.0",
+        "filename-dd" : "sd-simple-1-dd-diff.html",
+        "filename-tree" : "sd-simple-1-tree-diff.html"
+      },
       "output" : {
-        "errorCount" : 2,
+        "errorCount" : 1,
         "warningCount" : 1,
+        "infoCount" : 8,
+        "output" : [
+          "ERROR: StructureDefinition.url: Values for url differ: 'http://hl7.org/fhir/sd-simple-1-left' vs 'http://hl7.org/fhir/sd-simple-1-right'",
+          "INFORMATION: StructureDefinition.name: Values for name differ: 'SimpleProfileLeft' vs 'SimpleProfileRight'",
+          "INFORMATION: StructureDefinition.jurisdiction: Added the item 'urn:iso:std:iso:3166#US'",
+          "INFORMATION: StructureDefinition.short: Values for short differ: 'Short Comment (left)' vs 'Short Comment (right)'",
+          "INFORMATION: StructureDefinition.definition: Values for definition differ: 'This is *hard*' vs 'This is *not hard*'",
+          "WARNING: Practitioner.identifier: Elements differ in short: 'Short Comment (left)' vs 'Short Comment (right)'",
+          "WARNING: Practitioner.identifier: Elements differ in definition for mustSupport: 'true' vs 'false'",
+          "INFORMATION: Practitioner.identifier: Element minimum cardinalities differ:  '1' vs '0'",
+          "INFORMATION: Practitioner.identifier: Element maximum cardinalities differ:  '2147483647' vs '1'",
+          "INFORMATION: Practitioner.active: Element minimum cardinalities differ:  '1' vs '0'",
+          "INFORMATION: Practitioner.name: Element minimum cardinalities differ:  '1' vs '0'"
+        ]
+      }
+    },
+    "extension-comparison-complex" : {
+      "left" : {
+        "source" : "sd-ext-left.json",
+        "version" : "4.0"
+      },
+      "right" : {
+        "source" : "sd-ext-right.json",
+        "version" : "4.0"
+      },
+      "version" : {
+        "stated" : "1.0.0",
+        "filename-dd" : "sd-ext-dd-diff.html",
+        "filename-tree" : "sd-ext-tree-diff.html"
+      },
+      "output" : {
+        "errorCount" : 0,
+        "warningCount" : 0,
         "infoCount" : 2,
         "output" : [
-          "Error	StructureDefinition.url	Values for url differ: 'http://hl7.org/fhir/sd-simple-1-left' vs 'http://hl7.org/fhir/sd-simple-1-right'",
-          "Information	StructureDefinition.name	Values for name differ: 'SimpleProfileLeft' vs 'SimpleProfileRight'",
-          "Information	StructureDefinition.jurisdiction	Added the item 'urn:iso:std:iso:3166#US'",
-          "Warning	Practitioner.identifier	Elements differ in short: 'Short Comment (left)' 'Short Comment (right)'",
-          "Error	Practitioner.identifier	Elements differ in definition for mustSupport: 'true' 'false'"
+          "INFORMATION: Extension: Element minimum cardinalities differ:  '0' vs '1'",
+          "INFORMATION: Extension: Element maximum cardinalities differ:  '1' vs '2147483647'"
         ]
       }
     },

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Questionnaire xmlns="http://hl7.org/fhir">
+  <id value="hai-ltcf-questionnaire-mdro-cdi-event"/>
+  <language value="en-US"/>
+  <url value="http://hl7.org/fhir/us/hai-ltcf/Questionnaire/hai-ltcf-questionnaire-mdro-cdi-event"/>
+  <identifier>
+    <value value="hai-questionnaire-los-event-v1"/>
+  </identifier>
+  <version value="1.0.0"/>
+  <name value="HAI_LTCF_questionnaire_mdro_cdi_event"/>
+  <title value="HAI Laboratory Identified MDRO or CDI Event Report for LTCF"/>
+  <status value="draft"/>
+  <subjectType value="Patient"/>
+  <date value="2019-08-01"/>
+  <publisher value="HL7 Public Health Work Group (http://www.hl7.org/Special/committees/pher/index.cfm)"/>
+  <contact>
+    <name value="HL7 International - Public Health"/>
+    <telecom>
+      <system value="url"/>
+      <value value="http://www.hl7.org/Special/committees/pher"/>
+    </telecom>
+  </contact>
+  <description value="This Questionnaire instance records the laboratory identification of a MDRO or CDI microorganism. These reports are submitted if the LTC facility is monitoring the organism specified. Each report records a single organism event. Information regarding the resident's care location, type of primary service and date of current admission are recorded. &#xA;&#xA;Key Encounter data in the report includes:&#xA;* The date of the current admission to the facility location where the specimen was collected.&#xA;* The date of specimen collection.&#xA;Key Finding data in this report includes:&#xA;* Information on the type of organism and the date which it was collected.&#xA;&#xA;For further details see the NHSN website [https://www.cdc.gov/nhsn/](https://www.cdc.gov/nhsn/) for reporting healthcare-associated infections in long-term care facilities. The concepts reported in this Questionnaire are defined for the NHSN &quot;*LabID Event Protocol for LTCF*&quot; and the corresponding data collection form &quot;*57.138 LabID Event Form for LTCF"/>
+  <jurisdiction>
+    <coding>
+      <system value="urn:iso:std:iso:3166"/>
+      <code value="US"/>
+    </coding>
+  </jurisdiction>
+  <code>
+    <system value="http://loinc.org"/>
+    <code value="51897-7"/>
+    <display value="Healthcare Associated Infection report Document"/>
+  </code>
+  <item>
+    <linkId value="facility-id"/>
+    <text value="Facility ID"/>
+    <type value="url"/>
+    <required value="true"/>
+    <repeats value="false"/>
+  </item>
+  <item>
+    <linkId value="date-of-first-admission-to-facility"/>
+    <text value="Date of First Admission to Facility"/>
+    <type value="date"/>
+    <required value="true"/>
+    <repeats value="false"/>
+  </item>
+  <item>
+    <linkId value="date-of-current-admission-to-facility"/>
+    <text value="Date of Current Admission to Facility"/>
+    <type value="date"/>
+    <required value="true"/>
+    <repeats value="false"/>
+  </item>
+  <item>
+    <linkId value="event-details-group"/>
+    <code>
+      <system value="http://loinc.org"/>
+      <code value="51899-3"/>
+      <display value="Details Document"/>
+    </code>
+    <text value="Event Details Group"/>
+    <type value="group"/>
+    <required value="true"/>
+    <repeats value="false"/>
+    <item>
+      <linkId value="event-details-group-display"/>
+      <text value="The Event Details Group records details about the event."/>
+      <type value="display"/>
+    </item>
+    <item>
+      <linkId value="date-specimen-collected"/>
+      <text value="Date Specimen Collected"/>
+      <type value="date"/>
+      <required value="true"/>
+      <repeats value="false"/>
+    </item>
+    <item>
+      <linkId value="specimen-type"/>
+      <text value="Specimen Type"/>
+      <type value="choice"/>
+      <required value="true"/>
+      <repeats value="false"/>
+      <answerValueSet value="http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.3249"/>
+    </item>
+    <item>
+      <linkId value="resident-care-location"/>
+      <text value="Resident Care Location"/>
+      <type value="url"/>
+      <required value="true"/>
+      <repeats value="false"/>
+    </item>
+    <item>
+      <linkId value="primary-resident-service-type"/>
+      <text value="Primary Resident Service Type"/>
+      <type value="choice"/>
+      <required value="true"/>
+      <repeats value="false"/>
+      <answerValueSet value="http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.113883.10.20.5.1.5.9.3"/>
+    </item>
+  </item>
+  <item>
+    <linkId value="encounters-group"/>
+    <code>
+      <system value="http://loinc.org"/>
+      <code value="46240-8"/>
+      <display value="Hx of Hospitalizations+OP visits"/>
+    </code>
+    <text value="Encounters Group"/>
+    <type value="group"/>
+    <required value="true"/>
+    <repeats value="true"/>
+    <item>
+      <linkId value="encounters-group-display"/>
+      <text value="The Encounters Group records the first admission date to the facility along with whether or not the resident was transferred from an acute care facility in the past four weeks."/>
+      <type value="display"/>
+    </item>
+    <item>
+      <linkId value="transfer-from-acute-care-facility"/>
+      <text value="Transfer From Acute Care Facility to LTCF in Past Four Weeks"/>
+      <type value="boolean"/>
+      <required value="true"/>
+      <repeats value="false"/>
+    </item>
+    <item>
+      <linkId value="date-of-last-transfer"/>
+      <text value="Date of Last Transfer From Acute Care to LTCF"/>
+      <type value="date"/>
+      <enableWhen>
+        <question value="transfer-from-acute-care-facility"/>
+        <operator value="="/>
+        <answerBoolean value="true"/>
+      </enableWhen>
+      <required value="false"/>
+      <repeats value="false"/>
+    </item>
+    <item>
+      <linkId value="antibiotic-at-time-of-transfer"/>
+      <text value="Resident on Antibiotic Therapy for Specific Organism at Time of Transfer to Facility"/>
+      <type value="boolean"/>
+      <enableWhen>
+        <question value="transfer-from-acute-care-facility"/>
+        <operator value="="/>
+        <answerBoolean value="true"/>
+      </enableWhen>
+      <required value="false"/>
+      <repeats value="false"/>
+    </item>
+  </item>
+  <item>
+    <linkId value="findings-group"/>
+    <code>
+      <system value="http://loinc.org"/>
+      <code value="18769-0"/>
+      <display value="Microbial susceptibility tests Set"/>
+    </code>
+    <text value="Findings Group"/>
+    <type value="group"/>
+    <required value="true"/>
+    <repeats value="true"/>
+    <item>
+      <linkId value="findings-group-display"/>
+      <text value="The Findings Group records a laboratory-identified microorganism. It records one microorganism (if more were identified, each is recorded in a separate QuestionnaireResponse), and details about the specimen collection."/>
+      <type value="display"/>
+    </item>
+    <item>
+      <linkId value="specific-organism-type"/>
+      <text value="Specific Organism Type"/>
+      <type value="choice"/>
+      <required value="true"/>
+      <repeats value="false"/>
+      <answerValueSet value="http://cts.nlm.nih.gov/fhir/ValueSet/2.16.840.1.114222.4.11.3194"/>
+    </item>
+  </item>
+  <item>
+    <linkId value="nhsn-comment"/>
+    <code>
+      <system value="http://loinc.org"/>
+      <code value="86468-6"/>
+      <display value="Report Comment Section"/>
+    </code>
+    <text value="Comments"/>
+    <type value="text"/>
+    <required value="false"/>
+    <repeats value="false"/>
+    <maxLength value="2000"/>
+  </item>
+</Questionnaire>

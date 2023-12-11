@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="KBV-PR-Base-Medication"/>
+  <url value="https://fhir.kbv.de/StructureDefinition/KBV_PR_Base_Medication" />
+  <version value="1.3.0" />
+  <name value="KBV_PR_Base_Medication" />
+  <status value="draft" />
+  <fhirVersion value="4.0.1" />
+  <mapping>
+    <identity value="script10.6" />
+    <uri value="http://ncpdp.org/SCRIPT10_6" />
+    <name value="Mapping to NCPDP SCRIPT 10.6" />
+  </mapping>
+  <mapping>
+    <identity value="rim" />
+    <uri value="http://hl7.org/v3" />
+    <name value="RIM Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="w5" />
+    <uri value="http://hl7.org/fhir/fivews" />
+    <name value="FiveWs Pattern Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="v2" />
+    <uri value="http://hl7.org/v2" />
+    <name value="HL7 v2 Mapping" />
+  </mapping>
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Medication" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Medication" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Medication">
+      <path value="Medication" />
+      <definition value="Hier können Informationen zu einem Fertigarzneimittel oder einer Rezeptur angegeben werden. &#xD;&#xA;&#xD;&#xA;In diesem Profil können in Falle von komplexen Packungen auf Submedikamente (ingredient.itemreference) verwiesen werden. Diese Submedikamente dürfen dann nicht die PZN des Hauptarzneimittels enthalten, da über die Angabe der PZN auch das Hauptarzneimittel gefunden werden kann, aber die Teile in dieser Zusammensetzung auch einfach keine eigenständige PZN haben." />
+    </element>
+    <element id="Medication.extension">
+      <path value="Medication.extension" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Medication.extension:Kategorie">
+      <path value="Medication.extension" />
+      <sliceName value="Kategorie" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="https://fhir.kbv.de/StructureDefinition/KBV_EX_Base_Medication_Type" />
+      </type>
+    </element>
+    <element id="Medication.extension:Kategorie.value[x]">
+      <path value="Medication.extension.value[x]" />
+      <min value="1" />
+    </element>
+    <element id="Medication.extension:Kategorie.value[x]:valueCodeableConcept">
+      <path value="Medication.extension.value[x]" />
+      <sliceName value="valueCodeableConcept" />
+      <min value="1" />
+    </element>
+    <element id="Medication.code">
+      <path value="Medication.code" />
+      <definition value="Dieses Element beinhaltet die Bezeichnung des Arzneimittels oder der Rezeptur, entweder in einem geeigneten Codesystem kodiert oder als Freitext." />
+      <min value="1" />
+    </element>
+    <element id="Medication.code.coding">
+      <path value="Medication.code.coding" />
+      <slicing>
+        <discriminator>
+          <type value="pattern" />
+          <path value="$this" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Medication.code.coding:pznCode">
+      <path value="Medication.code.coding" />
+      <sliceName value="pznCode" />
+	  <max value="1"/>	  
+      <type>
+        <code value="Coding" />
+        <profile value="http://fhir.de/StructureDefinition/CodingPZN" />
+      </type>
+      <patternCoding>
+        <system value="http://fhir.de/CodeSystem/ifa/pzn" />
+      </patternCoding>
+    </element>
+    <element id="Medication.code.coding:snomedCode">
+      <path value="Medication.code.coding" />
+      <sliceName value="snomedCode" />
+      <patternCoding>
+        <system value="http://snomed.info/sct" />
+      </patternCoding>
+    </element>
+    <element id="Medication.code.coding:snomedCode.system">
+      <path value="Medication.code.coding.system" />
+      <min value="1" />
+    </element>
+    <element id="Medication.code.coding:snomedCode.code">
+      <path value="Medication.code.coding.code" />
+      <min value="1" />
+    </element>
+    <element id="Medication.code.coding:atcCode">
+      <path value="Medication.code.coding" />
+      <sliceName value="atcCode" />
+      <definition value="Falls ein Fertigarzneimittel angegeben wird, kann hier der entsprechende deutsche ATC-Code dokumentiert werden. Es ist erlaubt, zusätzlich den Wirkstoff mit einem anderen Code unter Bestandteile zu dokumentieren." />
+      <type>
+        <code value="Coding" />
+        <profile value="http://fhir.de/StructureDefinition/CodingATC" />
+      </type>
+      <patternCoding>
+        <system value="http://fhir.de/CodeSystem/bfarm/atc" />
+      </patternCoding>
+    </element>
+    <element id="Medication.form.coding">
+      <path value="Medication.form.coding" />
+      <slicing>
+        <discriminator>
+          <type value="pattern" />
+          <path value="$this" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+      <definition value="Diese Gruppe enthält die Bezeichnung / den Namen der Darreichungsform als Code oder als Freitexteintrag." />
+    </element>
+    <element id="Medication.form.coding:snomedCode">
+      <path value="Medication.form.coding" />
+      <sliceName value="snomedCode" />
+      <patternCoding>
+        <system value="http://snomed.info/sct" />
+      </patternCoding>
+    </element>
+    <element id="Medication.form.coding:snomedCode.system">
+      <path value="Medication.form.coding.system" />
+      <min value="1" />
+    </element>
+    <element id="Medication.form.coding:snomedCode.code">
+      <path value="Medication.form.coding.code" />
+      <min value="1" />
+    </element>
+    <element id="Medication.form.coding:edqmCode">
+      <path value="Medication.form.coding" />
+      <sliceName value="edqmCode" />
+      <patternCoding>
+        <system value="http://standardterms.edqm.eu" />
+      </patternCoding>
+      <binding>
+        <strength value="required" />
+        <valueSet value="https://fhir.kbv.de/ValueSet/KBV_VS_Base_EDQM" />
+      </binding>
+    </element>
+    <element id="Medication.form.coding:edqmCode.system">
+      <path value="Medication.form.coding.system" />
+      <min value="1" />
+    </element>
+    <element id="Medication.form.coding:edqmCode.code">
+      <path value="Medication.form.coding.code" />
+      <min value="1" />
+    </element>
+    <element id="Medication.form.coding:kbvDarreichungsform">
+      <path value="Medication.form.coding" />
+      <sliceName value="kbvDarreichungsform" />
+      <patternCoding>
+        <system value="https://fhir.kbv.de/CodeSystem/KBV_CS_SFHIR_KBV_DARREICHUNGSFORM" />
+      </patternCoding>
+      <binding>
+        <strength value="required" />
+        <valueSet value="https://fhir.kbv.de/ValueSet/KBV_VS_SFHIR_KBV_DARREICHUNGSFORM" />
+      </binding>
+    </element>
+    <element id="Medication.form.coding:kbvDarreichungsform.system">
+      <path value="Medication.form.coding.system" />
+      <min value="1" />
+    </element>
+    <element id="Medication.form.coding:kbvDarreichungsform.code">
+      <path value="Medication.form.coding.code" />
+      <min value="1" />
+    </element>
+<!--
+    <element id="Medication.ingredient">
+      <path value="Medication.ingredient" />
+      <definition value="Hier können Bestandteile, die Wirkstoffe oder keine Wirkstoffe sind, erfasst werden." />
+    </element>
+    <element id="Medication.ingredient.item[x]">
+      <path value="Medication.ingredient.item[x]" />
+      <slicing>
+        <discriminator>
+          <type value="type" />
+          <path value="$this" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+      <definition value="Hier kann ein Bestandteil eingetragen werden." />
+    </element>
+    <element id="Medication.ingredient.item[x]:itemCodeableConcept">
+      <path value="Medication.ingredient.item[x]" />
+      <sliceName value="itemCodeableConcept" />  
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+    </element>
+    <element id="Medication.ingredient.item[x]:itemCodeableConcept.coding">
+      <path value="Medication.ingredient.item[x].coding" />
+      <slicing>
+        <discriminator>
+          <type value="pattern" />
+          <path value="$this" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Medication.ingredient.item[x]:itemCodeableConcept.coding:askCode">
+      <path value="Medication.ingredient.item[x].coding" />
+      <sliceName value="askCode" />
+      <type>
+        <code value="Coding" />
+        <profile value="http://fhir.de/StructureDefinition/CodingASK" />
+      </type>
+      <patternCoding>
+        <system value="http://fhir.de/CodeSystem/ask" />
+      </patternCoding>
+    </element>
+    <element id="Medication.ingredient.item[x]:itemCodeableConcept.coding:snomedCode">
+      <path value="Medication.ingredient.item[x].coding" />
+      <sliceName value="snomedCode" />
+      <patternCoding>
+        <system value="http://snomed.info/sct" />
+      </patternCoding>
+    </element>
+    <element id="Medication.ingredient.item[x]:itemCodeableConcept.coding:snomedCode.system">
+      <path value="Medication.ingredient.item[x].coding.system" />
+      <min value="1" />
+    </element>
+    <element id="Medication.ingredient.item[x]:itemCodeableConcept.coding:snomedCode.code">
+      <path value="Medication.ingredient.item[x].coding.code" />
+      <min value="1" />
+    </element>
+    <element id="Medication.ingredient.item[x]:itemReference">
+      <path value="Medication.ingredient.item[x]" />
+      <sliceName value="itemReference" />	  
+      <type>
+        <code value="Reference" />
+        <targetProfile value="https://fhir.kbv.de/StructureDefinition/KBV_PR_Base_Medication|1.3.0" />
+      </type>	  
+    </element>
+    <element id="Medication.ingredient.item[x]:itemReference.reference">
+      <path value="Medication.ingredient.item[x].reference" />
+      <min value="1" />
+    </element>
+    -->
+    <element id="Medication.ingredient.strength">
+      <path value="Medication.ingredient.strength" />
+      <definition value="Hier kann angegeben werden, in welcher Menge der genannte Wirkstoff im Medikament vorhanden ist." />
+    </element>
+    <element id="Medication.ingredient.strength.numerator.value">
+      <path value="Medication.ingredient.strength.numerator.value" />
+      <definition value="Hier wird die Menge des enthaltenen Bestandteils als Zahl angegeben." />
+    </element>
+    <element id="Medication.ingredient.strength.denominator.value">
+      <path value="Medication.ingredient.strength.denominator.value" />
+      <definition value="Hier wird die Bezugsgröße angegeben, in der die genannte Menge enthalten ist.&#xD;&#xA;Beispiele: 1 Tbl, 1 ml Lösung, 1 Fertigspritze, ... (in allen genannten Beispielen wäre 1 als Zahl der Bezugsgröße anzugeben)" />
+    </element>
+  </differential>
+</StructureDefinition>

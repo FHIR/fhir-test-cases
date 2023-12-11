@@ -1,0 +1,398 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "ratio-measure-cqfm",
+  "url": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/ratio-measure-cqfm",
+  "version": "4.0.0",
+  "name": "CQFMRatioMeasure",
+  "title": "CQFM Ratio Measure",
+  "status": "active",
+  "experimental": false,
+  "date": "2019-02-13",
+  "publisher": "Clinical Quality Information WG",
+  "contact": [
+    {
+      "telecom": [
+        {
+          "system": "url",
+          "value": "http://www.hl7.org/Special/committees/cqi/index.cfm"
+        }
+      ]
+    }
+  ],
+  "description": "The CQFM Ratio Measure Profile describes a ratio scoring measure",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "US"
+        }
+      ]
+    }
+  ],
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    },
+    {
+      "identity": "workflow",
+      "uri": "http://hl7.org/fhir/workflow",
+      "name": "Workflow Pattern"
+    },
+    {
+      "identity": "w5",
+      "uri": "http://hl7.org/fhir/fivews",
+      "name": "FiveWs Pattern Mapping"
+    },
+    {
+      "identity": "objimpl",
+      "uri": "http://hl7.org/fhir/object-implementation",
+      "name": "Object Implementation Information"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Measure",
+  "baseDefinition": "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/measure-cqfm",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Measure",
+        "path": "Measure",
+        "mustSupport": false
+      },
+      {
+        "id": "Measure.scoring",
+        "path": "Measure.scoring",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+              "code": "ratio"
+            }
+          ]
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group",
+        "path": "Measure.group",
+        "min": 1,
+        "max": "*",
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population",
+        "path": "Measure.group.population",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "code"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 4,
+        "max": "8",
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:initialPopulation",
+        "path": "Measure.group.population",
+        "sliceName": "initialPopulation",
+        "short": "Initial Population",
+        "min": 1,
+        "max": "2",
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:initialPopulation.extension:populationBasis",
+        "path": "Measure.group.population.extension",
+        "sliceName": "populationBasis",
+        "short": "Allows the populationBasis for that population to be overridden. If not present, the populationBasis of the measure (or group) is used. If present, it specifies the population basis for all the expressions that use it as the initial population in the ratio measure.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-populationBasis"
+            ]
+          }
+        ],
+        "mustSupport": false
+      },
+      {
+        "id": "Measure.group.population:initialPopulation.code",
+        "path": "Measure.group.population.code",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+              "code": "initial-population"
+            }
+          ]
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:denominator",
+        "path": "Measure.group.population",
+        "sliceName": "denominator",
+        "short": "Denominator",
+        "min": 1,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:denominator.extension:criteriaReference",
+        "path": "Measure.group.population.extension",
+        "sliceName": "criteriaReference",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-criteriaReference"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:denominator.code",
+        "path": "Measure.group.population.code",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+              "code": "denominator"
+            }
+          ]
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:denominatorExclusion",
+        "path": "Measure.group.population",
+        "sliceName": "denominatorExclusion",
+        "short": "Denominator Exclusion",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:denominatorExclusion.extension:criteriaReference",
+        "path": "Measure.group.population.extension",
+        "sliceName": "criteriaReference",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-criteriaReference"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:denominatorExclusion.code",
+        "path": "Measure.group.population.code",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+              "code": "denominator-exclusion"
+            }
+          ]
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:numerator",
+        "path": "Measure.group.population",
+        "sliceName": "numerator",
+        "short": "Numerator",
+        "min": 1,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:numerator.extension:criteriaReference",
+        "path": "Measure.group.population.extension",
+        "sliceName": "criteriaReference",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-criteriaReference"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:numerator.code",
+        "path": "Measure.group.population.code",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+              "code": "numerator"
+            }
+          ]
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:numeratorExclusion",
+        "path": "Measure.group.population",
+        "sliceName": "numeratorExclusion",
+        "short": "Numerator Exclusion",
+        "min": 0,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:numeratorExclusion.extension:criteriaReference",
+        "path": "Measure.group.population.extension",
+        "sliceName": "criteriaReference",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-criteriaReference"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:numeratorExclusion.code",
+        "path": "Measure.group.population.code",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+              "code": "numerator-exclusion"
+            }
+          ]
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:measureObservation",
+        "path": "Measure.group.population",
+        "sliceName": "measureObservation",
+        "short": "Measure Observation",
+        "min": 1,
+        "max": "2",
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:measureObservation.extension:criteriaReference",
+        "path": "Measure.group.population.extension",
+        "sliceName": "criteriaReference",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-criteriaReference"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:measureObservation.extension:aggregateMethod",
+        "path": "Measure.group.population.extension",
+        "sliceName": "aggregateMethod",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/us/cqfmeasures/StructureDefinition/cqfm-aggregateMethod"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Measure.group.population:measureObservation.code",
+        "path": "Measure.group.population.code",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+              "code": "measure-observation"
+            }
+          ]
+        },
+        "mustSupport": true
+      }
+    ]
+  }
+}

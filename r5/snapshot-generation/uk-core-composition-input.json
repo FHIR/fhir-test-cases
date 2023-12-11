@@ -1,0 +1,353 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "UKCore-Composition",
+  "url": "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Composition",
+  "version": "2.0.0",
+  "name": "UKCoreComposition",
+  "title": "UK Core Composition",
+  "status": "draft",
+  "date": "2021-09-10",
+  "publisher": "HL7 UK",
+  "contact": [
+    {
+      "name": "HL7 UK",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "secretariat@hl7.org.uk",
+          "use": "work",
+          "rank": 1
+        }
+      ]
+    },
+    {
+      "name": "NHS Digital",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "interoperabilityteam@nhs.net",
+          "use": "work",
+          "rank": 2
+        }
+      ]
+    }
+  ],
+  "description": "Defines the UK Core constraints and extensions on the Composition resource to enable a generic and flexible approach to FHIR document structures.",
+  "purpose": "This profile allows a record of a set of healthcare-related information that is assembled together into a single logical package that provides a single coherent statement of meaning, establishes its own context and that has clinical attestation with regard to who is making the statement. A Composition defines the structure and narrative content necessary for a document. However, a Composition alone does not constitute a document. Rather, the Composition must be the first entry in a Bundle where Bundle.type=document, and any other resources referenced from Composition must be included as subsequent entries in the Bundle (for example Patient, Practitioner, Encounter, etc.).",
+  "copyright": "Copyright © 2021+ HL7 UK Licensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. HL7® FHIR® standard Copyright © 2011+ HL7 The HL7® FHIR® standard is used under the FHIR license. You may obtain a copy of the FHIR license at  https://www.hl7.org/fhir/license.html.",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "workflow",
+      "uri": "http://hl7.org/fhir/workflow",
+      "name": "Workflow Pattern"
+    },
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    },
+    {
+      "identity": "cda",
+      "uri": "http://hl7.org/v3/cda",
+      "name": "CDA (R2)"
+    },
+    {
+      "identity": "fhirdocumentreference",
+      "uri": "http://hl7.org/fhir/documentreference",
+      "name": "FHIR DocumentReference"
+    },
+    {
+      "identity": "w5",
+      "uri": "http://hl7.org/fhir/fivews",
+      "name": "FiveWs Pattern Mapping"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Composition",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Composition",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Composition.identifier.assigner",
+        "path": "Composition.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.type",
+        "path": "Composition.type",
+        "short": "Kind of composition (SNOMED CT)",
+        "binding": {
+          "strength": "extensible",
+          "description": "SNOMED CT Document Type",
+          "valueSet": "https://fhir.hl7.org.uk/ValueSet/UKCore-DocumentType"
+        }
+      },
+      {
+        "id": "Composition.category",
+        "path": "Composition.category",
+        "definition": "A categorization for the type of the composition - helps for indexing and searching. This may be implied by or derived from the code specified in the Composition Type.\r\nFurther investgation is required about the usage of this element for UK Core."
+      },
+      {
+        "id": "Composition.subject.identifier.assigner",
+        "path": "Composition.subject.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.encounter",
+        "path": "Composition.encounter",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Encounter"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.encounter.identifier.assigner",
+        "path": "Composition.encounter.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.author",
+        "path": "Composition.author",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Device",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Practitioner",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-PractitionerRole",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Patient",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-RelatedPerson",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.author.identifier.assigner",
+        "path": "Composition.author.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.attester.party",
+        "path": "Composition.attester.party",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Patient",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-RelatedPerson",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Practitioner",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-PractitionerRole",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.attester.party.identifier.assigner",
+        "path": "Composition.attester.party.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.custodian",
+        "path": "Composition.custodian",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.custodian.identifier.assigner",
+        "path": "Composition.custodian.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.event.detail.reference.identifier.assigner",
+        "path": "Composition.event.detail.reference.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.section.code",
+        "path": "Composition.section.code",
+        "binding": {
+          "strength": "extensible",
+          "valueSet": "https://fhir.hl7.org.uk/ValueSet/UKCore-CompositionSectionCode"
+        }
+      },
+      {
+        "id": "Composition.section.author",
+        "path": "Composition.section.author",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Device",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Practitioner",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-PractitionerRole",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Patient",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-RelatedPerson",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.section.author.identifier.assigner",
+        "path": "Composition.section.author.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.section.focus.identifier.assigner",
+        "path": "Composition.section.focus.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.section.entry.identifier.assigner",
+        "path": "Composition.section.entry.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.section.section.code",
+        "path": "Composition.section.section.code",
+        "binding": {
+          "strength": "extensible",
+          "valueSet": "https://fhir.hl7.org.uk/ValueSet/UKCore-CompositionSectionCode"
+        }
+      },
+      {
+        "id": "Composition.section.section.author",
+        "path": "Composition.section.section.author",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Device",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Practitioner",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-PractitionerRole",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Patient",
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-RelatedPerson"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.section.section.author.identifier.assigner",
+        "path": "Composition.section.section.author.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.section.section.focus.identifier.assigner",
+        "path": "Composition.section.section.focus.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Composition.section.section.entry.identifier.assigner",
+        "path": "Composition.section.section.entry.identifier.assigner",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://fhir.hl7.org.uk/StructureDefinition/UKCore-Organization"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

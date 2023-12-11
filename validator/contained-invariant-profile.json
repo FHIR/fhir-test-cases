@@ -1,0 +1,57 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "contained-invariant-profile",
+  "url": "http://hl7.org//fhir/test/StructureDefinition/contained-invariant-profile",
+  "version": "1.0.0",
+  "name": "MyContainedProfile",
+  "status": "draft",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient.contained",
+        "path": "Patient.contained",
+        "type" : [{
+          "code" : "Practitioner"
+        }],
+        "constraint": [
+          {
+            "key": "cont-1",
+            "severity": "error",
+            "human": "Check context variables are set correctly",
+            "expression": "%context.type().name = 'Practitioner' and %resource.type().name = 'Patient' and %rootResource.type().name = 'Patient'"
+          }
+        ]
+      },
+      {
+        "id": "Patient.contained.name",
+        "path": "Patient.contained.name",
+        "constraint": [
+          {
+            "key": "cont-2",
+            "severity": "error",
+            "human": "Check context variables are set correctly",
+            "expression": "%context.type().name = 'HumanName' and %resource.type().name = 'Practitioner' and %rootResource.type().name = 'Patient'"
+          }
+        ]
+      },
+      {
+        "id": "Patient.generalPractitioner",
+        "path": "Patient.generalPractitioner",
+        "constraint": [
+          {
+            "key": "cont-3",
+            "severity": "error",
+            "human": "Check context variables are set correctly",
+            "expression": "%context.type().name = 'Reference' and %resource.type().name = 'Patient' and %rootResource.type().name = 'Patient'"
+          }
+        ]
+      }
+    ]
+  }
+}

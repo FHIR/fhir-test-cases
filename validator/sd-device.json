@@ -1,0 +1,46 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "IMEIDevice",
+  "url": "https://org.example.fhir/StructureDefinition/IMEIDevice",
+  "version": "PACKAGE_VERSION",
+  "name": "IMEIDevice",
+  "status": "draft",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Device",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Device",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Device.identifier",
+        "path": "Device.identifier",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Device.identifier:imei",
+        "path": "Device.identifier",
+        "sliceName": "imei",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Device.identifier:imei.system",
+        "path": "Device.identifier.system",
+        "min": 1,
+        "fixedUri": "http://hl7.org/fhir/sid/imei"
+      }
+    ]
+  }
+}
