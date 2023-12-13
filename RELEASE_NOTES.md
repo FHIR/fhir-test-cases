@@ -3,4 +3,5 @@
 * Support optional `code` and `system` values on some tx test cases
 * Add test case for improvements to vital signs messages
 * Add test case for CDA xsi:type usage per SD decision
+* Fix for missing warnings around bundle link validation
 
