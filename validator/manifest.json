@@ -38461,6 +38461,7 @@
       "name": "ips-htmlrefs-forwards",
       "file": "ips-htmlrefs-forwards.json",
       "version": "4.0",
+      "packages" : ["hl7.fhir.us.core#3.1.1"],
       "java": {
         "outcome": {
           "resourceType": "OperationOutcome",
@@ -38488,6 +38489,52 @@
               ]
             }
           ]
+        }
+      }
+    },
+    {
+      "name": "obs-fio2",
+      "file": "obs-fio2.json",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "information",
+            "code" : "informational",
+            "details" : {
+              "text" : "Validate Observation against the Oxygen saturation profile (http://hl7.org/fhir/StructureDefinition/oxygensat) which is required by the FHIR specification because the LOINC code 2708-6 was found"
+            },
+            "diagnostics" : "[1,2]",
+            "expression" : ["Observation"]
+          },
+          {
+            "severity" : "warning",
+            "code" : "code-invalid",
+            "details" : {
+              "text" : "None of the codings provided are in the value set 'Vital Signs' (http://hl7.org/fhir/ValueSet/observation-vitalsignresult|4.0.1), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://loinc.org#3151-8)"
+            },
+            "diagnostics" : "[94,8]",
+            "expression" : ["Observation.component[0].code"]
+          },
+          {
+            "severity" : "error",
+            "code" : "code-invalid",
+            "details" : {
+              "text" : "The Coding provided (http://unitsofmeasure.org#L/min) was not found in the value set 'Vital Signs Units' (http://hl7.org/fhir/ValueSet/ucum-vitals-common|4.0.1), and a code is required from this value set.  (error message = The provided code 'http://unitsofmeasure.org#L/min' was not found in the value set 'http://hl7.org/fhir/ValueSet/ucum-vitals-common|4.0.1')"
+            },
+            "diagnostics" : "[104,8]",
+            "expression" : ["Observation.component[0].value.ofType(Quantity)"]
+          },
+          {
+            "severity" : "warning",
+            "code" : "structure",
+            "details" : {
+              "text" : "Profile reference 'http://hl7.org/fhir/us/core/StructureDefinition/us-core-pulse-oximetry' has not been checked because it could not be found, and the validator is set to not fetch unknown profiles"
+            },
+            "diagnostics" : "[1,2]",
+            "expression" : ["Observation.meta.profile[0]"]
+          }]
         }
       }
     },
