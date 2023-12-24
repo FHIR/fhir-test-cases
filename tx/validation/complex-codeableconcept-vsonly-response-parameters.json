@@ -21,26 +21,27 @@
     "resource" : {
       "resourceType" : "OperationOutcome",
       "issue" : [{
+        "$optional$" : true,
         "severity" : "error",
         "code" : "code-invalid",
         "details" : {
-          "text" : "$external:1:xxxx$"
+          "text" : "$external:2:http://hl7.org/fhir/test/ValueSet/simple-all|5.0.0$"
+        }
+      },
+      {
+        "severity" : "warning",
+        "code" : "code-invalid",
+        "details" : {
+          "text" : "$external:3:code1$"
         },
-        "location" : ["CodeableConcept"]
+        "location" : ["CodeableConcept.coding[0].code"]
       },
       {
         "$optional$" : true,
-        "severity" : "error",
-        "code" : "invalid",
-        "details" : {
-          "text" : "$external:2:http://hl7.org/fhir/test/ValueSet/simple-all$"
-        }
-      },{
-        "$optional$" : true,
-        "severity" : "error",
+        "severity" : "warning",
         "code" : "code-invalid",
         "details" : {
-          "text" : "The provided code 'xxxx' is not known to belong to the provided code system 'http://hl7.org/fhir/test/CodeSystem/simple'"
+          "text" : "$external:1:xxx$"
         },
         "location" : ["CodeableConcept.coding[1].code"]
       }]
@@ -48,7 +49,7 @@
   },
   {
     "name" : "message",
-    "valueString" : "$external:3$"
+    "valueString" : "$external:4$"
   },
   {
     "name" : "result",
