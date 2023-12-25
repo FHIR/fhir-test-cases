@@ -1,6 +1,16 @@
 ﻿{
   "resourceType" : "Parameters",
   "parameter" : [{
+    "name" : "codeableConcept",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://hl7.org/fhir/test/CodeSystem/simple",
+        "version" : "1.0.0",
+        "code" : "code1"
+      }]
+    }
+  },
+  {
     "name" : "issues",
     "resource" : {
       "resourceType" : "OperationOutcome",
@@ -13,6 +23,7 @@
         "location" : ["CodeableConcept.coding[0].system"]
       },
       {
+        "$optional$" : true,
         "severity" : "warning",
         "code" : "not-found",
         "details" : {
@@ -24,7 +35,7 @@
   },
   {
     "name" : "message",
-    "valueString" : "$external:3:http://hl7.org/fhir/test/CodeSystem/simple|1.0.0$"
+    "valueString" : "$external:3$"
   },
   {
     "name" : "result",

@@ -1,6 +1,15 @@
 ﻿{
   "resourceType" : "Parameters",
   "parameter" : [{
+    "name" : "codeableConcept",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://hl7.org/fhir/test/CodeSystem/simple",
+        "code" : "code1x"
+      }]
+    }
+  },
+  {
     "name" : "issues",
     "resource" : {
       "resourceType" : "OperationOutcome",
@@ -8,9 +17,8 @@
         "severity" : "error",
         "code" : "code-invalid",
         "details" : {
-          "text" : "$external:1:http://hl7.org/fhir/test/ValueSet/simple-all|5.0.0$"
-        },
-        "location" : ["CodeableConcept.coding[0].code"]
+          "text" : "No valid coding was found for the value set 'http://hl7.org/fhir/test/ValueSet/simple-all|5.0.0'"
+        }
       },
       {
         "severity" : "error",
@@ -19,12 +27,20 @@
           "text" : "$external:2:http://hl7.org/fhir/test/CodeSystem/simple$"
         },
         "location" : ["CodeableConcept.coding[0].code"]
+      },
+      {
+        "severity" : "warning",
+        "code" : "code-invalid",
+        "details" : {
+          "text" : "$external:1:http://hl7.org/fhir/test/ValueSet/simple-all|5.0.0$"
+        },
+        "location" : ["CodeableConcept.coding[0].code"]
       }]
     }
   },
   {
     "name" : "message",
-    "valueString" : "$external:3:http://hl7.org/fhir/test/CodeSystem/simple$"
+    "valueString" : "$external:3$"
   },
   {
     "name" : "result",

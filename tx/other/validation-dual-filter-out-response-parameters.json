@@ -1,11 +1,27 @@
 ﻿{
   "resourceType" : "Parameters",
   "parameter" : [{
+    "name" : "codeableConcept",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://hl7.org/fhir/test/CodeSystem/dual-filter",
+        "code" : "AA"
+      }]
+    }
+  },
+  {
     "name" : "issues",
     "resource" : {
       "resourceType" : "OperationOutcome",
       "issue" : [{
         "severity" : "error",
+        "code" : "code-invalid",
+        "details" : {
+          "text" : "No valid coding was found for the value set 'http://hl7.org/fhir/test/ValueSet/dual-filter'"
+        }
+      },
+      {
+        "severity" : "warning",
         "code" : "code-invalid",
         "details" : {
           "text" : "The provided code 'http://hl7.org/fhir/test/CodeSystem/dual-filter#AA' was not found in the value set 'http://hl7.org/fhir/test/ValueSet/dual-filter'"
@@ -16,7 +32,7 @@
   },
   {
     "name" : "message",
-    "valueString" : "The provided code 'http://hl7.org/fhir/test/CodeSystem/dual-filter#AA' was not found in the value set 'http://hl7.org/fhir/test/ValueSet/dual-filter'"
+    "valueString" : "No valid coding was found for the value set 'http://hl7.org/fhir/test/ValueSet/dual-filter'; The provided code 'http://hl7.org/fhir/test/CodeSystem/dual-filter#AA' was not found in the value set 'http://hl7.org/fhir/test/ValueSet/dual-filter'"
   },
   {
     "name" : "result",

@@ -1,22 +1,55 @@
 ﻿{
   "resourceType" : "Parameters",
   "parameter" : [{
+    "name" : "codeableConcept",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://hl7.org/fhir/test/CodeSystem/version",
+        "version" : "1.0.0",
+        "code" : "code1",
+        "display" : "xxxxx"
+      },
+      {
+        "system" : "http://hl7.org/fhir/test/CodeSystem/simple",
+        "code" : "xxxx"
+      }],
+      "text" : "Some crap text"
+    }
+  },
+  {
     "name" : "issues",
     "resource" : {
       "resourceType" : "OperationOutcome",
       "issue" : [{
+        "$optional$" : true,
         "severity" : "error",
         "code" : "code-invalid",
         "details" : {
-          "text" : "None of the provided codes [http://hl7.org/fhir/test/CodeSystem/version|1.0.0#code1, http://hl7.org/fhir/test/CodeSystem/simple#xxxx] are in the value set 'http://hl7.org/fhir/test/ValueSet/simple-all|5.0.0'"
+          "text" : "$external:2:http://hl7.org/fhir/test/ValueSet/simple-all|5.0.0$"
+        }
+      },
+      {
+        "severity" : "warning",
+        "code" : "code-invalid",
+        "details" : {
+          "text" : "$external:3:code1$"
         },
-        "location" : ["CodeableConcept"]
+        "location" : ["CodeableConcept.coding[0].code"]
+      },
+      {
+        "$optional$" : true,
+        "severity" : "warning",
+        "code" : "code-invalid",
+        "details" : {
+          "text" : "$external:1:xxx$"
+        },
+        "location" : ["CodeableConcept.coding[1].code"]
       }]
     }
   },
   {
     "name" : "message",
-    "valueString" : "None of the provided codes [http://hl7.org/fhir/test/CodeSystem/version|1.0.0#code1, http://hl7.org/fhir/test/CodeSystem/simple#xxxx] are in the value set 'http://hl7.org/fhir/test/ValueSet/simple-all|5.0.0'"
+    "valueString" : "$external:4$"
   },
   {
     "name" : "result",
