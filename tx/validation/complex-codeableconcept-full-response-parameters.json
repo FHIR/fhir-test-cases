@@ -29,28 +29,49 @@
     "resource" : {
       "resourceType" : "OperationOutcome",
       "issue" : [{
+        "$optional-properties$" : ["expression" ],
         "severity" : "error",
         "code" : "code-invalid",
         "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "invalid-code"
+          }],
           "text" : "$external:2:xxxx$"
         },
-        "location" : ["CodeableConcept.coding[1].code"]
+        "location" : ["CodeableConcept.coding[1].code"],
+        "expression" : ["CodeableConcept.coding[1].code"]
       },
       {
+        "$optional-properties$" : ["expression" ],
         "severity" : "error",
         "code" : "invalid",
         "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "invalid-display"
+          }],
           "text" : "$external:3:xxxxx$"
         },
-        "location" : ["CodeableConcept.coding[0].display"]
+        "location" : ["CodeableConcept.coding[0].display"],
+        "expression" : ["CodeableConcept.coding[0].display"]
       },
       {
-        "severity" : "warning",
+        "$optional-properties$" : ["expression" ],
+        "severity" : "information",
         "code" : "code-invalid",
         "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "this-code-not-in-vs"
+          }],
           "text" : "$external:1:xxxx$"
         },
-        "location" : ["CodeableConcept.coding[1].code"]
+        "location" : ["CodeableConcept.coding[1].code"],
+        "expression" : ["CodeableConcept.coding[1].code"]
       }]
     }
   },

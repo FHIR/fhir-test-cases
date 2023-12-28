@@ -15,12 +15,19 @@
     "resource" : {
       "resourceType" : "OperationOutcome",
       "issue" : [{
+        "$optional-properties$" : ["expression" ],
         "severity" : "error",
         "code" : "code-invalid",
         "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "not-in-vs"
+          }],
           "text" : "$external:1:http://hl7.org/fhir/test/ValueSet/inactive-all-active|5.0.0$"
         },
-        "location" : ["Coding.code"]
+        "location" : ["Coding.code"],
+        "expression" : ["Coding.code"]
       }]
     }
   },

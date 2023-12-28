@@ -9,21 +9,34 @@
     "resource" : {
       "resourceType" : "OperationOutcome",
       "issue" : [{
+        "$optional-properties$" : ["expression" ],
         "severity" : "error",
         "code" : "not-found",
         "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "not-found"
+          }],
           "text" : "$external:1:http://hl7.org/fhir/test/CodeSystem/simple$"
         },
-        "location" : ["Coding.system"]
+        "location" : ["Coding.system"],
+        "expression" : ["Coding.system"]
       },
       {
-        "$optional$" : true,
+        "$optional-properties$" : ["expression" ],
         "severity" : "warning",
         "code" : "not-found",
         "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "vs-invalid"
+          }],
           "text" : "Unable to check whether the code is in the value set http://hl7.org/fhir/test/ValueSet/simple-all|5.0.0"
         },
-        "location" : ["Coding"]
+        "location" : ["Coding"],
+        "expression" : ["Coding"]
       }]
     }
   },

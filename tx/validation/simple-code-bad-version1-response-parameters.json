@@ -9,18 +9,30 @@
     "resource" : {
       "resourceType" : "OperationOutcome",
       "issue" : [{
+        "$optional-properties$" : ["expression" ],
         "severity" : "error",
         "code" : "not-found",
         "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "not-found"
+          }],
           "text" : "$external:1:http://hl7.org/fhir/test/CodeSystem/simple|1.0.0$"
         },
-        "location" : ["system"]
+        "location" : ["system"],
+        "expression" : ["$.system"]
       },
       {
         "$optional$" : true,
         "severity" : "warning",
         "code" : "not-found",
         "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "vs-invalid"
+          }],
           "text" : "$external:2:http://hl7.org/fhir/test/ValueSet/simple-all|5.0.0$"
         }
       }]

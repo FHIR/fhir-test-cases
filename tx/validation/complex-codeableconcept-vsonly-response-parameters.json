@@ -25,25 +25,43 @@
         "severity" : "error",
         "code" : "code-invalid",
         "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "not-in-vs"
+          }],
           "text" : "$external:2:http://hl7.org/fhir/test/ValueSet/simple-all|5.0.0$"
         }
       },
       {
-        "severity" : "warning",
+        "$optional-properties$" : ["expression" ],
+        "severity" : "information",
         "code" : "code-invalid",
         "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "this-code-not-in-vs"
+          }],
           "text" : "$external:3:code1$"
         },
-        "location" : ["CodeableConcept.coding[0].code"]
+        "location" : ["CodeableConcept.coding[0].code"],
+        "expression" : ["CodeableConcept.coding[0].code"]
       },
       {
-        "$optional$" : true,
-        "severity" : "warning",
+        "$optional-properties$" : ["expression" ],
+        "severity" : "information",
         "code" : "code-invalid",
         "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "this-code-not-in-vs"
+          }],
           "text" : "$external:1:xxx$"
         },
-        "location" : ["CodeableConcept.coding[1].code"]
+        "location" : ["CodeableConcept.coding[1].code"],
+        "expression" : ["CodeableConcept.coding[1].code"]
       }]
     }
   },

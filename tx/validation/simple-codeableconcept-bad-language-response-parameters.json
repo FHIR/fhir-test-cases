@@ -23,12 +23,19 @@
     "resource" : {
       "resourceType" : "OperationOutcome",
       "issue" : [{
+        "$optional-properties$" : ["expression" ],
         "severity" : "error",
         "code" : "invalid",
         "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "invalid-display"
+          }],
           "text" : "$external:1:Anzeige 1$"
         },
-        "location" : ["CodeableConcept.coding[0].display"]
+        "location" : ["CodeableConcept.coding[0].display"],
+        "expression" : ["CodeableConcept.coding[0].display"]
       }]
     }
   },

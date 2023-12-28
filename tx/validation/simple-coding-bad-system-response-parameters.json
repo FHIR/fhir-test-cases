@@ -9,20 +9,34 @@
     "resource" : {
       "resourceType" : "OperationOutcome",
       "issue" : [{
+        "$optional-properties$" : ["expression" ],
         "severity" : "error",
         "code" : "code-invalid",
         "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "not-in-vs"
+          }],
           "text" : "The provided code 'http://hl7.org/fhir/test/CodeSystem/simplex#code1' was not found in the value set 'http://hl7.org/fhir/test/ValueSet/simple-all|5.0.0'"
         },
-        "location" : ["Coding.code"]
+        "location" : ["Coding.code"],
+        "expression" : ["Coding.code"]
       },
       {
+        "$optional-properties$" : ["expression" ],
         "severity" : "error",
         "code" : "not-found",
         "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "not-found"
+          }],
           "text" : "The code system http://hl7.org/fhir/test/CodeSystem/simplex could not be found"
         },
-        "location" : ["Coding.system"]
+        "location" : ["Coding.system"],
+        "expression" : ["Coding.system"]
       }]
     }
   },
