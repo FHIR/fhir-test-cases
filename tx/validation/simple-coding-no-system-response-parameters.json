@@ -2,7 +2,7 @@
   "resourceType" : "Parameters",
   "parameter" : [{
     "name" : "code",
-    "valueCode" : "code1x"
+    "valueCode" : "code1"
   },
   {
     "name" : "issues",
@@ -18,32 +18,31 @@
             "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
             "code" : "not-in-vs"
           }],
-          "text" : "$external:1:http://hl7.org/fhir/test/ValueSet/simple-all|5.0.0$"
+          "text" : "The provided code '#code1' was not found in the value set 'http://hl7.org/fhir/test/ValueSet/simple-all|5.0.0'"
         },
-        "location" : ["code"],
-        "expression" : ["code"]
+        "location" : ["Coding.code"],
+        "expression" : ["Coding.code"]
       },
       {
         "$optional-properties$" : ["expression" ],
-        "$optional$" : true,
         "severity" : "error",
-        "code" : "code-invalid",
+        "code" : "invalid",
         "details" : {
           "$optional-properties$" : ["coding" ],
           "coding" : [{
             "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
-            "code" : "invalid-code"
+            "code" : "invalid-data"
           }],
-          "text" : "$external:2:http://hl7.org/fhir/test/CodeSystem/simple$"
+          "text" : "Coding has no system. A code with no system has no defined meaning, and it cannot be validated. A system should be provided"
         },
-        "location" : ["code"],
-        "expression" : ["code"]
+        "location" : ["Coding"],
+        "expression" : ["Coding"]
       }]
     }
   },
   {
     "name" : "message",
-    "valueString" : "$external:3:http://hl7.org/fhir/test/CodeSystem/simple$"
+    "valueString" : "Coding has no system. A code with no system has no defined meaning, and it cannot be validated. A system should be provided; The provided code '#code1' was not found in the value set 'http://hl7.org/fhir/test/ValueSet/simple-all|5.0.0'"
   },
   {
     "name" : "result",

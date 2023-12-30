@@ -7,6 +7,11 @@
   },
   {
     "$optional$" : true,
+    "name" : "display",
+    "valueString" : "Display Retired"
+  },
+  {
+    "$optional$" : true,
     "name" : "inactive",
     "valueBoolean" : true
   },
@@ -15,6 +20,21 @@
     "resource" : {
       "resourceType" : "OperationOutcome",
       "issue" : [{
+        "$optional-properties$" : ["expression" ],
+        "severity" : "error",
+        "code" : "business-rule",
+        "details" : {
+          "$optional-properties$" : ["coding" ],
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+            "code" : "code-rule"
+          }],
+          "text" : "The code 'codeRetired' is valid but is not active"
+        },
+        "location" : ["Coding.code"],
+        "expression" : ["Coding.code"]
+      },
+      {
         "$optional-properties$" : ["expression" ],
         "severity" : "error",
         "code" : "code-invalid",
