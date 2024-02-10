@@ -1,0 +1,99 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "res-inv-profile-bundle",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/res-inv-profile-bundle",
+  "name": "UserAccessBrandsBundle",
+  "title": "User Access Brands Bundle Profile",
+  "status": "active",
+  "date": "2023-03-19",
+  "description": "Test %resource constraints on resource boundaries with profiles",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Bundle",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Bundle",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Bundle",
+        "path": "Bundle",
+        "short": "User Access Brands Bundle",
+        "definition": "FHIR Bundle (type: collection) of Endpoints and related resources hosted at a stable, publicly available, publicly disclosed location Endpoint associated with a User Access Brand (Organization)"
+      },
+      {
+        "id": "Bundle.meta",
+        "path": "Bundle.meta",
+        "mustSupport": true
+      },
+      {
+        "id": "Bundle.meta.lastUpdated",
+        "path": "Bundle.meta.lastUpdated",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Bundle.type",
+        "path": "Bundle.type",
+        "fixedCode": "collection",
+        "mustSupport": true
+      },
+      {
+        "id": "Bundle.entry",
+        "path": "Bundle.entry",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "resource"
+            }
+          ],
+          "rules": "open"
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Bundle.entry:UserAccessEndpoint",
+        "path": "Bundle.entry",
+        "sliceName": "UserAccessEndpoint",
+        "min": 0,
+        "max": "*",
+        "mustSupport": true
+      },
+      {
+        "id": "Bundle.entry:UserAccessEndpoint.resource",
+        "path": "Bundle.entry.resource",
+        "type": [
+          {
+            "code": "Endpoint",
+            "profile": [
+              "http://hl7.org/fhir/test/StructureDefinition/res-inv-profile-ep"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Bundle.entry:UserAccessBrand",
+        "path": "Bundle.entry",
+        "sliceName": "UserAccessBrand",
+        "min": 0,
+        "max": "*",
+        "mustSupport": true
+      },
+      {
+        "id": "Bundle.entry:UserAccessBrand.resource",
+        "path": "Bundle.entry.resource",
+        "type": [
+          {
+            "code": "Organization",
+            "profile": [
+              "http://hl7.org/fhir/test/StructureDefinition/res-inv-profile-org"
+            ]
+          }
+        ],
+        "mustSupport": true
+      }
+    ]
+  }
+}

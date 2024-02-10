@@ -1,0 +1,201 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "res-inv-profile-org",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/res-inv-profile-org",
+  "name": "UserAccessBrand",
+  "title": "User Access Brand (Organization) Profile",
+  "status": "active",
+  "date": "2023-03-05",
+  "description": "Profile on Organization to convey a User Access Brand.\n\nFor background and context, see **[User Access Brands Overview](brands.html#brand-profile-organization)**.\n\nIn addition to the core data elements on Organization, two key extensions are used in this profile:\n\n* <http://hl7.org/fhir/StructureDefinition/organization-brand> conveys the organization's logo(s) and other top-level branding details. See definitions for details.\n* <http://hl7.org/fhir/StructureDefinition/organization-portal> conveys the details of a user portal and its associated FHIR endpoints. See definitions for details.\n\n Notes:\n* `0..1 MS` `partOf` Conveys that an affiliate Brand response for providing this Brand's user access. The hierarchy of \"access provided by\" links SHALL NOT exceed a depth of two (i.e., a Brand either includes portal details or links directly to a Brand that provides them).\n\n* `0..* MS` `identifier` Conveys identifiers that apps can use to link this Brand across publishers or with external data sets. EHRs SHALL support customer-supplied identifiers (`system` and `value`).\n\n    * It is RECOMMENDED that each Brand include an identifier where `system` is `urn:ietf:rfc: 3986` (meaning the identifier is a URL) and `value` is the HTTPS URL for the Brand's primary web presence, omitting any \"www.\" prefix from the domain and omitting any path component. For example, since the main web presence of Boston Children's Hospital is https://www.childrenshospital.org/, a recommended identifier would be:     `{\"system\": \"urn:ietf:rfc:3986\",\"value\": \"https://childrenshospital.org\"}`",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "v2",
+      "uri": "http://hl7.org/v2",
+      "name": "HL7 v2 Mapping"
+    },
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    },
+    {
+      "identity": "servd",
+      "uri": "http://www.omg.org/spec/ServD/1.0/",
+      "name": "ServD"
+    },
+    {
+      "identity": "w5",
+      "uri": "http://hl7.org/fhir/fivews",
+      "name": "FiveWs Pattern Mapping"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Organization",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Organization",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Organization",
+        "path": "Organization",
+        "short": "User Access Brand",
+        "definition": "A brand of a healthcare provider, such as a hospital, clinic, or practice",
+        "constraint": [
+          {
+            "key" : "uab-1",
+            "severity" : "error",
+            "human" : "Portal endpoints must also appear at Organization.endpoint",
+            "expression" : "Organization.extension('http://hl7.org/fhir/StructureDefinition/organization-portal').extension('portalEndpoint').value.ofType(Reference).reference.subsetOf(%resource.endpoint.reference)",
+            "source" : "http://hl7.org/fhir/smart-app-launch/StructureDefinition/user-access-brand"
+          }
+        ]
+      },
+      {
+        "id": "Organization.extension",
+        "path": "Organization.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Organization.extension:brand",
+        "path": "Organization.extension",
+        "sliceName": "brand",
+        "short": "Brand Details",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/StructureDefinition/organization-brand"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Organization.extension:portal",
+        "path": "Organization.extension",
+        "sliceName": "portal",
+        "short": "Portal Details",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/StructureDefinition/organization-portal"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Organization.identifier",
+        "path": "Organization.identifier",
+        "short": "Unique identifier for the brand",
+        "definition": "The unique identifier for the brand  that apps can use to link this Brand across publishers or with external data sets. EHRs SHALL support customer-supplied identifiers (`system` and `value`).\n\n* It is RECOMMENDED that each Brand include an identifier where `system` is `urn:ietf:rfc: 3986` (meaning the identifier is a URL) and `value` is the HTTPS URL for the Brand's primary web presence, omitting any \"www.\" prefix from the domain and omitting any path component. For example, since the main web presence of Boston Children's Hospital is https: //www.childrenshospital.org/, a recommended identifier would be:\n\n  `{\n    \"system\": \"urn:ietf:rfc:3986\",\n    \"value\": \"https://childrenshospital.org\"\n   }`\n",
+        "mustSupport": true
+      },
+      {
+        "id" : "Organization.type",
+        "path" : "Organization.type",
+        "slicing" : {
+          "discriminator" : [
+            {
+              "type" : "value",
+              "path" : "$this"
+            }
+          ],
+          "rules" : "open"
+        },
+        "mustSupport" : true
+      },
+      {
+        "id" : "Organization.type:pab",
+        "path" : "Organization.type",
+        "sliceName" : "pab",
+        "short" : "Categories of user access offered",
+        "mustSupport" : true,
+        "min" : 0,
+        "binding" : {
+          "strength" : "required",
+          "valueSet" : "http://hl7.org/fhir/smart-app-launch/ValueSet/user-access-category"
+        }
+      },
+      {
+        "id": "Organization.name",
+        "path": "Organization.name",
+        "short": "Primary brand name to display on a card",
+        "definition": "The primary brand name to display on a card.",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Organization.alias",
+        "path": "Organization.alias",
+        "short": "Aliases (e.g., former names like \"Partners Healthcare\") for filtering/search",
+        "definition": "Aliases (e.g., former names like \"Partners Healthcare\") for filtering/search",
+        "mustSupport": true
+      },
+      {
+        "id": "Organization.telecom",
+        "path": "Organization.telecom",
+        "short": "The primary public website for the Brand.",
+        "definition": "`telecom` with `system` of `url` and `value` conveying the primary public website for the Brand. Note this is distinct from the user access portal website.",
+        "min": 1,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Organization.address",
+        "path": "Organization.address",
+        "short": "Locations (e.g., zip codes and/or street addresses) associated with the Brand.",
+        "definition": "Locations (e.g., zip codes and/or street addresses) associated with the Brand. The following combinations are allowed:\n  * State\n  * City, state\n  * City, state, zip code\n  * Street address, city, state, zip code\n  * zip code alone\n",
+        "mustSupport": true
+      },
+      {
+        "id": "Organization.partOf",
+        "path": "Organization.partOf",
+        "short": "Affiliated \"parent brand\", if this Brand is part of a larger health system",
+        "definition": "Affiliated \"parent brand\", if this Brand is part of a larger health system.  \"User access provided by\", to convey that an affiliated Brand hosts this Brand's API technology and user portal. The hierarchy of \"access provided by\" links SHALL NOT exceed a depth of two (i.e., a Brand either includes portal details or links directly to a Brand that provides them).",
+        "mustSupport": true
+      },
+      {
+        "id": "Organization.endpoint",
+        "path": "Organization.endpoint",
+        "short": "Endpoint associated with this brand",
+        "definition": "References one or more `UserAccessEndpoints`. Endpoints here will also be listed within the `organization-portal` extension, to indicate the specific portal they're associated with.",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/smart-app-launch/StructureDefinition/user-access-endpoint"
+            ],
+            "aggregation": [
+              "bundled"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Organization.endpoint.reference",
+        "path": "Organization.endpoint.reference",
+        "short": "Relative URL to an Endpoint within the User Access Brands Bundle",
+        "definition": "Relative URL to an Endpoint within the User Access Brands Bundle",
+        "mustSupport": true
+      }
+    ]
+  }
+}
