@@ -1,0 +1,151 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "user-access-endpoint",
+  "url": "http://hl7.org/fhir/smart-app-launch/StructureDefinition/user-access-endpoint",
+  "name": "UserAccessEndpoint",
+  "title": "User Access Endpoint Profile",
+  "status": "active",
+  "date": "2023-08-31",
+  "description": "Profile on Endpoint associated with a User Access Brand.\n\nFor background and context, see **[User Access Brands Overview](brands.html#endpoint-profile)**.\n\nIn addition to the core data elements on Endpoint, one key extension is used in this profile:\n\n* <http://hl7.org/fhir/StructureDefinition/endpoint-fhir-version> conveys is a denormalization to help clients focus on supported endpoints. The `valueCode` is any version from http://hl7.org/fhir/valueset-FHIR-version.html (e.g., `4.0.1` is expected for FHIR R4 endpoints).\n\nNotes:\n * `0..1` `name` Conveys a fallback or default name describing the endpoint and the organization offering User API access at this endpoint. This value MAY contain technical details like FHIR API Version designations and apps SHOULD preferentially use names from an associated `UserAccessBrand` rather than displaying this value to users.\n * `1..* MS` `contact` website where developers can configure access to this endpoint, providing at least one `\"system\": \"url\"` contact point where the `value` is an `https://` URL intended for app developers\n * `1..1 MS` `address` FHIR base URL for server supporting user access",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    },
+    {
+      "identity": "w5",
+      "uri": "http://hl7.org/fhir/fivews",
+      "name": "FiveWs Pattern Mapping"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Endpoint",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Endpoint",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Endpoint",
+        "path": "Endpoint",
+        "short": "User Access Endpoint",
+        "definition": "Endpoint associated with a User Access Brand (Organization)"
+      },
+      {
+        "id": "Endpoint.extension",
+        "path": "Endpoint.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
+        "min": 1
+      },
+      {
+        "id": "Endpoint.extension:fhir-version",
+        "path": "Endpoint.extension",
+        "sliceName": "fhir-version",
+        "short": "Endpoint FHIR Version",
+        "min": 1,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/StructureDefinition/endpoint-fhir-version"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Endpoint.status",
+        "path": "Endpoint.status",
+        "mustSupport": true
+      },
+      {
+        "id": "Endpoint.connectionType",
+        "path": "Endpoint.connectionType",
+        "patternCoding": {
+          "code": "hl7-fhir-rest",
+          "system": "http://terminology.hl7.org/CodeSystem/endpoint-connection-type"
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Endpoint.name",
+        "path": "Endpoint.name",
+        "definition": "Fallback or default name describing the endpoint and the organization offering User API access at this endpoint. This value MAY contain technical details like FHIR API Version designations, and apps SHOULD preferentially use the name from an associated UserAccessBrand, rather than displaying this value to users."
+      },
+      {
+        "id": "Endpoint.contact",
+        "path": "Endpoint.contact",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        },
+        "short": "Contact information for the endpoint.",
+        "definition": "Contact information for the endpoint.",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Endpoint.contact:configuration-url",
+        "path": "Endpoint.contact",
+        "sliceName": "configuration-url",
+        "short": "Website where developers can configure access to this endpoint",
+        "definition": "Contact information for the endpoint. This is the website where developers can configure access to this endpoint.",
+        "min": 1,
+        "max": "*",
+        "mustSupport": true
+      },
+      {
+        "id": "Endpoint.contact:configuration-url.system",
+        "path": "Endpoint.contact.system",
+        "min": 1,
+        "fixedCode": "url",
+        "mustSupport": true
+      },
+      {
+        "id": "Endpoint.contact:configuration-url.value",
+        "path": "Endpoint.contact.value",
+        "short": "an https:// URL for app developers",
+        "definition": "an `https://` URL for app developers",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Endpoint.payloadType",
+        "path": "Endpoint.payloadType",
+        "max": "1",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "none",
+              "system": "http://terminology.hl7.org/CodeSystem/endpoint-payload-type"
+            }
+          ]
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Endpoint.address",
+        "path": "Endpoint.address",
+        "short": "FHIR base URL for servers supporting user access",
+        "mustSupport": true
+      }
+    ]
+  }
+}

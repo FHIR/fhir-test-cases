@@ -1,0 +1,121 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "user-access-brands-bundle",
+  "url": "http://hl7.org/fhir/smart-app-launch/StructureDefinition/user-access-brands-bundle",
+  "name": "UserAccessBrandsBundle",
+  "title": "User Access Brands Bundle Profile",
+  "status": "active",
+  "date": "2023-03-19",
+  "description": "JSON FHIR Bundle (type: `collection`) of Organizations and Endpoints that is hosted at a stable, publicly available, publicly disclosed location. \n\nFor background and context, see **[User Access Brands Overview](brands.html#brand-bundle-profile)**.\n\nBundle Entries include:\n* [User Access Endpoint Profile](StructureDefinition-user-access-endpoint.html) resources.\n* [User Access Brand (Organization)](StructureDefinition-user-access-brand.html) resources. Vendors SHALL publish at least a \"primary brand\" for each endpoint and SHOULD support the publication of a more detailed Brand hierarchy.\n\nBrand Bundles SHALL populate `Bundle.timestamp` to advertise the timestamp of the last change to the contents. In addition, Brand Bundles SHOULD populate `Bundle.entry.resource.meta.lastUpdated` with a more detailed timestamp if the system tracks updates per Resource.",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "v2",
+      "uri": "http://hl7.org/v2",
+      "name": "HL7 v2 Mapping"
+    },
+    {
+      "identity": "rim",
+      "uri": "http://hl7.org/v3",
+      "name": "RIM Mapping"
+    },
+    {
+      "identity": "cda",
+      "uri": "http://hl7.org/v3/cda",
+      "name": "CDA (R2)"
+    },
+    {
+      "identity": "w5",
+      "uri": "http://hl7.org/fhir/fivews",
+      "name": "FiveWs Pattern Mapping"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Bundle",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Bundle",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Bundle",
+        "path": "Bundle",
+        "short": "User Access Brands Bundle",
+        "definition": "FHIR Bundle (type: collection) of Endpoints and related resources hosted at a stable, publicly available, publicly disclosed location Endpoint associated with a User Access Brand (Organization)"
+      },
+      {
+        "id": "Bundle.meta",
+        "path": "Bundle.meta",
+        "mustSupport": true
+      },
+      {
+        "id": "Bundle.meta.lastUpdated",
+        "path": "Bundle.meta.lastUpdated",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Bundle.type",
+        "path": "Bundle.type",
+        "fixedCode": "collection",
+        "mustSupport": true
+      },
+      {
+        "id": "Bundle.entry",
+        "path": "Bundle.entry",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "resource"
+            }
+          ],
+          "rules": "open"
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Bundle.entry:UserAccessEndpoint",
+        "path": "Bundle.entry",
+        "sliceName": "UserAccessEndpoint",
+        "min": 0,
+        "max": "*",
+        "mustSupport": true
+      },
+      {
+        "id": "Bundle.entry:UserAccessEndpoint.resource",
+        "path": "Bundle.entry.resource",
+        "type": [
+          {
+            "code": "Endpoint",
+            "profile": [
+              "http://hl7.org/fhir/smart-app-launch/StructureDefinition/user-access-endpoint"
+            ]
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Bundle.entry:UserAccessBrand",
+        "path": "Bundle.entry",
+        "sliceName": "UserAccessBrand",
+        "min": 0,
+        "max": "*",
+        "mustSupport": true
+      },
+      {
+        "id": "Bundle.entry:UserAccessBrand.resource",
+        "path": "Bundle.entry.resource",
+        "type": [
+          {
+            "code": "Organization",
+            "profile": [
+              "http://hl7.org/fhir/smart-app-launch/StructureDefinition/user-access-brand"
+            ]
+          }
+        ],
+        "mustSupport": true
+      }
+    ]
+  }
+}
