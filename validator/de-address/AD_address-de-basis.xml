@@ -1,0 +1,305 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="address-de-basis" />
+  <url value="http://fhir.de/StructureDefinition/address-de-basis" />
+  <version value="1.3.2" />
+  <name value="AddressDeBasis" />
+  <title value="Adresse, deutsches Basisprofil" />
+  <status value="active" />
+  <date value="2021-02-17" />
+  <publisher value="HL7 Deutschland e.V. (Technisches Komitee FHIR)" />
+  <contact>
+    <telecom>
+      <system value="other" />
+      <value value="http://hl7.de/technische-komitees/fhir/" />
+    </telecom>
+  </contact>
+  <description value="Erweiterung des komplexen Datentyps Address zur Verwendung im Kontext der Deutschen Basis-Profile" />
+  <purpose value="Einige Systeme und Standards in Deutschland erfordern die separate Erfassung von Straße und Hausnummer.&#xD;&#xA;Die Erweiterung des Datentyps Address fügt hierfür die entsprechenden ISO-Extensions hinzu.&#xD;&#xA;Ob deren Verwendung in einem konkreten Kontext verpflichtend ist, muss in den abgeleiteten Profilen festgelegt werden." />
+  <copyright value="HL7 Deutschland e.V." />
+  <fhirVersion value="4.0.1" />
+  <mapping>
+    <identity value="KVDT" />
+    <name value="KVDT Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="BDT" />
+    <name value="BDT Mapping" />
+  </mapping>
+  <kind value="complex-type" />
+  <abstract value="false" />
+  <type value="Address" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Address" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Address">
+      <path value="Address" />
+      <short value="Eine Adresse gemäß postalischer Konventionen" />
+      <definition value="Eine Adresse gemäß postalischer Konventionen (im Gegensatz zu bspw. GPS-Koordinaten). Die Adresse kann sowohl zur Zustellung von Postsendungen oder zum Aufsuchen von Orten, die keine gültige Postadresse haben, verwendet werden.&#xD;&#xA;&#xD;&#xA;Die verwendeten Extensions in diesem Profil bilden die Struktur der Adresse ab, wie sie im VSDM-Format der elektronischen Versichertenkarte verwendet wird.&#xD;&#xA;&#xD;&#xA;Insbesondere bei ausländischen Adresse oder Adressen, die nicht durch Einlesen einer elektronischen Versichertenkarte erfasst wurden, sind abweichende Strukturen möglich. Die Verwendung der Extensions ist nicht verpflichtend." />
+      <example>
+        <label value="Beispiel für einfache Adresse" />
+        <valueAddress>
+          <use value="home" />
+          <type value="postal" />
+          <line value="Musterweg 42" />
+          <city value="Musterhausen" />
+          <postalCode value="99999" />
+        </valueAddress>
+      </example>
+      <constraint>
+        <key value="add-1" />
+        <severity value="error" />
+        <human value="Wenn die Extension 'Hausnummer' verwendet wird, muss auch Address.line gefüllt werden" />
+        <expression value="line.all($this.extension('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber').empty() or $this.hasValue())" />
+        <source value="http://fhir.de/StructureDefinition/address-de-basis" />
+      </constraint>
+      <constraint>
+        <key value="add-2" />
+        <severity value="error" />
+        <human value="Wenn die Extension 'Strasse' verwendet wird, muss auch Address.line gefüllt werden" />
+        <expression value="line.all($this.extension('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName').empty() or $this.hasValue())" />
+        <source value="http://fhir.de/StructureDefinition/address-de-basis" />
+      </constraint>
+      <constraint>
+        <key value="add-3" />
+        <severity value="error" />
+        <human value="Wenn die Extension 'Postfach' verwendet wird, muss auch Address.line gefüllt werden" />
+        <expression value="line.all($this.extension('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-postBox').empty() or $this.hasValue())" />
+        <source value="http://fhir.de/StructureDefinition/address-de-basis" />
+      </constraint>
+      <constraint>
+        <key value="add-4" />
+        <severity value="warning" />
+        <human value="Eine Postfach-Adresse darf nicht vom Type &quot;physical&quot; oder &quot;both&quot; sein." />
+        <expression value="line.all($this.extension('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-postBox').empty() or $this.hasValue()) or type='postal' or type.empty()" />
+        <source value="http://fhir.de/StructureDefinition/address-de-basis" />
+      </constraint>
+      <constraint>
+        <key value="add-5" />
+        <severity value="error" />
+        <human value="Wenn die Extension 'Adresszusatz' verwendet wird, muss auch Address.line gefüllt werden" />
+        <expression value="line.all($this.extension('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator').empty() or $this.hasValue())" />
+        <source value="http://fhir.de/StructureDefinition/address-de-basis" />
+      </constraint>
+      <constraint>
+        <key value="add-6" />
+        <severity value="warning" />
+        <human value="Wenn die Extension 'Postfach' verwendet wird, dürfen die Extensions 'Strasse' und 'Hausnummer' nicht verwendet werden" />
+        <expression value="line.all($this.extension('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-postBox').empty() or ($this.extension('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName').empty() and $this.extension('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber').empty()))" />
+        <source value="http://fhir.de/StructureDefinition/address-de-basis" />
+      </constraint>
+      <constraint>
+        <key value="add-7" />
+        <severity value="warning" />
+        <human value="Wenn die Extension 'Precinct' (Stadtteil) verwendet wird, dann muss diese Information auch als separates line-item abgebildet sein." />
+        <expression value="extension('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-precinct').empty() or all(line contains extension('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-precinct').value.ofType(string))" />
+        <source value="http://fhir.de/StructureDefinition/address-de-basis" />
+      </constraint>
+    </element>
+    <element id="Address.extension">
+      <path value="Address.extension" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Address.extension:Stadtteil">
+      <path value="Address.extension" />
+      <sliceName value="Stadtteil" />
+      <short value="Stadt- oder Ortsteil" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-precinct" />
+      </type>
+    </element>
+    <element id="Address.type">
+      <path value="Address.type" />
+      <mapping>
+        <identity value="BDT" />
+        <map value="1202 (1=physical, 2=postal)" />
+      </mapping>
+    </element>
+    <element id="Address.line">
+      <path value="Address.line" />
+      <short value="Straßenname mit Hausnummer oder Postfach sowie weitere Angaben zur Zustellung" />
+      <definition value="Diese Komponente kann Straßennamen, Hausnummer, Appartmentnummer, Postfach, c/o sowie weitere Zustellungshinweise enthalten. Die Informationen können in mehrere line-Komponenten aufgeteilt werden.&#xD;&#xA;Bei Verwendung der Extensions, um Straße, Hausnnummer und Postleitzahl strukturiert zu übermitteln, müssen diese Informationen stets vollständig auch in der line-Komponente, die sie erweitern, enthalten sein, um es Systemen, die diese Extensions nicht verwenden zu ermöglichen, auf diese Informationen zugreifen zu können." />
+      <max value="3" />
+      <example>
+        <label value="Beipiel für Adresszeile mit Extensions für Straße und Hausnummer" />
+        <valueString value="Musterweg 42">
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName">
+            <valueString value="Musterweg" />
+          </extension>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber">
+            <valueString value="42" />
+          </extension>
+        </valueString>
+      </example>
+      <mapping>
+        <identity value="KVDT" />
+        <map value="3107 + 3109 + 3115 oder 3123" />
+      </mapping>
+      <mapping>
+        <identity value="BDT" />
+        <map value="3107 + 3109 + 3115 oder 3123" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension">
+      <path value="Address.line.extension" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Address.line.extension:Strasse">
+      <path value="Address.line.extension" />
+      <sliceName value="Strasse" />
+      <short value="Strassenname (ohne Hausnummer)" />
+      <definition value="Strassenname (ohne Hausnummer)&#xD;&#xA;Bei Angabe einer Strasse in dieser Extension muss diese auch in Address.line angegeben werden um die Interoperabilität mit Systemen zu gewährleisten, die diese Extension nicht verwenden." />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName" />
+      </type>
+      <mapping>
+        <identity value="KVDT" />
+        <map value="3107" />
+      </mapping>
+      <mapping>
+        <identity value="BDT" />
+        <map value="3107" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension:Hausnummer">
+      <path value="Address.line.extension" />
+      <sliceName value="Hausnummer" />
+      <short value="Hausnummer" />
+      <definition value="Hausnummer, sowie Zusätze (Appartmentnummer, Etage...)&#xD;&#xA;Bei Angabe einer Hausnummer in dieser Extension muss diese auch in Address.line angegeben werden um die Interoperabilität mit Systemen zu gewährleisten, die diese Extension nicht verwenden." />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber" />
+      </type>
+      <mapping>
+        <identity value="KVDT" />
+        <map value="3109" />
+      </mapping>
+      <mapping>
+        <identity value="BDT" />
+        <map value="3109" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension:Adresszusatz">
+      <path value="Address.line.extension" />
+      <sliceName value="Adresszusatz" />
+      <short value="Adresszusatz" />
+      <definition value="Zusätzliche Informationen, wie z.B. &quot;3. Etage&quot;, &quot;Appartment C&quot;&#xD;&#xA;Bei Angabe einer Zusatzinformation in dieser Extension muss diese auch in Address.line angegeben werden um die Interoperabilität mit Systemen zu gewährleisten, die diese Extension nicht verwenden." />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator" />
+      </type>
+      <mapping>
+        <identity value="KVDT" />
+        <map value="3115" />
+      </mapping>
+      <mapping>
+        <identity value="BDT" />
+        <map value="3115" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension:Postfach">
+      <path value="Address.line.extension" />
+      <sliceName value="Postfach" />
+      <short value="Postfach" />
+      <definition value="Postfach-Adresse.&#xD;&#xA;Bei Angabe eines Postfaches in dieser Extension muss das Postfach auch in Address.line angegeben werden um die Interoperabilität mit Systemen zu gewährleisten, die diese Extension nicht verwenden.&#xD;&#xA;Eine Postfach-Adresse darf nicht in Verbindung mit Address.type &quot;physical&quot; oder &quot;both&quot; verwendet werden." />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-postBox" />
+      </type>
+      <mapping>
+        <identity value="KVDT" />
+        <map value="3123" />
+      </mapping>
+      <mapping>
+        <identity value="BDT" />
+        <map value="3123" />
+      </mapping>
+    </element>
+    <element id="Address.city">
+      <path value="Address.city" />
+      <mapping>
+        <identity value="BDT" />
+        <map value="3113 oder 3122 (Postfach)" />
+      </mapping>
+      <mapping>
+        <identity value="KVDT" />
+        <map value="3113 oder 3122 (Postfach)" />
+      </mapping>
+    </element>
+    <element id="Address.district">
+      <path value="Address.district" />
+      <max value="0" />
+    </element>
+    <element id="Address.state">
+      <path value="Address.state" />
+      <short value="Bundesland" />
+      <definition value="Name (oder Kürzel) des Bundeslandes." />
+      <binding>
+        <strength value="preferred" />
+        <valueSet value="http://fhir.de/ValueSet/iso/bundeslaender" />
+      </binding>
+    </element>
+    <element id="Address.postalCode">
+      <path value="Address.postalCode" />
+      <short value="Postleitzahl" />
+      <definition value="Postleitzahl gemäß der im jeweiligen Land gültigen Konventionen" />
+      <mapping>
+        <identity value="BDT" />
+        <map value="3112 oder 3121 (Postfach)" />
+      </mapping>
+      <mapping>
+        <identity value="KVDT" />
+        <map value="3112 oder 3121 (Postfach)" />
+      </mapping>
+    </element>
+    <element id="Address.country">
+      <path value="Address.country" />
+      <short value="Staat" />
+      <definition value="Staat (vorzugsweise als 2-Stelliger ISO-Ländercode).&#xD;&#xA;Es obliegt abgeleiteten Profilen, hier die Verwendung der ISO-Ländercodes verbindlich vorzuschreiben" />
+      <binding>
+        <strength value="preferred" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/iso3166-1-2" />
+      </binding>
+      <mapping>
+        <identity value="BDT" />
+        <map value="3114 oder 3124 (Postfach), abweichendes CodeSystem" />
+      </mapping>
+      <mapping>
+        <identity value="KVDT" />
+        <map value="3114 oder 3124 (Postfach), abweichendes CodeSystem" />
+      </mapping>
+    </element>
+    <element id="Address.period.start">
+      <path value="Address.period.start" />
+      <mapping>
+        <identity value="BDT" />
+        <map value="8226" />
+      </mapping>
+    </element>
+    <element id="Address.period.end">
+      <path value="Address.period.end" />
+      <mapping>
+        <identity value="BDT" />
+        <map value="8227" />
+      </mapping>
+    </element>
+  </differential>
+</StructureDefinition>
