@@ -12,4 +12,4 @@
 * Fix test cases for fixed bug in processing/validating profiles
 * Add test case for validating links in resource narratives
 * Add CDA and FHIR test cases for validating attribute cardinality
-
+* Add test cases for invalid JSON (value on primitives) that wasn't being caught
