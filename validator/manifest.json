@@ -7191,61 +7191,6 @@
               ]
             },
             {
-              "severity": "information",
-              "code": "not-found",
-              "details": {
-                "text": "Can't find 'urn:uuid:9439fa97-f1a9-438d-8a9c-80f52bcbce64' in the bundle (Bundle.entry[3].resource.entry[0].resource.subject)"
-              },
-              "diagnostics": "[1,91]",
-              "expression": [
-                "Bundle"
-              ]
-            },
-            {
-              "severity": "information",
-              "code": "not-found",
-              "details": {
-                "text": "Can't find 'urn:uuid:a7f1f367-144b-4bf3-8c65-a0826787986b' in the bundle (Bundle.entry[3].resource.entry[0].resource.encounter)"
-              },
-              "diagnostics": "[1,91]",
-              "expression": [
-                "Bundle"
-              ]
-            },
-            {
-              "severity": "information",
-              "code": "not-found",
-              "details": {
-                "text": "Can't find 'urn:uuid:b8fe561b-6b36-46f5-b6bb-433529955b8c' in the bundle (Bundle.entry[3].resource.entry[0].resource.author[0])"
-              },
-              "diagnostics": "[1,91]",
-              "expression": [
-                "Bundle"
-              ]
-            },
-            {
-              "severity": "information",
-              "code": "not-found",
-              "details": {
-                "text": "Can't find 'urn:uuid:97775e71-21d7-4f2d-aadb-2f3f5a1da6a6' in the bundle (Bundle.entry[3].resource.entry[0].resource.custodian)"
-              },
-              "diagnostics": "[1,91]",
-              "expression": [
-                "Bundle"
-              ]
-            },
-            {
-              "severity": "information",
-              "code": "not-found",
-              "details": {
-                "text": "Can't find 'urn:uuid:16bbba8a-ba9b-46ea-b571-a64dba136a2a' in the bundle (Bundle.entry[3].resource.entry[0].resource.section[7].entry[0])"
-              },
-              "diagnostics": "[1,91]",
-              "expression": [
-                "Bundle"
-              ]
-            },
-            {
               "severity": "error",
               "code": "not-found",
               "details": {
@@ -47265,6 +47210,162 @@
               "diagnostics": "[4,17]",
               "expression": [
                 "Observation.value.ofType(integer)"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "cs-bad-props",
+      "file": "cs-bad-props.json",
+      "version": "4.0",
+      "explanation": "Mixing and matching bad property definitions in code systems",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "text": "Wrong type 'dateTime': The URI 'http://hl7.org/fhir/concept-properties#notSelectable' identifies a property that has the type 'boolean'"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "text": "A property is already defined with the code 'notSelectable'"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[1]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "This property has only the standard code ('notSelectable') but not the standard URI 'http://hl7.org/fhir/concept-properties#notSelectable', so it has no clearly defined meaning in the terminology ecosystem"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[1]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "text": "A property is already defined with the URI 'http://hl7.org/fhir/concept-properties#notSelectable'"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[2]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "This property has only the standard code ('synonym') but not the standard URI 'http://hl7.org/fhir/concept-properties#synonym', so it has no clearly defined meaning in the terminology ecosystem"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[3]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "Wrong type 'decimal': The code 'synonym' identifies a property that has the type 'code'"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[3]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "text": "The URI 'http://hl7.org/fhir/concept-properties#deprecationDate' is normally assigned the code 'deprecationDate'. Using the code 'inactive' will usually create confusion in ValueSet filters etc"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[4]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "text": "Wrong type 'code': The URI 'http://hl7.org/fhir/concept-properties#deprecationDate' identifies a property that has the type 'dateTime'"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[4]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "text": "The property 'not-a-code' has no definition. Many terminology tools wont know what to do with it"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.concept[0].property[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "text": "The property 'notSelectable' has the invalid type 'boolean', when it is defined to have the type 'dateTime'"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.concept[0].property[1]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "text": "The property 'synonym' has the invalid type 'integer', when it is defined to have the type 'decimal'"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.concept[0].property[2]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "text": "The designation 'Really a test code' has no use and is in the same language ('en-US'), so is not differentiated from the base display ('Test Code')"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.concept[0].designation[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "text": "The designation 'Really a test code (US)' has no use and is in the same language ('en-US'), so is not differentiated from the base display ('Test Code')"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.concept[0].designation[1]"
               ]
             }
           ]
