@@ -1,0 +1,81 @@
+<html><head><link rel="stylesheet" href="http://hl7.org/fhir/fhir.css"/><link rel="stylesheet" href="http://hl7.org/fhir/dist/css/bootstrap.css"/><link rel="stylesheet" href="http://hl7.org/fhir/assets/css/bootstrap-fhir.css"/><link rel="stylesheet" href="http://hl7.org/fhir/assets/css/project.css"/><link rel="stylesheet" href="http://hl7.org/fhir/assets/css/pygments-manni.css"/><link rel="stylesheet" href="http://hl7.org/fhir/jquery-ui.css"/></head><body>
+<div id="segment-content" class="segment"><div class="container"><div class="row"><div class="inner-wrapper"><div class="col-12">
+<p>Narrative</p><div>
+  <h2>Related Artifacts</h2>
+  <table class="grid">
+    <tr>
+      <td>Depends On</td>
+      <td>
+        <code>http://hl7.org/fhir/Library/library-quick-model-definition</code>
+      </td>
+    </tr>
+  </table>
+  <h2>Data Requirements</h2>
+  <table class="grid">
+    <tr>
+      <td colspan="2">
+        <b>Type</b>
+: Condition
+      </td>
+    </tr>
+    <tr style="background-color: #efefef">
+      <td>Filter</td>
+      <td>Value</td>
+    </tr>
+    <tr>
+      <td>code</td>
+      <td>In ValueSet urn:oid:2.16.840.1.113883.3.464.1003.111.12.1006</td>
+    </tr>
+  </table>
+  <h2>Contents</h2>
+  <p>
+    <code>text/cql</code>
+  </p>
+  <pre>
+    <code class="language-sql">library ChlamydiaScreening_Common version '2'
+
+using QUICK
+
+valueset &quot;Female Administrative Sex&quot;: '2.16.840.1.113883.3.560.100.2'
+valueset &quot;Other Female Reproductive Conditions&quot;: '2.16.840.1.113883.3.464.1003.111.12.1006'
+valueset &quot;Genital Herpes&quot;: '2.16.840.1.113883.3.464.1003.110.12.1049'
+valueset &quot;Genococcal Infections and Venereal Diseases&quot;: '2.16.840.1.113883.3.464.1003.112.12.1001'
+valueset &quot;Inflammatory Diseases of Female Reproductive Organs&quot;: '2.16.840.1.113883.3.464.1003.112.12.1004'
+valueset &quot;Chlamydia&quot;: '2.16.840.1.113883.3.464.1003.112.12.1003'
+valueset &quot;HIV&quot;: '2.16.840.1.113883.3.464.1003.120.12.1003'
+valueset &quot;Syphilis&quot;: '2.16.840.1.113883.3.464.1003.112.12.1002'
+valueset &quot;Complications of Pregnancy, Childbirth and the Puerperium&quot;: '2.16.840.1.113883.3.464.1003.111.12.1012'
+valueset &quot;Pregnancy Test&quot;: '2.16.840.1.113883.3.464.1003.111.12.1011'
+valueset &quot;Pap Test&quot;: '2.16.840.1.113883.3.464.1003.108.12.1017'
+valueset &quot;Lab Tests During Pregnancy&quot;: '2.16.840.1.113883.3.464.1003.111.12.1007'
+valueset &quot;Lab Tests for Sexually Transmitted Infections&quot;: '2.16.840.1.113883.3.464.1003.110.12.1051'
+valueset &quot;Chlamydia Screening&quot;: '2.16.840.1.113883.3.464.1003.110.12.1052'
+
+context Patient
+
+define &quot;Conditions Indicating Sexual Activity&quot;:
+	[&quot;Condition&quot;: &quot;Other Female Reproductive Conditions&quot;]
+	union [&quot;Condition&quot;: &quot;Genital Herpes&quot;]
+    union [&quot;Condition&quot;: &quot;Genococcal Infections and Venereal Diseases&quot;]
+    union [&quot;Condition&quot;: &quot;Inflammatory Diseases of Female Reproductive Organs&quot;]
+    union [&quot;Condition&quot;: &quot;Chlamydia&quot;]
+    union [&quot;Condition&quot;: &quot;HIV&quot;]
+    union [&quot;Condition&quot;: &quot;Syphilis&quot;]
+    union [&quot;Condition&quot;: &quot;Complications of Pregnancy, Childbirth and the Puerperium&quot;]
+
+define &quot;Laboratory Tests Indicating Sexual Activity&quot;:
+    [&quot;DiagnosticOrder&quot;: &quot;Pregnancy Test&quot;]
+    union [&quot;DiagnosticOrder&quot;: &quot;Pap Test&quot;]
+    union [&quot;DiagnosticOrder&quot;: &quot;Lab Tests During Pregnancy&quot;]
+	union [&quot;DiagnosticOrder&quot;: &quot;Lab Tests for Sexually Transmitted Infections&quot;]
+
+define &quot;Tests Performed For Chlamydia&quot;:
+	[&quot;DiagnosticReport&quot;: &quot;Chlamydia Screening&quot;]
+
+define &quot;Results Present For Chlamydia Screening&quot;:
+    [&quot;DiagnosticReport&quot;: &quot;Chlamydia Screening&quot;] R where R.&quot;result&quot; is not null
+</code>
+  </pre>
+</div>
+
+</div></div></div></div></div></body></html>

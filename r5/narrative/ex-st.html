@@ -1,0 +1,134 @@
+<html><head><link rel="stylesheet" href="http://hl7.org/fhir/fhir.css"/><link rel="stylesheet" href="http://hl7.org/fhir/dist/css/bootstrap.css"/><link rel="stylesheet" href="http://hl7.org/fhir/assets/css/bootstrap-fhir.css"/><link rel="stylesheet" href="http://hl7.org/fhir/assets/css/project.css"/><link rel="stylesheet" href="http://hl7.org/fhir/assets/css/pygments-manni.css"/><link rel="stylesheet" href="http://hl7.org/fhir/jquery-ui.css"/></head><body>
+<div id="segment-content" class="segment"><div class="container"><div class="row"><div class="inner-wrapper"><div class="col-12">
+<p>Narrative</p><div>
+  <h2>example</h2>
+  <div>
+    <p>Example topic for completed encounters</p>
+
+
+  </div>
+  <table class="grid">
+    <tr>
+      <td colspan="5">
+        <b>Resource Triggers</b>
+      </td>
+    </tr>
+    <tr>
+      <th>
+        <b>Resource</b>
+      </th>
+      <th>
+        <b>Interactions</b>
+      </th>
+      <th>
+        <b>Criteria</b>
+      </th>
+      <th>
+        <b>FHIR Path</b>
+      </th>
+      <th>
+        <b>Description</b>
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <a href="http://hl7.org/fhir/StructureDefinition/Encounter">http://hl7.org/fhir/StructureDefinition/Encounter</a>
+      </td>
+      <td>update</td>
+      <td>
+        <div>
+          <ul>
+
+            <li>previous = status:not=completed</li>
+
+            <li>create result = TESTPASSES</li>
+
+            <li>create result = status=completed</li>
+
+            <li>delete result = TESTFAILS</li>
+
+            <li>require both = true</li>
+
+
+          </ul>
+
+
+        </div>
+      </td>
+      <td>(%previous.empty() | (%previous.status != 'completed')) and (%current.status = 'completed')</td>
+      <td>
+        <div>
+          <p>An Encounter has been completed</p>
+
+
+        </div>
+      </td>
+    </tr>
+  </table>
+  <table class="grid">
+    <tr>
+      <td colspan="4">
+        <b>Can Filter By</b>
+      </td>
+    </tr>
+    <tr>
+      <th>
+        <b>Resource</b>
+      </th>
+      <th>
+        <b>Filter Parameter</b>
+      </th>
+      <th>
+        <b>Comparators</b>
+      </th>
+      <th>
+        <b>Modifiers</b>
+      </th>
+    </tr>
+    <tr>
+      <td>Encounter</td>
+      <td>subject</td>
+      <td/>
+      <td/>
+    </tr>
+    <tr>
+      <td>Encounter</td>
+      <td>_in</td>
+      <td/>
+      <td/>
+    </tr>
+    <tr>
+      <td>Encounter</td>
+      <td>length</td>
+      <td>gt, lt, ge, le</td>
+      <td/>
+    </tr>
+    <tr>
+      <td>Encounter</td>
+      <td>account</td>
+      <td/>
+      <td>missing, not, identifier</td>
+    </tr>
+  </table>
+  <table class="grid">
+    <tr>
+      <td colspan="2">
+        <b>Notification Shapes</b>
+      </td>
+    </tr>
+    <tr>
+      <th>
+        <b>Resource</b>
+      </th>
+      <th>
+        <b>Includes</b>
+      </th>
+    </tr>
+    <tr>
+      <td>Encounter</td>
+      <td>Encounter:patient&amp;iterate=Patient.link, Encounter:practitioner, Encounter:service-provider, Encounter:account, Encounter:diagnosis, Encounter:observation, Encounter:location</td>
+    </tr>
+  </table>
+</div>
+
+</div></div></div></div></div></body></html>
