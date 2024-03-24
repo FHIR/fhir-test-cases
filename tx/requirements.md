@@ -25,10 +25,10 @@ All systems, need to conform to the following requirements:
 
 * The server SHOULD make all the code systems and value sets it supports available through the /CodeSystem and /ValueSet endpoints.
 * CodeSystems MAY have content = not-present; the tools will not consider this when choosing whether to try using the code system (uses TerminologyCapabilities.codeSystem.uri)
-* Note that server does not *have to* make them all available in this fashion
+* Note that server does not *have to* make all the code systems it supports available in this fashion
 * the server SHOULD ensure that all code systems and value sets conform to the Shareable* Profiles
 * The server need not support history or track or report version tags on the resources (Resource.meta.version)
-* Servers SHOULD generally allow multiple resources for the same canonical URL with different Resourve.version, but this is subject to business rules on the server 
+* Servers SHOULD generally allow multiple resources for the same canonical URL with different Resource.version, but this is subject to business rules on the server 
 * The server does not need to support PUT/POST for any resources, but it can choose to do so 
   * if it allows PUT/POST, it SHOULD only do so for authenticated clients. However it does, it SHALL ensure that it only sends correct results for the code systems for which it is registered as 'authoritative' (see https://github.com/FHIR/ig-registry/blob/master/tx-registry-doco.md)
 
@@ -38,7 +38,37 @@ All code systems and value sets SHALL have a web representation that is appropri
 
 The server MAY choose to make this content available at the end-point for the relevant resource. e.g. aa request for {root}/CodeSystem/123 with an ```Accept``` header of 'application/fhir+json' returns the resource, and the same URL with an ```Accept``` header of 'text/html' returns a web page suitable for human consumption. Servers are not required to do this; they MAY choose to make the content available elsewhere.
 
-If the server chooses to make them available elsewhere, it SHALL populate the extension ```http://hl7.org/fhir/tools/StructureDefinition/web-source``` with a valueUrl where the web view can be found. This SHALL be populated when the CodeSystem and ValueSet are read, and also in any $expand of the value set (just for the root valueset in this case).
+If the server chooses to make them available elsewhere, it SHALL populate the extension ```http://hl7.org/fhir/tools/StructureDefinition/web-source``` in any resources it makes available with a valueUrl where the web view can be found. This SHALL be populated when the CodeSystem and ValueSet are read, and also in any $expand of the value set (just for the root valueset in this case).
+
+# Code system support
+
+* Servers do not need to support any code systems but the ones that they are provisioned to serve internally (including in the txResources parameter - see below)
+* Servers SHALL support code system supplements. Servers SHALL not ignore supplements, though they MAY choose to return errors rather than process them correctly
+* Servers SHALL support the following properties:
+  * CodeSystem.caseSensitive 
+  * CodeSystem.valueSet 
+  * CodeSystem.hierarchyMeaning 
+  * CodeSystem.compositional 
+  * CodeSystem.versionNeeded
+  * CodeSystem.content
+  * CodeSystem.supplements
+* Note that servers can choose to not support all the implied features in that list, but if it does not, it SHALL correctly indicate that it has not by returning appropriate errors or warnings when the features are relevant
+* 
+   
+
+
+
+
+... 	Σ	0..1	boolean	If code comparison is case sensitive
+... 	Σ	0..1	canonical(ValueSet)	Canonical reference to the value set with entire code system
+... 	ΣC	0..1	code	grouped-by | is-a | part-of | classified-with
+Binding: Code System Hierarchy Meaning (Required)
+... 	Σ	0..1	boolean	If code system defines a compositional grammar
+... versionNeeded	Σ	0..1	boolean	If definitions are not stable
+... content	ΣC	1..1	code	not-present | example | fragment | complete | supplement
+Binding: Code System Content Mode (Required)
+... supplements	ΣCTU	0..1	canonical(CodeSystem)	Canonical URL of Code System this adds designations and properties to
+
 
 # Common Parameters ($expand and $validate-code)
 
@@ -78,6 +108,8 @@ If the server chooses to make them available elsewhere, it SHALL populate the ex
   * The server SHALL return an issues parameter when there are issues to return 
   * The server SHALL return system, code and display for the code that it considered valid, along with the version if this is known
   * The server SHOULD return a x-caused-by-unknown-system parameter for each code system it did not support
+  * The server SHOULD return a normalized-code parameter where appropriate (e.g. case insensitive code systems, code systems with complex grammars)
+  * The server SHOULD return an issue with tx issue type ```processing-note``` when it has not fully validated the code e.g. an SCT expression against the MRCM 
 
 The following extensions should be supported:
 * http://hl7.org/fhir/StructureDefinition/codesystem-alternate - if code system has alternate codes (TODO: this is subject to further discussion)

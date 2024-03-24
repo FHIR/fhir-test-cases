@@ -2085,54 +2085,6 @@
         <code value="List"/>
         <profile value="http://nictiz.nl/fhir/StructureDefinition/MedicationOverview"/>
       </type>
-      <constraint>
-        <key value="dom-2"/>
-        <severity value="error"/>
-        <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
-        <expression value="contained.contained.empty()"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
-      </constraint>
-      <constraint>
-        <key value="dom-3"/>
-        <severity value="error"/>
-        <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"/>
-        <expression value="contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().ofType(canonical) | %resource.descendants().ofType(uri) | %resource.descendants().ofType(url))) or descendants().where(reference = '#').exists() or descendants().where(ofType(canonical) = '#').exists() or descendants().where(ofType(canonical) = '#').exists()).not()).trace('unmatched', id).empty()"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
-      </constraint>
-      <constraint>
-        <key value="dom-4"/>
-        <severity value="error"/>
-        <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
-        <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
-      </constraint>
-      <constraint>
-        <key value="dom-5"/>
-        <severity value="error"/>
-        <human value="If a resource is contained in another resource, it SHALL NOT have a security label"/>
-        <expression value="contained.meta.security.empty()"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
-      </constraint>
-      <constraint>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice">
-          <valueBoolean value="true"/>
-        </extension>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice-explanation">
-          <valueMarkdown value="When a resource has no narrative, only systems that fully understand the data can display the resource to a human safely. Including a human readable representation in the resource makes for a much more robust eco-system and cheaper handling of resources by intermediary systems. Some ecosystems restrict distribution of resources to only those systems that do fully understand the resources, and as a consequence implementers may believe that the narrative is superfluous. However experience shows that such eco-systems often open up to new participants over time."/>
-        </extension>
-        <key value="dom-6"/>
-        <severity value="warning"/>
-        <human value="A resource should have narrative for robust management"/>
-        <expression value="text.`div`.exists()"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
-      </constraint>
-      <constraint>
-        <key value="lst-1"/>
-        <severity value="error"/>
-        <human value="A list can only have an emptyReason if it is empty"/>
-        <expression value="emptyReason.empty() or entry.empty()"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/List"/>
-      </constraint>
       <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="false"/>

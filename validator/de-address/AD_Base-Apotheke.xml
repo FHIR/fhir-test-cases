@@ -1,0 +1,237 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="DAV-PR-Base-Apotheke" />
+  <url value="http://fhir.abda.de/eRezeptAbgabedaten/StructureDefinition/DAV-PR-Base-Apotheke" />
+  <version value="1.3" />
+  <name value="DAV_PR_Base_Apotheke" />
+  <title value="DAV_PR_Base_Apotheke" />
+  <status value="active" />
+  <date value="2023-03-15" />
+  <fhirVersion value="4.0.1" />
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Organization" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Organization" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Organization.meta">
+      <path value="Organization.meta" />
+      <min value="1" />
+      <type>
+        <code value="Meta" />
+        <profile value="http://fhir.abda.de/StructureDefinition/DAV-PR-ERP-AbgabedatenMeta" />
+      </type>
+    </element>
+    <element id="Organization.implicitRules">
+      <path value="Organization.implicitRules" />
+      <max value="0" />
+    </element>
+    <element id="Organization.language">
+      <path value="Organization.language" />
+      <max value="0" />
+    </element>
+    <element id="Organization.text">
+      <path value="Organization.text" />
+      <max value="0" />
+    </element>
+    <element id="Organization.contained">
+      <path value="Organization.contained" />
+      <max value="0" />
+    </element>
+    <element id="Organization.identifier">
+      <path value="Organization.identifier" />
+      <min value="1" />
+      <max value="1" />
+      <type>
+        <code value="Identifier" />
+        <profile value="http://fhir.de/StructureDefinition/identifier-iknr" />
+      </type>
+      <patternIdentifier>
+        <system value="http://fhir.de/sid/arge-ik/iknr" />
+      </patternIdentifier>
+    </element>
+    <element id="Organization.identifier.use">
+      <path value="Organization.identifier.use" />
+      <max value="0" />
+    </element>
+    <element id="Organization.identifier.type">
+      <path value="Organization.identifier.type" />
+      <max value="0" />
+    </element>
+    <element id="Organization.identifier.value">
+      <path value="Organization.identifier.value" />
+      <short value="Apotheken-IK" />
+      <definition value="Institutionskennzeichen der abgebenden Apotheke nach § 293 Absatz 5 SGB V" />
+      <constraint>
+        <key value="PR-Apotheke-1" />
+        <severity value="error" />
+        <human value="Eine IK muss 9-stellig (mit Prüfziffer) sein!" />
+        <expression value="matches('^[0-9]{9}$')" />
+        <source value="http://fhir.abda.de/eRezeptAbgabedaten/StructureDefinition/DAV-PR-Base-Apotheke" />
+      </constraint>
+    </element>
+    <element id="Organization.identifier.period">
+      <path value="Organization.identifier.period" />
+      <max value="0" />
+    </element>
+    <element id="Organization.identifier.assigner">
+      <path value="Organization.identifier.assigner" />
+      <max value="0" />
+    </element>
+    <element id="Organization.active">
+      <path value="Organization.active" />
+      <max value="0" />
+    </element>
+    <element id="Organization.type">
+      <path value="Organization.type" />
+      <max value="0" />
+    </element>
+    <element id="Organization.name">
+      <path value="Organization.name" />
+      <short value="Apothekenname oder Inhaber" />
+      <definition value="Der Name der Apotheke oder der Name des Inhabers." />
+      <min value="1" />
+      <maxLength value="45" />
+    </element>
+    <element id="Organization.alias">
+      <path value="Organization.alias" />
+      <max value="0" />
+    </element>
+    <element id="Organization.telecom">
+      <path value="Organization.telecom" />
+      <max value="0" />
+    </element>
+    <element id="Organization.address">
+      <path value="Organization.address" />
+      <min value="1" />
+      <max value="1" />
+      <type>
+        <code value="Address" />
+        <profile value="http://fhir.de/StructureDefinition/address-de-basis" />
+      </type>
+    </element>
+    <element id="Organization.address.extension">
+      <path value="Organization.address.extension" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <rules value="closed" />
+      </slicing>
+      <min value="0" />
+      <max value="0" />
+    </element>
+    <element id="Organization.address.extension:Stadtteil">
+      <path value="Organization.address.extension" />
+      <sliceName value="Stadtteil" />
+      <min value="0" />
+      <max value="0" />
+    </element>
+    <element id="Organization.address.use">
+      <path value="Organization.address.use" />
+      <max value="0" />
+    </element>
+    <element id="Organization.address.type">
+      <path value="Organization.address.type" />
+      <min value="1" />
+      <fixedCode value="physical" />
+    </element>
+    <element id="Organization.address.text">
+      <path value="Organization.address.text" />
+      <max value="0" />
+    </element>
+    <element id="Organization.address.line">
+      <path value="Organization.address.line" />
+      <min value="1" />
+      <max value="1" />
+    </element>
+    <element id="Organization.address.line.extension">
+      <path value="Organization.address.line.extension" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <rules value="closed" />
+      </slicing>
+      <min value="2" />
+    </element>
+    <element id="Organization.address.line.extension:Strasse">
+      <path value="Organization.address.line.extension" />
+      <sliceName value="Strasse" />
+      <min value="1" />
+    </element>
+    <element id="Organization.address.line.extension:Strasse.value[x]">
+      <path value="Organization.address.line.extension.value[x]" />
+      <maxLength value="46" />
+    </element>
+    <element id="Organization.address.line.extension:Hausnummer">
+      <path value="Organization.address.line.extension" />
+      <sliceName value="Hausnummer" />
+      <min value="1" />
+    </element>
+    <element id="Organization.address.line.extension:Hausnummer.value[x]">
+      <path value="Organization.address.line.extension.value[x]" />
+      <maxLength value="9" />
+    </element>
+    <element id="Organization.address.line.extension:Adresszusatz">
+      <path value="Organization.address.line.extension" />
+      <sliceName value="Adresszusatz" />
+      <min value="0" />
+      <mustSupport value="true" />
+    </element>
+    <element id="Organization.address.line.extension:Adresszusatz.value[x]">
+      <path value="Organization.address.line.extension.value[x]" />
+      <maxLength value="40" />
+    </element>
+    <element id="Organization.address.line.extension:Postfach">
+      <path value="Organization.address.line.extension" />
+      <sliceName value="Postfach" />
+      <min value="0" />
+      <max value="0" />
+    </element>
+    <element id="Organization.address.city">
+      <path value="Organization.address.city" />
+      <short value="Ortsname" />
+      <definition value="Ortsname der Apotheke" />
+      <min value="1" />
+      <maxLength value="40" />
+    </element>
+    <element id="Organization.address.state">
+      <path value="Organization.address.state" />
+      <max value="0" />
+    </element>
+    <element id="Organization.address.postalCode">
+      <path value="Organization.address.postalCode" />
+      <min value="1" />
+      <maxLength value="10" />
+    </element>
+    <element id="Organization.address.country">
+      <path value="Organization.address.country" />
+      <short value="Wohnsitzländercode" />
+      <definition value="Wohnsitzländercode der Apotheke entsprechend dem gemeinsamen Rundschreiben DEÜV Anlage 08." />
+      <min value="1" />
+      <maxLength value="3" />
+      <binding>
+        <strength value="extensible" />
+        <valueSet value="http://fhir.abda.de/eRezeptAbgabedaten/ValueSet/DAV-VS-ERP-DEUEV-Anlage-8" />
+      </binding>
+    </element>
+    <element id="Organization.address.period">
+      <path value="Organization.address.period" />
+      <max value="0" />
+    </element>
+    <element id="Organization.partOf">
+      <path value="Organization.partOf" />
+      <max value="0" />
+    </element>
+    <element id="Organization.contact">
+      <path value="Organization.contact" />
+      <max value="0" />
+    </element>
+    <element id="Organization.endpoint">
+      <path value="Organization.endpoint" />
+      <max value="0" />
+    </element>
+  </differential>
+</StructureDefinition>
