@@ -27,3 +27,7 @@ parameters, and conpare the outcomes. Some notes about comparisons:
 The simplest way to execute these is to use the java validator:
 
 java -jar {validator} -txtests -source {root folder for this repo} -tx {server to test}
+
+Note that the test cases are in R5 format, and these are authoritative. But since most users are
+interested in the tests in R4 format, a copy of the test cases are also maintained in /R4 in R4 format 
+for perusal of the tests in R4
