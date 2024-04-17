@@ -1,18 +1,18 @@
 <snapshot-generation-tests>
   <test gen="true" id="t1" description="no change in the differential">
     <rule text="The snapshot must have the same number of elements, in the same order, with matching paths" fhirpath="fixture('t1-output').snapshot.element.select(path) = fixture('patient').snapshot.element.select(path)"/>
-    <rule text="The snapshot elements must be the same - check short description" fhirpath="fixture('t1-output').snapshot.element.all(aliasAs('A').short = fixture('patient').snapshot.element.where(path = alias('A').path).short)"/>
-    <rule text="The snapshot elements must be the same - check min cardinality" fhirpath="fixture('t1-output').snapshot.element.all(aliasAs('A').min = fixture('patient').snapshot.element.where(path = alias('A').path).min)"/>
-    <rule text="The snapshot elements must be the same - check max cardinality" fhirpath="fixture('t1-output').snapshot.element.all(aliasAs('A').max = fixture('patient').snapshot.element.where(path = alias('A').path).max)"/>
-    <rule text="The snapshot elements must be the same - check binding" fhirpath="fixture('t1-output').snapshot.element.where(binding.valueSet.exists()).all(aliasAs('A').binding.valueSet.trace('A') = fixture('patient').snapshot.element.where(path = alias('A').path).binding.valueSet.trace('B'))"/>
+    <rule text="The snapshot elements must be the same - check short description" fhirpath="fixture('t1-output').snapshot.element.all(defineVariable('A').select(short = fixture('patient').snapshot.element.where(path = %A.path).short))"/>
+    <rule text="The snapshot elements must be the same - check min cardinality" fhirpath="fixture('t1-output').snapshot.element.all(defineVariable('A').select(min = fixture('patient').snapshot.element.where(path = %A.path).min))"/>
+    <rule text="The snapshot elements must be the same - check max cardinality" fhirpath="fixture('t1-output').snapshot.element.all(defineVariable('A').select(max = fixture('patient').snapshot.element.where(path = %A.path).max))"/>
+    <rule text="The snapshot elements must be the same - check binding" fhirpath="fixture('t1-output').snapshot.element.where(binding.valueSet.exists()).all(defineVariable('A').select(binding.valueSet.trace('A') = fixture('patient').snapshot.element.where(path = %A.path).binding.valueSet.trace('B')))"/>
   </test>
   <test gen="true" id="t2" description="no change in the differential, but a value set">
     <rule text="The snapshot must have the same number of elements, in the same order, with matching paths" fhirpath="fixture('t2-output').snapshot.element.select(path) = fixture('valueset').snapshot.element.select(path)"/>
-    <rule text="The snapshot elements must be the same" fhirpath="fixture('t2-output').snapshot.element.all(aliasAs('A').short = fixture('valueset').snapshot.element.where(path = alias('A').path).short)"/>
+    <rule text="The snapshot elements must be the same" fhirpath="fixture('t2-output').snapshot.element.all(defineVariable('A').select(short = fixture('valueset').snapshot.element.where(path = %A.path).short))"/>
   </test>
   <test gen="true" id="t3" description="change a cardinality">
     <rule text="The snapshot must have the same number of elements, in the same order, with matching paths" fhirpath="fixture('t3-output').snapshot.element.select(path) = fixture('patient').snapshot.element.select(path)"/>
-    <rule text="The snapshot elements must be the same" fhirpath="fixture('t3-output').snapshot.element.all(aliasAs('A').short = fixture('patient').snapshot.element.where(path = alias('A').path).short)"/>
+    <rule text="The snapshot elements must be the same" fhirpath="fixture('t3-output').snapshot.element.all(defineVariable('A').select(short = fixture('patient').snapshot.element.where(path = %A.path).short))"/>
     <rule text="The patient.identifier cardinality must be right" fhirpath="fixture('t3-output').snapshot.element.where(path = 'Patient.identifier').min = 1"/>
   </test>
   <test gen="true" id="t4" description="test appending documentation">
