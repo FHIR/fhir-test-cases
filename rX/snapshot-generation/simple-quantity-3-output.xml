@@ -54,7 +54,7 @@
             <span style="opacity: 0.5">1</span>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <a href="http://hl7.org/fhir/datatypes.html#Quantity">Quantity</a>
+            <a href="MoneyQuantity.html" title="Quantity">MoneyQuantity</a>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
             <span style="opacity: 0.5">Amount dispensed</span>
@@ -1228,8 +1228,9 @@
     </element>
     <element id="MedicationDispense.quantity">
       <path value="MedicationDispense.quantity"/>
-      <short value="Amount dispensed"/>
-      <definition value="The amount of medication that has been dispensed. Includes unit of measure."/>
+      <short value="An amount of money. With regard to precision, see [Decimal Precision](datatypes.html#precision)"/>
+      <definition value="There SHALL be a code if there is a value and it SHALL be an expression of currency.  If system is present, it SHALL be ISO 4217 (system = &quot;urn:iso:std:iso:4217&quot; - currency)."/>
+      <comment value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1239,7 +1240,9 @@
       </base>
       <type>
         <code value="Quantity"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/MoneyQuantity"/>
       </type>
+      <condition value="ele-1"/>
       <constraint>
         <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
           <valueString value="@value|f:*|h:div"/>
@@ -1250,19 +1253,38 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <constraint>
+        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
+          <valueString value="(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='urn:iso:std:iso:4217')"/>
+        </extension>
+        <key value="mqty-1"/>
+        <severity value="error"/>
+        <human value="There SHALL be a code if there is a value and it SHALL be an expression of currency.  If system is present, it SHALL be ISO 4217 (system = &quot;urn:iso:std:iso:4217&quot; - currency)."/>
+        <expression value="(code.exists() or value.empty()) and (system.empty() or system = 'urn:iso:std:iso:4217')"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/MedicationDispense"/>
+      </constraint>
+      <constraint>
+        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
+          <valueString value="not(exists(f:code)) or exists(f:system)"/>
+        </extension>
+        <key value="qty-3"/>
+        <severity value="error"/>
+        <human value="If a code for the unit is present, the system SHALL also be present"/>
+        <expression value="code.empty() or system.exists()"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Quantity"/>
+      </constraint>
       <isModifier value="false"/>
-      <isSummary value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
       <mapping>
         <identity value="v2"/>
-        <map value="RXD-4-Actual Dispense Amount / RXD-5.1-Actual Dispense Units.code / RXD-5.3-Actual Dispense Units.name of coding system"/>
+        <map value="SN (see also Range) or CQ"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value=".quantity"/>
-      </mapping>
-      <mapping>
-        <identity value="rx-dispense-rmim"/>
-        <map value="CombinedMedicationDispense.SupplyEvent.quantity"/>
+        <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
       </mapping>
     </element>
     <element id="MedicationDispense.daysSupply">
@@ -1915,6 +1937,7 @@
       <path value="MedicationDispense.quantity"/>
       <type>
         <code value="Quantity"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/MoneyQuantity"/>
       </type>
     </element>
   </differential>
