@@ -1363,7 +1363,9 @@
     "name" : "tx.fhir.org",
     "mode" : "tx.fhir.org",
     "description" : "These are tx.fhir.org specific tests. There's no expectation that other servers will pass these tests, and they are not executed by default. (other servers can, but they depend on other set up not controlled by the tests",
-    "setup" : [ "tx.fhir.org/valueset-all.json", "tx.fhir.org/valueset-enumerated-bad.json", "tx.fhir.org/valueset-enumerated.json", "tx.fhir.org/valueset-filter-prop-component.json", "tx.fhir.org/valueset-filter-prop-method.json", "tx.fhir.org/valueset-filter-prop-order-obs.json", "tx.fhir.org/valueset-concept-is-a.json", "tx.fhir.org/valueset-filter-copyright.json"],
+    "setup" : [ "tx.fhir.org/valueset-all.json", "tx.fhir.org/valueset-enumerated-bad.json", "tx.fhir.org/valueset-enumerated.json", "tx.fhir.org/valueset-filter-prop-component.json", "tx.fhir.org/valueset-filter-prop-method.json", 
+      "tx.fhir.org/valueset-filter-prop-order-obs.json", "tx.fhir.org/valueset-concept-is-a.json", "tx.fhir.org/valueset-filter-copyright.json", "tx.fhir.org/valueset-filter-status.json", "tx.fhir.org/valueset-filter-class-regex.json", 
+      "tx.fhir.org/valueset-filter-scale-type.json", "tx.fhir.org/valueset-filter-list.json"],
     "tests" : [
       {
         "name" : "snomed-validation-1",
@@ -1445,6 +1447,16 @@
         "request" : "tx.fhir.org/loinc-expand-enum-bad-request-parameters.json",
         "response" : "tx.fhir.org/loinc-expand-enum-bad-response-valueSet.json"
       },{
+        "name" : "loinc-expand-status",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-status-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-status-response-valueSet.json"
+      },{
+        "name" : "loinc-expand-class-regex",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-class-regex-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-class-regex-response-valueSet.json"
+      },{
         "name" : "loinc-expand-prop-component",
         "operation" : "expand",
         "request" : "tx.fhir.org/loinc-expand-prop-component-request-parameters.json",
@@ -1470,6 +1482,11 @@
         "request" : "tx.fhir.org/loinc-expand-copyright-request-parameters.json",
         "response" : "tx.fhir.org/loinc-expand-copyright-response-valueSet.json"
       },{
+        "name" : "loinc-expand-scale-type",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-scale-type-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-scale-type-response-valueSet.json"
+      },{
         "name" : "loinc-validate-enum-good",
         "operation" : "validate-code",
         "request" : "tx.fhir.org/loinc-validate-enum-good-request-parameters.json",
@@ -1489,6 +1506,66 @@
         "operation" : "validate-code",
         "request" : "tx.fhir.org/loinc-validate-filter-prop-component-bad-request-parameters.json",
         "response" : "tx.fhir.org/loinc-validate-filter-prop-component-bad-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-status-good",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-status-good-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-status-good-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-status-bad",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-status-bad-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-status-bad-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-class-regex-good",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-class-regex-good-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-class-regex-good-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-class-regex-bad",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-class-regex-bad-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-class-regex-bad-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-scale-type-good",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-scale-type-good-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-scale-type-good-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-scale-type-bad",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-scale-type-bad-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-scale-type-bad-response-parameters.json"
+      },{
+        "name" : "loinc-expand-list-request-parameters",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-list-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-list-response-valueSet.json"
+      },{
+        "name" : "loinc-validate-list-good",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-list-good-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-list-good-response-parameters.json"
+      },{
+        "name" : "loinc-validate-list-bad",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-list-bad-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-list-bad-response-parameters.json"
+      },{
+        "name" : "loinc-expand-filter-list-request-parameters",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-filter-list-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-filter-list-response-valueSet.json"
+      },{
+        "name" : "loinc-validate-filter-list-type-good",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-list-good-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-list-good-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-list-bad",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-list-bad-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-list-bad-response-parameters.json"
       }
     ]
   }],
