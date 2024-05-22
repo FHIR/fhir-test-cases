@@ -1,0 +1,146 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "feature",
+  "url": "http://www.hl7.org/fhir/uv/capstmt/StructureDefinition/feature",
+  "name": "Feature",
+  "status": "draft",
+  "description": "This extension documents the features of a system using code/value pairs",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "code": "001*",
+          "system": "http://unstats.un.org/unsd/methods/m49/m49.htm"
+        }
+      ]
+    }
+  ],
+  "fhirVersion": "4.0.1",
+  "kind": "complex-type",
+  "abstract": false,
+  "context": [
+    {
+      "type": "element",
+      "expression": "CapabilityStatement.rest"
+    }
+  ],
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Extension",
+        "path": "Extension",
+        "definition": "This extension documents the features of a system using code/value pairs"
+      },
+      {
+        "id": "Extension.extension",
+        "path": "Extension.extension",
+        "min": 2
+      },
+      {
+        "id": "Extension.extension:code",
+        "path": "Extension.extension",
+        "sliceName": "code",
+        "min": 1,
+        "max": "1",
+        "mustSupport": true
+      },
+      {
+        "id": "Extension.extension:code.extension",
+        "path": "Extension.extension.extension",
+        "max": "0"
+      },
+      {
+        "id": "Extension.extension:code.url",
+        "path": "Extension.extension.url",
+        "fixedUri": "code"
+      },
+      {
+        "id": "Extension.extension:code.value[x]",
+        "path": "Extension.extension.value[x]",
+        "min": 1,
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "extensible",
+          "valueSet": "http://www.hl7.org/fhir/uv/capstmt/ValueSet/capability-feature-vs"
+        }
+      },
+      {
+        "id": "Extension.extension:value",
+        "path": "Extension.extension",
+        "sliceName": "value",
+        "min": 1,
+        "max": "*",
+        "mustSupport": true
+      },
+      {
+        "id": "Extension.extension:value.extension",
+        "path": "Extension.extension.extension",
+        "max": "0"
+      },
+      {
+        "id": "Extension.extension:value.url",
+        "path": "Extension.extension.url",
+        "fixedUri": "value"
+      },
+      {
+        "id": "Extension.extension:value.value[x]",
+        "path": "Extension.extension.value[x]",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        },
+        "min": 1,
+        "type": [
+          {
+            "code": "boolean"
+          },
+          {
+            "code": "string"
+          },
+          {
+            "code": "CodeableConcept"
+          }
+        ]
+      },
+      {
+        "id": "Extension.extension:value.value[x]:valueCodeableConcept",
+        "path": "Extension.extension.value[x]",
+        "sliceName": "valueCodeableConcept",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "extensible",
+          "valueSet": "http://www.hl7.org/fhir/uv/capstmt/ValueSet/capability-feature-value-vs"
+        }
+      },
+      {
+        "id": "Extension.url",
+        "path": "Extension.url",
+        "fixedUri": "http://www.hl7.org/fhir/uv/capstmt/StructureDefinition/feature"
+      },
+      {
+        "id": "Extension.value[x]",
+        "path": "Extension.value[x]",
+        "max": "0"
+      }
+    ]
+  }
+}
