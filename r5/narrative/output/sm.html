@@ -1,0 +1,95 @@
+<html><head><link rel="stylesheet" href="http://hl7.org/fhir/fhir.css"/><link rel="stylesheet" href="http://hl7.org/fhir/dist/css/bootstrap.css"/><link rel="stylesheet" href="http://hl7.org/fhir/assets/css/bootstrap-fhir.css"/><link rel="stylesheet" href="http://hl7.org/fhir/assets/css/project.css"/><link rel="stylesheet" href="http://hl7.org/fhir/assets/css/pygments-manni.css"/><link rel="stylesheet" href="http://hl7.org/fhir/jquery-ui.css"/></head><body>
+<div id="segment-content" class="segment"><div class="container"><div class="row"><div class="inner-wrapper"><div class="col-12">
+<p>Narrative</p><div><pre class="fml">
+<span style="color: #cc00cc">/// <b>url</b> = </span><span style="color: blue">'http://hl7.org/fhir/StructureMap/Composition4to5'</span>
+<span style="color: #cc00cc">/// <b>name</b> = </span><span style="color: blue">'Composition4to5'</span>
+<span style="color: #cc00cc">/// <b>title</b> = </span><span style="color: blue">'FML Conversion for Composition: R4 to R5'</span>
+<span style="color: #cc00cc">/// <b>status</b> = </span><span style="color: blue">'active'</span>
+
+<b>conceptmap</b><span style="color: navy"> &quot;</span>CompositionStatus<span style="color: navy">&quot; {
+</span><b>  prefix </b>s<span style="color: navy"> = &quot;</span>http://hl7.org/fhir/4.0/composition-status<span style="color: navy">&quot;
+</span><b>  prefix </b>t<span style="color: navy"> = &quot;</span>http://hl7.org/fhir/composition-status<span style="color: navy">&quot;
+</span>
+  <span style="color: #b36b00" title="This element was not defined prior to R5">// s:&quot;registered&quot; - t:&quot;registered&quot;</span>
+  <span style="color: #b36b00" title="This element was not defined prior to R5">// s:&quot;partial&quot; - t:&quot;partial&quot;</span>
+  s<span style="color: navy">:</span>preliminary <b>-</b> t<span style="color: navy">:</span>preliminary
+  s<span style="color: navy">:</span>final <b>-</b> t<span style="color: navy">:</span>final
+  s<span style="color: navy">:</span>amended <b>-</b> t<span style="color: navy">:</span>amended
+  <span style="color: #b36b00" title="This element was not defined prior to R5">// s:&quot;corrected&quot; - t:&quot;corrected&quot;</span>
+  <span style="color: #b36b00" title="This element was not defined prior to R5">// s:&quot;appended&quot; - t:&quot;appended&quot;</span>
+  <span style="color: #b36b00" title="This element was not defined prior to R5">// s:&quot;cancelled&quot; - t:&quot;cancelled&quot;</span>
+  s<span style="color: navy">:</span>&quot;entered-in-error&quot; <b>-</b> t<span style="color: navy">:</span><span style="color: navy">&quot;</span>entered-in-error<span style="color: navy">&quot;</span>
+  <span style="color: #b36b00" title="This element was not defined prior to R5">// s:&quot;deprecated&quot; - t:&quot;deprecated&quot;</span>
+  <span style="color: #b36b00" title="This element was not defined prior to R5">// s:&quot;unknown&quot; - t:&quot;unknown&quot;</span>
+<span style="color: navy">}
+
+</span><b>conceptmap</b><span style="color: navy"> &quot;</span>SectionMode<span style="color: navy">&quot; {
+</span><b>  prefix </b>s<span style="color: navy"> = &quot;</span>http://hl7.org/fhir/4.0/list-mode<span style="color: navy">&quot;
+</span><b>  prefix </b>t<span style="color: navy"> = &quot;</span>http://hl7.org/fhir/list-mode<span style="color: navy">&quot;
+</span>
+  s<span style="color: navy">:</span>working <b>-</b> t<span style="color: navy">:</span>working
+  s<span style="color: navy">:</span>snapshot <b>-</b> t<span style="color: navy">:</span>snapshot
+  s<span style="color: navy">:</span>changes <b>-</b> t<span style="color: navy">:</span>changes
+<span style="color: navy">}
+
+</span><b>uses</b><span style="color: navy"> &quot;</span>http://hl7.org/fhir/4.0/StructureDefinition/Composition<span style="color: navy">&quot; </span><b>alias </b>CompositionR4 <b>as </b><b>source</b>
+<b>uses</b><span style="color: navy"> &quot;</span>http://hl7.org/fhir/StructureDefinition/Composition<span style="color: navy">&quot; </span><b>alias </b>CompositionR5 <b>as </b><b>target</b>
+
+<b>imports</b><span style="color: navy"> &quot;</span>http://hl7.org/fhir/StructureMap/*4to5<span style="color: navy">&quot;
+</span>
+<b>group </b>Composition<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span><span style="color: navy"> : </span>CompositionR4, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy"> : </span>CompositionR5<span style="color: navy">)</span><b> extends </b>DomainResource<b> &lt;&lt;type+&gt;&gt;</b><span style="color: navy"> {
+</span>  <span style="color: navy">// </span><span style="color: green">Section comment</span>
+  <span style="color: #b36b00" title="This element was not defined prior to R5">// src.url -&gt; tgt.url;</span>
+  src.identifier<span style="color: navy"><b> -&gt; </b></span>tgt.identifier<span style="color: navy">;</span> <span style="color: navy">// </span><span style="color: green">comment</span>
+  <span style="color: #b36b00" title="This element was not defined prior to R5">// src.version -&gt; tgt.version;</span>
+  src.status<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.status = <b>translate</b><span style="color: navy">(</span><span style="color: maroon">v</span><span style="color: navy">, </span><span style="color: blue">'#CompositionStatus'</span><span style="color: navy">, </span><span style="color: blue">'code'</span><span style="color: navy">)</span><span style="color: navy">;</span>
+  src.type<span style="color: navy"><b> -&gt; </b></span>tgt.type<span style="color: navy">;</span>
+  src.category<span style="color: navy"><b> -&gt; </b></span>tgt.category<span style="color: navy">;</span>
+  src.subject<span style="color: navy"><b> -&gt; </b></span>tgt.subject<span style="color: navy">;</span>
+  src.encounter<span style="color: navy"><b> -&gt; </b></span>tgt.encounter<span style="color: navy">;</span>
+  src.date<span style="color: navy"><b> -&gt; </b></span>tgt.date<span style="color: navy">;</span>
+  <span style="color: #b36b00" title="This element was not defined prior to R5">// src.useContext -&gt; tgt.useContext;</span>
+  src.author<span style="color: navy"><b> -&gt; </b></span>tgt.author<span style="color: navy">;</span>
+  <span style="color: #b36b00" title="This element was not defined prior to R5">// src.name -&gt; tgt.name;</span>
+  src.title<span style="color: navy"><b> -&gt; </b></span>tgt.title<span style="color: navy">;</span>
+  <span style="color: #b36b00" title="This element was not defined prior to R5">// src.note -&gt; tgt.note;</span>
+  src.attester<b> as </b><span style="color: maroon">s</span><span style="color: navy"><b> -&gt; </b></span>tgt.attester<b> as </b><span style="color: maroon">t</span><b> then </b>CompositionAttester<span style="color: navy">(</span><span style="color: maroon">s</span><span style="color: navy">, </span><span style="color: maroon">t</span><span style="color: navy">)</span><span style="color: navy">;</span> <span style="color: navy">// </span><span style="color: green">another comment at the end</span>
+  src.custodian<span style="color: navy"><b> -&gt; </b></span>tgt.custodian<span style="color: navy">;</span>
+  src.relatesTo<b> as </b><span style="color: maroon">s</span><span style="color: navy"><b> -&gt; </b></span>tgt.relatesTo<b> as </b><span style="color: maroon">t</span><b> then </b>CompositionRelatesTo<span style="color: navy">(</span><span style="color: maroon">s</span><span style="color: navy">, </span><span style="color: maroon">t</span><span style="color: navy">)</span><span style="color: navy">;</span>
+  src.event<b> as </b><span style="color: maroon">s</span><span style="color: navy"><b> -&gt; </b></span>tgt.event<b> as </b><span style="color: maroon">t</span><b> then </b>CompositionEvent<span style="color: navy">(</span><span style="color: maroon">s</span><span style="color: navy">, </span><span style="color: maroon">t</span><span style="color: navy">)</span><span style="color: navy">;</span>
+  src.section<b> as </b><span style="color: maroon">s</span><span style="color: navy"><b> -&gt; </b></span>tgt.section<b> as </b><span style="color: maroon">t</span><b> then </b>CompositionSection<span style="color: navy">(</span><span style="color: maroon">s</span><span style="color: navy">, </span><span style="color: maroon">t</span><span style="color: navy">)</span><span style="color: navy">;</span>
+<span style="color: navy">// </span><span style="color: green">comment again</span>
+<span style="color: navy">}
+
+</span><b>group </b>CompositionAttester<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span>, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy">)</span><b> extends </b>BackboneElement<span style="color: navy"> {
+</span>  src.mode<b> as </b><span style="color: maroon">s</span><span style="color: navy"><b> -&gt; </b></span> tgt.mode = <b>create</b><span style="color: navy">(</span><span style="color: blue">'CodeableConcept'</span><span style="color: navy">)</span><b> as </b><span style="color: maroon">t</span><span style="color: navy">, </span> t.coding = <b>create</b><span style="color: navy">(</span><span style="color: blue">'Coding'</span><span style="color: navy">)</span><b> as </b><span style="color: maroon">tc</span><span style="color: navy">, </span> tc.system = <span style="color: blue">'http://hl7.org/fhir/composition-attestation-mode'</span><span style="color: navy">, </span> tc.code = <span style="color: maroon">s</span><span style="color: navy">;</span>
+  src.time<span style="color: navy"><b> -&gt; </b></span>tgt.time<span style="color: navy">;</span>
+  src.party<span style="color: navy"><b> -&gt; </b></span>tgt.party<span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span><b>group </b>CompositionEvent<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span>, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy">)</span><b> extends </b>BackboneElement<span style="color: navy"> {
+</span>  src.code<span style="color: navy"><b> -&gt; </b></span>tgt.code<span style="color: navy">;</span>
+  src.period<span style="color: navy"><b> -&gt; </b></span>tgt.period<span style="color: navy">;</span>
+  src.detail<span style="color: navy"><b> -&gt; </b></span>tgt.detail<span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span><b>group </b>CompositionRelatesTo<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span>, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy">)</span><b> extends </b>Element<span style="color: navy"> {
+</span>  src.code<span style="color: navy"><b> -&gt; </b></span>tgt.type<span style="color: navy">;</span>
+  src.target<span style="color: navy"> : </span>Identifier<b> as </b><span style="color: maroon">s</span><span style="color: navy"><b> -&gt; </b></span> tgt.resourceReference<b> as </b><span style="color: maroon">t</span><span style="color: navy">, </span> t.identifier = <span style="color: maroon">s</span><span style="color: navy">;</span>
+  src.target<span style="color: navy"> : </span>Reference<span style="color: navy"><b> -&gt; </b></span>tgt.resourceReference<span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span><b>group </b>CompositionSection<span style="color: navy">(</span><b>source</b> <span style="color: maroon">src</span>, <b>target</b> <span style="color: maroon">tgt</span><span style="color: navy">)</span><b> extends </b>BackboneElement<span style="color: navy"> {
+</span>  src.title<span style="color: navy"><b> -&gt; </b></span>tgt.title<span style="color: navy">;</span>
+  src.code<span style="color: navy"><b> -&gt; </b></span>tgt.code<span style="color: navy">;</span>
+  src.author<span style="color: navy"><b> -&gt; </b></span>tgt.author<span style="color: navy">;</span>
+  src.focus<span style="color: navy"><b> -&gt; </b></span>tgt.focus<span style="color: navy">;</span>
+  src.text<span style="color: navy"><b> -&gt; </b></span>tgt.text<span style="color: navy">;</span>
+  src.mode<b> as </b><span style="color: maroon">v</span><span style="color: navy"><b> -&gt; </b></span>tgt.mode = <b>translate</b><span style="color: navy">(</span><span style="color: maroon">v</span><span style="color: navy">, </span><span style="color: blue">'#SectionMode'</span><span style="color: navy">, </span><span style="color: blue">'code'</span><span style="color: navy">)</span><span style="color: navy">;</span>
+  src.orderedBy<span style="color: navy"><b> -&gt; </b></span>tgt.orderedBy<span style="color: navy">;</span>
+  src.entry<span style="color: navy"><b> -&gt; </b></span>tgt.entry<span style="color: navy">;</span>
+  src.emptyReason<span style="color: navy"><b> -&gt; </b></span>tgt.emptyReason<span style="color: navy">;</span>
+<span style="color: navy">}
+
+</span></pre></div>
+</div></div></div></div></div></body></html>
