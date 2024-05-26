@@ -1,0 +1,57 @@
+{
+  "meta" : {
+    "profile" : [ "http://hl7.org/v2/StructureDefinition/Segment-Profile" ]
+  },
+  "resourceType" : "StructureDefinition",
+  "url" : "http://hl7.org/v2/StructureDefinition/PID",
+  "version" : "0.0.1",
+  "name" : "V2PIDSegment",
+  "title" : "V2 PID Segment",
+  "status" : "active",
+  "kind" : "logical",
+  "abstract" : false,
+  "type" : "http://hl7.org/v2/StructureDefinition/PID",
+  "baseDefinition" : "http://hl7.org/v2/StructureDefinition/Segment",
+  "derivation" : "specialization",
+  "differential" : {
+    "element" : [
+      {
+        "id" : "PID.0",
+        "path" : "PID.0",
+        "type" : [{ "code" : "code"}],
+        "fixedCode" : "PID"
+      },
+      {
+        "id" : "PID.1",
+        "path" : "PID.1",
+        "code" : [ { "system" : "http://hl7.org/v2/CodeSystem/Items", "code" : "00104" }],
+        "short" : "Set ID - PID",
+        "definition" : "This field contains the number that identifies this transaction. For the first occurrence of the segment, the sequence number shall be one, for the second occurrence, the sequence number shall be two, etc.",
+        "min" : 0,
+        "max" : "1",
+        "type" : [{ "code" : "http://hl7.org/v2/StructureDefinition/SI"}],
+        "maxLength" : 4
+      },
+      {
+        "id" : "PID.2",
+        "path" : "PID.2",
+        "code" : [ { "system" : "http://hl7.org/v2/CodeSystem/Items", "code" : "00105" }],
+        "short" : "Patient ID (Do Not Use)",
+        "definition" : "Deprecated: The PID-2 field was retained for backward compatibility only as of v2.3.1 and was withdrawn and removed from this message structure as of v2.7. It is recommended to use PID-3 - Patient Identifier List for all patient identifiers.",
+        "min" : 0,
+        "max" : "0",
+        "type" : [{ "code" : "http://hl7.org/v2/StructureDefinition/CX"}]
+      },
+      {
+        "id" : "PID.3",
+        "path" : "PID.3",
+        "code" : [ { "system" : "http://hl7.org/v2/CodeSystem/Items", "code" : "00106" }],
+        "short" : "Patient Identifier List",
+        "definition" : "This field contains the list of identifiers (one or more) used by the healthcare facility to uniquely identify a patient (e.g., medical record number, billing number, birth registry, national unique individual identifier, etc.). In Canada, the Canadian Provincial Healthcare Number should be sent in this field. The arbitrary term of 'internal ID' has been removed from the name of this field for clarity.",
+        "min" : 0,
+        "max" : "*",
+        "type" : [{ "code" : "http://hl7.org/v2/StructureDefinition/CX"}]
+      }
+    ]
+  }
+}

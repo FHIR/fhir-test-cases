@@ -1,0 +1,118 @@
+{
+  "resourceType" : "StructureDefinition",
+  "url" : "http://hl7.org/v2/StructureDefinition/Segment-Profile",
+  "version" : "0.0.1",
+  "name" : "V2SegmentDefinition",
+  "title" : "V2 Segment Definition",
+  "status" : "active",
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "StructureDefinition",
+  "description" : "Rules that are true for all segment definitions",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/StructureDefinition",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [
+      {
+        "id" : "StructureDefinition.kind",
+        "path" : "StructureDefinition.kind",
+        "fixedCode" : "logical"
+      },
+      {
+        "id" : "StructureDefinition.abstract",
+        "path" : "StructureDefinition.abstract",
+        "fixedBoolean" : false
+      },
+      {
+        "id" : "StructureDefinition.type",
+        "path" : "StructureDefinition.type",
+        "binding" : {
+          "strength" : "required",
+          "valueSet" : "http://hl7.org/v2/ValueSet/Segment"
+        }
+      },
+      {
+        "id" : "StructureDefinition.baseDefinition",
+        "path" : "StructureDefinition.baseDefinition",
+        "fixedCanonical" : "http://hl7.org/v2/StructureDefinition/Segment"
+      },
+      {
+        "id" : "StructureDefinition.derivation",
+        "path" : "StructureDefinition.derivation",
+        "fixedCode" : "specialization"
+      },
+      {
+        "id" : "StructureDefinition.differential.element",
+        "path" : "StructureDefinition.differential.element",
+        "slicing" : {
+          "discriminator" : [{
+            "type" : "position",
+            "path" : "$this"
+          }],
+          "ordered" : true,
+          "rules" : "closed"
+        }
+      },
+      {
+        "id" : "StructureDefinition.differential.element:FixedCode",
+        "path" : "StructureDefinition.differential.element",
+        "sliceName" : "FixedCode",
+        "max" : "1",
+        "min" : 1
+      },
+      {
+        "id" : "StructureDefinition.differential.element:FixedCode.fixed",
+        "path" : "StructureDefinition.differential.element.fixed",
+        "min" : 1
+      },
+      {
+        "id" : "StructureDefinition.differential.element:FixedCode.type",
+        "path" : "StructureDefinition.differential.element.type",
+        "min" : 1,
+        "max" : "1"
+      },
+      {
+        "id" : "StructureDefinition.differential.element:FixedCode.type.code",
+        "path" : "StructureDefinition.differential.element.type.code",
+        "min" : 1,
+        "fixedUri" : "code"
+      },
+      {
+        "id" : "StructureDefinition.differential.element:Field",
+        "path" : "StructureDefinition.differential.element",
+        "sliceName" : "Field",
+        "max" : "*",
+        "constraint" : [{
+          "key" : "Segment-profile-2",
+          "severity" : "error",
+          "human" : "The field name must be an integer that matches the offset",
+          "expression" : "path.substring(indexOf('.')+1).convertsToInteger()"
+        }]
+      },
+      {
+        "id" : "StructureDefinition.differential.element:Field.code",
+        "path" : "StructureDefinition.differential.element.code",
+        "min" : 1,
+        "binding" : {
+          "strength" : "required",
+          "valueSet" : "http://hl7.org/v2/ValueSet/Items"
+        }
+      },
+      {
+        "id" : "StructureDefinition.differential.element:Field.type",
+        "path" : "StructureDefinition.differential.element.type",
+        "min" : 1,
+        "max" : "1"
+      },
+      {
+        "id" : "StructureDefinition.differential.element:Field.type.code",
+        "path" : "StructureDefinition.differential.element.type.code",
+        "min" : 1,
+        "binding" : {
+          "strength" : "required",
+          "valueSet" : "http://hl7.org/v2/ValueSet/Types"
+        }
+      }
+    ]
+  }
+}

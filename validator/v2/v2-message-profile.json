@@ -1,0 +1,61 @@
+{
+  "resourceType" : "StructureDefinition",
+  "url" : "http://hl7.org/v2/StructureDefinition/Message-Profile",
+  "version" : "0.0.1",
+  "name" : "V2MessageDefinition",
+  "title" : "V2 Message Definition",
+  "status" : "active",
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "StructureDefinition",
+  "description" : "Rules that are true for all message definitions (= Abstract Syntax Tree)",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/StructureDefinition",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [
+      {
+        "id" : "StructureDefinition.kind",
+        "path" : "StructureDefinition.kind",
+        "fixedCode" : "logical"
+      },
+      {
+        "id" : "StructureDefinition.abstract",
+        "path" : "StructureDefinition.abstract",
+        "fixedBoolean" : false
+      },
+      {
+        "id" : "StructureDefinition.type",
+        "path" : "StructureDefinition.type",
+        "binding" : {
+          "strength" : "required",
+          "valueSet" : "http://hl7.org/v2/ValueSet/Messages"
+        }
+      },
+      {
+        "id" : "StructureDefinition.baseDefinition",
+        "path" : "StructureDefinition.baseDefinition",
+        "fixedCanonical" : "http://hl7.org/v2/StructureDefinition/Message"
+      },
+      {
+        "id" : "StructureDefinition.derivation",
+        "path" : "StructureDefinition.derivation",
+        "fixedCode" : "specialization"
+      },
+      {
+        "id" : "StructureDefinition.differential.element:Field.type",
+        "path" : "StructureDefinition.differential.element.type",
+        "min" : 0,
+        "max" : "1"
+      },
+      {
+        "id" : "StructureDefinition.differential.element:Field.type.code",
+        "path" : "StructureDefinition.differential.element.type.code",
+        "min" : 1,
+        "binding" : {
+          "strength" : "required",
+          "valueSet" : "http://hl7.org/v2/ValueSet/Segments"
+        }
+      }
+    ]
+  }
+}
