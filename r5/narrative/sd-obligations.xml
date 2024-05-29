@@ -44,6 +44,23 @@
   <derivation value="constraint"/>
   <differential>
     <element id="AllergyIntolerance">
+      <extension url="http://hl7.org/fhir/StructureDefinition/obligation">
+        <extension url="code">
+          <valueCode value="SHALL:in-narrative"/>
+        </extension>
+        <extension url="code">
+          <valueCode value="SHOULD:user-input"/>
+        </extension>
+        <extension url="elementId">
+          <valueString value="AllergyIntolerance.clinicalStatus"/>
+        </extension>
+        <extension url="elementId">
+          <valueString value="AllergyIntolerance.clinicalStatus"/>
+        </extension>
+        <extension url="elementId">
+          <valueString value="AllergyIntolerance.onset[x]:onsetPeriod.start"/>
+        </extension>
+      </extension>
       <path value="AllergyIntolerance"/>
     </element>
     <element id="AllergyIntolerance.extension:abatement-datetime">
@@ -73,9 +90,12 @@
       </type>
     </element>
     <element id="AllergyIntolerance.type">
-      <extension url="http://hl7.org/fhir/tools/StructureDefinition/obligation">
+      <extension url="http://hl7.org/fhir/StructureDefinition/obligation">
         <extension url="code">
-          <valueCode value="SHALL:will-send+SHOULD:display"/>
+          <valueCode value="SHALL:populate"/>
+        </extension>
+        <extension url="code">
+          <valueCode value="SHOULD:display"/>
         </extension>
         <extension url="documentation">
           <valueMarkdown value="All Australian applications have to understand this element correctly"/>
@@ -98,6 +118,26 @@
       <extension url="http://hl7.org/fhir/StructureDefinition/obligation">
         <extension url="code">
           <valueCode value="SHALL:unaltered"/>
+        </extension>
+        <extension url="actor">
+          <valueCanonical value="http://hl7.org/fhir/test/ActorDefinition/client"/>
+        </extension>
+        <extension url="actor">
+          <valueCanonical value="http://hl7.org/fhir/test/ActorDefinition/server"/>
+        </extension>
+        <extension url="documentation">
+          <valueMarkdown value="Servers can't change this value"/>
+        </extension>
+        <extension url="filter-desc">
+          <valueString value="where(coding.code.exists())"/>
+        </extension>
+        <extension url="filter">
+          <valueMarkdown value="This only applies to values with a code (not text only)"/>
+        </extension>
+      </extension>
+      <extension url="http://hl7.org/fhir/StructureDefinition/obligation">
+        <extension url="code">
+          <valueCode value="SHOULD:persist"/>
         </extension>
         <extension url="actor">
           <valueCanonical value="http://hl7.org/fhir/test/ActorDefinition/server"/>
