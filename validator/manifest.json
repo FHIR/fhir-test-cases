@@ -7861,7 +7861,7 @@
                 },
                 "diagnostics": "[192,9]",
                 "expression": [
-                  "Observation.component[0].code.coding[1].system"
+                  "Observation.component[0].code.coding[2].system"
                 ]
               },
               {
@@ -7936,7 +7936,7 @@
               },
               "diagnostics": "[192,9]",
               "expression": [
-                "Observation.component[0].code.coding[1].system"
+                "Observation.component[0].code.coding[2].system"
               ]
             },
             {
@@ -8579,7 +8579,7 @@
               },
               "diagnostics": "[67,8]",
               "expression": [
-                "Observation.code.coding[1].display"
+                "Observation.code.coding[0].display"
               ]
             }
           ]
@@ -49701,12 +49701,38 @@
     {
       "name": "params-recursion",
       "file": "params-recursion.json",
-      "supporting": ["params-recursion-profile.json"],
+      "supporting": [
+        "params-recursion-profile.json"
+      ],
       "version": "4.0",
       "java": {
         "outcome": {
           "resourceType": "OperationOutcome",
           "issue": []
+        }
+      }
+    },
+    {
+      "name": "dr-xml-space",
+      "file": "dr-xml-space.xml",
+      "documentation": "Use of xml:space is a *bad* thing",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "invalid",
+              "details": {
+                "text": "The attribute xml:space is legal in XHTML 1.0, and therefore in resources, but was removed in XHTML 1.1, and for this reason it's use is strongly discouraged"
+              },
+              "diagnostics": "[5,45]",
+              "expression": [
+                "DiagnosticReport.text.div"
+              ]
+            }
+          ]
         }
       }
     },
