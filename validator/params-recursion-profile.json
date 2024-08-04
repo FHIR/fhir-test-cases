@@ -1,0 +1,231 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "pdex-parameters-multi-member-match-bundle-in",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "fm"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status",
+    "valueCode" : "trial-use",
+    "_valueCode" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-conformance-derivedFrom",
+        "valueCanonical" : "http://hl7.org/fhir/us/davinci-pdex/ImplementationGuide/hl7.fhir.us.davinci-pdex"
+      }]
+    }
+  }],
+  "url" : "http://hl7.org/fhir/us/davinci-pdex/StructureDefinition/pdex-parameters-multi-member-match-bundle-in",
+  "version" : "2.1.0",
+  "name" : "PDexMultiMemberMatchRequestParameters",
+  "title" : "PDex $multi-member-match request",
+  "status" : "active",
+  "date" : "2024-07-28T07:44:34+08:00",
+  "publisher" : "HL7 International / Financial Management",
+  "contact" : [{
+    "name" : "HL7 International / Financial Management",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/fm"
+    },
+    {
+      "system" : "email",
+      "value" : "fm@lists.HL7.org"
+    }]
+  },
+  {
+    "name" : "Mark Scrimshire (mark.scrimshire@onyxhealth.io)",
+    "telecom" : [{
+      "system" : "email",
+      "value" : "mailto:mark.scrimshire@onyxhealth.io"
+    }]
+  },
+  {
+    "name" : "HL7 International - Financial Management",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/fm"
+    }]
+  }],
+  "description" : "A Parameters profile defining the inputs to a $bulk-member-match operation performed by a payer system",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "urn:iso:std:iso:3166",
+      "code" : "US",
+      "display" : "United States of America"
+    }]
+  }],
+  "copyright" : "Used by permission of HL7 International, all rights reserved Creative Commons License",
+  "fhirVersion" : "4.0.1",
+  "mapping" : [{
+    "identity" : "v2",
+    "uri" : "http://hl7.org/v2",
+    "name" : "HL7 v2 Mapping"
+  },
+  {
+    "identity" : "rim",
+    "uri" : "http://hl7.org/v3",
+    "name" : "RIM Mapping"
+  }],
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Parameters",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Parameters",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Parameters",
+      "path" : "Parameters"
+    },
+    {
+      "id" : "Parameters.parameter",
+      "path" : "Parameters.parameter",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Parameters.parameter.name",
+      "path" : "Parameters.parameter.name",
+      "patternString" : "MemberBundle"
+    },
+    {
+      "id" : "Parameters.parameter.part",
+      "path" : "Parameters.parameter.part",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "$this.name"
+        }],
+        "description" : "slicing pattern for parameter.part",
+        "ordered" : false,
+        "rules" : "openAtEnd"
+      },
+      "min" : 3,
+      "max" : "4",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Parameters.parameter.part:MemberPatient",
+      "path" : "Parameters.parameter.part",
+      "sliceName" : "MemberPatient",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Parameters.parameter.part:MemberPatient.name",
+      "path" : "Parameters.parameter.part.name",
+      "fixedString" : "MemberPatient",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Parameters.parameter.part:MemberPatient.resource",
+      "path" : "Parameters.parameter.part.resource",
+      "min" : 1,
+      "type" : [{
+        "code" : "Patient"
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Parameters.parameter.part:MemberPatient.part",
+      "path" : "Parameters.parameter.part.part",
+      "max" : "0"
+    },
+    {
+      "id" : "Parameters.parameter.part:CoverageToMatch",
+      "path" : "Parameters.parameter.part",
+      "sliceName" : "CoverageToMatch",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Parameters.parameter.part:CoverageToMatch.name",
+      "path" : "Parameters.parameter.part.name",
+      "fixedString" : "CoverageToMatch",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Parameters.parameter.part:CoverageToMatch.resource",
+      "path" : "Parameters.parameter.part.resource",
+      "min" : 1,
+      "type" : [{
+        "code" : "Coverage"
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Parameters.parameter.part:CoverageToMatch.part",
+      "path" : "Parameters.parameter.part.part",
+      "max" : "0"
+    },
+    {
+      "id" : "Parameters.parameter.part:CoverageToLink",
+      "path" : "Parameters.parameter.part",
+      "sliceName" : "CoverageToLink",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Parameters.parameter.part:CoverageToLink.name",
+      "path" : "Parameters.parameter.part.name",
+      "fixedString" : "CoverageToLink",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Parameters.parameter.part:CoverageToLink.resource",
+      "path" : "Parameters.parameter.part.resource",
+      "min" : 1,
+      "type" : [{
+        "code" : "Coverage"
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Parameters.parameter.part:CoverageToLink.part",
+      "path" : "Parameters.parameter.part.part",
+      "max" : "0"
+    },
+    {
+      "id" : "Parameters.parameter.part:Consent",
+      "path" : "Parameters.parameter.part",
+      "sliceName" : "Consent",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "BackboneElement"
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Parameters.parameter.part:Consent.name",
+      "path" : "Parameters.parameter.part.name",
+      "fixedString" : "Consent",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Parameters.parameter.part:Consent.resource",
+      "path" : "Parameters.parameter.part.resource",
+      "min" : 1,
+      "type" : [{
+        "code" : "Consent"
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Parameters.parameter.part:Consent.part",
+      "path" : "Parameters.parameter.part.part",
+      "max" : "0"
+    }]
+  }
+}
