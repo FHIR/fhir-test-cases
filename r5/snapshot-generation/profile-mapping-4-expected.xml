@@ -5,8 +5,8 @@
   <extension url="http://hl7.org/fhir/tools/StructureDefinition/obligation-profile">
     <valueBoolean value="true"/>
   </extension>
-  <url value="http://hl7.org/fhir/tests/StructureDefinition/profile-mapping-1"/>
-  <name value="ProfileMappingBase"/>
+  <url value="http://hl7.org/fhir/tests/StructureDefinition/profile-mapping-4"/>
+  <name value="ProfileMappingDerived"/>
   <status value="draft"/>
   <fhirVersion value="5.0.0"/>
   <mapping>
@@ -48,7 +48,7 @@
   <kind value="resource"/>
   <abstract value="false"/>
   <type value="Patient"/>
-  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/tests/StructureDefinition/profile-mapping-1"/>
   <derivation value="constraint"/>
   <snapshot>
     <element id="Patient">
@@ -637,7 +637,11 @@
       <isSummary value="true"/>
       <mapping>
         <identity value="map1"/>
-        <map value="some.path.here"/>
+        <map value="some.other.path.here,some.path.here"/>
+      </mapping>
+      <mapping>
+        <identity value="cda"/>
+        <map value="PatientLivingSubject.something,.patient.birthTime"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
@@ -650,10 +654,6 @@
       <mapping>
         <identity value="interface"/>
         <map value="ParticipantLiving.birthDate"/>
-      </mapping>
-      <mapping>
-        <identity value="cda"/>
-        <map value=".patient.birthTime"/>
       </mapping>
       <mapping>
         <identity value="loinc"/>
@@ -1850,11 +1850,11 @@
       <path value="Patient.birthDate"/>
       <mapping>
         <identity value="map1"/>
-        <map value="some.path.here"/>
+        <map value="some.other.path.here"/>
       </mapping>
       <mapping>
-        <identity value="rim"/>
-        <map value="Patient.dob.something"/>
+        <identity value="cda"/>
+        <map value="PatientLivingSubject.something"/>
       </mapping>
     </element>
   </differential>
