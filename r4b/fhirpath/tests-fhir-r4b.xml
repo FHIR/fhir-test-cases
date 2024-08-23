@@ -449,6 +449,7 @@ Any text enclosed within is ignored
 		<test name="testExists3" inputfile="patient-example.xml"><expression>Patient.name.exists(use = 'official')</expression><output type="boolean">true</output></test>
 		<test name="testExists4" inputfile="patient-example.xml"><expression>Patient.maritalStatus.coding.exists(code = 'P' and system = 'http://terminology.hl7.org/CodeSystem/v3-MaritalStatus')
 			or Patient.maritalStatus.coding.exists(code = 'A' and system = 'http://terminology.hl7.org/CodeSystem/v3-MaritalStatus')</expression><output type="boolean">false</output></test>
+		<test name="testExists5" inputfile="patient-example.xml"><expression>(1 | 2).exists()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testAll">
@@ -1357,7 +1358,31 @@ Any text enclosed within is ignored
 	</group>
 
 	<group name="LowBoundary">
-		<test name="LowBoundaryDecimal"><expression>1.587.lowBoundary(8)</expression><output>1.58650000</output></test>
+		<test name="LowBoundaryDecimalDefault"><expression>1.587.lowBoundary()</expression><output>1.58650000</output></test>
+		<test name="LowBoundaryDecimal1"><expression>1.587.lowBoundary(6)</expression><output>1.586500</output></test>
+		<test name="LowBoundaryDecimal2"><expression>1.587.lowBoundary(2)</expression><output>1.58</output></test>
+		<test name="LowBoundaryDecimal3"><expression>1.587.lowBoundary(-1)</expression></test>
+		<test name="LowBoundaryDecimal4"><expression>1.587.lowBoundary(0)</expression><output>1</output></test>
+		<test name="LowBoundaryDecimal5"><expression>1.587.lowBoundary(32)</expression></test>
+
+		<test name="LowBoundaryNegDecimalDefault"><expression>(-1.587).lowBoundary()</expression><output>-1.58750000</output></test>
+		<test name="LowBoundaryNegDecimal1"><expression>(-1.587).lowBoundary(6)</expression><output>-1.587500</output></test>
+		<test name="LowBoundaryNegDecimal2"><expression>(-1.587).lowBoundary(2)</expression><output>-1.59</output></test>
+		<test name="LowBoundaryNegDecimal3"><expression>(-1.587).lowBoundary(-1)</expression></test>
+		<test name="LowBoundaryNegDecimal4"><expression>(-1.587).lowBoundary(0)</expression><output>-2</output></test>
+		<test name="LowBoundaryNegDecimal5"><expression>(-1.587).lowBoundary(32)</expression></test>
+
+		<test name="LowBoundaryDecimal6"><expression>1.587.lowBoundary(39)</expression></test>
+		<test name="LowBoundaryDecimal7"><expression>1.toDecimal().lowBoundary()</expression><output>0.50000000</output></test>
+		<test name="LowBoundaryDecimal8"><expression>1.lowBoundary(0)</expression><output>0</output></test>
+		<test name="LowBoundaryDecimal9"><expression>1.lowBoundary(5)</expression><output>0.50000</output></test>
+		<test name="LowBoundaryDecimal10"><expression>12.587.lowBoundary(2)</expression><output>12.58</output></test>
+		<test name="LowBoundaryDecimal11"><expression>12.500.lowBoundary(4)</expression><output>12.4995</output></test>
+		<test name="LowBoundaryDecimal12"><expression>120.lowBoundary(2)</expression><output>119.50</output></test>
+		<test name="LowBoundaryDecimal13"><expression>(-120).lowBoundary(2)</expression><output>-120.50</output></test>
+		<test name="LowBoundaryDecimal14"><expression>0.0034.lowBoundary(1)</expression><output>0.0</output></test>
+		<test name="LowBoundaryDecimal15"><expression>(-0.0034).lowBoundary(1)</expression><output>-0.0</output></test>
+
 		<test name="LowBoundaryQuantity"><expression>1.587 'cm'.lowBoundary(8)</expression><output>1.58650000 'cm'</output></test>
 		<test name="LowBoundaryDateMonth"><expression>@2014.lowBoundary(6)</expression><output>@2014-01</output></test>
 		<test name="LowBoundaryDateTimeMillisecond1"><expression>@2014-01-01T08.lowBoundary(17)</expression><output>@2014-01-01T08:00:00.000+14:00</output></test>
@@ -1367,12 +1392,29 @@ Any text enclosed within is ignored
 	</group>
 
 	<group name="HighBoundary">
+		<test name="HighBoundaryDecimalDefault"><expression>1.587.highBoundary()</expression><output>1.58750000</output></test> 
+		<test name="HighBoundaryDecimal1"><expression>1.587.highBoundary(2)</expression><output>1.59</output></test> 
+		<test name="HighBoundaryDecimal2"><expression>1.587.highBoundary(6)</expression><output>1.587500</output></test> 
+		<test name="HighBoundaryDecimal3"><expression>1.587.highBoundary(-1)</expression></test> 
+		<test name="HighBoundaryDecimal4"><expression>(-1.587).highBoundary()</expression><output>-1.58650000</output></test> 
+		<test name="HighBoundaryDecimal5"><expression>(-1.587).highBoundary(2)</expression><output>-1.58</output></test> 
+		<test name="HighBoundaryDecimal6"><expression>(-1.587).highBoundary(6)</expression><output>-1.586500</output></test> 
+		<test name="HighBoundaryDecimal7"><expression>1.587.highBoundary(39)</expression></test> 
+		<test name="HighBoundaryDecimal8"><expression>1.highBoundary()</expression><output>1.50000000</output></test> 
+		<test name="HighBoundaryDecimal9"><expression>1.highBoundary(0)</expression><output>2</output></test> 
+		<test name="HighBoundaryDecimal10"><expression>1.highBoundary(5)</expression><output>1.50000</output></test> 
+		<test name="HighBoundaryDecimal11"><expression>12.587.highBoundary(2)</expression><output>12.59</output></test> 
+		<test name="HighBoundaryDecimal12"><expression>12.500.highBoundary(4)</expression><output>12.5005</output></test> 
+		<test name="HighBoundaryDecimal13"><expression>120.highBoundary(2)</expression><output>120.50</output></test> 
+		<test name="HighBoundaryDecimal14"><expression>-120.highBoundary(2)</expression><output>-120.50</output></test> 
+		<test name="HighBoundaryDecimal15"><expression>0.0034.highBoundary(1)</expression><output>0.0</output></test> 
+		<test name="HighBoundaryDecimal16"><expression>-0.0034.highBoundary(1)</expression><output>0.0</output></test> 
 		<test name="HighBoundaryDecimal"><expression>1.587.highBoundary(8)</expression><output>1.58750000</output></test>
 		<test name="HighBoundaryQuantity"><expression>1.587 'm'.highBoundary(8)</expression><output>1.58750000 'm'</output></test>
 		<test name="HighBoundaryDateMonth"><expression>@2014.highBoundary(6)</expression><output>@2014-12</output></test>
-		<test name="HighBoundaryDateTimeMillisecond"><expression>@2014-01-01T08.highBoundary(17)</expression><output>@2014-01-01T08:00:59.999-12:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
-		<test name="HighBoundaryDateTimeMillisecond"><expression>@2014-01-01T08:05-05:00.highBoundary(17)</expression><output>@2014-01-01T08:05:59.999-05:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
-		<test name="HighBoundaryDateTimeMillisecond"><expression>@2014-01-01T08.highBoundary(17)</expression><output>@2014-01-01T08:00:59.999-12:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
+		<test name="HighBoundaryDateTimeMillisecond1"><expression>@2014-01-01T08.highBoundary(17)</expression><output>@2014-01-01T08:00:59.999-12:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
+		<test name="HighBoundaryDateTimeMillisecond2"><expression>@2014-01-01T08:05-05:00.highBoundary(17)</expression><output>@2014-01-01T08:05:59.999-05:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
+		<test name="HighBoundaryDateTimeMillisecond3"><expression>@2014-01-01T08.highBoundary(17)</expression><output>@2014-01-01T08:00:59.999-12:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
 		<test name="HighBoundaryTimeMillisecond">	<expression>@T10:30.highBoundary(9)</expression><output>@T10:30:59.999</output></test>
 	</group>
 
