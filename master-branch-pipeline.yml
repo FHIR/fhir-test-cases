@@ -13,7 +13,7 @@ variables:
 
 steps:
   # Runs 'mvn package'
-  - task: Maven@3
+  - task: Maven@4
     inputs:
       mavenPomFile: 'pom.xml'
       mavenOptions: '-Xmx3072m'
@@ -87,7 +87,7 @@ steps:
 
   # Deploy the SNAPSHOT artifact to sonatype nexus.
   # This is done for the master branch merges only.
-  - task: Maven@3
+  - task: Maven@4
     displayName: 'Deploy $(module) to Sonatype staging'
     inputs:
       mavenPomFile: '$(System.DefaultWorkingDirectory)/pom.xml'
@@ -97,7 +97,7 @@ steps:
 
   # Deploy the SNAPSHOT artifact to GitHub packages.
   # This is done for the master branch merges only.
-  - task: Maven@3
+  - task: Maven@4
     displayName: 'Deploy $(module) to Sonatype staging'
     inputs:
       mavenPomFile: '$(System.DefaultWorkingDirectory)/pom.xml'
