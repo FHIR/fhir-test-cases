@@ -33,7 +33,7 @@ steps:
         Write-Host "##vso[task.setvariable variable=version]$version"
 
   # Runs 'mvn package'
-  - task: Maven@3
+  - task: Maven@4
     inputs:
       mavenPomFile: 'pom.xml'
       mavenOptions: '-Xmx3072m'
@@ -115,7 +115,7 @@ steps:
 
   # Deploy the SNAPSHOT artifact to sonatype nexus
   # This is done for the master branch merges only.
-  - task: Maven@3
+  - task: Maven@4
     displayName: 'Deploy $(version) to Sonatype staging'
     condition: and(eq(variables.currentImage, 'ubuntu-16.04'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     inputs:
