@@ -37116,16 +37116,6 @@
               ]
             },
             {
-              "severity": "warning",
-              "code": "business-rule",
-              "details": {
-                "text": "The definition for the element 'Patient.language' binds to the value set 'http://hl7.org/fhir/ValueSet/languages' which is experimental, but this structure is not labeled as experimental"
-              },
-              "expression": [
-                "StructureDefinition.snapshot.element[4].binding"
-              ]
-            },
-            {
               "severity": "error",
               "code": "exception",
               "details": {
@@ -37133,16 +37123,6 @@
               },
               "expression": [
                 "StructureDefinition.snapshot.element[8].type[0].profile[0]"
-              ]
-            },
-            {
-              "severity": "warning",
-              "code": "business-rule",
-              "details": {
-                "text": "The definition for the element 'Patient.communication.language' binds to the value set 'http://hl7.org/fhir/ValueSet/languages' which is experimental, but this structure is not labeled as experimental"
-              },
-              "expression": [
-                "StructureDefinition.snapshot.element[55].binding"
               ]
             }
           ]
@@ -39759,7 +39739,7 @@
       "file": "bundle-ea-testcase.json",
       "description": "This caused an assertion to be thrown in an earlier version of the validator associated with boundary conditions in bundles",
       "version": "4.0",
-      "no-experimental-content" : true,
+      "no-experimental-content": true,
       "java": {
         "outcome": {
           "resourceType": "OperationOutcome",
@@ -43069,16 +43049,6 @@
               "expression": [
                 "StructureDefinition.snapshot.element[0].constraint[0]"
               ]
-            },
-            {
-              "severity": "warning",
-              "code": "business-rule",
-              "details": {
-                "text": "The definition for the element 'Bundle.language' binds to the value set 'http://hl7.org/fhir/ValueSet/languages' which is experimental, but this structure is not labeled as experimental"
-              },
-              "expression": [
-                "StructureDefinition.snapshot.element[4].binding"
-              ]
             }
           ]
         }
@@ -43320,16 +43290,6 @@
               },
               "expression": [
                 "StructureDefinition.differential.element[16].binding"
-              ]
-            },
-            {
-              "severity": "warning",
-              "code": "business-rule",
-              "details": {
-                "text": "The definition for the element 'StructureDefinition.language' binds to the value set 'http://hl7.org/fhir/ValueSet/languages' which is experimental, but this structure is not labeled as experimental"
-              },
-              "expression": [
-                "StructureDefinition.snapshot.element[4].binding"
               ]
             },
             {
@@ -48798,6 +48758,95 @@
                 ]
               }
             ]
+          }
+        }
+      }
+    },
+    {
+      "name": "additional-bindings-observation-uc-y",
+      "file": "additional-bindings-observation-uc-y.json",
+      "supporting": [
+        "additional-bindings-profile-cs.json"
+      ],
+      "version": "5.0",
+      "explanation": "check additional bindings are tested with a usageContext",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "code-invalid",
+              "details": {
+                "text": "None of the codings provided are in the value set 'Observation Category Codes' (http://hl7.org/fhir/ValueSet/observation-category|5.0.0), and a coding is recommended to come from this value set (codes = http://hl7.org/fhir/test/StructureDefinition/additional-bindings-profile-cs#digital-access)"
+              },
+              "diagnostics": "[4,4]",
+              "expression": [
+                "Observation.category[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "profile": {
+        "source": "additional-bindings-profile-uc.json",
+        "supporting": [
+          "additional-bindings-vs1.json"
+        ],
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "code-invalid",
+                "details": {
+                  "text": "None of the codings provided are in the value set 'Additional Bindings ValueSet1' (http://hl7.org/fhir/test/StructureDefinition/additional-bindings-vs1|1.0.0) specified in an additional binding which applies because Observation.category = digital-access, and a coding from this value set is required) (codes = http://loinc.org#100066-0)"
+                },
+                "diagnostics": "[13,4]",
+                "expression": [
+                  "Observation.code"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "additional-bindings-observation-uc-n",
+      "file": "additional-bindings-observation-uc-n.json",
+      "supporting": [
+        "additional-bindings-profile-cs.json"
+      ],
+      "version": "5.0",
+      "explanation": "check additional bindings are tested with a usageContext",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "code-invalid",
+              "details": {
+                "text": "None of the codings provided are in the value set 'Observation Category Codes' (http://hl7.org/fhir/ValueSet/observation-category|5.0.0), and a coding is recommended to come from this value set (codes = http://hl7.org/fhir/test/StructureDefinition/additional-bindings-profile-cs#sdoh-category-unspecified)"
+              },
+              "diagnostics": "[4,4]",
+              "expression": [
+                "Observation.category[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "profile": {
+        "source": "additional-bindings-profile-uc.json",
+        "supporting": [
+          "additional-bindings-vs1.json"
+        ],
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome"
           }
         }
       }

@@ -1,0 +1,42 @@
+{
+  "resourceType" : "StructureDefinition",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/additional-bindings-profile-uc",
+  "version" : "1.0.0",
+  "name" : "AdditionalBindingsProfile",
+  "title" : "Additional Bindings Profile",
+  "status" : "draft",
+  "fhirVersion" : "5.0.0",
+  "kind" : "resource",
+  "abstract" : "false",
+  "type" : "Observation",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Observation.code",
+      "path" : "Observation.code",
+      "binding" : {
+        "strength" : "example",
+        "valueSet":"http://hl7.org/fhir/ValueSet/observation-codes",
+        "additional" : [{
+          "purpose" : "required",
+          "valueSet" : "http://hl7.org/fhir/test/StructureDefinition/additional-bindings-vs1",
+          "usage" : [{
+            "code" : {
+              "system" : "http://hl7.org/fhir/test/StructureDefinition/additional-bindings-profile-uc",
+              "code" : "Observation.category"
+            },
+            "valueCodeableConcept" : {
+              "coding" : [
+                {
+                  "system" : "http://hl7.org/fhir/test/StructureDefinition/additional-bindings-profile-cs",
+                  "code" : "digital-access"
+                }
+              ]
+            }
+          }]
+        }]
+      }
+    }]
+  }
+}
