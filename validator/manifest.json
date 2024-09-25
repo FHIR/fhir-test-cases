@@ -31795,6 +31795,12 @@
               ]
             },
             {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+                  "valueUrl": "http://tx-dev.fhir.org/r4"
+                }
+              ],
               "severity": "information",
               "code": "business-rule",
               "details": {
@@ -37134,11 +37140,7 @@
       "file": "valueset-import-legacy-test.json",
       "description": "this checks that the validator is correctly interpreting legacy value sets published prior to aligning on https://jira.hl7.org/browse/FHIR-25179",
       "version": "4.0",
-      "java": {
-        "outcome": {
-          "resourceType": "OperationOutcome"
-        }
-      },
+      "java": {},
       "profile": {
         "source": "valueset-import-legacy-test-profile.json",
         "packages": [
@@ -37146,7 +37148,20 @@
         ],
         "java": {
           "outcome": {
-            "resourceType": "OperationOutcome"
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "code-invalid",
+                "details": {
+                  "text": "None of the codings provided are in the value set 'Dental Anatomy' (http://hl7.org/fhir/us/dental-data-exchange/ValueSet/dental-anatomy|1.0.0), and a coding from this value set is required) (codes = http://www.ada.org/snodent#210965D)"
+                },
+                "diagnostics": "[6,4]",
+                "expression": [
+                  "Observation.code"
+                ]
+              }
+            ]
           }
         }
       }
@@ -39617,7 +39632,7 @@
                 "severity": "error",
                 "code": "invalid",
                 "details": {
-                  "text": "Wrong Display Name 'O2 % BldC Oximetry' for http://loinc.org#59408-5. Valid display is 'Oxygen saturation in Arterial blood by Pulse oximetry' (en-US) (for the language(s) 'en-US')"
+                  "text": "Wrong Display Name 'O2 % BldC Oximetry' for http://loinc.org#59408-5. Valid display is one of 3 choices: 'Oxygen saturation in Arterial blood by Pulse oximetry' (en-US), 'Oxygen saturation in Arterial blood by Pulse oximetry' (en-US) or 'SaO2 % BldA PulseOx' (en-US) (for the language(s) 'en-US')"
                 },
                 "diagnostics": "[44,10]",
                 "expression": [
@@ -39656,7 +39671,7 @@
                 "severity": "error",
                 "code": "invalid",
                 "details": {
-                  "text": "Wrong Display Name 'Flow Rate' for http://loinc.org#3151-8. Valid display is 'Inhaled oxygen flow rate' (en-US) (for the language(s) 'en-US')"
+                  "text": "Wrong Display Name 'Flow Rate' for http://loinc.org#3151-8. Valid display is one of 4 choices: 'Inhaled oxygen flow rate' (en-US), 'Inhaled oxygen flow rate' (en-US), 'Inhaled O2 flow rate' (en-US) or 'Inhaled oxygen' (en-US) (for the language(s) 'en-US')"
                 },
                 "diagnostics": "[106,14]",
                 "expression": [
@@ -39697,6 +39712,23 @@
                 ]
               },
               {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+                    "valueUrl": "http://tx-dev.fhir.org/r4"
+                  }
+                ],
+                "severity": "error",
+                "code": "invalid",
+                "details": {
+                  "text": "Wrong Display Name 'O2 % BldC Oximetry' for http://loinc.org#59408-5. Valid display is 'Oxygen saturation in Arterial blood by Pulse oximetry' (en-US) (for the language(s) 'en-US')"
+                },
+                "diagnostics": "[44,10]",
+                "expression": [
+                  "Bundle.entry[0].resource.code.coding[0].display"
+                ]
+              },
+              {
                 "severity": "warning",
                 "code": "code-invalid",
                 "details": {
@@ -39716,6 +39748,23 @@
                 "diagnostics": "[89,14]",
                 "expression": [
                   "Bundle.entry[0].resource.component[0].code"
+                ]
+              },
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+                    "valueUrl": "http://tx-dev.fhir.org/r4"
+                  }
+                ],
+                "severity": "error",
+                "code": "invalid",
+                "details": {
+                  "text": "Wrong Display Name 'Flow Rate' for http://loinc.org#3151-8. Valid display is 'Inhaled oxygen flow rate' (en-US) (for the language(s) 'en-US')"
+                },
+                "diagnostics": "[106,14]",
+                "expression": [
+                  "Bundle.entry[0].resource.component[1].code.coding[0].display"
                 ]
               },
               {
@@ -43337,6 +43386,12 @@
           "resourceType": "OperationOutcome",
           "issue": [
             {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+                  "valueUrl": "http://tx-dev.fhir.org/r4"
+                }
+              ],
               "severity": "information",
               "code": "business-rule",
               "details": {
@@ -43749,6 +43804,12 @@
               ]
             },
             {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+                  "valueUrl": "http://tx-dev.fhir.org/r4"
+                }
+              ],
               "severity": "information",
               "code": "business-rule",
               "details": {
@@ -43815,6 +43876,12 @@
               ]
             },
             {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+                  "valueUrl": "http://tx-dev.fhir.org/r4"
+                }
+              ],
               "severity": "information",
               "code": "business-rule",
               "details": {
@@ -49639,7 +49706,52 @@
       "java": {
         "outcome": {
           "resourceType": "OperationOutcome",
-          "issue": []
+          "issue": [
+            {
+              "severity": "error",
+              "code": "too-costly",
+              "details": {
+                "text": "The value set 'http://hl7.org/fhir/ValueSet/consent-category|4.0.1' validation took too long to process (>60sec)"
+              },
+              "diagnostics": "[84,10]",
+              "expression": [
+                "Parameters.parameter[0].part[2].resource/*Consent/consent-1*/.category[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "None of the codings provided are in the value set 'Consent Category Codes' (http://hl7.org/fhir/ValueSet/consent-category|4.0.1), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL)"
+              },
+              "diagnostics": "[84,10]",
+              "expression": [
+                "Parameters.parameter[0].part[2].resource/*Consent/consent-1*/.category[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "too-costly",
+              "details": {
+                "text": "The value set 'http://hl7.org/fhir/ValueSet/consent-category|4.0.1' validation took too long to process (>60sec)"
+              },
+              "diagnostics": "[214,10]",
+              "expression": [
+                "Parameters.parameter[1].part[2].resource/*Consent/consent-2*/.category[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "None of the codings provided are in the value set 'Consent Category Codes' (http://hl7.org/fhir/ValueSet/consent-category|4.0.1), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://terminology.hl7.org/CodeSystem/v3-ActCode#IDSCL)"
+              },
+              "diagnostics": "[214,10]",
+              "expression": [
+                "Parameters.parameter[1].part[2].resource/*Consent/consent-2*/.category[0]"
+              ]
+            }
+          ]
         }
       }
     },
