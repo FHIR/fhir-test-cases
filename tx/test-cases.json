@@ -973,6 +973,15 @@
     "tests" : [
       {
         "explanation" : "This test is testing that a server can (a) defend itself against a request that is too big and (b) returns the correct response when it does. The test is termed in terms of 1000 codes, but the actual limit doesn't matter as long as it's... big enough (loose definition)",
+        "header" : {
+          "mode" : "ontoserver",
+          "name" : "X-TOO-COSTLY-THRESHOLD",
+          "value" : "1000",
+          "explanation" : 
+            ["Ontoserver has an internal limit far above 1000 codes. That's fine, but we really want to know that if it's actual limit is exceeded,",
+            "it'll return the correct response. So we add this artificial header to tell Ontoserver to treat 1000 as an internal limit. This way we know",
+            "that if a real value set exceeds the internal cost limit, however that's determined, the response will be correctly understood"]
+        },
         "name" : "big-echo-no-limit",
         "operation" : "expand",
         "http-code" : "4xx",
