@@ -107,7 +107,11 @@ public class TestComplexExtension extends PEGeneratedBase {
   }
 
   /**
-   * A complex extension - an extension with 2 levels
+   * May be used to represent additional information that is not part of the basic 
+   * definition of the element. To make the use of extensions safe and managable, 
+   * there is a strict set of governance applied to the definition and use of 
+   * extensions. Though any implementer can define an extension, there is a set of 
+   * requirements that SHALL be met as part of the definition of the extension.
    *
    */
   public List<Extension> getExtensions() {
@@ -137,7 +141,7 @@ public class TestComplexExtension extends PEGeneratedBase {
 
 
   /**
-   * A complex extension - an extension with 2 levels
+   * A code for the extension
    *
    */
   public List<Coding> getSlice1s() {
@@ -167,7 +171,7 @@ public class TestComplexExtension extends PEGeneratedBase {
 
 
   /**
-   * A complex extension - an extension with 2 levels
+   * More details
    *
    */
   public List<StringType> getSlice2s() {
@@ -197,7 +201,7 @@ public class TestComplexExtension extends PEGeneratedBase {
 
 
   /**
-   * A complex extension - an extension with 2 levels
+   * Justification Details.
    *
    */
   public Extension getSlice3() {
