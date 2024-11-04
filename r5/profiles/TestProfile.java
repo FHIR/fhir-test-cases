@@ -254,8 +254,16 @@ public class TestProfile extends PEGeneratedBase {
    */
   public Observation build(IWorkerContext context) {
     workerContext = context;
+    return build();
+  }
+
+  /**
+   * Build a instance of the underlying object based on this wrapping object 
+   *
+   */
+  public Observation build() {
     Observation theThing = new Observation();
-    PEBuilder builder = new PEBuilder(context, PEElementPropertiesPolicy.EXTENSION, true);
+    PEBuilder builder = new PEBuilder(workerContext, PEElementPropertiesPolicy.EXTENSION, true);
     PEInstance tgt = builder.buildPEInstance(CANONICAL_URL, theThing);
     save(tgt, false);
     return theThing;
