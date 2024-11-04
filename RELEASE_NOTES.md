@@ -4,3 +4,4 @@
 * update code gen tests for ongoing work on code generation for profiles
 * Add FML test Simple Form: Identity transform
 * Add start of terminology test history
+* Add test cases for JSON parsing error handling
