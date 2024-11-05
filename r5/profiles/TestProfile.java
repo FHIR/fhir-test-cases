@@ -236,8 +236,8 @@ public class TestProfile extends PEGeneratedBase {
     if (src.hasChild("encounter")) {
       encounter = (Reference) src.child("encounter").asDataType();
     }
-    if (src.hasChild("effective")) {
-      effective = ((DateTimeType) src.child("effective").asDataType()).getValue();
+    if (src.hasChild("effective[x]")) {
+      effective = ((DateTimeType) src.child("effective[x]").asDataType()).getValue();
     }
     for (PEInstance item : src.children("performer")) {
       performers.add((Reference) item.asDataType());
@@ -249,7 +249,7 @@ public class TestProfile extends PEGeneratedBase {
   }
 
   /**
-   * Build an instance of the object based on this source object 
+   * Build a instance of the underlying object based on this wrapping object 
    *
    */
   public Observation build(IWorkerContext context) {
@@ -322,9 +322,9 @@ public class TestProfile extends PEGeneratedBase {
     if (encounter != null) {
       tgt.addChild("encounter", encounter);
     }
-    tgt.clear("effective");
+    tgt.clear("effective[x]");
     if (effective != null) {
-      tgt.addChild("effective", new DateTimeType(effective));
+      tgt.addChild("effective[x]", new DateTimeType(effective));
     }
     tgt.clear("performer");
     for (Reference item : performers) {
