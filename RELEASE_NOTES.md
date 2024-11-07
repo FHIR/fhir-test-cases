@@ -5,4 +5,5 @@
 * Add FML test Simple Form: Identity transform
 * Add start of terminology test history
 * Add test cases for JSON parsing error handling
-* Add test case for slicing by type with multiple types
+* Add test cases for slicing by type with multiple types and profiles
+
