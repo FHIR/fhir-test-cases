@@ -6,4 +6,6 @@
 * Add start of terminology test history
 * Add test cases for JSON parsing error handling
 * Add test cases for slicing by type with multiple types and profiles
+* Add specific tx tests for the interaction between ValueSet.compose.inactive and the activeOnly parameter
+* Add tx tests for correctly populated CapabilityStatement and TerminologyCapabilities resources 
 
