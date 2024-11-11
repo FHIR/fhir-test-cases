@@ -1,15 +1,41 @@
 {
   "introduction" : "see the readme!",
   "suites" : [{
+    "name" : "metadata",
+    "description" : "tests for minimal requirements for metadata statements",
+    "setup" : [],
+    "tests" : [
+      {
+        "name" : "metadata",
+        "operation" : "metadata",
+        "response" : "capstmt.json"
+      },
+      {
+        "name" : "term-caps",
+        "operation" : "term-caps",
+        "response" : "capterms.json"
+      }
+    ]
+  }, {
     "name" : "simple-cases",
     "description" : "basic tests, setting up the API tests to come",
-    "setup" : ["simple/codesystem-simple.json", "simple/valueset-all.json", "simple/valueset-enumerated.json", "simple/valueset-enumerated-bad.json", "simple/valueset-filter-isa.json", "simple/valueset-filter-property.json", "simple/valueset-filter-regex.json", "simple/valueset-filter-regex2.json"],
+    "setup" : ["simple/codesystem-simple.json", "simple/valueset-all.json", "simple/valueset-active.json", "simple/valueset-inactive.json", "simple/valueset-enumerated.json", "simple/valueset-enumerated-bad.json", "simple/valueset-filter-isa.json", "simple/valueset-filter-property.json", "simple/valueset-filter-regex.json", "simple/valueset-filter-regex2.json"],
     "tests" :[
       {
         "name" : "simple-expand-all",
         "operation" : "expand",
         "request" : "simple/simple-expand-all-request-parameters.json",
         "response" : "simple/simple-expand-all-response-valueSet.json"
+      },{
+        "name" : "simple-expand-active",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-active-request-parameters.json",
+        "response" : "simple/simple-expand-active-response-valueSet.json"
+      },{
+        "name" : "simple-expand-inactive",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-inactive-request-parameters.json",
+        "response" : "simple/simple-expand-inactive-response-valueSet.json"
       },{
         "name" : "simple-expand-enum",
         "operation" : "expand",
@@ -73,7 +99,7 @@
   },{
     "name" : "parameters",
     "description" : "Testing out the various expansion parameters that the IG publisher makes use of",
-    "setup" : ["simple/codesystem-simple.json", "simple/valueset-all.json", "simple/valueset-enumerated.json", "simple/valueset-filter-isa.json", 
+    "setup" : ["simple/codesystem-simple.json", "simple/valueset-all.json", "simple/valueset-active.json", "simple/valueset-inactive.json", "simple/valueset-enumerated.json", "simple/valueset-filter-isa.json", 
        "simple/valueset-filter-property.json", "simple/valueset-filter-regex.json", "extensions/codesystem-extensions.json", "extensions/codesystem-supplement.json", "extensions/valueset-extensions-enumerated.json"],
     "tests" :[
       {
@@ -100,6 +126,18 @@
         "response" : "parameters/parameters-expand-all-active-response-valueSet.json",
         "response:flat" : "parameters/parameters-expand-all-active-response-flat-valueSet.json"
       },{
+        "name" : "parameters-expand-active-active",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-active-active-request-parameters.json",
+        "response" : "parameters/parameters-expand-active-active-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-active-active-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-inactive-active",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-inactive-active-request-parameters.json",
+        "response" : "parameters/parameters-expand-inactive-active-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-inactive-active-response-flat-valueSet.json"
+      },{
         "name" : "parameters-expand-enum-active",
         "operation" : "expand",
         "request" : "parameters/parameters-expand-enum-active-request-parameters.json",
@@ -116,6 +154,18 @@
         "request" : "parameters/parameters-expand-all-inactive-request-parameters.json",
         "response" : "parameters/parameters-expand-all-inactive-response-valueSet.json",
         "response:flat" : "parameters/parameters-expand-all-inactive-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-active-inactive",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-active-inactive-request-parameters.json",
+        "response" : "parameters/parameters-expand-active-inactive-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-active-inactive-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-inactive-inactive",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-inactive-inactive-request-parameters.json",
+        "response" : "parameters/parameters-expand-inactive-inactive-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-inactive-inactive-response-flat-valueSet.json"
       },{
         "name" : "parameters-expand-enum-inactive",
         "operation" : "expand",
