@@ -5,6 +5,10 @@ note that the github repository that contains these tests contains many other te
 kind of functionality. This history file only contains entries for github releases that include 
 changes to the terminology tests.
 
+## 1.6.x
+
+* Fix references to wrong value set in supplement tests
+
 ## 1.6.2 
 
 * Add specific tests for the interaction between ValueSet.compose.inactive and the activeOnly parameter
