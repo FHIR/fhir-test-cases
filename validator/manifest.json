@@ -50212,6 +50212,181 @@
       }
     },
     {
+      "name": "vs-loinc-filter",
+      "file": "vs-loinc-filter.json",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      }
+    },
+    {
+      "name": "cs-filter",
+      "file": "cs-filter.json",
+      "version": "4.0",
+      "supporting": [
+        "cs-sub-prop.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "This property has only a code ('myproperty') and not a URI, so it has no clearly defined meaning in the terminology ecosystem"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "This property has only a code ('myintproperty') and not a URI, so it has no clearly defined meaning in the terminology ecosystem"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[1]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "cs-filter-bad",
+      "file": "cs-filter-bad.json",
+      "version": "4.0",
+      "supporting": [
+        "cs-sub-prop.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "code-invalid",
+              "details": {
+                "text": "Unknown code 'code-r-3' in the CodeSystem 'http://hl7.org/fhir/test/CodeSystem/cs-sub-prop' version 'null'"
+              },
+              "diagnostics": "[34,10]",
+              "expression": [
+                "CodeSystem.concept[1].property[0].value.ofType(Coding).code"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "This property has only a code ('myproperty') and not a URI, so it has no clearly defined meaning in the terminology ecosystem"
+              },
+              "diagnostics": "[1,4]",
+              "expression": [
+                "CodeSystem.property[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vs-filter-filter",
+      "file": "vs-filter-filter.json",
+      "version": "4.0",
+      "supporting": [
+        "cs-filter.json",
+        "cs-sub-prop.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      }
+    },
+    {
+      "name": "vs-filter-property",
+      "file": "vs-filter-property.json",
+      "version": "4.0",
+      "supporting": [
+        "cs-filter.json",
+        "cs-sub-prop.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      }
+    },
+    {
+      "name": "vs-filter-property-bad",
+      "file": "vs-filter-property-bad.json",
+      "version": "4.0",
+      "supporting": [
+        "cs-filter.json",
+        "cs-sub-prop.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "The value for a filter based on property 'myproperty' is 'http://hl7.org/fhir/test/CodeSystem/cs-sub-prop#code-r-3' which is not a valid code (Unknown code 'code-r-3' in the CodeSystem 'http://hl7.org/fhir/test/CodeSystem/cs-sub-prop' version 'null')"
+              },
+              "diagnostics": "[10,8]",
+              "expression": [
+                "ValueSet.compose.include[0].filter[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vs-filter-property-bad2",
+      "file": "vs-filter-property-bad2.json",
+      "version": "4.0",
+      "supporting": [
+        "cs-filter.json",
+        "cs-sub-prop.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "The value for a filter based on property 'myproperty' must be in the format system(|version)#code, not 'code-r-3'"
+              },
+              "diagnostics": "[10,8]",
+              "expression": [
+                "ValueSet.compose.include[0].filter[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vs-filter-int",
+      "file": "vs-filter-int.json",
+      "version": "4.0",
+      "supporting": [
+        "cs-filter.json"
+      ],
+      "java": {}
+    },
+    {
       "name": "zzz",
       "file": "zzz.json",
       "description": "hack to close ups",
