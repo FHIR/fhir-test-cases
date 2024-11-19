@@ -48,7 +48,7 @@ You can copy, modify, distribute and perform the work, even for commercial purpo
  */
 public class TestProfile extends PEGeneratedBase {
 
-  private static final String CANONICAL_URL = "http://hl7.org/fhir/test/StructureDefinition/pe-profile1|0.1";
+  public static final String CANONICAL_URL = "http://hl7.org/fhir/test/StructureDefinition/pe-profile1|0.1";
 
   public enum ProfileObservationCategoryCode {
     LABORATORY, // "Laboratory" = http://terminology.hl7.org/CodeSystem/observation-category#laboratory
@@ -236,8 +236,8 @@ public class TestProfile extends PEGeneratedBase {
     if (src.hasChild("encounter")) {
       encounter = (Reference) src.child("encounter").asDataType();
     }
-    if (src.hasChild("effective")) {
-      effective = ((DateTimeType) src.child("effective").asDataType()).getValue();
+    if (src.hasChild("effective[x]")) {
+      effective = ((DateTimeType) src.child("effective[x]").asDataType()).getValue();
     }
     for (PEInstance item : src.children("performer")) {
       performers.add((Reference) item.asDataType());
@@ -249,13 +249,21 @@ public class TestProfile extends PEGeneratedBase {
   }
 
   /**
-   * Build an instance of the object based on this source object 
+   * Build a instance of the underlying object based on this wrapping object 
    *
    */
   public Observation build(IWorkerContext context) {
     workerContext = context;
+    return build();
+  }
+
+  /**
+   * Build a instance of the underlying object based on this wrapping object 
+   *
+   */
+  public Observation build() {
     Observation theThing = new Observation();
-    PEBuilder builder = new PEBuilder(context, PEElementPropertiesPolicy.EXTENSION, true);
+    PEBuilder builder = new PEBuilder(workerContext, PEElementPropertiesPolicy.EXTENSION, true);
     PEInstance tgt = builder.buildPEInstance(CANONICAL_URL, theThing);
     save(tgt, false);
     return theThing;
@@ -314,9 +322,9 @@ public class TestProfile extends PEGeneratedBase {
     if (encounter != null) {
       tgt.addChild("encounter", encounter);
     }
-    tgt.clear("effective");
+    tgt.clear("effective[x]");
     if (effective != null) {
-      tgt.addChild("effective", new DateTimeType(effective));
+      tgt.addChild("effective[x]", new DateTimeType(effective));
     }
     tgt.clear("performer");
     for (Reference item : performers) {
@@ -334,10 +342,6 @@ public class TestProfile extends PEGeneratedBase {
 
   }
 
-  /**
-   * Test Observation Profile.
-   *
-   */
   public String getId() {
     return id;
   }
@@ -352,7 +356,7 @@ public class TestProfile extends PEGeneratedBase {
   }
 
   /**
-   * Test Observation Profile.
+   * An Extension
    *
    */
   public List<Extension> getExtensions() {
@@ -382,7 +386,7 @@ public class TestProfile extends PEGeneratedBase {
 
 
   /**
-   * Test Observation Profile.
+   * A simple extension - an extension with just a value
    *
    */
   public String getSimple() {
@@ -399,7 +403,7 @@ public class TestProfile extends PEGeneratedBase {
   }
 
   /**
-   * Test Observation Profile.
+   * A complex extension - an extension with 2 levels
    *
    */
   public TestComplexExtension getComplex() {
@@ -416,7 +420,7 @@ public class TestProfile extends PEGeneratedBase {
   }
 
   /**
-   * Test Observation Profile.
+   * A unique identifier assigned to this observation.
    *
    */
   public Identifier getIdentifier() {
@@ -433,7 +437,7 @@ public class TestProfile extends PEGeneratedBase {
   }
 
   /**
-   * Test Observation Profile.
+   * The status of the result value.
    *
    */
   public String getStatus() {
@@ -445,7 +449,7 @@ public class TestProfile extends PEGeneratedBase {
   }
 
   /**
-   * Test Observation Profile.
+   * A code that classifies the general type of observation being made.
    *
    */
   public ProfileObservationCategoryCode getCategory() {
@@ -462,7 +466,7 @@ public class TestProfile extends PEGeneratedBase {
   }
 
   /**
-   * Test Observation Profile.
+   * Describes what was observed. Sometimes this is called the observation "name".
    *
    */
   public CodeableConcept getCode() {
@@ -475,7 +479,11 @@ public class TestProfile extends PEGeneratedBase {
   }
 
   /**
-   * Test Observation Profile.
+   * The patient, or group of patients, location, device, organization, procedure or 
+   * practitioner this observation is about and into whose or what record the 
+   * observation is placed. If the actual focus of the observation is different from 
+   * the subject (or a sample of, part, or region of the subject), the `focus` 
+   * element or the `code` itself specifies the actual focus of the observation.
    *
    */
   public Reference getSubject() {
@@ -492,7 +500,8 @@ public class TestProfile extends PEGeneratedBase {
   }
 
   /**
-   * Test Observation Profile.
+   * The healthcare event  (e.g. a patient and healthcare provider interaction) 
+   * during which this observation is made.
    *
    */
   public Reference getEncounter() {
@@ -509,7 +518,7 @@ public class TestProfile extends PEGeneratedBase {
   }
 
   /**
-   * Test Observation Profile.
+   * Time of observation
    *
    */
   public Date getEffective() {
@@ -526,7 +535,7 @@ public class TestProfile extends PEGeneratedBase {
   }
 
   /**
-   * Test Observation Profile.
+   * Who was responsible for asserting the observed value as "true".
    *
    */
   public List<Reference> getPerformers() {
@@ -556,7 +565,7 @@ public class TestProfile extends PEGeneratedBase {
 
 
   /**
-   * Test Observation Profile.
+   * The Sexual Orientation value.
    *
    */
   public TestDatatypeProfile getValueCodeableConcept() {
