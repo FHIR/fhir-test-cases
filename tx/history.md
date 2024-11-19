@@ -5,7 +5,7 @@ note that the github repository that contains these tests contains many other te
 kind of functionality. This history file only contains entries for github releases that include 
 changes to the terminology tests.
 
-## 1.6.x
+## 1.6.6
 
 * Fix references to wrong value set in supplement tests
 
