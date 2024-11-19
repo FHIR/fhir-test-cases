@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="zib-NursingIntervention" />
+  <text>
+    <status value="empty"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">No narrative is provided for definitional resources. A human-readable rendering can be found in the implementation guide(s) where this resource is used.</div>
+  </text>
+  <url value="http://nictiz.nl/fhir/StructureDefinition/zib-NursingIntervention" />
+  <name value="ZibNursingIntervention" />
+  <title value="zib NursingIntervention" />
+  <status value="draft" />
+  <publisher value="Nictiz" />
+  <contact>
+    <name value="Nictiz" />
+    <telecom>
+      <system value="url" />
+      <value value="https://www.nictiz.nl" />
+      <use value="work" />
+    </telecom>
+  </contact>
+  <description value="A nursing intervention is the care and/or treatment carried out by a nurse based on an expert opinion and clinical knowledge. It is part of the nursing process; interventions are determined as a result of indexed healthcare problems (nursing diagnoses) and based on treatment goals. Following the NEN-EN-ISO 18104 norm, it is possible to structure nursing interventions (or actions) in a hierarchy, where one intervention can be part of another intervention.&#xD;&#xA;&#xD;&#xA;In a home care situation some actions can also be performed by the patient or a caregiver after a relevant instruction." />
+  <purpose value="This CarePlan resource represents the Dutch [zib ('Zorginformatiebouwsteen', i.e. Health and Care Information Model) NursingIntervention v3.2 (2020)](https://zibs.nl/wiki/NursingIntervention-v3.2(2020EN))." />
+  <copyright value="Copyright and related rights waived via CC0, https://creativecommons.org/publicdomain/zero/1.0/. This does not apply to information from third parties, for example a medical terminology system. The implementer alone is responsible for identifying and obtaining any necessary licenses or authorizations to utilize third party IP in connection with the specification or otherwise." />
+  <fhirVersion value="4.0.1" />
+  <mapping>
+    <identity value="zib-nursingintervention-v3.2-2020EN" />
+    <uri value="https://zibs.nl/wiki/NursingIntervention-v3.2(2020EN)" />
+    <name value="zib NursingIntervention-v3.2(2020EN)" />
+  </mapping>
+  <kind value="resource" />
+  <abstract value="true" />
+  <type value="CarePlan" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/CarePlan" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="CarePlan">
+      <path value="CarePlan" />
+      <short value="NursingIntervention" />
+      <alias value="VerpleegkundigeInterventie" />
+      <constraint>
+        <key value="zib-NursingIntervention-1" />
+        <severity value="error" />
+        <human value="The start and/or end date of a repeating schedule should be communicated in CarePlan.encounter as well." />
+        <expression value="activity.detail.scheduled.ofType(Timing).repeat.bounds.ofType(Period).exists() implies (period = activity.detail.scheduled.ofType(Timing).repeat.bounds.ofType(Period))" />
+      </constraint>
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.1" />
+        <comment value="NursingIntervention" />
+      </mapping>
+    </element>
+    <element id="CarePlan.status">
+      <path value="CarePlan.status" />
+      <comment value="Sending systems that don't record an explicit status can use the following guidance to infer a value from the zib:&#xD;&#xA;&#xD;&#xA;* ProcedureEndTime present:&#xD;&#xA;    * and in the future: _active_&#xD;&#xA;    * and in the past: _completed_&#xD;&#xA;* ProcedureEndTime absent:&#xD;&#xA;    * ProcedureStartTime present: _active_&#xD;&#xA;    * ProcedureStartTime absent: _unknown_" />
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.11" />
+        <comment value="ProcedureStartDateTime (implicit, main mapping is on CarePlan.period.start and optionally on CarePlan.activity.detail.scheduledTiming.repeat.boundsPeriod.start)" />
+      </mapping>
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.12" />
+        <comment value="ProcedureEndDateTime (implicit, main mapping is on CarePlan.period.end and optionally on CarePlan.activity.detail.scheduledTiming.repeat.boundsPeriod.end)" />
+      </mapping>
+    </element>
+    <element id="CarePlan.intent">
+      <path value="CarePlan.intent" />
+      <comment value="For zib NursingIntervention, this will normally be _plan_, but the context may specify a more suitable intent." />
+    </element>
+    <element id="CarePlan.category">
+      <path value="CarePlan.category" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="coding" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+      <min value="1" />
+    </element>
+    <element id="CarePlan.category:nursingInterventionCode">
+      <path value="CarePlan.category" />
+      <sliceName value="nursingInterventionCode" />
+      <min value="1" />
+      <max value="1" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://snomed.info/sct" />
+          <code value="9632001" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="CarePlan.period.start">
+      <path value="CarePlan.period.start" />
+      <short value="ProcedureStartDateTime" />
+      <definition value="The start date (and if possible start time) of the procedure. The concept offers the option to indicate the start of the period of a series of repeating procedures, in which case it should be repeated in `CarePlan.activity.detail.scheduledTiming.repeat.boundsPeriod.start`." />
+      <alias value="ActieStartDatumTijd" />
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.11" />
+        <comment value="ProcedureStartDateTime" />
+      </mapping>
+    </element>
+    <element id="CarePlan.period.end">
+      <path value="CarePlan.period.end" />
+      <short value="ProcedureEndDateTime" />
+      <definition value="The end date (and if possible end time) of the procedure. The concept offers the option to indicate the end of the period of a series of repeating procedures, in which case it should be repeated in `CarePlan.activity.detail.scheduledTiming.repeat.boundsPeriod.end`." />
+      <alias value="ActieEindDatumTijd" />
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.12" />
+        <comment value="ProcedureEndDateTime" />
+      </mapping>
+    </element>
+    <element id="CarePlan.contributor">
+      <path value="CarePlan.contributor" />
+      <slicing>
+        <discriminator>
+          <type value="exists" />
+          <path value="extension(url='http://nictiz.nl/fhir/StructureDefinition/ext-NursingIntervention-ContributorIsRequester')" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="CarePlan.contributor:requester">
+      <path value="CarePlan.contributor" />
+      <sliceName value="requester" />
+      <short value="Requester" />
+      <definition value="The health professional who requested the nursing intervention. If desired, only the requester’s specialty can be entered." />
+      <alias value="Aanvrager" />
+      <type>
+        <code value="Reference" />
+        <profile value="http://nictiz.nl/fhir/StructureDefinition/pattern-ZibHealthProfessionalReference" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/zib-HealthProfessional-PractitionerRole" />
+      </type>
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.8" />
+        <comment value="Requester" />
+      </mapping>
+    </element>
+    <element id="CarePlan.contributor:requester.extension">
+      <path value="CarePlan.contributor.extension" />
+      <min value="1" />
+    </element>
+    <element id="CarePlan.contributor:requester.extension:contributorIsRequester">
+      <path value="CarePlan.contributor.extension" />
+      <sliceName value="contributorIsRequester" />
+      <min value="1" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://nictiz.nl/fhir/StructureDefinition/ext-NursingIntervention-ContributorIsRequester" />
+      </type>
+    </element>
+    <element id="CarePlan.addresses">
+      <path value="CarePlan.addresses" />
+      <short value="Indication" />
+      <definition value="The nursing-related problem (indication) providing cause for the intervention." />
+      <alias value="Indicatie" />
+      <max value="1" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/zib-Problem" />
+      </type>
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.6" />
+        <comment value="Indication" />
+      </mapping>
+    </element>
+    <element id="CarePlan.goal">
+      <path value="CarePlan.goal" />
+      <short value="TreatmentObjective" />
+      <definition value="The description of the treatment goal that the intervention decision is based on." />
+      <alias value="Behandeldoel" />
+      <max value="1" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Goal" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/zib-TreatmentObjective" />
+      </type>
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.14" />
+        <comment value="TreatmentObjective" />
+      </mapping>
+    </element>
+    <element id="CarePlan.activity">
+      <path value="CarePlan.activity" />
+      <comment value="A nursing intervention in the Dutch realm always consists of a single activity. For this reason, the cardinality of `.activity` is restricted to `0..1`." />
+      <max value="1" />
+    </element>
+    <element id="CarePlan.activity.detail.extension:medicalDevice">
+      <path value="CarePlan.activity.detail.extension" />
+      <sliceName value="medicalDevice" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://nictiz.nl/fhir/StructureDefinition/ext-CarePlan-MaterialUsed" />
+      </type>
+    </element>
+    <element id="CarePlan.activity.detail.extension:medicalDevice.value[x]">
+      <path value="CarePlan.activity.detail.extension.value[x]" />
+      <short value="MedicalDevice" />
+      <definition value="Description of the materials used for the nursing procedure, such as bandages." />
+      <alias value="MedischHulpmiddel" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DeviceUseStatement" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/zib-MedicalDevice" />
+      </type>
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.13" />
+        <comment value="MedicalDevice" />
+      </mapping>
+    </element>
+    <element id="CarePlan.activity.detail.code">
+      <path value="CarePlan.activity.detail.code" />
+      <short value="Intervention" />
+      <definition value="A nursing intervention is a treatment carried out by a nurse based on an expert opinion and clinical knowledge for the benefit of the person requesting healthcare. The intervention is targeted towards a certain problem (diagnosis) and has a predetermined healthcare result. It is possible to build a hierarchy of nursing interventions (where one intervention is part of another)." />
+      <alias value="Interventie" />
+      <binding>
+        <strength value="required" />
+        <valueSet value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.121.11.18--20200901000000" />
+      </binding>
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.2" />
+        <comment value="Intervention" />
+      </mapping>
+    </element>
+    <element id="CarePlan.activity.detail.scheduled[x]">
+      <path value="CarePlan.activity.detail.scheduled[x]" />
+      <slicing>
+        <discriminator>
+          <type value="type" />
+          <path value="$this" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="CarePlan.activity.detail.scheduled[x]:scheduledTiming">
+      <path value="CarePlan.activity.detail.scheduled[x]" />
+      <sliceName value="scheduledTiming" />
+      <type>
+        <code value="Timing" />
+      </type>
+    </element>
+    <element id="CarePlan.activity.detail.scheduled[x]:scheduledTiming.repeat.bounds[x]">
+      <path value="CarePlan.activity.detail.scheduled[x].repeat.bounds[x]" />
+      <slicing>
+        <discriminator>
+          <type value="type" />
+          <path value="$this" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="CarePlan.activity.detail.scheduled[x]:scheduledTiming.repeat.bounds[x]:boundsPeriod">
+      <path value="CarePlan.activity.detail.scheduled[x].repeat.bounds[x]" />
+      <sliceName value="boundsPeriod" />
+      <type>
+        <code value="Period" />
+      </type>
+    </element>
+    <element id="CarePlan.activity.detail.scheduled[x]:scheduledTiming.repeat.bounds[x]:boundsPeriod.start">
+      <path value="CarePlan.activity.detail.scheduled[x].repeat.bounds[x].start" />
+      <short value="ProcedureStartDateTime" />
+      <definition value="Zib concept ProcedureStartDateTime should primarily be communicated using `CarePlan.period.start`, but it should be repeated here if it indicates the end of a series of repeating procedures." />
+      <alias value="ActieStartDatumTijd" />
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.11" />
+        <comment value="ProcedureStartDateTime" />
+      </mapping>
+    </element>
+    <element id="CarePlan.activity.detail.scheduled[x]:scheduledTiming.repeat.bounds[x]:boundsPeriod.end">
+      <path value="CarePlan.activity.detail.scheduled[x].repeat.bounds[x].end" />
+      <short value="ProcedureEndDateTime" />
+      <definition value="Zib concept ProcedureEndDateTime should primarily be communicated using `CarePlan.period.end`, but it should be repeated here if it indicates the end of a series of repeating procedures." />
+      <alias value="ActieEindDatumTijd" />
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.12" />
+        <comment value="ProcedureEndDateTime" />
+      </mapping>
+    </element>
+    <element id="CarePlan.activity.detail.scheduled[x]:scheduledTiming.repeat.frequency">
+      <path value="CarePlan.activity.detail.scheduled[x].repeat.frequency" />
+      <short value="Interval / Frequency" />
+      <definition value="* Interval indicates the time between planned procedures. When entering an interval, the focus is on the time between the consecutive procedures, such as in the treatment of a wound, for example. The exact times are of lesser importance.&#xD;&#xA;* The frequency describes how often and in which period certain procedures are carried out, e.g. 3x a day." />
+      <comment value="Both the zib concepts Interval and Frequency are communicated using a combination of `.frequency`, `.period` and `.periodUnit`. If the Interval concept is communicated, `.frequency` SHOULD have a fixed value of 1 (see &quot;Meaning when missing&quot; for `.frequency`)." />
+      <alias value="Interval" />
+      <alias value="Frequentie" />
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.3" />
+        <comment value="Interval" />
+      </mapping>
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.4" />
+        <comment value="Frequency" />
+      </mapping>
+    </element>
+    <element id="CarePlan.activity.detail.scheduled[x]:scheduledTiming.repeat.period">
+      <path value="CarePlan.activity.detail.scheduled[x].repeat.period" />
+      <short value="Interval / Frequency" />
+      <definition value="* Interval indicates the time between planned procedures. When entering an interval, the focus is on the time between the consecutive procedures, such as in the treatment of a wound, for example. The exact times are of lesser importance.&#xD;&#xA;* The frequency describes how often and in which period certain procedures are carried out, e.g. 3x a day." />
+      <comment value="Both the zib concepts Interval and Frequency are communicated using a combination of `.frequency`, `.period` and `.periodUnit`. If the Interval concept is communicated, `.frequency` SHOULD have a fixed value of 1 (see &quot;Meaning when missing&quot; for `.frequency`)." />
+      <alias value="Interval" />
+      <alias value="Frequentie" />
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.3" />
+        <comment value="Interval" />
+      </mapping>
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.4" />
+        <comment value="Frequency" />
+      </mapping>
+    </element>
+    <element id="CarePlan.activity.detail.scheduled[x]:scheduledTiming.repeat.periodUnit">
+      <path value="CarePlan.activity.detail.scheduled[x].repeat.periodUnit" />
+      <short value="Interval / Frequency" />
+      <definition value="* Interval indicates the time between planned procedures. When entering an interval, the focus is on the time between the consecutive procedures, such as in the treatment of a wound, for example. The exact times are of lesser importance.&#xD;&#xA;* The frequency describes how often and in which period certain procedures are carried out, e.g. 3x a day." />
+      <comment value="Both the zib concepts Interval and Frequency are communicated using a combination of `.frequency`, `.period` and `.periodUnit`. If the Interval concept is communicated, `.frequency` SHOULD have a fixed value of 1 (see &quot;Meaning when missing&quot; for `.frequency`)." />
+      <alias value="Interval" />
+      <alias value="Frequentie" />
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.3" />
+        <comment value="Interval" />
+      </mapping>
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.4" />
+        <comment value="Frequency" />
+      </mapping>
+    </element>
+    <element id="CarePlan.activity.detail.performer">
+      <path value="CarePlan.activity.detail.performer" />
+      <slicing>
+        <discriminator>
+          <type value="profile" />
+          <path value="resolve()" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+      <max value="1" />
+    </element>
+    <element id="CarePlan.activity.detail.performer:healthcareProvider">
+      <path value="CarePlan.activity.detail.performer" />
+      <sliceName value="healthcareProvider" />
+      <short value="HealthcareProvider" />
+      <definition value="The health professional carrying out the nursing procedure." />
+      <alias value="Zorgverlener" />
+      <max value="1" />
+      <type>
+        <code value="Reference" />
+        <profile value="http://nictiz.nl/fhir/StructureDefinition/pattern-ZibHealthProfessionalReference" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/zib-HealthProfessional-PractitionerRole" />
+      </type>
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.7" />
+        <comment value="HealthcareProvider" />
+      </mapping>
+    </element>
+    <element id="CarePlan.activity.detail.performer:caregiver">
+      <path value="CarePlan.activity.detail.performer" />
+      <sliceName value="caregiver" />
+      <short value="Caregiver" />
+      <definition value="The caregiver carrying out the nursing procedure." />
+      <alias value="Verzorger" />
+      <max value="1" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/zib-ContactPerson" />
+      </type>
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.16" />
+        <comment value="Caregiver" />
+      </mapping>
+    </element>
+    <element id="CarePlan.activity.detail.performer:patient">
+      <path value="CarePlan.activity.detail.performer" />
+      <sliceName value="patient" />
+      <short value="Patient" />
+      <definition value="The patient carrying out the nursing procedure." />
+      <alias value="Patient" />
+      <max value="1" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/zib-Patient" />
+      </type>
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.17" />
+        <comment value="Patient" />
+      </mapping>
+    </element>
+    <element id="CarePlan.activity.detail.description">
+      <path value="CarePlan.activity.detail.description" />
+      <short value="Instruction" />
+      <definition value="Instructions for performing the nursing action. This is particularly at issue when the action is performed by the patient himself or by a caregiver." />
+      <alias value="Instructie" />
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.18" />
+        <comment value="Instruction" />
+      </mapping>
+    </element>
+    <element id="CarePlan.note">
+      <path value="CarePlan.note" />
+      <max value="1" />
+    </element>
+    <element id="CarePlan.note.text">
+      <path value="CarePlan.note.text" />
+      <short value="Comment" />
+      <definition value="Comment on the nursing intervention." />
+      <alias value="Toelichting" />
+      <mapping>
+        <identity value="zib-nursingintervention-v3.2-2020EN" />
+        <map value="NL-CM:14.2.5" />
+        <comment value="Comment" />
+      </mapping>
+    </element>
+  </differential>
+</StructureDefinition>
