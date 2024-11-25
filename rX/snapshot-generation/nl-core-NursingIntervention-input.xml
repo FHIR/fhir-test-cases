@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="nl-core-NursingIntervention" />
+  <text>
+    <status value="empty"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">No narrative is provided for definitional resources. A human-readable rendering can be found in the implementation guide(s) where this resource is used.</div>
+  </text>
+  <url value="http://nictiz.nl/fhir/StructureDefinition/nl-core-NursingIntervention" />
+  <name value="NlcoreNursingIntervention" />
+  <title value="nl core NursingIntervention" />
+  <status value="draft" />
+  <publisher value="Nictiz" />
+  <contact>
+    <name value="Nictiz" />
+    <telecom>
+      <system value="url" />
+      <value value="https://www.nictiz.nl" />
+      <use value="work" />
+    </telecom>
+  </contact>
+  <description value="A nursing intervention is the care and/or treatment carried out by a nurse based on an expert opinion and clinical knowledge. It is part of the nursing process; interventions are determined as a result of indexed healthcare problems (nursing diagnoses) and based on treatment goals. Following the NEN-EN-ISO 18104 norm, it is possible to structure nursing interventions (or actions) in a hierarchy, where one intervention can be part of another intervention.&#xD;&#xA;&#xD;&#xA;In a home care situation some actions can also be performed by the patient or a caregiver after a relevant instruction." />
+  <purpose value="A derived profile from [zib-NursingIntervention](http://nictiz.nl/fhir/StructureDefinition/zib-NursingIntervention) to provide a version better suited for implementation purposes. This profile augments the base profile with elements found in the various use cases that have adopted the zib." />
+  <copyright value="Copyright and related rights waived via CC0, https://creativecommons.org/publicdomain/zero/1.0/. This does not apply to information from third parties, for example a medical terminology system. The implementer alone is responsible for identifying and obtaining any necessary licenses or authorizations to utilize third party IP in connection with the specification or otherwise." />
+  <fhirVersion value="4.0.1" />
+  <mapping>
+    <identity value="zib-nursingintervention-v3.2-2020EN" />
+    <uri value="https://zibs.nl/wiki/NursingIntervention-v3.2(2020EN)" />
+    <name value="zib NursingIntervention-v3.2(2020EN)" />
+  </mapping>
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="CarePlan" />
+  <baseDefinition value="http://nictiz.nl/fhir/StructureDefinition/zib-NursingIntervention" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="CarePlan">
+      <path value="CarePlan" />
+      <alias value="nl-core-NursingIntervention" />
+    </element>
+    <element id="CarePlan.subject">
+      <path value="CarePlan.subject" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Group" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/nl-core-Patient" />
+      </type>
+    </element>
+    <element id="CarePlan.contributor:requester">
+      <path value="CarePlan.contributor" />
+      <sliceName value="requester" />
+      <type>
+        <code value="Reference" />
+        <profile value="http://nictiz.nl/fhir/StructureDefinition/pattern-NlCoreHealthProfessionalReference" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/nl-core-HealthProfessional-PractitionerRole" />
+      </type>
+    </element>
+    <element id="CarePlan.addresses">
+      <path value="CarePlan.addresses" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Condition" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/nl-core-Problem" />
+      </type>
+    </element>
+    <element id="CarePlan.goal">
+      <path value="CarePlan.goal" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Goal" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/nl-core-TreatmentObjective" />
+      </type>
+    </element>
+    <element id="CarePlan.activity.detail.extension:medicalDevice">
+      <path value="CarePlan.activity.detail.extension" />
+      <sliceName value="medicalDevice" />
+    </element>
+    <element id="CarePlan.activity.detail.extension:medicalDevice.value[x]">
+      <path value="CarePlan.activity.detail.extension.value[x]" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/DeviceUseStatement" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/nl-core-MedicalDevice" />
+      </type>
+    </element>
+    <element id="CarePlan.activity.detail.performer:healthcareProvider">
+      <path value="CarePlan.activity.detail.performer" />
+      <sliceName value="healthcareProvider" />
+      <type>
+        <code value="Reference" />
+        <profile value="http://nictiz.nl/fhir/StructureDefinition/pattern-NlCoreHealthProfessionalReference" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/nl-core-HealthProfessional-PractitionerRole" />
+      </type>
+    </element>
+    <element id="CarePlan.activity.detail.performer:caregiver">
+      <path value="CarePlan.activity.detail.performer" />
+      <sliceName value="caregiver" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/nl-core-ContactPerson" />
+      </type>
+    </element>
+    <element id="CarePlan.activity.detail.performer:patient">
+      <path value="CarePlan.activity.detail.performer" />
+      <sliceName value="patient" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://nictiz.nl/fhir/StructureDefinition/nl-core-Patient" />
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>
