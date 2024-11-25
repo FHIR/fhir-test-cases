@@ -30,6 +30,20 @@ This repository contains:
 * validator - test cases for the cross-version validation
 * target - maven administrative stuff
 
+
+## FHIR Foundation Project Statement
+
+* Maintainers: Grahame Grieve
+* Issues / Discussion: Various, but primarily https://chat.fhir.org/#narrow/stream/179239-tooling
+* License: The contents in here are covered by Creative Commons Public Domain
+* Contribution Policy: See below
+* Security Information: There shouldn't be any security issues, since this is all static content, but if there are any, use the standard github [security reporting framework](security.md) 
+
+## Contribution Policy
+
+* Contributions are welcome, but are almost always tied to contributions made to the repositories that use this material as part of their test regime. 
+* All contributions must be made in public through this github as a PR, or as comments on other Github repositories, or on a public zulip channel
+
 ## Accessing the test cases
 
 You can access the test cases via Maven. If using Maven doesn't suit, then 

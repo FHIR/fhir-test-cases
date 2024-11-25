@@ -1,0 +1,12 @@
+map "http://ahdis.ch/matchbox/fml/syntaxshort" = "syntaxshort"
+uses "http://hl7.org/fhir/StructureDefinition/CapabilityStatement" alias CapabilityStatement as source
+uses "http://hl7.org/fhir/StructureDefinition/CapabilityStatement" alias CapabilityStatement as target
+
+group CapabilityStatement(source src: CapabilityStatement, target tgt : CapabilityStatement) {
+    src.name -> tgt.name;
+    src.title -> tgt.title;
+}
+
+group string(source src : string, target tgt : string) <<type+>> {
+    src.value as v -> tgt.value = v "stringValue";
+}

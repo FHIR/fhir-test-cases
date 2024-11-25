@@ -1,0 +1,80 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "HRexWellknownDefinition",
+  "url": "http://hl7.org/fhir/us/davinci-hrex/StructureDefinition/HRexWellknownDefinition",
+  "name": "HRexWellknownDefinition",
+  "title": "Da Vinci .well-known File Definition",
+  "status": "active",
+  "experimental": false,
+  "description": "Definition of the content of the Da Vinci .well-known endpoint",
+  "fhirVersion": "4.0.1",
+  "kind": "logical",
+  "abstract": false,
+  "type": "http://hl7.org/fhir/us/davinci-hrex/StructureDefinition/HRexWellknownDefinition",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Base",
+  "derivation": "specialization",
+  "differential": {
+    "element": [
+      {
+        "id": "HRexWellknownDefinition",
+        "path": "HRexWellknownDefinition",
+        "short": "Config value passed to service",
+        "definition": "A configuration parameter passed to the CRD decision support service",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id" : "HRexWellknownDefinition.identifier",
+        "path" : "HRexWellknownDefinition.identifier",
+        "short" : "Payer id",
+        "definition" : "A unique identifier for the payer associated with this set of endpoints",
+        "min" : 1,
+        "max" : "1",
+        "type": [{ 
+          "code" : "Identifier"
+        }]
+      },
+      {
+        "id" : "HRexWellknownDefinition.endpoints",
+        "extension": [
+          {
+            "url" : "http://hl7.org/fhir/tools/StructureDefinition/json-property-key",
+            "valueCode" : "key"
+          }
+        ],
+        "path" : "HRexWellknownDefinition.endpoints",
+        "short" : "Endpoints for this payer",
+        "definition" : "The set of endpoints to be used for this payer (possibly for a particular coverage type or set of types)",
+        "min" : 1,
+        "max" : "*",
+        "type": [{ "code" : "Base"}]
+      },
+      {
+        "id" : "HRexWellknownDefinition.endpoints.key",
+        "path" : "HRexWellknownDefinition.endpoints.key",
+        "short" : "The endpoint being defined",
+        "definition" : "A code that indicates the name of the endpoint.",
+        "min" : 1,
+        "max" : "1",
+        "type" : [{ "code" : "code"}],
+        "binding" : {
+          "strength": "extensible",
+          "valueSet": "http://hl7.org/fhir/us/davinci-hrex/ValueSet/hrex-endpoint-name"
+        }
+      },
+      {
+        "id" : "HRexWellknownDefinition.endpoints.value",
+        "path" : "HRexWellknownDefinition.endpoints.value",
+        "short" : "The value of the config option",
+        "definition" : "The value of the config option",
+        "min" : 1,
+        "max" : "1",
+        "type" : [{ "code" : "uri"}],
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/tools/StructureDefinition/json-primitive-choice",
+          "valueBoolean" : true
+        }]
+      }
+    ]
+  }
+}

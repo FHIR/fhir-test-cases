@@ -1,15 +1,41 @@
 {
   "introduction" : "see the readme!",
   "suites" : [{
+    "name" : "metadata",
+    "description" : "tests for minimal requirements for metadata statements",
+    "setup" : [],
+    "tests" : [
+      {
+        "name" : "metadata",
+        "operation" : "metadata",
+        "response" : "capstmt.json"
+      },
+      {
+        "name" : "term-caps",
+        "operation" : "term-caps",
+        "response" : "capterms.json"
+      }
+    ]
+  }, {
     "name" : "simple-cases",
     "description" : "basic tests, setting up the API tests to come",
-    "setup" : ["simple/codesystem-simple.json", "simple/valueset-all.json", "simple/valueset-enumerated.json", "simple/valueset-enumerated-bad.json", "simple/valueset-filter-isa.json", "simple/valueset-filter-property.json", "simple/valueset-filter-regex.json", "simple/valueset-filter-regex2.json"],
+    "setup" : ["simple/codesystem-simple.json", "simple/valueset-all.json", "simple/valueset-active.json", "simple/valueset-inactive.json", "simple/valueset-enumerated.json", "simple/valueset-enumerated-bad.json", "simple/valueset-filter-isa.json", "simple/valueset-filter-property.json", "simple/valueset-filter-regex.json", "simple/valueset-filter-regex2.json"],
     "tests" :[
       {
         "name" : "simple-expand-all",
         "operation" : "expand",
         "request" : "simple/simple-expand-all-request-parameters.json",
         "response" : "simple/simple-expand-all-response-valueSet.json"
+      },{
+        "name" : "simple-expand-active",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-active-request-parameters.json",
+        "response" : "simple/simple-expand-active-response-valueSet.json"
+      },{
+        "name" : "simple-expand-inactive",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-inactive-request-parameters.json",
+        "response" : "simple/simple-expand-inactive-response-valueSet.json"
       },{
         "name" : "simple-expand-enum",
         "operation" : "expand",
@@ -27,16 +53,19 @@
         "response" : "simple/simple-expand-isa-response-valueSet.json"
       },{
         "name" : "simple-expand-isa-o2",
+        "mode" : "tx.fhir.org",
         "operation" : "expand",
         "request" : "simple/simple-expand-isa-o2-request-parameters.json",
         "response" : "simple/simple-expand-isa-o2-response-valueSet.json"
       },{
         "name" : "simple-expand-isa-c2",
+        "mode" : "tx.fhir.org",
         "operation" : "expand",
         "request" : "simple/simple-expand-isa-c2-request-parameters.json",
         "response" : "simple/simple-expand-isa-c2-response-valueSet.json"
       },{
         "name" : "simple-expand-isa-o2c2",
+        "mode" : "tx.fhir.org",
         "operation" : "expand",
         "request" : "simple/simple-expand-isa-o2c2-request-parameters.json",
         "response" : "simple/simple-expand-isa-o2c2-response-valueSet.json"
@@ -70,7 +99,7 @@
   },{
     "name" : "parameters",
     "description" : "Testing out the various expansion parameters that the IG publisher makes use of",
-    "setup" : ["simple/codesystem-simple.json", "simple/valueset-all.json", "simple/valueset-enumerated.json", "simple/valueset-filter-isa.json", 
+    "setup" : ["simple/codesystem-simple.json", "simple/valueset-all.json", "simple/valueset-active.json", "simple/valueset-inactive.json", "simple/valueset-enumerated.json", "simple/valueset-filter-isa.json", 
        "simple/valueset-filter-property.json", "simple/valueset-filter-regex.json", "extensions/codesystem-extensions.json", "extensions/codesystem-supplement.json", "extensions/valueset-extensions-enumerated.json"],
     "tests" :[
       {
@@ -97,6 +126,18 @@
         "response" : "parameters/parameters-expand-all-active-response-valueSet.json",
         "response:flat" : "parameters/parameters-expand-all-active-response-flat-valueSet.json"
       },{
+        "name" : "parameters-expand-active-active",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-active-active-request-parameters.json",
+        "response" : "parameters/parameters-expand-active-active-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-active-active-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-inactive-active",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-inactive-active-request-parameters.json",
+        "response" : "parameters/parameters-expand-inactive-active-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-inactive-active-response-flat-valueSet.json"
+      },{
         "name" : "parameters-expand-enum-active",
         "operation" : "expand",
         "request" : "parameters/parameters-expand-enum-active-request-parameters.json",
@@ -113,6 +154,18 @@
         "request" : "parameters/parameters-expand-all-inactive-request-parameters.json",
         "response" : "parameters/parameters-expand-all-inactive-response-valueSet.json",
         "response:flat" : "parameters/parameters-expand-all-inactive-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-active-inactive",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-active-inactive-request-parameters.json",
+        "response" : "parameters/parameters-expand-active-inactive-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-active-inactive-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-inactive-inactive",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-inactive-inactive-request-parameters.json",
+        "response" : "parameters/parameters-expand-inactive-inactive-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-inactive-inactive-response-flat-valueSet.json"
       },{
         "name" : "parameters-expand-enum-inactive",
         "operation" : "expand",
@@ -251,19 +304,19 @@
       },{
         "name" : "language-echo-en-en-header",
         "operation" : "expand",
-        "Content-Language" : "en",
+        "Accept-Language" : "en",
         "request" : "language/expand-echo-en-en-header-request-parameters.json",
         "response" : "language/expand-echo-en-en-header-response-valueSet.json"
       },{
         "name" : "language-echo-en-en-vslang",
         "operation" : "expand",
-        "Content-Language" : "en",
+        "Accept-Language" : "en",
         "request" : "language/expand-echo-en-en-vslang-request-parameters.json",
         "response" : "language/expand-echo-en-en-vslang-response-valueSet.json"
       },{
         "name" : "language-echo-en-en-mixed",
         "operation" : "expand",
-        "Content-Language" : "es",
+        "Accept-Language" : "es",
         "request" : "language/expand-echo-en-en-mixed-request-parameters.json",
         "response" : "language/expand-echo-en-en-mixed-response-valueSet.json"
       },
@@ -283,7 +336,7 @@
       {
         "name" : "language-echo-de-de-header",
         "operation" : "expand",
-        "Content-Language" : "de",
+        "Accept-Language" : "de",
         "request" : "language/expand-echo-de-de-header-request-parameters.json",
         "response" : "language/expand-echo-de-de-header-response-valueSet.json"
       },
@@ -303,7 +356,7 @@
       {
         "name" : "language-echo-en-multi-en-header",
         "operation" : "expand",
-        "Content-Language" : "en",
+        "Accept-Language" : "en",
         "request" : "language/expand-echo-en-multi-en-header-request-parameters.json",
         "response" : "language/expand-echo-en-multi-en-header-response-valueSet.json"
       },
@@ -323,7 +376,7 @@
       {
         "name" : "language-echo-de-multi-de-header",
         "operation" : "expand",
-        "Content-Language" : "de",
+        "Accept-Language" : "de",
         "request" : "language/expand-echo-de-multi-de-header-request-parameters.json",
         "response" : "language/expand-echo-de-multi-de-header-response-valueSet.json"
       },
@@ -344,7 +397,7 @@
       {
         "name" : "language-xform-en-multi-de-default",
         "operation" : "expand",
-        "Content-Language" : "de,*",
+        "Accept-Language" : "de,*",
         "request" : "language/expand-xform-en-multi-de-default-request-parameters.json",
         "response" : "language/expand-xform-en-multi-de-default-response-valueSet.json"
       },
@@ -564,30 +617,35 @@
       {
         "name" : "extensions-echo-bad-supplement",
         "operation" : "expand",
+        "http-code" : "4xx",
         "request" : "extensions/expand-echo-bad-supplement-parameters.json",
         "response" : "extensions/expand-echo-bad-supplement-outcome.json"
       },
       {
         "name" : "validate-code-bad-supplement",
         "operation" : "validate-code",
+        "http-code" : "4xx",
         "request" : "extensions/validate-code-bad-supplement-request-parameters.json",
         "response" : "extensions/validate-code-bad-supplement-response-outcome.json"
       },
       {
         "name" : "validate-coding-bad-supplement",
         "operation" : "validate-code",
+        "http-code" : "4xx",
         "request" : "extensions/validate-coding-bad-supplement-request-parameters.json",
         "response" : "extensions/validate-coding-bad-supplement-response-outcome.json"
       },
       {
         "name" : "validate-coding-bad-supplement-url",
         "operation" : "cs-validate-code",
+        "http-code" : "2xx",
         "request" : "extensions/validate-coding-bad-supplement-url-request-parameters.json",
         "response" : "extensions/validate-coding-bad-supplement-url-response-outcome.json"
       },
       {
         "name" : "validate-codeableconcept-bad-supplement",
         "operation" : "validate-code",
+        "http-code" : "4xx",
         "request" : "extensions/validate-codeableconcept-bad-supplement-request-parameters.json",
         "response" : "extensions/validate-codeableconcept-bad-supplement-response-outcome.json"
       },
@@ -671,18 +729,21 @@
       {
         "name" : "validation-simple-code-bad-valueSet",
         "operation" : "validate-code",
+        "http-code" : "4xx",
         "request" : "validation/simple-code-bad-valueSet-request-parameters.json",
         "response" :  "validation/simple-code-bad-valueSet-response-outcome.json"
       },
       {
         "name" : "validation-simple-coding-bad-valueSet",
         "operation" : "validate-code",
+        "http-code" : "4xx",
         "request" : "validation/simple-coding-bad-valueSet-request-parameters.json",
         "response" :  "validation/simple-coding-bad-valueSet-response-outcome.json"
       },
       {
         "name" : "validation-simple-codeableconcept-bad-valueSet",
         "operation" : "validate-code",
+        "http-code" : "4xx",
         "request" : "validation/simple-codeableconcept-bad-valueSet-request-parameters.json",
         "response" :  "validation/simple-codeableconcept-bad-valueSet-response-outcome.json"
       },
@@ -888,7 +949,7 @@
       {
         "name" : "validation-simple-coding-bad-language-header",
         "operation" : "validate-code",
-        "Content-Language" : "en, en-AU; q=0.4",
+        "Accept-Language" : "en, en-AU; q=0.4",
         "request" : "validation/simple-coding-bad-language-header-request-parameters.json",
         "response" :  "validation/simple-coding-bad-language-header-response-parameters.json"
       },
@@ -962,8 +1023,18 @@
     "tests" : [
       {
         "explanation" : "This test is testing that a server can (a) defend itself against a request that is too big and (b) returns the correct response when it does. The test is termed in terms of 1000 codes, but the actual limit doesn't matter as long as it's... big enough (loose definition)",
+        "header" : {
+          "mode" : "ontoserver",
+          "name" : "X-TOO-COSTLY-THRESHOLD",
+          "value" : "1000",
+          "explanation" : 
+            ["Ontoserver has an internal limit far above 1000 codes. That's fine, but we really want to know that if it's actual limit is exceeded,",
+            "it'll return the correct response. So we add this artificial header to tell Ontoserver to treat 1000 as an internal limit. This way we know",
+            "that if a real value set exceeds the internal cost limit, however that's determined, the response will be correctly understood"]
+        },
         "name" : "big-echo-no-limit",
         "operation" : "expand",
+        "http-code" : "4xx",
         "request" : "big/expand-no-limit-parameters.json",
         "response" : "big/expand-no-limit-outcome.json"
       },
@@ -984,12 +1055,14 @@
       {
         "name" : "big-circle-bang",
         "operation" : "expand",
+        "http-code" : "4xx",
         "request" : "big/expand-circle-parameters.json",
         "response" : "big/expand-circle-outcome.json"
       },
       {
         "name" : "big-circle-validate",
         "operation" : "validate-code",
+        "http-code" : "4xx",
         "request" : "big/validation-big-circle-request-parameters.json",
         "response" : "big/validation-big-circle-response-outcome.json"
       }        
@@ -1594,8 +1667,9 @@
       },{
         "name" : "loinc-expand-all",
         "operation" : "expand",
+        "http-code" : "4xx",
         "request" : "tx.fhir.org/loinc-expand-all-request-parameters.json",
-        "response" : "tx.fhir.org/loinc-expand-all-response-valueSet.json"
+        "response" : "tx.fhir.org/loinc-expand-all-response-outcome.json"
       },{
         "name" : "loinc-expand-all-limited",
         "operation" : "expand",

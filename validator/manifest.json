@@ -5740,7 +5740,7 @@
                 "severity": "error",
                 "code": "value",
                 "details": {
-                  "text": "Value is 'urn:oid:2.16.756.5.30.999999.1.2' but must be 'urn:oid:2.16.756.5.30.999999.1'"
+                  "text": "Value is 'urn:oid:2.16.756.5.30.999999.1.2' but is fixed to 'urn:oid:2.16.756.5.30.999999.1' in the profile http://hl7.org/fhir/StructureDefinition/patient-patternidentifier-profile#Patient"
                 },
                 "diagnostics": "[8,55]",
                 "expression": [
@@ -5781,7 +5781,7 @@
                 "severity": "error",
                 "code": "value",
                 "details": {
-                  "text": "Value is 'urn:oid:2.16.756.5.30.999999.1.2' but must be 'urn:oid:2.16.756.5.30.999999.1'"
+                  "text": "Value is 'urn:oid:2.16.756.5.30.999999.1.2' but is fixed to 'urn:oid:2.16.756.5.30.999999.1' in the profile http://hl7.org/fhir/StructureDefinition/patient-patternidentifier-profile#Patient"
                 },
                 "diagnostics": "[18,55]",
                 "expression": [
@@ -5831,17 +5831,6 @@
               "diagnostics": "[35,23]",
               "expression": [
                 "StructureDefinition.differential.element[1].pattern.ofType(Identifier)"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[2,50]",
-              "expression": [
-                "StructureDefinition"
               ]
             }
           ]
@@ -5972,17 +5961,6 @@
               ]
             },
             {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[2,50]",
-              "expression": [
-                "StructureDefinition"
-              ]
-            },
-            {
               "severity": "information",
               "code": "value",
               "details": {
@@ -5990,6 +5968,17 @@
               },
               "expression": [
                 "StructureDefinition.snapshot.element[9]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "The discriminator type 'pattern' has been deprecated. Use type=value with a pattern[x] instead (if this is not an inherited slicing)"
+              },
+              "diagnostics": "[22,20]",
+              "expression": [
+                "StructureDefinition.differential.element[1].slicing.discriminator[0]"
               ]
             }
           ]
@@ -5999,6 +5988,7 @@
     {
       "name": "patient-conform-profile",
       "file": "patient-conform-profile.xml",
+      "for-publication": true,
       "java": {
         "outcome": {
           "resourceType": "OperationOutcome",
@@ -7192,61 +7182,6 @@
             },
             {
               "severity": "error",
-              "code": "not-found",
-              "details": {
-                "text": "Can't find 'urn:uuid:b8fe561b-6b36-46f5-b6bb-433529955b8c' in the bundle (Composition.author)"
-              },
-              "diagnostics": "[152,23]",
-              "expression": [
-                "Bundle.entry[3].resource.entry[1].resource.author[1]"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "not-found",
-              "details": {
-                "text": "Can't find 'urn:uuid:a7f1f367-144b-4bf3-8c65-a0826787986b' in the bundle (Composition.encounter)"
-              },
-              "diagnostics": "[146,26]",
-              "expression": [
-                "Bundle.entry[3].resource.entry[1].resource.encounter"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "not-found",
-              "details": {
-                "text": "Can't find 'urn:uuid:97775e71-21d7-4f2d-aadb-2f3f5a1da6a6' in the bundle (Composition.custodian)"
-              },
-              "diagnostics": "[157,26]",
-              "expression": [
-                "Bundle.entry[3].resource.entry[1].resource.custodian"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "not-found",
-              "details": {
-                "text": "Can't find 'urn:uuid:a7f1f367-144b-4bf3-8c65-a0826787986b' in the bundle (Section Entry)"
-              },
-              "diagnostics": "[191,24]",
-              "expression": [
-                "Bundle.entry[3].resource.entry[1].resource.section[2].entry[1]"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "not-found",
-              "details": {
-                "text": "Can't find 'urn:uuid:16bbba8a-ba9b-46ea-b571-a64dba136a2a' in the bundle (Section Entry)"
-              },
-              "diagnostics": "[290,24]",
-              "expression": [
-                "Bundle.entry[3].resource.entry[1].resource.section[8].entry[1]"
-              ]
-            },
-            {
-              "severity": "error",
               "code": "required",
               "details": {
                 "text": "A document must have a date (Bundle.timestamp)"
@@ -7347,17 +7282,6 @@
               "severity": "error",
               "code": "business-rule",
               "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[2,44]",
-              "expression": [
-                "Questionnaire"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
                 "text": "Questions with an enableWhen cannot refer to an inner question for it's enableWhen condition"
               },
               "diagnostics": "[13,9]",
@@ -7377,17 +7301,6 @@
         "outcome": {
           "resourceType": "OperationOutcome",
           "issue": [
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[2,44]",
-              "expression": [
-                "Questionnaire"
-              ]
-            },
             {
               "severity": "warning",
               "code": "business-rule",
@@ -8366,7 +8279,7 @@
               "severity": "error",
               "code": "value",
               "details": {
-                "text": "Value is '0' but must be '4.5'"
+                "text": "Value is '0' but is fixed to '4.5' in the profile http://hl7.org/fhir/StructureDefinition/cholesterol|5.0.0#Observation.referenceRange"
               },
               "diagnostics": "[91,23]",
               "expression": [
@@ -8432,7 +8345,7 @@
               "severity": "error",
               "code": "value",
               "details": {
-                "text": "Value is '13457-7' but must be '35200-5'"
+                "text": "Value is '13457-7' but is fixed to '35200-5' in the profile http://hl7.org/fhir/StructureDefinition/cholesterol|5.0.0#Observation"
               },
               "diagnostics": "[72,28]",
               "expression": [
@@ -8443,7 +8356,7 @@
               "severity": "error",
               "code": "value",
               "details": {
-                "text": "Value is 'Cholesterol in LDL [Mass/volume] in Serum or Plasma by calculation' but must be 'Cholesterol [Moles/​volume] in Serum or Plasma'"
+                "text": "Value is 'Cholesterol in LDL [Mass/volume] in Serum or Plasma by calculation' but is fixed to 'Cholesterol [Moles/​volume] in Serum or Plasma' in the profile http://hl7.org/fhir/StructureDefinition/cholesterol|5.0.0#Observation"
               },
               "diagnostics": "[74,82]",
               "expression": [
@@ -8597,7 +8510,7 @@
               "severity": "error",
               "code": "value",
               "details": {
-                "text": "The pattern [system http://loinc.org, code 35217-9, and display 'Triglyceride [Moles/​volume] in Serum or Plasma'] defined in the profile http://hl7.org/fhir/StructureDefinition/triglyceride|5.0.0 not found. Issues: [ValidationMessage[level=ERROR,type=VALUE,location=Observation.code.coding.code,message=Value is '35200-5' but must be '35217-9'], ValidationMessage[level=ERROR,type=VALUE,location=Observation.code.coding.display,message=Value is 'Cholest SerPl-msCnc' but must be 'Triglyceride [Moles/​volume] in Serum or Plasma'], ValidationMessage[level=ERROR,type=VALUE,location=Observation.code.coding.system,message=Value is 'http://snomed.info/sct' but must be 'http://loinc.org'], ValidationMessage[level=ERROR,type=VALUE,location=Observation.code.coding.code,message=Value is '85600001' but must be '35217-9'], ValidationMessage[level=ERROR,type=VALUE,location=Observation.code.coding.display,message=Value is 'Triacylglycerol' but must be 'Triglyceride [Moles/​volume] in Serum or Plasma']]"
+                "text": "The pattern [system http://loinc.org, code 35217-9, and display 'Triglyceride [Moles/​volume] in Serum or Plasma'] defined in the profile http://hl7.org/fhir/StructureDefinition/triglyceride|5.0.0 not found. Issues: [ValidationMessage[level=ERROR,type=VALUE,location=Observation.code.coding.code,message=Value is '35200-5' but is fixed to '35217-9' in the profile http://hl7.org/fhir/StructureDefinition/triglyceride|5.0.0#Observation], ValidationMessage[level=ERROR,type=VALUE,location=Observation.code.coding.display,message=Value is 'Cholest SerPl-msCnc' but is fixed to 'Triglyceride [Moles/​volume] in Serum or Plasma' in the profile http://hl7.org/fhir/StructureDefinition/triglyceride|5.0.0#Observation], ValidationMessage[level=ERROR,type=VALUE,location=Observation.code.coding.system,message=Value is 'http://snomed.info/sct' but is fixed to 'http://loinc.org' in the profile http://hl7.org/fhir/StructureDefinition/triglyceride|5.0.0#Observation], ValidationMessage[level=ERROR,type=VALUE,location=Observation.code.coding.code,message=Value is '85600001' but is fixed to '35217-9' in the profile http://hl7.org/fhir/StructureDefinition/triglyceride|5.0.0#Observation], ValidationMessage[level=ERROR,type=VALUE,location=Observation.code.coding.display,message=Value is 'Triacylglycerol' but is fixed to 'Triglyceride [Moles/​volume] in Serum or Plasma' in the profile http://hl7.org/fhir/StructureDefinition/triglyceride|5.0.0#Observation]]"
               },
               "diagnostics": "[67,8]",
               "expression": [
@@ -14080,7 +13993,7 @@
                 "severity": "error",
                 "code": "invalid",
                 "details": {
-                  "text": "This element does not match any known slice  defined in the profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-master and slicing is CLOSED: Bundle.entry[0]: Does not match slice 'Patient' (discriminator: $this.resource.conformsTo('http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-patient')), Bundle.entry[0]: Details for Bundle matching against profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-patient, Bundle.entry[0]: Does not match slice 'Obs1' (discriminator: $this.resource.conformsTo('http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-obs1')), Bundle.entry[0]: Details for Bundle matching against profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-obs1, Bundle.entry[0]: Does not match slice 'Obs2' (discriminator: $this.resource.conformsTo('http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-obs2')), Bundle.entry[0]: Details for Bundle matching against profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-obs2, Bundle.entry[0]: Does not match slice 'Procedure' (discriminator: $this.resource.conformsTo('http://hl7.org/fhir/StructureDefinition/Procedure')), Bundle.entry[0]: Details for Bundle matching against profile http://hl7.org/fhir/StructureDefinition/Procedure|4.0.1"
+                  "text": "This element does not match any known slice defined in the profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-master and slicing is CLOSED: Bundle.entry[0]: Does not match slice 'Patient' (discriminator: $this.resource.conformsTo('http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-patient')), Bundle.entry[0]: Details for Bundle matching against profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-patient, Bundle.entry[0]: Does not match slice 'Obs1' (discriminator: $this.resource.conformsTo('http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-obs1')), Bundle.entry[0]: Details for Bundle matching against profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-obs1, Bundle.entry[0]: Does not match slice 'Obs2' (discriminator: $this.resource.conformsTo('http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-obs2')), Bundle.entry[0]: Details for Bundle matching against profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-obs2, Bundle.entry[0]: Does not match slice 'Procedure' (discriminator: $this.resource.conformsTo('http://hl7.org/fhir/StructureDefinition/Procedure')), Bundle.entry[0]: Details for Bundle matching against profile http://hl7.org/fhir/StructureDefinition/Procedure|4.0.1"
                 },
                 "diagnostics": "[4,10]",
                 "expression": [
@@ -14408,7 +14321,7 @@
                 "severity": "error",
                 "code": "value",
                 "details": {
-                  "text": "Value is 'male' but must be 'other'"
+                  "text": "Value is 'male' but is fixed to 'other' in the profile http://hl7.org/fhir/test/StructureDefinition/patient-circle1-profile#Patient.gender"
                 },
                 "diagnostics": "[3,25]",
                 "expression": [
@@ -14579,7 +14492,7 @@
                 "severity": "error",
                 "code": "value",
                 "details": {
-                  "text": "Value is 'male' but must be 'other'"
+                  "text": "Value is 'male' but is fixed to 'other' in the profile http://hl7.org/fhir/test/StructureDefinition/patient-circle1-profile#Patient.gender"
                 },
                 "diagnostics": "[3,25]",
                 "expression": [
@@ -15032,7 +14945,7 @@
                 "severity": "error",
                 "code": "value",
                 "details": {
-                  "text": "Value is 'male' but must be 'other'"
+                  "text": "Value is 'male' but is fixed to 'other' in the profile http://hl7.org/fhir/test/StructureDefinition/patient-circle2-profile1#Patient.gender"
                 },
                 "diagnostics": "[3,25]",
                 "expression": [
@@ -16640,7 +16553,7 @@
                 "severity": "error",
                 "code": "invalid",
                 "details": {
-                  "text": "This element does not match any known slice  defined in the profile http://hl7.org.au/fhir/ch/v1/StructureDefinition/ncdhc-observation-urinalysis-protein|dv0.0.1 and slicing is CLOSED: Observation.code.coding[0]: Does not match slice 'Urinalysis-SNOMED-CT' (discriminator: $this.where((system = 'http://snomed.info/sct') and (code = '27171005')).exists())"
+                  "text": "This element does not match any known slice defined in the profile http://hl7.org.au/fhir/ch/v1/StructureDefinition/ncdhc-observation-urinalysis-protein|dv0.0.1 and slicing is CLOSED: Observation.code.coding[0]: Does not match slice 'Urinalysis-SNOMED-CT' (discriminator: $this.where((system = 'http://snomed.info/sct') and (code = '27171005')).exists())"
                 },
                 "diagnostics": "[7,8]",
                 "expression": [
@@ -17191,7 +17104,7 @@
               "severity": "fatal",
               "code": "invalid",
               "details": {
-                "text": "Error parsing JSON: Error parsing JSON source: Unexpected content at end of JSON: Close at Line 15 (path=[/NI])"
+                "text": "Error parsing JSON: Error parsing JSON source: Unexpected close marker '}' at end of JSON at Line 15 (path=[/NI])"
               }
             }
           ]
@@ -21039,17 +20952,6 @@
           "resourceType": "OperationOutcome",
           "issue": [
             {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[1,2]",
-              "expression": [
-                "SearchParameter"
-              ]
-            },
-            {
               "severity": "warning",
               "code": "business-rule",
               "details": {
@@ -21085,17 +20987,6 @@
               "severity": "error",
               "code": "business-rule",
               "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[1,2]",
-              "expression": [
-                "SearchParameter"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
                 "text": "The type string is different to the type http://hl7.org/fhir/SearchParameter/Organization-name in the derivedFrom SearchParameter"
               },
               "expression": [
@@ -21124,17 +21015,6 @@
         "outcome": {
           "resourceType": "OperationOutcome",
           "issue": [
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[1,2]",
-              "expression": [
-                "SearchParameter"
-              ]
-            },
             {
               "severity": "error",
               "code": "invalid",
@@ -22227,17 +22107,6 @@
         "outcome": {
           "resourceType": "OperationOutcome",
           "issue": [
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[1,2]",
-              "expression": [
-                "CodeSystem"
-              ]
-            },
             {
               "severity": "warning",
               "code": "business-rule",
@@ -23508,7 +23377,7 @@
               "severity": "error",
               "code": "value",
               "details": {
-                "text": "Value is 'mm[Hg]{hg}' but must be 'mm[Hg]'"
+                "text": "Value is 'mm[Hg]{hg}' but is fixed to 'mm[Hg]' in the profile http://hl7.org/fhir/StructureDefinition/bp|4.0.1#Observation.component:SystolicBP.value[x].code"
               },
               "diagnostics": "[40,31]",
               "expression": [
@@ -23530,7 +23399,7 @@
               "severity": "error",
               "code": "value",
               "details": {
-                "text": "Value is 'fmm[Hg]' but must be 'mm[Hg]'"
+                "text": "Value is 'fmm[Hg]' but is fixed to 'mm[Hg]' in the profile http://hl7.org/fhir/StructureDefinition/bp|4.0.1#Observation.component:DiastolicBP.value[x].code"
               },
               "diagnostics": "[55,28]",
               "expression": [
@@ -25506,17 +25375,6 @@
               "code": "invariant",
               "details": {
                 "text": "Constraint failed: sdf-0: 'Name should be usable as an identifier for the module by machine processing applications such as code generation'"
-              },
-              "diagnostics": "[1,50]",
-              "expression": [
-                "StructureDefinition"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
               },
               "diagnostics": "[1,50]",
               "expression": [
@@ -32077,7 +31935,7 @@
                 "severity": "error",
                 "code": "value",
                 "details": {
-                  "text": "Value is 'Completed' but must be 'completed'"
+                  "text": "Value is 'Completed' but is fixed to 'completed' in the profile http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-dm|0.6.2#Immunization.status"
                 },
                 "diagnostics": "[18,29]",
                 "expression": [
@@ -32099,7 +31957,7 @@
                 "severity": "error",
                 "code": "value",
                 "details": {
-                  "text": "Value is 'COMPLETED' but must be 'completed'"
+                  "text": "Value is 'COMPLETED' but is fixed to 'completed' in the profile http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-dm|0.6.2#Immunization.status"
                 },
                 "diagnostics": "[35,29]",
                 "expression": [
@@ -32331,7 +32189,7 @@
               "severity": "error",
               "code": "invalid",
               "details": {
-                "text": "This element does not match any known slice  defined in the profile http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm|0.6.2 and slicing is CLOSED: payload.vc.credentialSubject.entry[1]: Does not match slice 'patient' (discriminator: (resource is Patient)), payload.vc.credentialSubject.entry[1]: Does not match slice 'labResult' (discriminator: (resource is Observation))"
+                "text": "This element does not match any known slice defined in the profile http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm|0.6.2 and slicing is CLOSED: payload.vc.credentialSubject.entry[1]: Does not match slice 'patient' (discriminator: (resource is Patient)), payload.vc.credentialSubject.entry[1]: Does not match slice 'labResult' (discriminator: (resource is Observation))"
               },
               "diagnostics": "[1,777]",
               "expression": [
@@ -32342,7 +32200,7 @@
               "severity": "error",
               "code": "invalid",
               "details": {
-                "text": "This element does not match any known slice  defined in the profile http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm|0.6.2 and slicing is CLOSED: payload.vc.credentialSubject.entry[2]: Does not match slice 'patient' (discriminator: (resource is Patient)), payload.vc.credentialSubject.entry[2]: Does not match slice 'labResult' (discriminator: (resource is Observation))"
+                "text": "This element does not match any known slice defined in the profile http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm|0.6.2 and slicing is CLOSED: payload.vc.credentialSubject.entry[2]: Does not match slice 'patient' (discriminator: (resource is Patient)), payload.vc.credentialSubject.entry[2]: Does not match slice 'labResult' (discriminator: (resource is Observation))"
               },
               "diagnostics": "[1,1120]",
               "expression": [
@@ -32511,7 +32369,7 @@
               "severity": "error",
               "code": "invalid",
               "details": {
-                "text": "This element does not match any known slice  defined in the profile http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm|0.6.2 and slicing is CLOSED: payload.vc.credentialSubject.entry[1]: Does not match slice 'patient' (discriminator: (resource is Patient)), payload.vc.credentialSubject.entry[1]: Does not match slice 'labResult' (discriminator: (resource is Observation))"
+                "text": "This element does not match any known slice defined in the profile http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm|0.6.2 and slicing is CLOSED: payload.vc.credentialSubject.entry[1]: Does not match slice 'patient' (discriminator: (resource is Patient)), payload.vc.credentialSubject.entry[1]: Does not match slice 'labResult' (discriminator: (resource is Observation))"
               },
               "diagnostics": "[1,699]",
               "expression": [
@@ -32522,7 +32380,7 @@
               "severity": "error",
               "code": "invalid",
               "details": {
-                "text": "This element does not match any known slice  defined in the profile http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm|0.6.2 and slicing is CLOSED: payload.vc.credentialSubject.entry[2]: Does not match slice 'patient' (discriminator: (resource is Patient)), payload.vc.credentialSubject.entry[2]: Does not match slice 'labResult' (discriminator: (resource is Observation))"
+                "text": "This element does not match any known slice defined in the profile http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-covid19-laboratory-bundle-dm|0.6.2 and slicing is CLOSED: payload.vc.credentialSubject.entry[2]: Does not match slice 'patient' (discriminator: (resource is Patient)), payload.vc.credentialSubject.entry[2]: Does not match slice 'labResult' (discriminator: (resource is Observation))"
               },
               "diagnostics": "[1,964]",
               "expression": [
@@ -33000,17 +32858,6 @@
           "resourceType": "OperationOutcome",
           "issue": [
             {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[10,4]",
-              "expression": [
-                "ValueSet.contained[0]/*CodeSystem/c1*/"
-              ]
-            },
-            {
               "severity": "warning",
               "code": "business-rule",
               "details": {
@@ -33033,17 +32880,6 @@
         "outcome": {
           "resourceType": "OperationOutcome",
           "issue": [
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[10,4]",
-              "expression": [
-                "ValueSet.contained[0]/*CodeSystem/c1*/"
-              ]
-            },
             {
               "severity": "warning",
               "code": "business-rule",
@@ -34549,17 +34385,6 @@
               "diagnostics": "[9,10]",
               "expression": [
                 "QuestionnaireResponse.contained[0]/*Questionnaire/contained-adaptive-questionnaire-example-phq9*/.extension[0]"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[136,6]",
-              "expression": [
-                "QuestionnaireResponse.contained[1]/*ValueSet/VSPHQ9*/"
               ]
             },
             {
@@ -37440,17 +37265,6 @@
               "expression": [
                 "Library.type"
               ]
-            },
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[2,38]",
-              "expression": [
-                "Library"
-              ]
             }
           ]
         }
@@ -37960,17 +37774,6 @@
               "code": "invariant",
               "details": {
                 "text": "Constraint failed: cpb-0: 'Name should be usable as an identifier for the module by machine processing applications such as code generation'"
-              },
-              "diagnostics": "[1,88]",
-              "expression": [
-                "CapabilityStatement"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
               },
               "diagnostics": "[1,88]",
               "expression": [
@@ -38958,7 +38761,7 @@
                 "severity": "error",
                 "code": "structure",
                 "details": {
-                  "text": "CDSHooksResponse.cards.source.label: minimum required = 1, but only found 0 (from http://hl7.org/fhir/tools/StructureDefinition/CDSHooksResponse|0.2.0)"
+                  "text": "CDSHooksResponse.cards.source.label: minimum required = 1, but only found 0 (from http://hl7.org/fhir/tools/StructureDefinition/CDSHooksResponse|0.3.0)"
                 },
                 "diagnostics": "[7,20]",
                 "expression": [
@@ -39833,17 +39636,6 @@
               ]
             },
             {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[7,8]",
-              "expression": [
-                "Bundle.entry[0].resource/*Measure/measure-EXM104-8.2.000*/"
-              ]
-            },
-            {
               "severity": "information",
               "code": "not-found",
               "details": {
@@ -40089,17 +39881,6 @@
               "code": "business-rule",
               "details": {
                 "text": "Experimental content is not allowed in this context"
-              },
-              "diagnostics": "[7,8]",
-              "expression": [
-                "Bundle.entry[0].resource"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
               },
               "diagnostics": "[7,8]",
               "expression": [
@@ -40755,7 +40536,7 @@
               "severity": "error",
               "code": "value",
               "details": {
-                "text": "Value is 'http://hl7.org/fhir/StructureDefinition/patient-congregation|4.0.0' but must be 'http://hl7.org/fhir/StructureDefinition/patient-congregation'"
+                "text": "Value is 'http://hl7.org/fhir/StructureDefinition/patient-congregation|4.0.0' but is fixed to 'http://hl7.org/fhir/StructureDefinition/patient-congregation' in the profile http://hl7.org/fhir/StructureDefinition/patient-congregation|4.0.1#Extension.url"
               },
               "diagnostics": "[8,81]",
               "expression": [
@@ -41125,17 +40906,6 @@
               "code": "invariant",
               "details": {
                 "text": "Constraint failed: cnl-0: 'Name should be usable as an identifier for the module by machine processing applications such as code generation' (defined in http://hl7.org/fhir/StructureDefinition/StructureMap)"
-              },
-              "diagnostics": "[0,0]",
-              "expression": [
-                "StructureMap"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
               },
               "diagnostics": "[0,0]",
               "expression": [
@@ -41528,17 +41298,6 @@
             },
             {
               "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[1,2]",
-              "expression": [
-                "SearchParameter"
-              ]
-            },
-            {
-              "severity": "error",
               "code": "invalid",
               "details": {
                 "text": "Error in search expression 'Organization.address.country': Error evaluating FHIRPath expression: The name 'address' is not valid for any of the possible types: [http://hl7.org/fhir/StructureDefinition/Organization] (@char 1)"
@@ -41888,6 +41647,39 @@
               "expression": [
                 "StructureDefinition"
               ]
+            },
+            {
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "The discriminator type 'pattern' is deprecated in R5+. For future compatibility, you could consider using type=value with a pattern[x] instead (if this is not an inherited slicing)"
+              },
+              "diagnostics": "[65,14]",
+              "expression": [
+                "StructureDefinition.differential.element[0].slicing.discriminator[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "The discriminator path 'type' does not appear to be valid for the element that is being sliced 'AuditEvent.agent.extension'"
+              },
+              "diagnostics": "[93,14]",
+              "expression": [
+                "StructureDefinition.differential.element[2].slicing.discriminator[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "The discriminator path 'type' does not appear to be valid for the element that is being sliced 'AuditEvent.agent.extension'"
+              },
+              "diagnostics": "[227,14]",
+              "expression": [
+                "StructureDefinition.differential.element[15].slicing.discriminator[0]"
+              ]
             }
           ]
         }
@@ -41942,7 +41734,7 @@
               "severity": "error",
               "code": "value",
               "details": {
-                "text": "Value is 'http://hl7.org/fhir/sid/us-ssn' but must be 'http://hl7.org/fhir/sid/us-npi'"
+                "text": "Value is 'http://hl7.org/fhir/sid/us-ssn' but is fixed to 'http://hl7.org/fhir/sid/us-npi' in the profile http://example.org/reslicedextension/StructureDefinition/MyAuditEventProfile|0.1.0#AuditEvent.agent.extension:altid/npi.value[x]:valueIdentifier.system"
               },
               "diagnostics": "[21,55]",
               "expression": [
@@ -43191,7 +42983,7 @@
               "severity": "error",
               "code": "invalid",
               "details": {
-                "text": "This element does not match any known slice  defined in the profile http://hl7.org/fhir/StructureDefinition/bp|4.0.1 and slicing is CLOSED: Observation.value.ofType(Quantity): Does not match slice 'valueQuantity' (discriminator: $this.empty())"
+                "text": "This element does not match any known slice defined in the profile http://hl7.org/fhir/StructureDefinition/bp|4.0.1 and slicing is CLOSED: Observation.value.ofType(Quantity): Does not match slice 'valueQuantity' (discriminator: $this.empty())"
               },
               "diagnostics": "[6,4]",
               "expression": [
@@ -43295,11 +43087,7 @@
       "file": "sd-device.json",
       "version": "4.0",
       "description": "test identifiers defined in THO",
-      "java": {
-        "outcome": {
-          "resourceType": "OperationOutcome"
-        }
-      }
+      "java": {}
     },
     {
       "name": "bundle-invariant",
@@ -43450,17 +43238,6 @@
               "diagnostics": "[22,4]",
               "expression": [
                 "ValueSet.jurisdiction[0]"
-              ]
-            },
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[1,2]",
-              "expression": [
-                "ValueSet"
               ]
             },
             {
@@ -47812,17 +47589,6 @@
               ]
             },
             {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[132,6]",
-              "expression": [
-                "QuestionnaireResponse.contained[1]/*ValueSet/VSPHQ9*/"
-              ]
-            },
-            {
               "extension": [
                 {
                   "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-slicetext",
@@ -48496,17 +48262,6 @@
           "issue": [
             {
               "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[1,2]",
-              "expression": [
-                "ValueSet"
-              ]
-            },
-            {
-              "severity": "error",
               "code": "invalid",
               "details": {
                 "text": "The value for a filter based on property 'concept' must be a valid code from the system 'http://snomed.info/sct', and 'something' is not (Unknown code 'something' in the CodeSystem 'http://snomed.info/sct' version 'http://snomed.info/sct/900000000000207008/version/20240201')"
@@ -48600,7 +48355,7 @@
               "severity": "error",
               "code": "value",
               "details": {
-                "text": "Value is 'http://hl7.org/fhir/test/StructureDefinition/ext-derived' but must be 'http://hl7.org/fhir/test/StructureDefinition/ext-base', because the value must match the fixed value define in 'http://hl7.org/fhir/test/StructureDefinition/ext-base'"
+                "text": "Value is 'http://hl7.org/fhir/test/StructureDefinition/ext-derived' but is fixed to 'http://hl7.org/fhir/test/StructureDefinition/ext-base' in the profile , because the value must match the fixed value define in 'http://hl7.org/fhir/test/StructureDefinition/ext-base'"
               },
               "diagnostics": "[30,79]",
               "expression": [
@@ -48788,24 +48543,7 @@
       "file": "codesystem-example-supplement-version.xml",
       "version": "5.0",
       "explanation": "check version specific supplement reference",
-      "java": {
-        "outcome": {
-          "resourceType": "OperationOutcome",
-          "issue": [
-            {
-              "severity": "error",
-              "code": "business-rule",
-              "details": {
-                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
-              },
-              "diagnostics": "[3,41]",
-              "expression": [
-                "CodeSystem"
-              ]
-            }
-          ]
-        }
-      }
+      "java": {}
     },
     {
       "name": "additional-bindings-observation-1",
@@ -49835,6 +49573,605 @@
               "diagnostics": "[455,18]",
               "expression": [
                 "Bundle.entry[8].resource/*MedicationStatement/4e348646-0375-486a-a33d-d19801e6c7f7*/.medication.ofType(CodeableConcept).coding[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "q_val_fail",
+      "file": "q_val_fail.json",
+      "documentation": "see https://chat.fhir.org/#narrow/stream/179255-questionnaire/topic/R4.20-.20Struggling.20to.20validate.20a.20Questionnaire.20with.20open-choice",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "invalid",
+              "details": {
+                "text": "Coding has no system. A code with no system has no defined meaning, and it cannot be validated. A system should be provided"
+              },
+              "diagnostics": "[14,22]",
+              "expression": [
+                "QuestionnaireResponse.contained[0]/*Questionnaire/ed364266b937bb3bd73082b1*/.item[0].extension[0].value.ofType(CodeableConcept).coding[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "None of the codings provided are in the value set 'Questionnaire Item UI Control Codes' (http://hl7.org/fhir/ValueSet/questionnaire-item-control|4.0.1), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = null#editableDropdown)"
+              },
+              "diagnostics": "[14,22]",
+              "expression": [
+                "QuestionnaireResponse.contained[0]/*Questionnaire/ed364266b937bb3bd73082b1*/.item[0].extension[0].value.ofType(CodeableConcept)"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "A code with no system has no defined meaning, and it cannot be validated. A system should be provided"
+              },
+              "diagnostics": "[45,19]",
+              "expression": [
+                "QuestionnaireResponse.contained[0]/*Questionnaire/ed364266b937bb3bd73082b1*/.item[0].code[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "A code with no system has no defined meaning, and it cannot be validated. A system should be provided"
+              },
+              "diagnostics": "[26,22]",
+              "expression": [
+                "QuestionnaireResponse.contained[0]/*Questionnaire/ed364266b937bb3bd73082b1*/.item[0].answerOption[0].value.ofType(Coding)"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "A code with no system has no defined meaning, and it cannot be validated. A system should be provided"
+              },
+              "diagnostics": "[32,22]",
+              "expression": [
+                "QuestionnaireResponse.contained[0]/*Questionnaire/ed364266b937bb3bd73082b1*/.item[0].answerOption[1].value.ofType(Coding)"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "A code with no system has no defined meaning, and it cannot be validated. A system should be provided"
+              },
+              "diagnostics": "[38,22]",
+              "expression": [
+                "QuestionnaireResponse.contained[0]/*Questionnaire/ed364266b937bb3bd73082b1*/.item[0].answerOption[2].value.ofType(Coding)"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "invariant",
+              "details": {
+                "text": "Constraint failed: que-0: 'Name should be usable as an identifier for the module by machine processing applications such as code generation'"
+              },
+              "diagnostics": "[7,7]",
+              "expression": [
+                "QuestionnaireResponse.contained[0]/*Questionnaire/ed364266b937bb3bd73082b1*/"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "structure",
+              "details": {
+                "text": "The string value 'Blood' matches an entry in the list of valid Codings, so this is probably an error"
+              },
+              "diagnostics": "[66,36]",
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ab-list-slicing",
+      "file": "ab/List-ListExample.json",
+      "supporting": [
+        "ab/StructureDefinition-my-appointment-profile.json"
+      ],
+      "documentation": "see https://chat.fhir.org/#narrow/stream/179252-IG-creation/topic/Slicing.20error.20on.20contained.20resource/near/476709589",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "Hyperlink '#hcListExample/MyAppointmentExample' at 'div/table/tr/td/a' for 'Appointment: status = proposed' does not resolve"
+              },
+              "diagnostics": "[6,538]",
+              "expression": [
+                "List.text.div"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "json-prop-key",
+      "file": "json-prop-key.json",
+      "module": "logical",
+      "version": "4.0",
+      "logical": {
+        "supporting": [
+          "json-prop-key-logical.json"
+        ],
+        "format": "http://hl7.org/fhir/us/davinci-hrex/StructureDefinition/HRexWellknownDefinition",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "warning",
+                "code": "code-invalid",
+                "details": {
+                  "text": "ValueSet 'http://hl7.org/fhir/us/davinci-hrex/ValueSet/hrex-endpoint-name' not found"
+                },
+                "diagnostics": "[7,67]",
+                "expression": [
+                  "HRexWellknownDefinition.endpoints[0].key"
+                ]
+              },
+              {
+                "severity": "warning",
+                "code": "code-invalid",
+                "details": {
+                  "text": "ValueSet 'http://hl7.org/fhir/us/davinci-hrex/ValueSet/hrex-endpoint-name' not found"
+                },
+                "diagnostics": "[8,71]",
+                "expression": [
+                  "HRexWellknownDefinition.endpoints[1].key"
+                ]
+              },
+              {
+                "severity": "warning",
+                "code": "code-invalid",
+                "details": {
+                  "text": "ValueSet 'http://hl7.org/fhir/us/davinci-hrex/ValueSet/hrex-endpoint-name' not found"
+                },
+                "diagnostics": "[9,73]",
+                "expression": [
+                  "HRexWellknownDefinition.endpoints[2].key"
+                ]
+              },
+              {
+                "severity": "warning",
+                "code": "code-invalid",
+                "details": {
+                  "text": "ValueSet 'http://hl7.org/fhir/us/davinci-hrex/ValueSet/hrex-endpoint-name' not found"
+                },
+                "diagnostics": "[10,55]",
+                "expression": [
+                  "HRexWellknownDefinition.endpoints[3].key"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "java": {
+        "errorCount": 1,
+        "output": [
+          "FATAL: ClinicalDocument: This does not appear to be a FHIR resource (unknown namespace/name 'urn:hl7-org:v3-test::ClinicalDocument')"
+        ]
+      }
+    },
+    {
+      "name": "patient-min-length",
+      "file": "patient-good.xml",
+      "version": "4.0",
+      "java": {},
+      "profile": {
+        "source": "patient-min-length-profile.xml",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "invalid",
+                "details": {
+                  "text": "Value '8' is shorter than permitted minimum length of 20"
+                },
+                "diagnostics": "[2,25]",
+                "expression": [
+                  "Patient.id"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "bad-json-close",
+      "file": "bad-json-close-1.json",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "invalid",
+              "details": {
+                "text": "Error parsing JSON: Error parsing JSON source: Unexpected close marker ']'. Expected '}' at Line 15 (path=[//entry[]/entry/resource/name[]/name/given[]Christopher])"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "bad-json-close-2",
+      "file": "bad-json-close-2.json",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "invalid",
+              "details": {
+                "text": "Error parsing JSON: Error parsing JSON source: Unexpected content '#' in json format at Line 15 (path=[//entry[]/entry/resource/name[]/name/given[]Christopher])"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "bad-json-close-3",
+      "file": "bad-json-close-3.json",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "invalid",
+              "details": {
+                "text": "Error parsing JSON: Error parsing JSON source: Unexpected close marker '}'. Expected ']' at Line 16 (path=[//entry[]/entry/resource/name[]/nameChristopher])"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "type-slicing-multiple",
+      "file": "type-slicing-multiple-instance.json",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      },
+      "profile": {
+        "source": "type-slicing-multiple-profile.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "type-slicing-multipleb",
+      "file": "type-slicing-multiple-instance.json",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      },
+      "profile": {
+        "source": "type-slicing-multiple-profileb.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "structure",
+                "details": {
+                  "text": "Bundle.entry:myslicename2: max allowed = 1, but found 2 (from http://hl7.org/fhir/test/StructureDefinition/type-slicing-multiple-b|1.0.0-ballot)"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "Bundle"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "profile-slicing-multiple",
+      "file": "type-slicing-multiple-instance.json",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      },
+      "profile": {
+        "source": "profile-slicing-multiple-profile.json",
+        "supporting": [
+          "profile-slicing-support-patient.json",
+          "profile-slicing-support-practitioner.json",
+          "profile-slicing-support-practitionerrole.json"
+        ],
+        "java": {}
+      }
+    },
+    {
+      "name": "profile-slicing-multipleb",
+      "file": "type-slicing-multiple-instance.json",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      },
+      "profile": {
+        "source": "profile-slicing-multiple-profileb.json",
+        "supporting": [
+          "profile-slicing-support-patient.json",
+          "profile-slicing-support-practitioner.json",
+          "profile-slicing-support-practitionerrole.json"
+        ],
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "structure",
+                "details": {
+                  "text": "Bundle.entry:myslicename2: max allowed = 1, but found 2 (from http://hl7.org/fhir/test/StructureDefinition/profile-slicing-multiple|1.0.0-ballot)"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "Bundle"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "vs-loinc-filter",
+      "file": "vs-loinc-filter.json",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      }
+    },
+    {
+      "name": "cs-filter",
+      "file": "cs-filter.json",
+      "version": "4.0",
+      "supporting": [
+        "cs-sub-prop.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "This property has only a code ('myproperty') and not a URI, so it has no clearly defined meaning in the terminology ecosystem"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "This property has only a code ('myintproperty') and not a URI, so it has no clearly defined meaning in the terminology ecosystem"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[1]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "cs-filter-bad",
+      "file": "cs-filter-bad.json",
+      "version": "4.0",
+      "supporting": [
+        "cs-sub-prop.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "code-invalid",
+              "details": {
+                "text": "Unknown code 'code-r-3' in the CodeSystem 'http://hl7.org/fhir/test/CodeSystem/cs-sub-prop' version 'null'"
+              },
+              "diagnostics": "[34,10]",
+              "expression": [
+                "CodeSystem.concept[1].property[0].value.ofType(Coding).code"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "This property has only a code ('myproperty') and not a URI, so it has no clearly defined meaning in the terminology ecosystem"
+              },
+              "diagnostics": "[1,4]",
+              "expression": [
+                "CodeSystem.property[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vs-filter-filter",
+      "file": "vs-filter-filter.json",
+      "version": "4.0",
+      "supporting": [
+        "cs-filter.json",
+        "cs-sub-prop.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      }
+    },
+    {
+      "name": "vs-filter-property",
+      "file": "vs-filter-property.json",
+      "version": "4.0",
+      "supporting": [
+        "cs-filter.json",
+        "cs-sub-prop.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      }
+    },
+    {
+      "name": "vs-filter-property-bad",
+      "file": "vs-filter-property-bad.json",
+      "version": "4.0",
+      "supporting": [
+        "cs-filter.json",
+        "cs-sub-prop.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "The value for a filter based on property 'myproperty' is 'http://hl7.org/fhir/test/CodeSystem/cs-sub-prop#code-r-3' which is not a valid code (Unknown code 'code-r-3' in the CodeSystem 'http://hl7.org/fhir/test/CodeSystem/cs-sub-prop' version 'null')"
+              },
+              "diagnostics": "[10,8]",
+              "expression": [
+                "ValueSet.compose.include[0].filter[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vs-filter-property-bad2",
+      "file": "vs-filter-property-bad2.json",
+      "version": "4.0",
+      "supporting": [
+        "cs-filter.json",
+        "cs-sub-prop.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "The value for a filter based on property 'myproperty' must be in the format system(|version)#code, not 'code-r-3'"
+              },
+              "diagnostics": "[10,8]",
+              "expression": [
+                "ValueSet.compose.include[0].filter[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vs-filter-int",
+      "file": "vs-filter-int.json",
+      "version": "4.0",
+      "supporting": [
+        "cs-filter.json"
+      ],
+      "java": {}
+    },
+    {
+      "name": "cs-narrative-status",
+      "file": "cs-narrative-status.json",
+      "version": "4.0",
+      "description": "doesn't have a WG stated - shouldn't be an error unless in publication mode",
+      "java": {}
+    },
+    {
+      "name": "cs-narrative-status-pub",
+      "file": "cs-narrative-status.json",
+      "version": "4.0",
+      "for-publication": true,
+      "description": "doesn't have a WG stated - shouldn't be an error unless in publication mode",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "text": "When HL7 is publishing a resource, the owning committee must be stated using the http://hl7.org/fhir/StructureDefinition/structuredefinition-wg extension"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "Most code systems defined in HL7 IGs will need to move to THO later during the process. Consider giving this code system a THO URL now (See https://confluence.hl7.org/display/TSMG/Terminology+Play+Book, and/or talk to TSMG)"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem"
               ]
             }
           ]

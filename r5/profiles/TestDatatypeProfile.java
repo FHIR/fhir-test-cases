@@ -30,7 +30,7 @@ import org.hl7.fhir.r5.profilemodel.gen.Definition;
  */
 public class TestDatatypeProfile extends PEGeneratedBase {
 
-  private static final String CANONICAL_URL = "http://hl7.org/fhir/test/StructureDefinition/pe-profile2|0.1";
+  public static final String CANONICAL_URL = "http://hl7.org/fhir/test/StructureDefinition/pe-profile2|0.1";
 
   @Min("1") @Max("2") @Doco("Code defined by a terminology system")
   @Definition("A reference to a code defined by a terminology system.")
@@ -105,7 +105,7 @@ public class TestDatatypeProfile extends PEGeneratedBase {
   }
 
   /**
-   * Test CodeableConcept Profile.
+   * A reference to a code defined by a terminology system.
    *
    */
   public List<Coding> getCodings() {
@@ -135,7 +135,7 @@ public class TestDatatypeProfile extends PEGeneratedBase {
 
 
   /**
-   * Test CodeableConcept Profile.
+   * A reference to a code defined by a terminology system.
    *
    */
   public Coding getSnomedct() {
@@ -152,7 +152,7 @@ public class TestDatatypeProfile extends PEGeneratedBase {
   }
 
   /**
-   * Test CodeableConcept Profile.
+   * A reference to a code defined by a terminology system.
    *
    */
   public Coding getLoinc() {
@@ -169,7 +169,9 @@ public class TestDatatypeProfile extends PEGeneratedBase {
   }
 
   /**
-   * Test CodeableConcept Profile.
+   * A human language representation of the concept as seen/selected/uttered by the 
+   * user who entered the data and/or which represents the intended meaning of the 
+   * user.
    *
    */
   public String getText() {
