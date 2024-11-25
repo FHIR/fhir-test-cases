@@ -92,14 +92,14 @@ steps:
     inputs:
       mavenPomFile: '$(System.DefaultWorkingDirectory)/pom.xml'
       goals: deploy
-      options: '--settings $(System.DefaultWorkingDirectory)/settings.xml -DdeployToSonatype'
+      options: '--settings $(System.DefaultWorkingDirectory)/settings.xml -Dmaven.test.skip -DdeployToSonatype'
       publishJUnitResults: false
 
   # Deploy the SNAPSHOT artifact to GitHub packages.
   # This is done for the master branch merges only.
   - task: Maven@4
-    enabled: false
-    displayName: 'Deploy $(module) to Sonatype staging'
+    #enabled: false
+    displayName: 'Deploy $(module) to GitHub Packages'
     inputs:
       mavenPomFile: '$(System.DefaultWorkingDirectory)/pom.xml'
       goals: deploy
