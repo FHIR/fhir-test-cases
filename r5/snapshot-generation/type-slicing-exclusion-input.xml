@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="klgateway-children-indicator"/>
+  <url value="http://fhir.kl.dk/children/StructureDefinition/klgateway-children-indicator"/>
+  <version value="2.1.0"/>
+  <name value="KLGatewayChildrenIndicator"/>
+  <title value="KLGatewayChildrenIndicator"/>
+  <status value="active"/>
+  <date value="2024-11-21T10:26:44+11:00"/>
+  <publisher value="Kommunernes Landsforening"/>
+  <contact>
+    <name value="Kommunernes Landsforening"/>
+    <telecom>
+      <system value="url"/>
+      <value value="http://kl.dk"/>
+    </telecom>
+  </contact>
+  <description value="Abstract indicator profile, used in the children database"/>
+  <fhirVersion value="4.0.1"/>
+  <mapping>
+    <identity value="workflow"/>
+    <uri value="http://hl7.org/fhir/workflow"/>
+    <name value="Workflow Pattern"/>
+  </mapping>
+  <mapping>
+    <identity value="sct-concept"/>
+    <uri value="http://snomed.info/conceptdomain"/>
+    <name value="SNOMED CT Concept Domain Binding"/>
+  </mapping>
+  <mapping>
+    <identity value="v2"/>
+    <uri value="http://hl7.org/v2"/>
+    <name value="HL7 v2 Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="w5"/>
+    <uri value="http://hl7.org/fhir/fivews"/>
+    <name value="FiveWs Pattern Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="sct-attr"/>
+    <uri value="http://snomed.org/attributebinding"/>
+    <name value="SNOMED CT Attribute Binding"/>
+  </mapping>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.dk/fhir/core/StructureDefinition/dk-core-observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation">
+      <path value="Observation"/>
+      <constraint>
+        <key value="obs-2"/>
+        <severity value="error"/>
+        <human value="If the value is not given, then explain why using dataAbsentReason"/>
+        <expression value="value.empty() implies dataAbsentReason.exists()"/>
+        <source value="http://fhir.kl.dk/children/StructureDefinition/klgateway-children-indicator"/>
+      </constraint>
+    </element>
+    <element id="Observation.identifier">
+      <path value="Observation.identifier"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.basedOn">
+      <path value="Observation.basedOn"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.partOf">
+      <path value="Observation.partOf"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.status">
+      <path value="Observation.status"/>
+      <short value="[DK] IndikatorStatus"/>
+    </element>
+    <element id="Observation.category">
+      <path value="Observation.category"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.code">
+      <path value="Observation.code"/>
+      <short value="[DK] IndikatorKode"/>
+    </element>
+    <element id="Observation.code.coding">
+      <path value="Observation.code.coding"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="system"/>
+        </discriminator>
+        <rules value="closed"/>
+      </slicing>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="Observation.code.coding:LOINC">
+      <path value="Observation.code.coding"/>
+      <sliceName value="LOINC"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.code.coding:SNOMEDCT">
+      <path value="Observation.code.coding"/>
+      <sliceName value="SNOMEDCT"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.code.coding:NPU">
+      <path value="Observation.code.coding"/>
+      <sliceName value="NPU"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.code.coding:IEEE">
+      <path value="Observation.code.coding"/>
+      <sliceName value="IEEE"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.code.coding:MedCom">
+      <path value="Observation.code.coding"/>
+      <sliceName value="MedCom"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.code.coding:SKS">
+      <path value="Observation.code.coding"/>
+      <sliceName value="SKS"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.code.coding:FBOECode">
+      <path value="Observation.code.coding"/>
+      <sliceName value="FBOECode"/>
+      <min value="1"/>
+      <max value="1"/>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://fhir.kl.dk/children/ValueSet/IndicatorCodesChildren"/>
+      </binding>
+    </element>
+    <element id="Observation.code.coding:FBOECode.system">
+      <path value="Observation.code.coding.system"/>
+      <min value="1"/>
+      <patternUri value="http://fhir.kl.dk/term/CodeSystem/FBOE"/>
+    </element>
+    <element id="Observation.subject">
+      <path value="Observation.subject"/>
+      <short value="[DK] Indikatorsubjekt"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://fhir.kl.dk/children/StructureDefinition/klgateway-children-citizen"/>
+        <aggregation value="bundled"/>
+      </type>
+    </element>
+    <element id="Observation.focus">
+      <path value="Observation.focus"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.encounter">
+      <path value="Observation.encounter"/>
+      <short value="[DK] Indikatorkontakt"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://fhir.kl.dk/children/StructureDefinition/klgateway-children-encounter"/>
+        <aggregation value="bundled"/>
+      </type>
+    </element>
+    <element id="Observation.effective[x]">
+      <path value="Observation.effective[x]"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <min value="1"/>
+    </element>
+    <element id="Observation.effective[x]:effectiveInstant">
+      <path value="Observation.effective[x]"/>
+      <sliceName value="effectiveInstant"/>
+      <min value="0"/>
+      <max value="0"/>
+      <type>
+        <code value="instant"/>
+      </type>
+    </element>
+    <element id="Observation.effective[x]:effectivePeriod">
+      <path value="Observation.effective[x]"/>
+      <sliceName value="effectivePeriod"/>
+      <min value="0"/>
+      <max value="0"/>
+      <type>
+        <code value="Period"/>
+      </type>
+    </element>
+    <element id="Observation.effective[x]:effectiveTiming">
+      <path value="Observation.effective[x]"/>
+      <sliceName value="effectiveTiming"/>
+      <min value="0"/>
+      <max value="0"/>
+      <type>
+        <code value="Timing"/>
+      </type>
+    </element>
+    <element id="Observation.effective[x]:effectiveDateTime">
+      <path value="Observation.effective[x]"/>
+      <sliceName value="effectiveDateTime"/>
+      <short value="[DK] Indikatortid"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+    </element>
+    <element id="Observation.issued">
+      <path value="Observation.issued"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.performer">
+      <path value="Observation.performer"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.value[x]">
+      <path value="Observation.value[x]"/>
+      <short value="[DK] IndikatorResultat"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+    </element>
+    <element id="Observation.value[x]:valueCodeableConcept">
+      <path value="Observation.value[x]"/>
+      <sliceName value="valueCodeableConcept"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+    </element>
+    <element id="Observation.value[x]:valueCodeableConcept.coding">
+      <path value="Observation.value[x].coding"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="Observation.dataAbsentReason">
+      <path value="Observation.dataAbsentReason"/>
+      <short value="[DK] IndikatorMangler"/>
+    </element>
+    <element id="Observation.interpretation">
+      <path value="Observation.interpretation"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.note">
+      <path value="Observation.note"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.bodySite">
+      <path value="Observation.bodySite"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.method">
+      <path value="Observation.method"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.specimen">
+      <path value="Observation.specimen"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.device">
+      <path value="Observation.device"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.hasMember">
+      <path value="Observation.hasMember"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.derivedFrom">
+      <path value="Observation.derivedFrom"/>
+      <max value="0"/>
+    </element>
+  </differential>
+</StructureDefinition>
