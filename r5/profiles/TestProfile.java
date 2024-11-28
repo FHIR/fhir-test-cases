@@ -14,9 +14,10 @@ package org.hl7.fhir.r5.profiles;
  */
 import java.util.List;
 import java.util.ArrayList;
-import javax.annotation.Nullable;
 import java.util.Date;
 
+import java.math.BigDecimal;
+import javax.annotation.Nullable;
 
 import org.hl7.fhir.r5.context.IWorkerContext;
 import org.hl7.fhir.r5.model.*;
