@@ -50183,6 +50183,42 @@
       "file": "zzz.json",
       "description": "hack to close ups",
       "close-up": true
+    },
+    {
+      "name": "AppointmentWithCodingFromFragmentCS",
+      "file": "AppointmentWithCodingFromFragmentCS",
+      "description": "Appointment contains a coding from a CodeSystem that is defined as a fragment, validation should not complain that the CodeSystem cannot be found",
+      "supporting": [
+        "Fachabteilungsschluessel-erweitert.json"
+      ],
+      "java": {
+        "warningCount": 1,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "code-invalid",
+              "details": {
+                "text": "None of the codings provided are in the value set 'Practice Setting Code Value Set' (http://hl7.org/fhir/ValueSet/c80-practice-codes|5.0.0), and a coding is recommended to come from this value set (codes = http://fhir.de/CodeSystem/dkgev/Fachabteilungsschluessel-erweitert#3600)"
+              },
+              "expression": [
+                "Appointment.specialty[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "invariant",
+              "details": {
+                "text": "Constraint failed: dom-6: 'A resource should have narrative for robust management' (defined in http://hl7.org/fhir/StructureDefinition/DomainResource) (Best Practice Recommendation)"
+              },
+              "expression": [
+                "Appointment"
+              ]
+            }
+          ]
+        }
+      }
     }
   ]
 }
