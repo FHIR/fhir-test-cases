@@ -1,0 +1,48 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "TestObservationProfileWithResolve",
+  "url": "http://example.org/StructureDefinition/TestObservationProfileWithResolve",
+  "name": "TestObservationProfileWithResolve",
+  "title": "TestObservationProfileWithResolve",
+  "status": "draft",
+  "description": "TestObservationProfileWithResolve",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.performer",
+        "path": "Observation.performer",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "$this.resolve()"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1
+      },
+      {
+        "id": "Observation.performer:test",
+        "path": "Observation.performer",
+        "sliceName": "test",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Patient"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
