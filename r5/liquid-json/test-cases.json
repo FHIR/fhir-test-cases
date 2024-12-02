@@ -1,0 +1,2111 @@
+{
+  "introduction" : "see the readme!",
+  "suites" : [{
+    "name" : "metadata",
+    "description" : "tests for minimal requirements for metadata statements",
+    "setup" : [],
+    "tests" : [
+      {
+        "name" : "metadata",
+        "description" : "Check that the minimum expected things are found in the server CapabilityStatement",
+        "operation" : "metadata",
+        "response" : "capstmt.json"
+      },
+      {
+        "name" : "term-caps",
+        "description" : "Check that the minimum expected things are found in the server TerminologyCapabilities",
+        "operation" : "term-caps",
+        "response" : "capterms.json"
+      }
+    ]
+  }, {
+    "name" : "simple-cases",
+    "description" : "basic tests, setting up for the API tests to come",
+    "setup" : ["simple/codesystem-simple.json", "simple/valueset-all.json", "simple/valueset-active.json", "simple/valueset-inactive.json", "simple/valueset-enumerated.json", "simple/valueset-enumerated-bad.json", "simple/valueset-filter-isa.json", "simple/valueset-filter-property.json", "simple/valueset-filter-regex.json", "simple/valueset-filter-regex2.json"],
+    "tests" :[
+      {
+        "name" : "simple-expand-all",
+        "description" : "Expansion containing all the code system",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-all-request-parameters.json",
+        "response" : "simple/simple-expand-all-response-valueSet.json"
+      },{
+        "name" : "simple-expand-active",
+        "description" : "Expansion containing only the active codes in the code system",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-active-request-parameters.json",
+        "response" : "simple/simple-expand-active-response-valueSet.json"
+      },{
+        "name" : "simple-expand-inactive",
+        "description" : "Expansion containing only the inactive codes in the code system",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-inactive-request-parameters.json",
+        "response" : "simple/simple-expand-inactive-response-valueSet.json"
+      },{
+        "name" : "simple-expand-enum",
+        "description" : "Expansion containing an enumerated set of codes in the code system",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-enum-request-parameters.json",
+        "response" : "simple/simple-expand-enum-response-valueSet.json"
+      },{
+        "name" : "simple-expand-enum-bad",
+        "description" : "Expansion containing an enumerated set of codes in the code system, including invalid codes",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-enum-bad-request-parameters.json",
+        "response" : "simple/simple-expand-enum-bad-response-valueSet.json"
+      },{
+        "name" : "simple-expand-isa",
+        "description" : "Expansion containing a filter on the code system using is-a relationship",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-isa-request-parameters.json",
+        "response" : "simple/simple-expand-isa-response-valueSet.json"
+      },{
+        "name" : "simple-expand-isa-o2",
+        "description" : "Expansion containing a filter on the code system using is-a relationship with paging (tx.fhir.org internal test)",
+        "mode" : "tx.fhir.org",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-isa-o2-request-parameters.json",
+        "response" : "simple/simple-expand-isa-o2-response-valueSet.json"
+      },{
+        "name" : "simple-expand-isa-c2",
+        "description" : "Expansion containing a filter on the code system using is-a relationship with paging (tx.fhir.org internal test)",
+        "mode" : "tx.fhir.org",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-isa-c2-request-parameters.json",
+        "response" : "simple/simple-expand-isa-c2-response-valueSet.json"
+      },{
+        "name" : "simple-expand-isa-o2c2",
+        "description" : "Expansion containing a filter on the code system using is-a relationship with paging (tx.fhir.org internal test)",
+        "mode" : "tx.fhir.org",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-isa-o2c2-request-parameters.json",
+        "response" : "simple/simple-expand-isa-o2c2-response-valueSet.json"
+      },{
+        "name" : "simple-expand-prop",
+        "description" : "Expansion containing a filter on the code system using a property value",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-prop-request-parameters.json",
+        "response" : "simple/simple-expand-prop-response-valueSet.json"
+      },{
+        "name" : "simple-expand-regex",
+        "description" : "Expansion containing a filter on the code system using regex on the codes",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-regex-request-parameters.json",
+        "response" : "simple/simple-expand-regex-response-valueSet.json"
+      },{
+        "name" : "simple-expand-regex2",
+        "description" : "Expansion containing a filter on the code system using regex on the codes using a regex known to cause a problem on at least one server",
+        "operation" : "expand",
+        "request" : "simple/simple-expand-regex2-request-parameters.json",
+        "response" : "simple/simple-expand-regex2-response-valueSet.json"
+      },{
+        "name" : "simple-lookup-1",
+        "description" : "Check that $lookup works (there's not many tests for $lookup because it's not used much by the tools)",
+        "operation" : "lookup",
+        "request" : "simple/simple-lookup-request-parameters.json",
+        "response" : "simple/simple-lookup-response-parameters.json"
+      },{
+        "name" : "simple-lookup-2",
+        "description" : "Check that $lookup works (there's not many tests for $lookup because it's not used much by the tools)",
+        "operation" : "lookup",
+        "request" : "simple/simple-lookup2-request-parameters.json",
+        "response" : "simple/simple-lookup2-response-parameters.json"
+      }
+    ]
+  },{
+    "name" : "parameters",
+    "description" : "Testing out the various expansion parameters that the IG publisher makes use of",
+    "setup" : ["simple/codesystem-simple.json", "simple/valueset-all.json", "simple/valueset-active.json", "simple/valueset-inactive.json", "simple/valueset-enumerated.json", "simple/valueset-filter-isa.json", 
+       "simple/valueset-filter-property.json", "simple/valueset-filter-regex.json", "extensions/codesystem-extensions.json", "extensions/codesystem-supplement.json", "extensions/valueset-extensions-enumerated.json"],
+    "tests" :[
+      {
+        "name" : "parameters-expand-all-hierarchy",
+        "description" : "Expand an entire code system, and check that the code system replicates the hierarchy. Note that for all the hierarchical expansions, the flag 'flat' means that the server is not expected to provide a hierarchical expansion",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-all-hierarchy-request-parameters.json",
+        "response" : "parameters/parameters-expand-all-hierarchy-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-all-hierarchy-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-enum-hierarchy",
+        "description" : "Expand an enumerated value set - no hierarchy in this case",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-enum-hierarchy-request-parameters.json",
+        "response" : "parameters/parameters-expand-enum-hierarchy-response-valueSet.json"
+      },{
+        "name" : "parameters-expand-isa-hierarchy",
+        "description" : "Expand an is-a value set, and preserve the hierarchy",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-isa-hierarchy-request-parameters.json",
+        "response" : "parameters/parameters-expand-isa-hierarchy-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-isa-hierarchy-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-all-active",
+        "description" : "expand all the active codes - hierarchy is preserved",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-all-active-request-parameters.json",
+        "response" : "parameters/parameters-expand-all-active-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-all-active-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-active-active",
+        "description" : "Expand all the active codes, and specify active codes in a parameter",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-active-active-request-parameters.json",
+        "response" : "parameters/parameters-expand-active-active-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-active-active-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-inactive-active",
+        "description" : "Expand all the codes, including inactive ones, but specify active codes only in a parameter",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-inactive-active-request-parameters.json",
+        "response" : "parameters/parameters-expand-inactive-active-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-inactive-active-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-enum-active",
+        "description" : "Expand an enumerated value set, with active codes only in a parameter",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-enum-active-request-parameters.json",
+        "response" : "parameters/parameters-expand-enum-active-response-valueSet.json"
+      },{
+        "name" : "parameters-expand-isa-active",
+        "description" : "Expand an is-a value set, only the active codes",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-isa-active-request-parameters.json",
+        "response" : "parameters/parameters-expand-isa-active-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-isa-active-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-all-inactive",
+        "description" : "expand all the active codes, including inactive codes - hierarchy is preserved",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-all-inactive-request-parameters.json",
+        "response" : "parameters/parameters-expand-all-inactive-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-all-inactive-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-active-inactive",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-active-inactive-request-parameters.json",
+        "response" : "parameters/parameters-expand-active-inactive-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-active-inactive-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-inactive-inactive",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-inactive-inactive-request-parameters.json",
+        "response" : "parameters/parameters-expand-inactive-inactive-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-inactive-inactive-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-enum-inactive",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-enum-inactive-request-parameters.json",
+        "response" : "parameters/parameters-expand-enum-inactive-response-valueSet.json"
+      },{
+        "name" : "parameters-expand-isa-inactive",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-isa-inactive-request-parameters.json",
+        "response" : "parameters/parameters-expand-isa-inactive-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-isa-inactive-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-all-designations",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-all-designations-request-parameters.json",
+        "response" : "parameters/parameters-expand-all-designations-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-all-designations-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-enum-designations",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-enum-designations-request-parameters.json",
+        "response" : "parameters/parameters-expand-enum-designations-response-valueSet.json"
+      },{
+        "name" : "parameters-expand-isa-designations",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-isa-designations-request-parameters.json",
+        "response" : "parameters/parameters-expand-isa-designations-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-isa-designations-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-all-definitions",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-all-definitions-request-parameters.json",
+        "response" : "parameters/parameters-expand-all-definitions-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-all-definitions-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-enum-definitions",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-enum-definitions-request-parameters.json",
+        "response" : "parameters/parameters-expand-enum-definitions-response-valueSet.json"
+      },{
+        "name" : "parameters-expand-isa-definitions",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-isa-definitions-request-parameters.json",
+        "response" : "parameters/parameters-expand-isa-definitions-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-isa-definitions-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-all-definitions2",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-all-definitions2-request-parameters.json",
+        "response" : "parameters/parameters-expand-all-definitions2-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-all-definitions2-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-enum-definitions2",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-enum-definitions2-request-parameters.json",
+        "response" : "parameters/parameters-expand-enum-definitions2-response-valueSet.json"
+      },{
+        "description" : "specifically to test out http://hl7.org/fhir/StructureDefinition/valueset-concept-definition",
+        "name" : "parameters-expand-enum-definitions3",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-enum-definitions3-request-parameters.json",
+        "response" : "parameters/parameters-expand-enum-definitions3-response-valueSet.json"
+      },{
+        "name" : "parameters-expand-isa-definitions2",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-isa-definitions2-request-parameters.json",
+        "response" : "parameters/parameters-expand-isa-definitions2-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-isa-definitions2-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-all-property",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-all-property-request-parameters.json",
+        "response" : "parameters/parameters-expand-all-property-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-all-property-response-flat-valueSet.json"
+      },{
+        "name" : "parameters-expand-enum-property",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-enum-property-request-parameters.json",
+        "response" : "parameters/parameters-expand-enum-property-response-valueSet.json"
+      },{
+        "name" : "parameters-expand-isa-property",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "parameters/parameters-expand-isa-property-request-parameters.json",
+        "response" : "parameters/parameters-expand-isa-property-response-valueSet.json",
+        "response:flat" : "parameters/parameters-expand-isa-property-response-flat-valueSet.json"
+      }
+    ]
+  },{
+    "name" : "language",
+    "description" : "Testing returning language by request, getting the right designation",
+    "notes" : "see languages.md for an explanation",
+    "setup" : [
+      "language/codesystem-de-multi.json", "language/codesystem-de-single.json", 
+      "language/codesystem-en-multi.json", "language/codesystem-en-single.json",
+
+     "language/valueset-de-multi.json", "language/valueset-de-single.json", "language/valueset-de-de-single.json", "language/valueset-de-de-multi.json", 
+     "language/valueset-en-multi.json", "language/valueset-en-en-multi.json",  "language/valueset-en-single.json", "language/valueset-en-en-single.json", 
+     "language/valueset-en-enlang-single.json", "language/valueset-en-mixed-single.json",
+     "language/valueset-en-de-soft-multi.json", "language/valueset-en-de-hard-multi.json"],
+    "tests" : [
+      {
+        "name" : "language-echo-en-none",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-echo-en-none-request-parameters.json",
+        "response" : "language/expand-echo-en-none-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-de-none",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-echo-de-none-request-parameters.json",
+        "response" : "language/expand-echo-de-none-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-en-multi-none",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-echo-en-multi-none-request-parameters.json",
+        "response" : "language/expand-echo-en-multi-none-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-de-multi-none",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-echo-de-multi-none-request-parameters.json",
+        "response" : "language/expand-echo-de-multi-none-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-en-en-param",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-echo-en-en-param-request-parameters.json",
+        "response" : "language/expand-echo-en-en-param-response-valueSet.json"
+      },{
+        "name" : "language-echo-en-en-vs",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-echo-en-en-vs-request-parameters.json",
+        "response" : "language/expand-echo-en-en-vs-response-valueSet.json"
+      },{
+        "name" : "language-echo-en-en-header",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "Accept-Language" : "en",
+        "request" : "language/expand-echo-en-en-header-request-parameters.json",
+        "response" : "language/expand-echo-en-en-header-response-valueSet.json"
+      },{
+        "name" : "language-echo-en-en-vslang",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "Accept-Language" : "en",
+        "request" : "language/expand-echo-en-en-vslang-request-parameters.json",
+        "response" : "language/expand-echo-en-en-vslang-response-valueSet.json"
+      },{
+        "name" : "language-echo-en-en-mixed",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "Accept-Language" : "es",
+        "request" : "language/expand-echo-en-en-mixed-request-parameters.json",
+        "response" : "language/expand-echo-en-en-mixed-response-valueSet.json"
+      },
+
+      {
+        "name" : "language-echo-de-de-param",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-echo-de-de-param-request-parameters.json",
+        "response" : "language/expand-echo-de-de-param-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-de-de-vs",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-echo-de-de-vs-request-parameters.json",
+        "response" : "language/expand-echo-de-de-vs-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-de-de-header",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "Accept-Language" : "de",
+        "request" : "language/expand-echo-de-de-header-request-parameters.json",
+        "response" : "language/expand-echo-de-de-header-response-valueSet.json"
+      },
+      
+      {
+        "name" : "language-echo-en-multi-en-param",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-echo-en-multi-en-param-request-parameters.json",
+        "response" : "language/expand-echo-en-multi-en-param-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-en-multi-en-vs",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-echo-en-multi-en-vs-request-parameters.json",
+        "response" : "language/expand-echo-en-multi-en-vs-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-en-multi-en-header",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "Accept-Language" : "en",
+        "request" : "language/expand-echo-en-multi-en-header-request-parameters.json",
+        "response" : "language/expand-echo-en-multi-en-header-response-valueSet.json"
+      },
+
+      {
+        "name" : "language-echo-de-multi-de-param",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-echo-de-multi-de-param-request-parameters.json",
+        "response" : "language/expand-echo-de-multi-de-param-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-de-multi-de-vs",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-echo-de-multi-de-vs-request-parameters.json",
+        "response" : "language/expand-echo-de-multi-de-vs-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-de-multi-de-header",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "Accept-Language" : "de",
+        "request" : "language/expand-echo-de-multi-de-header-request-parameters.json",
+        "response" : "language/expand-echo-de-multi-de-header-response-valueSet.json"
+      },
+      
+
+      {
+        "name" : "language-xform-en-multi-de-soft",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-xform-en-multi-de-soft-request-parameters.json",
+        "response" : "language/expand-xform-en-multi-de-soft-response-valueSet.json"
+      },
+      {
+        "name" : "language-xform-en-multi-de-hard",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-xform-en-multi-de-hard-request-parameters.json",
+        "response" : "language/expand-xform-en-multi-de-hard-response-valueSet.json"
+      },
+      {
+        "name" : "language-xform-en-multi-de-default",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "Accept-Language" : "de,*",
+        "request" : "language/expand-xform-en-multi-de-default-request-parameters.json",
+        "response" : "language/expand-xform-en-multi-de-default-response-valueSet.json"
+      },
+      {
+        "name" : "language-xform-de-multi-en-soft",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-xform-de-multi-en-soft-request-parameters.json",
+        "response" : "language/expand-xform-de-multi-en-soft-response-valueSet.json"
+      },
+      {
+        "name" : "language-xform-de-multi-en-hard",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-xform-de-multi-en-hard-request-parameters.json",
+        "response" : "language/expand-xform-de-multi-en-hard-response-valueSet.json"
+      },
+      {
+        "name" : "language-xform-de-multi-en-default",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-xform-de-multi-en-default-request-parameters.json",
+        "response" : "language/expand-xform-de-multi-en-default-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-en-designation",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-echo-en-designation-request-parameters.json",
+        "response" : "language/expand-echo-en-designation-response-valueSet.json"
+      },
+      {
+        "name" : "language-echo-en-designations",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "language/expand-echo-en-designations-request-parameters.json",
+        "response" : "language/expand-echo-en-designations-response-valueSet.json"
+      }
+    ]
+  },{
+    "name" : "language2",
+    "description" : "A series of tests that test display name validation for various permutations of languages",
+    "notes" : "see display/index.md for an explanation",
+    "setup" : [
+        "display/codesystem-en.json", "display/codesystem-ende-N.json", "display/codesystem-ende.json", "display/codesystem-none.json",
+        "display/valueset-en.json", "display/valueset-ende-N.json", "display/valueset-ende.json", "display/valueset-none.json"],
+    "tests" : [
+      {
+        "name" : "validation-right-de-en",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-right-de-en-request-parameters.json",
+        "response" : "display/validation-right-de-en-response-parameters.json"
+      },
+      {
+        "name" : "validation-right-de-ende-N",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-right-de-ende-N-request-parameters.json",
+        "response" : "display/validation-right-de-ende-N-response-parameters.json"
+      },
+      {
+        "name" : "validation-right-de-ende",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-right-de-ende-request-parameters.json",
+        "response" : "display/validation-right-de-ende-response-parameters.json"
+      },
+      {
+        "name" : "validation-right-de-none",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-right-de-none-request-parameters.json",
+        "response" : "display/validation-right-de-none-response-parameters.json"
+      },
+      {
+        "name" : "validation-right-en-en",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-right-en-en-request-parameters.json",
+        "response" : "display/validation-right-en-en-response-parameters.json"
+      },
+      {
+        "name" : "validation-right-en-ende-N",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-right-en-ende-N-request-parameters.json",
+        "response" : "display/validation-right-en-ende-N-response-parameters.json"
+      },
+      {
+        "name" : "validation-right-en-ende",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-right-en-ende-request-parameters.json",
+        "response" : "display/validation-right-en-ende-response-parameters.json"
+      },
+      {
+        "name" : "validation-right-en-none",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-right-en-none-request-parameters.json",
+        "response" : "display/validation-right-en-none-response-parameters.json"
+      },
+      {
+        "name" : "validation-right-none-en",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-right-none-en-request-parameters.json",
+        "response" : "display/validation-right-none-en-response-parameters.json"
+      },
+      {
+        "name" : "validation-right-none-ende-N",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-right-none-ende-N-request-parameters.json",
+        "response" : "display/validation-right-none-ende-N-response-parameters.json"
+      },
+      {
+        "name" : "validation-right-none-ende",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-right-none-ende-request-parameters.json",
+        "response" : "display/validation-right-none-ende-response-parameters.json"
+      },
+      {
+        "name" : "validation-right-none-none",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-right-none-none-request-parameters.json",
+        "response" : "display/validation-right-none-none-response-parameters.json"
+      },
+      {
+        "name" : "validation-wrong-de-en",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-wrong-de-en-request-parameters.json",
+        "response" : "display/validation-wrong-de-en-response-parameters.json"
+      },
+      {
+        "name" : "validation-wrong-de-ende-N",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-wrong-de-ende-N-request-parameters.json",
+        "response" : "display/validation-wrong-de-ende-N-response-parameters.json"
+      },
+      {
+        "name" : "validation-wrong-de-ende",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-wrong-de-ende-request-parameters.json",
+        "response" : "display/validation-wrong-de-ende-response-parameters.json"
+      },
+      {
+        "name" : "validation-wrong-de-none",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-wrong-de-none-request-parameters.json",
+        "response" : "display/validation-wrong-de-none-response-parameters.json"
+      },
+      {
+        "name" : "validation-wrong-en-en",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-wrong-en-en-request-parameters.json",
+        "response" : "display/validation-wrong-en-en-response-parameters.json"
+      },
+      {
+        "name" : "validation-wrong-en-ende-N",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-wrong-en-ende-N-request-parameters.json",
+        "response" : "display/validation-wrong-en-ende-N-response-parameters.json"
+      },
+      {
+        "name" : "validation-wrong-en-ende",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-wrong-en-ende-request-parameters.json",
+        "response" : "display/validation-wrong-en-ende-response-parameters.json"
+      },
+      {
+        "name" : "validation-wrong-en-none",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-wrong-en-none-request-parameters.json",
+        "response" : "display/validation-wrong-en-none-response-parameters.json"
+      },
+      {
+        "name" : "validation-wrong-none-en",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-wrong-none-en-request-parameters.json",
+        "response" : "display/validation-wrong-none-en-response-parameters.json"
+      },
+      {
+        "name" : "validation-wrong-none-ende-N",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-wrong-none-ende-N-request-parameters.json",
+        "response" : "display/validation-wrong-none-ende-N-response-parameters.json"
+      },
+      {
+        "name" : "validation-wrong-none-ende",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-wrong-none-ende-request-parameters.json",
+        "response" : "display/validation-wrong-none-ende-response-parameters.json"
+      },
+      {
+        "name" : "validation-wrong-none-none",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "display/validation-wrong-none-none-request-parameters.json",
+        "response" : "display/validation-wrong-none-none-response-parameters.json"
+      }
+    ]
+  },{
+    "name" : "extensions",
+    "description" : "Testing proper handling of extensions, which depends on the extension",
+    "setup" : ["extensions/codesystem-extensions.json", "extensions/codesystem-supplement.json", "extensions/valueset-extensions-all.json", "extensions/valueset-extensions-bad-supplement.json", "extensions/valueset-extensions-enumerated.json"],
+    "extensions-handled-doco": [
+      "http://hl7.org/fhir/StructureDefinition/valueset-supplement", "http://hl7.org/fhir/StructureDefinition/valueset-deprecated", "http://hl7.org/fhir/StructureDefinition/valueset-concept-definition",
+      "http://hl7.org/fhir/StructureDefinition/coding-sctdescid", "http://hl7.org/fhir/StructureDefinition/valueset-conceptOrder", "http://hl7.org/fhir/StructureDefinition/valueset-label",
+      "http://hl7.org/fhir/StructureDefinition/itemWeight", "http://hl7.org/fhir/StructureDefinition/rendering-style", "http://hl7.org/fhir/StructureDefinition/rendering-xhtml",
+      "http://hl7.org/fhir/StructureDefinition/codesystem-conceptOrder", "http://hl7.org/fhir/StructureDefinition/codesystem-label", "http://hl7.org/fhir/StructureDefinition/codesystem-alternate"],
+    "tests" : [
+      {
+        "name" : "extensions-echo-all",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "extensions/expand-echo-all-parameters.json",
+        "response" : "extensions/expand-echo-all-valueset.json"
+      },
+      {
+        "name" : "extensions-echo-all-alt",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "extensions/expand-echo-all-alt-parameters.json",
+        "response" : "extensions/expand-echo-all-alt-valueset.json"
+      },
+      {
+        "name" : "extensions-echo-enumerated",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "extensions/expand-echo-enumerated-parameters.json",
+        "response" : "extensions/expand-echo-enumerated-valueset.json"
+      },
+      {
+        "name" : "extensions-echo-bad-supplement",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "http-code" : "4xx",
+        "request" : "extensions/expand-echo-bad-supplement-parameters.json",
+        "response" : "extensions/expand-echo-bad-supplement-outcome.json"
+      },
+      {
+        "name" : "validate-code-bad-supplement",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "http-code" : "4xx",
+        "request" : "extensions/validate-code-bad-supplement-request-parameters.json",
+        "response" : "extensions/validate-code-bad-supplement-response-outcome.json"
+      },
+      {
+        "name" : "validate-coding-bad-supplement",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "http-code" : "4xx",
+        "request" : "extensions/validate-coding-bad-supplement-request-parameters.json",
+        "response" : "extensions/validate-coding-bad-supplement-response-outcome.json"
+      },
+      {
+        "name" : "validate-coding-bad-supplement-url",
+        "description" : "to be provided",
+        "operation" : "cs-validate-code",
+        "http-code" : "2xx",
+        "request" : "extensions/validate-coding-bad-supplement-url-request-parameters.json",
+        "response" : "extensions/validate-coding-bad-supplement-url-response-outcome.json"
+      },
+      {
+        "name" : "validate-codeableconcept-bad-supplement",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "http-code" : "4xx",
+        "request" : "extensions/validate-codeableconcept-bad-supplement-request-parameters.json",
+        "response" : "extensions/validate-codeableconcept-bad-supplement-response-outcome.json"
+      },
+      {
+        "name" : "validate-coding-good-supplement",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "extensions/validate-coding-good-supplement-request-parameters.json",
+        "response" : "extensions/validate-coding-good-supplement-response-parameters.json"
+      },
+      {
+        "name" : "validate-coding-good2-supplement",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "extensions/validate-coding-good2-supplement-request-parameters.json",
+        "response" : "extensions/validate-coding-good2-supplement-response-parameters.json"
+      }
+    ]
+  },{
+    "name" : "validation",
+    "description" : "Testing various validation parameter combinations",
+    "setup" : ["simple/codesystem-simple.json", "simple/valueset-all.json", "simple/valueset-import-bad.json", "simple/valueset-enumerated.json", "simple/valueset-filter-isa.json", "simple/valueset-filter-property.json", "simple/valueset-filter-regex.json",
+        "language/codesystem-de-multi.json", "language/codesystem-de-single.json", "language/codesystem-en-multi.json", "language/codesystem-en-single.json",
+        "language/valueset-de-multi.json", "language/valueset-de-single.json", "language/valueset-en-multi.json", "language/valueset-en-single.json",
+        "version/codesystem-version-1.json", "version/codesystem-version-2.json", "version/valueset-all-version-1.json", "version/valueset-all-version-2.json", "version/valueset-all-version.json",
+        "language/valueset-en-enlang-multi.json", "language/valueset-en-en-multi.json", "inactive/valueset-all.json", "inactive/codesystem-inactive.json"
+      ],
+    "tests" : [
+      {
+        "name" : "validation-simple-code-good",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-good-request-parameters.json",
+        "response" :  "validation/simple-code-good-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-implied-good",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-implied-good-request-parameters.json",
+        "response" :  "validation/simple-code-implied-good-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-good",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-good-request-parameters.json",
+        "response" :  "validation/simple-coding-good-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-codeableconcept-good",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-codeableconcept-good-request-parameters.json",
+        "response" : "validation/simple-codeableconcept-good-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-bad-code",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-bad-code-request-parameters.json",
+        "response" :  "validation/simple-code-bad-code-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-implied-bad-code",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-implied-bad-code-request-parameters.json",
+        "response" :  "validation/simple-code-implied-bad-code-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-bad-code",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-bad-code-request-parameters.json",
+        "response" :  "validation/simple-coding-bad-code-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-bad-code-inactive",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-bad-code-inactive-request-parameters.json",
+        "response" :  "validation/simple-coding-bad-code-inactive-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-codeableconcept-bad-code",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-codeableconcept-bad-code-request-parameters.json",
+        "response" : "validation/simple-codeableconcept-bad-code-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-bad-valueSet",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "http-code" : "4xx",
+        "request" : "validation/simple-code-bad-valueSet-request-parameters.json",
+        "response" :  "validation/simple-code-bad-valueSet-response-outcome.json"
+      },
+      {
+        "name" : "validation-simple-coding-bad-valueSet",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "http-code" : "4xx",
+        "request" : "validation/simple-coding-bad-valueSet-request-parameters.json",
+        "response" :  "validation/simple-coding-bad-valueSet-response-outcome.json"
+      },
+      {
+        "name" : "validation-simple-codeableconcept-bad-valueSet",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "http-code" : "4xx",
+        "request" : "validation/simple-codeableconcept-bad-valueSet-request-parameters.json",
+        "response" :  "validation/simple-codeableconcept-bad-valueSet-response-outcome.json"
+      },
+      {
+        "name" : "validation-simple-code-bad-import",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-bad-import-request-parameters.json",
+        "response" :  "validation/simple-code-bad-import-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-bad-import",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-bad-import-request-parameters.json",
+        "response" :  "validation/simple-coding-bad-import-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-codeableconcept-bad-import",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-codeableconcept-bad-import-request-parameters.json",
+        "response" :  "validation/simple-codeableconcept-bad-import-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-bad-system",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-bad-system-request-parameters.json",
+        "response" :  "validation/simple-code-bad-system-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-bad-system",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-bad-system-request-parameters.json",
+        "response" :  "validation/simple-coding-bad-system-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-bad-system2",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-bad-system2-request-parameters.json",
+        "response" :  "validation/simple-coding-bad-system2-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-bad-system-local",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-bad-system-local-request-parameters.json",
+        "response" :  "validation/simple-coding-bad-system-local-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-no-system",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-no-system-request-parameters.json",
+        "response" :  "validation/simple-coding-no-system-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-codeableconcept-bad-system",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-codeableconcept-bad-system-request-parameters.json",
+        "response" : "validation/simple-codeableconcept-bad-system-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-bad-version1",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-bad-version1-request-parameters.json",
+        "response" :  "validation/simple-code-bad-version1-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-bad-version1",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-bad-version1-request-parameters.json",
+        "response" :  "validation/simple-coding-bad-version1-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-codeableconcept-bad-version1",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-codeableconcept-bad-version1-request-parameters.json",
+        "response" : "validation/simple-codeableconcept-bad-version1-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-codeableconcept-bad-version2",
+        "description" : "Check that a bad system with a version doesn't generate a warning that the version can't be found",
+        "operation" : "validate-code",
+        "request" : "validation/simple-codeableconcept-bad-version2-request-parameters.json",
+        "response" : "validation/simple-codeableconcept-bad-version2-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-good-version",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-good-version-request-parameters.json",
+        "response" :  "validation/simple-code-good-version-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-good-version",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-good-version-request-parameters.json",
+        "response" :  "validation/simple-coding-good-version-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-codeableconcept-good-version",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-codeableconcept-good-version-request-parameters.json",
+        "response" : "validation/simple-codeableconcept-good-version-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-good-display",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-good-display-request-parameters.json",
+        "response" :  "validation/simple-code-good-display-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-good-display",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-good-display-request-parameters.json",
+        "response" :  "validation/simple-coding-good-display-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-codeableconcept-good-display",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-codeableconcept-good-display-request-parameters.json",
+        "response" : "validation/simple-codeableconcept-good-display-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-bad-display",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-bad-display-request-parameters.json",
+        "response" :  "validation/simple-code-bad-display-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-bad-display-ws",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-bad-display-ws-request-parameters.json",
+        "response" :  "validation/simple-code-bad-display-ws-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-bad-display",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-bad-display-request-parameters.json",
+        "response" :  "validation/simple-coding-bad-display-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-codeableconcept-bad-display",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-codeableconcept-bad-display-request-parameters.json",
+        "response" : "validation/simple-codeableconcept-bad-display-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-bad-display-warning",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-bad-displayW-request-parameters.json",
+        "response" :  "validation/simple-code-bad-displayW-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-bad-display-warning",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-bad-displayW-request-parameters.json",
+        "response" :  "validation/simple-coding-bad-displayW-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-codeableconcept-bad-display-warning",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-codeableconcept-bad-displayW-request-parameters.json",
+        "response" : "validation/simple-codeableconcept-bad-displayW-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-good-language",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-good-language-request-parameters.json",
+        "response" :  "validation/simple-code-good-language-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-good-language",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-good-language-request-parameters.json",
+        "response" :  "validation/simple-coding-good-language-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-codeableconcept-good-language",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-codeableconcept-good-language-request-parameters.json",
+        "response" : "validation/simple-codeableconcept-good-language-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-bad-language",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-bad-language-request-parameters.json",
+        "response" :  "validation/simple-code-bad-language-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-good-regex",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-good-regex-request-parameters.json",
+        "response" : "validation/simple-code-good-regex-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-code-bad-regex",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-code-bad-regex-request-parameters.json",
+        "response" :  "validation/simple-code-bad-regex-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-bad-language",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-bad-language-request-parameters.json",
+        "response" :  "validation/simple-coding-bad-language-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-bad-language-header",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "Accept-Language" : "en, en-AU; q=0.4",
+        "request" : "validation/simple-coding-bad-language-header-request-parameters.json",
+        "response" :  "validation/simple-coding-bad-language-header-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-bad-language-vs",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-bad-language-vs-request-parameters.json",
+        "response" :  "validation/simple-coding-bad-language-vs-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-coding-bad-language-vslang",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-coding-bad-language-vslang-request-parameters.json",
+        "response" :  "validation/simple-coding-bad-language-vslang-response-parameters.json"
+      },
+      {
+        "name" : "validation-simple-codeableconcept-bad-language",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/simple-codeableconcept-bad-language-request-parameters.json",
+        "response" : "validation/simple-codeableconcept-bad-language-response-parameters.json"
+      },
+      {
+        "name" : "validation-complex-codeableconcept-full",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/complex-codeableconcept-full-request-parameters.json",
+        "response" : "validation/complex-codeableconcept-full-response-parameters.json"
+      },
+      {
+        "name" : "validation-complex-codeableconcept-vsonly",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/complex-codeableconcept-vsonly-request-parameters.json",
+        "response" : "validation/complex-codeableconcept-vsonly-response-parameters.json"
+      },
+      {
+        "name" : "validation-version-profile-none",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "validation/version-profile-none-request-parameters.json",
+        "response" : "validation/version-profile-none-response-parameters.json"
+      },
+      {
+        "name" : "validation-version-profile-default",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "profile" : "version/parameters-default-version.json",
+        "request" : "validation/version-profile-default-request-parameters.json",
+        "response" : "validation/version-profile-default-response-parameters.json"
+      },
+      {
+        "name" : "validation-version-profile-coding",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "profile" : "version/parameters-default-version.json",
+        "request" : "validation/version-profile-coding-request-parameters.json",
+        "response" : "validation/version-profile-coding-response-parameters.json"
+      },
+      {
+        "name" : "validation-cs-code-good",
+        "description" : "to be provided",
+        "operation" : "cs-validate-code",
+        "request" : "validation/cs-code-good-request-parameters.json",
+        "response" :  "validation/cs-code-good-response-parameters.json"
+      },
+      {
+        "name" : "validation-cs-code-bad-code",
+        "description" : "to be provided",
+        "operation" : "cs-validate-code",
+        "request" : "validation/cs-code-bad-code-request-parameters.json",
+        "response" :  "validation/cs-code-bad-code-response-parameters.json"
+      }
+    ]
+  },{
+    "name" : "big",
+    "description" : "Testing handling a big code system",
+    "setup" : ["big/codesystem-big.json", "big/codesystem-not-so-big.json", "big/valueset-big.json", "big/valueset-big-circle1.json", "big/valueset-big-circle2.json"],
+    "tests" : [
+      {
+        "explanation" : "This test is testing that a server can (a) defend itself against a request that is too big and (b) returns the correct response when it does. The test is termed in terms of 1000 codes, but the actual limit doesn't matter as long as it's... big enough (loose definition)",
+        "header" : {
+          "mode" : "ontoserver",
+          "name" : "X-TOO-COSTLY-THRESHOLD",
+          "description" : "to be provided",
+          "value" : "1000",
+          "explanation" : 
+            ["Ontoserver has an internal limit far above 1000 codes. That's fine, but we really want to know that if it's actual limit is exceeded,",
+            "it'll return the correct response. So we add this artificial header to tell Ontoserver to treat 1000 as an internal limit. This way we know",
+            "that if a real value set exceeds the internal cost limit, however that's determined, the response will be correctly understood"]
+        },
+        "name" : "big-echo-no-limit",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "http-code" : "4xx",
+        "request" : "big/expand-no-limit-parameters.json",
+        "response" : "big/expand-no-limit-outcome.json"
+      },
+      {
+        "name" : "big-echo-zero-fifty-limit",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "big/expand-zero-fifty-limit-parameters.json",
+        "response" : "big/expand-zero-fifty-limit-valueset.json",
+        "response:tx.fhir.org" : "big/expand-zero-fifty-limit-valueset-precise.json"
+      },
+      {
+        "name" : "big-echo-fifty-fifty-limit",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "big/expand-fifty-fifty-limit-parameters.json",
+        "response" : "big/expand-fifty-fifty-limit-valueset.json",
+        "response:tx.fhir.org" : "big/expand-fifty-fifty-limit-valueset-precise.json"
+      },
+      {
+        "name" : "big-circle-bang",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "http-code" : "4xx",
+        "request" : "big/expand-circle-parameters.json",
+        "response" : "big/expand-circle-outcome.json"
+      },
+      {
+        "name" : "big-circle-validate",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "http-code" : "4xx",
+        "request" : "big/validation-big-circle-request-parameters.json",
+        "response" : "big/validation-big-circle-response-outcome.json"
+      }        
+    ]
+  },{
+    "name" : "other",
+    "description" : "Misc tests based on issues submitted by users",
+    "setup" : ["other/codesystem-dual-filter.json", "other/valueset-dual-filter.json"],
+    "tests" : [
+      {
+        "name" : "dual-filter",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "other/expand-dual-filter-parameters.json",
+        "response" : "other/expand-dual-filter-valueset.json"
+      },
+      {
+        "name" : "validation-dual-filter-in",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "other/validation-dual-filter-in-request-parameters.json",
+        "response" : "other/validation-dual-filter-in-response-parameters.json"
+      },
+      {
+        "name" : "validation-dual-filter-out",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "other/validation-dual-filter-out-request-parameters.json",
+        "response" : "other/validation-dual-filter-out-response-parameters.json"
+      }     
+    ]
+  },{
+    "name" : "errors",
+    "description" : "Testing Various Error Conditions",
+    "setup" : ["errors/valueset-unknown-system.json"],
+    "tests" : [
+      {
+        "name" : "unknown-system1",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "errors/errors-unknown-system1-request.json",
+        "response" : "errors/errors-unknown-system1-response.json"
+      },{
+        "name" : "unknown-system2",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "errors/errors-unknown-system2-request.json",
+        "response" : "errors/errors-unknown-system2-response.json"
+      }     
+    ]
+  },{
+    "name" : "deprecated",
+    "description" : "Testing Deprecated+Withdrawn warnings",
+    "setup" : ["deprecated/codesystem-deprecated.json","deprecated/valueset-withdrawn.json","deprecated/valueset-not-withdrawn.json", 
+               "deprecated/codesystem-experimental.json","deprecated/valueset-experimental.json",
+               "deprecated/codesystem-draft.json","deprecated/valueset-draft.json"],
+    "tests" : [
+      {
+        "name" : "withdrawn",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "deprecated/expand-withdrawn-request-parameters.json",
+        "response" : "deprecated/expand-withdrawn-response-valueSet.json"
+      },{
+        "name" : "not-withdrawn",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "deprecated/expand-not-withdrawn-request-parameters.json",
+        "response" : "deprecated/expand-not-withdrawn-response-valueSet.json"
+      },{
+        "name" : "withdrawn-validate",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "deprecated/validate-withdrawn-request-parameters.json",
+        "response" : "deprecated/validate-withdrawn-response-parameters.json"
+      },{
+        "name" : "not-withdrawn-validate",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "deprecated/validate-not-withdrawn-request-parameters.json",
+        "response" : "deprecated/validate-not-withdrawn-response-parameters.json"
+      },
+      {
+        "name" : "experimental",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "deprecated/expand-experimental-request-parameters.json",
+        "response" : "deprecated/expand-experimental-response-valueSet.json"
+      } ,{
+        "name" : "experimental-validate",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "deprecated/validate-experimental-request-parameters.json",
+        "response" : "deprecated/validate-experimental-response-parameters.json"
+      },
+      {
+        "name" : "draft",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "deprecated/expand-draft-request-parameters.json",
+        "response" : "deprecated/expand-draft-response-valueSet.json"
+      },
+      {
+        "name" : "draft-validate",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "deprecated/validate-draft-request-parameters.json",
+        "response" : "deprecated/validate-draft-response-parameters.json"
+      }
+    ]
+  },{
+    "name" : "notSelectable",
+    "description" : "Testing notSelectable",
+    "setup" : [
+       "notSelectable/codesystem-notSelectable-prop.json", "notSelectable/valueset-notSelectable-prop-all.json", "notSelectable/valueset-notSelectable-prop-false.json", "notSelectable/valueset-notSelectable-prop-true.json", "notSelectable/valueset-notSelectable-prop-trueUC.json", "notSelectable/valueset-notSelectable-prop-in.json", "notSelectable/valueset-notSelectable-prop-out.json",
+       "notSelectable/codesystem-notSelectable-noprop.json", "notSelectable/valueset-notSelectable-noprop-all.json", "notSelectable/valueset-notSelectable-noprop-false.json", "notSelectable/valueset-notSelectable-noprop-true.json", 
+       "notSelectable/codesystem-notSelectable-reprop.json", "notSelectable/valueset-notSelectable-reprop-all.json", "notSelectable/valueset-notSelectable-reprop-false.json", "notSelectable/valueset-notSelectable-reprop-true.json", 
+       "notSelectable/codesystem-notSelectable-unprop.json", "notSelectable/valueset-notSelectable-unprop-all.json", "notSelectable/valueset-notSelectable-unprop-false.json", "notSelectable/valueset-notSelectable-unprop-true.json"],
+    "tests" : [
+      {
+        "name" : "notSelectable-prop-all",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-prop-all-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-prop-all-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-noprop-all",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-noprop-all-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-noprop-all-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-reprop-all",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-reprop-all-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-reprop-all-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-unprop-all",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-reprop-all-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-reprop-all-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-prop-true",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-prop-true-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-prop-true-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-prop-trueUC",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-prop-trueUC-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-prop-trueUC-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-noprop-true",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-noprop-true-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-noprop-true-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-reprop-true",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-reprop-true-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-reprop-true-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-unprop-true",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-unprop-true-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-unprop-true-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-prop-false",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-prop-false-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-prop-false-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-noprop-false",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-noprop-false-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-noprop-false-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-reprop-false",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-reprop-false-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-reprop-false-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-unprop-false",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-unprop-false-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-unprop-false-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-prop-in",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-prop-in-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-prop-in-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-prop-out",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "notSelectable/expand-notSelectable-prop-out-request-parameters.json",
+        "response" : "notSelectable/expand-notSelectable-prop-out-response-valueSet.json"
+      },
+      {
+        "name" : "notSelectable-prop-true-true",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-prop-true-true-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-prop-true-true-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-prop-trueUC-true",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-prop-trueUC-true-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-prop-trueUC-true-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-prop-in-true",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-prop-in-true-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-prop-in-true-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-prop-out-true",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-prop-out-true-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-prop-out-true-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-noprop-true-true",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-noprop-true-true-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-noprop-true-true-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-reprop-true-true",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-reprop-true-true-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-reprop-true-true-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-unprop-true-true",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-unprop-true-true-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-unprop-true-true-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-prop-true-false",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-prop-true-false-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-prop-true-false-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-prop-in-false",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-prop-in-false-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-prop-in-false-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-prop-in-unknown",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-prop-in-unknown-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-prop-in-unknown-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-prop-out-unknown",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-prop-out-unknown-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-prop-out-unknown-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-prop-out-false",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-prop-out-false-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-prop-out-false-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-noprop-true-false",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-noprop-true-false-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-noprop-true-false-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-reprop-true-false",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-reprop-true-false-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-reprop-true-false-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-unprop-true-false",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-unprop-true-false-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-unprop-true-false-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-prop-false-true",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-prop-false-true-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-prop-false-true-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-noprop-false-true",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-noprop-false-true-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-noprop-false-true-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-reprop-false-true",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-reprop-false-true-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-reprop-false-true-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-unprop-false-true",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-unprop-false-true-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-unprop-false-true-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-prop-false-false",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-prop-false-false-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-prop-false-false-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-noprop-false-false",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-noprop-false-false-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-noprop-false-false-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-reprop-false-false",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-reprop-false-false-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-reprop-false-false-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-unprop-false-false",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-unprop-false-false-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-unprop-false-false-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-noprop-true-unknown",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-noprop-true-unknown-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-noprop-true-unknown-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-reprop-true-unknown",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-reprop-true-unknown-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-reprop-true-unknown-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-unprop-true-unknown",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-unprop-true-unknown-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-unprop-true-unknown-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-prop-true-unknown",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-prop-true-unknown-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-prop-true-unknown-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-prop-false-unknown",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-prop-false-unknown-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-prop-false-unknown-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-noprop-false-unknown",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-noprop-false-unknown-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-noprop-false-unknown-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-reprop-false-unknown",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-reprop-false-unknown-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-reprop-false-unknown-response-parameters.json"
+      },
+      {
+        "name" : "notSelectable-unprop-false-unknown",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "notSelectable/validate-notSelectable-unprop-false-unknown-request-parameters.json",
+        "response" : "notSelectable/validate-notSelectable-unprop-false-unknown-response-parameters.json"
+      }
+    ]
+  },{
+    "name" : "inactive",
+    "description" : "Testing Inactive codes",
+    "setup" : ["inactive/codesystem-inactive.json","inactive/valueset-all.json","inactive/valueset-all-inactive.json","inactive/valueset-all-active.json"],
+    "tests" : [
+      {
+        "name" : "inactive-expand",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "inactive/inactive-expand-all-request-parameters.json",
+        "response" : "inactive/inactive-expand-all-response-valueSet.json"
+      },     
+      {
+        "name" : "inactive-inactive-expand",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "inactive/inactive-inactive-expand-all-request-parameters.json",
+        "response" : "inactive/inactive-inactive-expand-all-response-valueSet.json"
+      },     
+      {
+        "name" : "inactive-active-expand",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "inactive/inactive-active-expand-all-request-parameters.json",
+        "response" : "inactive/inactive-active-expand-all-response-valueSet.json"
+      },
+      {
+        "name" : "inactive-1-validate",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "inactive/validate-inactive-1-request-parameters.json",
+        "response" : "inactive/validate-inactive-1-response-parameters.json"
+      },
+      {
+        "name" : "inactive-2-validate",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "inactive/validate-inactive-2-request-parameters.json",
+        "response" : "inactive/validate-inactive-2-response-parameters.json"
+      },
+      {
+        "name" : "inactive-3-validate",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "inactive/validate-inactive-3-request-parameters.json",
+        "response" : "inactive/validate-inactive-3-response-parameters.json"
+      },
+      {
+        "name" : "inactive-1a-validate",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "inactive/validate-inactive-1a-request-parameters.json",
+        "response" : "inactive/validate-inactive-1a-response-parameters.json"
+      },
+      {
+        "name" : "inactive-2a-validate",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "inactive/validate-inactive-2a-request-parameters.json",
+        "response" : "inactive/validate-inactive-2a-response-parameters.json"
+      },
+      {
+        "name" : "inactive-3a-validate",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "inactive/validate-inactive-3a-request-parameters.json",
+        "response" : "inactive/validate-inactive-3a-response-parameters.json"
+      },
+      {
+        "name" : "inactive-1b-validate",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "inactive/validate-inactive-1b-request-parameters.json",
+        "response" : "inactive/validate-inactive-1b-response-parameters.json"
+      },
+      {
+        "name" : "inactive-2b-validate",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "inactive/validate-inactive-2b-request-parameters.json",
+        "response" : "inactive/validate-inactive-2b-response-parameters.json"
+      },
+      {
+        "name" : "inactive-3b-validate",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "inactive/validate-inactive-3b-request-parameters.json",
+        "response" : "inactive/validate-inactive-3b-response-parameters.json"
+      }
+    ]
+  },{
+    "name" : "case",
+    "description" : "Test Case Sensitivity handling",
+    "setup" : [ "case/codesystem-case-insensitive.json", "case/codesystem-case-sensitive.json", "case/valueset-case-insensitive.json", "case/valueset-case-sensitive.json" ],
+    "tests" : [
+      {
+        "name" : "case-insensitive-code1-1",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "case/case-coding-insensitive-code1-1-request-parameters.json",
+        "response" : "case/case-coding-insensitive-code1-1-response-parameters.json"
+      },
+      {
+        "name" : "case-insensitive-code1-2",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "case/case-coding-insensitive-code1-2-request-parameters.json",
+        "response" : "case/case-coding-insensitive-code1-2-response-parameters.json"
+      },
+      {
+        "name" : "case-insensitive-code1-3",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "case/case-coding-insensitive-code1-3-request-parameters.json",
+        "response" : "case/case-coding-insensitive-code1-3-response-parameters.json"
+      },
+      {
+        "name" : "case-sensitive-code1-1",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "case/case-coding-sensitive-code1-1-request-parameters.json",
+        "response" : "case/case-coding-sensitive-code1-1-response-parameters.json"
+      },
+      {
+        "name" : "case-sensitive-code1-2",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "case/case-coding-sensitive-code1-2-request-parameters.json",
+        "response" : "case/case-coding-sensitive-code1-2-response-parameters.json"
+      },
+      {
+        "name" : "case-sensitive-code1-3",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "case/case-coding-sensitive-code1-3-request-parameters.json",
+        "response" : "case/case-coding-sensitive-code1-3-response-parameters.json"
+      }
+    ]
+  },{
+    "disabled" : true,
+    "name" : "translate",
+    "description" : "Tests for ConceptMap.$translate",
+    "setup" : [ "translate/codesystem-source.json", "translate/codesystem-target.json", "translate/ConceptMap-full.json",
+                "translate/ConceptMap-novs.json", "translate/valueset-source.json", "translate/valueset-target.json"],
+    "tests" : [
+      {
+        "name" : "translate-1",
+        "description" : "to be provided",
+        "operation" : "translate",
+        "request" : "translate/translate-1-request-parameters.json",
+        "response" : "translate/translate-1-response-parameters.json"
+      }
+    ]
+  },{
+    "name" : "tho",
+    "description" : "Misc assorted test cases from tho",
+    "setup" : [ "tho/cs-act-class.json", "tho/vs-act-class.json" ],
+    "tests" : [
+      {
+        "name" : "act-class",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tho/expand-vs-act-class-request-parameters.json",
+        "response" : "tho/expand-vs-act-class-response-valueSet.json"
+      }
+    ]
+  },{
+    "name" : "tx.fhir.org",
+    "mode" : "tx.fhir.org",
+    "description" : "These are tx.fhir.org specific tests. There's no expectation that other servers will pass these tests, and they are not executed by default. (other servers can, but they depend on other set up not controlled by the tests",
+    "setup" : [ "tx.fhir.org/valueset-all.json", "tx.fhir.org/valueset-enumerated-bad.json", "tx.fhir.org/valueset-enumerated.json", "tx.fhir.org/valueset-filter-prop-component.json", "tx.fhir.org/valueset-filter-prop-method.json", "tx.fhir.org/valueset-filter-prop-component-str.json", 
+      "tx.fhir.org/valueset-filter-prop-order-obs.json", "tx.fhir.org/valueset-concept-is-a.json", "tx.fhir.org/valueset-filter-copyright.json", "tx.fhir.org/valueset-filter-status.json", "tx.fhir.org/valueset-filter-class-regex.json", 
+      "tx.fhir.org/valueset-filter-scale-type.json", "tx.fhir.org/valueset-filter-list.json", "tx.fhir.org/valueset-filter-prop-dockind-exists.json"],
+    "tests" : [
+      {
+        "name" : "snomed-validation-1",
+        "description" : "to be provided",
+        "operation" : "cs-validate-code",
+        "request" : "tx.fhir.org/snomed-validation-1-request-parameters.json",
+        "response" : "tx.fhir.org/snomed-validation-1-response-parameters.json"
+      },
+      {
+        "name" : "loinc-lookup-code",
+        "description" : "to be provided",
+        "operation" : "lookup",
+        "request" : "tx.fhir.org/loinc-lookup-code-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-lookup-code-response-parameters.json"
+      },
+      {
+        "name" : "loinc-lookup-part",
+        "description" : "to be provided",
+        "operation" : "lookup",
+        "request" : "tx.fhir.org/loinc-lookup-part-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-lookup-part-response-parameters.json"
+      },
+      {
+        "name" : "loinc-lookup-list",
+        "description" : "to be provided",
+        "operation" : "lookup",
+        "request" : "tx.fhir.org/loinc-lookup-list-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-lookup-list-response-parameters.json"
+      },
+      {
+        "name" : "loinc-lookup-answer",
+        "description" : "to be provided",
+        "operation" : "lookup",
+        "request" : "tx.fhir.org/loinc-lookup-answer-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-lookup-answer-response-parameters.json"
+      },
+      {
+        "name" : "loinc-validate-code",
+        "description" : "to be provided",
+        "operation" : "cs-validate-code",
+        "request" : "tx.fhir.org/loinc-validate-code-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-code-response-parameters.json"
+      },
+      {
+        "name" : "loinc-validate-part",
+        "description" : "to be provided",
+        "operation" : "cs-validate-code",
+        "request" : "tx.fhir.org/loinc-validate-part-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-part-response-parameters.json"
+      },
+      {
+        "name" : "loinc-validate-list",
+        "description" : "to be provided",
+        "operation" : "cs-validate-code",
+        "request" : "tx.fhir.org/loinc-validate-list-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-list-response-parameters.json"
+      },
+      {
+        "name" : "loinc-validate-answer",
+        "description" : "to be provided",
+        "operation" : "cs-validate-code",
+        "request" : "tx.fhir.org/loinc-validate-answer-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-answer-response-parameters.json"
+      },
+      {
+        "name" : "loinc-validate-invalid",
+        "description" : "to be provided",
+        "operation" : "cs-validate-code",
+        "request" : "tx.fhir.org/loinc-validate-invalid-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-invalid-response-parameters.json"
+      },{
+        "name" : "loinc-expand-enum",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-enum-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-enum-response-valueSet.json"
+      },{
+        "name" : "loinc-expand-all",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "http-code" : "4xx",
+        "request" : "tx.fhir.org/loinc-expand-all-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-all-response-outcome.json"
+      },{
+        "name" : "loinc-expand-all-limited",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-all-limited-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-all-limited-response-valueSet.json"
+      },{
+        "name" : "loinc-expand-enum-bad",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-enum-bad-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-enum-bad-response-valueSet.json"
+      },{
+        "name" : "loinc-expand-status",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-status-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-status-response-valueSet.json"
+      },{
+        "name" : "loinc-expand-class-regex",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-class-regex-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-class-regex-response-valueSet.json"
+      },{
+        "name" : "loinc-expand-prop-component",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-prop-component-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-prop-component-response-valueSet.json"
+      },{
+        "name" : "loinc-expand-prop-method",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-prop-method-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-prop-method-response-valueSet.json"
+      },{
+        "name" : "loinc-expand-prop-component-str",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-prop-component-str-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-prop-component-str-response-valueSet.json"
+      },{
+        "name" : "loinc-expand-prop-order-obs",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-prop-order-obs-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-prop-order-obs-response-valueSet.json"
+      },{
+        "name" : "loinc-expand-concept-is-a",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-concept-is-a-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-concept-is-a-response-valueSet.json"
+      },{
+        "name" : "loinc-expand-copyright",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-copyright-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-copyright-response-valueSet.json"
+      },{
+        "name" : "loinc-expand-scale-type",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-scale-type-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-scale-type-response-valueSet.json"
+      },{
+        "name" : "loinc-validate-enum-good",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-enum-good-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-enum-good-response-parameters.json"
+      },{
+        "name" : "loinc-validate-enum-bad",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-enum-bad-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-enum-bad-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-prop-component-good",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-prop-component-good-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-prop-component-good-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-prop-component-bad",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-prop-component-bad-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-prop-component-bad-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-status-good",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-status-good-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-status-good-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-status-bad",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-status-bad-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-status-bad-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-class-regex-good",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-class-regex-good-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-class-regex-good-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-class-regex-bad",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-class-regex-bad-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-class-regex-bad-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-scale-type-good",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-scale-type-good-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-scale-type-good-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-scale-type-bad",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-scale-type-bad-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-scale-type-bad-response-parameters.json"
+      },{
+        "name" : "loinc-expand-list-request-parameters",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-list-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-list-response-valueSet.json"
+      },{
+        "name" : "loinc-validate-list-good",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-list-good-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-list-good-response-parameters.json"
+      },{
+        "name" : "loinc-validate-list-bad",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-list-bad-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-list-bad-response-parameters.json"
+      },{
+        "name" : "loinc-expand-filter-list-request-parameters",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-filter-list-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-filter-list-response-valueSet.json"
+      },{
+        "name" : "loinc-validate-filter-list-type-good",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-list-good-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-list-good-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-list-bad",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-list-bad-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-list-bad-response-parameters.json"
+      },{
+        "name" : "loinc-expand-filter-dockind-request-parameters",
+        "description" : "to be provided",
+        "operation" : "expand",
+        "request" : "tx.fhir.org/loinc-expand-prop-dockind-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-expand-prop-dockind-response-valueSet.json"
+      },{
+        "name" : "loinc-validate-filter-dockind-type-good",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-prop-dockind-good-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-prop-dockind-good-response-parameters.json"
+      },{
+        "name" : "loinc-validate-filter-dockind-bad",
+        "description" : "to be provided",
+        "operation" : "validate-code",
+        "request" : "tx.fhir.org/loinc-validate-filter-prop-dockind-bad-request-parameters.json",
+        "response" : "tx.fhir.org/loinc-validate-filter-prop-dockind-bad-response-parameters.json"
+      }
+    ]
+  }],
+  "todo" : "incomplete code systems, inactive/abstract, filter = notSelectable",
+  "not-done" : [
+    "At this point, the tests do not cover ConceptMap, nor do they test the http://hl7.org/fhir/tools/StructureDefinition-select-by-map.html extension"
+  ]
+}

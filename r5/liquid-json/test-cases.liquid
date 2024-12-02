@@ -1,0 +1,31 @@
+
+<table class="grid">
+  <tr>
+   <td><b>Name</b></td>
+   <td><b>Operation</b></td>
+   <td><b>Flags</b></td>
+   <td><b>Description</b></td>
+  </tr>
+{% for suite in $this.suites %}  
+  <tr {% if suite.disabled %} style="background-color: #eeeeee; opacity: 0.5; text-decoration: line-through" {% else %} style="background-color: #eeeeee" {% endif %}> 
+    <td colspan="2">{{ suite.name }}</td>
+    <td>{{ suite.mode }}</td>
+    <td>
+      {{ suite.description || markdownify}}
+      {% if suite.notes %}
+      <br/>
+      {{ suite.description}}
+      {% endif %}
+    </td>
+   </tr>
+   
+  {% for test in suite.tests %} 
+   <tr {% if suite.disabled or test.disabled %} style="opacity: 0.5; text-decoration: line-through" {% endif %}>
+    <td>{{ test.name }}</td>
+    <td>${{ test.operation }}</td>
+    <td>{{ test.mode}}</td>
+    <td>{{ test.description || markdownify}}</td>
+   </tr>
+  {% endfor %}
+{% endfor %}
+</table>      
