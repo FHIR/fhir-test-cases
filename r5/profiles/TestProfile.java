@@ -232,10 +232,14 @@ public class TestProfile extends PEGeneratedBase {
       code = (CodeableConcept) src.child("code").asDataType();
     }
     if (src.hasChild("subject")) {
-      subject = (Reference) src.child("subject").asDataType();
+      Reference ref = (Reference) src.child("subject").asDataType();
+      if(!ref.isEmpty())
+        subject = ref;
     }
     if (src.hasChild("encounter")) {
-      encounter = (Reference) src.child("encounter").asDataType();
+      Reference ref = (Reference) src.child("encounter").asDataType();
+      if(!ref.isEmpty())
+        encounter = ref;
     }
     if (src.hasChild("effective[x]")) {
       effective = ((DateTimeType) src.child("effective[x]").asDataType()).getValue();
