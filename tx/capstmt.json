@@ -1,58 +1,100 @@
 {
-  "resourceType": "CapabilityStatement",
-  "url": "$url$",
-  "version": "$token$",
-  "name": "$token$",
-  "title": "$string$",
-  "status": "active",
-  "date": "$date$",
-  "kind": "instance",
-  "instantiates": [
-    "http://hl7.org/fhir/CapabilityStatement/terminology-server"
-  ],
-  "software": {
-    "name": "$string$",
-    "version": "$token$",
-    "releaseDate": "$date$"
-  },
-  "fhirVersion": "$version$",
-  "format": ["application/fhir+json"],
-  "rest": [{
-    "mode": "server",
-    "resource": [
-      {
-        "type": "CodeSystem",
-        "operation": [{
-          "name": "lookup",
-          "definition": "$url$"
-        },{
-          "name": "validate-code",
-          "definition": "$url$"
-        }]
+	"resourceType": "CapabilityStatement",
+	"url": "$url$",
+	"version": "$token$",
+	"name": "$token$",
+	"title": "$string$",
+	"status": "active",
+	"date": "$date$",
+	"kind": "instance",
+	"instantiates": [
+		"http://hl7.org/fhir/CapabilityStatement/terminology-server"
+	],
+	"software": {
+		"name": "$string$",
+		"version": "$token$",
+		"releaseDate": "$date$"
+	},
+	"fhirVersion": "$version$",
+	"format": ["application/fhir+json"],
+	"rest": [{
+      "$optional-properties$": ["security"],
+			"mode": "server",
+      "security": {
+        "$optional$": true
       },
-      {
-        "type": "ValueSet",
-        "interaction": [{
-          "code": "read"
-        },{
-          "code": "search-type"
-        }],
-        "operation": [
-          {
-            "name": "expand",
-            "definition": "$url$"
-          },
-          {
-            "name": "validate-code",
-            "definition": "$url$"
-          }
-        ]
-      }
-    ],
-    "operation": [{
-      "name": "versions",
-      "definition": "$url$"
-    }]
-  }]
+			"resource": [{
+					"$optional-properties$": ["interaction", "searchParam", "searchInclude"],
+					"type": "CodeSystem",
+					"interaction": [{
+							"$optional$": true
+						}
+					],
+					"searchInclude": ["$string$"],
+					"searchParam": [{
+							"$optional$": true
+						}
+					],
+					"operation": [{
+							"name": "lookup",
+							"definition": "$url$"
+						}, {
+							"$optional$": true
+						}, {
+							"name": "validate-code",
+							"definition": "$url$"
+						}
+					]
+				}, {
+					"$optional$": true,
+          "$optional-properties$": ["interaction", "searchParam", "searchInclude", "operation", "versioning", "readHistory"],
+					"type": "$token$",
+					"profile": "$url$",
+					"interaction": [{
+							"$optional$": true
+						}
+					],
+					"searchInclude": ["$string$"],
+          "versioning" : "$token$",
+          "readHistory": "$token$",
+          "searchParam" : [{
+            "$optional$": true
+          }],
+          "operation":[{
+            "$optional$": true
+          }]
+				},  {
+					"$optional-properties$": ["searchParam", "searchInclude"],
+					"type": "ValueSet",
+					"interaction": [{
+							"$optional$": true,
+							"code": "$token$"
+						}, {
+							"code": "read"
+						}, {
+							"code": "search-type"
+						}
+					],
+					"searchInclude": ["$string$"],
+					"searchParam": [{
+              "$optional$" : true
+						}
+					],
+					"operation": [{
+							"name": "expand",
+							"definition": "$url$"
+						}, {
+							"name": "validate-code",
+							"definition": "$url$"
+						}
+					]
+				}
+			],
+			"operation": [{
+					"name": "versions",
+					"definition": "$url$"
+				}
+			]
+		}
+	]
 }
-
