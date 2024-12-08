@@ -14,3 +14,5 @@
 * Terminology Tests: Add test cases for valueset-version
 * Terminology Tests: enable display2 test cases for language validation of displays
 * Terminology Tests: Add feature to tx capstmt test case
+* Terminology Tests: Add new optional fields to some tx server responses
+
