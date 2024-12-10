@@ -757,6 +757,93 @@
       }
     },
     {
+      "name": "bundle-document-versioned-references-good",
+      "file": "bundle-document-versioned-references-good.json",
+      "version": "4.0",
+      "java": {
+        "errorCount": 0,
+        "output": []
+      }
+    },
+    {
+      "name": "bundle-document-versioned-references-bad",
+      "file": "bundle-document-versioned-references-bad.json",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "warning",
+            "code" : "required",
+            "details" : {
+              "text" : "The bundle contains no match for http://example.org/Observation/ObservationExample by the rules of Bundle reference resolution, but it has multiple resources that match Observation/ObservationExample/_history/3 by resource type and id"
+            },
+            "expression" : ["Bundle.entry[0].resource/*Composition/CompositionExample1*/.section[0].entry[0]"]
+          },
+          {
+            "severity" : "warning",
+            "code" : "required",
+            "details" : {
+              "text" : "Entry 1 matches the reference Observation/ObservationExample/_history/3 by type and id but it's fullUrl http://example.org/Observation/ObservationExample does not match the full target URL http://example.org/Observation/ObservationExample by Bundle resolution rules"
+            },
+            "expression" : ["Bundle.entry[0].resource/*Composition/CompositionExample1*/.section[0].entry[0]"]
+          },
+          {
+            "severity" : "warning",
+            "code" : "required",
+            "details" : {
+              "text" : "Entry 2 matches the reference Observation/ObservationExample/_history/3 by type and id but it's fullUrl http://example.org/Observation/ObservationExample does not match the full target URL http://example.org/Observation/ObservationExample by Bundle resolution rules"
+            },
+            "expression" : ["Bundle.entry[0].resource/*Composition/CompositionExample1*/.section[0].entry[0]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "forbidden",
+            "details" : {
+              "text" : "Multiple matches in bundle for reference Observation/ObservationExample"
+            },
+            "expression" : ["Bundle.entry[0].resource/*Composition/CompositionExample1*/.section[0].entry[1]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "invalid",
+            "details" : {
+              "text" : "Can't find 'Observation/ObservationExample/_history/3' in the bundle (Section Entry). Note that there are 2 resources in the bundle with the same type and id, but they do not match because of the fullUrl based rules around matching relative references (one of ``http://example.org/Observation/ObservationExample``)"
+            },
+            "diagnostics" : "[22,16]",
+            "expression" : ["Bundle.entry[1].resource.section[1].entry[1]"]
+          },
+          {
+            "severity" : "error",
+            "code" : "invalid",
+            "details" : {
+              "text" : "Found 2 matches for 'Observation/ObservationExample' in the bundle (Section Entry)"
+            },
+            "diagnostics" : "[25,16]",
+            "expression" : ["Bundle.entry[1].resource.section[1].entry[2]"]
+          },
+          {
+            "severity" : "warning",
+            "code" : "invalid",
+            "details" : {
+              "text" : "Entry 'http://example.org/Observation/ObservationExample' isn't reachable by traversing forwards from the Composition. Only Provenance is approved to be used this way (R4 section 3.3.1)"
+            },
+            "diagnostics" : "[48,6]",
+            "expression" : ["Bundle.entry[6]"]
+          },
+          {
+            "severity" : "warning",
+            "code" : "invalid",
+            "details" : {
+              "text" : "Entry 'http://example.org/Observation/ObservationExample' isn't reachable by traversing forwards from the Composition. Only Provenance is approved to be used this way (R4 section 3.3.1)"
+            },
+            "diagnostics" : "[78,6]",
+            "expression" : ["Bundle.entry[6]"]
+          }]
+        }
+      }
+    },
+    {
       "name": "bundle-documentation-miss-last-updated",
       "file": "bundle-documentation-miss-last-updated.json",
       "version": "3.0",
