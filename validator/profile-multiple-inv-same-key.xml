@@ -1,0 +1,78 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="profile-multiple-inv-same-key"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/profile-multiple-inv-same-key"/>
+  <name value="ProfileMultipleInv"/>
+  <title value="ProfileMultipleInv"/>
+  <status value="draft"/>
+  <date value="2017-09-06T06:30:54+00:00"/>
+  <fhirVersion value="5.0.0"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Patient">
+      <path value="Patient"/>
+      <constraint> 
+        <key value="dom-2"/> 
+        <severity value="error"/> 
+        <human value="this is copied from parent, so no validation error"/> 
+        <expression value="contained.contained.empty()"/> 
+      </constraint> 
+      <constraint> 
+        <key value="dom-3"/> 
+        <severity value="error"/> 
+        <human value="this is changed from parent, so there's an error"/> 
+        <expression value="contained.something()"/> 
+      </constraint>       
+    </element>
+    <element id="Patient.identifier">
+      <path value="Patient.identifier"/>
+      <constraint> 
+        <key value="ele-1"/> 
+        <severity value="error"/> 
+        <human value="this is copied from parent, so no validation error (checking the source doesn't make a difference)"/> 
+        <expression value="hasValue() or (children().count() &gt; id.count())"/> 
+        <source value="http://hl7.org/fhir/test/StructureDefinition/profile-multiple-inv-same-key"/> 
+      </constraint> 
+      <constraint> 
+        <key value="ident-1"/> 
+        <severity value="warning"/> 
+        <human value="this is changed from parent, so there's an error (checking the source doesn't make a difference)"/> 
+        <expression value="value.exists() and value.hasValue()"/> 
+        <source value="http://hl7.org/fhir/test/StructureDefinition/profile-multiple-inv-same-key"/> 
+      </constraint> 
+    </element>
+    <element id="Patient.name">
+      <path value="Patient.name"/>
+      <constraint> 
+        <key value="e-1"/> 
+        <severity value="warning"/> 
+        <human value="first definition"/> 
+        <expression value="family.exists() and family.hasValue()"/> 
+      </constraint> 
+      <constraint> 
+        <key value="e-2"/> 
+        <severity value="warning"/> 
+        <human value="first definition"/> 
+        <expression value="text.exists() and text.hasValue()"/> 
+      </constraint> 
+    </element>
+    <element id="Patient.address">
+      <path value="Patient.address"/>
+      <constraint> 
+        <key value="e-1"/> 
+        <severity value="warning"/> 
+        <human value="second use - changed (error)"/> 
+        <expression value="country.exists() and country.hasValue()"/> 
+      </constraint> 
+      <constraint> 
+        <key value="e-2"/> 
+        <severity value="warning"/> 
+        <human value="second use, not changed"/> 
+        <expression value="text.exists() and text.hasValue()"/> 
+      </constraint> 
+    </element>
+  </differential>
+</StructureDefinition>
