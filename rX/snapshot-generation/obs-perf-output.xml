@@ -2354,9 +2354,9 @@
     <element id="Observation.value[x]:valueQuantity">
       <path value="Observation.value[x]"/>
       <sliceName value="valueQuantity"/>
-      <short value="A fixed quantity (no comparator)"/>
-      <definition value="The comparator is not used on a SimpleQuantity"/>
-      <comment value="The context of use may frequently define what kind of quantity this is and therefore what kind of units can be used. The context of use may also restrict the values for the comparator."/>
+      <short value="Actual result"/>
+      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
+      <comment value="An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R4/observation.html#notes) below."/>
       <requirements value="An observation exists to have a value, though it might not if it is in error, or if it represents a group of observations."/>
       <min value="0"/>
       <max value="1"/>
@@ -2369,7 +2369,7 @@
         <code value="Quantity"/>
         <profile value="http://hl7.org/fhir/StructureDefinition/SimpleQuantity"/>
       </type>
-      <condition value="ele-1"/>
+      <condition value="obs-7"/>
       <constraint>
         <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
           <valueString value="@value|f:*|h:div"/>
@@ -2380,38 +2380,23 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="not(exists(f:code)) or exists(f:system)"/>
-        </extension>
-        <key value="qty-3"/>
-        <severity value="error"/>
-        <human value="If a code for the unit is present, the system SHALL also be present"/>
-        <expression value="code.empty() or system.exists()"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Quantity"/>
-      </constraint>
-      <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="not(exists(f:comparator))"/>
-        </extension>
-        <key value="sqty-1"/>
-        <severity value="error"/>
-        <human value="The comparator is not used on a SimpleQuantity"/>
-        <expression value="comparator.empty()"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Observation"/>
-      </constraint>
       <isModifier value="false"/>
+      <isSummary value="true"/>
       <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
+        <identity value="sct-concept"/>
+        <map value="&lt; 441742003 |Evaluation finding|"/>
       </mapping>
       <mapping>
         <identity value="v2"/>
-        <map value="SN (see also Range) or CQ"/>
+        <map value="OBX.2, OBX.5, OBX.6"/>
       </mapping>
       <mapping>
         <identity value="rim"/>
-        <map value="PQ, IVL&lt;PQ&gt;, MO, CO, depending on the values"/>
+        <map value="value"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="363714003 |Interprets|"/>
       </mapping>
     </element>
     <element id="Observation.value[x]:valueQuantity.id">
