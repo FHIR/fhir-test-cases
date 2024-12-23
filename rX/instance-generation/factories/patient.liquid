@@ -1,0 +1,36 @@
+{
+  "resourceType" : "Patient",  
+  "id" : "{{ row.counter }}",
+  "meta" : {
+    "lastUpdated" : "{{ Globals.dateTime }}"
+  },
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\">{{ row.last_name }}, {{ row.first_name }}. MRN: {{ row.patient_id}} </div>",
+  }
+  "identifier:" : [{
+    "type" : {
+      "coding" : {
+        "system" : "http://terminology.hl7.org/CodeSystem/v2-0203",
+        "code" : "SS"
+      }
+    }
+    "system" : "https://github.com/projectcypress/cypress/patient",
+    "value" : "{{ row.patient_id }}",
+  }],
+  "active"  : "true",
+  "name" : [{
+    "use" : "official",
+    "family" : "{{ row.last_name }}",
+    "given" : "{{ row.first_name }}"
+  }],
+  "gender" : "{{ row.gender }}",
+  "address" : [{
+    "use" : "official",
+    "country" : "{{ countries.cell(Globals.random(245)+1, 'name') }}"
+  }],
+  "birthDate" : "{{ row.birthdate }}",
+  "managingOrganization" : {
+    "reference" : "Organization/{{ row.organization }}",
+  }
+}

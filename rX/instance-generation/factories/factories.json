@@ -1,0 +1,463 @@
+{
+    "factories-version": 1,
+    "factories": [
+        {
+            "name": "LiquidDemo",
+            "details" : "A simple liquid script showing how to look up a random value in a table",
+            "mode": "liquid",
+            "liquid": "patient.liquid",
+            "data": "data.csv",
+            "format": "json",
+            "filename": "output/Bundle-patients.json",
+            "bundle": true,
+            "tables": {
+                "countries": "countries.csv"
+            }
+        },
+        {
+            "name": "PatientGenerator",
+            "details" : "Generate instances based on a profile in the IG, and fill out values from an excel spreadsheet",
+            "mode": "profile",
+            "profile": "http://hl7.org/fhir/uv/howto/StructureDefinition/test-patient-profile",
+            "data": "patient-cases.xlsx;Patients",
+            "format": "json",
+            "filename": "output/Patient-$counter$.json",
+            "bundle": false,
+            "tables": {
+                "genders": "patient-genders.csv"
+            },
+            "mappings": [
+                {
+                    "path": "TestPatientProfile.name",
+                    "parts": [
+                        {
+                            "name": "family",
+                            "expression": "column('Family Name')"
+                        },
+                        {
+                            "name": "given",
+                            "expression": "column('Given Name')"
+                        }
+                    ]
+                },
+                {
+                    "path": "TestPatientProfile.identifier",
+                    "parts": [
+                        {
+                            "name": "system",
+                            "expression": "'http://acme.org/identifiers/Patient'"
+                        },
+                        {
+                            "name": "value",
+                            "expression": "column('Patient ID')"
+                        }
+                    ]
+                },
+                {
+                    "path": "TestPatientProfile.birthDate",
+                    "expression": "dateColumn('Date of Birth', 'M/d/yyyy')"
+                },
+                {
+                    "path": "TestPatientProfile.gender",
+                    "expression": "lookup('genders', 'gender', column('Sex'), 'code')"
+                },
+                {
+                    "path": "TestPatientProfile.id",
+                    "expression": "column('Patient ID')"
+                }
+            ]
+        },
+        {
+            "name": "EncounterGenerator",
+            "details" : "Another liquid script showing how to do conditional content",
+            "mode": "liquid",
+            "liquid": "encounter.liquid",
+            "data": "patient-cases.xlsx",
+            "format": "json",
+            "filename": "output/Encounter-$counter$.json",
+            "bundle": false,
+            "tables": {
+                "physicians": "patient-cases.xlsx;Providers"
+            }
+        },
+        {
+            "name": "BloodPressureGenerator",
+            "details" : "A more complex example. Since this is a wide open profile, a lot of what the mappings do is suppress columns",
+            "mode": "profile",
+            "profile": "http://hl7.org/fhir/StructureDefinition/bp",
+            "data": "patient-cases.xlsx;Patients",
+            "format": "json",
+            "filename": "output/Observation-bp-$counter$.json",
+            "bundle": false,
+            "mappings": [
+                {
+                    "path": "Observationbp.subject",
+                    "parts": [
+                        {
+                            "name": "reference",
+                            "expression": "'Patient/'+column('Patient ID')"
+                        }
+                    ]
+                },
+                {
+                    "path": "Observationbp.encounter",
+                    "parts": [
+                        {
+                            "name": "reference",
+                            "expression": "'Encounter/'+counter.toString()"
+                        }
+                    ]
+                },
+                {
+                    "path": "Observationbp.focus"
+                },
+                {
+                    "path": "Observationbp.triggeredBy"
+                },
+                {
+                    "path": "Observationbp.identifier"
+                },
+                {
+                    "path": "Observationbp.basedOn"
+                },
+                {
+                    "path": "Observationbp.partOf"
+                },
+                {
+                    "path": "Observationbp.dataAbsentReason"
+                },
+                {
+                    "path": "Observationbp.interpretation"
+                },
+                {
+                    "path": "Observationbp.note"
+                },
+                {
+                    "path": "Observationbp.bodySite"
+                },
+                {
+                    "path": "Observationbp.performer"
+                },
+                {
+                    "path": "Observationbp.bodyStructure"
+                },
+                {
+                    "path": "Observationbp.method"
+                },
+                {
+                    "path": "Observationbp.specimen"
+                },
+                {
+                    "path": "Observationbp.device"
+                },
+                {
+                    "path": "Observationbp.hasMember"
+                },
+                {
+                    "path": "Observationbp.derivedFrom"
+                },
+                {
+                    "path": "Observationbp.referenceRange"
+                },
+                {
+                    "path": "Observation.component.dataAbsentReason"
+                },
+                {
+                    "path": "Observation.component.interpretation"
+                },
+                {
+                    "path": "Observationbp.effective[x]",
+                    "fhirType": "dateTime",
+                    "expression": "dateColumn('Admission Date', 'M/d/yy')"
+                },
+                {
+                    "path": "Observationbp.SystolicBP.valueQuantity.value",
+                    "expression": "column('BP Systolic')"
+                },
+                {
+                    "path": "Observationbp.DiastolicBP.valueQuantity.value",
+                    "expression": "column('BP Diastolic')"
+                }
+            ]
+        },
+        {
+            "name": "WeightGenerator",
+            "details" : "Shows how to to do conditional content depending on the content of the spreadsheet",
+            "mode": "profile",
+            "profile": "http://hl7.org/fhir/StructureDefinition/bodyweight",
+            "data": "patient-cases.xlsx;Patients",
+            "format": "json",
+            "filename": "output/Observation-weight-$counter$.json",
+            "bundle": false,
+            "mappings": [
+                {
+                    "path": "Observationbodyweight.subject",
+                    "parts": [
+                        {
+                            "name": "reference",
+                            "expression": "'Patient/'+column('Patient ID')"
+                        }
+                    ]
+                },
+                {
+                    "path": "Observationbodyweight.encounter",
+                    "parts": [
+                        {
+                            "name": "reference",
+                            "expression": "'Encounter/'+counter.toString()"
+                        }
+                    ]
+                },
+                {
+                    "path": "Observationbodyweight.focus"
+                },
+                {
+                    "path": "Observationbodyweight.triggeredBy"
+                },
+                {
+                    "path": "Observationbodyweight.identifier"
+                },
+                {
+                    "path": "Observationbodyweight.basedOn"
+                },
+                {
+                    "path": "Observationbodyweight.partOf"
+                },
+                {
+                    "path": "Observationbodyweight.interpretation"
+                },
+                {
+                    "path": "Observationbodyweight.note"
+                },
+                {
+                    "path": "Observationbodyweight.bodySite"
+                },
+                {
+                    "path": "Observationbodyweight.performer"
+                },
+                {
+                    "path": "Observationbodyweight.bodyStructure"
+                },
+                {
+                    "path": "Observationbodyweight.method"
+                },
+                {
+                    "path": "Observationbodyweight.specimen"
+                },
+                {
+                    "path": "Observationbodyweight.device"
+                },
+                {
+                    "path": "Observationbodyweight.hasMember"
+                },
+                {
+                    "path": "Observationbodyweight.derivedFrom"
+                },
+                {
+                    "path": "Observationbodyweight.referenceRange"
+                },
+                {
+                    "path": "Observationbodyweight.component"
+                },
+                {
+                    "path": "Observationbodyweight.dataAbsentReason",
+                    "if": "column('Weight (kg)') = ''",
+                    "parts": [
+                        {
+                            "name": "coding.system",
+                            "expression": "'http://terminology.hl7.org/CodeSystem/data-absent-reason'"
+                        },
+                        {
+                            "name": "coding.code",
+                            "expression": "'not-performed'"
+                        }
+                    ]
+                },
+                {
+                    "path": "Observationbodyweight.dataAbsentReason"
+                },
+                {
+                    "path": "Observationbodyweight.valueQuantity",
+                    "if": "column('Weight (kg)') != ''",
+                    "parts": [
+                        {
+                            "name": "value",
+                            "expression": "column('Weight (kg)')"
+                        },
+                        {
+                            "name": "unit",
+                            "expression": "'kg'"
+                        },
+                        {
+                            "name": "system",
+                            "expression": "'http://unitsofmeasure.org'"
+                        },
+                        {
+                            "name": "code",
+                            "expression": "'kg'"
+                        }
+                    ]
+                },
+                {
+                    "path": "Observationbodyweight.valueQuantity"
+                },
+                {
+                    "path": "Observation.component.interpretation"
+                },
+                {
+                    "path": "Observationbodyweight.effective[x]",
+                    "fhirType": "dateTime",
+                    "expression": "dateColumn('Admission Date', 'M/d/yy')"
+                }
+            ]
+        },
+        {
+            "name": "WarfarinGenerator",
+            "details" : "Shows how to filter the rows in the first place",
+            "mode": "profile",
+            "profile": "http://hl7.org/fhir/StructureDefinition/MedicationStatement",
+            "data": "patient-cases.xlsx;Patients",
+            "format": "json",
+            "filename": "output/MedicationStatement-$counter$.json",
+            "bundle": false,
+            "filter" : "column('Warfarin?') != ''",
+            "mappings": [
+                {
+                    "path": "MedicationStatement.subject",
+                    "parts": [
+                        {
+                            "name": "reference",
+                            "expression": "'Patient/'+column('Patient ID')"
+                        }
+                    ]
+                },
+                {
+                    "path": "MedicationStatement.context",
+                    "parts": [
+                        {
+                            "name": "reference",
+                            "expression": "'Encounter/'+counter.toString()"
+                        }
+                    ]
+                },
+                {
+                    "path": "MedicationStatement.status",
+                    "expression" : "'completed'"
+                },
+                {
+                    "path": "MedicationStatement.triggeredBy"
+                },
+                {
+                    "path": "MedicationStatement.identifier"
+                },
+                {
+                    "path": "MedicationStatement.basedOn"
+                },
+                {
+                    "path": "MedicationStatement.partOf"
+                },
+                {
+                    "path": "MedicationStatement.statusReason"
+                },
+                {
+                    "path": "MedicationStatement.category"
+                },
+                {
+                    "path": "MedicationStatement.medication.concept",
+                    "parts" : [
+                      {
+                        "name" : "coding.system",
+                        "expression" : "'http://www.nlm.nih.gov/research/umls/rxnorm'"
+                      },
+                      {
+                        "name" : "coding.code",
+                        "expression" : "'11289'"
+                      }
+                    ]
+                },
+                {
+                    "path": "MedicationStatement.medication.reference"
+                },
+                {
+                    "path": "MedicationStatement.dateAsserted",
+                    "expression": "dateColumn('Admission Date', 'M/d/yy')"
+                },
+                {
+                    "path": "MedicationStatement.effective[x]"
+                },
+                {
+                    "path": "MedicationStatement.informationSource"
+                },
+                {
+                    "path": "MedicationStatement.derivedFrom"
+                },
+                {
+                    "path": "MedicationStatement.reasonCode"
+                },
+                {
+                    "path": "MedicationStatement.reasonReference"
+                },
+                {
+                    "path": "MedicationStatement.note"
+                },
+                {
+                    "path": "MedicationStatement.dosage"
+                },
+                {
+                    "path": "MedicationStatement.reason"
+                },
+                {
+                    "path": "MedicationStatement.relatedClinicalInformation"
+                },
+                {
+                    "path": "MedicationStatement.renderedDosageInstruction"
+                },
+                {
+                    "path": "MedicationStatement.adherence.reason"
+                },
+                {
+                    "path": "MedicationStatement.adherence.code",
+                    "if" : "column('Warfarin?') = 'Y'",
+                    "parts" : [
+                      {
+                        "name" : "coding.system",
+                        "expression" : "'http://hl7.org/fhir/CodeSystem/medication-statement-adherence'"
+                      },
+                      {
+                        "name" : "coding.code",
+                        "expression" : "'taking'"
+                      }
+                    ]
+                },
+                {
+                    "path": "MedicationStatement.adherence.code",
+                    "if" : "column('Warfarin?') = 'N'",
+                    "parts" : [
+                      {
+                        "name" : "coding.system",
+                        "expression" : "'http://hl7.org/fhir/CodeSystem/medication-statement-adherence'"
+                      },
+                      {
+                        "name" : "coding.code",
+                        "expression" : "'not-taking'"
+                      }
+                    ]
+                },
+                {
+                    "path": "MedicationStatement.adherence.code",
+                    "if" : "column('Warfarin?') = '?'",
+                    "parts" : [
+                      {
+                        "name" : "coding.system",
+                        "expression" : "'http://hl7.org/fhir/CodeSystem/medication-statement-adherence'"
+                      },
+                      {
+                        "name" : "coding.code",
+                        "expression" : "'unknown'"
+                      }
+                    ]
+                }
+            ]
+        }
+    ]
+}

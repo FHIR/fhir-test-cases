@@ -1,0 +1,24 @@
+{
+  "resourceType" : "Encounter",  
+  "id" : "{{ row.counter }}",
+  "meta" : {
+    "lastUpdated" : "{{ Globals.dateTime }}"
+  },
+  "identifier:" : [{
+    "system" : "https://github.com/projectcypress/cypress/encounter",
+    "value" : "{{ counter }}",
+  }],
+  "status"  : {% if column('Complete?') = 'y' %} "finished" {% else %} "in-progress" {% endif %},
+  "period" : [{
+    "start" : "{{ dateColumn('Admission Date', 'M/d/yy') }}",
+    {% if column('Discharge Date') != '' %}
+    "end" : "{{ dateColumn('Discharge Date', 'd-[MMMM][MMM]-yy') }}"
+    {% endif %}
+  }],
+  "serviceType" : {
+    "coding" : [{
+      "system" : "http://snomed.info/sct",
+      "code" : "{{ column('Service Code') }}"
+    }]
+  }
+}
