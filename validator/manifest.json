@@ -50508,7 +50508,7 @@
         "structuredefinition-version-range.xml"
       ],
       "version": "3.0",
-      "description": "testing combinations of earliestAllowedFHIRVersion and latestAllowedFHIRVersion",
+      "description": "testing usage of http://hl7.org/fhir/StructureDefinition/version-specific-use",
       "java": {
         "outcome": {
           "resourceType": "OperationOutcome",
@@ -50535,7 +50535,7 @@
         "structuredefinition-version-range.xml"
       ],
       "version": "4.0",
-      "description": "testing combinations of earliestAllowedFHIRVersion and latestAllowedFHIRVersion",
+      "description": "testing usage of http://hl7.org/fhir/StructureDefinition/version-specific-use",
       "java": {}
     },
     {
@@ -50545,7 +50545,7 @@
         "structuredefinition-version-range.xml"
       ],
       "version": "4.3",
-      "description": "testing combinations of earliestAllowedFHIRVersion and latestAllowedFHIRVersion",
+      "description": "testing usage of http://hl7.org/fhir/StructureDefinition/version-specific-use",
       "java": {}
     },
     {
@@ -50555,7 +50555,7 @@
         "structuredefinition-version-range.xml"
       ],
       "version": "5.0",
-      "description": "testing combinations of earliestAllowedFHIRVersion and latestAllowedFHIRVersion",
+      "description": "testing usage of http://hl7.org/fhir/StructureDefinition/version-specific-use",
       "java": {
         "outcome": {
           "resourceType": "OperationOutcome",
@@ -50569,6 +50569,121 @@
               "diagnostics": "[1,2]",
               "expression": [
                 "Patient"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "extension-version-restriction-range-ctxt-r3",
+      "file": "patient-version-range.json",
+      "supporting5": [
+        "structuredefinition-version-range-ctxt.xml"
+      ],
+      "version": "3.0",
+      "description": "testing usage of http://hl7.org/fhir/StructureDefinition/version-specific-use",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "The extension http://hl7.org/fhir/test/StructureDefinition/version-range is not allowed to be used at this point (allowed for this version = e:CodeSystem.property; this element is [Patient])"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "Patient"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "extension-version-restriction-range-ctxt-r4",
+      "file": "patient-version-range.json",
+      "supporting5": [
+        "structuredefinition-version-range-ctxt.xml"
+      ],
+      "version": "4.0",
+      "description": "testing usage of http://hl7.org/fhir/StructureDefinition/version-specific-use",
+      "java": {}
+    },
+    {
+      "name": "extension-version-restriction-range-ctxt-r4b",
+      "file": "patient-version-range.json",
+      "supporting5": [
+        "structuredefinition-version-range-ctxt.xml"
+      ],
+      "version": "4.3",
+      "description": "testing usage of http://hl7.org/fhir/StructureDefinition/version-specific-use",
+      "java": {}
+    },
+    {
+      "name": "extension-version-restriction-range-ctxt-r5",
+      "file": "patient-version-range.json",
+      "supporting5": [
+        "structuredefinition-version-range-ctxt.xml"
+      ],
+      "version": "5.0",
+      "description": "testing usage of http://hl7.org/fhir/StructureDefinition/version-specific-use",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "The extension http://hl7.org/fhir/test/StructureDefinition/version-range is not allowed to be used at this point (allowed for this version = e:CodeSystem.property; this element is [Patient])"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "Patient"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vs-wrong-vs",
+      "file": "vs-wrong-vs.xml",
+      "version": "5.0",
+      "description": "it's an actual error if the value set tries to use a value set url as the code system - check that",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "extension": [
+                {
+                  "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+                  "valueUrl": "http://tx-dev.fhir.org/r4"
+                }
+              ],
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "Reference to deprecated ValueSet http://hl7.org/fhir/ValueSet/jurisdiction|5.0.0"
+              },
+              "diagnostics": "[23,17]",
+              "expression": [
+                "ValueSet.jurisdiction[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "The system 'http://hl7.org/fhir/ValueSet/FHIR-version' is actually a value set, which itself refers to the system 'http://hl7.org/fhir/FHIR-version' so that may be what is intended here"
+              },
+              "diagnostics": "[31,14]",
+              "expression": [
+                "ValueSet.compose.include[0]"
               ]
             }
           ]
