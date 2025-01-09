@@ -41395,6 +41395,50 @@
               "expression": [
                 "CodeSystem"
               ]
+            },
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "The code 'status' in the CodeSystem UTG Specific Concept Properties for uri 'http://terminology.hl7.org/CodeSystem/utg-concept-properties' is not valid"
+              },
+              "diagnostics": "[3,41]",
+              "expression": [
+                "CodeSystem.property[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "The type is 'code', but no ValueSet information was found, so the codes will be validated as internal codes"
+              },
+              "diagnostics": "[3,41]",
+              "expression": [
+                "CodeSystem.property[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "The type is 'code', but no ValueSet information was found, so the codes will be validated as internal codes"
+              },
+              "diagnostics": "[3,41]",
+              "expression": [
+                "CodeSystem.property[1]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "invalid",
+              "details": {
+                "text": "The code 'A' is not a valid code in this code system"
+              },
+              "diagnostics": "[3,41]",
+              "expression": [
+                "CodeSystem.concept[0].property[0]"
+              ]
             }
           ]
         }
@@ -43330,30 +43374,10 @@
               "severity": "warning",
               "code": "business-rule",
               "details": {
-                "text": "The definition for the element 'StructureDefinition.keyword' binds to the value set 'http://hl7.org/fhir/ValueSet/profile-code' which is experimental, but this structure is not labeled as experimental"
-              },
-              "expression": [
-                "StructureDefinition.differential.element[16].binding"
-              ]
-            },
-            {
-              "severity": "warning",
-              "code": "business-rule",
-              "details": {
                 "text": "The definition for the element 'StructureDefinition.jurisdiction' binds to the value set 'http://hl7.org/fhir/ValueSet/jurisdiction' which is experimental, but this structure is not labeled as experimental"
               },
               "expression": [
                 "StructureDefinition.snapshot.element[21].binding"
-              ]
-            },
-            {
-              "severity": "warning",
-              "code": "business-rule",
-              "details": {
-                "text": "The definition for the element 'StructureDefinition.keyword' binds to the value set 'http://hl7.org/fhir/ValueSet/profile-code' which is experimental, but this structure is not labeled as experimental"
-              },
-              "expression": [
-                "StructureDefinition.snapshot.element[24].binding"
               ]
             },
             {
@@ -48329,6 +48353,17 @@
             },
             {
               "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "The code 'deprecationDate' in the CodeSystem FHIR Defined Concept Properties for uri 'http://hl7.org/fhir/concept-properties' is not valid"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[4]"
+              ]
+            },
+            {
+              "severity": "error",
               "code": "business-rule",
               "details": {
                 "text": "The URI 'http://hl7.org/fhir/concept-properties#deprecationDate' is normally assigned the code 'deprecationDate'. Using the code 'inactive' will usually create confusion in ValueSet filters etc"
@@ -50684,6 +50719,96 @@
               "diagnostics": "[31,14]",
               "expression": [
                 "ValueSet.compose.include[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "cs-bad-prop-code",
+      "file": "cs-bad-prop-code.json",
+      "version": "5.0",
+      "description": "a property that's a plain code is meant to be an internal code - an issue if it's not",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "Reference to draft CodeSystem http://hl7.org/fhir/hl7-work-group|1.0.0"
+              },
+              "diagnostics": "[10,23]",
+              "expression": [
+                "CodeSystem.extension[0].value.ofType(code)"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "The code 'status' in the CodeSystem UTG Specific Concept Properties for uri 'http://terminology.hl7.org/CodeSystem/utg-concept-properties' is not valid"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "The type is 'code', but no ValueSet information was found, so the codes will be validated as internal codes"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "The type is 'code', but no ValueSet information was found, so the codes will be validated as internal codes"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.property[1]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "invalid",
+              "details": {
+                "text": "The code 'A' is not a valid code in this code system"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.concept[0].property[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "invalid",
+              "details": {
+                "text": "The code '2.9' is not a valid code in this code system"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.concept[1].property[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "invalid",
+              "details": {
+                "text": "The code 'D' is not a valid code in this code system"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.concept[2].property[1]"
               ]
             }
           ]
