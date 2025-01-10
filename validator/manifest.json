@@ -41400,7 +41400,7 @@
               "severity": "warning",
               "code": "invalid",
               "details": {
-                "text": "The uri 'http://terminology.hl7.org/CodeSystem/utg-concept-properties#status' for the property 'status' implies the code 'status' exists in the CodeSystem UTG Specific Concept Properties for http://terminology.hl7.org/CodeSystem/utg-concept-properties but it does not exist"
+                "text": "The uri 'http://terminology.hl7.org/CodeSystem/utg-concept-properties#status' for the property 'status' implies a property with that URI exists in the CodeSystem UTG Specific Concept Properties for http://terminology.hl7.org/CodeSystem/utg-concept-properties, or the code 'status' does, but neither were found"
               },
               "diagnostics": "[3,41]",
               "expression": [
@@ -48355,7 +48355,7 @@
               "severity": "warning",
               "code": "invalid",
               "details": {
-                "text": "The uri 'http://hl7.org/fhir/concept-properties#deprecationDate' for the property 'inactive' implies the code 'deprecationDate' exists in the CodeSystem FHIR Defined Concept Properties for http://hl7.org/fhir/concept-properties but it does not exist"
+                "text": "The uri 'http://hl7.org/fhir/concept-properties#deprecationDate' for the property 'inactive' implies a property with that URI exists in the CodeSystem FHIR Defined Concept Properties for http://hl7.org/fhir/concept-properties, or the code 'deprecationDate' does, but neither were found"
               },
               "diagnostics": "[1,2]",
               "expression": [
@@ -50749,7 +50749,7 @@
               "severity": "warning",
               "code": "invalid",
               "details": {
-                "text": "The uri 'http://terminology.hl7.org/CodeSystem/utg-concept-properties#status' for the property 'status' implies the code 'status' exists in the CodeSystem UTG Specific Concept Properties for http://terminology.hl7.org/CodeSystem/utg-concept-properties but it does not exist"
+                "text": "The uri 'http://terminology.hl7.org/CodeSystem/utg-concept-properties#status' for the property 'status' implies a property with that URI exists in the CodeSystem UTG Specific Concept Properties for http://terminology.hl7.org/CodeSystem/utg-concept-properties, or the code 'status' does, but neither were found"
               },
               "diagnostics": "[1,2]",
               "expression": [
@@ -50801,6 +50801,27 @@
               ]
             }
           ]
+        }
+      }
+    },
+    {
+      "name": "deprecated-extension",
+      "file": "patient-deprecated-extension.json",
+      "version": "5.0",
+      "supporting" : ["StructureDefinition-deprecated.json"],
+      "description": "checking that the warning message picks up the deprecation notice",
+      "java": {
+        "outcome": {
+          "resourceType" : "OperationOutcome",
+          "issue" : [{
+            "severity" : "information",
+            "code" : "business-rule",
+            "details" : {
+              "text" : "The extension http://hl7.org/fhir/test/StructureDefinition/deprecated|4.0.1 is deprecated with the note Testing out the \"validator\" (http://hl7.org/fhir/validator)"
+            },
+            "diagnostics" : "[4,4]",
+            "expression" : ["Patient.extension[0]"]
+          }]
         }
       }
     },
