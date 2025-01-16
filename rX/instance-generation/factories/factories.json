@@ -68,6 +68,59 @@
             ]
         },
         {
+            "name": "PatientGenerator2",
+            "details" : "Generate instances based on a profile in the IG, and fill out values from an excel spreadsheet",
+            "mode": "profile",
+            "profile": "http://hl7.org/fhir/uv/howto/StructureDefinition/test-patient-profile",
+            "data": "patient-cases.xlsx;PatientsShifted!B6:F9",
+            "format": "json",
+            "filename": "output/Patient2-$counter$.json",
+            "bundle": false,
+            "tables": {
+                "genders": "patient-genders.csv"
+            },
+            "mappings": [
+                {
+                    "path": "TestPatientProfile.name",
+                    "parts": [
+                        {
+                            "name": "family",
+                            "expression": "column('Family Name')"
+                        },
+                        {
+                            "name": "given",
+                            "expression": "column('Given Name')"
+                        }
+                    ]
+                },
+                {
+                    "path": "TestPatientProfile.identifier",
+                    "parts": [
+                        {
+                            "name": "system",
+                            "expression": "'http://acme.org/identifiers/Patient'"
+                        },
+                        {
+                            "name": "value",
+                            "expression": "column('Patient ID')"
+                        }
+                    ]
+                },
+                {
+                    "path": "TestPatientProfile.birthDate",
+                    "expression": "dateColumn('Date of Birth', 'M/d/yyyy')"
+                },
+                {
+                    "path": "TestPatientProfile.gender",
+                    "expression": "lookup('genders', 'gender', column('Sex'), 'code')"
+                },
+                {
+                    "path": "TestPatientProfile.id",
+                    "expression": "column('Patient ID')"
+                }
+            ]
+        },
+        {
             "name": "EncounterGenerator",
             "details" : "Another liquid script showing how to do conditional content",
             "mode": "liquid",
