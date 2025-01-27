@@ -50799,20 +50799,71 @@
       "name": "deprecated-extension",
       "file": "patient-deprecated-extension.json",
       "version": "5.0",
-      "supporting" : ["StructureDefinition-deprecated.json"],
+      "supporting": [
+        "StructureDefinition-deprecated.json"
+      ],
       "description": "checking that the warning message picks up the deprecation notice",
       "java": {
         "outcome": {
-          "resourceType" : "OperationOutcome",
-          "issue" : [{
-            "severity" : "information",
-            "code" : "business-rule",
-            "details" : {
-              "text" : "The extension http://hl7.org/fhir/test/StructureDefinition/deprecated|4.0.1 is deprecated with the note Testing out the \"validator\" (http://hl7.org/fhir/validator)"
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "business-rule",
+              "details": {
+                "text": "The extension http://hl7.org/fhir/test/StructureDefinition/deprecated|4.0.1 is deprecated with the note Testing out the \"validator\" (http://hl7.org/fhir/validator)"
+              },
+              "diagnostics": "[4,4]",
+              "expression": [
+                "Patient.extension[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "patient-duplicate-contained",
+      "file": "patient-duplicate-contained.json",
+      "version": "5.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "duplicate",
+              "details": {
+                "text": "Duplicate ID for contained resource: pat1"
+              },
+              "diagnostics": "[21,4]",
+              "expression": [
+                "Patient.contained[1]/*Patient/pat1*/"
+              ]
             },
-            "diagnostics" : "[4,4]",
-            "expression" : ["Patient.extension[0]"]
-          }]
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "Resource requires an id, but none is present"
+              },
+              "diagnostics": "[27,4]",
+              "expression": [
+                "Patient.contained[3]/*Patient/null*/"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "The contained resource 'null' is not referenced to from elsewhere in the containing resource nor does it refer to the containing resource (dom-3)"
+              },
+              "diagnostics": "[27,4]",
+              "expression": [
+                "Patient.contained[3]"
+              ]
+            }
+          ]
         }
       }
     },
