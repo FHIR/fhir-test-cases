@@ -20461,6 +20461,17 @@
               "expression": [
                 "CodeSystem.concept[0]"
               ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "HL7 Defined CodeSystems should ensure that every concept has a definition"
+              },
+              "diagnostics": "[2,41]",
+              "expression": [
+                "CodeSystem.concept[0]"
+              ]
             }
           ]
         }
@@ -30546,6 +30557,17 @@
               "expression": [
                 "CodeSystem.concept[0]"
               ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "HL7 Defined CodeSystems should ensure that every concept has a definition"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.concept[0]"
+              ]
             }
           ]
         }
@@ -33006,6 +33028,17 @@
               "expression": [
                 "ValueSet.contained[0]/*CodeSystem/c1*/"
               ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "HL7 Defined CodeSystems should ensure that every concept has a definition"
+              },
+              "diagnostics": "[10,4]",
+              "expression": [
+                "ValueSet.contained[0]/*CodeSystem/c1*/.concept[0]"
+              ]
             }
           ]
         }
@@ -33028,6 +33061,17 @@
               },
               "expression": [
                 "ValueSet.contained[0]/*CodeSystem/c1*/"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "HL7 Defined CodeSystems should ensure that every concept has a definition"
+              },
+              "diagnostics": "[10,4]",
+              "expression": [
+                "ValueSet.contained[0]/*CodeSystem/c1*/.concept[0]"
               ]
             },
             {
@@ -48379,6 +48423,17 @@
               "severity": "warning",
               "code": "business-rule",
               "details": {
+                "text": "HL7 Defined CodeSystems should ensure that every concept has a definition"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.concept[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
                 "text": "The designation 'Really a test code' has no use and is in the same language ('en-US'), so is not differentiated from the base display ('Test Code')"
               },
               "diagnostics": "[1,2]",
@@ -48737,7 +48792,35 @@
       "file": "codesystem-example-supplement-version.xml",
       "version": "5.0",
       "explanation": "check version specific supplement reference",
-      "java": {}
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "HL7 Defined CodeSystems should ensure that every concept has a display"
+              },
+              "diagnostics": "[3,41]",
+              "expression": [
+                "CodeSystem.concept[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "HL7 Defined CodeSystems should ensure that every concept has a definition"
+              },
+              "diagnostics": "[3,41]",
+              "expression": [
+                "CodeSystem.concept[0]"
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "name": "additional-bindings-observation-1",
@@ -50258,6 +50341,17 @@
               "expression": [
                 "CodeSystem.property[1]"
               ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "HL7 Defined CodeSystems should ensure that every concept has a definition"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "CodeSystem.concept[0]"
+              ]
             }
           ]
         }
@@ -50294,6 +50388,17 @@
               "diagnostics": "[1,4]",
               "expression": [
                 "CodeSystem.property[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "HL7 Defined CodeSystems should ensure that every concept has a definition"
+              },
+              "diagnostics": "[1,4]",
+              "expression": [
+                "CodeSystem.concept[0]"
               ]
             }
           ]
@@ -50869,7 +50974,7 @@
     },
     {
       "name": "matchetype-pattern-1",
-      "file": "matchetype-pattern.json",
+      "file": "matchetype/matchetype-pattern.json",
       "version": "4.0",
       "packages": [
         "hl7.fhir.uv.tools#current"
@@ -50896,7 +51001,7 @@
     },
     {
       "name": "matchetype-pattern-2",
-      "file": "matchetype-pattern.json",
+      "file": "matchetype/matchetype-pattern.json",
       "version": "4.0",
       "packages": [
         "hl7.fhir.uv.tools#current"
@@ -50929,6 +51034,790 @@
             }
           ]
         }
+      }
+    },
+    {
+      "name": "matchetype-ss-good",
+      "file": "matchetype/singleton-simple-good.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-simple-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-ss-invalid",
+      "file": "matchetype/singleton-simple-invalid.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-simple-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "properties differ at $: unexpected element gender"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-ss-missing",
+      "file": "matchetype/singleton-simple-missing.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-simple-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "properties differ at $: missing element birthDate"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-ss-wrong",
+      "file": "matchetype/singleton-simple-wrong.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-simple-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "date property values differ at $.birthDate: expected 'A date' but found '2024-01'"
+                },
+                "diagnostics": "[14,25]",
+                "expression": [
+                  "$.birthDate"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-ss-opt-yes",
+      "file": "matchetype/singleton-simple-optional-yes.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-simple-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-ss-opt-no",
+      "file": "matchetype/singleton-simple-optional-no.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-simple-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-ss-opt-wrong",
+      "file": "matchetype/singleton-simple-optional-wrong.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-simple-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "id property values differ at $.id: expected \"matchetype\" but found 'matchetypeX'"
+                },
+                "diagnostics": "[13,22]",
+                "expression": [
+                  "$.id"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-sc-good",
+      "file": "matchetype/singleton-complex-good.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-complex-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-sc-invalid",
+      "file": "matchetype/singleton-complex-invalid.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-complex-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "properties differ at $.maritalStatus: unexpected element text"
+                },
+                "diagnostics": "[7,4]",
+                "expression": [
+                  "$.maritalStatus"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-sc-missing",
+      "file": "matchetype/singleton-complex-missing.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-complex-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "properties differ at $: missing element maritalStatus"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-sc-wrong",
+      "file": "matchetype/singleton-complex-wrong.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-complex-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "properties differ at $: unexpected element managingOrganization"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-sc-opt-yes",
+      "file": "matchetype/singleton-complex-optional-yes.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-complex-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-sc-opt-no",
+      "file": "matchetype/singleton-complex-optional-no.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-complex-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-sc-opt-wrong",
+      "file": "matchetype/singleton-complex-optional-wrong.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-complex-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "code property values differ at $.text.status: expected \"generated\" but found 'extensions'"
+                },
+                "diagnostics": "[14,27]",
+                "expression": [
+                  "$.text.status"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-list-single-present",
+      "file": "matchetype/list-single-present.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-single-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-list-single-extra",
+      "file": "matchetype/list-single-extra.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-single-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "array item count differs at $.name: expected \"1\" but found '2'"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$.name"
+                ]
+              },
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "Unexpected Node found in array at '$.name' at index 1"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$.name"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-list-single-missing",
+      "file": "matchetype/list-single-missing.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-single-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "properties differ at $: missing element name"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-list-multiple-present",
+      "file": "matchetype/list-multiple-present.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-multiple-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-list-multiple-extra",
+      "file": "matchetype/list-multiple-extra.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-multiple-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "array item count differs at $.name: expected \"2\" but found '3'"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$.name"
+                ]
+              },
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "Unexpected Node found in array at '$.name' at index 2"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$.name"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-list-multiple-missing-1",
+      "file": "matchetype/list-multiple-missing-1.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-multiple-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "array item count differs at $.name: expected \"2\" but found '1'"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$.name"
+                ]
+              },
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "string property values differ at $.name[0].text: expected \"test-name-1\" but found 'test-name-2'"
+                },
+                "diagnostics": "[10,27]",
+                "expression": [
+                  "$.name[0].text"
+                ]
+              },
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "Unexpected Node found in array at '$.name' at index 0"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$.name"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-list-multiple-missing-2",
+      "file": "matchetype/list-multiple-missing-2.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-multiple-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "array item count differs at $.name: expected \"2\" but found '1'"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$.name"
+                ]
+              },
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "One or more array items did not match at $.name starting at index 1"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$.name"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-optional-start-yes",
+      "file": "matchetype/list-optional-start-yes.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-start-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-optional-start-no",
+      "file": "matchetype/list-optional-start-no.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-start-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-optional-start-other",
+      "file": "matchetype/list-optional-start-other.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-start-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-optional-start-yes",
+      "file": "matchetype/list-optional-start-yes.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-start-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-optional-start-no",
+      "file": "matchetype/list-optional-start-no.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-start-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-optional-start-other",
+      "file": "matchetype/list-optional-start-other.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-start-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-optional-start-yes",
+      "file": "matchetype/list-optional-start-yes.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-start-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-optional-start-no",
+      "file": "matchetype/list-optional-start-no.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-start-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-optional-start-other",
+      "file": "matchetype/list-optional-start-other.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-start-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "Unexpected Node found in array at '$.name' at index 0"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$.name"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-optional-middle-yes",
+      "file": "matchetype/list-optional-middle-yes.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-middle-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-optional-middle-no",
+      "file": "matchetype/list-optional-middle-no.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-middle-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-optional-middle-other",
+      "file": "matchetype/list-optional-middle-other.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-middle-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "Unexpected Node found in array at '$.name' at index 1"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$.name"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-optional-end-yes",
+      "file": "matchetype/list-optional-end-yes.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-end-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-optional-end-no",
+      "file": "matchetype/list-optional-end-no.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-end-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-optional-end-other",
+      "file": "matchetype/list-optional-end-other.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-optional-end-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "Unexpected Node found in array at '$.name' at index 2"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$.name"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-list-count-yes",
+      "file": "matchetype/list-count-yes.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-count-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-list-count-no",
+      "file": "matchetype/list-count-no.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-count-pattern.json",
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "error",
+                "code": "value",
+                "details": {
+                  "text": "item count differs at $.name: expected \"3\" but found '2'"
+                },
+                "diagnostics": "[1,2]",
+                "expression": [
+                  "$.name"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "matchetype-list-sort-yes",
+      "file": "matchetype/list-sort-yes.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-sort-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-list-sort-no",
+      "file": "matchetype/list-sort-no.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-sort-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-pattern-singleton",
+      "file": "matchetype/pattern-singleton.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/singleton-pattern-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-pattern-list",
+      "file": "matchetype/pattern-list.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/list-pattern-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-extension-1",
+      "file": "matchetype/extension-example-1.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/extension-pattern.json",
+        "java": {}
+      }
+    },
+    {
+      "name": "matchetype-extension-2",
+      "file": "matchetype/extension-example-2.json",
+      "version": "4.0",
+      "java": {},
+      "matchetype": {
+        "source": "matchetype/extension-pattern.json",
+        "java": {}
       }
     },
     {
