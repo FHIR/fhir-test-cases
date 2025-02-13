@@ -34008,6 +34008,50 @@
       "java": {}
     },
     {
+      "name": "contained-referenced-resource-bad-id",
+      "file": "contained-referenced-resource.json",
+      "version": "4.0",
+      "validateContains": "CHECK_VALID",
+      "description": "65 character long ID on contained resource, set validateContains to CHECK_VALID should yield 2 errors",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "code-invalid",
+              "details": {
+                "text": "The value provided ('mongoose') was not found in the value set 'AdministrativeGender' (http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1), and a code is required from this value set  (error message = The System URI could not be determined for the code 'mongoose' in the ValueSet 'http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1'; The provided code '#mongoose' was not found in the value set 'http://hl7.org/fhir/ValueSet/administrative-gender|4.0.1')"
+              },
+              "diagnostics": "[13,28]",
+              "expression": [
+                "Condition.contained[0]/*Practitioner/1234*/.gender"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "structure",
+              "details": {
+                "text": "Details for #1234 matching against profile http://hl7.org/fhir/StructureDefinition/Practitioner|4.0.1"
+              },
+              "diagnostics": "[6,6]",
+              "expression": [
+                "Condition.recorder"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "contained-referenced-resource-bad-id-ignore",
+      "file": "contained-referenced-resource.json",
+      "version": "4.0",
+      "validateContains": "IGNORE",
+      "description": "65 character long ID on contained resource, set validateContains to IGNORE should yield no errors",
+      "java": {}
+    },
+    {
       "name": "type-subtype-slicing1",
       "file": "type-subtype-slicing1.json",
       "version": "4.0",
