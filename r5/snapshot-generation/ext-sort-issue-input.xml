@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<StructureDefinition xmlns="http://hl7.org/fhir" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../framework/forge-schemas/fhir-single.xsd">
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="ext-communication-topic"/>
   <url value="http://sharedhealth.exchange/fhir/StructureDefinition/ext-communication-topic"/>
   <name value="Communication Topic"/>
@@ -13,24 +14,24 @@
   <baseDefinition value="http://hl7.org/fhir/StructureDefinition/extension-Communication.topic"/>
   <derivation value="constraint"/>
   <differential>
-    <element>
+    <element id="Extension">
       <path value="Extension"/>
       <definition value="Allows a communication to reference the individual Medication Order"/>
       <comment value="Usage Note: This is used to identify the medication order that the communication is related too. Only the Prescription business identifier is included, the entire medication order resource will not be included. This is used to associate and link communications to the proper medication order to facilitate having a complete view of communication in context of the medication order that it is referring too.&#xA;&#xA;Conformance Rule:&#xA;&#xA;(1) When creating a communication that is linked to a medication order, the medication order identifier must be in the same format and have the same value as it was sent or received in the original task's MedicationOrder.identifier(EMR-id).&#xA;&#xA;(2) When receiving a communication and this element is populated, the system must use this value to find the corresponding medication order record in the receiving system to associate and link that incoming communication with in order to facilitate having that complete view of the context involved.&#xA;&#xA;(3) When replying to a communication and this element is populated, the system must resend the data as it was received.&#xA;&#xA;(4) Communication.extension(topic) and Communication.extension(topicGroup) must never be populated together, only one or the other extension can be populated depending on what needs to be referenced."/>
       <max value="1"/>
       <mustSupport value="true"/>
     </element>
-    <element>
+    <element id="Extension.extension">
       <path value="Extension.extension"/>
       <max value="0"/>
       <mustSupport value="false"/>
     </element>
-    <element>
+    <element id="Extension.url">
       <path value="Extension.url"/>
       <min value="1"/>
       <mustSupport value="true"/>
     </element>
-    <element>
+    <element id="Extension.value[x]">
       <path value="Extension.value[x]"/>
       <min value="1"/>
       <type>

@@ -1,261 +1,229 @@
 {
-  "resourceType": "StructureDefinition",
-  "id": "org2b",
-  "url": "http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/org2b",
-  "version": "0.1.0",
-  "name": "PlannetOrganization",
-  "title": "Plan-net Organization",
-  "status": "active",
-  "description": "An organization is a formal or informal grouping of people or organizations with a common purpose, such as a company, institution, corporation, community group, or healthcare practice.\nGuidance:   When the contact is a department name, rather than a human (e.g., patient help line), include a blank family and given name, and provide the department name in contact.name.text",
-  "fhirVersion": "4.0.1",
-  "mapping": [
-    {
-      "identity": "servd",
-      "uri": "http://www.omg.org/spec/ServD/1.0/",
-      "name": "ServD"
+  "resourceType" : "StructureDefinition",
+  "id" : "org2b",
+  "url" : "http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/org2b",
+  "version" : "0.1.0",
+  "name" : "PlannetOrganization",
+  "title" : "Plan-net Organization",
+  "status" : "active",
+  "description" : "An organization is a formal or informal grouping of people or organizations with a common purpose, such as a company, institution, corporation, community group, or healthcare practice.\nGuidance:   When the contact is a department name, rather than a human (e.g., patient help line), include a blank family and given name, and provide the department name in contact.name.text",
+  "fhirVersion" : "4.0.1",
+  "mapping" : [{
+    "identity" : "servd",
+    "uri" : "http://www.omg.org/spec/ServD/1.0/",
+    "name" : "ServD"
+  },
+  {
+    "identity" : "v2",
+    "uri" : "http://hl7.org/v2",
+    "name" : "HL7 v2 Mapping"
+  },
+  {
+    "identity" : "rim",
+    "uri" : "http://hl7.org/v3",
+    "name" : "RIM Mapping"
+  },
+  {
+    "identity" : "w5",
+    "uri" : "http://hl7.org/fhir/fivews",
+    "name" : "FiveWs Pattern Mapping"
+  }],
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Organization",
+  "baseDefinition" : "http://hl7.org/fhir/us/core/StructureDefinition/us-core-organization",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Organization",
+      "path" : "Organization"
     },
     {
-      "identity": "v2",
-      "uri": "http://hl7.org/v2",
-      "name": "HL7 v2 Mapping"
-    },
-    {
-      "identity": "rim",
-      "uri": "http://hl7.org/v3",
-      "name": "RIM Mapping"
-    },
-    {
-      "identity": "w5",
-      "uri": "http://hl7.org/fhir/fivews",
-      "name": "FiveWs Pattern Mapping"
-    }
-  ],
-  "kind": "resource",
-  "abstract": false,
-  "type": "Organization",
-  "baseDefinition": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-organization",
-  "derivation": "constraint",
-  "differential": {
-    "element": [
-      {
-        "id": "Organization",
-        "path": "Organization"
-      },
-      {
-        "id": "Organization.extension",
-        "path": "Organization.extension",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "ordered": false,
-          "rules": "open"
-        }
-      },
-      {
-        "id": "Organization.extension:qualification",
-        "path": "Organization.extension",
-        "sliceName": "qualification",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": [
-              "http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/qualification"
-            ]
-          }
-        ],
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.extension:org-description",
-        "path": "Organization.extension",
-        "sliceName": "org-description",
-        "min": 0,
-        "max": "1",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": [
-              "http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/org-description"
-            ]
-          }
-        ],
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.identifier",
-        "path": "Organization.identifier"
-      },
-      {
-        "id": "Organization.identifier.id",
-        "path": "Organization.identifier.id",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.identifier.use",
-        "path": "Organization.identifier.use",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.identifier.type",
-        "path": "Organization.identifier.type",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.identifier.period",
-        "path": "Organization.identifier.period",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.identifier.assigner",
-        "path": "Organization.identifier.assigner",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.active",
-        "path": "Organization.active",
-        "patternBoolean": true
-      },
-      {
-        "id": "Organization.type",
-        "path": "Organization.type",
-        "binding": {
-          "strength": "required",
-          "valueSet": "http://hl7.org/fhir/us/davinci-pdex-plan-net/ValueSet/OrgTypeVS"
-        }
-      },
-      {
-        "id": "Organization.alias",
-        "path": "Organization.alias",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.contact",
-        "path": "Organization.contact",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.contact.telecom",
-        "path": "Organization.contact.telecom",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.contact.telecom.extension:contactpoint-availabletime",
-        "path": "Organization.contact.telecom.extension",
-        "sliceName": "contactpoint-availabletime",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": [
-              "http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/contactpoint-availabletime"
-            ]
-          }
-        ],
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.contact.telecom.extension:via-intermediary",
-        "path": "Organization.contact.telecom.extension",
-        "sliceName": "via-intermediary",
-        "short": "Via Intermediary",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": [
-              "http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/via-intermediary"
-            ]
-          }
-        ],
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.contact.telecom.system",
-        "path": "Organization.contact.telecom.system",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.contact.telecom.value",
-        "path": "Organization.contact.telecom.value",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.contact.telecom.use",
-        "path": "Organization.contact.telecom.use",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.contact.address",
-        "path": "Organization.contact.address"
-      },
-      {
-        "id": "Organization.contact.address.extension:geolocation",
-        "path": "Organization.contact.address.extension",
-        "sliceName": "geolocation",
-        "min": 0,
-        "max": "*",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": [
-              "http://hl7.org/fhir/StructureDefinition/geolocation"
-            ]
-          }
-        ],
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.contact.address.use",
-        "path": "Organization.contact.address.use",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.contact.address.type",
-        "path": "Organization.contact.address.type",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.contact.address.text",
-        "path": "Organization.contact.address.text",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.contact.address.period",
-        "path": "Organization.contact.address.period",
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.partOf",
-        "path": "Organization.partOf",
-        "type": [
-          {
-            "code": "Reference",
-            "targetProfile": [
-              "http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization"
-            ],
-            "extension": [
-              {
-                "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-hierarchy",
-                "valueBoolean": true
-              }
-            ]
-          }
-        ],
-        "mustSupport": true
-      },
-      {
-        "id": "Organization.endpoint",
-        "path": "Organization.endpoint",
-        "mustSupport": true
+      "id" : "Organization.extension",
+      "path" : "Organization.extension",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "url"
+        }],
+        "ordered" : false,
+        "rules" : "open"
       }
-    ]
+    },
+    {
+      "id" : "Organization.extension:qualification",
+      "path" : "Organization.extension",
+      "sliceName" : "qualification",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Extension",
+        "profile" : ["http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/qualification"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.extension:org-description",
+      "path" : "Organization.extension",
+      "sliceName" : "org-description",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Extension",
+        "profile" : ["http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/org-description"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.identifier",
+      "path" : "Organization.identifier"
+    },
+    {
+      "id" : "Organization.identifier.id",
+      "path" : "Organization.identifier.id",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.identifier.use",
+      "path" : "Organization.identifier.use",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.identifier.type",
+      "path" : "Organization.identifier.type",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.identifier.period",
+      "path" : "Organization.identifier.period",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.identifier.assigner",
+      "path" : "Organization.identifier.assigner",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.active",
+      "path" : "Organization.active",
+      "patternBoolean" : true
+    },
+    {
+      "id" : "Organization.type",
+      "path" : "Organization.type",
+      "binding" : {
+        "strength" : "required",
+        "valueSet" : "http://hl7.org/fhir/us/davinci-pdex-plan-net/ValueSet/OrgTypeVS"
+      }
+    },
+    {
+      "id" : "Organization.alias",
+      "path" : "Organization.alias",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.contact",
+      "path" : "Organization.contact",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.contact.telecom",
+      "path" : "Organization.contact.telecom",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.contact.telecom.extension:contactpoint-availabletime",
+      "path" : "Organization.contact.telecom.extension",
+      "sliceName" : "contactpoint-availabletime",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Extension",
+        "profile" : ["http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/contactpoint-availabletime"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.contact.telecom.extension:via-intermediary",
+      "path" : "Organization.contact.telecom.extension",
+      "sliceName" : "via-intermediary",
+      "short" : "Via Intermediary",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Extension",
+        "profile" : ["http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/via-intermediary"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.contact.telecom.system",
+      "path" : "Organization.contact.telecom.system",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.contact.telecom.value",
+      "path" : "Organization.contact.telecom.value",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.contact.telecom.use",
+      "path" : "Organization.contact.telecom.use",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.contact.address",
+      "path" : "Organization.contact.address"
+    },
+    {
+      "id" : "Organization.contact.address.extension:geolocation",
+      "path" : "Organization.contact.address.extension",
+      "sliceName" : "geolocation",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Extension",
+        "profile" : ["http://hl7.org/fhir/StructureDefinition/geolocation"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.contact.address.use",
+      "path" : "Organization.contact.address.use",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.contact.address.type",
+      "path" : "Organization.contact.address.type",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.contact.address.text",
+      "path" : "Organization.contact.address.text",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.contact.address.period",
+      "path" : "Organization.contact.address.period",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.partOf",
+      "path" : "Organization.partOf",
+      "type" : [{
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-hierarchy",
+          "valueBoolean" : true
+        }],
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.org/fhir/us/davinci-pdex-plan-net/StructureDefinition/plannet-Organization"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Organization.endpoint",
+      "path" : "Organization.endpoint",
+      "mustSupport" : true
+    }]
   }
 }

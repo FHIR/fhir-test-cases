@@ -1,101 +1,100 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <StructureDefinition xmlns="http://hl7.org/fhir">
-  <id value="nswhealthitocMedicationStatement" />
-  <url value="http://fhir.health.nsw.gov.au/fhir/ehealth/itoc/v1.0/StructureDefinition/nswhealthitocMedicationStatement" />
-  <version value="1.0.0" />
-  <name value="NSWHealthiTOCMedicationStatement" />
-  <status value="draft" />
+  <id value="nswhealthitocMedicationStatement"/>
+  <url value="http://fhir.health.nsw.gov.au/fhir/ehealth/itoc/v1.0/StructureDefinition/nswhealthitocMedicationStatement"/>
+  <version value="1.0.0"/>
+  <name value="NSWHealthiTOCMedicationStatement"/>
+  <status value="draft"/>
   <date value="2019-10-29"/>
-  <publisher value="NSW eHealth" />  
-  <fhirVersion value="4.0.1" />
-  <kind value="resource" />
-  <abstract value="false" />
-  <type value="MedicationStatement" />
-  <baseDefinition value="http://hl7.org.au/fhir/StructureDefinition/au-MedicationStatement" />
-  <derivation value="constraint" />
+  <publisher value="NSW eHealth"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="MedicationStatement"/>
+  <baseDefinition value="http://hl7.org.au/fhir/StructureDefinition/au-MedicationStatement"/>
+  <derivation value="constraint"/>
   <differential>
     <element id="MedicationStatement">
-      <path value="MedicationStatement" />
-      <short value="A record of medication being taken by a patient in an Australian healthcare context." />
+      <path value="MedicationStatement"/>
+      <short value="A record of medication being taken by a patient in an Australian healthcare context."/>
     </element>
     <element id="MedicationStatement.extension:diluent">
-      <path value="MedicationStatement.extension" />
-      <sliceName value="diluent" />
-      <short value="The diluent medication" />
-      <min value="0" />
-      <max value="1" />
+      <path value="MedicationStatement.extension"/>
+      <sliceName value="diluent"/>
+      <short value="The diluent medication"/>
+      <min value="0"/>
+      <max value="1"/>
       <type>
-        <code value="Extension" />
-        <profile value="http://fhir.health.nsw.gov.au/fhir/ehealth/itoc/v1.0/StructureDefinition/diluent" />
+        <code value="Extension"/>
+        <profile value="http://fhir.health.nsw.gov.au/fhir/ehealth/itoc/v1.0/StructureDefinition/diluent"/>
       </type>
     </element>
     <element id="MedicationStatement.category">
-      <path value="MedicationStatement.category" />
-      <short value="The type of medication usage. For Medication List use case use &quot;inpatient&quot;.  For Medication History use case use &quot;patientspecified&quot;." />
-      <definition value="Indicates where type of medication statement and where the medication is expected to be consumed or administered. For Medication List use case use &quot;inpatient&quot;.  For Medication History use case use &quot;patientspecified&quot;." />
-      <min value="1" />
+      <path value="MedicationStatement.category"/>
+      <short value="The type of medication usage. For Medication List use case use &quot;inpatient&quot;.  For Medication History use case use &quot;patientspecified&quot;."/>
+      <definition value="Indicates where type of medication statement and where the medication is expected to be consumed or administered. For Medication List use case use &quot;inpatient&quot;.  For Medication History use case use &quot;patientspecified&quot;."/>
+      <min value="1"/>
     </element>
-
     <element id="MedicationStatement.medication.concept.coding">
-      <path value="MedicationStatement.medication.concept.coding" />
+      <path value="MedicationStatement.medication.concept.coding"/>
       <slicing>
         <discriminator>
-          <type value="value" />
-          <path value="system" />
+          <type value="value"/>
+          <path value="system"/>
         </discriminator>
-        <rules value="open" />
+        <rules value="open"/>
       </slicing>
-      <short value="Medication Codes" />
-    </element>	
-	<element id="MedicationStatement.medication.concept.coding:cerner">
-		<path value="MedicationStatement.medication.concept.coding"/>
-		<sliceName value="cerner"/>
-		<short value="The cerner (MULTUM) code for the medication"/>			
-		<max value="1"/>
-	</element>
-	<element id="MedicationStatement.medication.concept.coding:cerner.system">
-		<path value="MedicationStatement.medication.concept.coding.system"/>
-		<min value="1"/>
-		<fixedUri value="http://cerner.com/itoc/codes"/>
-	</element>
-	<element id="MedicationStatement.medication.concept.coding:cerner.code">
-		<path value="MedicationStatement.medication.concept.coding.code"/>
-		<short value="Cerner (MULTUM) code value" />		
-		<min value="1"/>
-	</element>		
-	<element id="MedicationStatement.medication.concept.coding:imdsoft">
-		<path value="MedicationStatement.medication.concept.coding"/>	
-		<sliceName value="imdsoft"/>
-		<short value="The MetaVision / IMDsoft code for the medication"/>			
-		<max value="1"/>
-	</element>
-	<element id="MedicationStatement.medication.concept.coding:imdsoft.system">
-		<path value="MedicationStatement.medication.concept.coding.system"/>
-		<min value="1"/>
-		<fixedUri value="http://www.imd-soft.com/itoc/codes"/>
-	</element>
-	<element id="MedicationStatement.medication.concept.coding:imdsoft.code">
-		<path value="MedicationStatement.medication.concept.coding.code"/>
-		<short value="MetaVision / IMDsoft code value" />		
-		<min value="1"/>
-	</element>
-	<element id="MedicationStatement.medication.reference">
-		<path value="MedicationStatement.medication.reference"/>
-		<short value="A reference to a NSW Health iTOC Medication" />
-        <type>
-          <code value="Reference"/>
-          <targetProfile value="http://fhir.health.nsw.gov.au/fhir/ehealth/itoc/v1.0/StructureDefinition/nswhealthitocmedication"/>
-        </type>
-	</element>	
-    <element id="MedicationStatement.subject">
-      <path value="MedicationStatement.subject" />
-      <short value="The patient who is or was taking the medication." />
-      <definition value="The person who is/was taking the medication." />
+      <short value="Medication Codes"/>
+    </element>
+    <element id="MedicationStatement.medication.concept.coding:cerner">
+      <path value="MedicationStatement.medication.concept.coding"/>
+      <sliceName value="cerner"/>
+      <short value="The cerner (MULTUM) code for the medication"/>
+      <max value="1"/>
+    </element>
+    <element id="MedicationStatement.medication.concept.coding:cerner.system">
+      <path value="MedicationStatement.medication.concept.coding.system"/>
+      <min value="1"/>
+      <fixedUri value="http://cerner.com/itoc/codes"/>
+    </element>
+    <element id="MedicationStatement.medication.concept.coding:cerner.code">
+      <path value="MedicationStatement.medication.concept.coding.code"/>
+      <short value="Cerner (MULTUM) code value"/>
+      <min value="1"/>
+    </element>
+    <element id="MedicationStatement.medication.concept.coding:imdsoft">
+      <path value="MedicationStatement.medication.concept.coding"/>
+      <sliceName value="imdsoft"/>
+      <short value="The MetaVision / IMDsoft code for the medication"/>
+      <max value="1"/>
+    </element>
+    <element id="MedicationStatement.medication.concept.coding:imdsoft.system">
+      <path value="MedicationStatement.medication.concept.coding.system"/>
+      <min value="1"/>
+      <fixedUri value="http://www.imd-soft.com/itoc/codes"/>
+    </element>
+    <element id="MedicationStatement.medication.concept.coding:imdsoft.code">
+      <path value="MedicationStatement.medication.concept.coding.code"/>
+      <short value="MetaVision / IMDsoft code value"/>
+      <min value="1"/>
+    </element>
+    <element id="MedicationStatement.medication.reference">
+      <path value="MedicationStatement.medication.reference"/>
+      <short value="A reference to a NSW Health iTOC Medication"/>
       <type>
-        <code value="Reference" />
-        <targetProfile value="http://fhir.health.nsw.gov.au/fhir/ehealth/itoc/v1.0/StructureDefinition/nswhealthitocpatient" />
+        <code value="Reference"/>
+        <targetProfile value="http://fhir.health.nsw.gov.au/fhir/ehealth/itoc/v1.0/StructureDefinition/nswhealthitocmedication"/>
       </type>
     </element>
-	
+    <element id="MedicationStatement.subject">
+      <path value="MedicationStatement.subject"/>
+      <short value="The patient who is or was taking the medication."/>
+      <definition value="The person who is/was taking the medication."/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://fhir.health.nsw.gov.au/fhir/ehealth/itoc/v1.0/StructureDefinition/nswhealthitocpatient"/>
+      </type>
+    </element>
   </differential>
 </StructureDefinition>

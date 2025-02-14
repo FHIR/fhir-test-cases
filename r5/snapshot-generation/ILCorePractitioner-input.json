@@ -1,0 +1,122 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "il-core-practitioner",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status",
+    "valueCode" : "trial-use"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm",
+    "valueInteger" : 1
+  }],
+  "url" : "http://fhir.health.gov.il/StructureDefinition/il-core-practitioner",
+  "version" : "0.16.0",
+  "name" : "ILCorePractitioner",
+  "title" : "ILCore Practitioner Profile",
+  "status" : "draft",
+  "date" : "2024-11-06",
+  "publisher" : "Israel Core Team",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "email",
+      "value" : "tal.primak@moh.gov.il"
+    }]
+  }],
+  "description" : "Israel Core proposed constraints and extensions on the Practitioner Resource",
+  "fhirVersion" : "4.0.1",
+  "mapping" : [{
+    "identity" : "v2",
+    "uri" : "http://hl7.org/v2",
+    "name" : "HL7 v2 Mapping"
+  },
+  {
+    "identity" : "rim",
+    "uri" : "http://hl7.org/v3",
+    "name" : "RIM Mapping"
+  },
+  {
+    "identity" : "servd",
+    "uri" : "http://www.omg.org/spec/ServD/1.0/",
+    "name" : "ServD"
+  },
+  {
+    "identity" : "w5",
+    "uri" : "http://hl7.org/fhir/fivews",
+    "name" : "FiveWs Pattern Mapping"
+  }],
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Practitioner",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Practitioner",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Practitioner.identifier",
+      "path" : "Practitioner.identifier",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "system"
+        }],
+        "rules" : "open"
+      },
+      "min" : 1
+    },
+    {
+      "id" : "Practitioner.identifier.system",
+      "path" : "Practitioner.identifier.system",
+      "min" : 1,
+      "mustSupport" : true
+    },
+    {
+      "id" : "Practitioner.identifier.value",
+      "path" : "Practitioner.identifier.value",
+      "short" : "The value that is unique within the system.",
+      "min" : 1,
+      "mustSupport" : true
+    },
+    {
+      "id" : "Practitioner.identifier.assigner",
+      "path" : "Practitioner.identifier.assigner",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://fhir.health.gov.il/StructureDefinition/il-core-organization"]
+      }]
+    },
+    {
+      "id" : "Practitioner.identifier:prac-lic",
+      "path" : "Practitioner.identifier",
+      "sliceName" : "prac-lic",
+      "short" : "Israeli Ministry of Health practitioner license",
+      "definition" : "Israeli Ministry of Health medical practitioner license. [MoH practitioner portal](https://practitioners.health.gov.il/Practitioners)\n\n<mark>Note:</mark> Should include the profession-code, a dash (-) and a sequence number. I.e., \\<profession-code\\>-\\<profession-certificate-number\\> where profession-code is a value of <a href=\"https://simplifier.net/ilcore/practitioner-profession-moh-duplicate-2\">PractitionerProfessionMoH</a>",
+      "min" : 0,
+      "max" : "1",
+      "example" : [{
+        "label" : "valid Israeli Pracitioner Licence number example",
+        "valueString" : "1-12345"
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Practitioner.identifier:prac-lic.system",
+      "path" : "Practitioner.identifier.system",
+      "fixedUri" : "http://practitioners.health.gov.il/Practitioners"
+    },
+    {
+      "id" : "Practitioner.identifier:prac-lic.value",
+      "path" : "Practitioner.identifier.value",
+      "short" : "Israeli Ministry of Health Practitioner License",
+      "example" : [{
+        "label" : "General",
+        "valueString" : "1-12345"
+      }],
+      "constraint" : [{
+        "key" : "identifier-dash",
+        "severity" : "error",
+        "human" : "identifier.value in this slice SHALL have a number, followed by a hyphen (\"-\") and followed by another number",
+        "expression" : "matches('^[0-9]+(-[0-9]+)$')",
+        "source" : "http://fhir.health.gov.il/StructureDefinition/il-core-practitioner"
+      }]
+    }]
+  }
+}

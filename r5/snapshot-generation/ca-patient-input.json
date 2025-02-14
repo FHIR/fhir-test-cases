@@ -1,294 +1,265 @@
 {
-  "resourceType": "StructureDefinition",
-  "id": "profile-patient",
-  "url": "http://hl7.org/fhir/ca/core/StructureDefinition/profile-patient",
-  "version": "0.0.0",
-  "name": "PatientProfile",
-  "title": "Patient Profile",
-  "status": "draft",
-  "date": "2019-03-31",
-  "publisher": "TBD",
-  "description": "Proposed constraints and extensions on the Patient Resource.  Generated as a first step toward creating a set of Canadian Core FHIR profiles.",
-  "kind": "resource",
-  "abstract": false,
-  "type": "Patient",
-  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
-  "derivation": "constraint",
-  "differential": {
-    "element": [
-      {
-        "id": "Patient",
-        "path": "Patient",
-        "short": "Patient Profile",
-        "definition": "The Patient Profile is based upon the core FHIR Patient Resource",
-        "mustSupport": false,
-        "isModifier": false
+  "resourceType" : "StructureDefinition",
+  "id" : "profile-patient",
+  "url" : "http://hl7.org/fhir/ca/core/StructureDefinition/profile-patient",
+  "version" : "0.0.0",
+  "name" : "PatientProfile",
+  "title" : "Patient Profile",
+  "status" : "draft",
+  "date" : "2019-03-31",
+  "publisher" : "TBD",
+  "description" : "Proposed constraints and extensions on the Patient Resource.  Generated as a first step toward creating a set of Canadian Core FHIR profiles.",
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Patient",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Patient",
+      "path" : "Patient",
+      "short" : "Patient Profile",
+      "definition" : "The Patient Profile is based upon the core FHIR Patient Resource",
+      "mustSupport" : false,
+      "isModifier" : false
+    },
+    {
+      "id" : "Patient.extension",
+      "path" : "Patient.extension",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "url"
+        }],
+        "rules" : "open"
+      }
+    },
+    {
+      "id" : "Patient.extension:birthsex",
+      "path" : "Patient.extension",
+      "sliceName" : "birthsex",
+      "type" : [{
+        "code" : "Extension",
+        "profile" : ["http://hl7.org/fhir/ca/core/StructureDefinition/ext-patientbirthsex"]
+      }],
+      "mustSupport" : false,
+      "binding" : {
+        "strength" : "required",
+        "description" : "Code for sex assigned at birth",
+        "valueSet" : "http://hl7.org/fhir/ca/core/ValueSet/birthsex"
+      }
+    },
+    {
+      "id" : "Patient.identifier",
+      "path" : "Patient.identifier",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "pattern",
+          "path" : "type"
+        }],
+        "rules" : "open"
       },
-      {
-        "id": "Patient.extension",
-        "path": "Patient.extension",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "rules": "open"
+      "min" : 1,
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.identifier.type",
+      "path" : "Patient.identifier.type",
+      "min" : 1,
+      "example" : [{
+        "label" : "Pattern",
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code" : "MR"
+          }]
         }
-      },
-      {
-        "id": "Patient.extension:birthsex",
-        "path": "Patient.extension",
-        "sliceName": "birthsex",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": [
-              "http://hl7.org/fhir/ca/core/StructureDefinition/ext-patientbirthsex"
-            ]
-          }
-        ],
-        "mustSupport": false,
-        "binding": {
-          "strength": "required",
-          "description": "Code for sex assigned at birth",
-          "valueSet": "http://hl7.org/fhir/ca/core/ValueSet/birthsex"
-        }
-      },
-      {
-        "id": "Patient.identifier",
-        "path": "Patient.identifier",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "pattern",
-              "path": "type"
-            }
-          ],
-          "rules": "open"
-        },
-        "min": 1,
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.identifier.type",
-        "path": "Patient.identifier.type",
-        "min": 1,
-        "example": [
-          {
-            "label": "Pattern",
-            "valueCodeableConcept": {
-              "coding": [
-                {
-                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
-                  "code": "MR"
-                }
-              ]
-            }
-          }
-        ],
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.identifier.system",
-        "path": "Patient.identifier.system",
-        "min": 1,
-        "mustSupport": true,
-        "isModifier": false
-      },
-      {
-        "id": "Patient.identifier.value",
-        "path": "Patient.identifier.value",
-        "min": 1,
-        "mustSupport": true,
-        "isModifier": false
-      },
-      {
-        "id": "Patient.identifier:JHN",
-        "path": "Patient.identifier",
-        "sliceName": "JHN",
-        "short": "Jurisdictional Health Number",
-        "mustSupport": false
-      },
-      {
-        "id": "Patient.identifier:JHN.extension",
-        "path": "Patient.identifier.extension",
-        "slicing": {
-          "discriminator": [
-            {
-              "type": "value",
-              "path": "url"
-            }
-          ],
-          "rules": "open"
-        }
-      },
-      {
-        "id": "Patient.identifier:JHN.extension:versionCode",
-        "path": "Patient.identifier.extension",
-        "sliceName": "myExtension",
-        "short": "Health Number Version Code",
-        "type": [
-          {
-            "code": "Extension",
-            "profile": [
-              "http://hl7.org/fhir/ca/core/StructureDefinition/ext-identifierversion"
-            ]
-          }
-        ]
-      },
-      {
-        "id": "Patient.identifier:JHN.extension:versionCode.value[x]:valueString",
-        "path": "Patient.identifier.extension.value[x]",
-        "type" : [{
-          "code" : "string"
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.identifier.system",
+      "path" : "Patient.identifier.system",
+      "min" : 1,
+      "mustSupport" : true,
+      "isModifier" : false
+    },
+    {
+      "id" : "Patient.identifier.value",
+      "path" : "Patient.identifier.value",
+      "min" : 1,
+      "mustSupport" : true,
+      "isModifier" : false
+    },
+    {
+      "id" : "Patient.identifier:JHN",
+      "path" : "Patient.identifier",
+      "sliceName" : "JHN",
+      "short" : "Jurisdictional Health Number",
+      "mustSupport" : false
+    },
+    {
+      "id" : "Patient.identifier:JHN.extension",
+      "path" : "Patient.identifier.extension",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "url"
+        }],
+        "rules" : "open"
+      }
+    },
+    {
+      "id" : "Patient.identifier:JHN.extension:myExtension",
+      "path" : "Patient.identifier.extension",
+      "sliceName" : "myExtension",
+      "short" : "Health Number Version Code",
+      "type" : [{
+        "code" : "Extension",
+        "profile" : ["http://hl7.org/fhir/ca/core/StructureDefinition/ext-identifierversion"]
+      }]
+    },
+    {
+      "id" : "Patient.identifier:JHN.extension:myExtension.value[x]",
+      "path" : "Patient.identifier.extension.value[x]",
+      "type" : [{
+        "code" : "string"
+      }]
+    },
+    {
+      "id" : "Patient.identifier:JHN.type",
+      "path" : "Patient.identifier.type",
+      "min" : 1,
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v2-0203",
+          "code" : "JHN"
         }]
       },
-      {
-        "id": "Patient.identifier:JHN.type",
-        "path": "Patient.identifier.type",
-        "min": 1,
-        "patternCodeableConcept": {
-          "coding": [
-            {
-              "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
-              "code": "JHN"
-            }
-          ]
-        },
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.identifier:JHN.system",
-        "path": "Patient.identifier.system",
-        "short": "A Health Number Naming System from the Canadian URI Registry",
-        "min": 1,
-        "example": [
-          {
-            "label": "(Ontario)",
-            "valueUri": "https://fhir.infoway-inforoute.ca/NamingSystem/ca-on-patient-hcn"
-          }
-        ],
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.identifier:JHN.value",
-        "path": "Patient.identifier.value",
-        "min": 1,
-        "example": [
-          {
-            "label": "(Ontario)",
-            "valueString": "5584486647"
-          }
-        ],
-        "mustSupport": true,
-        "isModifier": false
-      },
-      {
-        "id": "Patient.name",
-        "path": "Patient.name",
-        "min": 1,
-        "constraint" : [
-          {
-            "key" : "ca-core-8",
-            "severity" : "error",
-            "human" : "Patient.name.given  or Patient.name.family or both SHALL be present",
-            "expression" : "family.exists() or given.exists()",
-            "xpath" : "f:given or f:family"
-          }
-        ],
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.name.family",
-        "path": "Patient.name.family",
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.name.given",
-        "path": "Patient.name.given",
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.telecom",
-        "path": "Patient.telecom",
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.telecom.system",
-        "path": "Patient.telecom.system",
-        "min": 1,
-        "mustSupport": true,
-        "binding": {
-          "strength": "required",
-          "description": "Telecommunications form for contact point.",
-          "valueSet": "http://hl7.org/fhir/ValueSet/contact-point-system"
-        }
-      },
-      {
-        "id": "Patient.telecom.value",
-        "path": "Patient.telecom.value",
-        "min": 1,
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.gender",
-        "path": "Patient.gender",
-        "min": 1,
-        "mustSupport": true,
-        "binding": {
-          "strength": "required",
-          "description": "The gender of a person used for administrative purposes.",
-          "valueSet": "http://hl7.org/fhir/ValueSet/administrative-gender"
-        }
-      },
-      {
-        "id": "Patient.birthDate",
-        "path": "Patient.birthDate",
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.address",
-        "path": "Patient.address",
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.address.line",
-        "path": "Patient.address.line",
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.address.city",
-        "path": "Patient.address.city",
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.address.state",
-        "path": "Patient.address.state",
-        "mustSupport": true,
-        "binding": {
-          "strength": "extensible",
-          "description": "This value set defines canadian province and terriroty codes",
-          "valueSet": "http://ehealthontario.ca/fhir/ValueSet/province-state-code"
-        }
-      },
-      {
-        "id": "Patient.address.postalCode",
-        "path": "Patient.address.postalCode",
-        "short": "Canadian Postal Codes",
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.communication",
-        "path": "Patient.communication",
-        "mustSupport": true
-      },
-      {
-        "id": "Patient.communication.language",
-        "path": "Patient.communication.language",
-        "mustSupport": true
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.identifier:JHN.system",
+      "path" : "Patient.identifier.system",
+      "short" : "A Health Number Naming System from the Canadian URI Registry",
+      "min" : 1,
+      "example" : [{
+        "label" : "(Ontario)",
+        "valueUri" : "https://fhir.infoway-inforoute.ca/NamingSystem/ca-on-patient-hcn"
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.identifier:JHN.value",
+      "path" : "Patient.identifier.value",
+      "min" : 1,
+      "example" : [{
+        "label" : "(Ontario)",
+        "valueString" : "5584486647"
+      }],
+      "mustSupport" : true,
+      "isModifier" : false
+    },
+    {
+      "id" : "Patient.name",
+      "path" : "Patient.name",
+      "min" : 1,
+      "constraint" : [{
+        "key" : "ca-core-8",
+        "severity" : "error",
+        "human" : "Patient.name.given  or Patient.name.family or both SHALL be present",
+        "expression" : "family.exists() or given.exists()"
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.name.family",
+      "path" : "Patient.name.family",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.name.given",
+      "path" : "Patient.name.given",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.telecom",
+      "path" : "Patient.telecom",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.telecom.system",
+      "path" : "Patient.telecom.system",
+      "min" : 1,
+      "mustSupport" : true,
+      "binding" : {
+        "strength" : "required",
+        "description" : "Telecommunications form for contact point.",
+        "valueSet" : "http://hl7.org/fhir/ValueSet/contact-point-system"
       }
-    ]
+    },
+    {
+      "id" : "Patient.telecom.value",
+      "path" : "Patient.telecom.value",
+      "min" : 1,
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.gender",
+      "path" : "Patient.gender",
+      "min" : 1,
+      "mustSupport" : true,
+      "binding" : {
+        "strength" : "required",
+        "description" : "The gender of a person used for administrative purposes.",
+        "valueSet" : "http://hl7.org/fhir/ValueSet/administrative-gender"
+      }
+    },
+    {
+      "id" : "Patient.birthDate",
+      "path" : "Patient.birthDate",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.address",
+      "path" : "Patient.address",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.address.line",
+      "path" : "Patient.address.line",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.address.city",
+      "path" : "Patient.address.city",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.address.state",
+      "path" : "Patient.address.state",
+      "mustSupport" : true,
+      "binding" : {
+        "strength" : "extensible",
+        "description" : "This value set defines canadian province and terriroty codes",
+        "valueSet" : "http://ehealthontario.ca/fhir/ValueSet/province-state-code"
+      }
+    },
+    {
+      "id" : "Patient.address.postalCode",
+      "path" : "Patient.address.postalCode",
+      "short" : "Canadian Postal Codes",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.communication",
+      "path" : "Patient.communication",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Patient.communication.language",
+      "path" : "Patient.communication.language",
+      "mustSupport" : true
+    }]
   }
 }
