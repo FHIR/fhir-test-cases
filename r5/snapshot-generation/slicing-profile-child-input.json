@@ -1,0 +1,83 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "slicing-profile-child",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/slicing-profile-child",
+  "version" : "0.1.0",
+  "name" : "slicing-profile-child",
+  "status" : "draft",
+  "date" : "2025-02-26T12:27:18+11:00",
+  "publisher" : "Example Publisher",
+  "contact" : [{
+    "name" : "Example Publisher",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://example.org/example-publisher"
+    }]
+  }],
+  "description" : "An example reproducing an issue with reslicing extensions.",
+  "fhirVersion" : "5.0.0",
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "AuditEvent",
+  "baseDefinition" : "http://hl7.org/fhir/test/StructureDefinition/slicing-profile-parent",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "AuditEvent",
+      "path" : "AuditEvent"
+    },
+    {
+      "id" : "AuditEvent.agent.extension",
+      "path" : "AuditEvent.agent.extension",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "url"
+        },
+        {
+          "type" : "pattern",
+          "path" : "value.ofType(Identifier).system"
+        }],
+        "ordered" : false,
+        "rules" : "open"
+      }
+    },
+    {
+      "id" : "AuditEvent.agent.extension:altid",
+      "path" : "AuditEvent.agent.extension",
+      "sliceName" : "altid",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Extension",
+        "profile" : ["http://hl7.org/fhir/StructureDefinition/auditevent-AlternativeUserID"]
+      }]
+    },
+    {
+      "id" : "AuditEvent.agent.extension:altid/npi",
+      "path" : "AuditEvent.agent.extension",
+      "sliceName" : "altid/npi",
+      "min" : 0,
+      "max" : "1"
+    },
+    {
+      "id" : "AuditEvent.agent.extension:altid/npi.value[x].system",
+      "path" : "AuditEvent.agent.extension.value[x].system",
+      "min" : 1,
+      "patternUri" : "http://hl7.org/fhir/sid/us-npi"
+    },
+    {
+      "id" : "AuditEvent.agent.extension:altid/ssn",
+      "path" : "AuditEvent.agent.extension",
+      "sliceName" : "altid/ssn",
+      "min" : 0,
+      "max" : "1"
+    },
+    {
+      "id" : "AuditEvent.agent.extension:altid/ssn.value[x].system",
+      "path" : "AuditEvent.agent.extension.value[x].system",
+      "min" : 1,
+      "patternUri" : "http://hl7.org/fhir/sid/us-ssn"
+    }]
+  }
+}
