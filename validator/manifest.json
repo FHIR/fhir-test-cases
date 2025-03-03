@@ -8159,17 +8159,6 @@
               },
               {
                 "severity": "warning",
-                "code": "code-invalid",
-                "details": {
-                  "text": "None of the codings provided are in the value set 'Vital Signs' (http://hl7.org/fhir/ValueSet/observation-vitalsignresult|5.0.0), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://loinc.org#8480-6, http://snomed.info/sct#271649006, http://fhir.ch/ig/local#3456)"
-                },
-                "diagnostics": "[196,9]",
-                "expression": [
-                  "Observation.component[0].code"
-                ]
-              },
-              {
-                "severity": "warning",
                 "code": "not-found",
                 "details": {
                   "text": "A definition for CodeSystem 'http://fhir.ch/ig/local' could not be found, so the code cannot be validated"
@@ -8177,17 +8166,6 @@
                 "diagnostics": "[229,9]",
                 "expression": [
                   "Observation.component[1].code.coding[1]"
-                ]
-              },
-              {
-                "severity": "warning",
-                "code": "code-invalid",
-                "details": {
-                  "text": "None of the codings provided are in the value set 'Vital Signs' (http://hl7.org/fhir/ValueSet/observation-vitalsignresult|5.0.0), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://loinc.org#8462-4, http://fhir.ch/ig/local#7890)"
-                },
-                "diagnostics": "[229,9]",
-                "expression": [
-                  "Observation.component[1].code"
                 ]
               },
               {
@@ -8311,17 +8289,6 @@
               ]
             },
             {
-              "severity": "warning",
-              "code": "code-invalid",
-              "details": {
-                "text": "None of the codings provided are in the value set 'Vital Signs' (http://hl7.org/fhir/ValueSet/observation-vitalsignresult|5.0.0), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://loinc.org#8480-6, http://snomed.info/sct#271649006, http://fhir.ch/ig/local#3456)"
-              },
-              "diagnostics": "[196,9]",
-              "expression": [
-                "Observation.component[0].code"
-              ]
-            },
-            {
               "extension": [
                 {
                   "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-slicetext",
@@ -8353,17 +8320,6 @@
               "diagnostics": "[207,12]",
               "expression": [
                 "Observation.component[0].code.coding[2]"
-              ]
-            },
-            {
-              "severity": "warning",
-              "code": "code-invalid",
-              "details": {
-                "text": "None of the codings provided are in the value set 'Vital Signs' (http://hl7.org/fhir/ValueSet/observation-vitalsignresult|5.0.0), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://loinc.org#8462-4, http://fhir.ch/ig/local#7890)"
-              },
-              "diagnostics": "[229,9]",
-              "expression": [
-                "Observation.component[1].code"
               ]
             },
             {
@@ -51978,9 +51934,35 @@
     {
       "name": "slicing-parent-slice",
       "file": "slicing-instance.json",
-      "supporting" : ["slicing-profile-child.json", "slicing-profile-parent.json"],
+      "supporting": [
+        "slicing-profile-child.json",
+        "slicing-profile-parent.json"
+      ],
       "version": "5.0",
       "java": {}
+    },
+    {
+      "name": "narrative-empty",
+      "file": "narrative-empty.xml",
+      "version": "5.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "invariant",
+              "details": {
+                "text": "Constraint failed: txt-2: 'The narrative SHALL have some non-whitespace content' (defined in http://hl7.org/fhir/StructureDefinition/Narrative)"
+              },
+              "diagnostics": "[4,47]",
+              "expression": [
+                "Patient.text.div"
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "name": "zzz",
