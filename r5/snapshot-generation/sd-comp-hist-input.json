@@ -1,0 +1,851 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "im-composition",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm",
+    "valueInteger" : 1
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status",
+    "valueCode" : "draft"
+  }],
+  "url" : "http://hl7.eu/fhir/imaging/StructureDefinition/im-composition",
+  "version" : "0.1.0",
+  "name" : "ImComposition",
+  "title" : "Imaging Composition",
+  "status" : "draft",
+  "date" : "2025-03-05T11:23:41+11:00",
+  "publisher" : "HL7 Europe",
+  "contact" : [{
+    "name" : "HL7 Europe",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://hl7.eu"
+    }]
+  }],
+  "description" : "Clinical document used to represent a Imaging Study Report for the scope of the HL7 Europe project.",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "150",
+      "display" : "Europe"
+    }]
+  }],
+  "copyright" : "Used by permission of HL7 Europe, all rights reserved Creative Commons License",
+  "fhirVersion" : "5.0.0",
+  "mapping" : [{
+    "identity" : "workflow",
+    "uri" : "http://hl7.org/fhir/workflow",
+    "name" : "Workflow Pattern"
+  },
+  {
+    "identity" : "rim",
+    "uri" : "http://hl7.org/v3",
+    "name" : "RIM Mapping"
+  },
+  {
+    "identity" : "cda",
+    "uri" : "http://hl7.org/v3/cda",
+    "name" : "CDA (R2)"
+  },
+  {
+    "identity" : "fhirdocumentreference",
+    "uri" : "http://hl7.org/fhir/documentreference",
+    "name" : "FHIR DocumentReference"
+  },
+  {
+    "identity" : "w5",
+    "uri" : "http://hl7.org/fhir/fivews",
+    "name" : "FiveWs Pattern Mapping"
+  }],
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Composition",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/clinicaldocument",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Composition",
+      "path" : "Composition",
+      "short" : "Imaging Report composition",
+      "definition" : "Imaging Study Report composition.\n\nA composition is a set of healthcare-related information that is assembled together into a single logical document that \nprovides a single coherent statement of meaning, establishes its own context and that has clinical attestation with regard \nto who is making the statement.\n\nWhile a Composition defines the structure, it does not actually contain the content: rather the full content of a document is contained in a Bundle, \nof which the Composition is the first resource contained.\n\n\nThe `text` field of each section SHALL contain a textual representation of all listed entries."
+    },
+    {
+      "id" : "Composition.meta.security",
+      "path" : "Composition.meta.security",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.language",
+      "path" : "Composition.language",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.extension",
+      "path" : "Composition.extension",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "url"
+        }],
+        "ordered" : false,
+        "rules" : "open"
+      },
+      "min" : 1
+    },
+    {
+      "id" : "Composition.extension:diagnosticreport-reference",
+      "path" : "Composition.extension",
+      "sliceName" : "diagnosticreport-reference",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "Extension",
+        "profile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-composition-diagnosticReportReference"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.extension:basedOn",
+      "path" : "Composition.extension",
+      "sliceName" : "basedOn",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Extension",
+        "profile" : ["http://hl7.org/fhir/StructureDefinition/event-basedOn"]
+      }]
+    },
+    {
+      "id" : "Composition.extension:basedOn.value[x]",
+      "path" : "Composition.extension.value[x]",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.org/fhir/StructureDefinition/ServiceRequest"]
+      }]
+    },
+    {
+      "id" : "Composition.extension:informationRecipient",
+      "path" : "Composition.extension",
+      "sliceName" : "informationRecipient",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Extension",
+        "profile" : ["http://hl7.eu/fhir/StructureDefinition/information-recipient"]
+      }]
+    },
+    {
+      "id" : "Composition.extension:informationRecipient.value[x]",
+      "path" : "Composition.extension.value[x]",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-information-recipient"]
+      }]
+    },
+    {
+      "id" : "Composition.extension:artifactVersion",
+      "path" : "Composition.extension",
+      "sliceName" : "artifactVersion",
+      "min" : 0,
+      "max" : "1",
+      "type" : [{
+        "code" : "Extension",
+        "profile" : ["http://hl7.org/fhir/StructureDefinition/artifact-version"]
+      }]
+    },
+    {
+      "id" : "Composition.identifier",
+      "path" : "Composition.identifier",
+      "short" : "Report identifier",
+      "definition" : "Identifiers assigned to this Imaging Report by the performer or other systems. It shall be common to several report versions",
+      "comment" : "Composition.identifier SHALL be equal to one of the DiagnosticReport.identifier, if at least one exists"
+    },
+    {
+      "id" : "Composition.status",
+      "path" : "Composition.status",
+      "short" : "Status of the Report",
+      "comment" : "DiagnosticReport.status and Composition.status shall be aligned"
+    },
+    {
+      "id" : "Composition.type",
+      "path" : "Composition.type",
+      "short" : "Type of Imaging Diagnostic Report",
+      "definition" : "Specifies that it refers to a Imaging Report",
+      "comment" : "At least one DiagnosticReport.code.coding and Composition.type.coding SHALL be equal",
+      "binding" : {
+        "strength" : "preferred",
+        "valueSet" : "http://hl7.eu/fhir/imaging/ValueSet/im-reportType-eu-lab"
+      }
+    },
+    {
+      "id" : "Composition.subject",
+      "path" : "Composition.subject",
+      "min" : 1,
+      "max" : "1",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-patient"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.date",
+      "path" : "Composition.date",
+      "short" : "Date the report was last changed.",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.author",
+      "path" : "Composition.author",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "profile",
+          "path" : "$this"
+        }],
+        "ordered" : false,
+        "rules" : "open"
+      },
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.author:author",
+      "path" : "Composition.author",
+      "sliceName" : "author",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-practitioner-role"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.author:authoring-device",
+      "path" : "Composition.author",
+      "sliceName" : "authoring-device",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-authoring-device"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.attester",
+      "extension" : [{
+        "extension" : [{
+          "url" : "code",
+          "valueCode" : "SHALL:populate-if-known"
+        },
+        {
+          "url" : "actor",
+          "valueCanonical" : "http://hl7.eu/fhir/imaging/ActorDefinition/ImProducer"
+        }],
+        "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
+      }],
+      "path" : "Composition.attester",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "$this.mode"
+        }],
+        "ordered" : false,
+        "rules" : "open"
+      },
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.attester:legalAuthenticator",
+      "path" : "Composition.attester",
+      "sliceName" : "legalAuthenticator",
+      "min" : 0,
+      "max" : "*",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.attester:legalAuthenticator.mode",
+      "path" : "Composition.attester.mode",
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "code" : "legal"
+        }]
+      },
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.attester:legalAuthenticator.party",
+      "path" : "Composition.attester.party",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-legal-authenticator"]
+      }]
+    },
+    {
+      "id" : "Composition.attester:resultValidator",
+      "path" : "Composition.attester",
+      "sliceName" : "resultValidator",
+      "min" : 0,
+      "max" : "*",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.attester:resultValidator.mode",
+      "path" : "Composition.attester.mode",
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "code" : "professional"
+        }]
+      },
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.attester:resultValidator.party",
+      "path" : "Composition.attester.party",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-result-validator"]
+      }]
+    },
+    {
+      "id" : "Composition.custodian",
+      "extension" : [{
+        "extension" : [{
+          "url" : "code",
+          "valueCode" : "SHALL:populate-if-known"
+        },
+        {
+          "url" : "actor",
+          "valueCanonical" : "http://hl7.eu/fhir/imaging/ActorDefinition/ImProducer"
+        }],
+        "url" : "http://hl7.org/fhir/StructureDefinition/obligation"
+      }],
+      "path" : "Composition.custodian",
+      "short" : "Organization that manages the Imaging Report",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-organization"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section",
+      "path" : "Composition.section",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "code"
+        }],
+        "ordered" : false,
+        "rules" : "open"
+      },
+      "min" : 9,
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section.title",
+      "path" : "Composition.section.title",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section.code",
+      "path" : "Composition.section.code",
+      "min" : 1,
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section.text",
+      "path" : "Composition.section.text",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section.entry",
+      "path" : "Composition.section.entry",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:imagingstudy",
+      "path" : "Composition.section",
+      "sliceName" : "imagingstudy",
+      "short" : "Imaging Study",
+      "definition" : "This section holds information related to the imaging studies covered by this report.",
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:imagingstudy.code",
+      "path" : "Composition.section.code",
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://loinc.org",
+          "code" : "18726-0"
+        }]
+      }
+    },
+    {
+      "id" : "Composition.section:imagingstudy.entry",
+      "path" : "Composition.section.entry",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "profile",
+          "path" : "$this"
+        }],
+        "ordered" : false,
+        "rules" : "open"
+      },
+      "min" : 1
+    },
+    {
+      "id" : "Composition.section:imagingstudy.entry:imagingstudy",
+      "path" : "Composition.section.entry",
+      "sliceName" : "imagingstudy",
+      "short" : "Imaging Study Reference",
+      "definition" : "This entry holds a reference to the Imaging Study instance that is associated with this Composition.",
+      "min" : 1,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-imagingstudy"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:order",
+      "path" : "Composition.section",
+      "sliceName" : "order",
+      "short" : "Order",
+      "definition" : "This section holds information related to the order for the imaging study.",
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:order.code",
+      "path" : "Composition.section.code",
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://loinc.org",
+          "code" : "55115-0",
+          "display" : "Order"
+        }]
+      }
+    },
+    {
+      "id" : "Composition.section:order.entry",
+      "path" : "Composition.section.entry",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "profile",
+          "path" : "\"\"$this\"\""
+        }],
+        "ordered" : false,
+        "rules" : "open"
+      }
+    },
+    {
+      "id" : "Composition.section:order.entry:order",
+      "path" : "Composition.section.entry",
+      "sliceName" : "order",
+      "short" : "Order reference",
+      "definition" : "This entry holds a reference to the order for the Imaging Study and report.",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-order"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:order.entry:orderPlacer",
+      "path" : "Composition.section.entry",
+      "sliceName" : "orderPlacer",
+      "short" : "Order Placer",
+      "definition" : "This entry holds a reference to order placer.",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-order-placer"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:order.entry:insurance",
+      "path" : "Composition.section.entry",
+      "sliceName" : "insurance",
+      "short" : "Insurrance",
+      "definition" : "This entry holds a reference to insurance.",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-coverage"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:order.entry:insurranceprovider",
+      "path" : "Composition.section.entry",
+      "sliceName" : "insurranceprovider",
+      "short" : "Insurrance",
+      "definition" : "This entry holds a reference to insurance provider.",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-health-insurance-provider"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:history",
+      "path" : "Composition.section",
+      "sliceName" : "history",
+      "short" : "History",
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:history.code",
+      "path" : "Composition.section.code",
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://loinc.org",
+          "code" : "11329-0",
+          "display" : "History"
+        }]
+      }
+    },
+    {
+      "id" : "Composition.section:procedure",
+      "path" : "Composition.section",
+      "sliceName" : "procedure",
+      "short" : "Procedure",
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:procedure.code",
+      "path" : "Composition.section.code",
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://loinc.org",
+          "code" : "55111-9",
+          "display" : "Procedure"
+        }]
+      }
+    },
+    {
+      "id" : "Composition.section:procedure.entry",
+      "path" : "Composition.section.entry",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "profile",
+          "path" : "$this"
+        }],
+        "ordered" : false,
+        "rules" : "open"
+      }
+    },
+    {
+      "id" : "Composition.section:procedure.entry:procedure",
+      "path" : "Composition.section.entry",
+      "sliceName" : "procedure",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-procedure"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:procedure.entry:performer",
+      "path" : "Composition.section.entry",
+      "sliceName" : "performer",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-performer"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:procedure.entry:imaging-device",
+      "path" : "Composition.section.entry",
+      "sliceName" : "imaging-device",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-imaging-device"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:procedure.entry:imaging-phase",
+      "path" : "Composition.section.entry",
+      "sliceName" : "imaging-phase",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-imaging-study-phase"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:procedure.entry:medication",
+      "path" : "Composition.section.entry",
+      "sliceName" : "medication",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-medication-administration"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:comparison",
+      "path" : "Composition.section",
+      "sliceName" : "comparison",
+      "short" : "History",
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:comparison.code",
+      "path" : "Composition.section.code",
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://loinc.org",
+          "code" : "18834-2",
+          "display" : "Comparison"
+        }]
+      }
+    },
+    {
+      "id" : "Composition.section:comparison.entry",
+      "path" : "Composition.section.entry",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "profile",
+          "path" : "$this"
+        }],
+        "ordered" : false,
+        "rules" : "open"
+      }
+    },
+    {
+      "id" : "Composition.section:comparison.entry:comparedstudy",
+      "path" : "Composition.section.entry",
+      "sliceName" : "comparedstudy",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-imagingstudy",
+        "http://hl7.eu/fhir/imaging/StructureDefinition/ImImagingSelection"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:findings",
+      "path" : "Composition.section",
+      "sliceName" : "findings",
+      "short" : "Findings",
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:findings.code",
+      "path" : "Composition.section.code",
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://loinc.org",
+          "code" : "59776-5",
+          "display" : "Findings"
+        }]
+      }
+    },
+    {
+      "id" : "Composition.section:findings.entry",
+      "path" : "Composition.section.entry",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "profile",
+          "path" : "$this"
+        }],
+        "ordered" : false,
+        "rules" : "open"
+      }
+    },
+    {
+      "id" : "Composition.section:findings.entry:finding",
+      "path" : "Composition.section.entry",
+      "sliceName" : "finding",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-finding"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:findings.entry:keyimage",
+      "path" : "Composition.section.entry",
+      "sliceName" : "keyimage",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-keyimages-document-reference",
+        "http://hl7.eu/fhir/imaging/StructureDefinition/im-keyimages-imaging-selection"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:impression",
+      "path" : "Composition.section",
+      "sliceName" : "impression",
+      "short" : "Impressions",
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:impression.code",
+      "path" : "Composition.section.code",
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://loinc.org",
+          "code" : "19005-8",
+          "display" : "Impression"
+        }]
+      }
+    },
+    {
+      "id" : "Composition.section:impression.entry",
+      "path" : "Composition.section.entry",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "profile",
+          "path" : "$this"
+        }],
+        "ordered" : false,
+        "rules" : "open"
+      }
+    },
+    {
+      "id" : "Composition.section:impression.entry:finding",
+      "path" : "Composition.section.entry",
+      "sliceName" : "finding",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-finding"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:impression.entry:impression",
+      "path" : "Composition.section.entry",
+      "sliceName" : "impression",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-impression"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:impression.entry:keyimage",
+      "path" : "Composition.section.entry",
+      "sliceName" : "keyimage",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-keyimages-document-reference",
+        "http://hl7.eu/fhir/imaging/StructureDefinition/im-keyimages-imaging-selection"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:recommendation",
+      "path" : "Composition.section",
+      "sliceName" : "recommendation",
+      "short" : "Recommendations",
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:recommendation.code",
+      "path" : "Composition.section.code",
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://loinc.org",
+          "code" : "18783-1",
+          "display" : "Recommendation"
+        }]
+      }
+    },
+    {
+      "id" : "Composition.section:recommendation.entry",
+      "path" : "Composition.section.entry",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "profile",
+          "path" : "$this"
+        }],
+        "ordered" : false,
+        "rules" : "open"
+      }
+    },
+    {
+      "id" : "Composition.section:recommendation.entry:recommendedCarePlan",
+      "path" : "Composition.section.entry",
+      "sliceName" : "recommendedCarePlan",
+      "min" : 0,
+      "max" : "*",
+      "type" : [{
+        "code" : "Reference",
+        "targetProfile" : ["http://hl7.eu/fhir/imaging/StructureDefinition/im-recommended-careplan"]
+      }],
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:communication",
+      "path" : "Composition.section",
+      "sliceName" : "communication",
+      "short" : "Communications",
+      "min" : 1,
+      "max" : "1",
+      "mustSupport" : true
+    },
+    {
+      "id" : "Composition.section:communication.code",
+      "path" : "Composition.section.code",
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://loinc.org",
+          "code" : "18783-1",
+          "display" : "Communication"
+        }]
+      }
+    }]
+  }
+}
