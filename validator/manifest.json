@@ -52227,6 +52227,150 @@
       "java": {}
     },
     {
+      "name": "vs-params-1",
+      "file": "vs-params-1.json",
+      "module": "tx-advanced",
+      "description": "valid use of ValueSet Parameters",
+      "version": "4.0",
+      "java": {}
+    },
+    {
+      "name": "vs-params-2",
+      "file": "vs-params-2.json",
+      "module": "tx-advanced",
+      "description": "Use wrong parameter",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "exception",
+              "details": {
+                "text": "The filter parameter expression '%p-inactive3' refers to the unknown parameter 'p-inactive3'"
+              },
+              "diagnostics": "[25,14]",
+              "expression": [
+                "ValueSet.compose.include[0].filter[0].extension[0].value.ofType(Expression)"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "The value set parameter 'p-inactive' is not used"
+              },
+              "diagnostics": "[3,4]",
+              "expression": [
+                "ValueSet.extension[1]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vs-params-3",
+      "file": "vs-params-3.json",
+      "module": "tx-advanced",
+      "description": "Bad expression",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "exception",
+              "details": {
+                "text": "The value of the expression '$ and %p-inactive' is not a valid FHIRPath: Error @1, 2: Found $ expecting a valid token name"
+              },
+              "diagnostics": "[25,14]",
+              "expression": [
+                "ValueSet.compose.include[0].filter[0].extension[0].value.ofType(Expression)"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "The value set parameter 'p-inactive' is not used"
+              },
+              "diagnostics": "[3,4]",
+              "expression": [
+                "ValueSet.extension[1]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vs-params-4",
+      "file": "vs-params-4.json",
+      "module": "tx-advanced",
+      "description": "bad language",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "A ValueSet expression language must be 'text/fhirpath' not 'text/cql'"
+              },
+              "diagnostics": "[25,14]",
+              "expression": [
+                "ValueSet.compose.include[0].filter[0].extension[0].value.ofType(Expression)"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "The value set parameter 'p-inactive' is not used"
+              },
+              "diagnostics": "[3,4]",
+              "expression": [
+                "ValueSet.extension[1]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "vs-params-q",
+      "file": "vs-params-q.json",
+      "module": "tx-advanced",
+      "description": "checking binding validation for value set parameters",
+      "version": "4.0",
+      "supporting": [
+        "vs-params-1.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "The binding parameter 'language' is not recognised as a standard parameter or a parameter on the ValueSet 'http://example.com/ValueSet/parameterised'"
+              },
+              "diagnostics": "[4,4]",
+              "expression": [
+                "Questionnaire.item[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
       "name": "zzz",
       "file": "zzz.json",
       "description": "hack to close ups",

@@ -1,0 +1,34 @@
+{
+  "resourceType": "ValueSet",
+  "extension" : [{
+    "url": "http://hl7.org/fhir/tools/StructureDefinition/valueset-parameter",
+    "extension" : [{
+      "url": "name",
+      "valueCode" : "p-inactive"
+    }, {
+      "url": "documentation",
+      "valueMarkdown" : "whether the record is inactive or not"
+    }]
+  }],
+  "url": "http://example.com/ValueSet/parameterised",
+  "status" : "active",
+  "compose": {
+    "include": [{
+      "valueSet": [ "http://snomed.info/sct?fhir_vs=refset/929360041000036105" ],
+      "system": "http://snomed.info/sct",
+      "filter": [{
+        "property": "inactive",
+        "op": "=",
+        "_value": {
+          "extension" :[{
+            "url" : "http://hl7.org/fhir/StructureDefinition/cqf-expression",
+            "valueExpression" : {
+              "language" : "text/cql",
+              "expression" : "%p-inactive"
+            }
+          }]
+        }
+      }]
+    }]
+  }
+}
