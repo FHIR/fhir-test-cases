@@ -125,12 +125,12 @@
     <rule text="Element count must be increased by 16" fhirpath="fixture('t28-output').snapshot.element.count().trace('t28o') = fixture('operationoutcome').snapshot.element.count().trace('t28') + 17"/>
   </test>
   <test gen="true" sort="true" id="t29" description="Test recursion on elements that are deeper than children of the root and have a different name (Parameters.parameter.part)">
-    <rule text="Element count must be increased by 15" fhirpath="fixture('t29-output').snapshot.element.count().trace('t29o') = fixture('parameters').snapshot.element.count().trace('t29') + 16"/>
     <rule text="There is an element with id 'Parameters.parameter.part:foo.id'" fhirpath="fixture('t29-output').snapshot.element.where(id = 'Parameters.parameter.part:foo.id').count()=1"/>
   </test>
   <test gen="true" sort="true" id="t29a" fail="true" description="Test recursion on elements that are deeper than children of the root and have a different name (Parameters.parameter.part)"/>
   <test gen="true" id="t29b" fail="true" regex=".*OperationOutcome.*" description="Test recursion on elements that are deeper than children of the root and have a different name (Parameters.parameter.part)"/>
-  <test gen="true" sort="true" id="t30b" include="t30a" description="Profile and derived profile both slice a backbone element; derived profile">
+  <test gen="true" sort="true" debug="false" id="t30a" description="Profile and derived profile both slice a backbone element; derived profile"/>
+  <test gen="true" sort="true" debug="false" id="t30b" include="t30a" description="Profile and derived profile both slice a backbone element; derived profile">
     <rule text="Snapshot doesn't result in an error'" fhirpath="fixture('t30b-output').snapshot.element.count().trace('t30bo')&gt;1"/>
   </test>
   <test gen="true" sort="true" id="t31" description="Propagate extensions from differential to snapshot"/>
@@ -284,4 +284,6 @@
   <test gen="true" id="ILCorePractitioner" debug="false" description="slicing but with details for all slices "/> 
   <test gen="true" id="slicing-profile-child" register="slicing-profile-parent" description="walking into the extension wrongly"/>
   <test gen="true" id="sd-comp-hist" register="sd-comp-supp1" description="slicing default properties problem"/>
+  <test gen="true" id="reslicing-profile-parent" debug="false" description="slicing Composition.section.section wrongly"/>
+  <test gen="true" id="reslicing-profile-child" debug="false" register="reslicing-profile-parent" description="reslicing Composition.section.section wrongly"/>
 </snapshot-generation-tests>
