@@ -52781,6 +52781,16 @@
               "expression": [
                 "StructureDefinition"
               ]
+            },
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "Slicing is not allowed at the root of a profile"
+              },
+              "expression": [
+                "StructureDefinition.differential.element[0]"
+              ]
             }
           ]
         }
@@ -63885,6 +63895,70 @@
               "diagnostics": "[4,4]",
               "expression": [
                 "Questionnaire.item[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "profile-compliesWith",
+      "file": "profile-compliesWith-derived.json",
+      "module": "profile",
+      "description": "Check that compliesWith says an identical profile is ok",
+      "version": "4.0",
+      "packages": [
+        "hl7.fhir.us.core#8.0.0-ballot"
+      ],
+      "supporting": [
+        "profile-compliesWith-base.json"
+      ],
+      "java": {}
+    },
+    {
+      "name": "bundle-explicit-version-5",
+      "file": "bundle-explicit-version.xml",
+      "module": "versions",
+      "description": "checking explicit statement of version for the expected version",
+      "version": "5.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "structure",
+              "details": {
+                "text": "Profile for this version of FHIR - all OK"
+              },
+              "diagnostics": "[1,37]",
+              "expression": [
+                "Bundle.meta.profile[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "bundle-explicit-version-4",
+      "file": "bundle-explicit-version.xml",
+      "module": "versions",
+      "description": "checking explicit statement of version for the wrong version",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "structure",
+              "details": {
+                "text": "Profile is for a different version of FHIR (5.0) so has been ignored"
+              },
+              "diagnostics": "[1,37]",
+              "expression": [
+                "Bundle.meta.profile[0]"
               ]
             }
           ]
