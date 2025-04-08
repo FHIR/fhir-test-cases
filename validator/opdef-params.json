@@ -1,0 +1,64 @@
+{
+  "resourceType" : "OperationDefinition",
+  "id" : "opdef-params",
+  "url" : "http://hl7.org/fhir/test/OperationDefinition/opdef-parameters",
+  "version" : "2.1.0",
+  "name" : "DTRNextQuestion",
+  "title" : "DTR Next Question Operation",
+  "status" : "active",
+  "kind" : "operation",
+  "date" : "2025-04-07T18:19:56+00:00",
+  "publisher" : "HL7 International / Clinical Decision Support",
+  "contact" : [{
+    "name" : "HL7 International / Clinical Decision Support",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/dss"
+    }]
+  }],
+  "description" : "The Next Question operation is used for *adaptive questionnaires*.  For specific details, see the [SDC Next Question operation](http://hl7.org/fhir/uv/sdc/OperationDefinition/Questionnaire-next-question).",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "urn:iso:std:iso:3166",
+      "code" : "US"
+    }]
+  }],
+  "code" : "next-question",
+  "comment" : "To return a calculated score for the questionnaire or group of items, the service may return a `readOnly` question with the score value in the corresponding QuestionnaireResponse.item.  The extension `questionnaire-hidden` can be included on the Questionnaire.item to indicate to the client that it should not be displayed to the end user",
+  "base" : "http://hl7.org/fhir/uv/sdc/OperationDefinition/Questionnaire-next-question",
+  "resource" : ["Questionnaire"],
+  "system" : false,
+  "type" : true,
+  "instance" : false,
+  "inputProfile" : "http://hl7.org/fhir/test/StructureDefinition/op-def-in-profile",
+  "outputProfile" : "http://hl7.org/fhir/test/StructureDefinition/op-def-out-profile",
+  "parameter" : [{
+    "name" : "questionnaire-response-in",
+    "use" : "in",
+    "min" : 1,
+    "max" : "1",
+    "documentation" : "The [DTR QuestionnaireResponse Profile](StructureDefinition-dtr-questionnaireresponse.html) of the QuestionnaireResponse resource with a *contained* Questionnaire.  When invoking the operation for the first time, neither the QuestionnaireResponse nor the contained Questionnaire will have any items, as no questions are yet known.  In subsequent calls, the QuestionnaireResponse will include answers to all required questions asked so far and the contained QuestionnaireResponse will remain the same as provided back from the operation in the preceding response.",
+    "type" : "Resource"
+  },{
+    "name" : "questionnaire",
+    "use" : "in",
+    "min" : 0,
+    "max" : "*",
+    "documentation" : "The [DTR QuestionnaireResponse Profile](StructureDefinition-dtr-questionnaireresponse.html) of the QuestionnaireResponse resource with a *contained* Questionnaire.  When invoking the operation for the first time, neither the QuestionnaireResponse nor the contained Questionnaire will have any items, as no questions are yet known.  In subsequent calls, the QuestionnaireResponse will include answers to all required questions asked so far and the contained QuestionnaireResponse will remain the same as provided back from the operation in the preceding response.",
+    "type" : "QuestionnaireResponse"
+  },{
+    "name" : "questionnaire",
+    "use" : "out",
+    "min" : 1,
+    "max" : "1",
+    "documentation" : "The [DTR QuestionnaireResponse Profile](StructureDefinition-dtr-questionnaireresponse.html) of the QuestionnaireResponse resource with a *contained* Questionnaire.  When invoking the operation for the first time, neither the QuestionnaireResponse nor the contained Questionnaire will have any items, as no questions are yet known.  In subsequent calls, the QuestionnaireResponse will include answers to all required questions asked so far and the contained QuestionnaireResponse will remain the same as provided back from the operation in the preceding response.",
+    "type" : "Questionnaire"
+  },{
+    "name" : "questionnaire-response-out",
+    "use" : "out",
+    "min" : 1,
+    "max" : "1",
+    "documentation" : "The [DTR QuestionnaireResponse Profile](StructureDefinition-dtr-questionnaireresponse.html) of the QuestionnaireResponse resource with a *contained* Questionnaire.  The Server updates the QuestionnaireResponse's contained Questionnaire by appending with the next question or questions ittems and any score or instruction items and returns the QuestionnaireResponse (with all answers completed thus far plus any calculated scores) as this parameter.  When the questionnaire is complete, the Server updates the status of the QuestionnaireResponse resource parameter to `complete`.",
+    "type" : "Resource"
+  }]
+}

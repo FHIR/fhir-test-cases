@@ -1,0 +1,119 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "op-def-out-profile",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/op-def-out-profile",
+  "version" : "2.1.0",
+  "name" : "DTRQuestionnaireNextQuestionnaireOutputParameters",
+  "title" : "DTR Next Question Output Parameters",
+  "status" : "active",
+  "date" : "2025-04-07T18:19:56+00:00",
+  "publisher" : "HL7 International / Clinical Decision Support",
+  "contact" : [{
+    "name" : "HL7 International / Clinical Decision Support",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/dss"
+    }]
+  }],
+  "description" : "Profile used to validate the parameters that are the output of the 'next question' adaptive questionnaire operation",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "urn:iso:std:iso:3166",
+      "code" : "US"
+    }]
+  }],
+  "fhirVersion" : "4.0.1",
+  "mapping" : [{
+    "identity" : "v2",
+    "uri" : "http://hl7.org/v2",
+    "name" : "HL7 v2 Mapping"
+  },
+  {
+    "identity" : "rim",
+    "uri" : "http://hl7.org/v3",
+    "name" : "RIM Mapping"
+  }],
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Parameters",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Parameters",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Parameters",
+      "path" : "Parameters"
+    },
+    {
+      "id" : "Parameters.parameter",
+      "path" : "Parameters.parameter",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "name"
+        }],
+        "rules" : "open"
+      },
+      "min" : 1
+    },
+    {
+      "id" : "Parameters.parameter:QuestionnaireResponse",
+      "path" : "Parameters.parameter",
+      "sliceName" : "QuestionnaireResponse",
+      "min" : 1,
+      "max" : "1"
+    },
+    {
+      "id" : "Parameters.parameter:QuestionnaireResponse.name",
+      "path" : "Parameters.parameter.name",
+      "fixedString" : "out"
+    },
+    {
+      "id" : "Parameters.parameter:QuestionnaireResponse.value[x]",
+      "path" : "Parameters.parameter.value[x]",
+      "max" : "0"
+    },
+    {
+      "id" : "Parameters.parameter:QuestionnaireResponse.resource",
+      "path" : "Parameters.parameter.resource",
+      "type" : [{
+        "code" : "QuestionnaireResponse",
+        "profile" : ["http://hl7.org/fhir/us/davinci-dtr/StructureDefinition/dtr-questionnaireresponse"]
+      }]
+    },
+    {
+      "id" : "Parameters.parameter:QuestionnaireResponse.part",
+      "path" : "Parameters.parameter.part",
+      "max" : "0"
+    },
+    {
+      "id" : "Parameters.parameter:questionnaire",
+      "path" : "Parameters.parameter",
+      "sliceName" : "questionnaire",
+      "min" : 1,
+      "max" : "1"
+    },
+    {
+      "id" : "Parameters.parameter:questionnaire.name",
+      "path" : "Parameters.parameter.name",
+      "fixedString" : "questionnaire"
+    },
+    {
+      "id" : "Parameters.parameter:questionnaire.value[x]",
+      "path" : "Parameters.parameter.value[x]",
+      "max" : "0"
+    },
+    {
+      "id" : "Parameters.parameter:questionnaire.resource",
+      "path" : "Parameters.parameter.resource",
+      "type" : [{
+        "code" : "QuestionnaireResponse",
+        "profile" : ["http://hl7.org/fhir/us/davinci-dtr/StructureDefinition/dtr-questionnaireresponse"]
+      }]
+    },
+    {
+      "id" : "Parameters.parameter:questionnaire.part",
+      "path" : "Parameters.parameter.part",
+      "max" : "0"
+    }]
+  }
+}

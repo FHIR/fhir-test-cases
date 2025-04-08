@@ -63966,6 +63966,190 @@
       }
     },
     {
+      "name": "opdef-params",
+      "file": "opdef-params.json",
+      "module": "sd",
+      "description": "cross-checking parameter definitions",
+      "version": "4.0",
+      "supporting": [
+        "opdef-in-profile.json",
+        "opdef-out-profile.json"
+      ],
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "unknown",
+              "details": {
+                "text": "The in profile defines a parameter 'in' but this is not in the parameters list"
+              },
+              "diagnostics": "[33,84]",
+              "expression": [
+                "OperationDefinition.inputProfile"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "unknown",
+              "details": {
+                "text": "The parameter 'questionnaire' has a value for 'min' of '1' in the in profile that is different to '0' which is the value in the parameter definition"
+              },
+              "diagnostics": "[42,4]",
+              "expression": [
+                "OperationDefinition.inputProfile.parameter[1]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "unknown",
+              "details": {
+                "text": "The parameter 'questionnaire' has a value for 'max' of '1' in the in profile that is different to '*' which is the value in the parameter definition"
+              },
+              "diagnostics": "[42,4]",
+              "expression": [
+                "OperationDefinition.inputProfile.parameter[1]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "unknown",
+              "details": {
+                "text": "The in profile does not have a parameter 'questionnaire-response-in' but it is in the parameters list"
+              },
+              "diagnostics": "[35,4]",
+              "expression": [
+                "OperationDefinition.inputProfile.parameter[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "unknown",
+              "details": {
+                "text": "The out profile defines a parameter 'out' but this is not in the parameters list"
+              },
+              "diagnostics": "[33,84]",
+              "expression": [
+                "OperationDefinition.inputProfile"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "The type 'QuestionnaireResponse' is allowed for the parameter 'questionnaire' in the  out profile but not in the list of allowed types for the parameter: Questionnaire"
+              },
+              "diagnostics": "[49,4]",
+              "expression": [
+                "OperationDefinition.inputProfile.parameter[2]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "The type 'Questionnaire' is not allowed for the parameter 'questionnaire' in the  out profile but is in the list of allowed types for the parameter (profile types = QuestionnaireResponse)"
+              },
+              "diagnostics": "[49,4]",
+              "expression": [
+                "OperationDefinition.inputProfile.parameter[2]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "unknown",
+              "details": {
+                "text": "The out profile does not have a parameter 'questionnaire-response-out' but it is in the parameters list"
+              },
+              "diagnostics": "[56,4]",
+              "expression": [
+                "OperationDefinition.inputProfile.parameter[3]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ref-policy-default",
+      "file": "ref-policy-base.json",
+      "module": "references",
+      "description": "checking default settings for bundle resolution of relative references is correct against R5 rules",
+      "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "informational",
+              "details": {
+                "text": "The URL 'Patient/example' cannot be resolved unless the fullURL is a RESTFul base URL, or a baseURL has been provided and the Bundle is a batch or transction"
+              },
+              "diagnostics": "[19,8]",
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.subject"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "informational",
+              "details": {
+                "text": "The URL 'Practitioner/practitioner-1' cannot be resolved unless the fullURL is a RESTFul base URL, or a baseURL has been provided and the Bundle is a batch or transction"
+              },
+              "diagnostics": "[24,8]",
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.source"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "URN reference is not locally contained within the bundle urn:uuid:23ac0bc6-0959-4181-8af0-6db5e2ef8176-X"
+              },
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.entry[1].item"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 3 matches the reference Practitioner/practitioner-1 by type and id but it's fullUrl urn:uuid:4e5aa5f2-dd58-47b0-83c8-6bea38669e67 does not match the full target URL http://hl7.org/fhir/test/Practitioner/practitioner-1 by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[1].resource/*Patient/example*/.generalPractitioner[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "informational",
+              "details": {
+                "text": "The URL 'Practitioner/practitioner-1' cannot be resolved unless the fullURL is a RESTFul base URL, or a baseURL has been provided and the Bundle is a batch or transction"
+              },
+              "diagnostics": "[61,8]",
+              "expression": [
+                "Bundle.entry[2].resource/*Patient/example1*/.generalPractitioner[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "informational",
+              "details": {
+                "text": "The URL 'Patient/example' cannot be resolved unless the fullURL is a RESTFul base URL, or a baseURL has been provided and the Bundle is a batch or transction"
+              },
+              "diagnostics": "[89,8]",
+              "expression": [
+                "Bundle.entry[4].resource/*MedicationStatement/smp-medstmt-bundle-1*/.subject"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
       "name": "zzz",
       "file": "zzz.json",
       "description": "hack to close ups",
