@@ -834,6 +834,19 @@ Any text enclosed within is ignored
 		<test name="testNow2" inputfile="patient-example.xml"><expression>now().toString().length() > 10</expression><output type="boolean">true</output></test>
 	</group>
 
+	<group name="testSort">
+		<test name="testSort1" inputfile="patient-example.xml"><expression>(1 | 2 | 3).sort() = (1 | 2 | 3)</expression><output type="boolean">true</output></test>
+		<test name="testSort2" inputfile="patient-example.xml"><expression>(3 | 2 | 1).sort() = (1 | 2 | 3)</expression><output type="boolean">true</output></test>
+		<test name="testSort3" inputfile="patient-example.xml"><expression>(1 | 2 | 3).sort($this) = (1 | 2 | 3)</expression><output type="boolean">true</output></test>
+		<test name="testSort4" inputfile="patient-example.xml"><expression>(3 | 2 | 1).sort($this) = (1 | 2 | 3)</expression><output type="boolean">true</output></test>
+		<test name="testSort5" inputfile="patient-example.xml"><expression>(1 | 2 | 3).sort(-$this) = (3 | 2 | 1)</expression><output type="boolean">true</output></test>
+		<test name="testSort6" inputfile="patient-example.xml"><expression>('a' | 'b' | 'c').sort($this) = ('a' | 'b' | 'c')</expression><output type="boolean">true</output></test>
+		<test name="testSort7" inputfile="patient-example.xml"><expression>('c' | 'b' | 'a').sort($this) = ('a' | 'b' | 'c')</expression><output type="boolean">true</output></test>
+		<test name="testSort8" inputfile="patient-example.xml"><expression>('a' | 'b' | 'c').sort(-$this) = ('c' | 'b' | 'a')</expression><output type="boolean">true</output></test>
+		<test name="testSort9" inputfile="patient-example.xml"><expression>Patient.name[0].given.sort() = ('James' | 'Peter')</expression><output type="boolean">true</output></test>
+		<test name="testSort10" inputfile="patient-example.xml"><expression>Patient.name.sort(-family, -given.first()).first().use = 'usual'</expression><output type="boolean">true</output></test>
+	</group>
+
 	<group name="testEquality">
 		<test name="testEquality1" inputfile="patient-example.xml"><expression>1 = 1</expression><output type="boolean">true</output></test>
 		<test name="testEquality2" inputfile="patient-example.xml"><expression>{} = {}</expression></test>
