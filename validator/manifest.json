@@ -971,11 +971,12 @@
               ]
             },
             {
-              "severity": "warning",
-              "code": "required",
+              "severity": "information",
+              "code": "informational",
               "details": {
-                "text": "Entry 1 matches the reference Patient/pat2 by type and id but it's fullUrl http://acme.com/Patient/pat2 does not match the full target URL Patient/pat2 by Bundle resolution rules"
+                "text": "The URL 'Patient/pat2' cannot be resolved unless the fullURL is a RESTFul base URL, or a baseURL has been provided and the Bundle is a batch or transction"
               },
+              "diagnostics": "[13,14]",
               "expression": [
                 "Bundle.entry[0].resource/*Patient/pat1*/.link[0].other"
               ]
@@ -9955,8 +9956,33 @@
       "module": "profile"
     },
     {
-      "name": "bad-bundle-reference-type",
+      "name": "bad-bundle-reference-type-5",
       "file": "bad-bundle-reference-type.xml",
+      "version": "5.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "informational",
+              "details": {
+                "text": "The URL 'Practitioner/5d9588d8-3cd6-4b32-8fb7-ad13694e069d' cannot be resolved unless the fullURL is a RESTFul base URL, or a baseURL has been provided and the Bundle is a batch or transction"
+              },
+              "diagnostics": "[8,30]",
+              "expression": [
+                "Bundle.entry[0].resource/*Patient/null*/.generalPractitioner[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "references"
+    },
+    {
+      "name": "bad-bundle-reference-type-4",
+      "file": "bad-bundle-reference-type.xml",
+      "version": "4.0",
       "java": {
         "outcome": {
           "resourceType": "OperationOutcome",
@@ -61557,7 +61583,7 @@
               "details": {
                 "text": "The target of the HTML idref attribute 'AAA1234X' was not found in the resource"
               },
-              "diagnostics": "[23,216]",
+              "diagnostics": "[23,229]",
               "expression": [
                 "Bundle.entry[0].resource/*Composition/d2d5d4dd-4e86-41c6-98d2-e412882e9b4c*/.text.div"
               ]
@@ -61574,7 +61600,7 @@
               "details": {
                 "text": "A definition for CodeSystem 'http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips' could not be found, so the code cannot be validated"
               },
-              "diagnostics": "[408,18]",
+              "diagnostics": "[407,18]",
               "expression": [
                 "Bundle.entry[6].resource/*AllergyIntolerance/d46cc177-5660-46cc-9f55-6c28e1bc3bba*/.code.coding[0].system"
               ]
@@ -61585,7 +61611,7 @@
               "details": {
                 "text": "A definition for CodeSystem 'http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips' could not be found, so the code cannot be validated"
               },
-              "diagnostics": "[435,18]",
+              "diagnostics": "[434,18]",
               "expression": [
                 "Bundle.entry[7].resource/*Condition/20a587fa-239f-49c2-a3c8-ff2f2a18b654*/.code.coding[0]"
               ]
@@ -61596,7 +61622,7 @@
               "details": {
                 "text": "A definition for CodeSystem 'http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips' could not be found, so the code cannot be validated"
               },
-              "diagnostics": "[455,18]",
+              "diagnostics": "[454,18]",
               "expression": [
                 "Bundle.entry[8].resource/*MedicationStatement/4e348646-0375-486a-a33d-d19801e6c7f7*/.medication.ofType(CodeableConcept).coding[0]"
               ]
@@ -64072,11 +64098,86 @@
       }
     },
     {
-      "name": "ref-policy-default",
-      "file": "ref-policy-base.json",
+      "name": "ref-policy-default-r4",
+      "file": "ref-policy-r4.json",
       "module": "references",
       "description": "checking default settings for bundle resolution of relative references is correct against R5 rules",
       "version": "4.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 1 matches the reference Patient/example by type and id but it's fullUrl http://hl7.org/fhir/test/Patient/example does not match the full target URL urn:uuid:example by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.subject"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 3 matches the reference Practitioner/practitioner-1 by type and id but it's fullUrl urn:uuid:4e5aa5f2-dd58-47b0-83c8-6bea38669e67 does not match the full target URL urn:uuid:practitioner-1 by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.source"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "URN reference is not locally contained within the bundle urn:uuid:23ac0bc6-0959-4181-8af0-6db5e2ef8176-X"
+              },
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.entry[1].item"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 3 matches the reference Practitioner/practitioner-1 by type and id but it's fullUrl urn:uuid:4e5aa5f2-dd58-47b0-83c8-6bea38669e67 does not match the full target URL http://hl7.org/fhir/test/Practitioner/practitioner-1 by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[1].resource/*Patient/example*/.generalPractitioner[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 3 matches the reference Practitioner/practitioner-1 by type and id but it's fullUrl urn:uuid:4e5aa5f2-dd58-47b0-83c8-6bea38669e67 does not match the full target URL Practitioner/practitioner-1 by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[2].resource/*Patient/example1*/.generalPractitioner[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 1 matches the reference Patient/example by type and id but it's fullUrl http://hl7.org/fhir/test/Patient/example does not match the full target URL urn:uuid:example by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[4].resource/*Observation/smp-obs-bundle-1*/.subject"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ref-policy-default-apply-r5",
+      "file": "ref-policy-r4.json",
+      "module": "references",
+      "description": "checking default settings for bundle resolution of relative references is correct against R5 rules",
+      "version": "4.0",
+      "r5-bundle-relative-reference-policy": "always",
       "java": {
         "outcome": {
           "resourceType": "OperationOutcome",
@@ -64087,7 +64188,7 @@
               "details": {
                 "text": "The URL 'Patient/example' cannot be resolved unless the fullURL is a RESTFul base URL, or a baseURL has been provided and the Bundle is a batch or transction"
               },
-              "diagnostics": "[19,8]",
+              "diagnostics": "[18,8]",
               "expression": [
                 "Bundle.entry[0].resource/*List/smp-medlist-1*/.subject"
               ]
@@ -64098,7 +64199,7 @@
               "details": {
                 "text": "The URL 'Practitioner/practitioner-1' cannot be resolved unless the fullURL is a RESTFul base URL, or a baseURL has been provided and the Bundle is a batch or transction"
               },
-              "diagnostics": "[24,8]",
+              "diagnostics": "[23,8]",
               "expression": [
                 "Bundle.entry[0].resource/*List/smp-medlist-1*/.source"
               ]
@@ -64129,7 +64230,7 @@
               "details": {
                 "text": "The URL 'Practitioner/practitioner-1' cannot be resolved unless the fullURL is a RESTFul base URL, or a baseURL has been provided and the Bundle is a batch or transction"
               },
-              "diagnostics": "[61,8]",
+              "diagnostics": "[60,8]",
               "expression": [
                 "Bundle.entry[2].resource/*Patient/example1*/.generalPractitioner[0]"
               ]
@@ -64140,9 +64241,162 @@
               "details": {
                 "text": "The URL 'Patient/example' cannot be resolved unless the fullURL is a RESTFul base URL, or a baseURL has been provided and the Bundle is a batch or transction"
               },
-              "diagnostics": "[89,8]",
+              "diagnostics": "[88,8]",
               "expression": [
-                "Bundle.entry[4].resource/*MedicationStatement/smp-medstmt-bundle-1*/.subject"
+                "Bundle.entry[4].resource/*Observation/smp-obs-bundle-1*/.subject"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ref-policy-default-r5",
+      "file": "ref-policy-r5.json",
+      "module": "references",
+      "description": "checking default settings for bundle resolution of relative references is correct against R5 rules",
+      "version": "5.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "information",
+              "code": "informational",
+              "details": {
+                "text": "The URL 'Patient/example' cannot be resolved unless the fullURL is a RESTFul base URL, or a baseURL has been provided and the Bundle is a batch or transction"
+              },
+              "diagnostics": "[18,8]",
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.subject[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "informational",
+              "details": {
+                "text": "The URL 'Practitioner/practitioner-1' cannot be resolved unless the fullURL is a RESTFul base URL, or a baseURL has been provided and the Bundle is a batch or transction"
+              },
+              "diagnostics": "[23,8]",
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.source"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "URN reference is not locally contained within the bundle urn:uuid:23ac0bc6-0959-4181-8af0-6db5e2ef8176-X"
+              },
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.entry[1].item"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 3 matches the reference Practitioner/practitioner-1 by type and id but it's fullUrl urn:uuid:4e5aa5f2-dd58-47b0-83c8-6bea38669e67 does not match the full target URL http://hl7.org/fhir/test/Practitioner/practitioner-1 by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[1].resource/*Patient/example*/.generalPractitioner[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "informational",
+              "details": {
+                "text": "The URL 'Practitioner/practitioner-1' cannot be resolved unless the fullURL is a RESTFul base URL, or a baseURL has been provided and the Bundle is a batch or transction"
+              },
+              "diagnostics": "[60,8]",
+              "expression": [
+                "Bundle.entry[2].resource/*Patient/example1*/.generalPractitioner[0]"
+              ]
+            },
+            {
+              "severity": "information",
+              "code": "informational",
+              "details": {
+                "text": "The URL 'Patient/example' cannot be resolved unless the fullURL is a RESTFul base URL, or a baseURL has been provided and the Bundle is a batch or transction"
+              },
+              "diagnostics": "[88,8]",
+              "expression": [
+                "Bundle.entry[4].resource/*Observation/smp-obs-bundle-1*/.subject"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ref-policy-default-r4",
+      "file": "ref-policy-r5.json",
+      "module": "references",
+      "description": "checking default settings for bundle resolution of relative references is correct against R5 rules",
+      "version": "5.0",
+      "r5-bundle-relative-reference-policy": "never",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 1 matches the reference Patient/example by type and id but it's fullUrl http://hl7.org/fhir/test/Patient/example does not match the full target URL urn:uuid:example by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.subject[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 3 matches the reference Practitioner/practitioner-1 by type and id but it's fullUrl urn:uuid:4e5aa5f2-dd58-47b0-83c8-6bea38669e67 does not match the full target URL urn:uuid:practitioner-1 by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.source"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "URN reference is not locally contained within the bundle urn:uuid:23ac0bc6-0959-4181-8af0-6db5e2ef8176-X"
+              },
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.entry[1].item"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 3 matches the reference Practitioner/practitioner-1 by type and id but it's fullUrl urn:uuid:4e5aa5f2-dd58-47b0-83c8-6bea38669e67 does not match the full target URL http://hl7.org/fhir/test/Practitioner/practitioner-1 by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[1].resource/*Patient/example*/.generalPractitioner[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 3 matches the reference Practitioner/practitioner-1 by type and id but it's fullUrl urn:uuid:4e5aa5f2-dd58-47b0-83c8-6bea38669e67 does not match the full target URL Practitioner/practitioner-1 by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[2].resource/*Patient/example1*/.generalPractitioner[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 1 matches the reference Patient/example by type and id but it's fullUrl http://hl7.org/fhir/test/Patient/example does not match the full target URL urn:uuid:example by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[4].resource/*Observation/smp-obs-bundle-1*/.subject"
               ]
             }
           ]
