@@ -1,0 +1,67 @@
+{
+    "resourceType": "StructureDefinition",
+    "id": "us-core-treatment-intervention-preference-grouping",
+    "url": "http://hl7.org/fhir/test/StructureDefinition/us-core-treatment-intervention-preference-grouping",
+    "name": "USCoreTreatmentInterventionPreferenceGroupingProfile",
+    "title": "US Core Treatment Intervention Preference Grouping Profile",
+    "status": "active",
+    "experimental": false,
+    "date": "2023-11-02",
+    "description": "The US Core Treatment Intervention Preference Profile inherits from the FHIR [Observation](https://hl7.org/fhir/R4/observation.html) resource; refer to it for scope and usage definitions. This profile provides guidance on how to record a treatment intervention preference expressed by the patient regarding their personal health goals,  preferences, and priorities for medical treatments or interventions in the event of a future health scenario where a person is unable to make medical decisions because of a severe illness or injury. This profile does not represent an actual order, but it can guide caregivers and medical personnel about what is important for the person. This profile sets minimum expectations for the Observation resource to record, search, and fetch for patient treatment intervention preferences. It specifies which core elements, extensions,  vocabularies, and value sets **SHALL** be present in the resource and constrains how the elements are used. Providing the floor for standards development for specific use cases promotes interoperability and adoption.",
+    "copyright": "Used by permission of HL7 International, all rights reserved Creative Commons License",
+    "fhirVersion": "4.0.1",
+    "kind": "resource",
+    "abstract": false,
+    "type": "Observation",
+    "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+    "derivation": "constraint",
+    "differential": {
+        "element": [
+            {
+                "id": "Observation",
+                "path": "Observation",
+                "short": "US Core Treatment Intervention Preference Profile"
+            },
+            {
+                "id": "Observation.status",
+                "path": "Observation.status",
+                "mustSupport": true
+            },
+            {
+                "id": "Observation.category",
+                "path": "Observation.category",
+                "slicing": {
+                    "discriminator": [
+                        {
+                            "type": "value",
+                            "path": "$this"
+                        }
+                    ],
+                    "rules": "open"
+                },
+                "mustSupport": true,
+                "binding": {
+                    "strength": "preferred",
+                    "description": "FHIR and US Core codes for high level observation categories.",
+                    "valueSet": "http://hl7.org/fhir/us/core/ValueSet/us-core-simple-observation-category"
+                }
+            },
+            {
+                "id": "Observation.category:us-core",
+                "path": "Observation.category",
+                "sliceName": "us-core",
+                "min": 0,
+                "max": "1",
+                "patternCodeableConcept": {
+                    "coding": [
+                        {
+                            "system": "http://hl7.org/fhir/us/core/CodeSystem/us-core-category",
+                            "code": "treatment-intervention-preference"
+                        }
+                    ]
+                },
+                "mustSupport": true
+            }
+        ]
+    }
+}

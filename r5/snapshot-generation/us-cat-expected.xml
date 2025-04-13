@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <StructureDefinition xmlns="http://hl7.org/fhir">
-  <id value="type-slice-missing"/>
-  <url value="http://hl7.org/fhir/test/StructureDefinition/type-slice-missing"/>
-  <status value="draft"/>
+  <id value="us-core-treatment-intervention-preference-grouping"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/us-core-treatment-intervention-preference-grouping"/>
+  <name value="USCoreTreatmentInterventionPreferenceGroupingProfile"/>
+  <title value="US Core Treatment Intervention Preference Grouping Profile"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <date value="2023-11-02"/>
+  <description value="The US Core Treatment Intervention Preference Profile inherits from the FHIR [Observation](https://hl7.org/fhir/R4/observation.html) resource; refer to it for scope and usage definitions. This profile provides guidance on how to record a treatment intervention preference expressed by the patient regarding their personal health goals,  preferences, and priorities for medical treatments or interventions in the event of a future health scenario where a person is unable to make medical decisions because of a severe illness or injury. This profile does not represent an actual order, but it can guide caregivers and medical personnel about what is important for the person. This profile sets minimum expectations for the Observation resource to record, search, and fetch for patient treatment intervention preferences. It specifies which core elements, extensions,  vocabularies, and value sets **SHALL** be present in the resource and constrains how the elements are used. Providing the floor for standards development for specific use cases promotes interoperability and adoption."/>
+  <copyright value="Used by permission of HL7 International, all rights reserved Creative Commons License"/>
   <fhirVersion value="4.0.1"/>
   <mapping>
     <identity value="workflow"/>
@@ -46,7 +52,7 @@
     </extension>
     <element id="Observation">
       <path value="Observation"/>
-      <short value="Measurements and simple assertions"/>
+      <short value="US Core Treatment Intervention Preference Profile"/>
       <definition value="Measurements and simple assertions made about a patient, device or other subject."/>
       <comment value="Used for simple observations such as device measurements, laboratory atomic results, vital signs, height, weight, smoking status, comments, etc.  Other resources are used to provide context for observations such as laboratory reports, etc."/>
       <alias value="Vital Signs"/>
@@ -835,7 +841,7 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="false"/>
+      <mustSupport value="true"/>
       <isModifier value="true"/>
       <isModifierReason value="This element is labeled as a modifier because it is a status element that contains status entered-in-error which means that the resource should not be treated as valid"/>
       <isSummary value="true"/>
@@ -870,6 +876,13 @@
     </element>
     <element id="Observation.category">
       <path value="Observation.category"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="$this"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
       <short value="Classification of  type of observation"/>
       <definition value="A code that classifies the general type of observation being made."/>
       <comment value="In addition to the required category valueset, this element allows various categorization schemes based on the owner’s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set."/>
@@ -891,16 +904,60 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="false"/>
+      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="ObservationCategory"/>
-        </extension>
         <strength value="preferred"/>
-        <description value="Codes for high level observation categories."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/observation-category"/>
+        <description value="FHIR and US Core codes for high level observation categories."/>
+        <valueSet value="http://hl7.org/fhir/us/core/ValueSet/us-core-simple-observation-category"/>
+      </binding>
+      <mapping>
+        <identity value="w5"/>
+        <map value="FiveWs.class"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value=".outboundRelationship[typeCode=&quot;COMP].target[classCode=&quot;LIST&quot;, moodCode=&quot;EVN&quot;].code"/>
+      </mapping>
+    </element>
+    <element id="Observation.category:us-core">
+      <path value="Observation.category"/>
+      <sliceName value="us-core"/>
+      <short value="Classification of  type of observation"/>
+      <definition value="A code that classifies the general type of observation being made."/>
+      <comment value="In addition to the required category valueset, this element allows various categorization schemes based on the owner’s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set."/>
+      <requirements value="Used for filtering what observations are retrieved and displayed."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Observation.category"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.org/fhir/us/core/CodeSystem/us-core-category"/>
+          <code value="treatment-intervention-preference"/>
+        </coding>
+      </patternCodeableConcept>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="true"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <strength value="preferred"/>
+        <description value="FHIR and US Core codes for high level observation categories."/>
+        <valueSet value="http://hl7.org/fhir/us/core/ValueSet/us-core-simple-observation-category"/>
       </binding>
       <mapping>
         <identity value="w5"/>
@@ -1112,20 +1169,12 @@
     </element>
     <element id="Observation.effective[x]">
       <path value="Observation.effective[x]"/>
-      <slicing>
-        <discriminator>
-          <type value="type"/>
-          <path value="$this"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
       <short value="Clinically relevant time/time-period for observation"/>
       <definition value="The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the &quot;physiologically relevant time&quot;. This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself."/>
       <comment value="At least a date should be present unless this observation is a historical report.  For recording imprecise or &quot;fuzzy&quot; times (For example, a blood glucose measurement taken &quot;after breakfast&quot;) use the [Timing](http://hl7.org/fhir/R5/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events."/>
       <requirements value="Knowing when an observation was deemed true is important to its relevance as well as determining trends."/>
       <alias value="Occurrence"/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="Observation.effective[x]"/>
@@ -1138,6 +1187,12 @@
       <type>
         <code value="Period"/>
       </type>
+      <type>
+        <code value="Timing"/>
+      </type>
+      <type>
+        <code value="instant"/>
+      </type>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -1145,7 +1200,7 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="true"/>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -1163,194 +1218,6 @@
       <mapping>
         <identity value="rim"/>
         <map value="effectiveTime"/>
-      </mapping>
-    </element>
-    <element id="Observation.effective[x]:effectivePeriod">
-      <path value="Observation.effective[x]"/>
-      <sliceName value="effectivePeriod"/>
-      <short value="Clinically relevant time/time-period for observation"/>
-      <definition value="The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the &quot;physiologically relevant time&quot;. This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself."/>
-      <comment value="At least a date should be present unless this observation is a historical report.  For recording imprecise or &quot;fuzzy&quot; times (For example, a blood glucose measurement taken &quot;after breakfast&quot;) use the [Timing](http://hl7.org/fhir/R5/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events."/>
-      <requirements value="Knowing when an observation was deemed true is important to its relevance as well as determining trends."/>
-      <alias value="Occurrence"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Observation.effective[x]"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="Period"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="true"/>
-      <isModifier value="false"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="workflow"/>
-        <map value="Event.occurrence[x]"/>
-      </mapping>
-      <mapping>
-        <identity value="w5"/>
-        <map value="FiveWs.done[x]"/>
-      </mapping>
-      <mapping>
-        <identity value="v2"/>
-        <map value="OBX-14, and/or OBX-19 after v2.4  (depends on who observation made)"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="effectiveTime"/>
-      </mapping>
-    </element>
-    <element id="Observation.effective[x]:effectivePeriod.id">
-      <path value="Observation.effective[x].id"/>
-      <representation value="xmlAttr"/>
-      <short value="Unique id for inter-element referencing"/>
-      <definition value="Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-          <valueUrl value="id"/>
-        </extension>
-        <code value="http://hl7.org/fhirpath/System.String"/>
-      </type>
-      <condition value="ele-1"/>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Observation.effective[x]:effectivePeriod.extension">
-      <path value="Observation.effective[x].extension"/>
-      <slicing>
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <description value="Extensions are always sliced by (at least) url"/>
-        <rules value="open"/>
-      </slicing>
-      <short value="Additional content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <constraint>
-        <key value="ext-1"/>
-        <severity value="error"/>
-        <human value="Must have either extensions or value[x], not both"/>
-        <expression value="extension.exists() != value.exists()"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
-      </constraint>
-      <isModifier value="false"/>
-      <isSummary value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Observation.effective[x]:effectivePeriod.start">
-      <path value="Observation.effective[x].start"/>
-      <short value="Starting time with inclusive boundary"/>
-      <definition value="The start of the period. The boundary is inclusive."/>
-      <comment value="If the low element is missing, the meaning is that the low boundary is not known."/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="Period.start"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <condition value="per-1"/>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="true"/>
-      <isModifier value="false"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="v2"/>
-        <map value="DR.1"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="./low"/>
-      </mapping>
-    </element>
-    <element id="Observation.effective[x]:effectivePeriod.end">
-      <path value="Observation.effective[x].end"/>
-      <short value="End time with inclusive boundary, if not ongoing"/>
-      <definition value="The end of the period. If the end of the period is missing, it means no end was known or planned at the time the instance was created. The start may be in the past, and the end date in the future, which means that period is expected/planned to end at that time."/>
-      <comment value="The end value includes any matching date/time. i.e. 2012-02-03T10:00:00 is in a period that has an end value of 2012-02-03."/>
-      <min value="1"/>
-      <max value="1"/>
-      <base>
-        <path value="Period.end"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <meaningWhenMissing value="If the end of the period is missing, it means that the period is ongoing"/>
-      <condition value="per-1"/>
-      <constraint>
-        <key value="ele-1"/>
-        <severity value="error"/>
-        <human value="All FHIR elements must have a @value or children"/>
-        <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
-      </constraint>
-      <mustSupport value="true"/>
-      <isModifier value="false"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="v2"/>
-        <map value="DR.2"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="./high"/>
       </mapping>
     </element>
     <element id="Observation.issued">
@@ -2770,39 +2637,41 @@
     </element>
   </snapshot>
   <differential>
-    <element id="Observation.effective[x]">
-      <path value="Observation.effective[x]"/>
+    <element id="Observation">
+      <path value="Observation"/>
+      <short value="US Core Treatment Intervention Preference Profile"/>
+    </element>
+    <element id="Observation.status">
+      <path value="Observation.status"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Observation.category">
+      <path value="Observation.category"/>
       <slicing>
         <discriminator>
-          <type value="type"/>
+          <type value="value"/>
           <path value="$this"/>
         </discriminator>
         <rules value="open"/>
       </slicing>
-      <min value="1"/>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <type>
-        <code value="Period"/>
-      </type>
       <mustSupport value="true"/>
+      <binding>
+        <strength value="preferred"/>
+        <description value="FHIR and US Core codes for high level observation categories."/>
+        <valueSet value="http://hl7.org/fhir/us/core/ValueSet/us-core-simple-observation-category"/>
+      </binding>
     </element>
-    <element id="Observation.effective[x]:effectivePeriod">
-      <path value="Observation.effective[x]"/>
-      <sliceName value="effectivePeriod"/>
-      <type>
-        <code value="Period"/>
-      </type>
-    </element>
-    <element id="Observation.effective[x]:effectivePeriod.start">
-      <path value="Observation.effective[x].start"/>
-      <min value="1"/>
-      <mustSupport value="true"/>
-    </element>
-    <element id="Observation.effective[x]:effectivePeriod.end">
-      <path value="Observation.effective[x].end"/>
-      <min value="1"/>
+    <element id="Observation.category:us-core">
+      <path value="Observation.category"/>
+      <sliceName value="us-core"/>
+      <min value="0"/>
+      <max value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.org/fhir/us/core/CodeSystem/us-core-category"/>
+          <code value="treatment-intervention-preference"/>
+        </coding>
+      </patternCodeableConcept>
       <mustSupport value="true"/>
     </element>
   </differential>
