@@ -48,7 +48,7 @@
             <span style="opacity: 0.5">*</span>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">Observation</td>
-          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">This is an abstractprofile. 
+          <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">This is an abstract profile. 
             <br/>
             <span style="opacity: 0.5">Measurements and simple assertions</span>
           </td>
@@ -361,8 +361,7 @@
             <span style="opacity: 0.5">1</span>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <a href="http://hl7.org/fhirreferences.html">Reference</a>(
-            <a href="http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient">US Core Patient Profile</a>)
+            <a href="http://hl7.org/fhirreferences.html">Reference</a>(http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient)
           </td>
           <td style="vertical-align: top; text-align : left; background-color: white; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
             <span style="opacity: 0.5">Who and/or what the observation is about</span>
@@ -549,12 +548,9 @@
             <span style="opacity: 0.5">*</span>
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
-            <a href="http://hl7.org/fhirreferences.html">Reference</a>(
-            <a href="http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient">US Core Patient Profile</a> 
-            <span style="padding-left: 3px; padding-right: 3px; color: white; background-color: red" title="This type must be supported">S</span> | 
-            <a href="http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner">US Core Practitioner Profile</a> 
-            <span style="padding-left: 3px; padding-right: 3px; color: white; background-color: red" title="This type must be supported">S</span> | 
-            <a href="http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole">US Core PractitionerRole Profile</a> | RelatedPerson)
+            <a href="http://hl7.org/fhirreferences.html">Reference</a>(http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient 
+            <span style="padding-left: 3px; padding-right: 3px; color: white; background-color: red" title="This type must be supported">S</span> | http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner 
+            <span style="padding-left: 3px; padding-right: 3px; color: white; background-color: red" title="This type must be supported">S</span> | http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole | RelatedPerson)
           </td>
           <td style="vertical-align: top; text-align : left; background-color: #F7F7F7; border: 0px #F0F0F0 solid; padding:0px 4px 0px 4px" class="hierarchy">
             <span style="opacity: 0.5">Who is responsible for the observation</span>
@@ -942,43 +938,35 @@
         <max value="*"/>
       </base>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="not(parent::f:contained and f:contained)"/>
-        </extension>
         <key value="dom-2"/>
         <severity value="error"/>
         <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
         <expression value="contained.contained.empty()"/>
+        <xpath value="not(parent::f:contained and f:contained)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="not(exists(for $id in f:contained/*/f:id/@value return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))"/>
-        </extension>
         <key value="dom-3"/>
         <severity value="error"/>
         <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"/>
         <expression value="contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()"/>
+        <xpath value="not(exists(for $id in f:contained/*/f:id/@value return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
-        </extension>
         <key value="dom-4"/>
         <severity value="error"/>
         <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
         <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
+        <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="not(exists(f:contained/*/f:meta/f:security))"/>
-        </extension>
         <key value="dom-5"/>
         <severity value="error"/>
         <human value="If a resource is contained in another resource, it SHALL NOT have a security label"/>
         <expression value="contained.meta.security.empty()"/>
+        <xpath value="not(exists(f:contained/*/f:meta/f:security))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
       <constraint>
@@ -988,33 +976,27 @@
         <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice-explanation">
           <valueMarkdown value="When a resource has no narrative, only systems that fully understand the data can display the resource to a human safely. Including a human readable representation in the resource makes for a much more robust eco-system and cheaper handling of resources by intermediary systems. Some ecosystems restrict distribution of resources to only those systems that do fully understand the resources, and as a consequence implementers may believe that the narrative is superfluous. However experience shows that such eco-systems often open up to new participants over time."/>
         </extension>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="exists(f:text/h:div)"/>
-        </extension>
         <key value="dom-6"/>
         <severity value="warning"/>
         <human value="A resource should have narrative for robust management"/>
         <expression value="text.`div`.exists()"/>
+        <xpath value="exists(f:text/h:div)"/>
         <source value="http://hl7.org/fhir/StructureDefinition/DomainResource"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), 'value')])))"/>
-        </extension>
         <key value="obs-6"/>
         <severity value="error"/>
         <human value="dataAbsentReason SHALL only be present if Observation.value[x] is not present"/>
         <expression value="dataAbsentReason.empty() or value.empty()"/>
+        <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), 'value')])))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Observation"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="not(f:*[starts-with(local-name(.), 'value')] and (for $coding in f:code/f:coding return f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value] [f:system/@value=$coding/f:system/@value]))"/>
-        </extension>
         <key value="obs-7"/>
         <severity value="error"/>
         <human value="If Observation.code is the same as an Observation.component.code then the value element associated with the code SHALL NOT be present"/>
         <expression value="value.empty() or component.code.where(coding.intersect(%resource.code.coding).exists()).empty()"/>
+        <xpath value="not(f:*[starts-with(local-name(.), 'value')] and (for $coding in f:code/f:coding return f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value] [f:system/@value=$coding/f:system/@value]))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Observation"/>
       </constraint>
       <isModifier value="false"/>
@@ -1076,13 +1058,11 @@
         <code value="Meta"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1104,13 +1084,11 @@
         <code value="uri"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="true"/>
@@ -1133,13 +1111,11 @@
         <code value="code"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1176,13 +1152,11 @@
         <code value="Narrative"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1235,23 +1209,19 @@
         <code value="Extension"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        </extension>
         <key value="ext-1"/>
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <isModifier value="false"/>
@@ -1276,23 +1246,19 @@
         <code value="Extension"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        </extension>
         <key value="ext-1"/>
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <isModifier value="true"/>
@@ -1315,13 +1281,11 @@
         <code value="Identifier"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1366,13 +1330,11 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/ServiceRequest"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1413,13 +1375,11 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/ImagingStudy"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1457,13 +1417,11 @@
         <code value="code"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1519,13 +1477,11 @@
         <code value="CodeableConcept"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1571,13 +1527,11 @@
         </coding>
       </patternCodeableConcept>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1624,13 +1578,11 @@
         </coding>
       </patternCodeableConcept>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1670,13 +1622,11 @@
         <code value="CodeableConcept"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1730,13 +1680,11 @@
         <targetProfile value="http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1780,13 +1728,11 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1827,13 +1773,11 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Encounter"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1884,13 +1828,11 @@
         <code value="Period"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -1935,15 +1877,14 @@
         <code value="dateTime"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -1982,15 +1923,14 @@
         <code value="Period"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -2061,23 +2001,19 @@
         <code value="Extension"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        </extension>
         <key value="ext-1"/>
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <isModifier value="false"/>
@@ -2107,13 +2043,11 @@
       </type>
       <condition value="per-1"/>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -2149,13 +2083,11 @@
       <meaningWhenMissing value="If the end of the period is missing, it means that the period is ongoing"/>
       <condition value="per-1"/>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -2186,13 +2118,11 @@
         <code value="instant"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -2239,13 +2169,11 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -2297,13 +2225,11 @@
       </type>
       <condition value="obs-7"/>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -2345,15 +2271,14 @@
       </type>
       <condition value="obs-7"/>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -2393,15 +2318,14 @@
       </type>
       <condition value="obs-7"/>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -2472,23 +2396,19 @@
         <code value="Extension"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        </extension>
         <key value="ext-1"/>
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <isModifier value="false"/>
@@ -2515,13 +2435,11 @@
         <code value="decimal"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -2553,13 +2471,11 @@
       </type>
       <meaningWhenMissing value="If there is no comparator, then there is no modification of the value"/>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="true"/>
@@ -2601,13 +2517,11 @@
         <code value="string"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -2639,13 +2553,11 @@
       <patternUri value="http://unitsofmeasure.org"/>
       <condition value="qty-3"/>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -2676,13 +2588,11 @@
         <code value="code"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -2715,13 +2625,11 @@
       </type>
       <condition value="obs-6"/>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -2761,13 +2669,11 @@
         <code value="CodeableConcept"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -2814,13 +2720,11 @@
         <code value="Annotation"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -2886,23 +2790,19 @@
         <code value="Extension"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        </extension>
         <key value="ext-1"/>
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <isModifier value="false"/>
@@ -2940,13 +2840,11 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -2976,13 +2874,11 @@
         <code value="dateTime"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -3012,13 +2908,11 @@
         <code value="markdown"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
@@ -3049,13 +2943,11 @@
         <code value="CodeableConcept"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3102,13 +2994,11 @@
         <code value="CodeableConcept"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3147,13 +3037,11 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/Specimen"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3193,13 +3081,11 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/DeviceMetric"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3238,23 +3124,19 @@
         <code value="BackboneElement"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="(exists(f:low) or exists(f:high)or exists(f:text))"/>
-        </extension>
         <key value="obs-3"/>
         <severity value="error"/>
         <human value="Must have at least a low or a high or text"/>
         <expression value="low.exists() or high.exists() or text.exists()"/>
+        <xpath value="(exists(f:low) or exists(f:high)or exists(f:text))"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Observation"/>
       </constraint>
       <isModifier value="false"/>
@@ -3311,23 +3193,19 @@
         <code value="Extension"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        </extension>
         <key value="ext-1"/>
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <isModifier value="false"/>
@@ -3357,23 +3235,19 @@
         <code value="Extension"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        </extension>
         <key value="ext-1"/>
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <isModifier value="true"/>
@@ -3401,13 +3275,11 @@
       </type>
       <condition value="obs-3"/>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3438,13 +3310,11 @@
       </type>
       <condition value="obs-3"/>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3475,13 +3345,11 @@
         <code value="CodeableConcept"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3524,13 +3392,11 @@
         <code value="CodeableConcept"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3572,13 +3438,11 @@
         <code value="Range"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3603,13 +3467,11 @@
         <code value="string"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3642,13 +3504,11 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/MolecularSequence"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3684,13 +3544,11 @@
         <targetProfile value="http://hl7.org/fhir/StructureDefinition/MolecularSequence"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3721,13 +3579,11 @@
         <code value="BackboneElement"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3784,23 +3640,19 @@
         <code value="Extension"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        </extension>
         <key value="ext-1"/>
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <isModifier value="false"/>
@@ -3830,23 +3682,19 @@
         <code value="Extension"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
-        </extension>
         <key value="ext-1"/>
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <isModifier value="true"/>
@@ -3874,13 +3722,11 @@
         <code value="CodeableConcept"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3957,13 +3803,11 @@
         <code value="Period"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -4003,13 +3847,11 @@
       </type>
       <condition value="obs-6"/>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -4049,13 +3891,11 @@
         <code value="CodeableConcept"/>
       </type>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -4100,13 +3940,11 @@
       </base>
       <contentReference value="http://hl7.org/fhir/StructureDefinition/Observation#Observation.referenceRange"/>
       <constraint>
-        <extension url="http://hl7.org/fhir/4.0/StructureDefinition/extension-ElementDefinition.constraint.xpath">
-          <valueString value="@value|f:*|h:div"/>
-        </extension>
         <key value="ele-1"/>
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <isModifier value="false"/>
