@@ -55043,7 +55043,24 @@
       "file": "sd-device.json",
       "version": "4.0",
       "description": "test identifiers defined in THO",
-      "java": {},
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "invalid",
+              "details": {
+                "text": "The slice 'imei' on path 'Device.identifier' is not marked as 'must-support' which is not consistent with the element that defines the slicing, where 'must-support' is true"
+              },
+              "diagnostics": "[14,4]",
+              "expression": [
+                "StructureDefinition.differential"
+              ]
+            }
+          ]
+        }
+      },
       "module": "general"
     },
     {
@@ -57092,7 +57109,7 @@
                 "severity": "error",
                 "code": "invariant",
                 "details": {
-                  "text": "Constraint failed: spt-1: 'Phone numbers must have a use' (defined in http://hl7.org/fhir/StructureDefinition/Patient)"
+                  "text": "Constraint failed: spt-1: 'Phone numbers must have a use'"
                 },
                 "diagnostics": "[11,4]",
                 "expression": [
@@ -64401,6 +64418,165 @@
             }
           ]
         }
+      }
+    },
+    {
+      "name": "ccda-allergies",
+      "file": "ccda-allergies.xml",
+      "module": "cda",
+      "description": "check code validation and template validation",
+      "version": "5.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 1 matches the reference Patient/example by type and id but it's fullUrl http://hl7.org/fhir/test/Patient/example does not match the full target URL urn:uuid:example by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.subject[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 3 matches the reference Practitioner/practitioner-1 by type and id but it's fullUrl urn:uuid:4e5aa5f2-dd58-47b0-83c8-6bea38669e67 does not match the full target URL urn:uuid:practitioner-1 by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.source"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "URN reference is not locally contained within the bundle urn:uuid:23ac0bc6-0959-4181-8af0-6db5e2ef8176-X"
+              },
+              "expression": [
+                "Bundle.entry[0].resource/*List/smp-medlist-1*/.entry[1].item"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 3 matches the reference Practitioner/practitioner-1 by type and id but it's fullUrl urn:uuid:4e5aa5f2-dd58-47b0-83c8-6bea38669e67 does not match the full target URL http://hl7.org/fhir/test/Practitioner/practitioner-1 by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[1].resource/*Patient/example*/.generalPractitioner[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 3 matches the reference Practitioner/practitioner-1 by type and id but it's fullUrl urn:uuid:4e5aa5f2-dd58-47b0-83c8-6bea38669e67 does not match the full target URL Practitioner/practitioner-1 by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[2].resource/*Patient/example1*/.generalPractitioner[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "required",
+              "details": {
+                "text": "Entry 1 matches the reference Patient/example by type and id but it's fullUrl http://hl7.org/fhir/test/Patient/example does not match the full target URL urn:uuid:example by Bundle resolution rules"
+              },
+              "expression": [
+                "Bundle.entry[4].resource/*Observation/smp-obs-bundle-1*/.subject"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "sd-slices-ms",
+      "file": "sd-slices-ms.json",
+      "module": "sd",
+      "description": "check the code that compares slices for consistency (see https://chat.fhir.org/#narrow/channel/179252-IG-creation/topic/Slices.20not.20inheriting.20preferred.20bindings.20from.20root)",
+      "version": "5.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "invalid",
+              "details": {
+                "text": "The slice 'SSN' on path 'Patient.identifier' is not marked as 'must-support' which is not consistent with the element that defines the slicing, where 'must-support' is true"
+              },
+              "diagnostics": "[17,6]",
+              "expression": [
+                "StructureDefinition.differential"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ccda-allergies",
+      "file": "ccda-allergies.xml",
+      "module": "cda",
+      "use-test": false,
+      "description": "check code validation and template validation",
+      "version": "5.0",
+      "logical": {
+        "packages": [
+          "hl7.cda.uv.core#current",
+          "hl7.cda.us.ccda#current"
+        ],
+        "java": {
+          "outcome": {
+            "resourceType": "OperationOutcome",
+            "issue": [
+              {
+                "severity": "information",
+                "code": "code-invalid",
+                "details": {
+                  "text": "Binding has no source, so can't be checked"
+                },
+                "diagnostics": "[4,25]",
+                "expression": [
+                  "ClinicalDocument.realmCode[0]"
+                ]
+              },
+              {
+                "severity": "error",
+                "code": "invalid",
+                "details": {
+                  "text": "Neither the element value '2016-04-14T09:50:27' or the formatted value '20160414095027' meet dateTime regex '([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?'"
+                },
+                "diagnostics": "[9,42]",
+                "expression": [
+                  "ClinicalDocument.effectiveTime.value"
+                ]
+              },
+              {
+                "severity": "warning",
+                "code": "code-invalid",
+                "details": {
+                  "text": "The OID '2.16.840.1.113883.6.101' matches multiple resources (http://nucc.org/provider-taxonomy|4.0.0(active), http://terminology.hl7.org/CodeSystem/v3-nuccProviderCodes|3.0.1(active)); http://nucc.org/provider-taxonomy was chosen as the most appropriate"
+                },
+                "diagnostics": "[158,145]",
+                "expression": [
+                  "ClinicalDocument.component.structuredBody.component[0].section.entry[0].substanceAdministration.author[0].assignedAuthor.code"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "java": {
+        "errorCount": 1,
+        "output": [
+          "FATAL: ClinicalDocument: This does not appear to be a FHIR resource (unknown namespace/name 'urn:hl7-org:v3-test::ClinicalDocument')"
+        ]
       }
     },
     {
