@@ -64061,7 +64061,7 @@
               "details": {
                 "text": "The type 'QuestionnaireResponse' is allowed for the parameter 'questionnaire' in the  out profile but is not in the list of allowed types for the parameter: Questionnaire"
               },
-              "diagnostics": "[49,4]",
+              "diagnostics": "[50,4]",
               "expression": [
                 "OperationDefinition.inputProfile.parameter[2]"
               ]
@@ -64072,7 +64072,18 @@
               "details": {
                 "text": "The type 'Questionnaire' is not allowed for the parameter 'questionnaire' in the  out profile but is in the list of allowed types for the parameter (profile types = QuestionnaireResponse)"
               },
-              "diagnostics": "[49,4]",
+              "diagnostics": "[50,4]",
+              "expression": [
+                "OperationDefinition.inputProfile.parameter[2]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "text": "The target profile 'http://hl7.org/fhir/us/davinci-dtr/StructureDefinition/dtr-questionnaireresponse' is not allowed for the parameter 'questionnaire' in the  out profile but is in the list of target profiles for the parameter (target profiles = )"
+              },
+              "diagnostics": "[50,4]",
               "expression": [
                 "OperationDefinition.inputProfile.parameter[2]"
               ]
@@ -64083,7 +64094,7 @@
               "details": {
                 "text": "The out profile does not have a parameter 'questionnaire-response-out' but it is in the parameters list"
               },
-              "diagnostics": "[56,4]",
+              "diagnostics": "[57,4]",
               "expression": [
                 "OperationDefinition.inputProfile.parameter[3]"
               ]
@@ -64576,6 +64587,42 @@
               "diagnostics": "[26,4]",
               "expression": [
                 "ImplementationGuide.dependsOn[0]"
+              ]
+            },
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "text": "The canonical URL http://somewhere.org/fhir/uv/myig-data/ImplementationGuide/example.fhir.uv.myig-data doesn't point to an actual ImplementationGuide resource"
+              },
+              "diagnostics": "[26,4]",
+              "expression": [
+                "ImplementationGuide.dependsOn[0]"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "obs-sampled-data",
+      "file": "obs-sampled-data.json",
+      "module": "general",
+      "description": "Observation with a SampledData",
+      "version": "5.0",
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "code-invalid",
+              "details": {
+                "text": "No code provided, and a code should be provided from the value set 'Observation Interpretation Codes' (http://hl7.org/fhir/ValueSet/observation-interpretation|5.0.0)"
+              },
+              "diagnostics": "[25,4]",
+              "expression": [
+                "Observation.interpretation[0]"
               ]
             }
           ]
