@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+    <id value="multi-additional-base"/>
+    <url value="http://hl7.org/fhir/test/StructureDefinition/multi-additional-base"/>
+    <status value="active"/>
+    <kind value="resource"/>
+    <abstract value="false"/>
+    <type value="Patient"/>
+    <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+    <derivation value="constraint"/>
+    <differential>
+    <element>
+      <path value="Patient"/>
+      <short value="Short from Additional Base"/>
+      <alias value="Patient-Additional"/>
+    </element>
+    <element>
+      <path value="Patient.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element>
+      <path value="Patient.extension"/>
+      <sliceName value="pronouns"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/individual-pronouns"/>
+      </type>
+    </element>
+    <element>
+      <path value="Patient.gender"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.address.line"/>
+      <max value="1"/>
+    </element>
+    <element>
+      <path value="Patient.address.country"/>
+      <mustSupport value="false"/>
+      <patternString value="AU"/>
+    </element>
+    <element>
+      <path value="Patient.multipleBirth[x]"/>
+      <type>
+        <code value="integer"/>
+      </type>
+    </element>
+    <element>
+      <path value="Patient.multipleBirthInteger"/>
+      <minValueInteger value="1"/>
+      <maxValueInteger value="3"/>
+    </element>
+    <element>
+      <path value="Patient.contact.relationship"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://hl7.org/fhir/test/StructureDefinition/multi-dt-other"/>
+      </type>
+    </element>
+    <element>
+      <path value="Patient.communication.language"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://hl7.org/fhir/test/StructureDefinition/multi-dt-other"/>
+      </type>
+    </element>
+    </differential>
+</StructureDefinition>
