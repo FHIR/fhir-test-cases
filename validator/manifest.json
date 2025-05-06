@@ -64630,6 +64630,3208 @@
       }
     },
     {
+      "name": "abstract-question-type-included-qr",
+      "file": "questionnaire/brianpos/abstract-question-type-included-qr.json",
+      "description": "Verify abstract-question-type-included-qr against abstract-question-type-included-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/abstract-question-type-included-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidType",
+                    "display": "invalid item Type"
+                  }
+                ],
+                "text": "q1: The type 'Question' is not selectable - use a specific child item type instead"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "java": {
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "QuestionnaireResponse.status: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse|4.0.1)"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "QuestionnaireResponse"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "Items of type question should not have answers"
+              },
+              "diagnostics": "[8,10]",
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "attachment-content-type-qr",
+      "file": "questionnaire/brianpos/attachment-content-type-qr.json",
+      "description": "Verify attachment-content-type-qr against attachment-content-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/attachment-content-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAttachmentType",
+                    "display": "unsupported attachment type 'application/pdf'"
+                  }
+                ],
+                "text": "q1: attachment 'application/pdf' is not one of the supported types iamge/gif"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "java": {
+        "fatalCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "structure",
+              "details": {
+                "text": "QuestionnaireResponse.status: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse|4.0.1)"
+              },
+              "diagnostics": "[1,2]",
+              "expression": [
+                "QuestionnaireResponse"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "required",
+              "details": {
+                "text": "The mime type application/pdf is not valid for this answer (allowed = iamge/gif)"
+              },
+              "diagnostics": "[8,10]",
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "attachment-inconsistent-size-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/attachment-inconsistent-size-qr.json",
+      "description": "Verify attachment-inconsistent-size-qr against attachment-inconsistent-size-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/attachment-inconsistent-size-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "invalid",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "attachmentSizeInconsistent",
+                    "display": "attachment size inconsistent"
+                  }
+                ],
+                "text": "q1: attachment size reported 50,200,200.00 bytes, does not match the actual data size 500.00 bytes"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "attachment-invalid-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/attachment-invalid-type-qr.json",
+      "description": "Verify attachment-invalid-type-qr against attachment-invalid-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/attachment-invalid-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerType",
+                    "display": "invalid value type"
+                  }
+                ],
+                "text": "q1: Invalid datatype Coding provided for a Attachment item"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "attachment-max-size-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/attachment-max-size-qr.json",
+      "description": "Verify attachment-max-size-qr against attachment-max-size-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/attachment-max-size-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "maxAttachmentSize",
+                    "display": "attachment too large"
+                  }
+                ],
+                "text": "q1: Exceeded the maximum attachment size 50 bytes, received 500 bytes"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "attachment-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/attachment-qr.json",
+      "description": "Verify attachment-qr against attachment-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/attachment-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "boolean-invalid-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/boolean-invalid-type-qr.json",
+      "description": "Verify boolean-invalid-type-qr against boolean-invalid-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/boolean-invalid-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerType",
+                    "display": "invalid value type"
+                  }
+                ],
+                "text": "q1: Invalid datatype Coding provided for a Boolean item"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "choice-answer-option-exclusive-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/choice-answer-option-exclusive-qr.json",
+      "description": "Verify choice-answer-option-exclusive-qr against choice-answer-option-exclusive-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/choice-answer-option-exclusive-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "exclusiveAnswerOption",
+                    "display": "exclusive option"
+                  }
+                ],
+                "text": "q1: Selected answer c2 is an exclusive option"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[1]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "choice-answer-option-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/choice-answer-option-qr.json",
+      "description": "Verify choice-answer-option-qr against choice-answer-option-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/choice-answer-option-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerOption",
+                    "display": "invalid value"
+                  }
+                ],
+                "text": "q1: was not in the set of permitted values"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[3]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "choice-async-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/choice-async-qr.json",
+      "description": "Verify choice-async-qr against choice-async-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/choice-async-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "code-invalid",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidCoding",
+                    "display": "invalid code"
+                  }
+                ],
+                "text": "q1: invalid selection 'Australia'"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[1]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "choice-gender-coding-async-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/choice-gender-coding-async-qr.json",
+      "description": "Verify choice-gender-coding-async-qr against choice-gender-coding-async-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/choice-gender-coding-async-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "code-invalid",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidCoding",
+                    "display": "invalid code"
+                  }
+                ],
+                "text": "q1: invalid selection 'Australia'"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[1]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "choice-invalid-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/choice-invalid-type-qr.json",
+      "description": "Verify choice-invalid-type-qr against choice-invalid-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/choice-invalid-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerType",
+                    "display": "invalid value type"
+                  }
+                ],
+                "text": "q1: Invalid datatype string provided for a Choice item"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "choice-invalid-value-set-async-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/choice-invalid-value-set-async-qr.json",
+      "description": "Verify choice-invalid-value-set-async-qr against choice-invalid-value-set-async-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/choice-invalid-value-set-async-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "exception",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "tsError",
+                    "display": "server error"
+                  }
+                ],
+                "text": "q1: ValueSet not available on the terminology server"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "date-answer-option-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/date-answer-option-qr.json",
+      "description": "Verify date-answer-option-qr against date-answer-option-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/date-answer-option-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerOption",
+                    "display": "invalid value"
+                  }
+                ],
+                "text": "q1: was not in the set of permitted values"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[2]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "date-invalid-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/date-invalid-type-qr.json",
+      "description": "Verify date-invalid-type-qr against date-invalid-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/date-invalid-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerType",
+                    "display": "invalid value type"
+                  }
+                ],
+                "text": "q1: Invalid datatype Coding provided for a Date item"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "date-min-max-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/date-min-max-qr.json",
+      "description": "Verify date-min-max-qr against date-min-max-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/date-min-max-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 2,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "minValue",
+                    "display": "too small"
+                  }
+                ],
+                "text": "q1: Expected the minimum value 1/1/2020 12:00:00 AM , received 1/1/1998 12:00:00 AM"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[3]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "maxValue",
+                    "display": "too big"
+                  }
+                ],
+                "text": "q1: Exceeded the maximum value 1/1/2022 12:00:00 AM , received 1/1/2023 12:00:00 AM"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[4]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "date-time-invalid-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/date-time-invalid-type-qr.json",
+      "description": "Verify date-time-invalid-type-qr against date-time-invalid-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/date-time-invalid-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerType",
+                    "display": "invalid value type"
+                  }
+                ],
+                "text": "q1: Invalid datatype Coding provided for a DateTime item"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "date-time-min-max-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/date-time-min-max-qr.json",
+      "description": "Verify date-time-min-max-qr against date-time-min-max-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/date-time-min-max-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 2,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "minValue",
+                    "display": "too small"
+                  }
+                ],
+                "text": "q1: Expected the minimum value 2020, received 1998"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[3]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "maxValue",
+                    "display": "too big"
+                  }
+                ],
+                "text": "q1: Exceeded the maximum value 2022-06, received 2022-07"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[4]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "decimal-invalid-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/decimal-invalid-type-qr.json",
+      "description": "Verify decimal-invalid-type-qr against decimal-invalid-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/decimal-invalid-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerType",
+                    "display": "invalid value type"
+                  }
+                ],
+                "text": "q1: Invalid datatype Coding provided for a Decimal item"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "decimal-max-decimal-places-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/decimal-max-decimal-places-qr.json",
+      "description": "Verify decimal-max-decimal-places-qr against decimal-max-decimal-places-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/decimal-max-decimal-places-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "maxDecimalPlaces",
+                    "display": "too precise"
+                  }
+                ],
+                "text": "q1: Exceeded maximum decimal places 2, received 5"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "decimal-min-max-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/decimal-min-max-qr.json",
+      "description": "Verify decimal-min-max-qr against decimal-min-max-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/decimal-min-max-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 2,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "minValue",
+                    "display": "too small"
+                  }
+                ],
+                "text": "q1: Expected the minimum value 20, received 5.6"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "maxValue",
+                    "display": "too big"
+                  }
+                ],
+                "text": "q1: Exceeded the maximum value 2, received 5.6"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "decimal-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/decimal-qr.json",
+      "description": "Verify decimal-qr against decimal-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/decimal-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "display-answer-included-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/display-answer-included-qr.json",
+      "description": "Verify display-answer-included-qr against display-answer-included-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/display-answer-included-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "displayAnswer",
+                    "display": "Display has answer"
+                  }
+                ],
+                "text": "q1: Display items do not support answers"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "group-required-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/group-required-qr.json",
+      "description": "Verify group-required-qr against group-required-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/group-required-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "required",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "required",
+                    "display": "required"
+                  }
+                ],
+                "text": "grp1: Mandatory group does not have answer(s)"
+              },
+              "location": [
+                "linkId='grp1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "group-with-string-invalid-nesting-link-id-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/group-with-string-invalid-nesting-link-id-qr.json",
+      "description": "Verify group-with-string-invalid-nesting-link-id-qr against group-with-string-invalid-nesting-link-id-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/group-with-string-invalid-nesting-link-id-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidLinkId",
+                    "display": "invalid LinkID"
+                  }
+                ],
+                "text": "grp2: The linkId 'grp2' was not found in the Questionnaire"
+              },
+              "location": [
+                "linkId='grp2'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "group-with-string-invalid-nesting-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/group-with-string-invalid-nesting-qr.json",
+      "description": "Verify group-with-string-invalid-nesting-qr against group-with-string-invalid-nesting-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/group-with-string-invalid-nesting-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 2,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "groupShouldNotHaveAnswers",
+                    "display": "invalid group child items"
+                  }
+                ],
+                "text": "grp1: The type 'Group' should not use the 'answer' property, use the 'item' property for children"
+              },
+              "location": [
+                "linkId='grp1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "required",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "required",
+                    "display": "required"
+                  }
+                ],
+                "text": "q1: Mandatory field does not have an answer"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "required",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "required",
+                    "display": "required"
+                  }
+                ],
+                "text": "q2: Mandatory field does not have an answer"
+              },
+              "location": [
+                "linkId='q2'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "group-with-string-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/group-with-string-qr.json",
+      "description": "Verify group-with-string-qr against group-with-string-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/group-with-string-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "required",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "required",
+                    "display": "required"
+                  }
+                ],
+                "text": "q2: Mandatory field does not have an answer"
+              },
+              "location": [
+                "linkId='q2'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "integer-answer-option-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/integer-answer-option-qr.json",
+      "description": "Verify integer-answer-option-qr against integer-answer-option-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/integer-answer-option-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerOption",
+                    "display": "invalid value"
+                  }
+                ],
+                "text": "q1: was not in the set of permitted values"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[2]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "integer-invalid-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/integer-invalid-type-qr.json",
+      "description": "Verify integer-invalid-type-qr against integer-invalid-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/integer-invalid-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerType",
+                    "display": "invalid value type"
+                  }
+                ],
+                "text": "q1: Invalid datatype Coding provided for a Integer item"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "integer-min-max-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/integer-min-max-qr.json",
+      "description": "Verify integer-min-max-qr against integer-min-max-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/integer-min-max-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 2,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "minValue",
+                    "display": "too small"
+                  }
+                ],
+                "text": "q1: Expected the minimum value 20, received 5"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "maxValue",
+                    "display": "too big"
+                  }
+                ],
+                "text": "q1: Exceeded the maximum value 2, received 5"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "integer-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/integer-qr.json",
+      "description": "Verify integer-qr against integer-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/integer-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "invalid-link-id-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/invalid-link-id-qr.json",
+      "description": "Verify invalid-link-id-qr against invalid-link-id-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/invalid-link-id-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidLinkId",
+                    "display": "invalid LinkID"
+                  }
+                ],
+                "text": "q2: The linkId 'q2' was not found in the Questionnaire"
+              },
+              "location": [
+                "linkId='q2'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "invariant-corrupted-expression-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/invariant-corrupted-expression-qr.json",
+      "description": "Verify invariant-corrupted-expression-qr against invariant-corrupted-expression-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/invariant-corrupted-expression-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 1,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "invariant",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invariantExecution",
+                    "display": "invalid validation expression"
+                  }
+                ],
+                "text": "q1: Unable to evaluate custom validation rule Must have 3 answers"
+              },
+              "diagnostics": "answer.count() = 3 asdf aqwe\r\nCompilation failed: Parsing failure: unexpected 'a'; expected end of input (Line 1, Column 25); recently consumed:  = 3 asdf",
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "invariant-questionnaire-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/invariant-questionnaire-qr.json",
+      "description": "Verify invariant-questionnaire-qr against invariant-questionnaire-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/invariant-questionnaire-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 1,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "invariant",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invariant",
+                    "display": "Must have 3 answers"
+                  },
+                  {
+                    "system": "http://forms-lab.com/Questionnaire/ValidateInvariantQuestionnaire",
+                    "code": "k1",
+                    "display": "Must have 3 answers"
+                  }
+                ],
+                "text": "q1: Must have 3 answers"
+              },
+              "diagnostics": "answer.count() = 3",
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "invariant-undefined-variable-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/invariant-undefined-variable-qr.json",
+      "description": "Verify invariant-undefined-variable-qr against invariant-undefined-variable-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/invariant-undefined-variable-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 1,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "invariant",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invariantExecution",
+                    "display": "invalid validation expression"
+                  }
+                ],
+                "text": "q1: Unable to evaluate custom validation rule Must have 3 answers"
+              },
+              "diagnostics": "answer.count() = %unknown\r\nInvocation of operator '=' failed: Unknown symbol 'unknown'",
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "open-choice-gender-coding-async-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/open-choice-gender-coding-async-qr.json",
+      "description": "Verify open-choice-gender-coding-async-qr against open-choice-gender-coding-async-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/open-choice-gender-coding-async-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "code-invalid",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidCoding",
+                    "display": "invalid code"
+                  }
+                ],
+                "text": "q1: invalid selection 'Australia'"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[1]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "open-choice-invalid-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/open-choice-invalid-type-qr.json",
+      "description": "Verify open-choice-invalid-type-qr against open-choice-invalid-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/open-choice-invalid-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerType",
+                    "display": "invalid value type"
+                  }
+                ],
+                "text": "q1: Invalid datatype code provided for a OpenChoice item"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "open-choice-string-async-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/open-choice-string-async-qr.json",
+      "description": "Verify open-choice-string-async-qr against open-choice-string-async-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/open-choice-string-async-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "quantity-invalid-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/quantity-invalid-type-qr.json",
+      "description": "Verify quantity-invalid-type-qr against quantity-invalid-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/quantity-invalid-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerType",
+                    "display": "invalid value type"
+                  }
+                ],
+                "text": "q1: Invalid datatype string provided for a Quantity item"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "quantity-min-max-compat-units-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/quantity-min-max-compat-units-qr.json",
+      "description": "Verify quantity-min-max-compat-units-qr against quantity-min-max-compat-units-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/quantity-min-max-compat-units-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 2,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "minValue",
+                    "display": "too small"
+                  }
+                ],
+                "text": "q1: Expected the minimum value 50 km, received 10000 m"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "maxValue",
+                    "display": "too big"
+                  }
+                ],
+                "text": "q1: Exceeded the maximum value 5 km, received 10000 m"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "quantity-min-max-incompat-units-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/quantity-min-max-incompat-units-qr.json",
+      "description": "Verify quantity-min-max-incompat-units-qr against quantity-min-max-incompat-units-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/quantity-min-max-incompat-units-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 2,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "value",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "minValueIncompatUnits",
+                    "display": "incompatible units"
+                  }
+                ],
+                "text": "q1: Cannot convert value '10 Miles' to 'Kg' to verify minimum value"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "value",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "maxValueIncompatUnits",
+                    "display": "incompatible units"
+                  }
+                ],
+                "text": "q1: Cannot convert value '10 Miles' to 'Kg' to verify maximum value"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "quantity-min-max-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/quantity-min-max-qr.json",
+      "description": "Verify quantity-min-max-qr against quantity-min-max-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/quantity-min-max-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 2,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "minValue",
+                    "display": "too small"
+                  }
+                ],
+                "text": "q1: Expected the minimum value 50 Kg, received 10 Kg"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "maxValue",
+                    "display": "too big"
+                  }
+                ],
+                "text": "q1: Exceeded the maximum value 5 Kg, received 10 Kg"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "quantity-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/quantity-qr.json",
+      "description": "Verify quantity-qr against quantity-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/quantity-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "quantity-units-in-value-set-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/quantity-units-in-value-set-qr.json",
+      "description": "Verify quantity-units-in-value-set-qr against quantity-units-in-value-set-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/quantity-units-in-value-set-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "quantity-units-invalid-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/quantity-units-invalid-qr.json",
+      "description": "Verify quantity-units-invalid-qr against quantity-units-invalid-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/quantity-units-invalid-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "value",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidUnit",
+                    "display": "invalid units"
+                  }
+                ],
+                "text": "q1: The value '10 Kg' does not use 'kilometer', 'meter', 'miles'"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "quantity-units-not-in-value-set-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/quantity-units-not-in-value-set-qr.json",
+      "description": "Verify quantity-units-not-in-value-set-qr against quantity-units-not-in-value-set-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/quantity-units-not-in-value-set-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 2,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "code-invalid",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidUnitValueSet",
+                    "display": "invalid unit"
+                  }
+                ],
+                "text": "q1: invalid unit '10 kilometer', is not in 'http://hl7.org/fhir/ValueSet/jurisdiction'"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "code-invalid",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidUnitValueSet",
+                    "display": "invalid unit"
+                  }
+                ],
+                "text": "q1: invalid unit '10 kilometer', is not in 'http://hl7.org/fhir/ValueSet/jurisdiction'"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[1]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "quantity-units-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/quantity-units-qr.json",
+      "description": "Verify quantity-units-qr against quantity-units-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/quantity-units-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "questionnaire-draft-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/questionnaire-draft-qr.json",
+      "description": "Verify questionnaire-draft-qr against questionnaire-draft-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/questionnaire-draft-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 1,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "questionnaireDraft",
+                    "display": "Questionnaire inactive"
+                  }
+                ],
+                "text": "The Questionnaire is defined as a draft template"
+              },
+              "expression": [
+                "QuestionnaireResponse.questionnaire"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "questionnaire-inactive-end-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/questionnaire-inactive-end-qr.json",
+      "description": "Verify questionnaire-inactive-end-qr against questionnaire-inactive-end-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/questionnaire-inactive-end-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 1,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "questionnaireInactive",
+                    "display": "Questionnaire inactive"
+                  }
+                ],
+                "text": "The authored date is outside the permitted period defined in the Questionnaire"
+              },
+              "expression": [
+                "QuestionnaireResponse.authored"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "questionnaire-inactive-start-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/questionnaire-inactive-start-qr.json",
+      "description": "Verify questionnaire-inactive-start-qr against questionnaire-inactive-start-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/questionnaire-inactive-start-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 1,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "questionnaireInactive",
+                    "display": "Questionnaire inactive"
+                  }
+                ],
+                "text": "The authored date is outside the permitted period defined in the Questionnaire"
+              },
+              "expression": [
+                "QuestionnaireResponse.authored"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "questionnaire-not-resolved-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/questionnaire-not-resolved-qr.json",
+      "description": "Verify questionnaire-not-resolved-qr against questionnaire-not-resolved-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/questionnaire-not-resolved-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "not-found",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "questionnaireNotFound",
+                    "display": "Questionnaire not found"
+                  }
+                ],
+                "text": "The Questionnaire 'http://forms-lab.com/Questionnaire/ValidateQuestionnaireNotResolved' could not be resolved"
+              },
+              "expression": [
+                "QuestionnaireResponse.questionnaire"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "questionnaire-retired-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/questionnaire-retired-qr.json",
+      "description": "Verify questionnaire-retired-qr against questionnaire-retired-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/questionnaire-retired-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 1,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "questionnaireRetired",
+                    "display": "Questionnaire inactive"
+                  }
+                ],
+                "text": "The Questionnaire has been retired"
+              },
+              "expression": [
+                "QuestionnaireResponse.questionnaire"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "reference-absolute-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/reference-absolute-qr.json",
+      "description": "Verify reference-absolute-qr against reference-absolute-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/reference-absolute-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "reference-invalid-resource-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/reference-invalid-resource-type-qr.json",
+      "description": "Verify reference-invalid-resource-type-qr against reference-invalid-resource-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/reference-invalid-resource-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidRefResourceType",
+                    "display": "invalid FHIR resource type"
+                  }
+                ],
+                "text": "q1: The value 'https://example.org/Chicken/example' is not a valid FHIR Resource Reference"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "reference-invalid-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/reference-invalid-type-qr.json",
+      "description": "Verify reference-invalid-type-qr against reference-invalid-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/reference-invalid-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerType",
+                    "display": "invalid value type"
+                  }
+                ],
+                "text": "q1: Invalid datatype string provided for a Reference item"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "reference-invalid-url-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/reference-invalid-url-qr.json",
+      "description": "Verify reference-invalid-url-qr against reference-invalid-url-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/reference-invalid-url-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidRefValue",
+                    "display": "invalid format"
+                  }
+                ],
+                "text": "q1: The value 'htsdtps://example.org/Chicken/example' is not a valid FHIR Resource Reference"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "reference-relative-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/reference-relative-qr.json",
+      "description": "Verify reference-relative-qr against reference-relative-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/reference-relative-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome"
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "reference-unconstrained-resource-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/reference-unconstrained-resource-type-qr.json",
+      "description": "Verify reference-unconstrained-resource-type-qr against reference-unconstrained-resource-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/reference-unconstrained-resource-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "value",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidRefResourceTypeRestriction",
+                    "display": "incorrect resource type"
+                  }
+                ],
+                "text": "q1: The value 'Organization/example' does not refer to a Patient, Practitioner"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[1]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "string-answer-option-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/string-answer-option-qr.json",
+      "description": "Verify string-answer-option-qr against string-answer-option-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/string-answer-option-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerOption",
+                    "display": "invalid value"
+                  }
+                ],
+                "text": "q1: was not in the set of permitted values"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[2]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "string-draft-downgrade-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/string-draft-downgrade-qr.json",
+      "description": "Verify string-draft-downgrade-qr against string-draft-downgrade-q, expecting success: True",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/string-draft-downgrade-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 0,
+        "warningCount": 1,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "warning",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "repeats",
+                    "display": "multiple values"
+                  }
+                ],
+                "text": "q1: Provided 2 answers for a question that only permits 1 answer"
+              },
+              "diagnostics": "InProgress QuestionnaireResponse downgraded to warning",
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "string-invalid-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/string-invalid-type-qr.json",
+      "description": "Verify string-invalid-type-qr against string-invalid-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/string-invalid-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerType",
+                    "display": "invalid value type"
+                  }
+                ],
+                "text": "q1: Invalid datatype Coding provided for a String item"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "string-max-occurs-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/string-max-occurs-qr.json",
+      "description": "Verify string-max-occurs-qr against string-max-occurs-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/string-max-occurs-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "maxCount",
+                    "display": "too many"
+                  }
+                ],
+                "text": "q1: Exceeded maximum of 2 answers, received 3"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "string-min-max-length-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/string-min-max-length-qr.json",
+      "description": "Verify string-min-max-length-qr against string-min-max-length-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/string-min-max-length-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 2,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "minLength",
+                    "display": "too short"
+                  }
+                ],
+                "text": "q1: Expected the minimum value 20 characters, received 6"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "maxLength",
+                    "display": "too long"
+                  }
+                ],
+                "text": "q1: Exceeded maximum of 2 characters, received 6"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "string-min-occurs-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/string-min-occurs-qr.json",
+      "description": "Verify string-min-occurs-qr against string-min-occurs-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/string-min-occurs-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "minCount",
+                    "display": "not enough"
+                  }
+                ],
+                "text": "q1: Expected minimum of 2 answers, received 0"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "string-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/string-qr.json",
+      "description": "Verify string-qr against string-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/string-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "repeats",
+                    "display": "multiple values"
+                  }
+                ],
+                "text": "q1: Provided 2 answers for a question that only permits 1 answer"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "string-regex-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/string-regex-qr.json",
+      "description": "Verify string-regex-qr against string-regex-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/string-regex-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "invalid",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "regex",
+                    "display": "invalid format"
+                  }
+                ],
+                "text": "q1: The value 'fasdfa@@test.com.au' does not match the defined format blah@example.com"
+              },
+              "diagnostics": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[1]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "string-required-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/string-required-qr.json",
+      "description": "Verify string-required-qr against string-required-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/string-required-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "required",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "required",
+                    "display": "required"
+                  }
+                ],
+                "text": "q1: Mandatory field does not have an answer"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "string-vs-text-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/string-vs-text-qr.json",
+      "description": "Verify string-vs-text-qr against string-vs-text-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/string-vs-text-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidNewLine",
+                    "display": "contains newline"
+                  }
+                ],
+                "text": "q1: 'string' type questions cannot contain newline characters"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "string-with-coding-async-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/string-with-coding-async-qr.json",
+      "description": "Verify string-with-coding-async-qr against string-with-coding-async-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/string-with-coding-async-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "code-invalid",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidCoding",
+                    "display": "invalid code"
+                  }
+                ],
+                "text": "q1: invalid selection 'Australia'"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[1]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "text-invalid-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/text-invalid-type-qr.json",
+      "description": "Verify text-invalid-type-qr against text-invalid-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/text-invalid-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerType",
+                    "display": "invalid value type"
+                  }
+                ],
+                "text": "q1: Invalid datatype Coding provided for a Text item"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "time-invalid-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/time-invalid-type-qr.json",
+      "description": "Verify time-invalid-type-qr against time-invalid-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/time-invalid-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerType",
+                    "display": "invalid value type"
+                  }
+                ],
+                "text": "q1: Invalid datatype Coding provided for a Time item"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "time-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/time-qr.json",
+      "description": "Verify time-qr against time-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/time-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 1,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "business-rule",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerOption",
+                    "display": "invalid value"
+                  }
+                ],
+                "text": "q1: was not in the set of permitted values"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[1]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "url-invalid-type-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/url-invalid-type-qr.json",
+      "description": "Verify url-invalid-type-qr against url-invalid-type-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/url-invalid-type-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 1,
+        "errorCount": 0,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "fatal",
+              "code": "structure",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidAnswerType",
+                    "display": "invalid value type"
+                  }
+                ],
+                "text": "q1: Invalid datatype Coding provided for a Url item (datatype: uri)"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[0]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
+      "name": "url-value-qr",
+      "use-test": false,
+      "file": "questionnaire/brianpos/url-value-qr.json",
+      "description": "Verify url-value-qr against url-value-q, expecting success: False",
+      "fetcher": "standalone",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/brianpos/url-value-q.json"
+      ],
+      "dotnet-brianpos": {
+        "fatalCount": 0,
+        "errorCount": 2,
+        "warningCount": 0,
+        "outcome": {
+          "resourceType": "OperationOutcome",
+          "issue": [
+            {
+              "severity": "error",
+              "code": "value",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidUrlValue",
+                    "display": "invalid value"
+                  }
+                ],
+                "text": "q1: The value 'c:\\temp\\example.txt' is not a valid URL"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[1]"
+              ]
+            },
+            {
+              "severity": "error",
+              "code": "value",
+              "details": {
+                "coding": [
+                  {
+                    "system": "http://fhir.forms-lab.com/CodeSystem/errors",
+                    "code": "invalidUrlValue",
+                    "display": "invalid value"
+                  }
+                ],
+                "text": "q1: The value 'urn:uuid:c757873d-ec9a-4326-a141-556f43239520asdf' is not a valid URL"
+              },
+              "location": [
+                "linkId='q1'"
+              ],
+              "expression": [
+                "QuestionnaireResponse.item[0].answer[4]"
+              ]
+            }
+          ]
+        }
+      },
+      "module": "questionnaire"
+    },
+    {
       "name": "zzz",
       "file": "zzz.json",
       "description": "hack for close ups",
