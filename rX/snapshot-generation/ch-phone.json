@@ -1,0 +1,134 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "ch-core-contactpoint-ech-46-phone",
+  "url": "http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-contactpoint-ech-46-phone",
+  "name": "CHCoreContactPointECH46Phone",
+  "title": "CH Core ContactPoint eCH-0046 Phone",
+  "status": "active",
+  "description": "Phone number as contact point of a person or organization according to eCH-0046",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "eCH",
+      "name": "eCH Standards",
+      "uri": "https://www.ech.ch/"
+    }
+  ],
+  "kind": "complex-type",
+  "abstract": false,
+  "type": "ContactPoint",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/ContactPoint",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "ContactPoint",
+        "path": "ContactPoint",
+        "short": "CH Core ContactPoint eCH-0046 Phone",
+        "mapping": [
+          {
+            "identity": "eCH",
+            "map": "eCH-0046: phone"
+          }
+        ]
+      },
+      {
+        "id": "ContactPoint.system",
+        "path": "ContactPoint.system",
+        "min": 1,
+        "fixedCode": "phone",
+        "mapping": [
+          {
+            "identity": "eCH",
+            "map": "eCH-0046: phoneType"
+          }
+        ]
+      },
+      {
+        "id": "ContactPoint.value",
+        "path": "ContactPoint.value",
+        "min": 1,
+        "mapping": [
+          {
+            "identity": "eCH",
+            "map": "eCH-0046: phoneNumber"
+          }
+        ]
+      },
+      {
+        "id": "ContactPoint.use",
+        "path": "ContactPoint.use",
+        "mapping": [
+          {
+            "identity": "eCH",
+            "map": "eCH-0046: phoneCategory/otherPhoneCategory"
+          }
+        ]
+      },
+      {
+        "id": "ContactPoint.use.extension",
+        "path": "ContactPoint.use.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "ContactPoint.use.extension:phoneCategory",
+        "path": "ContactPoint.use.extension",
+        "sliceName": "phoneCategory",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://fhir.ch/ig/ch-core/StructureDefinition/ch-ext-ech-46-phonecategory"
+            ]
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "eCH",
+            "map": "eCH-0046: phoneNumberCategory"
+          }
+        ]
+      },
+      {
+        "id": "ContactPoint.period",
+        "path": "ContactPoint.period",
+        "mapping": [
+          {
+            "identity": "eCH",
+            "map": "eCH-0046: validity"
+          }
+        ]
+      },
+      {
+        "id": "ContactPoint.period.start",
+        "path": "ContactPoint.period.start",
+        "mapping": [
+          {
+            "identity": "eCH",
+            "map": "eCH-0046: dateFrom"
+          }
+        ]
+      },
+      {
+        "id": "ContactPoint.period.end",
+        "path": "ContactPoint.period.end",
+        "mapping": [
+          {
+            "identity": "eCH",
+            "map": "eCH-0046: dateTo"
+          }
+        ]
+      }
+    ]
+  }
+}

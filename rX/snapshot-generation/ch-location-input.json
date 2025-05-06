@@ -1,0 +1,141 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "ch-core-location",
+  "url": "http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-location",
+  "name": "CHCoreLocation",
+  "title": "CH Core Location",
+  "status": "active",
+  "description": "Base definition of the Location resource for use in Swiss specific use cases.",
+  "fhirVersion": "4.0.1",
+  "mapping": [
+    {
+      "identity": "eCH",
+      "name": "eCH Standards",
+      "uri": "https://www.ech.ch/"
+    }
+  ],
+  "kind": "resource",
+  "abstract": false,
+  "type": "Location",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Location",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Location",
+        "path": "Location",
+        "short": "CH Core Location"
+      },
+      {
+        "id": "Location.telecom",
+        "path": "Location.telecom",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        },
+        "mapping": [
+          {
+            "identity": "eCH",
+            "map": "eCH-0046: Contact"
+          }
+        ]
+      },
+      {
+        "id": "Location.telecom.system",
+        "path": "Location.telecom.system",
+        "min": 1
+      },
+      {
+        "id": "Location.telecom.value",
+        "path": "Location.telecom.value",
+        "min": 1
+      },
+      {
+        "id": "Location.telecom:email",
+        "path": "Location.telecom",
+        "sliceName": "email",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "ContactPoint",
+            "profile": [
+              "http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-contactpoint-ech-46-email"
+            ]
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "eCH",
+            "map": "eCH-0046: email"
+          }
+        ]
+      },
+      {
+        "id": "Location.telecom:phone",
+        "path": "Location.telecom",
+        "sliceName": "phone",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "ContactPoint",
+            "profile": [
+              "http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-contactpoint-ech-46-phone"
+            ]
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "eCH",
+            "map": "eCH-0046: phone"
+          }
+        ]
+      },
+      {
+        "id": "Location.telecom:internet",
+        "path": "Location.telecom",
+        "sliceName": "internet",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "ContactPoint",
+            "profile": [
+              "http://fhir.ch/ig/ch-core/StructureDefinition/ch-core-contactpoint-ech-46-internet"
+            ]
+          }
+        ],
+        "mapping": [
+          {
+            "identity": "eCH",
+            "map": "eCH-0046: internet"
+          }
+        ]
+      },
+      {
+        "id": "Location.address",
+        "path": "Location.address",
+        "type": [
+          {
+            "code": "Address"
+          }
+        ]
+      },
+      {
+        "id": "Location.managingOrganization",
+        "path": "Location.managingOrganization",
+        "type": [
+          {
+            "code": "Reference"
+          }
+        ]
+      }
+    ]
+  }
+}
