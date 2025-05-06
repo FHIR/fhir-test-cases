@@ -1,0 +1,39 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Profile http://example.org/reslicedextension/StructureDefinition/MyAuditEventProfile|0.1.0, Element matches more than one slice - altid/npi, altid/ssn"
+    },
+    "diagnostics" : "[12,10]",
+    "expression" : ["AuditEvent.agent[0].extension[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Profile http://example.org/reslicedextension/StructureDefinition/MyAuditEventProfile|0.1.0, Element matches more than one slice - altid/npi, altid/ssn"
+    },
+    "diagnostics" : "[19,10]",
+    "expression" : ["AuditEvent.agent[0].extension[1]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "AuditEvent.agent.extension:altid/npi: max allowed = 1, but found 2 (from http://example.org/reslicedextension/StructureDefinition/MyAuditEventProfile|0.1.0)"
+    },
+    "diagnostics" : "[10,6]",
+    "expression" : ["AuditEvent.agent[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "value",
+    "details" : {
+      "text" : "Value is 'http://hl7.org/fhir/sid/us-ssn' but is fixed to 'http://hl7.org/fhir/sid/us-npi' in the profile http://example.org/reslicedextension/StructureDefinition/MyAuditEventProfile|0.1.0#AuditEvent.agent.extension:altid/npi.value[x]:valueIdentifier.system"
+    },
+    "diagnostics" : "[21,55]",
+    "expression" : ["AuditEvent.agent[0].extension[1].value.ofType(Identifier).system"]
+  }]
+}

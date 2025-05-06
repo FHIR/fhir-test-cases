@@ -1,0 +1,73 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "This element does not match any known slice defined in the profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-master and slicing is CLOSED: Bundle.entry[0]: Does not match slice 'Patient' (discriminator: $this.resource.conformsTo('http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-patient')), Bundle.entry[0]: Details for Bundle matching against profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-patient, Bundle.entry[0]: Does not match slice 'Obs1' (discriminator: $this.resource.conformsTo('http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-obs1')), Bundle.entry[0]: Details for Bundle matching against profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-obs1, Bundle.entry[0]: Does not match slice 'Obs2' (discriminator: $this.resource.conformsTo('http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-obs2')), Bundle.entry[0]: Details for Bundle matching against profile http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-obs2, Bundle.entry[0]: Does not match slice 'Procedure' (discriminator: $this.resource.conformsTo('http://hl7.org/fhir/StructureDefinition/Procedure')), Bundle.entry[0]: Details for Bundle matching against profile http://hl7.org/fhir/StructureDefinition/Procedure|4.0.1"
+    },
+    "diagnostics" : "[4,10]",
+    "expression" : ["Bundle.entry[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "Slice 'Bundle.entry:Patient': a matching slice is required, but not found (from http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-master). Note that other slices are allowed in addition to this required slice"
+    },
+    "diagnostics" : "[1,37]",
+    "expression" : ["Bundle"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://acme.org/obs-codes' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[18,15]",
+    "expression" : ["Bundle.entry[1].resource.code.coding[0].system"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://acme.org/obs-codes' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[18,15]",
+    "expression" : ["Bundle.entry[1].resource/*Observation/obs1*/.code.coding[0].system"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://acme.org/obs-codes' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[33,15]",
+    "expression" : ["Bundle.entry[2].resource.code.coding[0].system"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://acme.org/obs-codes' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[33,15]",
+    "expression" : ["Bundle.entry[2].resource/*Observation/obs2*/.code.coding[0].system"]
+  }]
+}

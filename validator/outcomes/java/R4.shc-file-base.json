@@ -1,0 +1,48 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "error",
+    "code" : "not-found",
+    "details" : {
+      "text" : "JWT iss 'http://local.fhir.org:960/r4/' must start with https://"
+    },
+    "diagnostics" : "[1,1]",
+    "expression" : ["jwt"]
+  },
+  {
+    "severity" : "error",
+    "code" : "not-found",
+    "details" : {
+      "text" : "JWT iss 'http://local.fhir.org:960/r4/' must not have trailing /"
+    },
+    "diagnostics" : "[1,1]",
+    "expression" : ["jwt"]
+  },
+  {
+    "severity" : "error",
+    "code" : "not-found",
+    "details" : {
+      "text" : "Unable to verify the signature, because unable to retrieve JWKS from http://local.fhir.org:960/r4/.well-known/jwks.json: Connection refused"
+    },
+    "diagnostics" : "[1,1]",
+    "expression" : ["jwt"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "invariant",
+    "details" : {
+      "text" : "Constraint failed: vc-should-be-under-30-chars: 'Length SHOULD be <30 for data minimization.' (defined in http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-ad)"
+    },
+    "diagnostics" : "[1,824]",
+    "expression" : ["verifiableCredential[0].payload.vc.credentialSubject.entry[1].resource/*Immunization/null*/.performer[0].actor.display"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "invariant",
+    "details" : {
+      "text" : "Constraint failed: vc-should-be-under-30-chars: 'Length SHOULD be <30 for data minimization.' (defined in http://hl7.org/fhir/uv/shc-vaccination/StructureDefinition/shc-vaccination-ad)"
+    },
+    "diagnostics" : "[1,1192]",
+    "expression" : ["verifiableCredential[0].payload.vc.credentialSubject.entry[2].resource/*Immunization/null*/.performer[0].actor.display"]
+  }]
+}

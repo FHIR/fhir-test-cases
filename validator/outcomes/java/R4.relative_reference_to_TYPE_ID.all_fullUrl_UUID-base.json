@@ -1,0 +1,29 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "warning",
+    "code" : "required",
+    "details" : {
+      "text" : "Entry 1 matches the reference Organization/666 by type and id but it's fullUrl urn:uuid:2aaf815f-3ebe-4a03-9b87-05d0700313b2 does not match the full target URL urn:uuid:666 by Bundle resolution rules"
+    },
+    "expression" : ["Bundle.entry[0].resource/*Composition/null*/.author[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Can't find 'Organization/666' in the bundle (Composition.author). Note that there is a resource in the bundle with the same type and id, but it does not match because of the fullUrl based rules around matching relative references (must be ``urn:uuid:2aaf815f-3ebe-4a03-9b87-05d0700313b2``)"
+    },
+    "diagnostics" : "[20,13]",
+    "expression" : ["Bundle.entry[1].resource.author[1]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "informational",
+    "details" : {
+      "text" : "Entry 'urn:uuid:2aaf815f-3ebe-4a03-9b87-05d0700313b2' isn't reachable by traversing links (forward or backward) from the Composition"
+    },
+    "diagnostics" : "[27,9]",
+    "expression" : ["Bundle.entry[2]"]
+  }]
+}

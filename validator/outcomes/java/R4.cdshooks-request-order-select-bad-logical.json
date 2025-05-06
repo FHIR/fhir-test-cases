@@ -1,0 +1,91 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "fatal",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Unable to find resourceType property"
+    },
+    "diagnostics" : "[109,6]",
+    "expression" : ["CDSHooksRequest.prefetch[0].value"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "id value 'Patient/example-rec-11-benzo-trigger-without-opioid' is not valid"
+    },
+    "diagnostics" : "[7,71]",
+    "expression" : ["CDSHooksRequest.context.patientId"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "id value 'Encounter/example-rec-11-benzo-trigger-without-opioid-context' is not valid"
+    },
+    "diagnostics" : "[8,83]",
+    "expression" : ["CDSHooksRequest.context.encounterId"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invariant",
+    "details" : {
+      "text" : "Constraint failed: ord-1: 'Must be in the format {type}/{id}'"
+    },
+    "diagnostics" : "[10,60]",
+    "expression" : ["CDSHooksRequest.context.selections[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Except for transactions and batches, each entry in a Bundle must have a fullUrl which is the identity of the resource in the entry"
+    },
+    "diagnostics" : "[16,10]",
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "The extension http://fhir.org/guides/cdc/opioid-cds/StructureDefinition/dataDateRoller could not be found so is not allowed here"
+    },
+    "diagnostics" : "[21,16]",
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0].resource/*MedicationRequest/example-rec-11-benzo-trigger-without-opioid-context*/.extension[0]"]
+  },
+  {
+    "severity" : "information",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "Reference to draft CodeSystem http://terminology.hl7.org/CodeSystem/medicationrequest-category|1.0.0"
+    },
+    "diagnostics" : "[43,16]",
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0].resource/*MedicationRequest/example-rec-11-benzo-trigger-without-opioid-context*/.category[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "required",
+    "details" : {
+      "text" : "Bundle entry missing fullUrl"
+    },
+    "diagnostics" : "[16,10]",
+    "expression" : ["CDSHooksRequest.context.draftOrders.entry[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "required",
+    "details" : {
+      "text" : "Relative Reference appears inside Bundle whose entry is missing a fullUrl"
+    },
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0].resource/*MedicationRequest/example-rec-11-benzo-trigger-without-opioid-context*/.subject"]
+  },
+  {
+    "severity" : "error",
+    "code" : "required",
+    "details" : {
+      "text" : "Relative Reference appears inside Bundle whose entry is missing a fullUrl"
+    },
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0].resource/*MedicationRequest/example-rec-11-benzo-trigger-without-opioid-context*/.encounter"]
+  }]
+}

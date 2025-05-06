@@ -1,0 +1,47 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "warning",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Coding has no system. A code with no system has no defined meaning, and it cannot be validated. A system should be provided"
+    },
+    "diagnostics" : "[16,10]",
+    "expression" : ["Medication.extension[0].value.ofType(CodeableConcept).coding[0]"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r5"
+    }],
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Wrong Display Name 'Barbiturates and derivatives' for http://www.whocc.no/atc#N02AA. Valid display is 'Natural opium alkaloids' (for the language(s) 'en-US')"
+    },
+    "diagnostics" : "[27,10]",
+    "expression" : ["Medication.extension[1].value.ofType(CodeableConcept).coding[0].display"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r5"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/CodeSystem/usdrugformulary-DrugTierCS' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[38,12]",
+    "expression" : ["Medication.extension[2].value.ofType(CodeableConcept).coding[0].system"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "structure",
+    "details" : {
+      "text" : "Profile reference 'https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/StructureDefinition/usdrugformulary-FormularyDrug' has not been checked because it could not be found, and the validator is set to not fetch unknown profiles"
+    },
+    "diagnostics" : "[1,2]",
+    "expression" : ["Medication.meta.profile[0]"]
+  }]
+}

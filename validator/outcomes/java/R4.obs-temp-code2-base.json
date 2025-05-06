@@ -1,0 +1,47 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "error",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "Unknown code '276885007x' in the CodeSystem 'http://snomed.info/sct' version 'http://snomed.info/sct/900000000000207008/version/20240801'"
+    },
+    "diagnostics" : "[15,4]",
+    "expression" : ["Observation.code.coding[1].code"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "information",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "Code 276885007x is not a valid SNOMED CT Term, and neither could it be parsed as an expression (Found content (\"x\") after end of expression at character 10)"
+    },
+    "diagnostics" : "[15,4]",
+    "expression" : ["Observation.code.coding[1].code"]
+  },
+  {
+    "severity" : "information",
+    "code" : "informational",
+    "details" : {
+      "text" : "Validate Observation against the Body temperature profile (http://hl7.org/fhir/StructureDefinition/bodytemp) which is required by the FHIR specification because the LOINC code 8310-5 was found"
+    },
+    "diagnostics" : "[1,2]",
+    "expression" : ["Observation"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'Vital Signs' (http://hl7.org/fhir/ValueSet/observation-vitalsignresult|4.0.1), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://loinc.org#8310-5, http://snomed.info/sct#276885007x)"
+    },
+    "diagnostics" : "[15,4]",
+    "expression" : ["Observation.code"]
+  }]
+}

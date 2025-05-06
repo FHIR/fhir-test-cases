@@ -1,0 +1,38 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "error",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "if identifier.system is 'urn:ietf:rfc:3986', then the identifier.value must be a full URI (e.g. start with a scheme), not '2.16.840.1.113883.6.57'"
+    },
+    "diagnostics" : "[5,15]",
+    "expression" : ["CodeSystem.identifier[0]"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "HL7 Defined CodeSystems SHOULD have a stated value for the caseSensitive element so that users know the status and meaning of the code system clearly"
+    },
+    "expression" : ["CodeSystem"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "The code system says it has no content present, but concepts are found"
+    },
+    "diagnostics" : "[18,12]",
+    "expression" : ["CodeSystem.concept[0]"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "HL7 Defined CodeSystems should ensure that every concept has a definition"
+    },
+    "diagnostics" : "[2,41]",
+    "expression" : ["CodeSystem.concept[0]"]
+  }]
+}

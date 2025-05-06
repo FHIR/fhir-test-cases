@@ -1,0 +1,102 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "information",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "Reference to experimental CodeSystem http://fhir.de/CodeSystem/dimdi/icd-10-gm|2020"
+    },
+    "diagnostics" : "[9,4]",
+    "expression" : ["Condition.code"]
+  },
+  {
+    "severity" : "error",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "Unknown code 'A54.4† M73.04*' in the CodeSystem 'http://fhir.de/CodeSystem/dimdi/icd-10-gm' version '2020'"
+    },
+    "diagnostics" : "[9,4]",
+    "expression" : ["Condition.code.coding[0].code"]
+  },
+  {
+    "severity" : "information",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "Reference to experimental CodeSystem http://fhir.de/CodeSystem/dimdi/icd-10-gm|2020"
+    },
+    "diagnostics" : "[15,14]",
+    "expression" : ["Condition.code.coding[0].extension[0].value.ofType(Coding)"]
+  },
+  {
+    "severity" : "information",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "Reference to experimental CodeSystem http://fhir.de/CodeSystem/dimdi/icd-10-gm|2020"
+    },
+    "diagnostics" : "[23,14]",
+    "expression" : ["Condition.code.coding[0].extension[1].value.ofType(Coding)"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "invariant",
+    "details" : {
+      "text" : "Constraint failed: icd-5: 'Wenn die Diagnosesicherheit \"G (Gesichert)\" verwendet wird, dann muss clinicalStatus auf \"active\" und verificationStatus auf \"confirmed\" gesetzt werden.'"
+    },
+    "diagnostics" : "[31,14]",
+    "expression" : ["Condition.code.coding[0].extension[2].value.ofType(Coding)"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "Code System unknown, so assuming value set expansion is correct (A definition for CodeSystem 'https://fhir.kbv.de/CodeSystem/KBV_CS_SFHIR_ICD_DIAGNOSESICHERHEIT' version '1.00' could not be found, so the code cannot be validated. Valid versions: [])"
+    },
+    "diagnostics" : "[31,14]",
+    "expression" : ["Condition.code.coding[0].extension[2].value.ofType(Coding)"]
+  },
+  {
+    "severity" : "information",
+    "code" : "unknown",
+    "details" : {
+      "text" : "A definition for CodeSystem 'https://fhir.kbv.de/CodeSystem/KBV_CS_SFHIR_ICD_DIAGNOSESICHERHEIT' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[31,14]",
+    "expression" : ["Condition.code.coding[0].extension[2].value.ofType(Coding)"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "ValueSet 'https://fhir.kbv.de/ValueSet/KBV_VS_SFHIR_ICD_SEITENLOKALISATION' not found"
+    },
+    "diagnostics" : "[38,14]",
+    "expression" : ["Condition.code.coding[0].extension[3].value.ofType(Coding)"]
+  },
+  {
+    "severity" : "information",
+    "code" : "unknown",
+    "details" : {
+      "text" : "A definition for CodeSystem 'https://fhir.kbv.de/CodeSystem/KBV_CS_SFHIR_ICD_SEITENLOKALISATION' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[38,14]",
+    "expression" : ["Condition.code.coding[0].extension[3].value.ofType(Coding)"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "Condition.recordedDate: minimum required = 1, but only found 0 (from https://www.medizininformatik-initiative.de/fhir/core/modul-diagnose/StructureDefinition/Diagnose|1.0)"
+    },
+    "diagnostics" : "[1,2]",
+    "expression" : ["Condition"]
+  },
+  {
+    "severity" : "error",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "The Coding provided (http://fhir.de/CodeSystem/dimdi/icd-10-gm#A54.4† M73.04*) was not found in the value set 'ICD10GM' (http://fhir.de/ValueSet/dimdi/icd-10-gm|0.9.13), and a code is required from this value set.  (error message = The provided code 'http://fhir.de/CodeSystem/dimdi/icd-10-gm|2020#A54.4† M73.04*: 'Bursitis gonorrhoica'' was not found in the value set 'http://fhir.de/ValueSet/dimdi/icd-10-gm|0.9.13'; Unknown code 'A54.4† M73.04*' in the CodeSystem 'http://fhir.de/CodeSystem/dimdi/icd-10-gm' version '2020')"
+    },
+    "diagnostics" : "[11,8]",
+    "expression" : ["Condition.code.coding[0]"]
+  }]
+}

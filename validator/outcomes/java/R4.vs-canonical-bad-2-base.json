@@ -1,0 +1,29 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "HL7 Defined CodeSystems SHOULD have a stated value for the caseSensitive element so that users know the status and meaning of the code system clearly"
+    },
+    "expression" : ["ValueSet.contained[0]/*CodeSystem/c1*/"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "HL7 Defined CodeSystems should ensure that every concept has a definition"
+    },
+    "diagnostics" : "[10,4]",
+    "expression" : ["ValueSet.contained[0]/*CodeSystem/c1*/.concept[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "URI values in ValueSet.compose.include.system must be absolute. To reference a contained code system, use the full CodeSystem URL and reference it using the http://hl7.org/fhir/StructureDefinition/valueset-system extension"
+    },
+    "diagnostics" : "[30,8]",
+    "expression" : ["ValueSet.compose.include[0]"]
+  }]
+}

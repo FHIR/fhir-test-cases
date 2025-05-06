@@ -1,0 +1,131 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "The Extension 'http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal' must not be used as an extension (it's a modifierExtension)"
+    },
+    "diagnostics" : "[3,89]",
+    "expression" : ["Patient.extension[0][url='http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal']"]
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "severity",
+        "valueCode" : "information"
+      },
+      {
+        "url" : "type",
+        "valueCode" : "structure"
+      },
+      {
+        "url" : "path",
+        "valueString" : "Patient.extension[0].extension[1]"
+      },
+      {
+        "url" : "message",
+        "valueString" : "Does not match slice 'species' (discriminator: ('species' in url))"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/operationoutcome-inner-message"
+    },
+    {
+      "extension" : [{
+        "url" : "severity",
+        "valueCode" : "information"
+      },
+      {
+        "url" : "type",
+        "valueCode" : "structure"
+      },
+      {
+        "url" : "path",
+        "valueString" : "Patient.extension[0].extension[1]"
+      },
+      {
+        "url" : "message",
+        "valueString" : "Does not match slice 'breed' (discriminator: ('breed' in url))"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/operationoutcome-inner-message"
+    },
+    {
+      "extension" : [{
+        "url" : "severity",
+        "valueCode" : "information"
+      },
+      {
+        "url" : "type",
+        "valueCode" : "structure"
+      },
+      {
+        "url" : "path",
+        "valueString" : "Patient.extension[0].extension[1]"
+      },
+      {
+        "url" : "message",
+        "valueString" : "Does not match slice 'genderStatus' (discriminator: ('genderStatus' in url))"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/operationoutcome-inner-message"
+    }],
+    "severity" : "information",
+    "code" : "informational",
+    "details" : {
+      "text" : "This element does not match any known slice defined in the profile http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal|4.0.1 (this may not be a problem, but you should check that it's not intended to match a slice)"
+    },
+    "diagnostics" : "[13,30]",
+    "expression" : ["Patient.extension[0].extension[1]"]
+  },
+  {
+    "severity" : "information",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "Reference to draft CodeSystem http://hl7.org/fhir/animal-species|4.0.1"
+    },
+    "diagnostics" : "[5,29]",
+    "expression" : ["Patient.extension[0].extension[0].value.ofType(CodeableConcept)"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Sub-extension url 'x-breed' is not defined by the Extension http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal|4.0.1"
+    },
+    "diagnostics" : "[13,30]",
+    "expression" : ["Patient.extension[0].extension[1][url='x-breed']"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "information",
+    "code" : "invalid",
+    "details" : {
+      "text" : "The code '58108001' is valid but is not active"
+    },
+    "diagnostics" : "[14,29]",
+    "expression" : ["Patient.extension[0].extension[1].value.ofType(CodeableConcept).coding[0].code"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://example.org/fhir/animal-breed' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[14,29]",
+    "expression" : ["Patient.extension[0].extension[1].value.ofType(CodeableConcept).coding[1].system"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "No code provided, and a code should be provided from the value set 'IdentifierType' (http://hl7.org/fhir/ValueSet/identifier-type|4.0.1)"
+    },
+    "diagnostics" : "[37,11]",
+    "expression" : ["Patient.identifier[0].type"]
+  }]
+}

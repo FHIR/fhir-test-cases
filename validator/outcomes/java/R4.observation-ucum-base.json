@@ -1,0 +1,101 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "UCUM Codes that contain human readable annotations like {hg} can be misleading (e.g. they are ignored when comparing units). Best Practice is not to depend on annotations in the UCUM code, so this usage should be checked"
+    },
+    "diagnostics" : "[36,18]",
+    "expression" : ["Observation.component[0].value.ofType(Quantity)"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "error",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "Unknown code 'fmm[Hg]' in the CodeSystem 'http://unitsofmeasure.org' version '2.2'"
+    },
+    "diagnostics" : "[51,18]",
+    "expression" : ["Observation.component[1].value.ofType(Quantity).code"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "information",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "Error processing Unit: 'fmm[Hg]': The unit \"fmm[Hg]\" is unknown at character 1"
+    },
+    "diagnostics" : "[51,18]",
+    "expression" : ["Observation.component[1].value.ofType(Quantity).code"]
+  },
+  {
+    "severity" : "information",
+    "code" : "informational",
+    "details" : {
+      "text" : "Validate Observation against the Blood pressure systolic and diastolic profile (http://hl7.org/fhir/StructureDefinition/bp) which is required by the FHIR specification because the LOINC code 85354-9 was found"
+    },
+    "diagnostics" : "[1,42]",
+    "expression" : ["Observation"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "Observation.category: minimum required = 1, but only found 0 (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1)"
+    },
+    "diagnostics" : "[1,42]",
+    "expression" : ["Observation"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "Slice 'Observation.category:VSCat': a matching slice is required, but not found (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1). Note that other slices are allowed in addition to this required slice"
+    },
+    "diagnostics" : "[1,42]",
+    "expression" : ["Observation"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "The code provided (http://unitsofmeasure.org#mm[Hg]{hg}) is not in the value set 'Vital Signs Units' (http://hl7.org/fhir/ValueSet/ucum-vitals-common|4.0.1), and a code should come from this value set unless it has no suitable code (the validator cannot judge what is suitable)"
+    },
+    "diagnostics" : "[36,18]",
+    "expression" : ["Observation.component[0].value.ofType(Quantity)"]
+  },
+  {
+    "severity" : "error",
+    "code" : "value",
+    "details" : {
+      "text" : "Value is 'mm[Hg]{hg}' but is fixed to 'mm[Hg]' in the profile http://hl7.org/fhir/StructureDefinition/bp|4.0.1#Observation.component:SystolicBP.value[x].code"
+    },
+    "diagnostics" : "[40,31]",
+    "expression" : ["Observation.component[0].value.ofType(Quantity).code"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "The code provided (http://unitsofmeasure.org#fmm[Hg]) is not in the value set 'Vital Signs Units' (http://hl7.org/fhir/ValueSet/ucum-vitals-common|4.0.1), and a code should come from this value set unless it has no suitable code (the validator cannot judge what is suitable)"
+    },
+    "diagnostics" : "[51,18]",
+    "expression" : ["Observation.component[1].value.ofType(Quantity)"]
+  },
+  {
+    "severity" : "error",
+    "code" : "value",
+    "details" : {
+      "text" : "Value is 'fmm[Hg]' but is fixed to 'mm[Hg]' in the profile http://hl7.org/fhir/StructureDefinition/bp|4.0.1#Observation.component:DiastolicBP.value[x].code"
+    },
+    "diagnostics" : "[55,28]",
+    "expression" : ["Observation.component[1].value.ofType(Quantity).code"]
+  }]
+}

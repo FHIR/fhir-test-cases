@@ -1,0 +1,84 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "Text should not be present ('[%loop count=70%]')"
+    },
+    "diagnostics" : "[8,29]",
+    "expression" : ["/f:Bundle"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "Text should not be present ('[%endloop%]')"
+    },
+    "diagnostics" : "[45,11]",
+    "expression" : ["/f:Bundle"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "Undefined attribute '@xsi:schemaLocation' on Bundle for type Bundle"
+    },
+    "diagnostics" : "[3,68]",
+    "expression" : ["/f:Bundle"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "Undefined element 'coding' at Endpoint/f:connectionType"
+    },
+    "diagnostics" : "[22,19]",
+    "expression" : ["Endpoint/f:connectionType"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Invalid Resource id: Invalid Characters ('[%count%]')"
+    },
+    "diagnostics" : "[13,32]",
+    "expression" : ["Bundle.entry[0].resource/*Endpoint/[%count%]*/.id"]
+  },
+  {
+    "severity" : "error",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "The value provided ('[%status%]') was not found in the value set 'EndpointStatus' (http://hl7.org/fhir/ValueSet/endpoint-status|4.0.1), and a code is required from this value set  (error message = The System URI could not be determined for the code '[%status%]' in the ValueSet 'http://hl7.org/fhir/ValueSet/endpoint-status|4.0.1'; The provided code '#[%status%]' was not found in the value set 'http://hl7.org/fhir/ValueSet/endpoint-status|4.0.1')"
+    },
+    "diagnostics" : "[20,37]",
+    "expression" : ["Bundle.entry[0].resource/*Endpoint/[%count%]*/.status"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Coding has no system. A code with no system has no defined meaning, and it cannot be validated. A system should be provided"
+    },
+    "diagnostics" : "[35,22]",
+    "expression" : ["Bundle.entry[0].resource/*Endpoint/[%count%]*/.payloadType[0].coding[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "unknown",
+    "details" : {
+      "text" : "The System URI could not be determined for the code '[%payloadFormat%]' in the ValueSet 'http://hl7.org/fhir/ValueSet/mimetypes|4.0.1': include #0 has system urn:ietf:bcp:13 which could not be found, and the server returned error [Error from http://tx-dev.fhir.org/r4: The code System \"urn:ietf:bcp:13\" has a grammar, and cannot be enumerated directly]"
+    },
+    "diagnostics" : "[41,53]",
+    "expression" : ["Bundle.entry[0].resource/*Endpoint/[%count%]*/.payloadMimeType[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "The value provided ('[%payloadFormat%]') was not found in the value set 'MimeType' (http://hl7.org/fhir/ValueSet/mimetypes|4.0.1), and a code is required from this value set  (error message = The System URI could not be determined for the code '[%payloadFormat%]' in the ValueSet 'http://hl7.org/fhir/ValueSet/mimetypes|4.0.1': include #0 has system urn:ietf:bcp:13 which could not be found, and the server returned error [Error from http://tx-dev.fhir.org/r4: The code System \"urn:ietf:bcp:13\" has a grammar, and cannot be enumerated directly]; The System URI could not be determined for the code '[%payloadFormat%]' in the ValueSet 'http://hl7.org/fhir/ValueSet/mimetypes|4.0.1')"
+    },
+    "diagnostics" : "[41,53]",
+    "expression" : ["Bundle.entry[0].resource/*Endpoint/[%count%]*/.payloadMimeType[0]"]
+  }]
+}

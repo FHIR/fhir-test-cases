@@ -1,0 +1,47 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "information",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "Reference to draft CodeSystem http://hl7.org/fhir/animal-species|4.0.1"
+    },
+    "diagnostics" : "[5,29]",
+    "expression" : ["Patient.extension[0].extension[0].value.ofType(CodeableConcept)"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "information",
+    "code" : "invalid",
+    "details" : {
+      "text" : "The code '58108001' is valid but is not active"
+    },
+    "diagnostics" : "[14,29]",
+    "expression" : ["Patient.extension[0].extension[1].value.ofType(CodeableConcept).coding[0].code"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://example.org/fhir/animal-breed' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[14,29]",
+    "expression" : ["Patient.extension[0].extension[1].value.ofType(CodeableConcept).coding[1].system"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "No code provided, and a code should be provided from the value set 'IdentifierType' (http://hl7.org/fhir/ValueSet/identifier-type|4.0.1)"
+    },
+    "diagnostics" : "[37,11]",
+    "expression" : ["Patient.identifier[0].type"]
+  }]
+}

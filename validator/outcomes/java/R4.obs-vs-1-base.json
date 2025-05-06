@@ -1,0 +1,48 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "The extension http://hl7.org/fhir/uv/cardx-htn/StructureDefinition/NumberOfMeasurementsExt could not be found so is not allowed here"
+    },
+    "diagnostics" : "[11,4]",
+    "expression" : ["Observation.extension[0]"]
+  },
+  {
+    "severity" : "information",
+    "code" : "informational",
+    "details" : {
+      "text" : "Validate Observation against the Blood pressure systolic and diastolic profile (http://hl7.org/fhir/StructureDefinition/bp) which is required by the FHIR specification because the LOINC code 76534-7 was found"
+    },
+    "diagnostics" : "[1,2]",
+    "expression" : ["Observation"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'Vital Signs' (http://hl7.org/fhir/ValueSet/observation-vitalsignresult|4.0.1), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://loinc.org#76534-7)"
+    },
+    "diagnostics" : "[24,4]",
+    "expression" : ["Observation.code"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "BPCode: magic LOINC code 85354-9 required, but not found (from http://hl7.org/fhir/StructureDefinition/bp|4.0.1). Note that other Observation codes are allowed in addition to this required magic code"
+    },
+    "diagnostics" : "[24,4]",
+    "expression" : ["Observation.code"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "structure",
+    "details" : {
+      "text" : "Profile reference 'http://hl7.org/fhir/uv/cardx-htn/StructureDefinition/average-smbp' has not been checked because it could not be found, and the validator is set to not fetch unknown profiles"
+    },
+    "diagnostics" : "[1,2]",
+    "expression" : ["Observation.meta.profile[0]"]
+  }]
+}

@@ -1,0 +1,33 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r5"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://example.org/obs-code' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[12,10]",
+    "expression" : ["Bundle.entry[0].resource/*Observation/observation1*/.code.coding[0].system"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Relative URLs must be of the format [ResourceName]/[id], or a search URL is allowed ([type]?parameters. Encountered Device?identifier=1234&?==)"
+    },
+    "expression" : ["Bundle.entry[0].resource/*Observation/observation1*/.device"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "The query part of the conditional reference is not a valid query string (Device?identifier=1234&?==)"
+    },
+    "diagnostics" : "[25,10]",
+    "expression" : ["Bundle.entry[0].resource/*Observation/observation1*/.device"]
+  }]
+}

@@ -1,0 +1,88 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "warning",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Coding has no system. A code with no system has no defined meaning, and it cannot be validated. A system should be provided"
+    },
+    "diagnostics" : "[8,4]",
+    "expression" : ["Measure.subject.ofType(CodeableConcept).coding[0]"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Wrong Display Name 'COVID-19' for http://snomed.info/sct#840535000. Valid display is one of 7 choices: 'Antibody to 2019 novel coronavirus', 'Antibody to 2019-nCoV', 'Antibody to severe acute respiratory syndrome coronavirus 2 (substance)', 'Antibody to severe acute respiratory syndrome coronavirus 2', 'Antibody to SARS-CoV-2', 'Severe acute respiratory syndrome coronavirus 2 Ab' or 'Severe acute respiratory syndrome coronavirus 2 antibody' (for the language(s) 'en-US')"
+    },
+    "diagnostics" : "[42,8]",
+    "expression" : ["Measure.useContext[0].value.ofType(CodeableConcept).coding[0].display"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Coding has no system. A code with no system has no defined meaning, and it cannot be validated. A system should be provided"
+    },
+    "diagnostics" : "[55,4]",
+    "expression" : ["Measure.scoring.coding[0]"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'MeasureScoring' (http://hl7.org/fhir/ValueSet/measure-scoring|4.0.1), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = null#proportion)"
+    },
+    "diagnostics" : "[55,4]",
+    "expression" : ["Measure.scoring"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Coding has no system. A code with no system has no defined meaning, and it cannot be validated. A system should be provided"
+    },
+    "diagnostics" : "[67,12]",
+    "expression" : ["Measure.group[0].population[0].code.coding[0]"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'MeasurePopulationType' (http://hl7.org/fhir/ValueSet/measure-population|4.0.1), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = null#numerator)"
+    },
+    "diagnostics" : "[67,12]",
+    "expression" : ["Measure.group[0].population[0].code"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Coding has no system. A code with no system has no defined meaning, and it cannot be validated. A system should be provided"
+    },
+    "diagnostics" : "[82,12]",
+    "expression" : ["Measure.group[0].population[1].code.coding[0]"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'MeasurePopulationType' (http://hl7.org/fhir/ValueSet/measure-population|4.0.1), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = null#denominator)"
+    },
+    "diagnostics" : "[82,12]",
+    "expression" : ["Measure.group[0].population[1].code"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "invariant",
+    "details" : {
+      "text" : "Constraint failed: mea-0: 'Name should be usable as an identifier for the module by machine processing applications such as code generation'"
+    },
+    "diagnostics" : "[1,2]",
+    "expression" : ["Measure"]
+  }]
+}

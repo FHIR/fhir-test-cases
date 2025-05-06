@@ -1,0 +1,25 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r3"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://acme.org/not-snomed' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[5,4]",
+    "expression" : ["Observation.code.coding[0].system"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'Observation Interpretation Codes' (http://hl7.org/fhir/ValueSet/observation-interpretation|3.0.2), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://snomed.info/sct#17621005)"
+    },
+    "diagnostics" : "[38,4]",
+    "expression" : ["Observation.interpretation"]
+  }]
+}

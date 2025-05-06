@@ -1,0 +1,65 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r3"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://myownsystem.info/sct' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[7,15]",
+    "expression" : ["Observation.category[0].coding[0].system"]
+  },
+  {
+    "severity" : "information",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'Observation Category Codes' (http://hl7.org/fhir/ValueSet/observation-category|3.0.2), and a coding is recommended to come from this value set (codes = http://myownsystem.info/sct#104)"
+    },
+    "diagnostics" : "[7,15]",
+    "expression" : ["Observation.category[0]"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r3"
+    }],
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Wrong Display Name 'Chemistry' for http://snomed.info/sct#275711006. Valid display is one of 2 choices: 'Serum chemistry test' or 'Serum chemistry test (procedure)' (for the language(s) 'en-US')"
+    },
+    "diagnostics" : "[14,15]",
+    "expression" : ["Observation.category[1].coding[0].display"]
+  },
+  {
+    "severity" : "information",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'Observation Category Codes' (http://hl7.org/fhir/ValueSet/observation-category|3.0.2), and a coding is recommended to come from this value set (codes = http://snomed.info/sct#275711006)"
+    },
+    "diagnostics" : "[14,15]",
+    "expression" : ["Observation.category[1]"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'Observation Interpretation Codes' (http://hl7.org/fhir/ValueSet/observation-interpretation|3.0.2), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://snomed.info/sct#281302008)"
+    },
+    "diagnostics" : "[39,21]",
+    "expression" : ["Observation.interpretation"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "structure",
+    "details" : {
+      "text" : "Profile reference 'http://nictiz.nl/fhir/StructureDefinition/zib-LaboratoryTestResult-Observation-Value' has not been checked because it could not be found, and the validator is set to not fetch unknown profiles"
+    },
+    "diagnostics" : "[1,42]",
+    "expression" : ["Observation.meta.profile[0]"]
+  }]
+}

@@ -1,0 +1,91 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "id value 'Patient/example-rec-01-true-make-recommendations' is not valid"
+    },
+    "diagnostics" : "[7,68]",
+    "expression" : ["CDSHooksRequest.context.patientId"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Except for transactions and batches, each entry in a Bundle must have a fullUrl which is the identity of the resource in the entry"
+    },
+    "diagnostics" : "[12,10]",
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "The extension http://fhir.org/guides/cdc/opioid-cds/StructureDefinition/dataDateRoller could not be found so is not allowed here"
+    },
+    "diagnostics" : "[17,16]",
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0].resource/*MedicationRequest/05f8cb26-2eb6-4124-b65d-bb1f13e21c49*/.extension[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "The value provided ('Xactive') was not found in the value set 'Medicationrequest  status' (http://hl7.org/fhir/ValueSet/medicationrequest-status|4.0.1), and a code is required from this value set  (error message = The System URI could not be determined for the code 'Xactive' in the ValueSet 'http://hl7.org/fhir/ValueSet/medicationrequest-status|4.0.1'; The provided code '#Xactive' was not found in the value set 'http://hl7.org/fhir/ValueSet/medicationrequest-status|4.0.1')"
+    },
+    "diagnostics" : "[36,32]",
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0].resource/*MedicationRequest/05f8cb26-2eb6-4124-b65d-bb1f13e21c49*/.status"]
+  },
+  {
+    "severity" : "information",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "Reference to draft CodeSystem http://terminology.hl7.org/CodeSystem/medicationrequest-category|1.0.0"
+    },
+    "diagnostics" : "[39,16]",
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0].resource/*MedicationRequest/05f8cb26-2eb6-4124-b65d-bb1f13e21c49*/.category[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "required",
+    "details" : {
+      "text" : "Bundle entry missing fullUrl"
+    },
+    "diagnostics" : "[12,10]",
+    "expression" : ["CDSHooksRequest.context.draftOrders.entry[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "required",
+    "details" : {
+      "text" : "Relative Reference appears inside Bundle whose entry is missing a fullUrl"
+    },
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0].resource/*MedicationRequest/05f8cb26-2eb6-4124-b65d-bb1f13e21c49*/.subject"]
+  },
+  {
+    "severity" : "error",
+    "code" : "required",
+    "details" : {
+      "text" : "Relative Reference appears inside Bundle whose entry is missing a fullUrl"
+    },
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0].resource/*MedicationRequest/05f8cb26-2eb6-4124-b65d-bb1f13e21c49*/.encounter"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "The extension http://fhir.org/guides/cdc/opioid-cds/StructureDefinition/dataDateRoller could not be found so is not allowed here"
+    },
+    "diagnostics" : "[108,12]",
+    "expression" : ["CDSHooksRequest.prefetch[0].value/*Patient/example-rec-01-true-make-recommendations*/.extension[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Not a valid date ('X2002-09-26' doesn't meet format requirements for date)"
+    },
+    "diagnostics" : "[127,35]",
+    "expression" : ["CDSHooksRequest.prefetch[0].value/*Patient/example-rec-01-true-make-recommendations*/.birthDate"]
+  }]
+}

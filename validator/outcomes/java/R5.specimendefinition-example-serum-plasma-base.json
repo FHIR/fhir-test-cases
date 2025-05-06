@@ -1,0 +1,43 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "Undefined attribute '@value' on identifier for type Identifier"
+    },
+    "diagnostics" : "[5,31]",
+    "expression" : ["/f:SpecimenDefinition/f:identifier"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "invariant",
+    "details" : {
+      "text" : "Constraint failed: ident-1: 'Identifier with no value has limited utility.  If communicating that an identifier value has been suppressed or missing, the value element SHOULD be present with an extension indicating the missing semantic - e.g. data-absent-reason' (defined in http://hl7.org/fhir/StructureDefinition/Identifier)"
+    },
+    "diagnostics" : "[5,31]",
+    "expression" : ["SpecimenDefinition.identifier"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r5"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'urn:iso:std:iso:6710:2017' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[52,12]",
+    "expression" : ["SpecimenDefinition.typeTested[0].container.cap.coding[0].system"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'urn:iso:std:iso:6710:2017' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[141,12]",
+    "expression" : ["SpecimenDefinition.typeTested[1].container.cap.coding[0]"]
+  }]
+}

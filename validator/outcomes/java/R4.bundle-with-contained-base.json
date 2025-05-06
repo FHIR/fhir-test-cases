@@ -1,0 +1,87 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Hyperlink '#Organization_SampleLabelerOrganization' at 'div/p/a' for 'See above (Organization/SampleLabelerOrganization)' does not resolve"
+    },
+    "diagnostics" : "[14,498]",
+    "expression" : ["Bundle.entry[0].resource/*MessageHeader/SampleLabelerCodeRequestMessage*/.text.div"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Wrong Display Name 'NDC labeler code request' for http://loinc.org#51726-8. Valid display is one of 3 choices: 'FDA product label NDC labeler code request' (en-US), 'FDA product label NDC labeler code request' (en-US) or 'FDA label NDC labeler code request' (en-US) (for the language(s) 'en-US')"
+    },
+    "diagnostics" : "[16,10]",
+    "expression" : ["Bundle.entry[0].resource/*MessageHeader/SampleLabelerCodeRequestMessage*/.event.ofType(Coding).display"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Wrong Display Name 'Foreign Facility's United States Agent' for http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#C73330. Valid display is 'UNITED STATES AGENT' (for the language(s) 'en-US')"
+    },
+    "diagnostics" : "[51,16]",
+    "expression" : ["Bundle.entry[1].resource/*Organization/SampleLabelerOrganization*/.contained[0]/*OrganizationAffiliation/SampleLabelerUSAgentAffiliation*/.code[0].coding[0].display"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://example.org/fhir/us/spl/CodeSystem/codesystem-organizationTypes' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[72,16]",
+    "expression" : ["Bundle.entry[1].resource/*Organization/SampleLabelerOrganization*/.contained[1]/*Organization/usagent*/.type[0].coding[0].system"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://example.org/fhir/us/spl/CodeSystem/codesystem-organizationTypes' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[134,12]",
+    "expression" : ["Bundle.entry[1].resource/*Organization/SampleLabelerOrganization*/.type[0].coding[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Can't find 'Organization/SampleLabelerOrganization' in the bundle (MessageHeader Data). Note that there is a resource in the bundle with the same type and id, but it does not match because of the fullUrl based rules around matching relative references (must be ``http://example.org/Organization/SampleLabelerOrganization``)"
+    },
+    "diagnostics" : "[25,12]",
+    "expression" : ["Bundle.entry[1].resource.focus[0]"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "informational",
+    "details" : {
+      "text" : "Entry 'http://example.org/Organization/SampleLabelerOrganization' isn't reachable by traversing links (forward or backward) from the MessageHeader, so its presence should be reviewed (is it needed to process the message?)"
+    },
+    "diagnostics" : "[31,6]",
+    "expression" : ["Bundle.entry[2]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "The fullUrl 'http://example.org/MessageHeader/LabelerCodeRequestMessage' looks like a RESTful server URL, so it must end with the correct type and id (/MessageHeader/SampleLabelerCodeRequestMessage)"
+    },
+    "diagnostics" : "[7,6]",
+    "expression" : ["Bundle.entry[0]"]
+  }]
+}

@@ -1,0 +1,108 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r5"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://hl7.org/fhir/uv/phd/CodeSystem/PhdObservationCategories' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[37,6]",
+    "expression" : ["Observation.category[1].coding[0].system"]
+  },
+  {
+    "severity" : "information",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'Observation Category Codes' (http://hl7.org/fhir/ValueSet/observation-category|5.0.0), and a coding is recommended to come from this value set (codes = http://hl7.org/fhir/uv/phd/CodeSystem/PhdObservationCategories#phd-observation)"
+    },
+    "diagnostics" : "[37,6]",
+    "expression" : ["Observation.category[1]"]
+  },
+  {
+    "severity" : "information",
+    "code" : "informational",
+    "details" : {
+      "text" : "Validate Observation against the Heart rate profile (http://hl7.org/fhir/StructureDefinition/heartrate) which is required by the FHIR specification because the LOINC code 8867-4 was found"
+    },
+    "diagnostics" : "[1,2]",
+    "expression" : ["Observation"]
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "severity",
+        "valueCode" : "information"
+      },
+      {
+        "url" : "type",
+        "valueCode" : "structure"
+      },
+      {
+        "url" : "path",
+        "valueString" : "Observation.category[1]"
+      },
+      {
+        "url" : "message",
+        "valueString" : "Does not match slice 'VSCat' (discriminator: ('vital-signs' in coding.code) and ('http://terminology.hl7.org/CodeSystem/observation-category' in coding.system))"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/operationoutcome-inner-message"
+    }],
+    "severity" : "information",
+    "code" : "informational",
+    "details" : {
+      "text" : "This element does not match any known slice defined in the profile http://hl7.org/fhir/StructureDefinition/heartrate|5.0.0 (this may not be a problem, but you should check that it's not intended to match a slice)"
+    },
+    "diagnostics" : "[37,6]",
+    "expression" : ["Observation.category[1]"]
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "severity",
+        "valueCode" : "information"
+      },
+      {
+        "url" : "type",
+        "valueCode" : "structure"
+      },
+      {
+        "url" : "path",
+        "valueString" : "Observation.component[0].value.ofType(CodeableConcept)"
+      },
+      {
+        "url" : "message",
+        "valueString" : "Does not match slice 'valueQuantity' (discriminator: ($this is Quantity))"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/operationoutcome-inner-message"
+    }],
+    "severity" : "information",
+    "code" : "informational",
+    "details" : {
+      "text" : "This element does not match any known slice defined in the profile http://hl7.org/fhir/StructureDefinition/heartrate|5.0.0 (this may not be a problem, but you should check that it's not intended to match a slice)"
+    },
+    "diagnostics" : "[88,8]",
+    "expression" : ["Observation.component[0].value.ofType(CodeableConcept)"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'Vital Signs' (http://hl7.org/fhir/ValueSet/observation-vitalsignresult|5.0.0), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = urn:iso:std:iso:11073:10101#68193)"
+    },
+    "diagnostics" : "[79,8]",
+    "expression" : ["Observation.component[0].code"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "structure",
+    "details" : {
+      "text" : "Profile reference 'http://hl7.org/fhir/uv/phd/StructureDefinition/PhdNumericObservation' has not been checked because it could not be found, and the validator is set to not fetch unknown profiles"
+    },
+    "diagnostics" : "[1,2]",
+    "expression" : ["Observation.meta.profile[0]"]
+  }]
+}

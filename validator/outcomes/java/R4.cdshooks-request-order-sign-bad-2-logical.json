@@ -1,0 +1,73 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "fatal",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Unable to find resourceType property"
+    },
+    "diagnostics" : "[96,6]",
+    "expression" : ["CDSHooksRequest.prefetch[0].value"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "id value 'Patient/example-rec-01-false-due-to-inpatient-opioid' is not valid"
+    },
+    "diagnostics" : "[7,72]",
+    "expression" : ["CDSHooksRequest.context.patientId"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Except for transactions and batches, each entry in a Bundle must have a fullUrl which is the identity of the resource in the entry"
+    },
+    "diagnostics" : "[12,10]",
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "The extension http://fhir.org/guides/cdc/opioid-cds/StructureDefinition/dataDateRoller could not be found so is not allowed here"
+    },
+    "diagnostics" : "[17,16]",
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0].resource/*MedicationRequest/4d2b4402-022e-4f69-813e-ab16934286a6*/.extension[0]"]
+  },
+  {
+    "severity" : "information",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "Reference to draft CodeSystem http://terminology.hl7.org/CodeSystem/medicationrequest-category|1.0.0"
+    },
+    "diagnostics" : "[39,16]",
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0].resource/*MedicationRequest/4d2b4402-022e-4f69-813e-ab16934286a6*/.category[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "required",
+    "details" : {
+      "text" : "Bundle entry missing fullUrl"
+    },
+    "diagnostics" : "[12,10]",
+    "expression" : ["CDSHooksRequest.context.draftOrders.entry[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "required",
+    "details" : {
+      "text" : "Relative Reference appears inside Bundle whose entry is missing a fullUrl"
+    },
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0].resource/*MedicationRequest/4d2b4402-022e-4f69-813e-ab16934286a6*/.subject"]
+  },
+  {
+    "severity" : "error",
+    "code" : "required",
+    "details" : {
+      "text" : "Relative Reference appears inside Bundle whose entry is missing a fullUrl"
+    },
+    "expression" : ["CDSHooksRequest.context.draftOrders/*Bundle/null*/.entry[0].resource/*MedicationRequest/4d2b4402-022e-4f69-813e-ab16934286a6*/.encounter"]
+  }]
+}

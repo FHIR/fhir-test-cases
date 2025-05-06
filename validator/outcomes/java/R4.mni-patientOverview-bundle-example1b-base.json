@@ -1,0 +1,97 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "information",
+    "code" : "invalid",
+    "details" : {
+      "text" : "There are no valid display names found for the code http://loinc.org#60591-5 for language(s) 'de-CH'. The display is 'Patient summary Document' the default language display"
+    },
+    "diagnostics" : "[21,6]",
+    "expression" : ["Bundle.entry[0].resource/*Composition/1a*/.type.coding[0].display"]
+  },
+  {
+    "severity" : "error",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "Duplicate id value '2'"
+    },
+    "diagnostics" : "[88,7]",
+    "expression" : ["Bundle.entry[1].resource/*Patient/1*/.name[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "Duplicate id value '1a'"
+    },
+    "diagnostics" : "[189,4]",
+    "expression" : ["Bundle.entry[2]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Can't find 'Patient/1' in the bundle (Composition.subject). Note that there is a resource in the bundle with the same type and id, but it does not match because of the fullUrl based rules around matching relative references (must be ``Patient/1``)"
+    },
+    "diagnostics" : "[30,6]",
+    "expression" : ["Bundle.entry[1].resource.subject"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Can't find 'Device/1' in the bundle (Composition.author). Note that there is a resource in the bundle with the same type and id, but it does not match because of the fullUrl based rules around matching relative references (must be ``Device/1``)"
+    },
+    "diagnostics" : "[35,7]",
+    "expression" : ["Bundle.entry[1].resource.author[1]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "informational",
+    "details" : {
+      "text" : "Entry 'Patient/1' isn't reachable by traversing links (forward or backward) from the Composition"
+    },
+    "diagnostics" : "[47,4]",
+    "expression" : ["Bundle.entry[2]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "informational",
+    "details" : {
+      "text" : "Entry 'Device/1' isn't reachable by traversing links (forward or backward) from the Composition"
+    },
+    "diagnostics" : "[189,4]",
+    "expression" : ["Bundle.entry[3]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "The fullUrl must be an absolute URL (not 'Composition/1')"
+    },
+    "diagnostics" : "[12,4]",
+    "expression" : ["Bundle.entry[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "The fullUrl must be an absolute URL (not 'Patient/1')"
+    },
+    "diagnostics" : "[47,4]",
+    "expression" : ["Bundle.entry[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "The fullUrl must be an absolute URL (not 'Device/1')"
+    },
+    "diagnostics" : "[189,4]",
+    "expression" : ["Bundle.entry[0]"]
+  }]
+}

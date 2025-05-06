@@ -1,0 +1,48 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "error",
+    "code" : "not-found",
+    "details" : {
+      "text" : "The stylesheet reference could not be resolved in this bundle"
+    },
+    "diagnostics" : "[15,31]",
+    "expression" : ["Bundle.link[1].url"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "External Stylesheets other than https://hl7.org/fhir/fhir.css SHOULD not be used"
+    },
+    "diagnostics" : "[23,52]",
+    "expression" : ["Bundle.link[3].url"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "The stylesheet reference is not secure"
+    },
+    "diagnostics" : "[23,52]",
+    "expression" : ["Bundle.link[3].url"]
+  },
+  {
+    "severity" : "error",
+    "code" : "informational",
+    "details" : {
+      "text" : "Entry 'http://hl7.org/fhir/test/Binary/css1' isn't reachable by traversing links (forward or backward) from the Composition"
+    },
+    "diagnostics" : "[52,10]",
+    "expression" : ["Bundle.entry[3]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "The fullUrl 'http://hl7.org/fhir/test/Composition/test-css-document' looks like a RESTful server URL, so it must end with the correct type and id (/Composition/test-document-good)"
+    },
+    "diagnostics" : "[25,10]",
+    "expression" : ["Bundle.entry[0]"]
+  }]
+}

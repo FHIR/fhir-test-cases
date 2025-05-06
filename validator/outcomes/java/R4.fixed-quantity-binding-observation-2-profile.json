@@ -1,0 +1,25 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://example.org' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[5,3]",
+    "expression" : ["Observation.code.coding[0].system"]
+  },
+  {
+    "severity" : "error",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "The code provided (http://unitsofmeasure.org#m) was not found in the value set 'Common UCUM Codes for Age' (http://hl7.org/fhir/ValueSet/age-units|4.0.1), and a code from this value set is required: The provided code 'http://unitsofmeasure.org#m' was not found in the value set 'http://hl7.org/fhir/ValueSet/age-units|4.0.1'"
+    },
+    "diagnostics" : "[13,3]",
+    "expression" : ["Observation.value.ofType(Quantity)"]
+  }]
+}

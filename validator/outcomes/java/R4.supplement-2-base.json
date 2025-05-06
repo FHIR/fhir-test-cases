@@ -1,0 +1,28 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "error",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "CodeSystem Supplements SHALL have a content value of 'supplement'"
+    },
+    "expression" : ["CodeSystem.content"]
+  },
+  {
+    "severity" : "error",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "The code 'test' is not declared in the base CodeSystem http://loinc.org so is not valid in the supplement"
+    },
+    "expression" : ["CodeSystem.concept[0]"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "HL7 Defined CodeSystems should ensure that every concept has a definition"
+    },
+    "diagnostics" : "[1,2]",
+    "expression" : ["CodeSystem.concept[0]"]
+  }]
+}

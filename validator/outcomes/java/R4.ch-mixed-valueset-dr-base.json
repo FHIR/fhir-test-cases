@@ -1,0 +1,34 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Wrong Display Name 'Progress note' for http://snomed.info/sct#371532007. Valid display is one of 3 choices: 'Progress report', 'Report of subsequent visit' or 'Progress report (record artifact)' (for the language(s) 'en-US')"
+    },
+    "diagnostics" : "[5,11]",
+    "expression" : ["DocumentReference.type.coding[0].display"]
+  },
+  {
+    "severity" : "information",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'Document Type Value Set' (http://hl7.org/fhir/ValueSet/c80-doc-typecodes|4.0.1), and a coding is recommended to come from this value set (codes = http://snomed.info/sct#371532007)"
+    },
+    "diagnostics" : "[5,11]",
+    "expression" : ["DocumentReference.type"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "Stated Attachment Size 19 does not match actual attachment size 17"
+    },
+    "diagnostics" : "[20,21]",
+    "expression" : ["DocumentReference.content[0].attachment"]
+  }]
+}

@@ -1,0 +1,82 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'Location' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[9,4]",
+    "expression" : ["Measure.subject.ofType(CodeableConcept).coding[0].system"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Coding.system must be an absolute reference, not a local reference"
+    },
+    "diagnostics" : "[9,4]",
+    "expression" : ["Measure.subject.ofType(CodeableConcept).coding[0].system"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'Subject type' (http://hl7.org/fhir/ValueSet/subject-type|4.0.1), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = Location#Location)"
+    },
+    "diagnostics" : "[9,4]",
+    "expression" : ["Measure.subject.ofType(CodeableConcept)"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Wrong Display Name 'COVID-19' for http://snomed.info/sct#840535000. Valid display is one of 7 choices: 'Antibody to 2019 novel coronavirus', 'Antibody to 2019-nCoV', 'Antibody to severe acute respiratory syndrome coronavirus 2 (substance)', 'Antibody to severe acute respiratory syndrome coronavirus 2', 'Antibody to SARS-CoV-2', 'Severe acute respiratory syndrome coronavirus 2 Ab' or 'Severe acute respiratory syndrome coronavirus 2 antibody' (for the language(s) 'en-US')"
+    },
+    "diagnostics" : "[26,8]",
+    "expression" : ["Measure.useContext[0].value.ofType(CodeableConcept).coding[0].display"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "http://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "The Coding references a value set, not a code system ('http://hl7.org/fhir/ValueSet/measure-type')"
+    },
+    "diagnostics" : "[64,6]",
+    "expression" : ["Measure.type[0].coding[0].system"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'MeasureType' (http://hl7.org/fhir/ValueSet/measure-type|4.0.1), and a coding should come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://hl7.org/fhir/ValueSet/measure-type#structure)"
+    },
+    "diagnostics" : "[64,6]",
+    "expression" : ["Measure.type[0]"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "invariant",
+    "details" : {
+      "text" : "Constraint failed: mea-0: 'Name should be usable as an identifier for the module by machine processing applications such as code generation'"
+    },
+    "diagnostics" : "[1,2]",
+    "expression" : ["Measure"]
+  }]
+}
