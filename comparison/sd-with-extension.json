@@ -1,0 +1,40 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "profile-with-extension",
+  "url": "http://example.org/StructureDefinition/profile-with-extension",
+  "version": "1.0.0",
+  "name": "ProfileWithExtension",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Encounter",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Encounter",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Encounter.extension",
+        "path": "Encounter.extension",
+        "mustSupport": true
+      },
+      {
+        "id": "Encounter.extension:Aufnahmegrund",
+        "path": "Encounter.extension",
+        "sliceName": "Aufnahmegrund",
+        "short": "Aufnahmegrund",
+        "comment": "Aufnahmegrund nach 301 Abs. 3 SGB V. Dieser gehört zu den 'Medizinischen Daten des Behandlungsfalls' entsprechend der Definitionen für die Datenübermittlung\nnach 301 Abs. 3 SGB V. Somit sind diese über den Kontakt und nicht über den Abrechnungsfall zu dokumentieren. Diese Extension SOLLTE am ersten Abteilungskontakt, der die stationäre Aufnahme repräsentiert, dokumentiert werden. Wird durch den Encounter ein Einrichtungskontakt repräsentiert, SOLLTE dort zusätzlich zu dem Abteilungskontakt der Aufnahmegrund dokumentiert werden.",
+        "min": 0,
+        "max": "1",
+        "type":  [
+          {
+            "code": "Extension",
+            "profile":  [
+              "http://fhir.de/StructureDefinition/Aufnahmegrund"
+            ]
+          }
+        ],
+        "mustSupport": true
+      }
+    ]
+  }
+}
