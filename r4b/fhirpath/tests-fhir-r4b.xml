@@ -928,6 +928,7 @@ Any text enclosed within is ignored
 		<test name="testEquivalent20" inputfile="patient-example.xml"><expression>name.take(2).given ~ name.take(2).first().given | name.take(2).last().given</expression><output type="boolean">true</output></test>
 		<test name="testEquivalent21" inputfile="patient-example.xml"><expression>name.take(2).given ~ name.take(2).last().given | name.take(2).first().given</expression><output type="boolean">true</output></test>
 		<test name="testEquivalent22" inputfile="observation-example.xml"><expression>Observation.value ~ 185 '[lb_av]'</expression><output type="boolean">true</output></test>
+		<test name="testEquivalent23" inputfile="observation-example.xml"><expression>(1 | 2 | 3) ~ (3 | 2 | 1)</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testNotEquivalent">
@@ -1315,6 +1316,8 @@ Any text enclosed within is ignored
 		<test name="testPrecedence2" inputfile="patient-example.xml"><expression>1+2*3+4 = 11</expression><output type="boolean">true</output></test>
 		<test name="testPrecedence3" inputfile="patient-example.xml"><expression>1 > 2 is Boolean</expression><output type="boolean">true</output></test>
 		<test name="testPrecedence4" inputfile="patient-example.xml"><expression>1 | 1 is Integer</expression><output type="boolean">true</output></test>
+		<test name="testPrecedence5" inputfile="observation-example.xml"><expression>true and '0215' in ('0215' | '0216')</expression><output type="boolean">true</output></test>
+		<test name="testPrecedence6" inputfile="observation-example.xml"><expression>category.exists(coding.exists(system = 'http://terminology.hl7.org/CodeSystem/observation-category' and code.trace('c') in ('vital-signs' | 'vital-signs2').trace('codes')))</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testVariables">
