@@ -1,0 +1,100 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "parameters-opdef2-params-out",
+  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/parameters-opdef2-params-out",
+  "name": "SDCParametersQuestionnairePopulateOut",
+  "title": "Populate operation output parameters",
+  "status": "active",
+  "description": "Profile used to validate the parameters that are the output of the [$populate](OperationDefinition-Questionnaire-populate.html) questionnaire operation",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Parameters",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Parameters",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Parameters.parameter",
+        "path": "Parameters.parameter",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "name"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1
+      },
+      {
+        "id": "Parameters.parameter:response",
+        "path": "Parameters.parameter",
+        "sliceName": "response",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Parameters.parameter:response.name",
+        "path": "Parameters.parameter.name",
+        "fixedString": "response"
+      },
+      {
+        "id": "Parameters.parameter:response.value[x]",
+        "path": "Parameters.parameter.value[x]",
+        "max": "0"
+      },
+      {
+        "id": "Parameters.parameter:response.resource",
+        "path": "Parameters.parameter.resource",
+        "min": 1,
+        "type": [
+          {
+            "code": "QuestionnaireResponse",
+            "profile": [
+              "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Parameters.parameter:response.part",
+        "path": "Parameters.parameter.part",
+        "max": "0"
+      },
+      {
+        "id": "Parameters.parameter:issues",
+        "path": "Parameters.parameter",
+        "sliceName": "issues",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Parameters.parameter:issues.name",
+        "path": "Parameters.parameter.name",
+        "fixedString": "issues"
+      },
+      {
+        "id": "Parameters.parameter:issues.value[x]",
+        "path": "Parameters.parameter.value[x]",
+        "max": "0"
+      },
+      {
+        "id": "Parameters.parameter:issues.resource",
+        "path": "Parameters.parameter.resource",
+        "min": 1,
+        "type": [
+          {
+            "code": "OperationOutcome"
+          }
+        ]
+      },
+      {
+        "id": "Parameters.parameter:issues.part",
+        "path": "Parameters.parameter.part",
+        "max": "0"
+      }
+    ]
+  }
+}
