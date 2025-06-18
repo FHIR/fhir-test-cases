@@ -1,0 +1,287 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "parameters-opdef2-params-in",
+  "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/parameters-opdef2-params-in",
+  "name": "SDCParametersQuestionnairePopulateIn",
+  "title": "Populate operation input parameters",
+  "status": "active",
+  "description": "Profile used to validate the parameters that are the input of the [$populate](OperationDefinition-Questionnaire-populate.html), [$populate-html](OperationDefinition-Questionnaire-populatehtml.html), and [$populate-link](OperationDefinition-Questionnaire-populatelink.html) questionnaire operations",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Parameters",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Parameters",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Parameters",
+        "path": "Parameters",
+        "constraint": [
+          {
+            "key": "sdc-pop1",
+            "severity": "error",
+            "human": "Context names must be unique.",
+            "expression": "parameter.where(name='context').count() = parameter.where(name='context').part.where(name='name').value.distinct().count()",
+            "xpath": "count(f:parameter[f:name/@value='context']) = count(distinct-values(f:parameter[f:name/@value='context']/f:part[f:name/@value='name']/f:valueString/@value))",
+            "source": "http://hl7.org/fhir/uv/sdc/StructureDefinition/parameters-opdef2-params-in"
+          }
+        ]
+      },
+      {
+        "id": "Parameters.parameter",
+        "path": "Parameters.parameter",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "name"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Parameters.parameter:identifier",
+        "path": "Parameters.parameter",
+        "sliceName": "identifier",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Parameters.parameter:identifier.name",
+        "path": "Parameters.parameter.name",
+        "fixedString": "identifier"
+      },
+      {
+        "id": "Parameters.parameter:identifier.value[x]",
+        "path": "Parameters.parameter.value[x]",
+        "min": 1,
+        "type": [
+          {
+            "code": "Identifier"
+          }
+        ]
+      },
+      {
+        "id": "Parameters.parameter:identifier.resource",
+        "path": "Parameters.parameter.resource",
+        "max": "0"
+      },
+      {
+        "id": "Parameters.parameter:identifier.part",
+        "path": "Parameters.parameter.part",
+        "max": "0"
+      },
+      {
+        "id": "Parameters.parameter:questionnaire",
+        "path": "Parameters.parameter",
+        "sliceName": "questionnaire",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Parameters.parameter:questionnaire.name",
+        "path": "Parameters.parameter.name",
+        "fixedString": "questionnaire"
+      },
+      {
+        "id": "Parameters.parameter:questionnaire.value[x]",
+        "path": "Parameters.parameter.value[x]",
+        "type": [
+          {
+            "code": "uri"
+          },
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Questionnaire"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Parameters.parameter:questionnaire.resource",
+        "path": "Parameters.parameter.resource",
+        "type": [
+          {
+            "code": "Questionnaire"
+          }
+        ]
+      },
+      {
+        "id": "Parameters.parameter:questionnaire.part",
+        "path": "Parameters.parameter.part",
+        "max": "0"
+      },
+      {
+        "id": "Parameters.parameter:subject",
+        "path": "Parameters.parameter",
+        "sliceName": "subject",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Parameters.parameter:subject.name",
+        "path": "Parameters.parameter.name",
+        "fixedString": "subject"
+      },
+      {
+        "id": "Parameters.parameter:subject.value[x]",
+        "path": "Parameters.parameter.value[x]",
+        "min": 1,
+        "type": [
+          {
+            "code": "Reference"
+          }
+        ]
+      },
+      {
+        "id": "Parameters.parameter:subject.resource",
+        "path": "Parameters.parameter.resource",
+        "max": "0"
+      },
+      {
+        "id": "Parameters.parameter:subject.part",
+        "path": "Parameters.parameter.part",
+        "max": "0"
+      },
+      {
+        "id": "Parameters.parameter:context",
+        "path": "Parameters.parameter",
+        "sliceName": "context",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Parameters.parameter:context.name",
+        "path": "Parameters.parameter.name",
+        "fixedString": "context"
+      },
+      {
+        "id": "Parameters.parameter:context.value[x]",
+        "path": "Parameters.parameter.value[x]",
+        "max": "0"
+      },
+      {
+        "id": "Parameters.parameter:context.resource",
+        "path": "Parameters.parameter.resource",
+        "max": "0"
+      },
+      {
+        "id": "Parameters.parameter:context.part",
+        "path": "Parameters.parameter.part",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "name"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 2
+      },
+      {
+        "id": "Parameters.parameter:context.part:name",
+        "path": "Parameters.parameter.part",
+        "sliceName": "name",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "BackboneElement"
+          }
+        ]
+      },
+      {
+        "id": "Parameters.parameter:context.part:name.name",
+        "path": "Parameters.parameter.part.name",
+        "fixedString": "name"
+      },
+      {
+        "id": "Parameters.parameter:context.part:name.value[x]",
+        "path": "Parameters.parameter.part.value[x]",
+        "min": 1,
+        "type": [
+          {
+            "code": "string"
+          }
+        ]
+      },
+      {
+        "id": "Parameters.parameter:context.part:name.resource",
+        "path": "Parameters.parameter.part.resource",
+        "max": "0"
+      },
+      {
+        "id": "Parameters.parameter:context.part:name.part",
+        "path": "Parameters.parameter.part.part",
+        "max": "0"
+      },
+      {
+        "id": "Parameters.parameter:context.part:content",
+        "path": "Parameters.parameter.part",
+        "sliceName": "content",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "BackboneElement"
+          }
+        ]
+      },
+      {
+        "id": "Parameters.parameter:context.part:content.name",
+        "path": "Parameters.parameter.part.name",
+        "fixedString": "content"
+      },
+      {
+        "id": "Parameters.parameter:context.part:content.value[x]",
+        "path": "Parameters.parameter.part.value[x]",
+        "type": [
+          {
+            "code": "Reference"
+          }
+        ]
+      },
+      {
+        "id": "Parameters.parameter:context.part:content.part",
+        "path": "Parameters.parameter.part.part",
+        "max": "0"
+      },
+      {
+        "id": "Parameters.parameter:local",
+        "path": "Parameters.parameter",
+        "sliceName": "local",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Parameters.parameter:local.name",
+        "path": "Parameters.parameter.name",
+        "fixedString": "local"
+      },
+      {
+        "id": "Parameters.parameter:local.value[x]",
+        "path": "Parameters.parameter.value[x]",
+        "min": 1,
+        "type": [
+          {
+            "code": "boolean"
+          }
+        ]
+      },
+      {
+        "id": "Parameters.parameter:local.resource",
+        "path": "Parameters.parameter.resource",
+        "max": "0"
+      },
+      {
+        "id": "Parameters.parameter:local.part",
+        "path": "Parameters.parameter.part",
+        "max": "0"
+      }
+    ]
+  }
+}
