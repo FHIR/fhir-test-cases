@@ -820,6 +820,7 @@ Any text enclosed within is ignored
 		<test name="testSubstring7" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.substring(0, 12)</expression><output type="string">LogicalModel</output></test>
 		<test name="testSubstring8" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.substring(0, 'LogicalModel-Person'.indexOf('-'))</expression><output type="string">LogicalModel</output></test>
 		<test name="testSubstring9" inputfile="patient-example.xml"><expression>{}.substring(25).empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testSubstring10" inputfile="patient-example.xml"><expression>Patient.name.family.first().substring(2, length()-5)</expression><output type="string">alm</output></test>
 	</group>
 
 	<group name="testStartsWith">
@@ -834,6 +835,7 @@ Any text enclosed within is ignored
 		<test name="testStartsWith9" inputfile="patient-example.xml"><expression>{}.startsWith('').empty() = true</expression><output type="boolean">true</output></test>
 		<test name="testStartsWith10" inputfile="patient-example.xml"><expression>''.startsWith('') = true</expression><output type="boolean">true</output></test>
 		<test name="testStartsWith11" inputfile="patient-example.xml"><expression>{}.startsWith('').exists() = false</expression><output type="boolean">true</output></test>
+		<test name="testStartsWith12" inputfile="patient-example.xml"><expression>Patient.name.family.first().startsWith(toChars().take(3).join())</expression><output type="boolean">true</output></test>
 		<test name="testStartsWithNonString1" inputfile="appointment-examplereq.json"><expression invalid="semantic">Appointment.identifier.startsWith('rand')</expression></test>
 	</group>
 
@@ -847,6 +849,7 @@ Any text enclosed within is ignored
 		<test name="testEndsWith7" inputfile="patient-example.xml"><expression>'12345'.endsWith('') = true</expression><output type="boolean">true</output></test>
 		<test name="testEndsWith8" inputfile="patient-example.xml"><expression>{}.endsWith('1').empty() = true</expression><output type="boolean">true</output></test>
 		<test name="testEndsWith9" inputfile="patient-example.xml"><expression>{}.endsWith('').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testEndsWith10" inputfile="patient-example.xml"><expression>Patient.name.family.first().endsWith(toChars().skip(3).join())</expression><output type="boolean">true</output></test>
 		<test name="testEndsWithNonString1" inputfile="appointment-examplereq.json"><expression invalid="semantic">Appointment.identifier.endsWith('rand')</expression></test>
 	</group>
 
@@ -860,6 +863,7 @@ Any text enclosed within is ignored
 		<test name="testContainsString7" inputfile="patient-example.xml"><expression>'12345'.contains('') = true</expression><output type="boolean">true</output></test>
 		<test name="testContainsString8" inputfile="patient-example.xml"><expression>{}.contains('a').empty() = true</expression><output type="boolean">true</output></test>
 		<test name="testContainsString9" inputfile="patient-example.xml"><expression>{}.contains('').empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testContainsString10" inputfile="patient-example.xml"><expression>Patient.name.family.first().contains(toChars().skip(3).take(3).join())</expression><output type="boolean">true</output></test>
 		<test name="testContainsNonString1" inputfile="appointment-examplereq.json"><expression invalid="semantic">Appointment.identifier.contains('rand')</expression></test>
 	</group>
 
