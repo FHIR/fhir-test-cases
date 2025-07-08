@@ -1228,7 +1228,7 @@ Any text enclosed within is ignored
 
   <group name="testCombine()">
 		<test name="testCombine1" inputfile="codesystem-example.xml"><expression>concept.code.combine($this.descendants().concept.code).isDistinct()</expression><output type="boolean">false</output></test>
-		<test name="testCombine2" inputfile="patient-example.xml"><expression>name.given.combine(name.family).exclude('Jim')</expression><output type="string">Peter</output><output type="string">James</output><output type="string">Peter</output><output type="string">James</output><output type="string">Chalmers</output><output type="string">Windsor</output></test>
+		<test name="testCombine2" inputfile="patient-example.xml"><expression invalid="semantic">name.given.combine(name.family).exclude('Jim')</expression></test>
 		<test name="testCombine3" inputfile="patient-example.xml"><expression>name.given.combine($this.name.family).exclude('Jim')</expression><output type="string">Peter</output><output type="string">James</output><output type="string">Peter</output><output type="string">James</output><output type="string">Chalmers</output><output type="string">Windsor</output></test>
 	</group>
 
@@ -1243,7 +1243,11 @@ Any text enclosed within is ignored
 		<test name="testUnion8" inputfile="patient-example.xml"><expression>1.combine(1).union(2).count() = 2</expression><output type="boolean">true</output></test> <!-- do not merge duplicates -->
 		<test name="testUnion9" inputfile="patient-example.xml"><expression>name.select(use | given).count()</expression><output type="integer">8</output></test>
 		<test name="testUnion10" inputfile="patient-example.xml"><expression>name.select(use.union($this.given)).count()</expression><output type="integer">8</output></test>
-		<test name="testUnion11" inputfile="patient-example.xml"><expression>name.select(use.union(given)).count()</expression><output type="integer">8</output></test>
+		<test name="testUnion11" inputfile="patient-example.xml"><expression invalid="semantic">name.select(use.union(given)).count()</expression><output type="integer">3</output></test>
+		<test name="testUnion12" inputfile="patient-example.xml"><expression>true | Patient.name.given.first()</expression>
+			<output type="boolean">true</output>
+			<output type="string">Peter</output>
+		</test> <!-- merge duplicates -->
 	</group>
 
 	<group name="testIntersect">
