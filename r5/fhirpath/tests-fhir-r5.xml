@@ -821,6 +821,8 @@ Any text enclosed within is ignored
 		<test name="testSubstring8" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.substring(0, 'LogicalModel-Person'.indexOf('-'))</expression><output type="string">LogicalModel</output></test>
 		<test name="testSubstring9" inputfile="patient-example.xml"><expression>{}.substring(25).empty() = true</expression><output type="boolean">true</output></test>
 		<test name="testSubstring10" inputfile="patient-example.xml"><expression>Patient.name.family.first().substring(2, length()-5)</expression><output type="string">alm</output></test>
+		<test name="testSubstring11" inputfile="patient-example.xml"><expression>{}.substring({}).empty() = true</expression><output type="boolean">true</output></test>
+		<test name="testSubstring12" inputfile="patient-example.xml"><expression>'string'.substring({}).empty() = true</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testStartsWith">
@@ -1251,6 +1253,10 @@ Any text enclosed within is ignored
 		<test name="testIn2" inputfile="patient-example.xml"><expression>1 in (2 | 3)</expression><output type="boolean">false</output></test>
 		<test name="testIn3" inputfile="patient-example.xml"><expression>'a' in ('a' | 'c' | 'd')</expression><output type="boolean">true</output></test>
 		<test name="testIn4" inputfile="patient-example.xml"><expression>'b' in ('a' | 'c' | 'd')</expression><output type="boolean">false</output></test>
+		<test name="testIn5" inputfile="patient-example.xml"><expression invalid="execution">('a' | 'c' | 'd') in 'b'</expression></test>
+		<test name="testInEmptyCollection" inputfile="patient-example.xml"><expression>1 in {}</expression><output type="boolean">false</output></test>
+		<test name="testInEmptyValue" inputfile="patient-example.xml"><expression>{} in (1 | 2 | 3)</expression></test>
+		<test name="testInEmptyBoth" inputfile="patient-example.xml"><expression>{} in {}</expression></test>
 	</group>
 
 	<group name="testContainsCollection">
@@ -1258,6 +1264,11 @@ Any text enclosed within is ignored
 		<test name="testContainsCollection2" inputfile="patient-example.xml"><expression>(2 | 3) contains 1 </expression><output type="boolean">false</output></test>
 		<test name="testContainsCollection3" inputfile="patient-example.xml"><expression>('a' | 'c' | 'd') contains 'a'</expression><output type="boolean">true</output></test>
 		<test name="testContainsCollection4" inputfile="patient-example.xml"><expression>('a' | 'c' | 'd') contains 'b'</expression><output type="boolean">false</output></test>
+		<test name="testContainsCollectionEmpty1" inputfile="patient-example.xml"><expression>{} contains 1</expression><output type="boolean">false</output></test>
+		<test name="testContainsCollectionEmpty2" inputfile="patient-example.xml"><expression>{} contains 'value'</expression><output type="boolean">false</output></test>
+		<test name="testContainsCollectionEmpty3" inputfile="patient-example.xml"><expression>{} contains true</expression><output type="boolean">false</output></test>
+		<test name="testContainsCollectionEmpty4" inputfile="patient-example.xml"><expression>{} contains {}</expression></test>
+		<test name="testContainsCollectionEmptyDateTime" inputfile="patient-example.xml"><expression>{} contains @2023-01-01</expression><output type="boolean">false</output></test>
 	</group>
 
 	<group name="testBooleanLogicAnd">
@@ -1395,23 +1406,27 @@ Any text enclosed within is ignored
 	<group name="testRound">
 		<test name="testRound1" inputfile="patient-example.xml"><expression>1.round() = 1</expression><output type="boolean">true</output></test>
 		<test name="testRound2" inputfile="patient-example.xml"><expression>3.14159.round(3) = 3.142</expression><output type="boolean">true</output></test>
+		<test name="testRoundEmpty" inputfile="patient-example.xml"><expression>{}.round().empty()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testSqrt">
 		<test name="testSqrt1" inputfile="patient-example.xml"><expression>81.sqrt() = 9.0</expression><output type="boolean">true</output></test>
 		<test name="testSqrt2" inputfile="patient-example.xml"><expression>(-1).sqrt()</expression></test>
+		<test name="testSqrtEmpty" inputfile="patient-example.xml"><expression>{}.sqrt().empty()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testAbs">
 		<test name="testAbs1" inputfile="patient-example.xml"><expression>(-5).abs() = 5</expression><output type="boolean">true</output></test>
 		<test name="testAbs2" inputfile="patient-example.xml"><expression>(-5.5).abs() = 5.5</expression><output type="boolean">true</output></test>
 		<test name="testAbs3" inputfile="patient-example.xml"><expression>(-5.5 'mg').abs() = 5.5 'mg'</expression><output type="boolean">true</output></test>
+		<test name="testAbsEmpty" inputfile="patient-example.xml"><expression>{}.abs().empty()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testCeiling">
 		<test name="testCeiling1" inputfile="patient-example.xml"><expression>1.ceiling() = 1</expression><output type="boolean">true</output></test>
 		<test name="testCeiling2" inputfile="patient-example.xml"><expression>(-1.1).ceiling() = -1</expression><output type="boolean">true</output></test>
 		<test name="testCeiling3" inputfile="patient-example.xml"><expression>1.1.ceiling() = 2</expression><output type="boolean">true</output></test>
+		<test name="testCeilingEmpty" inputfile="patient-example.xml"><expression>{}.ceiling().empty()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testExp">
@@ -1424,28 +1439,37 @@ Any text enclosed within is ignored
 		<test name="testFloor1" inputfile="patient-example.xml"><expression>1.floor() = 1</expression><output type="boolean">true</output></test>
 		<test name="testFloor2" inputfile="patient-example.xml"><expression>2.1.floor() = 2</expression><output type="boolean">true</output></test>
 		<test name="testFloor3" inputfile="patient-example.xml"><expression>(-2.1).floor() = -3</expression><output type="boolean">true</output></test>
+		<test name="testFloorEmpty" inputfile="patient-example.xml"><expression>{}.floor().empty()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testLn">
 		<test name="testLn1" inputfile="patient-example.xml"><expression>1.ln() = 0.0</expression><output type="boolean">true</output></test>
 		<test name="testLn2" inputfile="patient-example.xml"><expression>1.0.ln() = 0.0</expression><output type="boolean">true</output></test>
+		<test name="testLnEmpty" inputfile="patient-example.xml"><expression>{}.ln().empty()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testLog">
 		<test name="testLog1" inputfile="patient-example.xml"><expression>16.log(2) = 4.0</expression><output type="boolean">true</output></test>
 		<test name="testLog2" inputfile="patient-example.xml"><expression>100.0.log(10.0) = 2.0</expression><output type="boolean">true</output></test>
+		<test name="testLogEmpty" inputfile="patient-example.xml"><expression>{}.log(10).empty()</expression><output type="boolean">true</output></test>
+		<test name="testLogEmpty2" inputfile="patient-example.xml"><expression>{}.log({}).empty()</expression><output type="boolean">true</output></test>
+		<test name="testLogEmpty3" inputfile="patient-example.xml"><expression>16.log({}).empty()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testPower">
 		<test name="testPower1" inputfile="patient-example.xml"><expression>2.power(3) = 8</expression><output type="boolean">true</output></test>
 		<test name="testPower2" inputfile="patient-example.xml"><expression>2.5.power(2) = 6.25</expression><output type="boolean">true</output></test>
 		<test name="testPower3" inputfile="patient-example.xml"><expression>(-1).power(0.5)</expression></test>
+		<test name="testPowerEmpty" inputfile="patient-example.xml"><expression>{}.power(2).empty()</expression><output type="boolean">true</output></test>
+		<test name="testPowerEmpty2" inputfile="patient-example.xml"><expression>{}.power({}).empty()</expression><output type="boolean">true</output></test>
+		<test name="testPowerEmpty3" inputfile="patient-example.xml"><expression>2.5.power({}).empty()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testTruncate">
 		<test name="testTruncate1" inputfile="patient-example.xml"><expression>101.truncate() = 101</expression><output type="boolean">true</output></test>
 		<test name="testTruncate2" inputfile="patient-example.xml"><expression>1.00000001.truncate() = 1</expression><output type="boolean">true</output></test>
 		<test name="testTruncate3" inputfile="patient-example.xml"><expression>(-1.56).truncate() = -1</expression><output type="boolean">true</output></test>
+		<test name="testTruncateEmpty" inputfile="patient-example.xml"><expression>{}.truncate().empty()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testPrecedence">
@@ -1587,6 +1611,7 @@ Any text enclosed within is ignored
 		<test name="PrecisionDateTimeMilliseconds"><expression>@2014-01-05T10:30:00.000.precision()</expression><output type="integer">17</output></test>
 		<test name="PrecisionTimeMinutes"><expression>@T10:30.precision()</expression><output type="integer">4</output></test>
 		<test name="PrecisionTimeMilliseconds"><expression>@T10:30:00.000.precision()</expression><output type="integer">9</output></test>
+		<test name="PrecisionEmpty" inputfile="patient-example.xml"><expression>{}.precision().empty()</expression><output type="boolean">true</output></test>
 	</group>
 
 <!--
@@ -1664,7 +1689,17 @@ Any text enclosed within is ignored
 
 	<group name="miscEngineTests">
 		<test name="testContainedId" inputfile="patient-container-example.json"><expression>contained.id</expression><output type="id">1</output></test>
-		<test name="testMultipleResolve" inputfile="diagnosticreport-eric.json" mode="element"><expression>composition.exists() implies (composition.resolve().section.entry.reference.where(resolve() is Observation) in (result.reference | result.reference.resolve().hasMember.reference))</expression><output type="boolean">true</output></test>
+		<test name="testMultipleResolve" inputfile="diagnosticreport-eric.json" mode="element">
+			<expression>
+			composition.exists() 
+			implies 
+			(
+				composition.resolve().section.entry.reference.where(resolve() is Observation)
+				.where($this in (%resource.result.reference | %resource.result.reference.resolve().hasMember.reference)).exists()
+			)
+			</expression>
+			<output type="boolean">true</output>
+		</test>
 	</group>
 
   <group name="cdaTests">
