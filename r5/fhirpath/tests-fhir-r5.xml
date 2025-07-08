@@ -1122,6 +1122,9 @@ Any text enclosed within is ignored
 		<test name="testLessThan25" inputfile="patient-example.xml"><expression>@T10:30 &lt; @T10:30:00</expression></test>
 		<test name="testLessThan26" inputfile="patient-example.xml"><expression>@2018-03-01T10:30:00 &lt; @2018-03-01T10:30:00.0</expression><output type="boolean">false</output></test>
 		<test name="testLessThan27" inputfile="patient-example.xml"><expression>@T10:30:00 &lt; @T10:30:00.0</expression><output type="boolean">false</output></test>
+		<test name="testLessThanEmpty1" inputfile="patient-example.xml"><expression>1 &lt; {}</expression></test>
+		<test name="testLessThanEmpty2" inputfile="patient-example.xml"><expression>{} &lt; 1</expression></test>
+		<test name="testLessThanEmpty3" inputfile="patient-example.xml"><expression>{} &lt; {}</expression></test>
 	</group>
 
 	<group name="testLessOrEqual">
@@ -1152,6 +1155,9 @@ Any text enclosed within is ignored
 		<test name="testLessOrEqual25" inputfile="patient-example.xml"><expression>@T10:30 &lt;= @T10:30:00</expression></test>
 		<test name="testLessOrEqual26" inputfile="patient-example.xml"><expression>@2018-03-01T10:30:00  &lt;= @2018-03-01T10:30:00.0</expression><output type="boolean">true</output></test>
 		<test name="testLessOrEqual27" inputfile="patient-example.xml"><expression>@T10:30:00 &lt;= @T10:30:00.0</expression><output type="boolean">true</output></test>
+		<test name="testLessOrEqualEmpty1" inputfile="patient-example.xml"><expression>1 &lt;= {}</expression></test>
+		<test name="testLessOrEqualEmpty2" inputfile="patient-example.xml"><expression>{} &lt;= 1</expression></test>
+		<test name="testLessOrEqualEmpty3" inputfile="patient-example.xml"><expression>{} &lt;= {}</expression></test>
 	</group>
 
 	<group name="testGreatorOrEqual">
@@ -1182,6 +1188,9 @@ Any text enclosed within is ignored
 		<test name="testGreatorOrEqual25" inputfile="patient-example.xml"><expression>@T10:30 >= @T10:30:00</expression></test>
 		<test name="testGreatorOrEqual26" inputfile="patient-example.xml"><expression>@2018-03-01T10:30:00 >= @2018-03-01T10:30:00.0</expression><output type="boolean">true</output></test>
 		<test name="testGreatorOrEqual27" inputfile="patient-example.xml"><expression>@T10:30:00 >= @T10:30:00.0</expression><output type="boolean">true</output></test>
+		<test name="testGreatorOrEqualEmpty1" inputfile="patient-example.xml"><expression>1 >= {}</expression></test>
+		<test name="testGreatorOrEqualEmpty2" inputfile="patient-example.xml"><expression>{} >= 1</expression></test>
+		<test name="testGreatorOrEqualEmpty3" inputfile="patient-example.xml"><expression>{} >= {}</expression></test>
 	</group>
 
 	<group name="testGreaterThan">
@@ -1212,6 +1221,9 @@ Any text enclosed within is ignored
 		<test name="testGreaterThan25" inputfile="patient-example.xml"><expression>@T10:30 > @T10:30:00</expression></test>
 		<test name="testGreaterThan26" inputfile="patient-example.xml"><expression>@2018-03-01T10:30:00 > @2018-03-01T10:30:00.0</expression><output type="boolean">false</output></test>
 		<test name="testGreaterThan27" inputfile="patient-example.xml"><expression>@T10:30:00 > @T10:30:00.0</expression><output type="boolean">false</output></test>
+		<test name="testGreaterThanEmpty1" inputfile="patient-example.xml"><expression>1 > {}</expression></test>
+		<test name="testGreaterThanEmpty2" inputfile="patient-example.xml"><expression>{} > 1</expression></test>
+		<test name="testGreaterThanEmpty3" inputfile="patient-example.xml"><expression>{} > {}</expression></test>
 	</group>
 
   <group name="testCombine()">
@@ -1324,6 +1336,7 @@ Any text enclosed within is ignored
 		<test name="testPlus2" inputfile="patient-example.xml"><expression>1 + 0 = 1</expression><output type="boolean">true</output></test>
 		<test name="testPlus3" inputfile="patient-example.xml"><expression>1.2 + 1.8 = 3.0</expression><output type="boolean">true</output></test>
 		<test name="testPlus4" inputfile="patient-example.xml"><expression>'a'+'b' = 'ab'</expression><output type="boolean">true</output></test>
+		<test name="testPlus4" inputfile="patient-example.xml"><expression>'a'+{}</expression></test>
    
     <test name="testPlusDate1" inputfile="patient-example.xml"><expression>@1973-12-25 + 7 days</expression>                             <output type="date">@1974-01-01</output></test>
     <test name="testPlusDate2" inputfile="patient-example.xml"><expression>@1973-12-25 + 7.7 days</expression>                           <output type="date">@1974-01-01</output></test>
@@ -1353,6 +1366,9 @@ Any text enclosed within is ignored
 		<test name="testPlusTime1" inputfile="patient-example.xml"><expression>@T01:00:00 + 2 hours</expression><output type="time">@T03:00:00</output></test>
 		<test name="testPlusTime2" inputfile="patient-example.xml"><expression>@T23:00:00 + 2 hours</expression><output type="time">@T01:00:00</output></test>
 		<test name="testPlusTime3" inputfile="patient-example.xml"><expression>@T23:00:00 + 50 hours</expression><output type="time">@T01:00:00</output></test>
+		<test name="testPlusEmpty1" inputfile="patient-example.xml"><expression>1 + {}</expression></test>
+		<test name="testPlusEmpty2" inputfile="patient-example.xml"><expression>{} + 1</expression></test>
+		<test name="testPlusEmpty3" inputfile="patient-example.xml"><expression>{} + {}</expression></test>
 	</group>
 
 	<group name="testConcatenate">
@@ -1371,12 +1387,18 @@ Any text enclosed within is ignored
     	<test name="testMinus6" inputfile="patient-example.xml"><expression invalid="execution">@1974-12-25 - 1 'cm'</expression></test>
 		<test name="testMinus7" inputfile="patient-example.xml"><expression>@T00:30:00 - 1 hour</expression><output type="time">@T23:30:00</output></test>
 		<test name="testMinus8" inputfile="patient-example.xml"><expression>@T01:00:00 - 2 hours</expression><output type="time">@T23:00:00</output></test>
+		<test name="testMinusEmpty1" inputfile="patient-example.xml"><expression>1 - {}</expression></test>
+		<test name="testMinusEmpty2" inputfile="patient-example.xml"><expression>{} - 1</expression></test>
+		<test name="testMinusEmpty3" inputfile="patient-example.xml"><expression>{} - {}</expression></test>
 	</group>
 
 	<group name="testMultiply">
 		<test name="testMultiply1" inputfile="patient-example.xml"><expression>1 * 1 = 1</expression><output type="boolean">true</output></test>
 		<test name="testMultiply2" inputfile="patient-example.xml"><expression>1 * 0 = 0</expression><output type="boolean">true</output></test>
 		<test name="testMultiply3" inputfile="patient-example.xml"><expression>1.2 * 1.8 = 2.16</expression><output type="boolean">true</output></test>
+		<test name="testMultiplyEmpty1" inputfile="patient-example.xml"><expression>1 * {}</expression></test>
+		<test name="testMultiplyEmpty2" inputfile="patient-example.xml"><expression>{} * 1</expression></test>
+		<test name="testMultiplyEmpty3" inputfile="patient-example.xml"><expression>{} * {}</expression></test>
 	</group>
 
 	<group name="testDivide">
@@ -1386,6 +1408,9 @@ Any text enclosed within is ignored
 		<test name="testDivide4" inputfile="patient-example.xml"><expression>1 / 2 = 0.5</expression><output type="boolean">true</output></test>
 		<test name="testDivide5" inputfile="patient-example.xml"><expression>(1.2 / 1.8).round(2) = 0.67</expression><output type="boolean">true</output></test>
 		<test name="testDivide6" inputfile="patient-example.xml"><expression>1 / 0</expression></test>
+		<test name="testDivideEmpty1" inputfile="patient-example.xml"><expression>1 / {}</expression></test>
+		<test name="testDivideEmpty2" inputfile="patient-example.xml"><expression>{} / 1</expression></test>
+		<test name="testDivideEmpty3" inputfile="patient-example.xml"><expression>{} / {}</expression></test>
 	</group>
 
 	<group name="testDiv">
@@ -1394,6 +1419,9 @@ Any text enclosed within is ignored
 		<test name="testDiv3" inputfile="patient-example.xml"><expression>5 div 2 = 2</expression><output type="boolean">true</output></test>
 		<test name="testDiv4" inputfile="patient-example.xml"><expression>2.2 div 1.8 = 1</expression><output type="boolean">true</output></test>
 		<test name="testDiv5" inputfile="patient-example.xml"><expression>5 div 0</expression></test>
+		<test name="testDivEmpty1" inputfile="patient-example.xml"><expression>1 div {}</expression></test>
+		<test name="testDivEmpty2" inputfile="patient-example.xml"><expression>{} div 1</expression></test>
+		<test name="testDivEmpty3" inputfile="patient-example.xml"><expression>{} div {}</expression></test>
 	</group>
 
 	<group name="testMod">
@@ -1402,6 +1430,9 @@ Any text enclosed within is ignored
 		<test name="testMod3" inputfile="patient-example.xml"><expression>5 mod 2 = 1</expression><output type="boolean">true</output></test>
 		<test name="testMod4" inputfile="patient-example.xml"><expression>2.2 mod 1.8 = 0.4</expression><output type="boolean">true</output></test>
 		<test name="testMod5" inputfile="patient-example.xml"><expression>5 mod 0</expression></test>
+		<test name="testModEmpty1" inputfile="patient-example.xml"><expression>1 mod {}</expression></test>
+		<test name="testModEmpty2" inputfile="patient-example.xml"><expression>{} mod 1</expression></test>
+		<test name="testModEmpty3" inputfile="patient-example.xml"><expression>{} mod {}</expression></test>
 	</group>
 
 	<group name="testRound">
