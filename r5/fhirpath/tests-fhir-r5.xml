@@ -972,16 +972,16 @@ Any text enclosed within is ignored
 	</group>
 
 	<group name="testSort">
-		<test name="testSort1" inputfile="patient-example.xml"><expression>(1 | 2 | 3).sort() = (1 | 2 | 3)</expression><output type="boolean">true</output></test>
-		<test name="testSort2" inputfile="patient-example.xml"><expression>(3 | 2 | 1).sort() = (1 | 2 | 3)</expression><output type="boolean">true</output></test>
-		<test name="testSort3" inputfile="patient-example.xml"><expression>(1 | 2 | 3).sort($this) = (1 | 2 | 3)</expression><output type="boolean">true</output></test>
-		<test name="testSort4" inputfile="patient-example.xml"><expression>(3 | 2 | 1).sort($this) = (1 | 2 | 3)</expression><output type="boolean">true</output></test>
-		<test name="testSort5" inputfile="patient-example.xml"><expression>(1 | 2 | 3).sort(-$this) = (3 | 2 | 1)</expression><output type="boolean">true</output></test>
-		<test name="testSort6" inputfile="patient-example.xml"><expression>('a' | 'b' | 'c').sort($this) = ('a' | 'b' | 'c')</expression><output type="boolean">true</output></test>
-		<test name="testSort7" inputfile="patient-example.xml"><expression>('c' | 'b' | 'a').sort($this) = ('a' | 'b' | 'c')</expression><output type="boolean">true</output></test>
-		<test name="testSort8" inputfile="patient-example.xml"><expression>('a' | 'b' | 'c').sort(-$this) = ('c' | 'b' | 'a')</expression><output type="boolean">true</output></test>
-		<test name="testSort9" inputfile="patient-example.xml"><expression>Patient.name[0].given.sort() = ('James' | 'Peter')</expression><output type="boolean">true</output></test>
-		<test name="testSort10" inputfile="patient-example.xml"><expression>Patient.name.sort(-family, -given.first()).first().use = 'usual'</expression><output type="boolean">true</output></test>
+		<test name="testSort1" inputfile="patient-example.xml" description="Prototype definition - not part of spec yet"><expression>(1 | 2 | 3).sort() = (1 | 2 | 3)</expression><output type="boolean">true</output></test>
+		<test name="testSort2" inputfile="patient-example.xml" description="Prototype definition - not part of spec yet"><expression>(3 | 2 | 1).sort() = (1 | 2 | 3)</expression><output type="boolean">true</output></test>
+		<test name="testSort3" inputfile="patient-example.xml" description="Prototype definition - not part of spec yet"><expression>(1 | 2 | 3).sort($this) = (1 | 2 | 3)</expression><output type="boolean">true</output></test>
+		<test name="testSort4" inputfile="patient-example.xml" description="Prototype definition - not part of spec yet"><expression>(3 | 2 | 1).sort($this) = (1 | 2 | 3)</expression><output type="boolean">true</output></test>
+		<test name="testSort5" inputfile="patient-example.xml" description="Prototype definition - not part of spec yet"><expression>(1 | 2 | 3).sort(-$this) = (3 | 2 | 1)</expression><output type="boolean">true</output></test>
+		<test name="testSort6" inputfile="patient-example.xml" description="Prototype definition - not part of spec yet"><expression>('a' | 'b' | 'c').sort($this) = ('a' | 'b' | 'c')</expression><output type="boolean">true</output></test>
+		<test name="testSort7" inputfile="patient-example.xml" description="Prototype definition - not part of spec yet"><expression>('c' | 'b' | 'a').sort($this) = ('a' | 'b' | 'c')</expression><output type="boolean">true</output></test>
+		<test name="testSort8" inputfile="patient-example.xml" description="Prototype definition - not part of spec yet"><expression>('a' | 'b' | 'c').sort(-$this) = ('c' | 'b' | 'a')</expression><output type="boolean">true</output></test>
+		<test name="testSort9" inputfile="patient-example.xml" description="Prototype definition - not part of spec yet"><expression>Patient.name[0].given.sort() = ('James' | 'Peter')</expression><output type="boolean">true</output></test>
+		<test name="testSort10" inputfile="patient-example.xml" description="Prototype definition - not part of spec yet"><expression>Patient.name.sort(-family, -given.first()).first().use = 'usual'</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testEquality">
@@ -1522,7 +1522,7 @@ Any text enclosed within is ignored
 		<test name="testType19" inputfile="patient-example.xml"><expression>Patient.is(FHIR.`Patient`)</expression><output type="boolean">true</output></test>
 		<test name="testType20" inputfile="patient-example.xml"><expression>Patient.ofType(Patient).type().name</expression><output type="string">Patient</output></test>
 		<test name="testType21" inputfile="patient-example.xml"><expression>Patient.ofType(FHIR.Patient).type().name</expression><output type="string">Patient</output></test>
-		<test name="testType22" inputfile="patient-example.xml"><expression>Patient.is(System.Patient).not()</expression><output type="boolean">true</output></test>
+		<test name="testType22" description="Note: Some systems may return an error due to failing to resolve System.Patient" inputfile="patient-example.xml"><expression>Patient.is(System.Patient).not()</expression><output type="boolean">true</output></test>
 		<test name="testType23" inputfile="patient-example.xml"><expression>Patient.ofType(FHIR.`Patient`).type().name</expression><output type="string">Patient</output></test>
 
 		<test name="testTypeA1" inputfile="parameters-example-types.xml"><expression>Parameters.parameter[0].value.is(FHIR.string)</expression><output type="boolean">true</output></test>
@@ -1565,10 +1565,10 @@ Any text enclosed within is ignored
 		<test name="LowBoundaryDecimal15"><expression>(-0.0034).lowBoundary(1)</expression><output type="decimal">-0.0</output></test>
 
 		<test name="LowBoundaryQuantity"><expression>1.587 'cm'.lowBoundary(8)</expression><output type="Quantity">1.58650000 'cm'</output></test>
-		<test name="LowBoundaryDateMonth"><expression>@2014.lowBoundary(6)</expression><output>@2014-01</output></test>
-		<test name="LowBoundaryDateTimeMillisecond1"><expression>@2014-01-01T08.lowBoundary(17)</expression><output>@2014-01-01T08:00:00.000+14:00</output></test>
-		<test name="LowBoundaryDateTimeMillisecond2"><expression>@2014-01-01T08:05+08:00.lowBoundary(17)</expression><output>@2014-01-01T08:05:00.000+08:00</output></test>
-		<test name="LowBoundaryDateTimeMillisecond3"><expression>@2014-01-01T08.lowBoundary(8)</expression><output>@2014-01-01</output></test>
+		<test name="LowBoundaryDateMonth"><expression>@2014.lowBoundary(6)</expression><output type="dateTime">@2014-01</output></test>
+		<test name="LowBoundaryDateTimeMillisecond1"><expression>@2014-01-01T08.lowBoundary(17)</expression><output type="dateTime">@2014-01-01T08:00:00.000+14:00</output></test>
+		<test name="LowBoundaryDateTimeMillisecond2"><expression>@2014-01-01T08:05+08:00.lowBoundary(17)</expression><output type="dateTime">@2014-01-01T08:05:00.000+08:00</output></test>
+		<test name="LowBoundaryDateTimeMillisecond3"><expression>@2014-01-01T08.lowBoundary(8)</expression><output type="dateTime">@2014-01-01</output></test>
 		<test name="LowBoundaryTimeMillisecond"><expression>@T10:30.lowBoundary(9)</expression><output type="time">@T10:30:00.000</output></test>
 	</group>
 
@@ -1592,10 +1592,10 @@ Any text enclosed within is ignored
 		<test name="HighBoundaryDecimal16"><expression>-0.0034.highBoundary(1)</expression><output type="decimal">0.0</output></test> 
 		<test name="HighBoundaryDecimal"><expression>1.587.highBoundary(8)</expression><output type="decimal">1.58750000</output></test>
 		<test name="HighBoundaryQuantity"><expression>1.587 'm'.highBoundary(8)</expression><output type="Quantity">1.58750000 'm'</output></test>
-		<test name="HighBoundaryDateMonth"><expression>@2014.highBoundary(6)</expression><output>@2014-12</output></test>
-		<test name="HighBoundaryDateTimeMillisecond1"><expression>@2014-01-01T08.highBoundary(17)</expression><output>@2014-01-01T08:00:59.999-12:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
-		<test name="HighBoundaryDateTimeMillisecond2"><expression>@2014-01-01T08:05-05:00.highBoundary(17)</expression><output>@2014-01-01T08:05:59.999-05:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
-		<test name="HighBoundaryDateTimeMillisecond3"><expression>@2014-01-01T08.highBoundary(17)</expression><output>@2014-01-01T08:00:59.999-12:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
+		<test name="HighBoundaryDateMonth"><expression>@2014.highBoundary(6)</expression><output type="dateTime">@2014-12</output></test>
+		<test name="HighBoundaryDateTimeMillisecond1"><expression>@2014-01-01T08.highBoundary(17)</expression><output type="dateTime">@2014-01-01T08:00:59.999-12:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
+		<test name="HighBoundaryDateTimeMillisecond2"><expression>@2014-01-01T08:05-05:00.highBoundary(17)</expression><output type="dateTime">@2014-01-01T08:05:59.999-05:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
+		<test name="HighBoundaryDateTimeMillisecond3"><expression>@2014-01-01T08.highBoundary(17)</expression><output type="dateTime">@2014-01-01T08:00:59.999-12:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
 		<test name="HighBoundaryTimeMillisecond">	<expression>@T10:30.highBoundary(9)</expression><output type="time">@T10:30:59.999</output></test>
 	</group>
 
