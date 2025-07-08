@@ -262,6 +262,7 @@ Any text enclosed within is ignored
 		<!-- testWrong(observation(), "Observation.valueQuantity.unit"); -->
 		<test name="testPolymorphismB" inputfile="observation-example.xml" mode="strict">
 			<expression invalid="semantic">Observation.valueQuantity.unit</expression>
+			<output type="string">lbs</output>
 		</test>
 
 		<!-- testBoolean(observation(), "Observation.value.is(Quantity)", true); -->
@@ -1228,7 +1229,12 @@ Any text enclosed within is ignored
 
   <group name="testCombine()">
 		<test name="testCombine1" inputfile="codesystem-example.xml"><expression>concept.code.combine($this.descendants().concept.code).isDistinct()</expression><output type="boolean">false</output></test>
-		<test name="testCombine2" inputfile="patient-example.xml"><expression invalid="semantic">name.given.combine(name.family).exclude('Jim')</expression></test>
+		<test name="testCombine2" inputfile="patient-example.xml"><expression invalid="semantic">name.given.combine(name.family).exclude('Jim')</expression>
+			<output type="string">Peter</output>
+			<output type="string">James</output>
+			<output type="string">Peter</output>
+			<output type="string">James</output>
+		</test>
 		<test name="testCombine3" inputfile="patient-example.xml"><expression>name.given.combine($this.name.family).exclude('Jim')</expression><output type="string">Peter</output><output type="string">James</output><output type="string">Peter</output><output type="string">James</output><output type="string">Chalmers</output><output type="string">Windsor</output></test>
 	</group>
 
