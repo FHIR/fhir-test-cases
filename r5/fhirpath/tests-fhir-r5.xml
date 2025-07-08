@@ -1343,15 +1343,16 @@ Any text enclosed within is ignored
     <test name="testPlusDate16" inputfile="patient-example.xml"><expression invalid="execution">@1973-12-25 + 1 'a'</expression>        </test>
     <test name="testPlusDate17" inputfile="patient-example.xml"><expression invalid="execution">@1975-12-25 + 1 'a'</expression>        </test>
     <test name="testPlusDate18" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 1 's'</expression>           <output type="dateTime">@1973-12-25T00:00:01.000+10:00</output></test>
-    <test name="testPlusDate19" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 0.1 's'</expression>         <output type="dateTime">@1973-12-25T00:00:00.000+10:00</output></test>
+    <test name="testPlusDate19" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 0.1 's'</expression>         <output type="dateTime">@1973-12-25T00:00:00.100+10:00</output></test>
     <test name="testPlusDate20" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 10 'ms'</expression>         <output type="dateTime">@1973-12-25T00:00:00.010+10:00</output></test>
     <test name="testPlusDate21" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 1 'min'</expression>         <output type="dateTime">@1973-12-25T00:01:00.000+10:00</output></test>
     <test name="testPlusDate22" inputfile="patient-example.xml"><expression>@1973-12-25T00:00:00.000+10:00 + 1 'h'</expression>           <output type="dateTime">@1973-12-25T01:00:00.000+10:00</output></test>
     
     <test name="testPlus6" inputfile="patient-example.xml"><expression invalid="semantic">@1974-12-25 + 7</expression></test>
 
-		<test name="testPlusTime1" inputfile="patient-example.xml"><expression>@T01:00:00 + 2 hours</expression><output type="time">@03:00:00</output></test>
-		<test name="testPlusTime2" inputfile="patient-example.xml"><expression>@T23:00:00 + 2 hours</expression><output type="time">@01:00:00</output></test>
+		<test name="testPlusTime1" inputfile="patient-example.xml"><expression>@T01:00:00 + 2 hours</expression><output type="time">@T03:00:00</output></test>
+		<test name="testPlusTime2" inputfile="patient-example.xml"><expression>@T23:00:00 + 2 hours</expression><output type="time">@T01:00:00</output></test>
+		<test name="testPlusTime3" inputfile="patient-example.xml"><expression>@T23:00:00 + 50 hours</expression><output type="time">@T01:00:00</output></test>
 	</group>
 
 	<group name="testConcatenate">
@@ -1368,8 +1369,8 @@ Any text enclosed within is ignored
 		<test name="testMinus4" inputfile="patient-example.xml"><expression invalid="execution">'a'-'b' = 'ab'</expression></test>
 		<test name="testMinus5" inputfile="patient-example.xml"><expression>@1974-12-25 - 1 'month'</expression><output type="date">@1974-11-25</output></test>
     	<test name="testMinus6" inputfile="patient-example.xml"><expression invalid="execution">@1974-12-25 - 1 'cm'</expression></test>
-		<test name="testMinus7" inputfile="patient-example.xml"><expression>@T00:30:00 - 1 hour</expression><output type="time">@23:30:00</output></test>
-		<test name="testMinus8" inputfile="patient-example.xml"><expression>@T01:00:00 - 2 hours</expression><output type="time">@23:00:00</output></test>
+		<test name="testMinus7" inputfile="patient-example.xml"><expression>@T00:30:00 - 1 hour</expression><output type="time">@T23:30:00</output></test>
+		<test name="testMinus8" inputfile="patient-example.xml"><expression>@T01:00:00 - 2 hours</expression><output type="time">@T23:00:00</output></test>
 	</group>
 
 	<group name="testMultiply">
