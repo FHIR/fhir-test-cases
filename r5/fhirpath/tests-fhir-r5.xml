@@ -761,11 +761,16 @@ Any text enclosed within is ignored
 		<test name="testIif10" inputfile="patient-example.xml">
 		    <expression invalid="execution">('item1' | 'item2').iif(true, 'true-result', 'false-result')</expression>
 		</test>
-<!-- Verify the input collection is being set as the iterator for the iif function (on the single item) -->
-<test name="testIif11" inputfile="patient-example.xml">
-    <expression>('context').iif($this = 'context','true-result', 'false-result')</expression>
-    <output type="string">true-result</output>
-</test>
+    <!-- Verify the input collection is being set as the iterator for the iif function (on the single item) -->
+		<test name="testIif11" inputfile="patient-example.xml">
+				<expression>('context').iif($this = 'context','true-result', 'false-result')</expression>
+				<output type="string">true-result</output>
+		</test>
+		<test name="testIif12" inputfile="patient-example-name.xml">
+				<expression>Patient.name.first().iif(text.exists(), text, family+given.first())</expression>
+				<output type="string">Pater J Chalmers</output>
+		</test>
+
 	</group>
 
 	<group name="testToInteger">
