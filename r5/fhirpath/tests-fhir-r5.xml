@@ -536,7 +536,7 @@ Any text enclosed within is ignored
 		<test name="testDecimalLiteralToQuantity" inputfile="patient-example.xml"><expression>1.0.toQuantity() = 1.0 '1'</expression><output type="boolean">true</output></test>
 		<test name="testStringIntegerLiteralToQuantity" inputfile="patient-example.xml"><expression>'1'.toQuantity()</expression><output type="Quantity">1 '1'</output></test>
 		<test name="testStringQuantityLiteralToQuantity" inputfile="patient-example.xml"><expression>'1 day'.toQuantity() = 1 day</expression><output type="boolean">true</output></test>
-		<test name="testStringQuantityDayLiteralToQuantity" inputfile="patient-example.xml"><expression>'1 day'.toQuantity() = 1 'd'</expression><output type="boolean">true</output></test>
+		<test name="testStringQuantityDayLiteralToQuantity" inputfile="patient-example.xml" description="Contested: calendar day units are not equal to ucum day units"><expression>'1 day'.toQuantity() = 1 'd'</expression><output type="boolean">true</output></test>
 		<test name="testStringQuantityWeekLiteralToQuantity" inputfile="patient-example.xml"><expression>'1 \'wk\''.toQuantity() = 1 week</expression><output type="boolean">true</output></test>
 		<test name="testStringQuantityMonthLiteralToQuantity" inputFile="patient-example.xml"><expression>'1 \'mo\''.toQuantity() = 1 month</expression></test>
 		<test name="testStringQuantityYearLiteralToQuantity" inputFile="patient-example.xml"><expression>'1 \'a\''.toQuantity() = 1 year</expression></test>
@@ -735,8 +735,9 @@ Any text enclosed within is ignored
 		</test>
 
 		<!-- Non boolean criteria -->
-		<test name="testIif6" inputfile="patient-example.xml">
-		    <expression mode="strict" invalid="semantic">iif('non boolean criteria', 'true-result', 'true-result')</expression>
+		<test name="testIif6" inputfile="patient-example.xml" description="Contested: nothing in the spec about what to do with non-boolean criteria - mixed results from engines">
+		    <expression mode="strict" invalid="semantic">iif('non boolean criteria', 'true-result', 'false-result')</expression>
+		    <output type="string">true-result</output>
 		</test>
 
 		<!-- No input collection -->
@@ -826,7 +827,8 @@ Any text enclosed within is ignored
 		<test name="testSubstring7" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.substring(0, 12)</expression><output type="string">LogicalModel</output></test>
 		<test name="testSubstring8" inputfile="patient-example.xml"><expression>'LogicalModel-Person'.substring(0, 'LogicalModel-Person'.indexOf('-'))</expression><output type="string">LogicalModel</output></test>
 		<test name="testSubstring9" inputfile="patient-example.xml"><expression>{}.substring(25).empty() = true</expression><output type="boolean">true</output></test>
-		<test name="testSubstring10" inputfile="patient-example.xml"><expression>Patient.name.family.first().substring(2, length()-5)</expression><output type="string">alm</output></test>
+		<test name="testSubstring10" inputfile="patient-example.xml"><expression>Patient.name.family.first().select(substring(2, length()-5))</expression><output type="string">alm</output></test>
+		<test name="testSubstring10a" inputfile="patient-example.xml"><expression invalid="semantic">Patient.name.family.first().substring(2, length()-5)</expression></test>
 		<test name="testSubstring11" inputfile="patient-example.xml"><expression>{}.substring({}).empty() = true</expression><output type="boolean">true</output></test>
 		<test name="testSubstring12" inputfile="patient-example.xml"><expression>'string'.substring({}).empty() = true</expression><output type="boolean">true</output></test>
 	</group>
@@ -843,7 +845,8 @@ Any text enclosed within is ignored
 		<test name="testStartsWith9" inputfile="patient-example.xml"><expression>{}.startsWith('').empty() = true</expression><output type="boolean">true</output></test>
 		<test name="testStartsWith10" inputfile="patient-example.xml"><expression>''.startsWith('') = true</expression><output type="boolean">true</output></test>
 		<test name="testStartsWith11" inputfile="patient-example.xml"><expression>{}.startsWith('').exists() = false</expression><output type="boolean">true</output></test>
-		<test name="testStartsWith12" inputfile="patient-example.xml"><expression>'987654321'.startsWith(length().toString())</expression><output type="boolean">true</output></test>
+		<test name="testStartsWith12" inputfile="patient-example.xml"><expression>'987654321'.select(startsWith(length().toString()))</expression><output type="boolean">true</output></test>
+		<test name="testStartsWith12a" inputfile="patient-example.xml"><expression invalid="semantic">'987654321'.startsWith(length().toString())</expression></test>
 		<test name="testStartsWithNonString1" inputfile="appointment-examplereq.json"><expression invalid="semantic">Appointment.identifier.startsWith('rand')</expression></test>
 	</group>
 
@@ -857,7 +860,8 @@ Any text enclosed within is ignored
 		<test name="testEndsWith7" inputfile="patient-example.xml"><expression>'12345'.endsWith('') = true</expression><output type="boolean">true</output></test>
 		<test name="testEndsWith8" inputfile="patient-example.xml"><expression>{}.endsWith('1').empty() = true</expression><output type="boolean">true</output></test>
 		<test name="testEndsWith9" inputfile="patient-example.xml"><expression>{}.endsWith('').empty() = true</expression><output type="boolean">true</output></test>
-		<test name="testEndsWith10" inputfile="patient-example.xml"><expression>'123456789'.endsWith(length().toString())</expression><output type="boolean">true</output></test>
+		<test name="testEndsWith10" inputfile="patient-example.xml"><expression>'123456789'.select(endsWith(length().toString()))</expression><output type="boolean">true</output></test>
+		<test name="testEndsWith10a" inputfile="patient-example.xml"><expression invalid="semantic">'123456789'.endsWith(length().toString())</expression></test>
 		<test name="testEndsWithNonString1" inputfile="appointment-examplereq.json"><expression invalid="semantic">Appointment.identifier.endsWith('rand')</expression></test>
 	</group>
 
@@ -871,7 +875,8 @@ Any text enclosed within is ignored
 		<test name="testContainsString7" inputfile="patient-example.xml"><expression>'12345'.contains('') = true</expression><output type="boolean">true</output></test>
 		<test name="testContainsString8" inputfile="patient-example.xml"><expression>{}.contains('a').empty() = true</expression><output type="boolean">true</output></test>
 		<test name="testContainsString9" inputfile="patient-example.xml"><expression>{}.contains('').empty() = true</expression><output type="boolean">true</output></test>
-		<test name="testContainsString10" inputfile="patient-example.xml"><expression>'123456789'.contains(length().toString())</expression><output type="boolean">true</output></test>
+		<test name="testContainsString10" inputfile="patient-example.xml"><expression>'123456789'.select(contains(length().toString()))</expression><output type="boolean">true</output></test>
+		<test name="testContainsString10a" inputfile="patient-example.xml"><expression invalid="semantic">'123456789'.contains(length().toString())</expression></test>
 		<test name="testContainsNonString1" inputfile="appointment-examplereq.json"><expression invalid="semantic">Appointment.identifier.contains('rand')</expression></test>
 	</group>
 
@@ -1013,7 +1018,7 @@ Any text enclosed within is ignored
 		<test name="testEquality20" inputfile="patient-example.xml"><expression>@2012-04-15T15:00:00 = @2012-04-15T10:00:00</expression><output type="boolean">false</output></test>
 		<test name="testEquality21" inputfile="patient-example.xml"><expression>@2012-04-15T15:30:31 = @2012-04-15T15:30:31.0</expression><output type="boolean">true</output></test>
 		<test name="testEquality22" inputfile="patient-example.xml"><expression>@2012-04-15T15:30:31 = @2012-04-15T15:30:31.1</expression><output type="boolean">false</output></test>
-		<test name="testEquality23" inputfile="patient-example.xml"><expression>@2012-04-15T15:00:00Z = @2012-04-15T10:00:00</expression></test>
+		<test name="testEquality23" inputfile="patient-example.xml" description="This could be impacted by the timezone of the engine running the test"><expression>@2012-04-15T15:00:00Z = @2012-04-15T10:00:00</expression></test>
 		<test name="testEquality24" inputfile="patient-example.xml"><expression>@2012-04-15T15:00:00+02:00 = @2012-04-15T16:00:00+03:00</expression><output type="boolean">true</output></test>
 		<test name="testEquality25" inputfile="patient-example.xml"><expression>name = name</expression><output type="boolean">true</output></test>
 		<test name="testEquality26" inputfile="patient-example.xml"><expression>name.take(2) = name.take(2).first() | name.take(2).last()</expression><output type="boolean">true</output></test>
@@ -1234,12 +1239,7 @@ Any text enclosed within is ignored
 
   <group name="testCombine()">
 		<test name="testCombine1" inputfile="codesystem-example.xml"><expression>concept.code.combine($this.descendants().concept.code).isDistinct()</expression><output type="boolean">false</output></test>
-		<test name="testCombine2" inputfile="patient-example.xml"><expression invalid="semantic">name.given.combine(name.family).exclude('Jim')</expression>
-			<output type="string">Peter</output>
-			<output type="string">James</output>
-			<output type="string">Peter</output>
-			<output type="string">James</output>
-		</test>
+		<test name="testCombine2" inputfile="patient-example.xml"><expression>name.given.combine(name.family).exclude('Jim')</expression><output type="string">Peter</output><output type="string">James</output><output type="string">Peter</output><output type="string">James</output><output type="string">Chalmers</output><output type="string">Windsor</output></test>
 		<test name="testCombine3" inputfile="patient-example.xml"><expression>name.given.combine($this.name.family).exclude('Jim')</expression><output type="string">Peter</output><output type="string">James</output><output type="string">Peter</output><output type="string">James</output><output type="string">Chalmers</output><output type="string">Windsor</output></test>
 	</group>
 
@@ -1254,7 +1254,7 @@ Any text enclosed within is ignored
 		<test name="testUnion8" inputfile="patient-example.xml"><expression>1.combine(1).union(2).count() = 2</expression><output type="boolean">true</output></test> <!-- do not merge duplicates -->
 		<test name="testUnion9" inputfile="patient-example.xml"><expression>name.select(use | given).count()</expression><output type="integer">8</output></test>
 		<test name="testUnion10" inputfile="patient-example.xml"><expression>name.select(use.union($this.given)).count()</expression><output type="integer">8</output></test>
-		<test name="testUnion11" inputfile="patient-example.xml"><expression invalid="semantic">name.select(use.union(given)).count()</expression><output type="integer">3</output></test>
+		<test name="testUnion11" inputfile="patient-example.xml"><expression>name.select(use.union(given)).count()</expression><output type="integer">8</output></test>
 		<test name="testUnion12" inputfile="patient-example.xml"><expression>true | Patient.name.given.first()</expression>
 			<output type="boolean">true</output>
 			<output type="string">Peter</output>
@@ -1398,7 +1398,8 @@ Any text enclosed within is ignored
 		<test name="testMinus2" inputfile="patient-example.xml"><expression>1 - 0 = 1</expression><output type="boolean">true</output></test>
 		<test name="testMinus3" inputfile="patient-example.xml"><expression>1.8 - 1.2 = 0.6</expression><output type="boolean">true</output></test>
 		<test name="testMinus4" inputfile="patient-example.xml"><expression invalid="execution">'a'-'b' = 'ab'</expression></test>
-		<test name="testMinus5" inputfile="patient-example.xml"><expression>@1974-12-25 - 1 'month'</expression><output type="date">@1974-11-25</output></test>
+		<test name="testMinus5" inputfile="patient-example.xml" description="Contested: single quotes are ucum units, which are not applicable to date arithmetic"><expression>@1974-12-25 - 1 'month'</expression><output type="date">@1974-11-25</output></test>
+		<!-- Should we have another rule here to check that the 1 'month' (which declares ucum units, though the correct ucum unit is 'mo') -->
     	<test name="testMinus6" inputfile="patient-example.xml"><expression invalid="execution">@1974-12-25 - 1 'cm'</expression></test>
 		<test name="testMinus7" inputfile="patient-example.xml"><expression>@T00:30:00 - 1 hour</expression><output type="time">@T23:30:00</output></test>
 		<test name="testMinus8" inputfile="patient-example.xml"><expression>@T01:00:00 - 2 hours</expression><output type="time">@T23:00:00</output></test>
@@ -1718,12 +1719,12 @@ Any text enclosed within is ignored
 		<test name="testFHIRPathIsFunction8" inputfile="observation-example.xml"><expression>Observation.extension('http://example.com/fhir/StructureDefinition/patient-age').value is Age</expression><output type="boolean">true</output></test>
 		<test name="testFHIRPathIsFunction9" inputfile="observation-example.xml"><expression>Observation.extension('http://example.com/fhir/StructureDefinition/patient-age').value is Quantity</expression><output type="boolean">true</output></test>
 		<test name="testFHIRPathIsFunction10" inputfile="observation-example.xml"><expression>Observation.extension('http://example.com/fhir/StructureDefinition/patient-age').value is Duration</expression><output type="boolean">false</output></test>
-		<test name="testFHIRPathAsFunction11" inputfile="patient-example.xml"><expression>Patient.gender.as(string)</expression></test>
+		<test name="testFHIRPathAsFunction11" inputfile="patient-example.xml" description="Contested: code type is a subtype of string"><expression>Patient.gender.as(string)</expression></test>
 		<test name="testFHIRPathAsFunction12" inputfile="patient-example.xml"><expression>Patient.gender.as(code)</expression><output type="code">male</output></test>
 		<test name="testFHIRPathAsFunction13" inputfile="patient-example.xml"><expression>Patient.gender.as(id)</expression></test>
 		<test name="testFHIRPathAsFunction14" inputfile="valueset-example-expansion.xml"><expression>ValueSet.version.as(string)</expression><output type="string">20150622</output></test>
 		<test name="testFHIRPathAsFunction15" inputfile="valueset-example-expansion.xml"><expression>ValueSet.version.as(code)</expression></test>
-		<test name="testFHIRPathAsFunction16" inputfile="patient-example.xml"><expression>Patient.gender.ofType(string)</expression></test>
+		<test name="testFHIRPathAsFunction16" inputfile="patient-example.xml" description="Contested: code type is a subtype of string"><expression>Patient.gender.ofType(string)</expression></test>
 		<test name="testFHIRPathAsFunction17" inputfile="patient-example.xml"><expression>Patient.gender.ofType(code)</expression><output type="code">male</output></test>
 		<test name="testFHIRPathAsFunction18" inputfile="patient-example.xml"><expression>Patient.gender.ofType(id)</expression></test>
 		<test name="testFHIRPathAsFunction19" inputfile="valueset-example-expansion.xml"><expression>ValueSet.version.ofType(string)</expression><output type="string">20150622</output></test>
