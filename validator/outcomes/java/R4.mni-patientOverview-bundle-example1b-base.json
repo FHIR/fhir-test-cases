@@ -3,15 +3,24 @@
   "issue" : [{
     "extension" : [{
       "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
-      "valueUrl" : "http://tx-dev.fhir.org/r4"
+      "valueUrl" : "https://tx-dev.fhir.org/r4"
     }],
-    "severity" : "information",
+    "severity" : "error",
     "code" : "invalid",
     "details" : {
-      "text" : "There are no valid display names found for the code http://loinc.org#60591-5 for language(s) 'de-CH'. The display is 'Patient summary Document' the default language display"
+      "text" : "Wrong Display Name 'Patient summary Document' for http://loinc.org#60591-5. Valid display is one of 2 choices: 'Patientenkurzakte - Dokument' (de-DE) or 'Patient Summary' (de-AT) (for the language(s) 'de-CH')"
     },
     "diagnostics" : "[21,6]",
     "expression" : ["Bundle.entry[0].resource/*Composition/1a*/.type.coding[0].display"]
+  },
+  {
+    "severity" : "information",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'FHIR Document Type Codes' (http://hl7.org/fhir/ValueSet/doc-typecodes|4.0.1), and a coding is recommended to come from this value set (codes = http://loinc.org#60591-5)"
+    },
+    "diagnostics" : "[21,6]",
+    "expression" : ["Bundle.entry[0].resource/*Composition/1a*/.type"]
   },
   {
     "severity" : "error",
