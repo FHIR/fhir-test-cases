@@ -15,6 +15,9 @@ Please maintain this README.md as a linkable document, as other documentation ma
 
 # fhir-test-cases
 
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/FHIR/fhir-test-cases/badge)](https://scorecard.dev/viewer/?uri=github.com/FHIR/fhir-test-cases)
+
+
 | CI Status (master) | Release Pipeline | Current Release | Latest SNAPSHOT |
 | :---: | :---: | :---: | :---: |
 | [![Build Status][Badge-AzurePipeline]][Link-AzureMasterPipeline] | [![Build Status][Badge-AzureReleasePipeline]][Link-AzureReleasePipeline] | [![Release Artifacts][Badge-SonatypeReleases]][Link-GithubZipRelease] | [![Snapshot Artifact][Badge-SonatypeSnapshots]][Link-SonatypeSnapshots] |
