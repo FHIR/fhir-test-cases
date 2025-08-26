@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="bc-UterusActivity" />
+  <url value="http://nictiz.nl/fhir/StructureDefinition/bc-UterusActivity" />
+  <version value="1.3.3" />
+  <name value="bc-UterusActivity" />
+  <title value="bc-UterusActivity" />
+  <status value="active" />
+  <publisher value="Nictiz" />
+  <contact>
+    <name value="Nictiz" />
+    <telecom>
+      <system value="email" />
+      <value value="geboortezorg@nictiz.nl" />
+      <use value="work" />
+    </telecom>
+  </contact>
+  <description value="An Observation profile derived from the maternal Observation profile describing uterus activity as defined by BabyConnect. Uterus activity is a patient-related Observation. Patient-related Observations are about the (pregnant) woman, which is the subject of the Observation." />
+  <copyright value="CC0" />
+  <fhirVersion value="3.0.2" />
+  <mapping>
+    <identity value="gebz-peri-v3.2" />
+    <uri value="https://decor.nictiz.nl/art-decor/decor-datasets--peri20-?id=2.16.840.1.113883.2.4.3.11.60.90.77.1.6&amp;effectiveDate=2016-09-08T00%3A00%3A00&amp;conceptId=2.16.840.1.113883.2.4.3.11.60.90.77.2.6.40050&amp;conceptEffectiveDate=2016-09-08T00%3A00%3A00" />
+    <name value="Geboortezorg 3.2" />
+  </mapping>
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Observation" />
+  <baseDefinition value="http://nictiz.nl/fhir/StructureDefinition/bc-MaternalObservation" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Observation">
+      <path value="Observation" />
+      <mapping>
+        <identity value="gebz-peri-v3.2" />
+        <map value="peri32-dataelement-1766" />
+        <comment value="Uterusactiviteit" />
+      </mapping>
+    </element>
+    <element id="Observation.code.coding">
+      <path value="Observation.code.coding" />
+      <patternCoding>
+        <system value="http://snomed.info/sct" />
+        <code value="364277008" />
+      </patternCoding>
+    </element>
+    <element id="Observation.effective[x]:effectivePeriod">
+      <path value="Observation.effective[x]" />
+      <sliceName value="effectivePeriod" />
+      <type>
+        <code value="Period" />
+        <profile value="http://nictiz.nl/fhir/StructureDefinition/bc-TimeInterval" />
+      </type>
+      <mapping>
+        <identity value="gebz-peri-v3.2" />
+        <map value="peri32-dataelement-3897" />
+        <comment value="Periode" />
+      </mapping>
+      <mapping>
+        <identity value="gebz-peri-v3.2" />
+        <map value="peri32-dataelement-3894" />
+        <comment value="TijdsInterval" />
+      </mapping>
+    </element>
+    <element id="Observation.performer">
+      <path value="Observation.performer" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://fhir.nl/fhir/StructureDefinition/nl-core-organization" />
+      </type>
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://fhir.nl/fhir/StructureDefinition/nl-core-practitioner" />
+      </type>
+      <mapping>
+        <identity value="gebz-peri-v3.2" />
+        <map value="peri32-dataelement-3898" />
+        <comment value="Beoordelaar" />
+      </mapping>
+    </element>
+    <element id="Observation.method">
+      <path value="Observation.method" />
+      <binding>
+        <strength value="extensible" />
+        <description value="UterusActiviteitMethode" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.11.293--20200129150222" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="gebz-peri-v3.2" />
+        <map value="peri32-dataelement-3905" />
+        <comment value="UterusActiviteitMethode" />
+      </mapping>
+    </element>
+    <element id="Observation.component">
+      <path value="Observation.component" />
+      <slicing>
+        <discriminator>
+          <type value="pattern" />
+          <path value="code" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Observation.component:uterusActivityFrequency">
+      <path value="Observation.component" />
+      <sliceName value="uterusActivityFrequency" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:uterusActivityFrequency.code.coding">
+      <path value="Observation.component.code.coding" />
+      <patternCoding>
+        <system value="http://snomed.info/sct" />
+        <code value="364270005" />
+      </patternCoding>
+    </element>
+    <element id="Observation.component:uterusActivityFrequency.value[x]:valueQuantity">
+      <path value="Observation.component.valueQuantity" />
+      <sliceName value="valueQuantity" />
+      <type>
+        <code value="Quantity" />
+      </type>
+      <mapping>
+        <identity value="gebz-peri-v3.2" />
+        <map value="peri32-dataelement-3900" />
+        <comment value="UterusActiviteitFrequentie" />
+      </mapping>
+    </element>
+    <element id="Observation.component:uterusActivityDuration">
+      <path value="Observation.component" />
+      <sliceName value="uterusActivityDuration" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:uterusActivityDuration.code.coding">
+      <path value="Observation.component.code.coding" />
+      <patternCoding>
+        <system value="http://snomed.info/sct" />
+        <code value="364274001" />
+      </patternCoding>
+    </element>
+    <element id="Observation.component:uterusActivityDuration.value[x]:valueQuantity">
+      <path value="Observation.component.valueQuantity" />
+      <sliceName value="valueQuantity" />
+      <type>
+        <code value="Quantity" />
+      </type>
+      <mapping>
+        <identity value="gebz-peri-v3.2" />
+        <map value="peri32-dataelement-3901" />
+        <comment value="UterusActiviteitDuur" />
+      </mapping>
+    </element>
+    <element id="Observation.component:uterusActivityDuration.value[x]:valueQuantity.unit">
+      <path value="Observation.component.valueQuantity.unit" />
+      <defaultValueString value="sec" />
+    </element>
+    <element id="Observation.component:uterusActivityDuration.value[x]:valueQuantity.code">
+      <path value="Observation.component.valueQuantity.code" />
+      <defaultValueCode value="sec" />
+    </element>
+    <element id="Observation.component:uterusActivityIntensity">
+      <path value="Observation.component" />
+      <sliceName value="uterusActivityIntensity" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:uterusActivityIntensity.code.coding">
+      <path value="Observation.component.code.coding" />
+      <patternCoding>
+        <system value="http://snomed.info/sct" />
+        <code value="251680002" />
+      </patternCoding>
+    </element>
+    <element id="Observation.component:uterusActivityIntensity.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="IntensiteitUterusContracties" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.11.291--20200129144103" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="gebz-peri-v3.2" />
+        <map value="peri32-dataelement-3902" />
+        <comment value="UterusActiviteitIntensiteit" />
+      </mapping>
+    </element>
+    <element id="Observation.component:monteVideoUnits">
+      <path value="Observation.component" />
+      <sliceName value="monteVideoUnits" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:monteVideoUnits.code.coding">
+      <path value="Observation.component.code.coding" />
+      <patternCoding>
+        <system value="http://snomed.info/sct" />
+        <code value="113571000146103" />
+      </patternCoding>
+    </element>
+    <element id="Observation.component:monteVideoUnits.value[x]:valueQuantity">
+      <path value="Observation.component.valueQuantity" />
+      <sliceName value="valueQuantity" />
+      <type>
+        <code value="Quantity" />
+      </type>
+      <mapping>
+        <identity value="gebz-peri-v3.2" />
+        <map value="peri32-dataelement-3903" />
+        <comment value="MonteVideoUnits" />
+      </mapping>
+    </element>
+    <element id="Observation.component:monteVideoUnits.value[x]:valueQuantity.unit">
+      <path value="Observation.component.valueQuantity.unit" />
+      <defaultValueString value="MVU" />
+    </element>
+    <element id="Observation.component:monteVideoUnits.value[x]:valueQuantity.code">
+      <path value="Observation.component.valueQuantity.code" />
+      <defaultValueCode value="MVU" />
+    </element>
+    <element id="Observation.component:uterusActivityRegularity">
+      <path value="Observation.component" />
+      <sliceName value="uterusActivityRegularity" />
+    </element>
+    <element id="Observation.component:uterusActivityRegularity.code.coding">
+      <path value="Observation.component.code.coding" />
+      <patternCoding>
+        <system value="http://snomed.info/sct" />
+        <code value="364271009" />
+      </patternCoding>
+    </element>
+    <element id="Observation.component:uterusActivityRegularity.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="RegelmatigheidUterusActiviteit" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.11.292--20200129145703" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="gebz-peri-v3.2" />
+        <map value="peri32-dataelement-3904" />
+        <comment value="UterusActiviteitRegelmatigheid" />
+      </mapping>
+    </element>
+    <element id="Observation.component:conclusionUterusActivity">
+      <path value="Observation.component" />
+      <sliceName value="conclusionUterusActivity" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:conclusionUterusActivity.code.coding">
+      <path value="Observation.component.code.coding" />
+      <patternCoding>
+        <system value="http://snomed.info/sct" />
+        <code value="289699001" />
+      </patternCoding>
+    </element>
+    <element id="Observation.component:conclusionUterusActivity.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="ConclusieUterusContracties" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.11.294--20200129150958" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="gebz-peri-v3.2" />
+        <map value="peri32-dataelement-3906" />
+        <comment value="ConclusieUterusActiviteit" />
+      </mapping>
+    </element>
+  </differential>
+</StructureDefinition>
