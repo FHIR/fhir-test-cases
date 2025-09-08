@@ -1,0 +1,56 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Extension url 'http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal' is not allowed (Element id 'Patient.animal' is valid, so check other defined extensions)"
+    },
+    "diagnostics" : "[3,89]",
+    "expression" : ["Patient.extension[0][url='http://hl7.org/fhir/1.0/StructureDefinition/extension-Patient.animal']"]
+  },
+  {
+    "severity" : "information",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "Reference to draft CodeSystem http://hl7.org/fhir/animal-species|4.0.1"
+    },
+    "diagnostics" : "[5,29]",
+    "expression" : ["Patient.extension[0].extension[0].value.ofType(CodeableConcept)"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "https://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "The concept '58108001' has a status of inactive and its use should be reviewed"
+    },
+    "diagnostics" : "[14,29]",
+    "expression" : ["Patient.extension[0].extension[1].value.ofType(CodeableConcept)"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "https://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://example.org/fhir/animal-breed' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[14,29]",
+    "expression" : ["Patient.extension[0].extension[1].value.ofType(CodeableConcept).coding[1].system"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "No code provided, and a code should be provided from the value set 'IdentifierType' (http://hl7.org/fhir/ValueSet/identifier-type|4.0.1)"
+    },
+    "diagnostics" : "[37,11]",
+    "expression" : ["Patient.identifier[0].type"]
+  }]
+}
