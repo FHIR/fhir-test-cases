@@ -1,13 +1,7 @@
-Foundational Requirements - Da Vinci - Coverage Requirements Discovery v2.2.0-ballot
-
-h2{--heading-prefix:"9"} h3,h4,h5,h6{--heading-prefix:"9"}
+# Foundational Requirements - Da Vinci - Coverage Requirements Discovery v2.2.0-ballot
 
 * [**Table of Contents**](toc.md)
 * **Foundational Requirements**
-
-h2:before{color:silver;counter-increment:section;content:var(--heading-prefix) " ";} h3:before{color:silver;counter-increment:sub-section;content:var(--heading-prefix) "." counter(sub-section) " ";} h4:before{color:silver;counter-increment:composite;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) " ";} h5:before{color:silver;counter-increment:detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) " ";} h6:before{color:silver;counter-increment:more-detail;content:var(--heading-prefix) "." counter(sub-section) "." counter(composite) "." counter(detail) "." counter(more-detail)" ";}
-
-Da Vinci - Coverage Requirements Discovery - Local Development build (v2.2.0-ballot) built by the FHIR (HL7® FHIR® Standard) Build Tools. See the [Directory of published versions](http://hl7.org/fhir/us/davinci-crd/history.html)
 
 ## Foundational Requirements
 
