@@ -18,7 +18,7 @@ This profile specifies extensions and constraints on the DeviceRequest resource 
 
 ### Usage
 
- CRD Clients **SHALL** use this profile to [resolve references](foundation.md#additional-data-retrieval) to DeviceRequest resources passed to CRD Servers (e.g. ```selections```**selections** context references) and to populate ```draftOrders```**draftOrders** context objects when invoking the following CDS Hooks:
+ CRD Clients **SHALL** use this profile to [resolve references](foundation.md#additional-data-retrieval) to DeviceRequest resources passed to CRD Servers (e.g. `selections` context references) and to populate `draftOrders` context objects when invoking the following CDS Hooks:
 
 * [order-select](hooks.md#order-select)
 * [order-sign](hooks.md#order-sign)
@@ -28,9 +28,9 @@ Information provided in [Must Support](http://hl7.org/fhir/R4/profiling.html#mus
 
 **Usages:**
 
-* Use this Profile:[CRD CDSHooks Additional Orders Response (Logical Definition)](StructureDefinition-CRDHooksResponse-additionalOrders.md),[CRD CDSHooks Alternate Request Response (Logical Definition)](StructureDefinition-CRDHooksResponse-alternateRequest.md),[CRD CDSHooks Coverage Information Response (Logical Definition)](StructureDefinition-CRDHooksResponse-coverageInformation.md)and[CRD Bundle of Request Resources](StructureDefinition-profile-bundle-request.md)
-* Refer to this Profile:[Coverage Information](StructureDefinition-ext-coverage-information.md)
-* CapabilityStatements using this Profile:[CRD Client USCDI 1](CapabilityStatement-crd-client3.1.md),[CRD Client USCDI 3](CapabilityStatement-crd-client6.1.md)and[CRD Client USCDI 4](CapabilityStatement-crd-client7.0.md)
+* Use this Profile: [CRD CDSHooks Additional Orders Response (Logical Definition)](StructureDefinition-CRDHooksResponse-additionalOrders.md), [CRD CDSHooks Alternate Request Response (Logical Definition)](StructureDefinition-CRDHooksResponse-alternateRequest.md), [CRD CDSHooks Coverage Information Response (Logical Definition)](StructureDefinition-CRDHooksResponse-coverageInformation.md) and [CRD Bundle of Request Resources](StructureDefinition-profile-bundle-request.md)
+* Refer to this Profile: [Coverage Information](StructureDefinition-ext-coverage-information.md)
+* CapabilityStatements using this Profile: [CRD Client USCDI 1](CapabilityStatement-crd-client3.1.md), [CRD Client USCDI 3](CapabilityStatement-crd-client6.1.md) and [CRD Client USCDI 4](CapabilityStatement-crd-client7.0.md)
 
 You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir.org/xig/hl7.fhir.us.davinci-crd|current/StructureDefinition/profile-devicerequest)
 
@@ -38,29 +38,29 @@ You can also check for [usages in the FHIR IG Statistics](https://packages2.fhir
 
  [Description of Profiles, Differentials, Snapshots and how the different presentations work](http://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#structure-definitions). 
 
-* [Key Elements Table](#tabs-key)
-* [Differential Table](#tabs-diff)
-* [Snapshot Table](#tabs-snap)
-* [Statistics/References](#tabs-summ)
-* [All](#tabs-all)
+*  [Key Elements Table](#tabs-key) 
+*  [Differential Table](#tabs-diff) 
+*  [Snapshot Table](#tabs-snap) 
+*  [Statistics/References](#tabs-summ) 
+*  [All](#tabs-all) 
 
 #### Terminology Bindings
 
 * **Path**: DeviceRequest.status
   * **Conformance**: [required](http://hl7.org/fhir/R4/terminologies.html#required)
-  * **ValueSet**: [RequestStatus](http://hl7.org/fhir/R4/valueset-request-status.html)```http://hl7.org/fhir/ValueSet/request-status|4.0.1```**http://hl7.org/fhir/ValueSet/request-status|4.0.1**From the FHIR Standard
+  * **ValueSet**: [RequestStatus](http://hl7.org/fhir/R4/valueset-request-status.html)`http://hl7.org/fhir/ValueSet/request-status|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.intent
   * **Conformance**: [required](http://hl7.org/fhir/R4/terminologies.html#required)
-  * **ValueSet**: [RequestIntent](http://hl7.org/fhir/R4/valueset-request-intent.html)```http://hl7.org/fhir/ValueSet/request-intent|4.0.1```**http://hl7.org/fhir/ValueSet/request-intent|4.0.1**From the FHIR Standard
+  * **ValueSet**: [RequestIntent](http://hl7.org/fhir/R4/valueset-request-intent.html)`http://hl7.org/fhir/ValueSet/request-intent|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.code[x]
   * **Conformance**: [extensible](http://hl7.org/fhir/R4/terminologies.html#extensible)
-  * **ValueSet**: [CRDDeviceRequests](ValueSet-deviceRequest.md)```http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest```**http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest**From this IG
+  * **ValueSet**: [CRDDeviceRequests](ValueSet-deviceRequest.md)`http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest`From this IG
 * **Path**: DeviceRequest.code[x]:codeCodeableConcept
   * **Conformance**: [example](http://hl7.org/fhir/R4/terminologies.html#example)
-  * **ValueSet**: [FHIRDeviceTypes](http://hl7.org/fhir/R4/valueset-device-kind.html)```http://hl7.org/fhir/ValueSet/device-kind|4.0.1```**http://hl7.org/fhir/ValueSet/device-kind|4.0.1**From the FHIR Standard
+  * **ValueSet**: [FHIRDeviceTypes](http://hl7.org/fhir/R4/valueset-device-kind.html)`http://hl7.org/fhir/ValueSet/device-kind|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.reasonCode
   * **Conformance**: [example](http://hl7.org/fhir/R4/terminologies.html#example)
-  * **ValueSet**: [Condition/Problem/DiagnosisCodes](http://hl7.org/fhir/R4/valueset-condition-code.html)```http://hl7.org/fhir/ValueSet/condition-code|4.0.1```**http://hl7.org/fhir/ValueSet/condition-code|4.0.1**From the FHIR Standard
+  * **ValueSet**: [Condition/Problem/DiagnosisCodes](http://hl7.org/fhir/R4/valueset-condition-code.html)`http://hl7.org/fhir/ValueSet/condition-code|4.0.1`From the FHIR Standard
 
 #### Constraints
 
@@ -146,41 +146,41 @@ This structure is derived from [DeviceRequest](http://hl7.org/fhir/R4/devicerequ
 
 * **Path**: DeviceRequest.code[x]
   * **Conformance**: [extensible](http://hl7.org/fhir/R4/terminologies.html#extensible)
-  * **ValueSet**: [CRDDeviceRequests](ValueSet-deviceRequest.md)```http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest```**http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest**From this IG
+  * **ValueSet**: [CRDDeviceRequests](ValueSet-deviceRequest.md)`http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest`From this IG
 
 #### Terminology Bindings
 
 * **Path**: DeviceRequest.language
   * **Conformance**: [preferred](http://hl7.org/fhir/R4/terminologies.html#preferred)
-  * **ValueSet**: [CommonLanguages](http://hl7.org/fhir/R4/valueset-languages.html)```http://hl7.org/fhir/ValueSet/languages|4.0.1```**http://hl7.org/fhir/ValueSet/languages|4.0.1**From the FHIR Standard
+  * **ValueSet**: [CommonLanguages](http://hl7.org/fhir/R4/valueset-languages.html)`http://hl7.org/fhir/ValueSet/languages|4.0.1`From the FHIR Standard
 * **Additional Bindings**: [AllLanguages](http://hl7.org/fhir/R4/valueset-all-languages.html)
   * Purpose: [Max Binding](http://hl7.org/fhir/R4/extension-elementdefinition-maxvalueset.html)
 
 
 * **Path**: DeviceRequest.status
   * **Conformance**: [required](http://hl7.org/fhir/R4/terminologies.html#required)
-  * **ValueSet**: [RequestStatus](http://hl7.org/fhir/R4/valueset-request-status.html)```http://hl7.org/fhir/ValueSet/request-status|4.0.1```**http://hl7.org/fhir/ValueSet/request-status|4.0.1**From the FHIR Standard
+  * **ValueSet**: [RequestStatus](http://hl7.org/fhir/R4/valueset-request-status.html)`http://hl7.org/fhir/ValueSet/request-status|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.intent
   * **Conformance**: [required](http://hl7.org/fhir/R4/terminologies.html#required)
-  * **ValueSet**: [RequestIntent](http://hl7.org/fhir/R4/valueset-request-intent.html)```http://hl7.org/fhir/ValueSet/request-intent|4.0.1```**http://hl7.org/fhir/ValueSet/request-intent|4.0.1**From the FHIR Standard
+  * **ValueSet**: [RequestIntent](http://hl7.org/fhir/R4/valueset-request-intent.html)`http://hl7.org/fhir/ValueSet/request-intent|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.priority
   * **Conformance**: [required](http://hl7.org/fhir/R4/terminologies.html#required)
-  * **ValueSet**: [RequestPriority](http://hl7.org/fhir/R4/valueset-request-priority.html)```http://hl7.org/fhir/ValueSet/request-priority|4.0.1```**http://hl7.org/fhir/ValueSet/request-priority|4.0.1**From the FHIR Standard
+  * **ValueSet**: [RequestPriority](http://hl7.org/fhir/R4/valueset-request-priority.html)`http://hl7.org/fhir/ValueSet/request-priority|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.code[x]
   * **Conformance**: [extensible](http://hl7.org/fhir/R4/terminologies.html#extensible)
-  * **ValueSet**: [CRDDeviceRequests](ValueSet-deviceRequest.md)```http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest```**http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest**From this IG
+  * **ValueSet**: [CRDDeviceRequests](ValueSet-deviceRequest.md)`http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest`From this IG
 * **Path**: DeviceRequest.code[x]:codeCodeableConcept
   * **Conformance**: [example](http://hl7.org/fhir/R4/terminologies.html#example)
-  * **ValueSet**: [FHIRDeviceTypes](http://hl7.org/fhir/R4/valueset-device-kind.html)```http://hl7.org/fhir/ValueSet/device-kind|4.0.1```**http://hl7.org/fhir/ValueSet/device-kind|4.0.1**From the FHIR Standard
+  * **ValueSet**: [FHIRDeviceTypes](http://hl7.org/fhir/R4/valueset-device-kind.html)`http://hl7.org/fhir/ValueSet/device-kind|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.parameter.code
   * **Conformance**: [example](http://hl7.org/fhir/R4/terminologies.html#example)
   * **ValueSet**: 
 * **Path**: DeviceRequest.performerType
   * **Conformance**: [example](http://hl7.org/fhir/R4/terminologies.html#example)
-  * **ValueSet**: [ParticipantRoles](http://hl7.org/fhir/R4/valueset-participant-role.html)```http://hl7.org/fhir/ValueSet/participant-role|4.0.1```**http://hl7.org/fhir/ValueSet/participant-role|4.0.1**From the FHIR Standard
+  * **ValueSet**: [ParticipantRoles](http://hl7.org/fhir/R4/valueset-participant-role.html)`http://hl7.org/fhir/ValueSet/participant-role|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.reasonCode
   * **Conformance**: [example](http://hl7.org/fhir/R4/terminologies.html#example)
-  * **ValueSet**: [Condition/Problem/DiagnosisCodes](http://hl7.org/fhir/R4/valueset-condition-code.html)```http://hl7.org/fhir/ValueSet/condition-code|4.0.1```**http://hl7.org/fhir/ValueSet/condition-code|4.0.1**From the FHIR Standard
+  * **ValueSet**: [Condition/Problem/DiagnosisCodes](http://hl7.org/fhir/R4/valueset-condition-code.html)`http://hl7.org/fhir/ValueSet/condition-code|4.0.1`From the FHIR Standard
 
 #### Constraints
 
@@ -303,19 +303,19 @@ This structure defines the following [Slices](http://hl7.org/fhir/R4/profiling.h
 
 * **Path**: DeviceRequest.status
   * **Conformance**: [required](http://hl7.org/fhir/R4/terminologies.html#required)
-  * **ValueSet**: [RequestStatus](http://hl7.org/fhir/R4/valueset-request-status.html)```http://hl7.org/fhir/ValueSet/request-status|4.0.1```**http://hl7.org/fhir/ValueSet/request-status|4.0.1**From the FHIR Standard
+  * **ValueSet**: [RequestStatus](http://hl7.org/fhir/R4/valueset-request-status.html)`http://hl7.org/fhir/ValueSet/request-status|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.intent
   * **Conformance**: [required](http://hl7.org/fhir/R4/terminologies.html#required)
-  * **ValueSet**: [RequestIntent](http://hl7.org/fhir/R4/valueset-request-intent.html)```http://hl7.org/fhir/ValueSet/request-intent|4.0.1```**http://hl7.org/fhir/ValueSet/request-intent|4.0.1**From the FHIR Standard
+  * **ValueSet**: [RequestIntent](http://hl7.org/fhir/R4/valueset-request-intent.html)`http://hl7.org/fhir/ValueSet/request-intent|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.code[x]
   * **Conformance**: [extensible](http://hl7.org/fhir/R4/terminologies.html#extensible)
-  * **ValueSet**: [CRDDeviceRequests](ValueSet-deviceRequest.md)```http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest```**http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest**From this IG
+  * **ValueSet**: [CRDDeviceRequests](ValueSet-deviceRequest.md)`http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest`From this IG
 * **Path**: DeviceRequest.code[x]:codeCodeableConcept
   * **Conformance**: [example](http://hl7.org/fhir/R4/terminologies.html#example)
-  * **ValueSet**: [FHIRDeviceTypes](http://hl7.org/fhir/R4/valueset-device-kind.html)```http://hl7.org/fhir/ValueSet/device-kind|4.0.1```**http://hl7.org/fhir/ValueSet/device-kind|4.0.1**From the FHIR Standard
+  * **ValueSet**: [FHIRDeviceTypes](http://hl7.org/fhir/R4/valueset-device-kind.html)`http://hl7.org/fhir/ValueSet/device-kind|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.reasonCode
   * **Conformance**: [example](http://hl7.org/fhir/R4/terminologies.html#example)
-  * **ValueSet**: [Condition/Problem/DiagnosisCodes](http://hl7.org/fhir/R4/valueset-condition-code.html)```http://hl7.org/fhir/ValueSet/condition-code|4.0.1```**http://hl7.org/fhir/ValueSet/condition-code|4.0.1**From the FHIR Standard
+  * **ValueSet**: [Condition/Problem/DiagnosisCodes](http://hl7.org/fhir/R4/valueset-condition-code.html)`http://hl7.org/fhir/ValueSet/condition-code|4.0.1`From the FHIR Standard
 
 #### Constraints
 
@@ -403,7 +403,7 @@ This structure is derived from [DeviceRequest](http://hl7.org/fhir/R4/devicerequ
 
 * **Path**: DeviceRequest.code[x]
   * **Conformance**: [extensible](http://hl7.org/fhir/R4/terminologies.html#extensible)
-  * **ValueSet**: [CRDDeviceRequests](ValueSet-deviceRequest.md)```http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest```**http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest**From this IG
+  * **ValueSet**: [CRDDeviceRequests](ValueSet-deviceRequest.md)`http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest`From this IG
 
  **Snapshot View** 
 
@@ -411,35 +411,35 @@ This structure is derived from [DeviceRequest](http://hl7.org/fhir/R4/devicerequ
 
 * **Path**: DeviceRequest.language
   * **Conformance**: [preferred](http://hl7.org/fhir/R4/terminologies.html#preferred)
-  * **ValueSet**: [CommonLanguages](http://hl7.org/fhir/R4/valueset-languages.html)```http://hl7.org/fhir/ValueSet/languages|4.0.1```**http://hl7.org/fhir/ValueSet/languages|4.0.1**From the FHIR Standard
+  * **ValueSet**: [CommonLanguages](http://hl7.org/fhir/R4/valueset-languages.html)`http://hl7.org/fhir/ValueSet/languages|4.0.1`From the FHIR Standard
 * **Additional Bindings**: [AllLanguages](http://hl7.org/fhir/R4/valueset-all-languages.html)
   * Purpose: [Max Binding](http://hl7.org/fhir/R4/extension-elementdefinition-maxvalueset.html)
 
 
 * **Path**: DeviceRequest.status
   * **Conformance**: [required](http://hl7.org/fhir/R4/terminologies.html#required)
-  * **ValueSet**: [RequestStatus](http://hl7.org/fhir/R4/valueset-request-status.html)```http://hl7.org/fhir/ValueSet/request-status|4.0.1```**http://hl7.org/fhir/ValueSet/request-status|4.0.1**From the FHIR Standard
+  * **ValueSet**: [RequestStatus](http://hl7.org/fhir/R4/valueset-request-status.html)`http://hl7.org/fhir/ValueSet/request-status|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.intent
   * **Conformance**: [required](http://hl7.org/fhir/R4/terminologies.html#required)
-  * **ValueSet**: [RequestIntent](http://hl7.org/fhir/R4/valueset-request-intent.html)```http://hl7.org/fhir/ValueSet/request-intent|4.0.1```**http://hl7.org/fhir/ValueSet/request-intent|4.0.1**From the FHIR Standard
+  * **ValueSet**: [RequestIntent](http://hl7.org/fhir/R4/valueset-request-intent.html)`http://hl7.org/fhir/ValueSet/request-intent|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.priority
   * **Conformance**: [required](http://hl7.org/fhir/R4/terminologies.html#required)
-  * **ValueSet**: [RequestPriority](http://hl7.org/fhir/R4/valueset-request-priority.html)```http://hl7.org/fhir/ValueSet/request-priority|4.0.1```**http://hl7.org/fhir/ValueSet/request-priority|4.0.1**From the FHIR Standard
+  * **ValueSet**: [RequestPriority](http://hl7.org/fhir/R4/valueset-request-priority.html)`http://hl7.org/fhir/ValueSet/request-priority|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.code[x]
   * **Conformance**: [extensible](http://hl7.org/fhir/R4/terminologies.html#extensible)
-  * **ValueSet**: [CRDDeviceRequests](ValueSet-deviceRequest.md)```http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest```**http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest**From this IG
+  * **ValueSet**: [CRDDeviceRequests](ValueSet-deviceRequest.md)`http://hl7.org/fhir/us/davinci-crd/ValueSet/deviceRequest`From this IG
 * **Path**: DeviceRequest.code[x]:codeCodeableConcept
   * **Conformance**: [example](http://hl7.org/fhir/R4/terminologies.html#example)
-  * **ValueSet**: [FHIRDeviceTypes](http://hl7.org/fhir/R4/valueset-device-kind.html)```http://hl7.org/fhir/ValueSet/device-kind|4.0.1```**http://hl7.org/fhir/ValueSet/device-kind|4.0.1**From the FHIR Standard
+  * **ValueSet**: [FHIRDeviceTypes](http://hl7.org/fhir/R4/valueset-device-kind.html)`http://hl7.org/fhir/ValueSet/device-kind|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.parameter.code
   * **Conformance**: [example](http://hl7.org/fhir/R4/terminologies.html#example)
   * **ValueSet**: 
 * **Path**: DeviceRequest.performerType
   * **Conformance**: [example](http://hl7.org/fhir/R4/terminologies.html#example)
-  * **ValueSet**: [ParticipantRoles](http://hl7.org/fhir/R4/valueset-participant-role.html)```http://hl7.org/fhir/ValueSet/participant-role|4.0.1```**http://hl7.org/fhir/ValueSet/participant-role|4.0.1**From the FHIR Standard
+  * **ValueSet**: [ParticipantRoles](http://hl7.org/fhir/R4/valueset-participant-role.html)`http://hl7.org/fhir/ValueSet/participant-role|4.0.1`From the FHIR Standard
 * **Path**: DeviceRequest.reasonCode
   * **Conformance**: [example](http://hl7.org/fhir/R4/terminologies.html#example)
-  * **ValueSet**: [Condition/Problem/DiagnosisCodes](http://hl7.org/fhir/R4/valueset-condition-code.html)```http://hl7.org/fhir/ValueSet/condition-code|4.0.1```**http://hl7.org/fhir/ValueSet/condition-code|4.0.1**From the FHIR Standard
+  * **ValueSet**: [Condition/Problem/DiagnosisCodes](http://hl7.org/fhir/R4/valueset-condition-code.html)`http://hl7.org/fhir/ValueSet/condition-code|4.0.1`From the FHIR Standard
 
 #### Constraints
 
