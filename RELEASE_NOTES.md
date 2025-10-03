@@ -1,1 +1,0 @@
-* Improved version rendering
