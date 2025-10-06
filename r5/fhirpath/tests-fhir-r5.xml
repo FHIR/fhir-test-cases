@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<tests name="FHIRPathTestSuite" description="FHIRPath Test Suite" reference="http://hl7.org/fhirpath|2.0.0">
+<tests name="FHIRPathTestSuite" description="FHIRPath Test Suite" reference="http://hl7.org/fhirpath|2.0.0" xmlns="http://hl7.org/fhirpath/tests" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 <!--
   The source of truth for this test suite is the R5 tests in the fhir-test-cases repository:
   https://github.com/FHIR/fhir-test-cases/blob/master/r5/fhirpath/tests-fhir-r5.xml
@@ -335,7 +335,7 @@ Any text enclosed within is ignored
 		</test>
 
 		<!-- testWrong(patient(), "Patient.children().skip(1)"); -->
-		<test name="testDollarOrderNotAllowed" inputfile="patient-example.xml" mode="strict" checkOrderedFunctions="true">
+		<test name="testDollarOrderNotAllowed" inputfile="patient-example.xml" mode="strict" ordered="true">
 			<expression invalid="semantic">Patient.children().skip(1)</expression>
 		</test>
 	</group>
@@ -735,8 +735,8 @@ Any text enclosed within is ignored
 		</test>
 
 		<!-- Non boolean criteria -->
-		<test name="testIif6" inputfile="patient-example.xml" description="Contested: nothing in the spec about what to do with non-boolean criteria - mixed results from engines">
-		    <expression mode="strict" invalid="semantic">iif('non boolean criteria', 'true-result', 'false-result')</expression>
+		<test name="testIif6" inputfile="patient-example.xml"  mode="strict" description="Contested: nothing in the spec about what to do with non-boolean criteria - mixed results from engines">
+		    <expression invalid="semantic">iif('non boolean criteria', 'true-result', 'false-result')</expression>
 		    <output type="string">true-result</output>
 		</test>
 
@@ -1688,8 +1688,8 @@ Any text enclosed within is ignored
     -->
 		<test name="testPolymorphicsA" inputfile="observation-example.xml"><expression>Observation.value.exists()</expression><output type="boolean">true</output></test>
 		<test name="testPolymorphicsB" inputfile="observation-example.xml"><expression invalid="semantic">Observation.valueQuantity.exists()</expression><output type="boolean">false</output></test>
-		<modeTest mode="lenient/polymorphics" name="testPolymorphicsC" inputfile="observation-example.xml"><expression>Observation.valueQuantity.exists()</expression><output type="boolean">true</output></modeTest>
-		<modeTest mode="lenient/polymorphics" name="testPolymorphicsD" inputfile="observation-example.xml"><expression>Observation.valueString.exists()</expression><output type="boolean">false</output></modeTest>
+		<test mode="lenient" name="testPolymorphicsC" inputfile="observation-example.xml"><expression>Observation.valueQuantity.exists()</expression><output type="boolean">true</output></test>
+		<test mode="lenient" name="testPolymorphicsD" inputfile="observation-example.xml"><expression>Observation.valueString.exists()</expression><output type="boolean">false</output></test>
   </group>
 
   <group name="index-part">
@@ -1736,7 +1736,7 @@ Any text enclosed within is ignored
 	</group>
 
 	<group name="miscEngineTests">
-		<test name="testContainedId" inputfile="patient-container-example.json"><expression>contained.id</expression><output type="id">1</output></test>
+		<test name="testContainedId" inputfile="patient-container-example.json"><expression>contained.id</expression><output type="string">1</output></test>
 		<test name="testMultipleResolve" inputfile="diagnosticreport-eric.json" mode="element">
 			<expression>
 			composition.exists() 

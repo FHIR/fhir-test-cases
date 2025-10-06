@@ -19,6 +19,16 @@
 				<xs:documentation>The name of the test suite. This should be a computer-friendly name.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="version" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The version of FHIRPath in which the features being tested were introduced. This should correspond to a published or planned published version of FHIRPath.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="versionTo" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The last version of the specification in which the features being tested appears</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 		<xs:attribute name="description" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>A description of the test suite.</xs:documentation>
@@ -42,6 +52,16 @@
 		<xs:attribute name="name" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>The name of the test group. This should be a computer-friendly name and must be unique within the test suite.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="version" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The version of FHIRPath in which the features being tested were introduced. This should correspond to a published or planned published version of FHIRPath.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="versionTo" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The last version of the specification in which the features being tested appears</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 		<xs:attribute name="description" type="xs:string">
@@ -76,6 +96,31 @@
 		<xs:attribute name="name" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>The name of the test suite. This should be a computer-friendly name.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="skipStaticCheck" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>Indicates whether to skip static type-checking as part of the test</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ordered" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>Indicates whether to check order of results (i.e. list equality vs collection equality).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="mode" type="ModeType">
+			<xs:annotation>
+				<xs:documentation>Indicates whether the test should be evaluated with strict (e.g. Patient.deceased) as opposed to lenient (e.g. Patient.deceasedBoolean) semantics.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="version" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The version of FHIRPath in which the features being tested were introduced. This should correspond to a published or planned published version of FHIRPath.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="versionTo" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The last version of the specification in which the features being tested appears</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 		<xs:attribute name="description" type="xs:string">
@@ -117,7 +162,7 @@
 					<xs:annotation>
 						<xs:documentation>The type of the expected output.</xs:documentation>
 					</xs:annotation>
-				<xs:attribute>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -129,7 +174,7 @@
 			<xs:enumeration value="dateTime"/>
 			<xs:enumeration value="decimal"/>
 			<xs:enumeration value="integer"/>
-			<xs:enumeration value="quantity"/>
+			<xs:enumeration value="Quantity"/>
 			<xs:enumeration value="string"/>
 			<xs:enumeration value="time"/>
 		</xs:restriction>
@@ -141,9 +186,19 @@
 					<xs:documentation>Indicates the test is expected to evaluate successfully.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="syntax">
+				<xs:annotation>
+					<xs:documentation>Indicates the test is expected to produce a syntax error.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="semantic">
 				<xs:annotation>
 					<xs:documentation>Indicates the test is expected to produce a semantic error.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="execution">
+				<xs:annotation>
+					<xs:documentation>Indicates the test is expected to produce an execution error.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="true">
@@ -151,6 +206,35 @@
 					<xs:documentation>Indicates the test is expected to produce a runtime error.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-		</xs:restrction>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ModeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="strict">
+				<xs:annotation>
+					<xs:documentation>Indicates the test is expected to evaluated with strict semantics (i.e. paths for choice-valued elements do not include the type name (e.g. Patient.deceased, not Patient.deceasedBoolean)).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="lenient">
+				<xs:annotation>
+					<xs:documentation>Indicates the test is expected to be evaluated with lenient semantics (i.e. paths for choice-valued elements may be included (e.g. Patient.deceasedBoolean)).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="element">
+				<xs:annotation>
+					<xs:documentation>Indicates the test is expected to be evaluated with respect to a particular element (i.e. from the context of a particular element such as an invariant evaluation).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="cda">
+				<xs:annotation>
+					<xs:documentation>Indicates the test is evaluating a CDA document, as opposed to a FHIR resource.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="tx">
+				<xs:annotation>
+					<xs:documentation>Indicates the test is expected to have access to the %terminologies environment variable, allowing access to terminology services as described in the FHIRPath topic in the FHIR specification.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>
