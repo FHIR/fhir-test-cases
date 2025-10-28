@@ -1,0 +1,1 @@
+* Adjust rendering test cases for rendering improvements
