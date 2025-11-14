@@ -15,7 +15,7 @@ Please maintain this README.md as a linkable document, as other documentation ma
 
 # fhir-test-cases
 
-[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/FHIR/fhir-test-cases/badge)](https://scorecard.dev/viewer/?uri=github.com/FHIR/fhir-test-cases)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/FHIR/fhir-test-cases/badge)](https://scorecard.dev/viewer/?uri=github.com/FHIR/fhir-test-cases) [![CodeQL](https://github.com/FHIR/fhir-test-cases/actions/workflows/codeql.yml/badge.svg)](https://github.com/FHIR/fhir-test-cases/actions/workflows/codeql.yml) [![OWASP Security Scans](https://github.com/FHIR/fhir-test-cases/actions/workflows/owasp.yml/badge.svg)](https://github.com/FHIR/fhir-test-cases/actions/workflows/owasp.yml) [![Trivy Security Scans](https://github.com/FHIR/fhir-test-cases/actions/workflows/trivy.yml/badge.svg)](https://github.com/FHIR/fhir-test-cases/actions/workflows/trivy.yml)
 
 
 |                        CI Status (master)                        |                    Current Release                     |      Latest SNAPSHOT       |
