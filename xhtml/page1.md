@@ -10,7 +10,7 @@
 | | | |
 | :--- | :--- | :--- |
 | *Official URL*:http://hl7.org/fhir/us/davinci-crd/StructureDefinition/profile-devicerequest | *Version*:2.2.0-ballot | |
-| *Standards status:*[Trial-use](http://hl7.org/fhir/R4/versions.html#std-process) | [Maturity Level](http://hl7.org/fhir/versions.html#maturity): 4 | *Computable Name*:CRDDeviceRequest |
+| * Standards status: *[Trial-use](http://hl7.org/fhir/R4/versions.html#std-process) | [Maturity Level](http://hl7.org/fhir/versions.html#maturity): 4 | *Computable Name*:CRDDeviceRequest |
 | *Other Identifiers:*OID:2.16.840.1.113883.4.642.40.18.42.9 | | |
 
  
@@ -262,7 +262,7 @@ This structure is derived from [DeviceRequest](http://hl7.org/fhir/R4/devicerequ
 
 This structure is derived from [DeviceRequest](http://hl7.org/fhir/R4/devicerequest.html) 
 
-**Summary**
+** Summary **
 
 Mandatory: 3 elements
  Must-Support: 16 elements
@@ -271,16 +271,16 @@ Mandatory: 3 elements
 
 This structure refers to these other structures:
 
-* [CRD Device(http://hl7.org/fhir/us/davinci-crd/StructureDefinition/profile-device)](StructureDefinition-profile-device.md)
-* [CRD Patient(http://hl7.org/fhir/us/davinci-crd/StructureDefinition/profile-patient)](StructureDefinition-profile-patient.md)
-* [CRD Encounter(http://hl7.org/fhir/us/davinci-crd/StructureDefinition/profile-encounter)](StructureDefinition-profile-encounter.md)
-* [US Core Practitioner Profile(http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-practitioner.html)
-* [HRex PractitionerRole Profile(http://hl7.org/fhir/us/davinci-hrex/StructureDefinition/hrex-practitionerrole)](http://hl7.org/fhir/us/davinci-hrex/STU1.1/StructureDefinition-hrex-practitionerrole.html)
-* [US Core Condition Problems and Health Concerns Profile(http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-condition-problems-health-concerns.html)
-* [US Core Condition Encounter Diagnosis Profile(http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-encounter-diagnosis|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-condition-encounter-diagnosis.html)
-* [US Core DiagnosticReport Profile for Laboratory Results Reporting(http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-lab|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-diagnosticreport-lab.html)
-* [US Core DiagnosticReport Profile for Report and Note Exchange(http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-note|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-diagnosticreport-note.html)
-* [US Core DocumentReference Profile(http://hl7.org/fhir/us/core/StructureDefinition/us-core-documentreference|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-documentreference.html)
+* [CRD Device (http://hl7.org/fhir/us/davinci-crd/StructureDefinition/profile-device)](StructureDefinition-profile-device.md)
+* [CRD Patient (http://hl7.org/fhir/us/davinci-crd/StructureDefinition/profile-patient)](StructureDefinition-profile-patient.md)
+* [CRD Encounter (http://hl7.org/fhir/us/davinci-crd/StructureDefinition/profile-encounter)](StructureDefinition-profile-encounter.md)
+* [US Core Practitioner Profile (http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-practitioner.html)
+* [HRex PractitionerRole Profile (http://hl7.org/fhir/us/davinci-hrex/StructureDefinition/hrex-practitionerrole)](http://hl7.org/fhir/us/davinci-hrex/STU1.1/StructureDefinition-hrex-practitionerrole.html)
+* [US Core Condition Problems and Health Concerns Profile (http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-condition-problems-health-concerns.html)
+* [US Core Condition Encounter Diagnosis Profile (http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-encounter-diagnosis|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-condition-encounter-diagnosis.html)
+* [US Core DiagnosticReport Profile for Laboratory Results Reporting (http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-lab|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-diagnosticreport-lab.html)
+* [US Core DiagnosticReport Profile for Report and Note Exchange (http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-note|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-diagnosticreport-note.html)
+* [US Core DocumentReference Profile (http://hl7.org/fhir/us/core/StructureDefinition/us-core-documentreference|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-documentreference.html)
 
 **Extensions**
 
@@ -521,7 +521,7 @@ This structure is derived from [DeviceRequest](http://hl7.org/fhir/R4/devicerequ
 
 This structure is derived from [DeviceRequest](http://hl7.org/fhir/R4/devicerequest.html) 
 
-**Summary**
+** Summary **
 
 Mandatory: 3 elements
  Must-Support: 16 elements
@@ -530,16 +530,16 @@ Mandatory: 3 elements
 
 This structure refers to these other structures:
 
-* [CRD Device(http://hl7.org/fhir/us/davinci-crd/StructureDefinition/profile-device)](StructureDefinition-profile-device.md)
-* [CRD Patient(http://hl7.org/fhir/us/davinci-crd/StructureDefinition/profile-patient)](StructureDefinition-profile-patient.md)
-* [CRD Encounter(http://hl7.org/fhir/us/davinci-crd/StructureDefinition/profile-encounter)](StructureDefinition-profile-encounter.md)
-* [US Core Practitioner Profile(http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-practitioner.html)
-* [HRex PractitionerRole Profile(http://hl7.org/fhir/us/davinci-hrex/StructureDefinition/hrex-practitionerrole)](http://hl7.org/fhir/us/davinci-hrex/STU1.1/StructureDefinition-hrex-practitionerrole.html)
-* [US Core Condition Problems and Health Concerns Profile(http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-condition-problems-health-concerns.html)
-* [US Core Condition Encounter Diagnosis Profile(http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-encounter-diagnosis|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-condition-encounter-diagnosis.html)
-* [US Core DiagnosticReport Profile for Laboratory Results Reporting(http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-lab|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-diagnosticreport-lab.html)
-* [US Core DiagnosticReport Profile for Report and Note Exchange(http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-note|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-diagnosticreport-note.html)
-* [US Core DocumentReference Profile(http://hl7.org/fhir/us/core/StructureDefinition/us-core-documentreference|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-documentreference.html)
+* [CRD Device (http://hl7.org/fhir/us/davinci-crd/StructureDefinition/profile-device)](StructureDefinition-profile-device.md)
+* [CRD Patient (http://hl7.org/fhir/us/davinci-crd/StructureDefinition/profile-patient)](StructureDefinition-profile-patient.md)
+* [CRD Encounter (http://hl7.org/fhir/us/davinci-crd/StructureDefinition/profile-encounter)](StructureDefinition-profile-encounter.md)
+* [US Core Practitioner Profile (http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-practitioner.html)
+* [HRex PractitionerRole Profile (http://hl7.org/fhir/us/davinci-hrex/StructureDefinition/hrex-practitionerrole)](http://hl7.org/fhir/us/davinci-hrex/STU1.1/StructureDefinition-hrex-practitionerrole.html)
+* [US Core Condition Problems and Health Concerns Profile (http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-problems-health-concerns|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-condition-problems-health-concerns.html)
+* [US Core Condition Encounter Diagnosis Profile (http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition-encounter-diagnosis|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-condition-encounter-diagnosis.html)
+* [US Core DiagnosticReport Profile for Laboratory Results Reporting (http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-lab|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-diagnosticreport-lab.html)
+* [US Core DiagnosticReport Profile for Report and Note Exchange (http://hl7.org/fhir/us/core/StructureDefinition/us-core-diagnosticreport-note|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-diagnosticreport-note.html)
+* [US Core DocumentReference Profile (http://hl7.org/fhir/us/core/StructureDefinition/us-core-documentreference|7.0.0)](http://hl7.org/fhir/us/core/STU7/StructureDefinition-us-core-documentreference.html)
 
 **Extensions**
 
