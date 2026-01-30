@@ -1,0 +1,719 @@
+{
+  "resourceType": "StructureDefinition",
+  "url": "https://gen.kanta.fi/fhir/tahdonilmaisut/StructureDefinition/TahdonilmaisuProvenance",
+  "name": "TahdonilmaisuProvenance",
+  "status": "draft",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Provenance",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Provenance",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Provenance",
+        "path": "Provenance",
+        "constraint": [
+          {
+            "key": "TIP-PROV-1",
+            "severity": "error",
+            "human": "Luovutusluvan tekijän palveluyksikkö pakollinen tieto, kun luovutusluvan tekijä on ammattilainen.",
+            "expression": "Provenance.agent.role.coding.where(code='2').exists() implies Provenance.agent.role.coding.where(code='7').exists()"
+          },
+          {
+            "key": "TIP-PROV-2",
+            "severity": "error",
+            "human": "Luovutusluvan tekijän palveluyksikkö annetaan vain, jos luovutusluvan tekijä on ammattilainen.",
+            "expression": "Provenance.agent.role.coding.where(code='2').exists().not() implies Provenance.agent.role.coding.where(code='7').exists().not()"
+          },
+          {
+            "key": "TIP-PROV-3",
+            "severity": "error",
+            "human": "Luovutusluvan tallentajaksi täytyy antaa joko asiakas itse, ammattihenkilö tai laillinen edustaja",
+            "expression": "Provenance.agent.role.coding.where(code='2').exists() or Provenance.agent.role.coding.where(code='12').exists() or Provenance.agent.role.coding.where(code='5').exists()"
+          },
+          {
+            "key": "TIP-PROV-4",
+            "severity": "error",
+            "human": "Luovutusluvan tallentajaksi annetaan vain yksi näistä: asiakas, ammattihenkilö tai laillinen edustaja",
+            "expression": "(Provenance.agent.where(role.coding.code = '2').count() + Provenance.agent.where(role.coding.code = '12').count() + Provenance.agent.where(role.coding.code = '5').count()) = 1"
+          }
+        ]
+      },
+      {
+        "id": "Provenance.id",
+        "path": "Provenance.id",
+        "short": "Resurssin yksilöivä tunnus",
+        "definition": "Resurssin globaalisti yksilöivä tunnus.\r\n\r\nResurssin tallennuksen yhteydessä Kanta-palvelut tuottaa resurssille yksilöivän tunnuksen."
+      },
+      {
+        "id": "Provenance.meta",
+        "path": "Provenance.meta"
+      },
+      {
+        "id": "Provenance.meta.profile",
+        "path": "Provenance.meta.profile",
+        "min": 1,
+        "max": "1",
+        "fixedCanonical": "https://gen.kanta.fi/fhir/tahdonilmaisut/StructureDefinition/TahdonilmaisuProvenance"
+      },
+      {
+        "id": "Provenance.implicitRules",
+        "path": "Provenance.implicitRules",
+        "max": "0"
+      },
+      {
+        "id": "Provenance.language",
+        "path": "Provenance.language",
+        "short": "Tahdonilmaisun kieli",
+        "definition": "Kieli, jolla tahdonilmaisu on laadittu",
+        "binding": {
+          "strength": "required",
+          "description": "Tahdonilmaisun kieli",
+          "valueSet": "https://gen.kanta.fi/fhir/tahdonilmaisut/ValueSet/figen-vs-languages-soteconsent"
+        }
+      },
+      {
+        "id": "Provenance.text",
+        "path": "Provenance.text",
+        "max": "0"
+      },
+      {
+        "id": "Provenance.target",
+        "path": "Provenance.target",
+        "short": "Consent-resurssi",
+        "definition": "Consent-resurssi, johon Provenance-resurssilla ilmoitettavat metatiedot liittyvät."
+      },
+      {
+        "id": "Provenance.target.reference",
+        "path": "Provenance.target.reference",
+        "short": "Viittaus Consent-resurssin yksilöivään tunnukseen",
+        "definition": "Viittaus sen Consent-resurssin yksilöivään tunnukseen, johon Provenance-resurssi liittyy. \r\nYksilöivänä tunnuksena ilmoitetaan Consent-resurssissa ilmoitettu yksilöintitunnus Consent.id.",
+        "min": 1
+      },
+      {
+        "id": "Provenance.occurred[x]",
+        "path": "Provenance.occurred[x]",
+        "max": "0"
+      },
+      {
+        "id": "Provenance.recorded",
+        "path": "Provenance.recorded",
+        "short": "Luontiaika",
+        "definition": "Ajankohta, jolloin luovutuslupa on valmistunut.\r\n\r\n"
+      },
+      {
+        "id": "Provenance.policy",
+        "path": "Provenance.policy",
+        "max": "0"
+      },
+      {
+        "id": "Provenance.location",
+        "path": "Provenance.location",
+        "max": "0"
+      },
+      {
+        "id": "Provenance.reason",
+        "path": "Provenance.reason",
+        "max": "0"
+      },
+      {
+        "id": "Provenance.activity",
+        "path": "Provenance.activity",
+        "max": "0"
+      },
+      {
+        "id": "Provenance.agent",
+        "path": "Provenance.agent",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "role.coding.code"
+            }
+          ],
+          "rules": "closed"
+        }
+      },
+      {
+        "id": "Provenance.agent:Custodian",
+        "path": "Provenance.agent",
+        "sliceName": "Custodian",
+        "short": "Rekisterinpitäjä",
+        "definition": "Rekisterinpidosta vastaavan rekisterinpitäjän tiedot. \r\nTahdonilmaisuilla rekisterinpitäjä on aina Kansaneläkelaitos.",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:Custodian.role",
+        "path": "Provenance.agent.role",
+        "short": "Rekisterinpitäjä",
+        "definition": "Tahdonilmaisun rekisterinpidosta vastaava rekisterinpitäjä",
+        "min": 1,
+        "max": "1",
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://gen.kanta.fi/ValueSet/figen-vs-provenancerolecategory"
+        }
+      },
+      {
+        "id": "Provenance.agent:Custodian.role.coding",
+        "path": "Provenance.agent.role.coding",
+        "short": "Kanta Provenance Role Category",
+        "definition": "Koodiston arvoilla ilmoitetaan, mikä on toimijan rooli Provenance-resurssissa.",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:Custodian.role.coding.system",
+        "path": "Provenance.agent.role.coding.system",
+        "min": 1,
+        "fixedUri": "http://gen.kanta.fi/figen-cs-provenancerolecategory"
+      },
+      {
+        "id": "Provenance.agent:Custodian.role.coding.code",
+        "path": "Provenance.agent.role.coding.code",
+        "short": "Roolin koodiarvo",
+        "definition": "Koodiarvo, joka kertoo toimijan roolin provenancessa",
+        "min": 1,
+        "fixedCode": "1"
+      },
+      {
+        "id": "Provenance.agent:Custodian.role.coding.display",
+        "path": "Provenance.agent.role.coding.display",
+        "short": "Koodiarvon mukainen kuvaus",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:Custodian.who.identifier",
+        "path": "Provenance.agent.who.identifier",
+        "short": "Rekisterinpitäjän tunniste",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:Custodian.who.identifier.value",
+        "path": "Provenance.agent.who.identifier.value",
+        "short": "Rekisterinpitäjän tunnus",
+        "definition": "Rekisterinpitäjän tunniste (Tahdonilmaisuilla aina Kansaneläkelaitos)",
+        "min": 1,
+        "fixedString": "1.2.246.10.2462460.19.1"
+      },
+      {
+        "id": "Provenance.agent:Custodian.who.display",
+        "path": "Provenance.agent.who.display",
+        "short": "Rekisterinpitäjän nimi",
+        "definition": "Rekisterinpitäjän nimi (Tahdonilmaisuilla aina Kansaneläkelaitos)",
+        "min": 1,
+        "fixedString": "Kansaneläkelaitos"
+      },
+      {
+        "id": "Provenance.agent:Device",
+        "path": "Provenance.agent",
+        "sliceName": "Device",
+        "short": "Resurssin tuottanut tietojärjestelmä",
+        "definition": "Luovutusluvan tuottaneen ohjelmiston tiedot.",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:Device.role",
+        "path": "Provenance.agent.role",
+        "short": "Resurssin tuottanut ohjelmisto",
+        "min": 1,
+        "max": "1",
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://gen.kanta.fi/ValueSet/figen-vs-provenancerolecategory"
+        }
+      },
+      {
+        "id": "Provenance.agent:Device.role.coding",
+        "path": "Provenance.agent.role.coding",
+        "short": "Kanta Provenance Role Category",
+        "definition": "Koodiston arvoilla ilmoitetaan mikä on toimijan rooli Provenance-resurssissa.",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:Device.role.coding.system",
+        "path": "Provenance.agent.role.coding.system",
+        "min": 1,
+        "fixedUri": "http://gen.kanta.fi/figen-cs-provenancerolecategory"
+      },
+      {
+        "id": "Provenance.agent:Device.role.coding.version",
+        "path": "Provenance.agent.role.coding.version",
+        "max": "0"
+      },
+      {
+        "id": "Provenance.agent:Device.role.coding.code",
+        "path": "Provenance.agent.role.coding.code",
+        "short": "Roolin koodiarvo",
+        "definition": "Koodiarvo, joka kertoo toimijan roolin Provenance-resurssissa.",
+        "min": 1,
+        "fixedCode": "4"
+      },
+      {
+        "id": "Provenance.agent:Device.role.coding.display",
+        "path": "Provenance.agent.role.coding.display",
+        "short": "Koodiarvon mukainen kuvaus",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:Device.who",
+        "path": "Provenance.agent.who",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://gen.kanta.fi/fhir/StructureDefinition/KantaDevice"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Provenance.agent:Device.who.reference",
+        "path": "Provenance.agent.who.reference",
+        "short": "Viittaus käytettävään resurssiin",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:Device.who.type",
+        "path": "Provenance.agent.who.type",
+        "max": "0"
+      },
+      {
+        "id": "Provenance.agent:Device.who.identifier",
+        "path": "Provenance.agent.who.identifier",
+        "max": "0"
+      },
+      {
+        "id": "Provenance.agent:Device.who.display",
+        "path": "Provenance.agent.who.display",
+        "max": "0"
+      },
+      {
+        "id": "Provenance.agent:Patient",
+        "path": "Provenance.agent",
+        "sliceName": "Patient",
+        "short": "Asiakas",
+        "definition": "Asiakkaan tiedot, jonka tahdonilmaisu tallennetaan",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:Patient.role",
+        "path": "Provenance.agent.role",
+        "short": "Asiakas",
+        "definition": "Asiakas, jota tahdonilmaisu koskee.",
+        "min": 1,
+        "max": "1",
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://gen.kanta.fi/ValueSet/figen-vs-provenancerolecategory"
+        }
+      },
+      {
+        "id": "Provenance.agent:Patient.role.coding",
+        "path": "Provenance.agent.role.coding",
+        "short": "Kanta Provenance Role Category",
+        "definition": "Koodiston arvoilla ilmoitetaan, mikä on toimijan rooli Provenance-resurssissa.",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:Patient.role.coding.system",
+        "path": "Provenance.agent.role.coding.system",
+        "min": 1,
+        "fixedUri": "http://gen.kanta.fi/figen-cs-provenancerolecategory"
+      },
+      {
+        "id": "Provenance.agent:Patient.role.coding.code",
+        "path": "Provenance.agent.role.coding.code",
+        "short": "Roolin koodiarvo",
+        "definition": "Koodiarvo, joka kertoo toimijan roolin Provenance-resurssissa.",
+        "min": 1,
+        "fixedCode": "3"
+      },
+      {
+        "id": "Provenance.agent:Patient.role.coding.display",
+        "path": "Provenance.agent.role.coding.display",
+        "short": "Koodiarvon mukainen kuvaus",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:Patient.who",
+        "path": "Provenance.agent.who",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://gen.kanta.fi/fhir/StructureDefinition/KantaPatientOfficialID"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Provenance.agent:Patient.who.reference",
+        "path": "Provenance.agent.who.reference",
+        "short": "Viittaus käytettävään resurssiin",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:RecordedByPatient",
+        "path": "Provenance.agent",
+        "sliceName": "RecordedByPatient",
+        "short": "Tahdonilmaisun tallentajana asiakas",
+        "definition": "Tahdonilmaisun tallentajana asiakas itse Omakannan kautta.\r\nTahdonilmaisun voi tallentaa asiakas, asiakkaan laillinen edustaja (ml. huoltaja) tai ammattilainen.",
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:RecordedByPatient.role",
+        "path": "Provenance.agent.role",
+        "short": "Luovutusluvan tallentanut asiakas",
+        "definition": "Luovutusluvan tallentanut asiakas",
+        "min": 1,
+        "max": "1",
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://gen.kanta.fi/ValueSet/figen-vs-provenancerolecategory"
+        }
+      },
+      {
+        "id": "Provenance.agent:RecordedByPatient.role.coding",
+        "path": "Provenance.agent.role.coding",
+        "short": "Kanta Provenance Role Category",
+        "definition": "Koodiston arvoilla ilmoitetaan, mikä on toimijan rooli Provenance-resurssissa.",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:RecordedByPatient.role.coding.system",
+        "path": "Provenance.agent.role.coding.system",
+        "min": 1,
+        "fixedUri": "http://gen.kanta.fi/figen-cs-provenancerolecategory"
+      },
+      {
+        "id": "Provenance.agent:RecordedByPatient.role.coding.code",
+        "path": "Provenance.agent.role.coding.code",
+        "short": "Roolin koodiarvo",
+        "definition": "Koodiarvo, joka kertoo toimijan roolin Provenance-resurssissa.",
+        "min": 1,
+        "fixedCode": "12"
+      },
+      {
+        "id": "Provenance.agent:RecordedByPatient.role.coding.display",
+        "path": "Provenance.agent.role.coding.display",
+        "short": "Koodiarvon mukainen kuvaus",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:RecordedByPatient.who",
+        "path": "Provenance.agent.who",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://gen.kanta.fi/fhir/StructureDefinition/KantaPatientOfficialID"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Provenance.agent:RecordedByPatient.who.reference",
+        "path": "Provenance.agent.who.reference",
+        "short": "Viittaus käytettävään resurssiin",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:RecordedByRelatedPerson",
+        "path": "Provenance.agent",
+        "sliceName": "RecordedByRelatedPerson",
+        "short": "Tahdonilmaisun tallentajana laillinen ediustaja",
+        "definition": "Tahdonilmaisunn tallentajana laillinen ediustaja (puolesta-asioija).\r\nTahdonilmaisun voi tallentaa asiakas, asiakkaan laillinen edustaja (ml. huoltaja) tai ammattilainen.",
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:RecordedByRelatedPerson.role",
+        "path": "Provenance.agent.role",
+        "short": "Tahdonilmaisun tallentanut puolesta-asioija",
+        "definition": "Tahdonilmaisun tallentanut puolesta-asioija",
+        "min": 1,
+        "max": "1",
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://gen.kanta.fi/ValueSet/figen-vs-provenancerolecategory"
+        }
+      },
+      {
+        "id": "Provenance.agent:RecordedByRelatedPerson.role.coding",
+        "path": "Provenance.agent.role.coding",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:RecordedByRelatedPerson.role.coding.system",
+        "path": "Provenance.agent.role.coding.system",
+        "min": 1,
+        "fixedUri": "http://gen.kanta.fi/figen-cs-provenancerolecategory"
+      },
+      {
+        "id": "Provenance.agent:RecordedByRelatedPerson.role.coding.code",
+        "path": "Provenance.agent.role.coding.code",
+        "short": "Roolin koodiarvo",
+        "definition": "Koodiarvo, joka kertoo toimijan roolin Provenance-resurssissa.",
+        "min": 1,
+        "fixedCode": "5"
+      },
+      {
+        "id": "Provenance.agent:RecordedByRelatedPerson.role.coding.display",
+        "path": "Provenance.agent.role.coding.display",
+        "short": "Koodiarvon mukainen kuvaus",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:RecordedByRelatedPerson.who",
+        "path": "Provenance.agent.who",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://gen.kanta.fi/fhir/StructureDefinition/KantaRelatedPerson"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Provenance.agent:RecordedByRelatedPerson.who.reference",
+        "path": "Provenance.agent.who.reference",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:RecordedByPractitioner",
+        "path": "Provenance.agent",
+        "sliceName": "RecordedByPractitioner",
+        "short": "Tahdonilmaisun tallentajana ammattihenkilö",
+        "definition": "Tahdonilmaisun tallentajana sote-ammattilainen.\r\nTahdonilmaisun voi tallentaa asiakas, asiakkaan laillinen edustaja (ml. huoltaja) tai ammattilainen.",
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:RecordedByPractitioner.role",
+        "path": "Provenance.agent.role",
+        "short": "Tahdonilmaisun tallentanut ammattihenkilö",
+        "definition": "Tahdonilmaisun tallentanut ammattihenkilö",
+        "min": 1,
+        "max": "1",
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://gen.kanta.fi/ValueSet/figen-vs-provenancerolecategory"
+        }
+      },
+      {
+        "id": "Provenance.agent:RecordedByPractitioner.role.coding",
+        "path": "Provenance.agent.role.coding",
+        "short": "Kanta Provenance Role Category",
+        "definition": "Koodiston arvoilla ilmoitetaan, mikä on toimijan rooli Provenance-resurssissa.",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:RecordedByPractitioner.role.coding.system",
+        "path": "Provenance.agent.role.coding.system",
+        "min": 1,
+        "fixedUri": "http://gen.kanta.fi/figen-cs-provenancerolecategory"
+      },
+      {
+        "id": "Provenance.agent:RecordedByPractitioner.role.coding.code",
+        "path": "Provenance.agent.role.coding.code",
+        "short": "Roolin koodiarvo",
+        "definition": "Koodiarvo, joka kertoo toimijan roolin Provenance-resurssissa.",
+        "min": 1,
+        "fixedCode": "2"
+      },
+      {
+        "id": "Provenance.agent:RecordedByPractitioner.role.coding.display",
+        "path": "Provenance.agent.role.coding.display",
+        "short": "Koodiarvon mukainen kuvaus",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:RecordedByPractitioner.who",
+        "path": "Provenance.agent.who",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "https://gen.kanta.fi/fhir/StructureDefinition/KantaPractitionerV2"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Provenance.agent:RecordedByPractitioner.who.reference",
+        "path": "Provenance.agent.who.reference",
+        "short": "Viittaus käytettävään resurssiin",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:PractitionerOrganizationUnit",
+        "path": "Provenance.agent",
+        "sliceName": "PractitionerOrganizationUnit",
+        "short": "Tahdonilmaisun talletaneen ammattilaisen palveluyksikkö",
+        "definition": "Tahdonilmaisun talletaneen ammattihenkiön organisaation tiedot.",
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:PractitionerOrganizationUnit.role",
+        "path": "Provenance.agent.role",
+        "short": "Tahdonilmaisun tallentaneen ammattihenkilön palveluyksikkö",
+        "definition": "Tahdonilmaisun tallentaneen ammattihenkilön palveluyksikkö",
+        "min": 1,
+        "max": "1",
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://gen.kanta.fi/ValueSet/figen-vs-provenancerolecategory"
+        }
+      },
+      {
+        "id": "Provenance.agent:PractitionerOrganizationUnit.role.coding",
+        "path": "Provenance.agent.role.coding",
+        "short": "Kanta Provenance Role Category",
+        "definition": "Koodiston arvoilla ilmoitetaan, mikä on toimijan rooli Provenance-resurssissa.",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:PractitionerOrganizationUnit.role.coding.system",
+        "path": "Provenance.agent.role.coding.system",
+        "min": 1,
+        "fixedUri": "http://gen.kanta.fi/figen-cs-provenancerolecategory"
+      },
+      {
+        "id": "Provenance.agent:PractitionerOrganizationUnit.role.coding.code",
+        "path": "Provenance.agent.role.coding.code",
+        "short": "Roolin koodiarvo",
+        "definition": "Koodiarvo, joka kertoo toimijan roolin Provenance-resurssissa",
+        "min": 1,
+        "fixedCode": "7"
+      },
+      {
+        "id": "Provenance.agent:PractitionerOrganizationUnit.role.coding.display",
+        "path": "Provenance.agent.role.coding.display",
+        "short": "Koodiarvon mukainen kuvaus",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:PractitionerOrganizationUnit.who.identifier",
+        "path": "Provenance.agent.who.identifier",
+        "short": "Luovutusluvan tallentaneen ammattihenkilön palveluyksikkö",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:PractitionerOrganizationUnit.who.identifier.system",
+        "path": "Provenance.agent.who.identifier.system",
+        "min": 1,
+        "fixedUri": "urn:ietf:rfc:3986"
+      },
+      {
+        "id": "Provenance.agent:PractitionerOrganizationUnit.who.identifier.value",
+        "path": "Provenance.agent.who.identifier.value",
+        "short": "Palveluyksikön tunnus",
+        "definition": "Sosiaali- ja terveydenhuollon organisaation yksilöivänä tunnuksena THL - SOTE-organisaatiorekisterin (1.2.246.537.6.202.2008) mukainen yksilöintitunnus. Itsenäisen ammatinharjoittajan organisaation yksilöivänä tunnuksena Valvira - Terveydenhuollon itsenäiset ammatinharjoittajat -rekisterin (1.2.246.537.6.203.2014) mukainen yksilöintitunnus.",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:PractitionerOrganizationUnit.who.display",
+        "path": "Provenance.agent.who.display",
+        "short": "Organisaation nimi",
+        "definition": "Organisaation nimi.\r\nNimen pitää vastata THL - SOTE-organisaatiorekisterissä (1.2.246.537.6.202.2008) tai IAH-rekisterissä organisaatiotunnukselle annettua nimeä",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:ServiceProvider",
+        "path": "Provenance.agent",
+        "sliceName": "ServiceProvider",
+        "short": "Palvelunantaja",
+        "definition": "Tahdonilmaisun tuottaneen palvelunantajan tiedot. Jos tehty Omakannasta, palvelunantaja Kela.",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:ServiceProvider.role",
+        "path": "Provenance.agent.role",
+        "short": "Palvelunantaja",
+        "definition": "Tahdonilmaisun tuottanut palvelunantaja.",
+        "min": 1,
+        "max": "1",
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://gen.kanta.fi/ValueSet/figen-vs-provenancerolecategory"
+        }
+      },
+      {
+        "id": "Provenance.agent:ServiceProvider.role.coding",
+        "path": "Provenance.agent.role.coding",
+        "short": "Kanta Provenance Role Category",
+        "definition": "Koodiston arvoilla ilmoitetaan, mikä on toimijan rooli Provenance-resurssissa.",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Provenance.agent:ServiceProvider.role.coding.system",
+        "path": "Provenance.agent.role.coding.system",
+        "min": 1,
+        "fixedUri": "http://gen.kanta.fi/figen-cs-provenancerolecategory"
+      },
+      {
+        "id": "Provenance.agent:ServiceProvider.role.coding.code",
+        "path": "Provenance.agent.role.coding.code",
+        "short": "Roolin koodiarvo",
+        "definition": "Koodiarvo, joka kertoo toimijan roolin Luovutusluvassa",
+        "min": 1,
+        "fixedCode": "13"
+      },
+      {
+        "id": "Provenance.agent:ServiceProvider.role.coding.display",
+        "path": "Provenance.agent.role.coding.display",
+        "short": "Koodiarvon mukainen kuvaus",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:ServiceProvider.who.identifier",
+        "path": "Provenance.agent.who.identifier",
+        "short": "Palvelunantajan tunniste",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:ServiceProvider.who.identifier.system",
+        "path": "Provenance.agent.who.identifier.system",
+        "definition": "Käytetään joko koodistoa THL - SOTE-organisaatiorekisteri (1.2.246.537.6.202.2008) tai  Valvira - Terveydenhuollon itsenäiset ammatinharjoittajat  (1.2.246.537.6.203.2014).",
+        "fixedUri": "urn:ietf:rfc:3986"
+      },
+      {
+        "id": "Provenance.agent:ServiceProvider.who.identifier.value",
+        "path": "Provenance.agent.who.identifier.value",
+        "short": "Palvelunantajan tunnus",
+        "definition": "Sosiaali- ja terveydenhuollon organisaation yksilöivänä tunnuksena THL - SOTE-organisaatiorekisterin (1.2.246.537.6.202.2008) mukainen yksilöintitunnus. Itsenäisen ammatinharjoittajan organisaation yksilöivänä tunnuksena Valvira - Terveydenhuollon itsenäiset ammatinharjoittajat -rekisterin (1.2.246.537.6.203.2014) mukainen yksilöintitunnus.",
+        "min": 1
+      },
+      {
+        "id": "Provenance.agent:ServiceProvider.who.display",
+        "path": "Provenance.agent.who.display",
+        "short": "Organisaation nimi",
+        "definition": "Organisaation nimi.\r\nNimen pitää vastata THL - SOTE-organisaatiorekisterissä (1.2.246.537.6.202.2008) tai IAH-rekisterissä organisaatiotunnukselle annettua nimeä",
+        "min": 1
+      },
+      {
+        "id": "Provenance.entity",
+        "path": "Provenance.entity",
+        "max": "0"
+      },
+      {
+        "id": "Provenance.signature",
+        "path": "Provenance.signature",
+        "max": "0"
+      }
+    ]
+  }
+}
