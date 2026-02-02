@@ -1,0 +1,112 @@
+{
+  "resourceType": "Consent",
+  "id": "Consent-AB352-Example2",
+  "status": "active",
+  "scope": {
+    "coding": [
+      {
+        "code": "patient-privacy",
+        "system": "http://terminology.hl7.org/CodeSystem/consentscope",
+        "display": "Privacy Consent"
+      }
+    ]
+  },
+  "category": [
+    {
+      "coding": [
+        {
+          "code": "64292-6",
+          "system": "http://loinc.org",
+          "display": "Release of information consent"
+        }
+      ]
+    }
+  ],
+  "patient": {
+    "reference": "http://example.org/Patient/example"
+  },
+  "dateTime": "2025-01-15T12:00:00Z",
+  "organization": [
+    {
+      "reference": "http://example.org/Organization/ca-hospital",
+      "display": "Example California Hospital"
+    }
+  ],
+  "policyRule": {
+    "coding": [
+      {
+        "system": "urn:ietf:rfc:3986",
+        "code": "urn:law:us:ca:statute:AB352",
+        "display": "California AB 352"
+      }
+    ]
+  },
+  "provision": {
+    "type": "permit",
+    "purpose": [
+      {
+        "code": "TREAT",
+        "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason"
+      },
+      {
+        "code": "HPAYMT",
+        "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason"
+      },
+      {
+        "code": "HOPERAT",
+        "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason"
+      }
+    ],
+    "securityLabel": [
+      {
+        "code": "N",
+        "system": "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
+        "display": "Normal"
+      }
+    ],
+    "provision": [
+      {
+        "type": "deny",
+        "securityLabel": [
+          {
+            "code": "ABORTION",
+            "system": "http://johnmoehrke.github.io/xacml-consent/CodeSystem/cs-health-sensitivity"
+          },
+          {
+            "code": "GENDER_AFFIRMING_CARE",
+            "system": "http://johnmoehrke.github.io/xacml-consent/CodeSystem/cs-health-sensitivity"
+          },
+          {
+            "code": "CONTRACEPTION",
+            "system": "http://johnmoehrke.github.io/xacml-consent/CodeSystem/cs-health-sensitivity"
+          }
+        ]
+      },
+      {
+        "type": "permit",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/consent-location",
+            "valueReference": {
+              "reference": "Location/ca-location"
+            }
+          }
+        ],
+        "securityLabel": [
+          {
+            "code": "ABORTION",
+            "system": "http://johnmoehrke.github.io/xacml-consent/CodeSystem/cs-health-sensitivity"
+          },
+          {
+            "code": "GENDER_AFFIRMING_CARE",
+            "system": "http://johnmoehrke.github.io/xacml-consent/CodeSystem/cs-health-sensitivity"
+          },
+          {
+            "code": "CONTRACEPTION",
+            "system": "http://johnmoehrke.github.io/xacml-consent/CodeSystem/cs-health-sensitivity"
+          }
+        ]
+      }
+    ]
+  }
+}
