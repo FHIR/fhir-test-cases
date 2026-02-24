@@ -42,6 +42,8 @@ Tests have the following properties:
   * ```java``` - rules for successful evaluation of the java validator (see below)
 * ```tags``` - an array of strings representing tags. Tags allow for the selective execution of tests. These follow the [syntax rules](https://docs.junit.org/6.0.3/running-tests/tags.html#syntax-rules) for the JUnit framework. The following tags are currently in use:
   * ```infoway-auth-required``` tests that use the Infoway terminology server and require authorization to be set up
+  * ```fhir-validator-cli``` tests targeting features of the HL7 FHIR CLI Validator tool
+* ```fhir-validator-cli-options``` a map of options that target features of the HL7 FHIR CLI Validator tool
   
 The java property is mandatory - all others are optional
 
