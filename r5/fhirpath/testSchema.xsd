@@ -143,6 +143,11 @@
 				<xs:documentation>True if this test represents a predicate.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="testing" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The primary function, operator, or feature being tested (e.g. startsWith, =, defineVariable). Used to categorize the test.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 	</xs:complexType>
 	<xs:complexType name="Expression">
 		<xs:simpleContent>
@@ -177,6 +182,7 @@
 			<xs:enumeration value="Quantity"/>
 			<xs:enumeration value="string"/>
 			<xs:enumeration value="time"/>
+			<xs:enumeration value="id"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="InvalidType">
@@ -233,6 +239,11 @@
 			<xs:enumeration value="tx">
 				<xs:annotation>
 					<xs:documentation>Indicates the test is expected to have access to the %terminologies environment variable, allowing access to terminology services as described in the FHIRPath topic in the FHIR specification.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="lenient/polymorphics">
+				<xs:annotation>
+					<xs:documentation>Indicates the test is expected to be evaluated with lenient semantics that also allow polymorphic path resolution (e.g. Observation.valueQuantity).</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 		</xs:restriction>
