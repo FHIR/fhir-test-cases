@@ -1,0 +1,61 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "information",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "Reference to draft CodeSystem http://ehelse.no/fhir/CodeSystem/colonoscopy-model-specific-codes"
+    },
+    "diagnostics" : "[75,34]",
+    "expression" : ["Bundle.entry[1].resource/*Procedure/1*/.extension[0].extension[0].value.ofType(CodeableConcept)"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "https://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "error",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "Unknown code '10821000202101' in the CodeSystem 'http://snomed.info/sct' version 'http://snomed.info/sct/900000000000207008/version/20250201' (International Edition)"
+    },
+    "diagnostics" : "[140,26]",
+    "expression" : ["Bundle.entry[1].resource/*Procedure/1*/.extension[6].value.ofType(CodeableConcept).coding[0].code"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "https://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Wrong Display Name 'Diagnostisk med biopsi' for http://snomed.info/sct#446745002. Valid display is one of 3 choices: 'Colonoscopy and biopsy of colon (procedure)' (en), 'Colonoscopy and biopsy of colon' (en) or 'Endoscopic biopsy of colon' (en) (for the language(s) 'en-US')"
+    },
+    "diagnostics" : "[152,18]",
+    "expression" : ["Bundle.entry[1].resource/*Procedure/1*/.category.coding[0].display"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "https://tx-dev.fhir.org/r4"
+    }],
+    "severity" : "error",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "Unknown code '8921000202108' in the CodeSystem 'http://snomed.info/sct' version 'http://snomed.info/sct/900000000000207008/version/20250201' (International Edition)"
+    },
+    "diagnostics" : "[176,26]",
+    "expression" : ["Bundle.entry[1].resource/*Procedure/1*/.performer[0].function.coding[0].code"]
+  },
+    {
+      "severity" : "warning",
+      "code" : "processing",
+      "details" : {
+        "text" : "Validation process produced more than maximum of 5 messages, set by validation-tests. Returned validation messages may be incomplete or inaccurate."
+      },
+      "diagnostics" : "[1,2]",
+      "expression" : ["Bundle"]
+    }
+  ]
+}
