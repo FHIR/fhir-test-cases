@@ -8176,7 +8176,7 @@
       "file": "qr-internal-refs.json",
       "version": "4.0",
       "packages": [
-        "hl7.fhir.uv.sdc"
+        "hl7.fhir.uv.sdc#4.0.0-ballot"
       ],
       "explanation": "Internal reference not picked up when validating",
       "module": "questionnaire",
@@ -11898,9 +11898,112 @@
       "version": "4.0",
       "module": "profile",
       "wrong-displays" : "warning",
-      "packages" : [ "hl7.fhir.uv.sdc#3.0.0" ],
+      "packages" : [ "hl7.fhir.uv.sdc#4.0.0-ballot" ],
       "java": "java/R4.sdc-inv-1.json"
-    },    
+    },{
+      "name": "aggregation-apart-good5",
+      "file": "aggregation-instance.xml",
+      "description": "Checking how the aggregation flag is enforced. This is testing the R5 meaning",
+      "version": "5.0",
+      "module": "profile",
+      "validateReference" : "CHECK_EXISTS_AND_TYPE",
+      "java": "java/R5.aggregation-apart-good-base.json",
+      "profile" : {
+        "source" : "aggregation-profile.xml",
+        "java": "java/R5.aggregation-apart-good-profile.json"
+      }
+    },{
+      "name": "aggregation-apart-good4",
+      "file": "aggregation-instance.xml",
+      "description": "Checking how the aggregation flag is enforced. This is overriding the R4 meaning",
+      "version": "4.0",
+      "module": "profile",
+      "validateReference" : "CHECK_EXISTS_AND_TYPE",
+      "enforceAggregationOutsideBundles" : false,
+      "java": "java/R5.aggregation-apart-good-base.json",
+      "profile" : {
+        "source" : "aggregation-profile.xml",
+        "java": "java/R5.aggregation-apart-good-profile.json"
+      }
+    },{
+      "name": "aggregation-apart-bad4",
+      "file": "aggregation-instance.xml",
+      "description": "Checking how the aggregation flag is enforced. This is testing the R4 meaning",
+      "version": "4.0",
+      "module": "profile",
+      "validateReference" : "CHECK_EXISTS_AND_TYPE",
+      "java": "java/R5.aggregation-apart-bad4-base.json",
+      "profile" : {
+        "source" : "aggregation-profile.xml",
+        "java": "java/R5.aggregation-apart-bad4-profile.json"
+      }
+    },{
+      "name": "aggregation-apart-bad5",
+      "file": "aggregation-instance.xml",
+      "description": "Checking how the aggregation flag is enforced. This is testing the R4 meaning",
+      "version": "5.0",
+      "module": "profile",
+      "enforceAggregationOutsideBundles" : true,
+      "validateReference" : "CHECK_EXISTS_AND_TYPE",
+      "java": "java/R5.aggregation-apart-good-base.json",
+      "profile" : {
+        "source" : "aggregation-profile.xml",
+        "java": "java/R5.aggregation-apart-good-profile.json"
+      }
+    },{
+      "name": "aggregation-bundle-good5",
+      "file": "aggregation-bundle-good.xml",
+      "description": "Checking how the aggregation flag is enforced. This is testing the R5 meaning in a bundle, with a valid resolution",
+      "version": "5.0",
+      "module": "profile",
+      "enforceAggregationOutsideBundles" : true,
+      "validateReference" : "CHECK_EXISTS_AND_TYPE",
+      "java": "java/R5.aggregation-apart-good-base.json",
+      "profile" : {
+        "source" : "aggregation-profile-bundle.xml",
+        "supporting" : ["aggregation-profile.xml"],
+        "java": "java/R5.aggregation-apart-good-profile.json"
+      }
+    },{
+      "name": "aggregation-bundle-bad5",
+      "file": "aggregation-bundle-bad.xml",
+      "description": "Checking how the aggregation flag is enforced. This is testing the R5 meaning in a bundle, without a valid resolution",
+      "version": "5.0",
+      "module": "profile",
+      "validateReference" : "CHECK_EXISTS_AND_TYPE",
+      "java": "java/R5.aggregation-bundle-bad5-base.json",
+      "profile" : {
+        "source" : "aggregation-profile-bundle.xml",
+        "supporting" : ["aggregation-profile.xml"],
+        "java": "java/R5.aggregation-bundle-bad5-profile.json"
+      }
+    },{
+      "name": "aggregation-bundle-good4",
+      "file": "aggregation-bundle-good.xml",
+      "description": "Checking how the aggregation flag is enforced. This is testing the R5 meaning in a bundle, with a valid resolution",
+      "version": "4.0",
+      "module": "profile",
+      "validateReference" : "CHECK_EXISTS_AND_TYPE",
+      "java": "java/R4.aggregation-bundle-good4-base.json",
+      "profile" : {
+        "source" : "aggregation-profile-bundle.xml",
+        "supporting" : ["aggregation-profile.xml"],
+        "java": "java/R4.aggregation-bundle-good4-profile.json"
+      }
+    },{
+      "name": "aggregation-bundle-bad4",
+      "file": "aggregation-bundle-bad.xml",
+      "description": "Checking how the aggregation flag is enforced. This is testing the R5 meaning in a bundle, without a valid resolution",
+      "version": "4.0",
+      "module": "profile",
+      "validateReference" : "CHECK_EXISTS_AND_TYPE",
+      "java": "java/R4.aggregation-bundle-bad4-base.json",
+      "profile" : {
+        "source" : "aggregation-profile-bundle.xml",
+        "supporting" : ["aggregation-profile.xml"],
+        "java": "java/R4.aggregation-bundle-bad4-profile.json"
+      }
+    },
     {
       "name": "zzz",
       "file": "zzz.json",
