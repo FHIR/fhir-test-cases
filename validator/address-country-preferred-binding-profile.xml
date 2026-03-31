@@ -1,0 +1,28 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="address-country-preferred-binding" />
+  <url value="http://example.org/fhir/StructureDefinition/address-country-preferred-binding" />
+  <version value="1.0.0" />
+  <name value="AddressCountryPreferredBinding" />
+  <title value="Address with preferred binding on country" />
+  <status value="active" />
+  <description value="Minimal Address profile that adds a preferred binding to Address.country pointing to the ISO 3166-1-2 ValueSet. Validates that a non-ISO country code (e.g. the Destatis code '20422' for Germany) produces a WARNING, not an ERROR, because the binding strength is 'preferred'." />
+  <fhirVersion value="4.0.1" />
+  <kind value="complex-type" />
+  <abstract value="false" />
+  <type value="Address" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Address" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Address.country">
+      <path value="Address.country" />
+      <short value="Staat" />
+      <definition value="Staat (vorzugsweise als 2-Stelliger ISO-Ländercode).&#xD;&#xA;Es obliegt abgeleiteten Profilen, hier die Verwendung der ISO-Ländercodes verbindlich vorzuschreiben" />
+      <comment value="ISO 3166 3 letter codes can be used in place of a human readable country name." />
+      <binding>
+        <strength value="preferred" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/iso3166-1-2" />
+      </binding>
+    </element>
+  </differential>
+</StructureDefinition>
+
