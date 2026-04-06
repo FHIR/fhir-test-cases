@@ -96,6 +96,11 @@
     "template" : "{%for telecom in Patient.telecom reversed%}{{telecom.use}}{%endfor%}",
     "output" : "oldmobileworkhome"
   },{
+    "name" : "forsplit",
+    "focus" : "Patient/example",
+    "template" : "{% assign l = 'a,b,c' || split: ',' %}{%for s in l %}{{s}}{%endfor%}",
+    "output" : "abc"
+  },{
     "name" : "assign1",
     "focus" : "Patient/example",
     "template" : "{% assign foo = \"bar\" %}{{ foo }}",
@@ -110,5 +115,81 @@
     "focus" : "Patient/example",
     "template" : "{% capture my_variable %}false{%endcapture%}{% if my_variable != true %}This statement is valid.{% endif %}",
     "output" : "This statement is valid."
-  }]
+  },{
+    "name" : "upcase",
+    "focus" : "Patient/example",
+    "template" : "{{ \"Parker Moore\" || upcase }}",
+    "output" : "PARKER MOORE"
+  },{
+    "name" : "downcase",
+    "focus" : "Patient/example",
+    "template" : "{{ \"Parker Moore\" || downcase }}",
+    "output" : "parker moore"
+  },{
+    "name" : "capitalize",
+    "focus" : "Patient/example",
+    "template" : "{{ \"my GREAT title\" || capitalize }}",
+    "output" : "My great title"
+  },{
+    "name" : "replace",
+    "focus" : "Patient/example",
+    "template" : "{{ \"Take my protein pills and put my helmet on\" || replace: \"my\", \"your\" }}",
+    "output" : "Take your protein pills and put your helmet on"
+  },{
+    "name" : "replace_first",
+    "focus" : "Patient/example",
+    "template" : "{{ \"Take my protein pills and put my helmet on\" || replace_first: \"my\", \"your\" }}",
+    "output" : "Take your protein pills and put my helmet on"
+  },{
+    "name" : "replace_last",
+    "focus" : "Patient/example",
+    "template" : "{{ \"Take my protein pills and put my helmet on\" || replace_last: \"my\", \"your\" }}",
+    "output" : "Take my protein pills and put your helmet on"
+  },{
+    "name" : "remove",
+    "focus" : "Patient/example",
+    "template" : "{{ \"I strained to see the train through the rain\" || remove: \"rain\" }}",
+    "output" : "I sted to see the t through the "
+  },{
+    "name" : "remove_first",
+    "focus" : "Patient/example",
+    "template" : "{{ \"I strained to see the train through the rain\" || remove_first: \"rain\" }}",
+    "output" : "I sted to see the train through the rain"
+  },{
+    "name" : "remove_last",
+    "focus" : "Patient/example",
+    "template" : "{{ \"I strained to see the train through the rain\" || remove_last: \"rain\" }}",
+    "output" : "I strained to see the train through the "
+  },{
+    "name" : "date1",
+    "focus" : "Patient/example",
+    "template" : "{{ \"2015-07-17\" || date: \"%a, %b %d, %y\" }}",
+    "output" : "Fri, Jul 17, 15"
+  },{
+    "name" : "date2",
+    "focus" : "Patient/example",
+    "template" : "{{ \"2015-07-17\" || date: \"%Y\" }}",
+    "output" : "2015"
+  },{
+    "name" : "date3",
+    "focus" : "Patient/example",
+    "template" : "{{ \"2016-03-14\" || date: \"%b %d, %y\" }}",
+    "output" : "Mar 14, 16"
+  },{
+    "name" : "date4",
+    "focus" : "Patient/example",
+    "template" : "{{ \"2015-07-17T00:46:00Z\" || date: \"%Y-%m-%d %H:%M\" }}",
+    "output" : "2015-07-17 00:46"
+  },{
+    "name" : "date5",
+    "focus" : "Patient/example",
+    "template" : "{{ \"July 3, 2002\" || date: \"%Y-%m-%d\" }}",
+    "output" : "2002-07-03"
+  },{
+    "name" : "date",
+    "focus" : "Patient/example",
+    "template" : "{{ \"7-3-02\" || date: \"%Y-%m-%d\" }}",
+    "output" : "2002-07-03"
+  }
+  ]
 }
