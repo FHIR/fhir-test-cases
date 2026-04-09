@@ -1,0 +1,62 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "complies-with-binding-strength-weaker-base",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/complies-with-binding-strength-weaker-base",
+  "name": "Complieswithbindingstrengthweakerbase",
+  "title": "complies-with-binding-strength-weaker-base",
+  "status": "active",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "contained": [
+    {
+      "resourceType": "ValueSet",
+      "id": "vs-marital",
+      "url": "http://hl7.org/fhir/test/ValueSet/vs-marital",
+      "name": "MaritalStatus",
+      "status": "active",
+      "compose": {
+        "include": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
+            "concept": [
+              {
+                "code": "A"
+              },
+              {
+                "code": "D"
+              },
+              {
+                "code": "M"
+              },
+              {
+                "code": "S"
+              },
+              {
+                "code": "W"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "differential": {
+    "element": [
+      {
+        "id": "Patient",
+        "path": "Patient"
+      },
+      {
+        "id": "Patient.maritalStatus",
+        "path": "Patient.maritalStatus",
+        "binding": {
+          "strength": "required",
+          "valueSet": "#vs-marital"
+        }
+      }
+    ]
+  }
+}

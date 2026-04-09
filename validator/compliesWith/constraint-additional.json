@@ -1,0 +1,40 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "complies-with-constraint-additional",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/complies-with-constraint-additional",
+  "name": "Complieswithconstraintadditional",
+  "title": "complies-with-constraint-additional",
+  "status": "active",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-compliesWithProfile",
+      "valueCanonical": "http://hl7.org/fhir/test/StructureDefinition/complies-with-constraint-additional-base"
+    }
+  ],
+  "differential": {
+    "element": [
+      {
+        "id": "Patient",
+        "path": "Patient"
+      },
+      {
+        "id": "Patient.name",
+        "path": "Patient.name",
+        "min": 1,
+        "constraint": [
+          {
+            "key": "cwt-1",
+            "severity": "error",
+            "human": "Must have a family name",
+            "expression": "family.exists()"
+          }
+        ]
+      }
+    ]
+  }
+}
