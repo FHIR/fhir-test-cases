@@ -1,0 +1,53 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "complies-with-slice-missing-required",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-missing-required",
+  "name": "Complieswithslicemissingrequired",
+  "title": "complies-with-slice-missing-required",
+  "status": "active",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-compliesWithProfile",
+      "valueCanonical": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-missing-required-base"
+    }
+  ],
+  "differential": {
+    "element": [
+      {
+        "id": "Patient",
+        "path": "Patient"
+      },
+      {
+        "id": "Patient.identifier",
+        "path": "Patient.identifier",
+        "min": 1,
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Patient.identifier:ssn",
+        "path": "Patient.identifier",
+        "sliceName": "ssn",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Patient.identifier:ssn.system",
+        "path": "Patient.identifier.system",
+        "patternUri": "http://hl7.org/fhir/sid/us-ssn"
+      }
+    ]
+  }
+}
