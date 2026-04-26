@@ -1,0 +1,61 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-context",
+      "valueString" : "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse|5.0.0"
+    }],
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "As specified by profile http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse|5.0.0, Element 'questionnaire' is out of order (found after status)"
+    },
+    "diagnostics" : "[4,67]",
+    "expression" : ["QuestionnaireResponse.questionnaire"]
+  },
+  {
+    "severity" : "error",
+    "code" : "structure",
+    "details" : {
+      "text" : "Items not of type group should not have items outside answers (use answer.item not .item)"
+    },
+    "diagnostics" : "[17,9]",
+    "expression" : ["QuestionnaireResponse.item[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "Only one response item with the linkId 2.5 allowed - found 2 items"
+    },
+    "diagnostics" : "[72,11]",
+    "expression" : ["QuestionnaireResponse.item[1]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invariant",
+    "details" : {
+      "text" : "The quantity -10 kg (UCUM#kg) is less than the allowed minimum of 0 kg (UCUM#kg)"
+    },
+    "diagnostics" : "[76,24]",
+    "expression" : ["QuestionnaireResponse.item[1].item[5].answer[0].value.ofType(Quantity)"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invariant",
+    "details" : {
+      "text" : "Answer value must be of the type boolean not string"
+    },
+    "diagnostics" : "[93,34]",
+    "expression" : ["QuestionnaireResponse.item[2].item[0].answer[0].value.ofType(string)"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invariant",
+    "details" : {
+      "text" : "Answer value must be of the type boolean not string"
+    },
+    "diagnostics" : "[100,55]",
+    "expression" : ["QuestionnaireResponse.item[2].item[1].answer[0].value.ofType(string)"]
+  }]
+}
