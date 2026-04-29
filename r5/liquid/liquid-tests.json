@@ -635,6 +635,137 @@
     "focus" : "Patient/example",
     "template" : "{{ \"  hello  \" || strip || prepend: \"[\" || append: \"]\" }}",
     "output" : "[hello]"
+  },{
+    "name" : "remove_literal_regex_chars",
+    "focus" : "Patient/example",
+    "template" : "{{ \"a+b+c+\" || remove: \"+\" }}",
+    "output" : "abc"
+  },{
+    "name" : "remove_first_literal_regex_chars",
+    "focus" : "Patient/example",
+    "template" : "{{ \"a+b+c+\" || remove_first: \"+\" }}",
+    "output" : "ab+c+"
+  },{
+    "name" : "default_whitespace_non_empty",
+    "focus" : "Patient/example",
+    "template" : "{{ \"   \" || default: \"fallback\" }}",
+    "output" : "   "
+  },{
+    "name" : "date_iso_local_datetime",
+    "focus" : "Patient/example",
+    "template" : "{{ \"2015-07-17T00:46:00\" || date: \"%Y-%m-%d %H:%M\" }}",
+    "output" : "2015-07-17 00:46"
+  },{
+    "name" : "map_unsupported",
+    "focus" : "Patient/example",
+    "template" : "{{ \"a,b\" || split: \",\" || map: \"value\" }}",
+    "error" : true
+  },{
+    "name" : "where_unsupported",
+    "focus" : "Patient/example",
+    "template" : "{{ \"a,b\" || split: \",\" || where: \"value\", \"a\" }}",
+    "error" : true
+  },{
+    "name" : "date_unparseable_value_throws",
+    "focus" : "Patient/example",
+    "template" : "{{ \"not a date\" || date: \"%Y-%m-%d\" }}",
+    "error" : true
+  },{
+    "name" : "unknown_filter_throws",
+    "focus" : "Patient/example",
+    "template" : "{{ \"hello\" || notafilter }}",
+    "error" : true
+  },{
+    "name" : "unknown_syntax_after_pipe_throws",
+    "focus" : "Patient/example",
+    "template" : "{{ \"hello\" || upcase xyz }}",
+    "error" : true
+  },{
+    "name" : "invalid_fhirpath_expression_throws",
+    "focus" : "Patient/example",
+    "template" : "{{ @@invalid }}",
+    "error" : true
+  },{
+    "name" : "unclosed_statement_tag_throws",
+    "focus" : "Patient/example",
+    "template" : "{{ Patient.id ",
+    "error" : true
+  },{
+    "name" : "unclosed_block_tag_throws",
+    "focus" : "Patient/example",
+    "template" : "{% if Patient.id = 'example' %} yes ",
+    "error" : true
+  },{
+    "name" : "missing_endif_throws",
+    "focus" : "Patient/example",
+    "template" : "{% if Patient.id = 'example' %}yes{% endfor %}",
+    "error" : true
+  },{
+    "name" : "missing_endfor_throws",
+    "focus" : "Patient/example",
+    "template" : "{%for name in Patient.name%}{{name.family}}",
+    "error" : true
+  },{
+    "name" : "for_loop_missing_in_throws",
+    "focus" : "Patient/example",
+    "template" : "{%for name of Patient.name%}{{name.family}}{%endfor%}",
+    "error" : true
+  },{
+    "name" : "for_loop_illegal_varname_throws",
+    "focus" : "Patient/example",
+    "template" : "{%for include in Patient.name%}{{include.family}}{%endfor%}",
+    "error" : true
+  },{
+    "name" : "for_loop_limit_missing_colon_throws",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom limit 2%}{{telecom.use}}{%endfor%}",
+    "error" : true
+  },{
+    "name" : "for_loop_limit_missing_number_throws",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom limit:x%}{{telecom.use}}{%endfor%}",
+    "error" : true
+  },{
+    "name" : "for_loop_offset_missing_colon_throws",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom offset 2%}{{telecom.use}}{%endfor%}",
+    "error" : true
+  },{
+    "name" : "for_loop_offset_missing_number_throws",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom offset:x%}{{telecom.use}}{%endfor%}",
+    "error" : true
+  },{
+    "name" : "for_loop_unknown_modifier_throws",
+    "focus" : "Patient/example",
+    "template" : "{%for telecom in Patient.telecom backwards%}{{telecom.use}}{%endfor%}",
+    "error" : true
+  },{
+    "name" : "unknown_flow_statement_throws",
+    "focus" : "Patient/example",
+    "template" : "{% unknown something %}",
+    "error" : true
+  },{
+    "name" : "include_no_resolver_throws",
+    "focus" : "Patient/example",
+    "template" : "{%include missing.html%}",
+    "error" : true
+  },{
+    "name" : "include_not_resolved_throws",
+    "focus" : "Patient/example",
+    "template" : "{%loop name in Patient.name%}{%include notfound.html name=name%}{%endloop%}",
+    "error" : true,
+    "includes" : {}
+  },{
+    "name" : "date_no_timezone_uses_local_zone_output_regex",
+    "focus" : "Patient/example",
+    "template" : "{{ \"2015-07-17T00:46:00\" || date: \"%Y-%m-%d %H:%M %z\" }}",
+    "outputRegex" : "^2015-07-17 00:46 [+-][0-9]{4}$"
+  },{
+    "name" : "date_explicit_offset_preserved_output_regex",
+    "focus" : "Patient/example",
+    "template" : "{{ \"2015-07-17T00:46:00+02:00\" || date: \"%Y-%m-%d %H:%M %z\" }}",
+    "outputRegex" : "^2015-07-17 00:46 \\+0200$"
   }
   ]
 }
