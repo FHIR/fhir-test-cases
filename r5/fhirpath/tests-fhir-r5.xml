@@ -1782,4 +1782,11 @@ Any text enclosed within is ignored
 	  <test name="txTest02" testing="validateVS" mode="tx" inputfile="patient-example.xml"><expression>%terminologies.validateVS('http://hl7.org/fhir/ValueSet/administrative-gender', $this.gender).parameter.where(name = 'result').value</expression><output type="boolean">true</output></test>
 	  <test name="txTest03" testing="translate" mode="tx" inputfile="patient-example.xml"><expression>%terminologies.translate('http://hl7.org/fhir/ConceptMap/cm-address-use-v2', $this.address.use).parameter.where(name = 'match').part.where(name = 'concept').value.code</expression><output type="code">H</output></test>
 	</group>
+	
+	<group name="HTMLChecks">
+    <test name="htmlTest01" testing="htmlChecks" mode="html" inputfile="patient-example.xml"><expression>text.div.htmlChecks()</expression><output type="boolean">true</output></test>
+    <test name="htmlTest02" testing="htmlChecks" mode="html" inputfile="parameters-example-html.xml"><expression>%resource.parameter.where(name='goodHtml').value.htmlChecks()</expression><output type="boolean">true</output></test>
+    <test name="htmlTest03" testing="htmlChecks" mode="html" inputfile="parameters-example-html.xml"><expression>%resource.parameter.where(name='badHtml').value.htmlChecks()</expression><output type="boolean">false</output></test>
+    <test name="htmlTest04" testing="htmlChecks" mode="html" inputfile="parameters-example-html.xml"><expression>%resource.parameter.where(name='notString').value.htmlChecks().empty()</expression><output type="boolean">true</output></test>
+	</group>
 </tests>
