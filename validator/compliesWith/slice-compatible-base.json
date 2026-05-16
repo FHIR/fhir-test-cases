@@ -1,0 +1,47 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "complies-with-slice-compatible-base",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-compatible-base",
+  "name": "Complieswithslicecompatiblebase",
+  "title": "complies-with-slice-compatible-base",
+  "status": "active",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient",
+        "path": "Patient"
+      },
+      {
+        "id": "Patient.identifier",
+        "path": "Patient.identifier",
+        "min": 1,
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Patient.identifier:mrn",
+        "path": "Patient.identifier",
+        "sliceName": "mrn",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Patient.identifier:mrn.system",
+        "path": "Patient.identifier.system",
+        "patternUri": "http://hospital.example.org/mrn"
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "TopLevel-maxValueDuration",
+  "url": "http://example.org/fhir/StructureDefinition/TopLevel-maxValueDuration",
+  "name": "TopLevelMaxValueDuration",
+  "status": "active",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient.birthDate",
+        "path": "Patient.birthDate",
+        "min": 1,
+        "maxValueDuration": {
+          "value": 10,
+          "unit": "a",
+          "system": "http://unitsofmeasure.org",
+          "code": "a"
+        }
+      }
+    ]
+  },
+  "description": "Test case for maxValueDuration constraint on top-level element (Patient.birthDate). Requires birthDate to be no more than 10 years in the future (measured from current time). The duration value is added to the current clock to determine the maximum allowable value. Constraint value: 10 years in the future",
+  "version": "1.0.0"
+}

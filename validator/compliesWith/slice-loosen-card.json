@@ -1,0 +1,52 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "complies-with-slice-loosen-card",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-loosen-card",
+  "name": "Complieswithsliceloosencard",
+  "title": "complies-with-slice-loosen-card",
+  "status": "active",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-compliesWithProfile",
+      "valueCanonical": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-loosen-card-base"
+    }
+  ],
+  "differential": {
+    "element": [
+      {
+        "id": "Patient",
+        "path": "Patient"
+      },
+      {
+        "id": "Patient.identifier",
+        "path": "Patient.identifier",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Patient.identifier:mrn",
+        "path": "Patient.identifier",
+        "sliceName": "mrn",
+        "min": 0,
+        "max": "3"
+      },
+      {
+        "id": "Patient.identifier:mrn.system",
+        "path": "Patient.identifier.system",
+        "patternUri": "http://hospital.example.org/mrn"
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "TopLevel-minValueDuration",
+  "url": "http://example.org/fhir/StructureDefinition/TopLevel-minValueDuration",
+  "name": "TopLevelMinValueDuration",
+  "status": "active",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient.birthDate",
+        "path": "Patient.birthDate",
+        "min": 1,
+        "minValueDuration": {
+          "value": 100,
+          "unit": "a",
+          "system": "http://unitsofmeasure.org",
+          "code": "a"
+        }
+      }
+    ]
+  },
+  "description": "Test case for minValueDuration constraint on top-level element (Patient.birthDate). Requires birthDate to be at least 100 years in the past (measured from current time). The duration value is subtracted from the current clock to determine the minimum allowable value. Constraint value: 100 years in the past",
+  "version": "1.0.0"
+}

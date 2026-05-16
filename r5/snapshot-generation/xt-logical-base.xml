@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="EHDSDocument"/>
+  <language value="en"/>
+  <url value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSDocument"/>
+  <version value="0.4.0"/>
+  <name value="EHDSDocument"/>
+  <title value="Document model"/>
+  <status value="draft"/>
+  <date value="2026-04-02T05:36:36+11:00"/>
+  <publisher value="Xt-EHR"/>
+  <contact>
+    <name value="Xt-EHR"/>
+    <telecom>
+      <system value="url"/>
+      <value value="http://www.xt-ehr.eu/"/>
+    </telecom>
+  </contact>
+  <description value="Model for common document data elements, including the common header. Data relevant to document type and its content for administrative and searching purposes."/>
+  <fhirVersion value="5.0.0"/>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM Mapping"/>
+  </mapping>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSDocument"/>
+  <baseDefinition value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSDataSet"/>
+  <derivation value="specialization"/>
+  <snapshot>
+    <extension url="http://hl7.org/fhir/tools/StructureDefinition/snapshot-base-version">
+      <valueString value="0.4.0"/>
+    </extension>
+    <element id="EHDSDocument">
+      <path value="EHDSDocument"/>
+      <short value="Document model"/>
+      <definition value="Model for common document data elements, including the common header. Data relevant to document type and its content for administrative and searching purposes."/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Base"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <isModifier value="false"/>
+      <mapping>
+        <identity value="rim"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="EHDSDocument.header">
+      <path value="EHDSDocument.header"/>
+      <short value="Document header"/>
+      <definition value="Basic metadata for this information"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="EHDSDataSet.header"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Base"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.subject">
+      <path value="EHDSDocument.header.subject"/>
+      <short value="Patient/subject information"/>
+      <definition value="Patient/subject information"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="EHDSDataSet.header.subject"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSPatient"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.identifier">
+      <path value="EHDSDocument.header.identifier"/>
+      <short value="Unique identifier of the document"/>
+      <definition value="Business identifier for the object, unique within its system. Supporting disambiguation between different contexts (systems/countries)."/>
+      <min value="1"/>
+      <max value="*"/>
+      <base>
+        <path value="EHDSDataSet.header.identifier"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Identifier"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.author[x]">
+      <path value="EHDSDocument.header.author[x]"/>
+      <short value="Author(s) of the document"/>
+      <definition value="Author(s) responsible for the provided information. The exact role of the responsible author varies across use cases and is specific to individual models."/>
+      <min value="1"/>
+      <max value="*"/>
+      <base>
+        <path value="EHDSDataSet.header.author[x]"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSHealthProfessional"/>
+      </type>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSOrganisation"/>
+      </type>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSDevice"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.date">
+      <path value="EHDSDocument.header.date"/>
+      <short value="Date of finalising/issuing the document"/>
+      <definition value="Date and optionally time of authoring/issuing"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="EHDSDataSet.header.date"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="dateTime"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.status">
+      <path value="EHDSDocument.header.status"/>
+      <short value="Status of the document"/>
+      <definition value="Status of the resource or document"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="EHDSDataSet.header.status"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.source">
+      <path value="EHDSDocument.header.source"/>
+      <short value="Source of information (e.g. patient, patient's proxy). Used in case the patient has authored the information or the author has submitted patient-stated information."/>
+      <definition value="Source of information (e.g. patient, patient's proxy). Used in case the patient has authored the information or the author has submitted patient-stated information."/>
+      <min value="0"/>
+      <max value="0"/>
+      <base>
+        <path value="EHDSDataSet.header.source"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.language">
+      <path value="EHDSDocument.header.language"/>
+      <short value="Language in which the resource is written. Language is expressed by the IETF language tag."/>
+      <definition value="Language in which the resource is written. Language is expressed by the IETF language tag."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="EHDSDataSet.header.language"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="preferred"/>
+        <description value="BCP 47"/>
+      </binding>
+    </element>
+    <element id="EHDSDocument.header.documentType">
+      <path value="EHDSDocument.header.documentType"/>
+      <short value="Type of document at hand, e.g. 60591-5 Patient summary document."/>
+      <definition value="Type of document at hand, e.g. 60591-5 Patient summary document."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="EHDSDocument.header.documentType"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="preferred"/>
+        <description value="LOINC"/>
+      </binding>
+    </element>
+    <element id="EHDSDocument.header.documentTitle">
+      <path value="EHDSDocument.header.documentTitle"/>
+      <short value="Human readable document title that can be displayed in search results, etc. This can be documentType's display name, or it can be assembled from multiple elements. Examples: 'Laboratory Result Report', 'Patient Summary of Jane Green 10.12.2024'"/>
+      <definition value="Human readable document title that can be displayed in search results, etc. This can be documentType's display name, or it can be assembled from multiple elements. Examples: 'Laboratory Result Report', 'Patient Summary of Jane Green 10.12.2024'"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="EHDSDocument.header.documentTitle"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.period">
+      <path value="EHDSDocument.header.period"/>
+      <short value="Time of service that is being documented"/>
+      <definition value="Time of service that is being documented"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="EHDSDocument.header.period"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Period"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.version">
+      <path value="EHDSDocument.header.version"/>
+      <short value="Business version of the document. The exact algorithm for versioning is decided by the producer/custodian"/>
+      <definition value="Business version of the document. The exact algorithm for versioning is decided by the producer/custodian"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="EHDSDocument.header.version"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.attestation">
+      <path value="EHDSDocument.header.attestation"/>
+      <short value="Document attestation details"/>
+      <definition value="Document attestation details"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="EHDSDocument.header.attestation"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Base"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.attestation.attester[x]">
+      <path value="EHDSDocument.header.attestation.attester[x]"/>
+      <short value="Attester who validated the document"/>
+      <definition value="Attester who validated the document"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="EHDSDocument.header.attestation.attester[x]"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSHealthProfessional"/>
+      </type>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSDevice"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.attestation.datetime">
+      <path value="EHDSDocument.header.attestation.datetime"/>
+      <short value="Date and time of the approval of the document by Attester"/>
+      <definition value="Date and time of the approval of the document by Attester"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="EHDSDocument.header.attestation.datetime"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="dateTime"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.legalAuthentication">
+      <path value="EHDSDocument.header.legalAuthentication"/>
+      <short value="Document legal authentication details"/>
+      <definition value="Document legal authentication details"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="EHDSDocument.header.legalAuthentication"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Base"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.legalAuthentication.legalAuthenticator[x]">
+      <path value="EHDSDocument.header.legalAuthentication.legalAuthenticator[x]"/>
+      <short value="The person or organisation taking responsibility for the content of the document."/>
+      <definition value="The person or organisation taking responsibility for the content of the document."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="EHDSDocument.header.legalAuthentication.legalAuthenticator[x]"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSHealthProfessional"/>
+      </type>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSOrganisation"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.legalAuthentication.datetime">
+      <path value="EHDSDocument.header.legalAuthentication.datetime"/>
+      <short value="Date and time when the document was authorised"/>
+      <definition value="Date and time when the document was authorised"/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="EHDSDocument.header.legalAuthentication.datetime"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="dateTime"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.eventType">
+      <path value="EHDSDocument.header.eventType"/>
+      <short value="Categorisation of the event covered by the document (e.g. laboratory study types, imaging study types including modality, etc.). Selection of such tags or labels depends on the use case and agreement between data sharing parties. This meta-data element serves primarily for searching and filtering purposes."/>
+      <definition value="Categorisation of the event covered by the document (e.g. laboratory study types, imaging study types including modality, etc.). Selection of such tags or labels depends on the use case and agreement between data sharing parties. This meta-data element serves primarily for searching and filtering purposes."/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="EHDSDocument.header.eventType"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="preferred"/>
+        <description value="LOINC, SNOMED CT, dicom-cid-33-Modality"/>
+      </binding>
+    </element>
+    <element id="EHDSDocument.header.serviceSpecialty">
+      <path value="EHDSDocument.header.serviceSpecialty"/>
+      <short value="Additional details about where the content was created (e.g. clinical specialty)"/>
+      <definition value="Additional details about where the content was created (e.g. clinical specialty)"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="EHDSDocument.header.serviceSpecialty"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="preferred"/>
+        <description value="SNOMED CT"/>
+      </binding>
+    </element>
+    <element id="EHDSDocument.header.custodian">
+      <path value="EHDSDocument.header.custodian"/>
+      <short value="Organisation that is in charge of maintaining the document/report."/>
+      <definition value="Organisation that is in charge of maintaining the document/report."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="EHDSDocument.header.custodian"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSOrganisation"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.presentedForm">
+      <path value="EHDSDocument.presentedForm"/>
+      <short value="A narrative easy-to-read representation of the full data set, e.g. PDF-version of a document"/>
+      <definition value="A narrative easy-to-read representation of the full data set, e.g. PDF-version of a document"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="EHDSDocument.presentedForm"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSAttachment"/>
+      </type>
+    </element>
+  </snapshot>
+  <differential>
+    <element id="EHDSDocument">
+      <path value="EHDSDocument"/>
+      <short value="Document model"/>
+      <definition value="Model for common document data elements, including the common header. Data relevant to document type and its content for administrative and searching purposes."/>
+    </element>
+    <element id="EHDSDocument.header">
+      <path value="EHDSDocument.header"/>
+      <short value="Document header"/>
+    </element>
+    <element id="EHDSDocument.header.identifier">
+      <path value="EHDSDocument.header.identifier"/>
+      <short value="Unique identifier of the document"/>
+      <min value="1"/>
+    </element>
+    <element id="EHDSDocument.header.author[x]">
+      <path value="EHDSDocument.header.author[x]"/>
+      <short value="Author(s) of the document"/>
+      <min value="1"/>
+    </element>
+    <element id="EHDSDocument.header.date">
+      <path value="EHDSDocument.header.date"/>
+      <short value="Date of finalising/issuing the document"/>
+      <min value="1"/>
+    </element>
+    <element id="EHDSDocument.header.status">
+      <path value="EHDSDocument.header.status"/>
+      <short value="Status of the document"/>
+    </element>
+    <element id="EHDSDocument.header.source">
+      <path value="EHDSDocument.header.source"/>
+      <max value="0"/>
+    </element>
+    <element id="EHDSDocument.header.documentType">
+      <path value="EHDSDocument.header.documentType"/>
+      <short value="Type of document at hand, e.g. 60591-5 Patient summary document."/>
+      <definition value="Type of document at hand, e.g. 60591-5 Patient summary document."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="preferred"/>
+        <description value="LOINC"/>
+      </binding>
+    </element>
+    <element id="EHDSDocument.header.documentTitle">
+      <path value="EHDSDocument.header.documentTitle"/>
+      <short value="Human readable document title that can be displayed in search results, etc. This can be documentType's display name, or it can be assembled from multiple elements. Examples: 'Laboratory Result Report', 'Patient Summary of Jane Green 10.12.2024'"/>
+      <definition value="Human readable document title that can be displayed in search results, etc. This can be documentType's display name, or it can be assembled from multiple elements. Examples: 'Laboratory Result Report', 'Patient Summary of Jane Green 10.12.2024'"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.period">
+      <path value="EHDSDocument.header.period"/>
+      <short value="Time of service that is being documented"/>
+      <definition value="Time of service that is being documented"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Period"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.version">
+      <path value="EHDSDocument.header.version"/>
+      <short value="Business version of the document. The exact algorithm for versioning is decided by the producer/custodian"/>
+      <definition value="Business version of the document. The exact algorithm for versioning is decided by the producer/custodian"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.attestation">
+      <path value="EHDSDocument.header.attestation"/>
+      <short value="Document attestation details"/>
+      <definition value="Document attestation details"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Base"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.attestation.attester[x]">
+      <path value="EHDSDocument.header.attestation.attester[x]"/>
+      <short value="Attester who validated the document"/>
+      <definition value="Attester who validated the document"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSHealthProfessional"/>
+      </type>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSDevice"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.attestation.datetime">
+      <path value="EHDSDocument.header.attestation.datetime"/>
+      <short value="Date and time of the approval of the document by Attester"/>
+      <definition value="Date and time of the approval of the document by Attester"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.legalAuthentication">
+      <path value="EHDSDocument.header.legalAuthentication"/>
+      <short value="Document legal authentication details"/>
+      <definition value="Document legal authentication details"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Base"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.legalAuthentication.legalAuthenticator[x]">
+      <path value="EHDSDocument.header.legalAuthentication.legalAuthenticator[x]"/>
+      <short value="The person or organisation taking responsibility for the content of the document."/>
+      <definition value="The person or organisation taking responsibility for the content of the document."/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSHealthProfessional"/>
+      </type>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSOrganisation"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.legalAuthentication.datetime">
+      <path value="EHDSDocument.header.legalAuthentication.datetime"/>
+      <short value="Date and time when the document was authorised"/>
+      <definition value="Date and time when the document was authorised"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.header.eventType">
+      <path value="EHDSDocument.header.eventType"/>
+      <short value="Categorisation of the event covered by the document (e.g. laboratory study types, imaging study types including modality, etc.). Selection of such tags or labels depends on the use case and agreement between data sharing parties. This meta-data element serves primarily for searching and filtering purposes."/>
+      <definition value="Categorisation of the event covered by the document (e.g. laboratory study types, imaging study types including modality, etc.). Selection of such tags or labels depends on the use case and agreement between data sharing parties. This meta-data element serves primarily for searching and filtering purposes."/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="preferred"/>
+        <description value="LOINC, SNOMED CT, dicom-cid-33-Modality"/>
+      </binding>
+    </element>
+    <element id="EHDSDocument.header.serviceSpecialty">
+      <path value="EHDSDocument.header.serviceSpecialty"/>
+      <short value="Additional details about where the content was created (e.g. clinical specialty)"/>
+      <definition value="Additional details about where the content was created (e.g. clinical specialty)"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <binding>
+        <strength value="preferred"/>
+        <description value="SNOMED CT"/>
+      </binding>
+    </element>
+    <element id="EHDSDocument.header.custodian">
+      <path value="EHDSDocument.header.custodian"/>
+      <short value="Organisation that is in charge of maintaining the document/report."/>
+      <definition value="Organisation that is in charge of maintaining the document/report."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSOrganisation"/>
+      </type>
+    </element>
+    <element id="EHDSDocument.presentedForm">
+      <path value="EHDSDocument.presentedForm"/>
+      <short value="A narrative easy-to-read representation of the full data set, e.g. PDF-version of a document"/>
+      <definition value="A narrative easy-to-read representation of the full data set, e.g. PDF-version of a document"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="http://www.xt-ehr.eu/fhir/models/StructureDefinition/EHDSAttachment"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

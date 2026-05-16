@@ -1,0 +1,30 @@
+<Patient xmlns="http://hl7.org/fhir">
+  <id value="patient-country-noniso-bad" />
+  <!--
+    This patient has a country value of "20422", which is the Destatis (Statistisches Bundesamt)
+    numeric key for Germany. It is NOT a valid ISO 3166-1 alpha-2 code (which would be "DE").
+
+    The address profile applied to this resource (address-country-preferred-binding-profile.xml)
+    defines a PREFERRED binding to http://hl7.org/fhir/ValueSet/iso3166-1-2.
+
+    Expected validator behaviour (per HL7 FHIR specification):
+      - severity: WARNING  (binding strength "preferred" → validator SHALL only warn)
+
+    Observed (incorrect) behaviour in some validator implementations:
+      - severity: ERROR    (incorrectly treating "preferred" as "required")
+
+    See: https://hl7.org/fhir/R4/terminologies.html#preferred
+  -->
+  <name>
+    <family value="Mustermann" />
+    <given value="Max" />
+  </name>
+  <address>
+    <use value="home" />
+    <line value="Musterstraße 1" />
+    <city value="Musterstadt" />
+    <postalCode value="12345" />
+    <country value="20422" />
+  </address>
+</Patient>
+

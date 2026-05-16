@@ -47,7 +47,7 @@
   <derivation value="constraint"/>
   <snapshot>
     <extension url="http://hl7.org/fhir/tools/StructureDefinition/snapshot-base-version">
-      <valueString value="4.0.0-ballot"/>
+      <valueString value="4.0.0"/>
     </extension>
     <element id="Questionnaire">
       <path value="Questionnaire"/>
@@ -129,7 +129,7 @@
         <key value="sdc-2"/>
         <severity value="error"/>
         <human value="If version is present, versionAlgorithm must be present."/>
-        <expression value="version.exists() implies extension.where(url='http://hl7.org/fhir/5.0/StructureDefinition/extension-Questionnaire.versionAlgorithm[x]').exists()"/>
+        <expression value="version.exists() implies extension.where(url='http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm').exists()"/>
         <source value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnairecommon"/>
       </constraint>
       <constraint>
@@ -139,7 +139,7 @@
         <key value="sdc-3"/>
         <severity value="warning"/>
         <human value="Semver is the preferred version algorithm - package machinery doesn't work well with artifacts using alternate versioning schemes"/>
-        <expression value="extension.where(url='http://hl7.org/fhir/5.0/StructureDefinition/extension-Questionnaire.versionAlgorithm[x]').all(value.ofType(Coding).where(system='http://hl7.org/fhir/version-algorithm' and code='semver').exists())"/>
+        <expression value="extension.where(url='http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm').all(value.ofType(Coding).where(system='http://hl7.org/fhir/version-algorithm' and code='semver').exists())"/>
         <source value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnairecommon"/>
       </constraint>
       <isModifier value="false"/>
@@ -265,7 +265,7 @@
         </extension>
         <strength value="preferred"/>
         <description value="A human language."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/languages"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/languages|4.0.1"/>
       </binding>
     </element>
     <element id="Questionnaire.text">
@@ -365,11 +365,46 @@
       <isModifier value="false"/>
       <isSummary value="false"/>
     </element>
+    <element id="Questionnaire.extension:terminologyServer">
+      <path value="Questionnaire.extension"/>
+      <sliceName value="terminologyServer"/>
+      <short value="Preferred terminology server"/>
+      <definition value="Indicates the terminology server(s) that are known to be capable of returning and potentially expanding the value set(s) associated with the resource or a particular portion of the resource (depending on where the extension appears).  If a full URL is not provided AND the requested query is a terminology operation (e.g. $lookup or $expand) the client SHOULD execute the operation against (one of) the preferredTerminologyServer(s) rather than the local repository. Systems SHOULD evaluate value sets using terminology servers as follows:  First, try any terminology servers declared on the element in question.  If there are more then one, try them in the order they appear.  Then try any servers that appear on ancestor elements in order of closest ancestor up to any on the resource root  If there are no declared servers or none of the ones listed provide a useful response, the form filler may then try any of the typical servers it would normally use.  A 'useful response' means a response that provides a valid (though potentially empty) expansion.  Clients MAY wish to log/report errors returned by terminology servers."/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="DomainResource.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/preferredTerminologyServer|5.3.0-ballot-tc1"/>
+      </type>
+      <condition value="ele-1"/>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <constraint>
+        <key value="ext-1"/>
+        <severity value="error"/>
+        <human value="Must have either extensions or value[x], not both"/>
+        <expression value="extension.exists() != value.exists()"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+      </constraint>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
     <element id="Questionnaire.extension:versionAlgorithm">
       <path value="Questionnaire.extension"/>
       <sliceName value="versionAlgorithm"/>
-      <short value="Optional Extensions Element"/>
-      <definition value="Optional Extension Element - found in all resources."/>
+      <short value="How to compare versions"/>
+      <definition value="Indicates the mechanism used to compare versions to determine which is more current."/>
+      <comment value="If set as a string, this is a FHIRPath expression that has two additional context variables passed in - %version1 and %version2 and will return a negative number if version1 is newer, a positive number if version2 and a 0 if the version ordering can't be successfully be determined."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -379,7 +414,7 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://hl7.org/fhir/5.0/StructureDefinition/extension-Questionnaire.versionAlgorithm[x]"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm|5.3.0-ballot-tc1"/>
       </type>
       <condition value="ele-1"/>
       <constraint>
@@ -398,20 +433,14 @@
       </constraint>
       <mustSupport value="true"/>
       <isModifier value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
+      <isSummary value="false"/>
     </element>
     <element id="Questionnaire.extension:copyrightLabel">
       <path value="Questionnaire.extension"/>
       <sliceName value="copyrightLabel"/>
-      <short value="Optional Extensions Element"/>
-      <definition value="Optional Extension Element - found in all resources."/>
+      <short value="Copyright holder and year(s)"/>
+      <definition value="A short string (&lt;50 characters), suitable for inclusion in a page footer that identifies the copyright holder, effective period, and optionally whether rights are resctricted. (e.g. 'All rights reserved', 'Some rights reserved')."/>
+      <comment value="Defines the content expected to be rendered in all representations of the artifact. The (c) symbol should NOT be included in this string. It is expected to be added by software when rendering the notation. Full details about licensing, restrictions, warrantees, etc. goes in the more general 'copyright' element."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -421,7 +450,7 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://hl7.org/fhir/5.0/StructureDefinition/extension-Questionnaire.copyrightLabel"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/artifact-copyrightLabel|5.3.0-ballot-tc1"/>
       </type>
       <condition value="ele-1"/>
       <constraint>
@@ -439,14 +468,7 @@
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <isModifier value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
+      <isSummary value="false"/>
     </element>
     <element id="Questionnaire.extension:designNote">
       <path value="Questionnaire.extension"/>
@@ -463,7 +485,7 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://hl7.org/fhir/StructureDefinition/designNote"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/designNote|5.3.0-ballot-tc1"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -800,7 +822,7 @@
       </base>
       <type>
         <code value="canonical"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Questionnaire"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Questionnaire|4.0.1"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -951,6 +973,125 @@
         <identity value="rim"/>
         <map value=".outboundRelationship[typeCode=META].target[classCode=OBS, moodCode=DEFN, isCriterion=true].participation.role.classCode"/>
       </mapping>
+    </element>
+    <element id="Questionnaire.subjectType.id">
+      <path value="Questionnaire.subjectType.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references)"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
+          <valueUrl value="string"/>
+        </extension>
+        <code value="http://hl7.org/fhirpath/System.String"/>
+      </type>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Questionnaire.subjectType.extension">
+      <path value="Questionnaire.subjectType.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <short value="Extension"/>
+      <definition value="An Extension"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <constraint>
+        <key value="ext-1"/>
+        <severity value="error"/>
+        <human value="Must have either extensions or value[x], not both"/>
+        <expression value="extension.exists() != value.exists()"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+      </constraint>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Questionnaire.subjectType.extension:subjectType">
+      <path value="Questionnaire.subjectType.extension"/>
+      <sliceName value="subjectType"/>
+      <short value="R5: subjectType additional codes"/>
+      <definition value="R5: `Questionnaire.subjectType` additional codes"/>
+      <comment value="Element `Questionnaire.subjectType` is mapped to FHIR R4 element `Questionnaire.subjectType` as `RelatedTo`.&#xA;The mappings for `Questionnaire.subjectType` do not allow expression of the necessary codes, per the bindings on the source and target.&#xA;If none are specified, then the subject is unlimited."/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/5.0/StructureDefinition/extension-Questionnaire.subjectType"/>
+      </type>
+      <condition value="ele-1"/>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element|4.0.1"/>
+      </constraint>
+      <constraint>
+        <key value="ext-1"/>
+        <severity value="error"/>
+        <human value="Must have either extensions or value[x], not both"/>
+        <expression value="extension.exists() != value.exists()"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Extension|4.0.1"/>
+      </constraint>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Questionnaire.subjectType.value">
+      <path value="Questionnaire.subjectType.value"/>
+      <representation value="xmlAttr"/>
+      <short value="Primitive value for code"/>
+      <definition value="Primitive value for code"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="string.value"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
+          <valueUrl value="string"/>
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/regex">
+          <valueString value="[^\s]+(\s[^\s]+)*"/>
+        </extension>
+        <code value="http://hl7.org/fhirpath/System.String"/>
+      </type>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
     </element>
     <element id="Questionnaire.date">
       <path value="Questionnaire.date"/>
@@ -1158,7 +1299,7 @@
         </extension>
         <strength value="extensible"/>
         <description value="Countries and regions within which this artifact is targeted for use."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/jurisdiction"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/jurisdiction|4.0.1"/>
       </binding>
       <mapping>
         <identity value="workflow"/>
@@ -1392,7 +1533,7 @@
         </extension>
         <strength value="example"/>
         <description value="Codes for questionnaires, groups and individual questions."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/questionnaire-questions"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/questionnaire-questions|4.0.1"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -1615,7 +1756,7 @@
       <sliceName value="hidden"/>
       <short value="Don't display to user"/>
       <definition value="If true, indicates that the extended item should not be displayed to the user."/>
-      <comment value="If an item is hidden, all descendant items are hidden as well.  See additional guidance and examples in the [SDC implementation guide](http://hl7.org/fhir/uv/sdc/rendering.html#hidden)."/>
+      <comment value="If an item is hidden, all descendant items are hidden as well.  See additional guidance and examples in the [SDC implementation guide](http://hl7.org/fhir/uv/sdc/2025Jan/rendering.html#hidden)."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -1625,8 +1766,9 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-hidden"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-hidden|5.3.0-ballot-tc1"/>
       </type>
+      <condition value="ele-1"/>
       <constraint>
         <key value="ele-1"/>
         <severity value="error"/>
@@ -1643,14 +1785,15 @@
       </constraint>
       <mustSupport value="true"/>
       <isModifier value="false"/>
+      <isSummary value="false"/>
     </element>
-    <element id="Questionnaire.item.extension:answerConstraint">
+    <element id="Questionnaire.item.extension:terminologyServer">
       <path value="Questionnaire.item.extension"/>
-      <sliceName value="answerConstraint"/>
-      <short value="Optional Extensions Element"/>
-      <definition value="Optional Extension Element - found in all resources."/>
+      <sliceName value="terminologyServer"/>
+      <short value="Preferred terminology server"/>
+      <definition value="Indicates the terminology server(s) that are known to be capable of returning and potentially expanding the value set(s) associated with the resource or a particular portion of the resource (depending on where the extension appears).  If a full URL is not provided AND the requested query is a terminology operation (e.g. $lookup or $expand) the client SHOULD execute the operation against (one of) the preferredTerminologyServer(s) rather than the local repository. Systems SHOULD evaluate value sets using terminology servers as follows:  First, try any terminology servers declared on the element in question.  If there are more then one, try them in the order they appear.  Then try any servers that appear on ancestor elements in order of closest ancestor up to any on the resource root  If there are no declared servers or none of the ones listed provide a useful response, the form filler may then try any of the typical servers it would normally use.  A 'useful response' means a response that provides a valid (though potentially empty) expansion.  Clients MAY wish to log/report errors returned by terminology servers."/>
       <min value="0"/>
-      <max value="1"/>
+      <max value="*"/>
       <base>
         <path value="Element.extension"/>
         <min value="0"/>
@@ -1658,7 +1801,7 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://hl7.org/fhir/5.0/StructureDefinition/extension-Questionnaire.item.answerConstraint"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/preferredTerminologyServer|5.3.0-ballot-tc1"/>
       </type>
       <condition value="ele-1"/>
       <constraint>
@@ -1676,14 +1819,77 @@
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
       <isModifier value="false"/>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="N/A"/>
-      </mapping>
+      <isSummary value="false"/>
+    </element>
+    <element id="Questionnaire.item.extension:disabledDisplay">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="disabledDisplay"/>
+      <short value="R5: hidden | protected (new)"/>
+      <definition value="R5: `Questionnaire.item.disabledDisplay` (new:code)"/>
+      <comment value="Element `Questionnaire.item.disabledDisplay` has a context of Questionnaire.item based on following the parent source element upwards and mapping to `Questionnaire`.&#xA;Element `Questionnaire.item.disabledDisplay` has no mapping targets in FHIR R4. Typically, this is because the element has been added (is a new element).&#xA;If not specified, rendering behavior is up to the client.  This element is only meaningful if enableWhen or an equivalent extension is present"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/5.0/StructureDefinition/extension-Questionnaire.item.disabledDisplay"/>
+      </type>
+      <condition value="ele-1"/>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element|4.0.1"/>
+      </constraint>
+      <constraint>
+        <key value="ext-1"/>
+        <severity value="error"/>
+        <human value="Must have either extensions or value[x], not both"/>
+        <expression value="extension.exists() != value.exists()"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Extension|4.0.1"/>
+      </constraint>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="Questionnaire.item.extension:answerConstraint">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="answerConstraint"/>
+      <short value="R5: optionsOnly | optionsOrType | optionsOrString (new)"/>
+      <definition value="R5: `Questionnaire.item.answerConstraint` (new:code)"/>
+      <comment value="Element `Questionnaire.item.answerConstraint` has a context of Questionnaire.item based on following the parent source element upwards and mapping to `Questionnaire`.&#xA;Element `Questionnaire.item.answerConstraint` has no mapping targets in FHIR R4. Typically, this is because the element has been added (is a new element)."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/5.0/StructureDefinition/extension-Questionnaire.item.answerConstraint"/>
+      </type>
+      <condition value="ele-1"/>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element|4.0.1"/>
+      </constraint>
+      <constraint>
+        <key value="ext-1"/>
+        <severity value="error"/>
+        <human value="Must have either extensions or value[x], not both"/>
+        <expression value="extension.exists() != value.exists()"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Extension|4.0.1"/>
+      </constraint>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
     </element>
     <element id="Questionnaire.item.extension:designNote">
       <path value="Questionnaire.item.extension"/>
@@ -1700,7 +1906,7 @@
       </base>
       <type>
         <code value="Extension"/>
-        <profile value="http://hl7.org/fhir/StructureDefinition/designNote"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/designNote|5.3.0-ballot-tc1"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -2296,7 +2502,7 @@
         </extension>
         <strength value="example"/>
         <description value="Codes for questionnaires, groups and individual questions."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/questionnaire-questions"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/questionnaire-questions|4.0.1"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -2662,7 +2868,7 @@
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource|4.0.1"/>
       </type>
       <condition value="que-7"/>
       <constraint>
@@ -2680,7 +2886,7 @@
         </extension>
         <strength value="example"/>
         <description value="Allowed values to answer questions."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/questionnaire-answers"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/questionnaire-answers|4.0.1"/>
       </binding>
       <mapping>
         <identity value="rim"/>
@@ -3047,6 +3253,14 @@
     </element>
     <element id="Questionnaire.item.answerOption.value[x]">
       <path value="Questionnaire.item.answerOption.value[x]"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
       <short value="Answer value"/>
       <definition value="A potential answer that's allowed as the answer to this question."/>
       <comment value="The data type of the value must agree with the item.type."/>
@@ -3074,7 +3288,7 @@
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource|4.0.1"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -3092,8 +3306,100 @@
         </extension>
         <strength value="example"/>
         <description value="Allowed values to answer questions."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/questionnaire-answers"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/questionnaire-answers|4.0.1"/>
       </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A - MIF rather than RIM level"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item.answerOption.value[x]:valueCoding">
+      <path value="Questionnaire.item.answerOption.value[x]"/>
+      <sliceName value="valueCoding"/>
+      <short value="Answer value"/>
+      <definition value="A potential answer that's allowed as the answer to this question."/>
+      <comment value="The data type of the value must agree with the item.type."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Questionnaire.item.answerOption.value[x]"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Coding"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <constraint>
+        <key value="sdc-base-1"/>
+        <severity value="error"/>
+        <human value="AnswerOption.valueCoding must have at least one of code or display"/>
+        <expression value="code.exists() or display.exists()"/>
+        <source value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire"/>
+      </constraint>
+      <constraint>
+        <key value="sdc-base-2"/>
+        <severity value="error"/>
+        <human value="If code exists, system must exist"/>
+        <expression value="code.exists() implies system.exists()"/>
+        <source value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire"/>
+      </constraint>
+      <mustSupport value="true"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="QuestionnaireQuestionOption"/>
+        </extension>
+        <strength value="example"/>
+        <description value="Allowed values to answer questions."/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/questionnaire-answers|4.0.1"/>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A - MIF rather than RIM level"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item.answerOption.value[x]:valueReference">
+      <path value="Questionnaire.item.answerOption.value[x]"/>
+      <sliceName value="valueReference"/>
+      <short value="Answer value"/>
+      <definition value="A potential answer that's allowed as the answer to this question."/>
+      <comment value="The data type of the value must agree with the item.type."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Questionnaire.item.answerOption.value[x]"/>
+        <min value="1"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <constraint>
+        <key value="sdc-base-4"/>
+        <severity value="error"/>
+        <human value="Reference must have at least one of reference, display, and identifier"/>
+        <expression value="reference.exists() or display.exists() or identifier.exists()"/>
+        <source value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire"/>
+      </constraint>
+      <mustSupport value="true"/>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
       <mapping>
         <identity value="rim"/>
         <map value="N/A - MIF rather than RIM level"/>
@@ -3313,7 +3619,7 @@
       </type>
       <type>
         <code value="Reference"/>
-        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Resource|4.0.1"/>
       </type>
       <constraint>
         <key value="ele-1"/>
@@ -3331,7 +3637,7 @@
         </extension>
         <strength value="example"/>
         <description value="Allowed values to answer questions."/>
-        <valueSet value="http://hl7.org/fhir/ValueSet/questionnaire-answers"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/questionnaire-answers|4.0.1"/>
       </binding>
       <mapping>
         <identity value="ihe-sdc"/>

@@ -1,0 +1,64 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "complies-with-slice-extra-in-closed",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-extra-in-closed",
+  "name": "Complieswithsliceextrainclosed",
+  "title": "complies-with-slice-extra-in-closed",
+  "status": "active",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-compliesWithProfile",
+      "valueCanonical": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-extra-in-closed-base"
+    }
+  ],
+  "differential": {
+    "element": [
+      {
+        "id": "Patient",
+        "path": "Patient"
+      },
+      {
+        "id": "Patient.identifier",
+        "path": "Patient.identifier",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "closed"
+        }
+      },
+      {
+        "id": "Patient.identifier:mrn",
+        "path": "Patient.identifier",
+        "sliceName": "mrn",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Patient.identifier:mrn.system",
+        "path": "Patient.identifier.system",
+        "patternUri": "http://hospital.example.org/mrn"
+      },
+      {
+        "id": "Patient.identifier:drivers",
+        "path": "Patient.identifier",
+        "sliceName": "drivers",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Patient.identifier:drivers.system",
+        "path": "Patient.identifier.system",
+        "patternUri": "http://example.org/drivers-license"
+      }
+    ]
+  }
+}

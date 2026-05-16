@@ -1,0 +1,68 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "complies-with-binding-strength-stronger",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/complies-with-binding-strength-stronger",
+  "name": "Complieswithbindingstrengthstronger",
+  "title": "complies-with-binding-strength-stronger",
+  "status": "active",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "contained": [
+    {
+      "resourceType": "ValueSet",
+      "id": "vs-marital2",
+      "url": "http://hl7.org/fhir/test/ValueSet/vs-marital2",
+      "name": "MaritalStatus2",
+      "status": "active",
+      "compose": {
+        "include": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
+            "concept": [
+              {
+                "code": "A"
+              },
+              {
+                "code": "D"
+              },
+              {
+                "code": "M"
+              },
+              {
+                "code": "S"
+              },
+              {
+                "code": "W"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-compliesWithProfile",
+      "valueCanonical": "http://hl7.org/fhir/test/StructureDefinition/complies-with-binding-strength-stronger-base"
+    }
+  ],
+  "differential": {
+    "element": [
+      {
+        "id": "Patient",
+        "path": "Patient"
+      },
+      {
+        "id": "Patient.maritalStatus",
+        "path": "Patient.maritalStatus",
+        "binding": {
+          "strength": "required",
+          "valueSet": "#vs-marital2"
+        }
+      }
+    ]
+  }
+}
