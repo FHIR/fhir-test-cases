@@ -485,6 +485,14 @@ Any text enclosed within is ignored
 		<test name="testStringUTCConvertsToDateTime" testing="convertsToDateTime" inputfile="patient-example.xml"><expression>'2015-02-04T14:34:28Z'.convertsToDateTime()</expression><output type="boolean">true</output></test>
 		<test name="testStringTZConvertsToDateTime" testing="convertsToDateTime" inputfile="patient-example.xml"><expression>'2015-02-04T14:34:28+10:00'.convertsToDateTime()</expression><output type="boolean">true</output></test>
 
+		<test name="testLiteralYearToDateTime" testing="toDateTime" inputfile="patient-example.xml"><expression>'2015'.toDateTime() = @2015</expression><output type="boolean">true</output></test>
+		<test name="testLiteralMonthToDateTime" testing="toDateTime" inputfile="patient-example.xml"><expression>'2015-02'.toDateTime() = @2015-02</expression><output type="boolean">true</output></test>
+		<test name="testLiteralDayToDateTime" testing="toDateTime" inputfile="patient-example.xml"><expression>'2015-02-04'.toDateTime() = @2015-02-04</expression><output type="boolean">true</output></test>
+		<test name="testLiteralSecondToDateTime" testing="toDateTime" inputfile="patient-example.xml"><expression>'2015-02-04T14:34:28'.toDateTime() = @2015-02-04T14:34:28</expression><output type="boolean">true</output></test>
+		<test name="testLiteralMillisecondToDateTime" testing="toDateTime" inputfile="patient-example.xml"><expression>'2015-02-04T14:34:28.123'.toDateTime() = @2015-02-04T14:34:28.123</expression><output type="boolean">true</output></test>
+		<test name="testLiteralUTCToDateTime" testing="toDateTime" inputfile="patient-example.xml"><expression>'2015-02-04T14:34:28Z'.toDateTime() = @2015-02-04T14:34:28Z</expression><output type="boolean">true</output></test>
+		<test name="testLiteralTZToDateTime" testing="toDateTime" inputfile="patient-example.xml"><expression>'2015-02-04T14:34:28+10:00'.toDateTime() = @2015-02-04T14:34:28+10:00</expression><output type="boolean">true</output></test>
+
 		<test name="testStringHourConvertsToTime" testing="convertsToTime" inputfile="patient-example.xml"><expression>'14'.convertsToTime()</expression><output type="boolean">true</output></test>
 		<test name="testStringMinuteConvertsToTime" testing="convertsToTime" inputfile="patient-example.xml"><expression>'14:34'.convertsToTime()</expression><output type="boolean">true</output></test>
 		<test name="testStringSecondConvertsToTime" testing="convertsToTime" inputfile="patient-example.xml"><expression>'14:34:28'.convertsToTime()</expression><output type="boolean">true</output></test>
@@ -1781,5 +1789,12 @@ Any text enclosed within is ignored
 	  <test name="txTest01" testing="expand" mode="tx" inputfile="patient-example.xml"><expression>%terminologies.expand('http://hl7.org/fhir/ValueSet/administrative-gender').expansion.contains.count()</expression><output type="integer">4</output></test>
 	  <test name="txTest02" testing="validateVS" mode="tx" inputfile="patient-example.xml"><expression>%terminologies.validateVS('http://hl7.org/fhir/ValueSet/administrative-gender', $this.gender).parameter.where(name = 'result').value</expression><output type="boolean">true</output></test>
 	  <test name="txTest03" testing="translate" mode="tx" inputfile="patient-example.xml"><expression>%terminologies.translate('http://hl7.org/fhir/ConceptMap/cm-address-use-v2', $this.address.use).parameter.where(name = 'match').part.where(name = 'concept').value.code</expression><output type="code">H</output></test>
+	</group>
+	
+	<group name="HTMLChecks">
+    <test name="htmlTest01" testing="htmlChecks" mode="html" inputfile="patient-example.xml"><expression>text.div.htmlChecks()</expression><output type="boolean">true</output></test>
+    <test name="htmlTest02" testing="htmlChecks" mode="html" inputfile="parameters-example-html.xml"><expression>%resource.parameter.where(name='goodHtml').value.htmlChecks()</expression><output type="boolean">true</output></test>
+    <test name="htmlTest03" testing="htmlChecks" mode="html" inputfile="parameters-example-html.xml"><expression>%resource.parameter.where(name='badHtml').value.htmlChecks()</expression><output type="boolean">false</output></test>
+    <test name="htmlTest04" testing="htmlChecks" mode="html" inputfile="parameters-example-html.xml"><expression>%resource.parameter.where(name='notString').value.htmlChecks().empty()</expression><output type="boolean">true</output></test>
 	</group>
 </tests>

@@ -5,7 +5,7 @@
 
 	<groupId>org.hl7.fhir.testcases</groupId>
 	<artifactId>fhir-test-cases</artifactId>
-	<version>1.7.61-SNAPSHOT</version>
+	<version>1.7.68-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>HL7 FHIR Test Cases</name>
@@ -60,16 +60,15 @@
 		<maven.compiler.testSource>17</maven.compiler.testSource>
 		<maven.compiler.testTarget>17</maven.compiler.testTarget>
 		<maven.compiler.testRelease>17</maven.compiler.testRelease>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.encoding>${project.build.sourceEncoding}</maven.compiler.encoding>
+
 	</properties>
 
 	<dependencies>
-		<!-- Use logback for tests -->
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.2.13</version>
-			<scope>test</scope>
-		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -78,13 +77,14 @@
 				<plugin>
 					<groupId>org.owasp</groupId>
 					<artifactId>dependency-check-maven</artifactId>
-					<version>12.2.1</version>
+					<version>12.2.2</version>
 					<configuration>
 						<nvdApiKeyEnvironmentVariable>NVD_API_KEY</nvdApiKeyEnvironmentVariable>
 						<suppressionFiles>
 							<suppressionFile>cve-suppression.xml</suppressionFile>
 						</suppressionFiles>
 						<formats>sarif,html</formats>
+						<ossIndexAnalyzerUrl>https://api.guide.sonatype.com</ossIndexAnalyzerUrl>
 					</configuration>
 				</plugin>
 			</plugins>

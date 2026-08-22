@@ -1,0 +1,174 @@
+{
+  "resourceType" : "CodeSystem",
+  "id" : "supplement-loinc",
+  "url" : "http://hl7.org/fhir/test/CodeSystem/supplement-loinc",
+  "version" : "1.0.0",
+  "name" : "LoincSupplementTest",
+  "title" : "Test Supplement for LOINC",
+  "status" : "active",
+  "experimental" : true,
+  "date" : "2026-08-11",
+  "publisher" : "HL7 FHIR Project",
+  "contact" : [{
+    "name" : "FHIR project team",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://hl7.org/fhir"
+    }]
+  }],
+  "description" : "Exercises the range of things a CodeSystem supplement can do to LOINC: replacement displays, definitions, designations in several languages and with several uses, and properties of each type. One of the codes (99999-9) is not valid in LOINC, and it sits in the middle of the list so that the error must be attributed to its own concept.",
+  "content" : "supplement",
+  "supplements" : "http://loinc.org",
+  "property" : [{
+    "code" : "legacy",
+    "uri" : "http://hl7.org/fhir/test/CodeSystem/supplement-loinc#legacy",
+    "description" : "Whether the concept is retained only for legacy interfaces",
+    "type" : "boolean"
+  },
+  {
+    "code" : "display-order",
+    "uri" : "http://hl7.org/fhir/test/CodeSystem/supplement-loinc#display-order",
+    "description" : "The order in which to display the concept on a local report",
+    "type" : "integer"
+  },
+  {
+    "code" : "local-code",
+    "uri" : "http://hl7.org/fhir/test/CodeSystem/supplement-loinc#local-code",
+    "description" : "The code used for this concept in the local laboratory system",
+    "type" : "string"
+  },
+  {
+    "code" : "category",
+    "uri" : "http://hl7.org/fhir/test/CodeSystem/supplement-loinc#category",
+    "description" : "Local reporting category for the concept",
+    "type" : "code"
+  },
+  {
+    "code" : "maps-to",
+    "uri" : "http://hl7.org/fhir/test/CodeSystem/supplement-loinc#maps-to",
+    "description" : "An equivalent concept in another code system",
+    "type" : "Coding"
+  },
+  {
+    "code" : "introduced",
+    "uri" : "http://hl7.org/fhir/test/CodeSystem/supplement-loinc#introduced",
+    "description" : "When the concept was introduced into local use",
+    "type" : "dateTime"
+  },
+  {
+    "code" : "conversion-factor",
+    "uri" : "http://hl7.org/fhir/test/CodeSystem/supplement-loinc#conversion-factor",
+    "description" : "Factor applied to convert the reported value to local units",
+    "type" : "decimal"
+  }],
+  "concept" : [{
+    "code" : "2947-0",
+    "display" : "Sodium (blood)",
+    "definition" : "Local definition: the amount of sodium in a sample of whole blood, reported in mmol/L.",
+    "designation" : [{
+      "language" : "de",
+      "use" : {
+        "system" : "http://terminology.hl7.org/CodeSystem/designation-usage",
+        "code" : "display"
+      },
+      "value" : "Natrium (Blut)"
+    },
+    {
+      "language" : "fr",
+      "value" : "Sodium (sang)"
+    }],
+    "property" : [{
+      "code" : "local-code",
+      "valueString" : "NA-BLD"
+    },
+    {
+      "code" : "display-order",
+      "valueInteger" : 10
+    },
+    {
+      "code" : "legacy",
+      "valueBoolean" : false
+    },
+    {
+      "code" : "category",
+      "valueCode" : "chemistry"
+    }]
+  },
+  {
+    "code" : "718-7",
+    "display" : "Haemoglobin",
+    "designation" : [{
+      "language" : "en-AU",
+      "use" : {
+        "system" : "http://terminology.hl7.org/CodeSystem/designation-usage",
+        "code" : "display"
+      },
+      "additionalUse" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "900000000000013009",
+        "display" : "Synonym"
+      }],
+      "value" : "Haemoglobin"
+    },
+    {
+      "language" : "de",
+      "value" : "Hämoglobin"
+    }],
+    "property" : [{
+      "code" : "maps-to",
+      "valueCoding" : {
+        "system" : "http://snomed.info/sct",
+        "code" : "441689006",
+        "display" : "Measurement of total hemoglobin concentration"
+      }
+    },
+    {
+      "code" : "conversion-factor",
+      "valueDecimal" : 0.6206
+    },
+    {
+      "code" : "introduced",
+      "valueDateTime" : "2019-04-01T00:00:00Z"
+    }]
+  },
+  {
+    "code" : "99999-9",
+    "display" : "Not a real LOINC code",
+    "designation" : [{
+      "language" : "de",
+      "value" : "Kein gültiger LOINC-Code"
+    }],
+    "property" : [{
+      "code" : "local-code",
+      "valueString" : "BOGUS-1"
+    },
+    {
+      "code" : "legacy",
+      "valueBoolean" : true
+    }]
+  },
+  {
+    "code" : "29463-7",
+    "display" : "Weight",
+    "definition" : "Local definition: patient weight as recorded at the point of care.",
+    "property" : [{
+      "code" : "display-order",
+      "valueInteger" : 20
+    },
+    {
+      "code" : "category",
+      "valueCode" : "observation"
+    },
+    {
+      "code" : "introduced",
+      "valueDateTime" : "2020-01-15"
+    }]
+  },
+  {
+    "code" : "8302-2",
+    "designation" : [{
+      "language" : "de",
+      "value" : "Körpergröße"
+    }]
+  }]
+}
