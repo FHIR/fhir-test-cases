@@ -1,0 +1,74 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "https://tx.fhir.org/r5"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-context",
+      "valueString" : "http://hl7.org/fhir/StructureDefinition/Measure|5.0.0"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://example.org/fhir/CodeSystem/measure-groups' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[41,6]",
+    "expression" : ["Measure.group[1].code.coding[0].system"]
+  },
+  {
+    "severity" : "information",
+    "code" : "not-found",
+    "details" : {
+      "text" : "The Library http://example.org/fhir/Library/does-not-exist could not be resolved, so expression validation may not be correct"
+    },
+    "diagnostics" : "[13,64]",
+    "expression" : ["Measure"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "required",
+    "details" : {
+      "text" : "Groups should have codes when there is more than one group"
+    },
+    "diagnostics" : "[14,4]",
+    "expression" : ["Measure.group[0]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "No CQL Libraries found on this Measure"
+    },
+    "diagnostics" : "[25,8]",
+    "expression" : ["Measure.group[0].population[0].criteria"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "required",
+    "details" : {
+      "text" : "A measure group population should have a code when there is more than one population"
+    },
+    "diagnostics" : "[30,6]",
+    "expression" : ["Measure.group[0].population[1]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "No CQL Libraries found on this Measure"
+    },
+    "diagnostics" : "[33,8]",
+    "expression" : ["Measure.group[0].population[1].criteria"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "required",
+    "details" : {
+      "text" : "Measure Groups should have at least one population"
+    },
+    "diagnostics" : "[39,4]",
+    "expression" : ["Measure.group[1]"]
+  }]
+}
