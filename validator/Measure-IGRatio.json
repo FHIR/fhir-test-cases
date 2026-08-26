@@ -1,0 +1,393 @@
+{
+  "resourceType" : "Measure",
+  "id" : "IGRatio",
+  "language" : "en",
+  "contained" : [{
+    "resourceType" : "Library",
+    "id" : "effective-data-requirements",
+    "extension" : [{
+      "extension" : [{
+        "url" : "libraryName",
+        "valueString" : "IGRatio"
+      },
+      {
+        "url" : "name",
+        "valueString" : "Numerator"
+      },
+      {
+        "url" : "statement",
+        "valueString" : "define \"Numerator\":\n  exists ([Observation])"
+      },
+      {
+        "url" : "displaySequence",
+        "valueInteger" : 0
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/cqf-logicDefinition"
+    },
+    {
+      "extension" : [{
+        "url" : "libraryName",
+        "valueString" : "IGRatio"
+      },
+      {
+        "url" : "name",
+        "valueString" : "Denominator"
+      },
+      {
+        "url" : "statement",
+        "valueString" : "define \"Denominator\":\n  exists ([Procedure])"
+      },
+      {
+        "url" : "displaySequence",
+        "valueInteger" : 1
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/cqf-logicDefinition"
+    },
+    {
+      "extension" : [{
+        "url" : "libraryName",
+        "valueString" : "IGRatio"
+      },
+      {
+        "url" : "name",
+        "valueString" : "Initial Population 1"
+      },
+      {
+        "url" : "statement",
+        "valueString" : "define \"Initial Population 1\":   // denominator's basis\n  exists ([Encounter])"
+      },
+      {
+        "url" : "displaySequence",
+        "valueInteger" : 2
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/cqf-logicDefinition"
+    },
+    {
+      "extension" : [{
+        "url" : "libraryName",
+        "valueString" : "IGRatio"
+      },
+      {
+        "url" : "name",
+        "valueString" : "Initial Population 2"
+      },
+      {
+        "url" : "statement",
+        "valueString" : "define \"Initial Population 2\":   // numerator's basis\n  exists ([Immunization])"
+      },
+      {
+        "url" : "displaySequence",
+        "valueInteger" : 3
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/cqf-logicDefinition"
+    },
+    {
+      "extension" : [{
+        "url" : "libraryName",
+        "valueString" : "IGRatio"
+      },
+      {
+        "url" : "name",
+        "valueString" : "Denominator Exclusion"
+      },
+      {
+        "url" : "statement",
+        "valueString" : "define \"Denominator Exclusion\":\n  Patient.deceased is true"
+      },
+      {
+        "url" : "displaySequence",
+        "valueInteger" : 4
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/cqf-logicDefinition"
+    },
+    {
+      "extension" : [{
+        "url" : "libraryName",
+        "valueString" : "IGRatio"
+      },
+      {
+        "url" : "name",
+        "valueString" : "Numerator Exclusion"
+      },
+      {
+        "url" : "statement",
+        "valueString" : "define \"Numerator Exclusion\":\n  exists ([ResearchStudy])"
+      },
+      {
+        "url" : "displaySequence",
+        "valueInteger" : 5
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/cqf-logicDefinition"
+    },
+    {
+      "extension" : [{
+        "url" : "libraryName",
+        "valueString" : "FHIRHelpers"
+      },
+      {
+        "url" : "name",
+        "valueString" : "ToBoolean"
+      },
+      {
+        "url" : "statement",
+        "valueString" : "define function ToBoolean(value boolean): value.value"
+      },
+      {
+        "url" : "displaySequence",
+        "valueInteger" : 6
+      }],
+      "url" : "http://hl7.org/fhir/StructureDefinition/cqf-logicDefinition"
+    }],
+    "name" : "EffectiveDataRequirements",
+    "status" : "active",
+    "type" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/library-type",
+        "code" : "module-definition"
+      }]
+    },
+    "relatedArtifact" : [{
+      "type" : "depends-on",
+      "display" : "FHIR model information",
+      "resource" : "http://hl7.org/fhir/uv/cql/Library/FHIR-ModelInfo|4.0.1"
+    },
+    {
+      "type" : "depends-on",
+      "display" : "Library FHIRHelpers",
+      "resource" : "http://hl7.org/fhir/Library/FHIRHelpers|4.0.1"
+    }],
+    "parameter" : [{
+      "name" : "Numerator",
+      "use" : "out",
+      "min" : 0,
+      "max" : "1",
+      "type" : "boolean"
+    },
+    {
+      "name" : "Denominator",
+      "use" : "out",
+      "min" : 0,
+      "max" : "1",
+      "type" : "boolean"
+    },
+    {
+      "name" : "Initial Population 1",
+      "use" : "out",
+      "min" : 0,
+      "max" : "1",
+      "type" : "boolean"
+    },
+    {
+      "name" : "Initial Population 2",
+      "use" : "out",
+      "min" : 0,
+      "max" : "1",
+      "type" : "boolean"
+    },
+    {
+      "name" : "Denominator Exclusion",
+      "use" : "out",
+      "min" : 0,
+      "max" : "1",
+      "type" : "boolean"
+    },
+    {
+      "name" : "Numerator Exclusion",
+      "use" : "out",
+      "min" : 0,
+      "max" : "1",
+      "type" : "boolean"
+    }],
+    "dataRequirement" : [{
+      "type" : "Observation",
+      "profile" : ["http://hl7.org/fhir/StructureDefinition/Observation"]
+    },
+    {
+      "type" : "Procedure",
+      "profile" : ["http://hl7.org/fhir/StructureDefinition/Procedure"]
+    },
+    {
+      "type" : "Encounter",
+      "profile" : ["http://hl7.org/fhir/StructureDefinition/Encounter"]
+    },
+    {
+      "type" : "Immunization",
+      "profile" : ["http://hl7.org/fhir/StructureDefinition/Immunization"]
+    },
+    {
+      "type" : "Patient",
+      "profile" : ["http://hl7.org/fhir/StructureDefinition/Patient"]
+    },
+    {
+      "type" : "ResearchStudy",
+      "profile" : ["http://hl7.org/fhir/StructureDefinition/ResearchStudy"]
+    }]
+  }],
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "cqi"
+  },
+  {
+    "url" : "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-effectiveDataRequirements",
+    "valueCanonical" : "#effective-data-requirements"
+  }],
+  "url" : "http://hl7.org/fhir/uv/cqm/Measure/IGRatio",
+  "identifier" : [{
+    "system" : "urn:ietf:rfc:3986",
+    "value" : "urn:oid:2.16.840.1.113883.4.642.40.61.29.32"
+  }],
+  "version" : "2.0.0",
+  "name" : "IGRatio",
+  "title" : "IG Ratio Measure",
+  "status" : "active",
+  "experimental" : true,
+  "date" : "2026-08-19T05:28:32+00:00",
+  "publisher" : "HL7 International / Clinical Quality Information",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/cqi"
+    }]
+  }],
+  "description" : "Ratio measure scoring example",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001"
+    }]
+  }],
+  "effectivePeriod" : {
+    "start" : "2027-01-01",
+    "end" : "2027-12-31"
+  },
+  "library" : ["http://hl7.org/fhir/uv/cqm/Library/IGRatio"],
+  "group" : [{
+    "id" : "Group_1",
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/cqm/StructureDefinition/cqm-scoring",
+      "valueCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/measure-scoring",
+          "code" : "ratio",
+          "display" : "Ratio"
+        }]
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/cqm/StructureDefinition/cqm-populationBasis",
+      "valueCode" : "boolean"
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/cqm/StructureDefinition/cqm-type",
+      "valueCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/measure-type",
+          "code" : "process",
+          "display" : "Process"
+        }]
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/cqm/StructureDefinition/cqm-improvementNotation",
+      "valueCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+          "code" : "increase",
+          "display" : "Increased score indicates improvement"
+        }]
+      }
+    }],
+    "population" : [{
+      "id" : "InitialPopulation_1",
+      "code" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/measure-population",
+          "code" : "initial-population",
+          "display" : "Initial Population"
+        }]
+      },
+      "criteria" : {
+        "language" : "text/cql-identifier",
+        "expression" : "Initial Population 1"
+      }
+    },
+    {
+      "id" : "InitialPopulation_2",
+      "code" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/measure-population",
+          "code" : "initial-population",
+          "display" : "Initial Population"
+        }]
+      },
+      "criteria" : {
+        "language" : "text/cql-identifier",
+        "expression" : "Initial Population 2"
+      }
+    },
+    {
+      "id" : "Denominator_1",
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/StructureDefinition/cqf-criteriaReference",
+        "valueString" : "InitialPopulation_1"
+      }],
+      "code" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/measure-population",
+          "code" : "denominator",
+          "display" : "Denominator"
+        }]
+      },
+      "criteria" : {
+        "language" : "text/cql-identifier",
+        "expression" : "Denominator"
+      }
+    },
+    {
+      "id" : "DenominatorExclusion_1",
+      "code" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/measure-population",
+          "code" : "denominator-exclusion",
+          "display" : "Denominator Exclusion"
+        }]
+      },
+      "criteria" : {
+        "language" : "text/cql-identifier",
+        "expression" : "Denominator Exclusion"
+      }
+    },
+    {
+      "id" : "Numerator_1",
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/StructureDefinition/cqf-criteriaReference",
+        "valueString" : "InitialPopulation_2"
+      }],
+      "code" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/measure-population",
+          "code" : "numerator",
+          "display" : "Numerator"
+        }]
+      },
+      "criteria" : {
+        "language" : "text/cql-identifier",
+        "expression" : "Numerator"
+      }
+    },
+    {
+      "id" : "NumeratorExclusion_1",
+      "code" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/measure-population",
+          "code" : "numerator-exclusion",
+          "display" : "Numerator Exclusion"
+        }]
+      },
+      "criteria" : {
+        "language" : "text/cql-identifier",
+        "expression" : "Numerator Exclusion"
+      }
+    }]
+  }]
+}
