@@ -1779,6 +1779,53 @@ Any text enclosed within is ignored
 		</test>
 	</group>
 
+	<group name="primitivesWithoutValue" description="FHIR primitive elements that carry extensions but no value (e.g. the data-absent-reason extension). Such an element is present in the tree, but it has no system value, so functions that need the value get an empty collection as input, and return empty (see hasValue()/getValue() in the FHIR spec)">
+		<test name="testNoValueExists" testing="exists" inputfile="patient-name-extensions.json">
+			<expression>Patient.name.given.first().exists()</expression>
+			<output type="boolean">true</output>
+		</test>
+		<test name="testNoValueExistsElement" testing="exists" inputfile="patient-name-extensions.json" mode="element">
+			<expression>Patient.name.given.first().exists()</expression>
+			<output type="boolean">true</output>
+		</test>
+		<test name="testNoValueHasValue" testing="hasValue" inputfile="patient-name-extensions.json">
+			<expression>Patient.name.given.first().hasValue()</expression>
+			<output type="boolean">false</output>
+		</test>
+		<test name="testNoValueLength" testing="length" inputfile="patient-name-extensions.json">
+			<!-- no value means no string to take the length of: empty in, empty out -->
+			<expression>Patient.name.given.first().length()</expression>
+		</test>
+		<test name="testNoValueLengthElement" testing="length" inputfile="patient-name-extensions.json" mode="element">
+			<expression>Patient.name.given.first().length()</expression>
+		</test>
+		<test name="testValueLength" testing="length" inputfile="patient-name-extensions.json">
+			<expression>Patient.name.given.last().length()</expression>
+			<output type="integer">5</output>
+		</test>
+		<test name="testNoValueToChars" testing="toChars" inputfile="patient-name-extensions.json">
+			<expression>Patient.name.given.first().toChars()</expression>
+		</test>
+		<test name="testNoValueSubstring" testing="substring" inputfile="patient-name-extensions.json">
+			<expression>Patient.name.given.first().substring(0, 1)</expression>
+		</test>
+		<test name="testNoValueUpper" testing="upper" inputfile="patient-name-extensions.json">
+			<expression>Patient.name.given.first().upper()</expression>
+		</test>
+		<test name="testNoValueComparison" testing="comparison" inputfile="patient-name-extensions.json">
+			<!-- comparing with something that has no value is comparing with empty -->
+			<expression>Patient.name.given.first() &lt; 'x'</expression>
+		</test>
+		<test name="testNoValueInvariant" testing="length" inputfile="patient-name-extensions.json">
+			<!-- the pattern used by invariants that check the length of a name part: exists() is true, but
+			     length() is empty, so the whole expression is empty (and therefore not true) -->
+			<expression>Patient.name.given.first().exists() and Patient.name.given.first().length() = 1</expression>
+		</test>
+		<test name="testNoValueInvariantElement" testing="length" inputfile="patient-name-extensions.json" mode="element">
+			<expression>Patient.name.given.first().exists() and Patient.name.given.first().length() = 1</expression>
+		</test>
+	</group>
+
   <group name="cdaTests">
 		<test name="testHasTemplateId1" testing="hasTemplateIdOf" mode="cda" inputfile="ccda.xml"><expression>hasTemplateIdOf('http://hl7.org/cda/us/ccda/StructureDefinition/ContinuityofCareDocumentCCD')</expression><output type="boolean">true</output></test>
 		<test name="testHasTemplateId2" testing="hasTemplateIdOf" mode="cda" inputfile="ccda.xml"><expression>ClinicalDocument.hasTemplateIdOf('http://hl7.org/cda/us/ccda/StructureDefinition/ContinuityofCareDocumentCCD')</expression><output type="boolean">true</output></test>
