@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="bodyheight" />
+  <url value="http://nictiz.nl/fhir/StructureDefinition/bodyheight" />
+  <version value="1.0.1" />
+  <name value="Vital Signs BodyHeight" />
+  <title value="VitalSigns BodyHeight" />
+  <status value="active" />
+  <publisher value="Nictiz" />
+  <contact>
+    <name value="Nictiz" />
+    <telecom>
+      <system value="email" />
+      <value value="info@nictiz.nl" />
+      <use value="work" />
+    </telecom>
+  </contact>
+  <description value="FHIR Body Height Profile - Copied FHIR Vital Sign Profile to remove .component.value quantity type constrain. More information can be found in GForge ticket #13796 or in the FHIR zulip chat https://chat.fhir.org/#narrow/stream/implementers/subject/Vital.20signs.20supporting.20observations." />
+  <copyright value="CC0" />
+  <fhirVersion value="3.0.2" />
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Observation" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Observation">
+      <path value="Observation" />
+      <short value="FHIR Body Height Profile" />
+      <definition value="This profile defines  how to represent Body Height observations in FHIR using a standard LOINC code and UCUM units of measure." />
+      <alias value="FHIR Lichaamslengte-profiel" />
+    </element>
+    <element id="Observation.code">
+      <path value="Observation.code" />
+      <short value="Body Height" />
+      <definition value="Body Height." />
+      <comment value="additional codes that translate or map to this code are allowed.  For example a more granular LOINC code or code that is used locally in a system." />
+      <alias value="Lichaamslengte" />
+    </element>
+    <element id="Observation.code.coding">
+      <path value="Observation.code.coding" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="code" />
+        </discriminator>
+        <ordered value="false" />
+        <rules value="open" />
+      </slicing>
+      <min value="1" />
+    </element>
+    <element id="Observation.code.coding:BodyHeightCode">
+      <path value="Observation.code.coding" />
+      <sliceName value="BodyHeightCode" />
+      <min value="1" />
+      <max value="1" />
+    </element>
+    <element id="Observation.code.coding:BodyHeightCode.system">
+      <path value="Observation.code.coding.system" />
+      <min value="1" />
+      <fixedUri value="http://loinc.org" />
+    </element>
+    <element id="Observation.code.coding:BodyHeightCode.code">
+      <path value="Observation.code.coding.code" />
+      <min value="1" />
+      <fixedCode value="8302-2" />
+    </element>
+    <element id="Observation.code.coding:BodyHeightCode.display">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true" />
+      </extension>
+      <path value="Observation.code.coding.display" />
+      <defaultValueString value="Body height" />
+    </element>
+<!--    <element id="Observation.value[x]:valueQuantity.code">
+      <path value="Observation.value[x].code" />
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="BodyLengthUnits" />
+        </extension>
+        <strength value="required" />
+        <description value="Common UCUM units for Body Length measures such as Body Height and Head Circumference" />
+        <valueSet value="http://hl7.org/fhir/ValueSet/ucum-bodylength" />
+      </binding>
+    </element> -->
+  </differential>
+</StructureDefinition>

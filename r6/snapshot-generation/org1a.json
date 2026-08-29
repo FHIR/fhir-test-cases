@@ -1,0 +1,307 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "org1a",
+  "url" : "http://hl7.org/fhir/us/core/StructureDefinition/org1a",
+  "version" : "3.1.0",
+  "name" : "USCoreOrganizationProfile",
+  "title" : "US Core Organization Profile",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2019-08-31T00:00:00+10:00",
+  "publisher" : "HL7 US Realm Steering Committee",
+  "contact" : [
+    {
+      "telecom" : [
+        {
+          "system" : "url",
+          "value" : "http://www.healthit.gov"
+        }
+      ]
+    }
+  ],
+  "description" : "Defines basic constraints and extensions on the Organization resource for use with other US Core resources",
+  "jurisdiction" : [
+    {
+      "coding" : [
+        {
+          "system" : "urn:iso:std:iso:3166",
+          "code" : "US",
+          "display" : "United States of America"
+        }
+      ]
+    }
+  ],
+  "fhirVersion" : "4.0.1",
+  "mapping" : [
+    {
+      "identity" : "servd",
+      "uri" : "http://www.omg.org/spec/ServD/1.0/",
+      "name" : "ServD"
+    },
+    {
+      "identity" : "v2",
+      "uri" : "http://hl7.org/v2",
+      "name" : "HL7 v2 Mapping"
+    },
+    {
+      "identity" : "rim",
+      "uri" : "http://hl7.org/v3",
+      "name" : "RIM Mapping"
+    },
+    {
+      "identity" : "w5",
+      "uri" : "http://hl7.org/fhir/fivews",
+      "name" : "FiveWs Pattern Mapping"
+    }
+  ],
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Organization",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Organization",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [
+      {
+        "id" : "Organization",
+        "path" : "Organization",
+        "mustSupport" : false,
+        "mapping" : [
+          {
+            "identity" : "servd",
+            "map" : "Organization"
+          }
+        ]
+      },
+      {
+        "id" : "Organization.identifier",
+        "path" : "Organization.identifier",
+        "slicing" : {
+          "discriminator" : [
+            {
+              "type" : "pattern",
+              "path" : "$this"
+            }
+          ],
+          "rules" : "open"
+        },
+        "comment" : "NPI preferred.",
+        "min" : 0,
+        "max" : "*",
+        "type" : [
+          {
+            "code" : "Identifier"
+          }
+        ],
+        "mustSupport" : true,
+        "mapping" : [
+          {
+            "identity" : "servd",
+            "map" : "n/a"
+          }
+        ]
+      },
+      {
+        "id" : "Organization.identifier.system",
+        "path" : "Organization.identifier.system",
+        "min" : 0,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "uri"
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "id" : "Organization.identifier.value",
+        "path" : "Organization.identifier.value",
+        "min" : 0,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "string"
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "id" : "Organization.identifier:NPI",
+        "path" : "Organization.identifier",
+        "sliceName" : "NPI",
+        "short" : "National Provider Identifier (NPI)",
+        "min" : 0,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "Identifier"
+          }
+        ],
+        "patternIdentifier" : {
+          "system" : "http://hl7.org/fhir/sid/us-npi"
+        },
+        "mustSupport" : true,
+        "mapping" : [
+          {
+            "identity" : "servd",
+            "map" : "n/a"
+          }
+        ]
+      },
+      {
+        "id" : "Organization.identifier:CLIA",
+        "path" : "Organization.identifier",
+        "sliceName" : "CLIA",
+        "short" : "Clinical Laboratory Improvement Amendments (CLIA) Number for laboratories",
+        "min" : 0,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "Identifier"
+          }
+        ],
+        "patternIdentifier" : {
+          "system" : "urn:oid:2.16.840.1.113883.4.7"
+        },
+        "mustSupport" : true,
+        "mapping" : [
+          {
+            "identity" : "servd",
+            "map" : "n/a"
+          }
+        ]
+      },
+      {
+        "id" : "Organization.active",
+        "path" : "Organization.active",
+        "min" : 1,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "boolean"
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "id" : "Organization.name",
+        "path" : "Organization.name",
+        "min" : 1,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "string"
+          }
+        ],
+        "mustSupport" : true,
+        "mapping" : [
+          {
+            "identity" : "servd",
+            "map" : "./PrimaryAddress and ./OtherAddresses"
+          }
+        ]
+      },
+      {
+        "id" : "Organization.contact.telecom",
+        "path" : "Organization.contact.telecom",
+        "min" : 0,
+        "max" : "*",
+        "type" : [
+          {
+            "code" : "ContactPoint"
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "id" : "Organization.contact.address",
+        "path" : "Organization.contact.address",
+        "min" : 0,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "Address"
+          }
+        ],
+        "mustSupport" : true,
+        "mapping" : [
+          {
+            "identity" : "servd",
+            "map" : "n/a"
+          }
+        ]
+      },
+      {
+        "id" : "Organization.contact.address.line",
+        "path" : "Organization.contact.address.line",
+        "min" : 0,
+        "max" : "4",
+        "type" : [
+          {
+            "code" : "string"
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "id" : "Organization.contact.address.city",
+        "path" : "Organization.contact.address.city",
+        "min" : 0,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "string"
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "id" : "Organization.contact.address.state",
+        "path" : "Organization.contact.address.state",
+        "min" : 0,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "string"
+          }
+        ],
+        "mustSupport" : true,
+        "binding" : {
+          "strength" : "extensible",
+          "description" : "Two letter USPS alphabetic codes.",
+          "valueSet" : "http://hl7.org/fhir/us/core/ValueSet/us-core-usps-state"
+        },
+        "mapping" : [
+          {
+            "identity" : "servd",
+            "map" : "./Sites"
+          }
+        ]
+      },
+      {
+        "id" : "Organization.contact.address.postalCode",
+        "path" : "Organization.contact.address.postalCode",
+        "short" : "US Zip Codes",
+        "min" : 0,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "string"
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "id" : "Organization.contact.address.country",
+        "path" : "Organization.contact.address.country",
+        "min" : 0,
+        "max" : "1",
+        "type" : [
+          {
+            "code" : "string"
+          }
+        ],
+        "mustSupport" : true
+      }
+    ]
+  }
+}

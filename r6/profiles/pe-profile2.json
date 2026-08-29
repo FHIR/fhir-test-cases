@@ -1,0 +1,79 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "pe-profile2",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/pe-profile2",
+  "version" : "0.1",
+  "name" : "TestDatatypeProfile",
+  "title" : "Test Datatype profile",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2022-04-20",
+  "publisher" : "HL7 International - Test Tools",
+  "description" : "Datatype Test Profile for Profile tooling",
+  "fhirVersion" : "5.0.0",
+  "kind" : "complex-type",
+  "abstract" : false,
+  "type" : "CodeableConcept",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/CodeableConcept",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [
+      {
+        "path" : "CodeableConcept",
+        "short" : "Test CodeableConcept Profile",
+        "definition" : "Test CodeableConcept Profile.",
+        "mustSupport" : false
+      },
+      {
+        "path" : "CodeableConcept.extension",
+        "max" : "0"
+      },
+      {
+        "path" : "CodeableConcept.coding",
+        "slicing" : {
+          "discriminator" : [{
+            "type" : "value",
+            "path" : "system"
+          }],
+          "ordered" : false,
+          "rules" : "open"
+        },
+        "min" : 1,
+        "max" : "2"
+      },
+      {
+        "path" : "CodeableConcept.coding",
+        "sliceName" : "snomedct",
+        "min" : 1,
+        "max" : "1"
+      },
+      {
+        "path" : "CodeableConcept.coding.system",
+        "fixedUri" : "http://snomed.info/sct"
+      },
+      {
+        "path" : "CodeableConcept.coding.userSelected",
+        "max" : "0"
+      },
+      {
+        "path" : "CodeableConcept.coding",
+        "sliceName" : "loinc",
+        "min" : 0,
+        "max" : "1"
+      },
+      {
+        "path" : "CodeableConcept.coding.system",
+        "fixedUri" : "http://loinc.org"
+      },
+      {
+        "path" : "CodeableConcept.coding.userSelected",
+        "max" : "0"
+      },
+      {
+        "path" : "CodeableConcept.text",
+        "min" : 1,
+        "mustHaveValue" : true
+      }
+    ]
+  }
+}

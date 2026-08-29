@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="8b30c416-6bee-4d8c-b3d2-c4f958484aeb"/>
+  <url value="urn:uuid:8b30c416-6bee-4d8c-b3d2-c4f958484aeb" />
+  <version value="0.0.0" />
+  <name value="SliceBase" />
+  <title value="Base Patient for Slice" />
+  <status value="draft" />
+  <experimental value="true" />
+  <fhirVersion value="4.0.1" />
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Patient" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Patient.identifier">
+      <path value="Patient.identifier" />
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="system"/>
+        </discriminator>
+      </slicing>
+    </element>
+    <element id="Patient.identifier:slice1">
+      <path value="Patient.identifier" />
+      <sliceName value="slice1"/>
+      <min value="1"/>
+    </element>
+    <element id="Patient.identifier:slice1.system">
+      <path value="Patient.identifier.system" />
+      <min value="1"/>
+      <fixedUri value="http://something"/>
+    </element>
+    <element id="Patient.identifier:slice1.value">
+      <path value="Patient.identifier.value" />
+      <min value="1"/>
+    </element>
+    <element id="Patient.identifier:slice2">
+      <path value="Patient.identifier" />
+      <sliceName value="slice2"/>
+      <min value="1"/>
+    </element>
+    <element id="Patient.identifier:slice2.system">
+      <path value="Patient.identifier.system" />
+      <min value="1"/>
+      <fixedUri value="http://something/else"/>
+    </element>
+    <element id="Patient.identifier:slice2.value">
+      <path value="Patient.identifier.value" />
+      <min value="1"/>
+    </element>
+  </differential>
+</StructureDefinition>

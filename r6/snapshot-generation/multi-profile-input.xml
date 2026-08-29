@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+    <id value="multi-profile"/>
+    <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-additionalBase">
+        <valueCanonical value="http://hl7.org/fhir/test/StructureDefinition/multi-additional-base"/>
+    </extension>
+    <url value="http://hl7.org/fhir/test/StructureDefinition/multi-profile"/>
+    <status value="draft"/>
+    <experimental value="true"/>
+    <kind value="resource"/>
+    <abstract value="false"/>
+    <type value="Patient"/>
+    <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+    <derivation value="constraint"/>
+    <differential>
+    <element>
+      <path value="Patient"/>
+      <short value="Short from Profile"/>
+      <alias value="Patient-Profile"/>
+    </element>
+    <element>
+      <path value="Patient.extension"/>
+      <sliceName value="genderIdentity"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/individual-genderIdentity"/>
+      </type>
+    </element>
+    <element>
+      <path value="Patient.name"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.address.line"/>
+      <max value="2"/>
+    </element>
+    <element>
+      <path value="Patient.address.country"/>
+      <fixedString value="AU"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="Patient.maritalStatus"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://hl7.org/fhir/test/StructureDefinition/multi-dt-base"/>
+      </type>
+    </element>
+    <element>
+      <path value="Patient.multipleBirth[x]"/>
+      <type>
+        <code value="integer"/>
+      </type>
+    </element>
+    <element>
+      <path value="Patient.multipleBirthInteger"/>
+      <minValueInteger value="2"/>
+      <maxValueInteger value="4"/>
+    </element>
+    <element>
+      <path value="Patient.communication.language"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://hl7.org/fhir/test/StructureDefinition/multi-dt-base"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

@@ -1,0 +1,78 @@
+{
+  "resourceType": "StructureDefinition",
+  "url": "http://fhir.de/StructureDefinition/identifier-iknr",
+  "version": "0.9.6",
+  "name": "IdentifierIknr",
+  "title": "Identifier-Profil für die Abbildung eines Institutionskennzeichens (IKNR)",
+  "status": "draft",
+  "date": "2019-12-08",
+  "description": "Identifier-Profil für die Abbildung eines Institutionskennzeichens (IKNR)",
+  "fhirVersion": "4.0.1",
+  "kind": "complex-type",
+  "abstract": false,
+  "type": "Identifier",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Identifier",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Identifier.use",
+        "path": "Identifier.use",
+        "fixedCode": "official"
+      },
+      {
+        "id": "Identifier.type.coding",
+        "path": "Identifier.type.coding",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1
+      },
+      {
+        "id": "Identifier.type.coding:XX-Type",
+        "path": "Identifier.type.coding",
+        "sliceName": "XX-Type",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Identifier.type.coding:XX-Type.system",
+        "path": "Identifier.type.coding.system",
+        "min": 1,
+        "fixedUri": "http://terminology.hl7.org/CodeSystem/v2-0203"
+      },
+      {
+        "id": "Identifier.type.coding:XX-Type.code",
+        "path": "Identifier.type.coding.code",
+        "min": 1,
+        "fixedCode": "XX"
+      },
+      {
+        "id": "Identifier.system",
+        "path": "Identifier.system",
+        "min": 1,
+        "fixedUri": "http://fhir.de/NamingSystem/arge-ik/iknr"
+      },
+      {
+        "id": "Identifier.value",
+        "path": "Identifier.value",
+        "min": 1,
+        "constraint": [
+          {
+            "key": "ik-1",
+            "severity": "warning",
+            "human": "Eine IK muss 8- (ohne Prüfziffer) oder 9-stellig (mit Prüfziffer) sein",
+            "expression": "matches('[0-9]{8,9}')",
+            "source": "Identifier"
+          }
+        ]
+      }
+    ]
+  }
+}

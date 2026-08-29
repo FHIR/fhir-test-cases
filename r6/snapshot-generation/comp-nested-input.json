@@ -1,0 +1,140 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "my-composition-snapshot-error",
+  "url": "http://example.org/StructureDefinition/my-composition-snapshot-error",
+  "name": "MyComposition_SNAPSHOT_ERROR",
+  "status": "draft",
+  "fhirVersion": "6.0.0-ballot3",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Composition",
+  "baseDefinition": "http://example.org/StructureDefinition/parent-recommendation-slices-not-defined",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Composition.section:parentSliceA",
+        "path": "Composition.section",
+        "sliceName": "parentSliceA"
+      },
+      {
+        "id": "Composition.section:parentSliceA.section:sliceA",
+        "path": "Composition.section.section",
+        "sliceName": "sliceA",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "BackboneElement"
+          }
+        ]
+      },
+      {
+        "id": "Composition.section:parentSliceA.section:sliceA.code.coding",
+        "path": "Composition.section.section.code.coding",
+        "min": 1,
+        "max": "1",
+        "patternCoding": {
+          "code": "sliceA",
+          "display": "sliceA"
+        }
+      },
+      {
+        "id": "Composition.section:parentSliceA.section:sliceA.section",
+        "path": "Composition.section.section.section",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "code"
+            }
+          ],
+          "rules": "closed"
+        }
+      },
+      {
+        "id": "Composition.section:parentSliceA.section:sliceA.section:subSlice",
+        "path": "Composition.section.section.section",
+        "sliceName": "subSlice",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "BackboneElement"
+          }
+        ]
+      },
+      {
+        "id": "Composition.section:parentSliceA.section:sliceA.section:subSlice.code",
+        "path": "Composition.section.section.section.code",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "subSlice"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Composition.section:parentSliceA.section:sliceB",
+        "path": "Composition.section.section",
+        "sliceName": "sliceB",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "BackboneElement"
+          }
+        ]
+      },
+      {
+        "id": "Composition.section:parentSliceA.section:sliceB.code.coding",
+        "path": "Composition.section.section.code.coding",
+        "min": 1,
+        "max": "1",
+        "patternCoding": {
+          "code": "sliceB",
+          "display": "sliceB"
+        }
+      },
+      {
+        "id": "Composition.section:parentSliceA.section:sliceB.section",
+        "path": "Composition.section.section.section",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "code"
+            }
+          ],
+          "rules": "closed"
+        }
+      },
+      {
+        "id": "Composition.section:parentSliceA.section:sliceB.section:subSlice",
+        "path": "Composition.section.section.section",
+        "sliceName": "subSlice",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "BackboneElement"
+          }
+        ]
+      },
+      {
+        "id": "Composition.section:parentSliceA.section:sliceB.section:subSlice.code",
+        "path": "Composition.section.section.section.code",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "subSlice"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

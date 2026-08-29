@@ -1,0 +1,70 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "parent-recommendation-slices-not-defined",
+  "url": "http://example.org/StructureDefinition/parent-recommendation-slices-not-defined",
+  "name": "ParentComposition_SLICES_NOT_DEFINED",
+  "status": "draft",
+  "fhirVersion": "6.0.0-ballot3",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Composition",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Composition",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Composition.section",
+        "path": "Composition.section",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "code"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1
+      },
+      {
+        "id": "Composition.section:parentSliceA",
+        "path": "Composition.section",
+        "sliceName": "parentSliceA",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Composition.section:parentSliceA.code",
+        "path": "Composition.section.code",
+        "min": 1,
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "code": "parentSliceA"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Composition.section:parentSliceA.section",
+        "path": "Composition.section.section",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "code"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Composition.section:parentSliceA.section:someSlice",
+        "path": "Composition.section.section",
+        "sliceName": "someSlice",
+        "min": 0,
+        "max": "*"
+      }
+    ]
+  }
+}

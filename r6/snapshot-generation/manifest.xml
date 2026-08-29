@@ -1,0 +1,293 @@
+<snapshot-generation-tests>
+  <test gen="true" id="t1" description="no change in the differential">
+    <rule text="The snapshot must have the same number of elements, in the same order, with matching paths" fhirpath="fixture('t1-output').snapshot.element.select(path) = fixture('patient').snapshot.element.select(path)"/>
+    <rule text="The snapshot elements must be the same - check short description" fhirpath="fixture('t1-output').snapshot.element.all(defineVariable('A').select(short = fixture('patient').snapshot.element.where(path = %A.path).short))"/>
+    <rule text="The snapshot elements must be the same - check min cardinality" fhirpath="fixture('t1-output').snapshot.element.all(defineVariable('A').select(min = fixture('patient').snapshot.element.where(path = %A.path).min))"/>
+    <rule text="The snapshot elements must be the same - check max cardinality" fhirpath="fixture('t1-output').snapshot.element.all(defineVariable('A').select(max = fixture('patient').snapshot.element.where(path = %A.path).max))"/>
+    <rule text="The snapshot elements must be the same - check binding" fhirpath="fixture('t1-output').snapshot.element.where(binding.valueSet.exists()).all(defineVariable('A').select(binding.valueSet.trace('A') = fixture('patient').snapshot.element.where(path = %A.path).binding.valueSet.trace('B')))"/>
+  </test>
+  <test gen="true" id="t2" description="no change in the differential, but a value set">
+    <rule text="The snapshot must have the same number of elements, in the same order, with matching paths" fhirpath="fixture('t2-output').snapshot.element.select(path) = fixture('valueset').snapshot.element.select(path)"/>
+    <rule text="The snapshot elements must be the same" fhirpath="fixture('t2-output').snapshot.element.all(defineVariable('A').select(short = fixture('valueset').snapshot.element.where(path = %A.path).short))"/>
+  </test>
+  <test gen="true" id="t3" description="change a cardinality">
+    <rule text="The snapshot must have the same number of elements, in the same order, with matching paths" fhirpath="fixture('t3-output').snapshot.element.select(path) = fixture('patient').snapshot.element.select(path)"/>
+    <rule text="The snapshot elements must be the same" fhirpath="fixture('t3-output').snapshot.element.all(defineVariable('A').select(short = fixture('patient').snapshot.element.where(path = %A.path).short))"/>
+    <rule text="The patient.identifier cardinality must be right" fhirpath="fixture('t3-output').snapshot.element.where(path = 'Patient.identifier').min = 1"/>
+  </test>
+  <test gen="true" id="t4" description="test appending documentation">
+    <rule text="The patient.identifier documentation must be right" fhirpath="fixture('t4-output').snapshot.element.where(path = 'Patient.identifier').definition.trace('definition') != '... some more doco'"/>
+  </test>
+  <test gen="true" id="t4a" description="test appending documentation">
+    <rule text="The patient.contact.identifier documentation must be right" fhirpath="fixture('t4a-output').snapshot.element.where(path = 'Patient.contact.telecom').definition.trace('definition') != '... some more doco'"/>
+  </test>
+  <test gen="true" id="t5" description="type narrowing #1">
+    <rule text="The patient.deceased type must be right" fhirpath="fixture('t5-output').snapshot.element.where(base.path = 'Patient.deceased[x]').type.code = 'dateTime'"/>
+    <rule text="The patient.deceased path must be right" fhirpath="fixture('t5-output').snapshot.element.where(base.path = 'Patient.deceased[x]').path = 'Patient.deceased[x]'"/>
+  </test>
+  <test gen="true" id="t6" description="type narrowing #2 - this makes a comment about the use of date, but doesn&#39;t constrain">
+    <rule text="The patient.deceased type must be right" fhirpath="fixture('t6-output').snapshot.element.where(path = 'Patient.deceased[x]' and sliceName.exists()).type.code.trace('code') = 'dateTime'"/>
+    <rule text="The patient.deceased path must be right" fhirpath="fixture('t6-output').snapshot.element.where(path = 'Patient.deceased[x]' and sliceName.exists()).path.trace('path') = 'Patient.deceased[x]'"/>
+  </test>
+  <test gen="true" id="t7" description="type mapping resolution">
+    <rule text="The mapping must be made" fhirpath="fixture('t7-output').snapshot.element.where(base.path = 'Patient.identifier').mapping.count() = fixture('t1-output').snapshot.element.where(base.path = 'Patient.identifier').mapping.count() + 1"/>
+  </test>
+  <test gen="true" id="t8" description="walking into a type">
+    <rule text="Mustsupport must be true on Patient.identifier" fhirpath="fixture('t8-output').snapshot.element.where(path = 'Patient.identifier').mustSupport"/>
+    <rule text="Mustsupport must be true on Patient.identifier.system" fhirpath="fixture('t8-output').snapshot.element.where(path = 'Patient.identifier.system').mustSupport"/>
+  </test>
+  <test gen="true" id="t9" description="walking into a type (sparsely)">
+    <rule text="Mustsupport must not be true on Patient.identifier" fhirpath="fixture('t9-output').snapshot.element.where(path = 'Patient.identifier').mustSupport.not()"/>
+    <rule text="Mustsupport must be true on Patient.identifier.system" fhirpath="fixture('t9-output').snapshot.element.where(path = 'Patient.identifier.system').mustSupport"/>
+  </test>
+  <test gen="true" id="t10" description="Simple slicing">
+    <rule text="Patient.identifier must be sliced" fhirpath="fixture('t10-output').snapshot.element.where(path = 'Patient.identifier').first().slicing.exists()"/>
+    <rule text="Patient.identifier must not have a slice name" fhirpath="fixture('t10-output').snapshot.element.where(path = 'Patient.identifier').first().sliceName.empty()"/>
+    <rule text="Patient.identifier must be sliced into two slices" fhirpath="fixture('t10-output').snapshot.element.where(path = 'Patient.identifier').count() = 3"/>
+    <rule text="Patient.identifier slice must not have a slice name" fhirpath="fixture('t10-output').snapshot.element.where(path = 'Patient.identifier').tail().slicing.empty()"/>
+    <rule text="Patient.identifier tail must have a slice name" fhirpath="fixture('t10-output').snapshot.element.where(path = 'Patient.identifier').tail().all(sliceName.empty().not())"/>
+    <rule text="Patient.identifier.use must be fixed" fhirpath="fixture('t10-output').snapshot.element.where(path = 'Patient.identifier.use').all(fixed.empty().not())"/>
+  </test>
+  <test gen="true" id="t11" description="slicing on extensions">
+    <rule text="Patient.extension must be sliced" fhirpath="fixture('t11-output').snapshot.element.where(path = 'Patient.extension').first().slicing.exists()"/>
+    <rule text="Patient.extension first must not have a slice name" fhirpath="fixture('t11-output').snapshot.element.where(path = 'Patient.extension').first().sliceName.empty()"/>
+    <rule text="Patient.extension must be sliced into two slices" fhirpath="fixture('t11-output').snapshot.element.where(path = 'Patient.extension').count() = 3"/>
+    <rule text="Patient.extension must not have a slice name" fhirpath="fixture('t11-output').snapshot.element.where(path = 'Patient.extension').tail().slicing.empty()"/>
+    <rule text="Patient.extension tail must not have a slice name" fhirpath="fixture('t11-output').snapshot.element.where(path = 'Patient.extension').tail().all(sliceName.empty().not())"/>
+    <rule text="Patient.extension cardinality must be correct" fhirpath="fixture('t11-output').snapshot.element.where(path = 'Patient.extension').first().max.exists()"/>
+    <rule text="Patient.extension cardinality must be correct" fhirpath="fixture('t11-output').snapshot.element.where(path = 'Patient.extension')[1].min.exists()"/>
+  </test>
+  <test gen="true" id="t12" description="slicing on extensions, no set up of slicing">
+    <rule text="Patient.extension must be sliced" fhirpath="fixture('t12-output').snapshot.element.where(path = 'Patient.extension').first().slicing.exists()"/>
+    <rule text="Patient.extension first must not have a slice name" fhirpath="fixture('t12-output').snapshot.element.where(path = 'Patient.extension').first().sliceName.empty()"/>
+    <rule text="Patient.extension must be sliced into two slices" fhirpath="fixture('t12-output').snapshot.element.where(path = 'Patient.extension').count() = 3"/>
+    <rule text="Patient.extension must not have a slice name" fhirpath="fixture('t12-output').snapshot.element.where(path = 'Patient.extension').tail().slicing.empty()"/>
+    <rule text="Patient.extension tail must not have a slice name" fhirpath="fixture('t12-output').snapshot.element.where(path = 'Patient.extension').tail().all(sliceName.empty().not())"/>
+    <rule text="Patient.extension cardinality must be correct" fhirpath="fixture('t12-output').snapshot.element.where(path = 'Patient.extension')[1].min.exists()"/>
+  </test>
+  <test gen="true" id="t12a" description="slicing on extensions, no set up of slicing, single slice"/>
+  <test gen="true" id="t13" description="complex slicing"/>
+  <test gen="true" id="t14" description="see task 8742"/>
+  <test gen="true" id="t15" description="complex extensions with children"/>
+  <test gen="true" id="t15a" fail="true" description="Unknown extension" allow="none"/>
+  <test gen="true" id="t16" debug="false" description="extending a complex extension&#39;s children in derived profile"/>
+  <test gen="true" id="t17" debug="false" description="use a modifier extension instead">
+    <rule text="Patient.modifierExtension must be sliced" fhirpath="fixture('t17-output').snapshot.element.where(path = 'Patient.modifierExtension').first().slicing.exists()"/>
+    <rule text="Patient.modifierExtension first must not have a slice name" fhirpath="fixture('t17-output').snapshot.element.where(path = 'Patient.modifierExtension').first().sliceName.empty()"/>
+    <rule text="Patient.modifierExtension must be sliced into two slices" fhirpath="fixture('t17-output').snapshot.element.where(path = 'Patient.modifierExtension').count() = 3"/>
+    <rule text="Patient.modifierExtension must not have a slice name" fhirpath="fixture('t17-output').snapshot.element.where(path = 'Patient.modifierExtension').tail().slicing.empty()"/>
+    <rule text="Patient.modifierExtension tail must not have a slice name" fhirpath="fixture('t17-output').snapshot.element.where(path = 'Patient.modifierExtension').tail().all(sliceName.empty().not())"/>
+    <rule text="Patient.modifierExtension cardinality must be correct" fhirpath="fixture('t17-output').snapshot.element.where(path = 'Patient.modifierExtension').first().max.exists()"/>
+    <rule text="Patient.modifierExtension cardinality must be correct" fhirpath="fixture('t17-output').snapshot.element.where(path = 'Patient.modifierExtension')[1].min.exists()"/>
+  </test>
+  <test gen="true" id="t18" description="use a modifier extension, with no set up">
+    <rule text="Patient.modifierExtension must be sliced" fhirpath="fixture('t18-output').snapshot.element.where(path = 'Patient.modifierExtension').first().slicing.exists()"/>
+    <rule text="Patient.modifierExtension first must not have a slice name" fhirpath="fixture('t18-output').snapshot.element.where(path = 'Patient.modifierExtension').first().sliceName.empty()"/>
+    <rule text="Patient.modifierExtension must be sliced into two slices" fhirpath="fixture('t18-output').snapshot.element.where(path = 'Patient.modifierExtension').count() = 3"/>
+    <rule text="Patient.modifierExtension must not have a slice name" fhirpath="fixture('t18-output').snapshot.element.where(path = 'Patient.modifierExtension').tail().slicing.empty()"/>
+    <rule text="Patient.modifierExtension tail must not have a slice name" fhirpath="fixture('t18-output').snapshot.element.where(path = 'Patient.modifierExtension').tail().all(sliceName.empty().not())"/>
+    <rule text="Patient.modifierExtension cardinality must be correct" fhirpath="fixture('t18-output').snapshot.element.where(path = 'Patient.modifierExtension').first().max.exists()"/>
+    <rule text="Patient.modifierExtension cardinality must be correct" fhirpath="fixture('t18-output').snapshot.element.where(path = 'Patient.modifierExtension')[1].min.exists()"/>
+  </test>
+  <test gen="true" id="t19" description="use a modifier extension, with no set up, and only one slice">
+    <rule text="Patient.modifierExtension must be sliced" fhirpath="fixture('t19-output').snapshot.element.where(path = 'Patient.modifierExtension').first().slicing.exists()"/>
+    <rule text="Patient.modifierExtension first must not have a slice name" fhirpath="fixture('t19-output').snapshot.element.where(path = 'Patient.modifierExtension').first().sliceName.empty()"/>
+    <rule text="Patient.modifierExtension must be sliced into one slices" fhirpath="fixture('t19-output').snapshot.element.where(path = 'Patient.modifierExtension').count() = 2"/>
+    <rule text="Patient.modifierExtension must not have a slice name" fhirpath="fixture('t19-output').snapshot.element.where(path = 'Patient.modifierExtension').tail().slicing.empty()"/>
+    <rule text="Patient.modifierExtension tail must not have a slice name" fhirpath="fixture('t19-output').snapshot.element.where(path = 'Patient.modifierExtension').tail().all(sliceName.empty().not())"/>
+  </test>
+  <test gen="true" id="t21" description="Slicing a backbone element on it&#39;s nested use">
+    <rule text="PlanDefinition.action.action must be sliced" fhirpath="fixture('t21-output').snapshot.element.where(path = 'PlanDefinition.action.action').first().slicing.exists()"/>
+    <rule text="PlanDefinition.action.action first must not have a slice name" fhirpath="fixture('t21-output').snapshot.element.where(path = 'PlanDefinition.action.action').first().sliceName.empty()"/>
+    <rule text="PlanDefinition.action.action must be sliced into two slices" fhirpath="fixture('t21-output').snapshot.element.where(path = 'PlanDefinition.action.action').count() = 3"/>
+    <rule text="PlanDefinition.action.action tail must not have a slice name" fhirpath="fixture('t21-output').snapshot.element.where(path = 'PlanDefinition.action.action').tail().slicing.empty()"/>
+    <rule text="PlanDefinition.action.action tail must not have a slice name" fhirpath="fixture('t21-output').snapshot.element.where(path = 'PlanDefinition.action.action').tail().all(sliceName.empty().not())"/>
+  </test>
+  <test gen="true" id="t22" description="Constrain base element before slicing">
+    <rule text="element count increased by 64" fhirpath="fixture('t22-output').snapshot.element.count().trace('t22o') = fixture('patient').snapshot.element.count().trace('t22patient') + 64"/>
+  </test>
+  <test gen="true" sort="true" id="t23" description="Test Slicing - unsorted differential"/>
+  <test gen="true" id="t23a" fail="true" description="Test Slicing - unsorted differential"/>
+  <test gen="true" id="t24b" register="t24a" description="Constrain base element before slicing when slices were already defined - backbone"/>
+  <test sort="true" id="t26" description="Test differential sorting for polymorphic references">
+    <rule text="differential element count the same" fhirpath="fixture('t26-output').differential.element.count() = fixture('t26').differential.element.count()"/>
+  </test>
+  <test gen="true" sort="true" id="t28" description="Test children of a polymorphic type">
+    <rule text="Element count must be increased by 16" fhirpath="fixture('t28-output').snapshot.element.count().trace('t28o') = fixture('operationoutcome').snapshot.element.count().trace('t28') + 17"/>
+  </test>
+  <test gen="true" sort="true" id="t29" description="Test recursion on elements that are deeper than children of the root and have a different name (Parameters.parameter.part)">
+    <rule text="There is an element with id 'Parameters.parameter.part:foo.id'" fhirpath="fixture('t29-output').snapshot.element.where(id = 'Parameters.parameter.part:foo.id').count()=1"/>
+  </test>
+  <test gen="true" sort="true" id="t29a" fail="true" description="Test recursion on elements that are deeper than children of the root and have a different name (Parameters.parameter.part)"/>
+  <test gen="true" id="t29b" fail="true" regex=".*OperationOutcome.*" description="Test recursion on elements that are deeper than children of the root and have a different name (Parameters.parameter.part)"/>
+  <test gen="true" sort="true" debug="false" id="t30a" description="Profile and derived profile both slice a backbone element; derived profile"/>
+  <test gen="true" sort="true" debug="false" id="t30b" include="t30a" description="Profile and derived profile both slice a backbone element; derived profile">
+    <rule text="Snapshot doesn't result in an error'" fhirpath="fixture('t30b-output').snapshot.element.count().trace('t30bo')&gt;1"/>
+  </test>
+  <test gen="true" sort="true" id="t31" description="Propagate extensions from differential to snapshot"/>
+  <test gen="true" sort="true" id="t32" description="Test disappearing slice definition">
+    <rule text="Snapshot Questionnaire.item element has slicing'" fhirpath="fixture('t32-output').snapshot.element.where(id = 'Questionnaire.item').slicing.count().trace('t32o item slicing count')=1"/>
+  </test>
+  <test gen="true" sort="true" id="t33" description="Test disappearing slice definition">
+    <rule text="Snapshot contains referenced item children with correct path'" fhirpath="fixture('t33-output').snapshot.element.where(id = 'ExplanationOfBenefit.addItem.adjudication.extension').exists()"/>
+  </test>
+  <test gen="true" sort="true" id="t34a" description="Referencing a custom extension"/>
+  <test gen="true" sort="true" id="t34" register="t34-defn" description="Referencing a custom extension">
+    <rule text="There must be 2 elements on Basic.identifier.extension in the snapshot" fhirpath="fixture('t34-output').snapshot.element.where(path = 'Basic.identifier.extension').count() = 2"/>
+    <rule text="The narrative must mention the extension URL (http://www.fhir.org/guides/test3/StructureDefinition/extension-identifier-status)" fhirpath="fixture('t34-output').text.div.contains('http://www.fhir.org/guides/test3/StructureDefinition/extension-identifier-status')"/>
+  </test>
+  <test gen="true" sort="true" id="t35" register="t35-defn" description="Referencing a profiled custom extension">
+    <rule text="There must be 2 elements on Basic.identifier.extension in the snapshot" fhirpath="fixture('t35-output').snapshot.element.where(path = 'Basic.identifier.extension').count() = 2"/>
+    <rule text="The narrative must mention the extension URL (http://www.fhir.org/guides/test3/StructureDefinition/extension-identifier-status)" fhirpath="fixture('t35-output').text.div.contains('http://www.fhir.org/guides/test3/StructureDefinition/extension-identifier-status')"/>
+  </test>
+  <test gen="true" sort="true" id="t36" description="Deep Recursion">
+    <rule text="Snapshot generation didn't blow up" fhirpath="fixture('t36-output').snapshot.element.count() &gt; 0"/>
+  </test>
+  <test gen="true" sort="true" id="t37" fail="true" description="Test bad Path"/>
+  <test gen="true" sort="true" id="t38" description="Deep nesting"/>
+  <test gen="true" sort="true" id="t40" description="Choice Types: constrain minimum cardinality">
+    <rule text="There should only be one element definition for value[x]" fhirpath="fixture('t40-output').snapshot.element.where(path.startsWith('Observation.value')).count() = 1"/>
+    <rule text="The element definition for value[x] should have min = 1" fhirpath="fixture('t40-output').snapshot.element.where(path.startsWith('Observation.value')).min = 1"/>
+  </test>
+  <test gen="true" sort="true" id="t41" description="Choice Types: constrain list of choices to 2">
+    <rule text="There should only be one element definition for value[x]" fhirpath="fixture('t41-output').snapshot.element.where(path.startsWith('Observation.value')).count() = 1"/>
+    <rule text="The element definition for value[x] should have 2 types" fhirpath="fixture('t41-output').snapshot.element.where(path.startsWith('Observation.value')).type.count() = 2"/>
+  </test>
+  <test gen="true" sort="true" id="t42" description="Choice Types: constrain list of choices to 1">
+    <rule text="There should only be one element definition for value[x]" fhirpath="fixture('t42-output').snapshot.element.where(path.startsWith('Observation.value')).count() = 1"/>
+    <rule text="The element definition for value[x] should have 1 type" fhirpath="fixture('t42-output').snapshot.element.where(path.startsWith('Observation.value')).type.count() = 1"/>
+    <rule text="The element definition for value[x] should have short = 'some text'" fhirpath="fixture('t42-output').snapshot.element.where(path.startsWith('Observation.value')).short = 'some text'"/>
+  </test>
+  <test gen="true" sort="true" id="t43" description="Choice Types: constrain list of choices to 1 and constrain the type (slicing)">
+    <rule text="There should be 9 element definitions for value[x] (base + quantity + walking into quantity" fhirpath="fixture('t43-output').snapshot.element.where(path.startsWith('Observation.value')).count() = 9"/>
+    <rule text="The element definition for value[x] should have 1 type" fhirpath="fixture('t43-output').snapshot.element.where(id = 'Observation.value[x]').type.count().trace('count') = 1"/>
+    <rule text="The element definition for value[x] should have short = 'some text'" fhirpath="fixture('t43-output').snapshot.element.where(id = 'Observation.value[x]').short = 'some text'"/>
+    <rule text="The element definition for value[x] quantity slice should have sliceName = 'Quantity'" fhirpath="fixture('t43-output').snapshot.element.where(id = 'Observation.value[x]:valueQuantity').check(exists(), 'no slice 1').sliceName = 'valueQuantity'"/>
+    <rule text="The element definition for value[x].value quantity slice should have sliceName = 'Quantity'" fhirpath="fixture('t43-output').snapshot.element.where(id = 'Observation.value[x]:valueQuantity.value').check(exists(), 'no slice 2').min = 1"/>
+  </test>
+  <test gen="true" sort="true" id="t43a" fail="true" description="Choice Types: constrain list of choices to 1 and constrain the type (slicing)"/>
+  <test gen="true" sort="true" id="t44" description="Choice Types: constrain list of choices to 1 and constrain the type (shortcut)">
+    <rule text="There should be 9 element definitions for value[x] (base + quantity + walking into quantity" fhirpath="fixture('t44-output').snapshot.element.where(path.startsWith('Observation.value')).count() = 9"/>
+    <rule text="The element definition for value[x] should have 1 type" fhirpath="fixture('t44-output').snapshot.element.where(id = 'Observation.value[x]').type.count().trace('count') = 1"/>
+    <rule text="The element definition for value[x] should have short = 'some text'" fhirpath="fixture('t44-output').snapshot.element.where(id = 'Observation.value[x]').short = 'some text'"/>
+    <rule text="The element definition for value[x] quantity slice should have sliceName = 'Quantity'" fhirpath="fixture('t44-output').snapshot.element.where(id = 'Observation.value[x]:valueQuantity').check(exists(), 'no slice 1').sliceName = 'valueQuantity'"/>
+    <rule text="The element definition for value[x].value quantity slice should have sliceName = 'Quantity'" fhirpath="fixture('t44-output').snapshot.element.where(id = 'Observation.value[x]:valueQuantity.value').check(exists(), 'no slice 2').min = 1"/>
+  </test>
+  <test gen="true" sort="true" id="t44a" description="Choice Types: constrain list of choices to 1 and constrain the type (shortcut)"/>
+  <test gen="true" sort="true" id="t45" register="t45-defn" description="Data Absent Reason Extension"/>
+  <test gen="true" id="samply1" description="checking extensions and slicing"/>
+  <test gen="true" id="au2" description="more work on extensions"/>
+  <test gen="true" id="au3" description="? not sure"/>
+  <test gen="true" id="dv1" description="slicing in data type"/>
+  <test gen="true" id="logical1" description="check logical define"/>
+  <test gen="true" id="logical2" register="logical1-expected" description="chck logical constraint"/>
+  <test gen="true" id="obs-1" description="closed type slicing"/>
+  <test gen="true" id="obs-1-1" description="re-constraining closed type slicing"/>
+  <test gen="true" id="obs-1-2" fail="true" reason="trying to profile a type already profiled out" description="trying to profile a type already profiled out"/>
+  <test gen="true" id="obs-2" description="open type slicing"/>
+  <test gen="true" id="obs-2a" description="open type slicing + constain base"/>
+  <test gen="true" id="obs-2b" description="open type slicing + min on slice"/>
+  <test gen="true" id="obs-2-1" description="reslicing choice to closed"/>
+  <test gen="true" id="obs-2-2" description="reslicing slice a different type"/>
+  <test gen="true" id="obs-2-3" fail="true" reason="trying to profile an illegal type" description="trying to profile an illegal type (not in slices remaining)"/>
+  <test gen="true" id="obs-3" fail="true" reason="trying to profile an illegal type" description="trying to profile an illegal type (not in element)"/>
+  <test gen="true" id="obs-4" description="open with min cardinality"/>
+  <test gen="true" id="obs-5" fail="true" reason="More than one type slice has min=1" description="More than one type slice has min=1"/>
+  <test gen="true" id="obs-6" description="very sparse differential"/>
+  <test gen="true" id="pattern-ext-1" description="constrain implicit type slice"/>
+  <test gen="true" id="pattern-ext-2" register="pattern-ext-1-expected" description="further constrain implicit type slice"/>
+  <test gen="true" id="pat-choice-ms" register="au-base" description="must-support on both slices"/>
+  <test gen="true" id="pat-msonslice" register="pat-msonslice-slicer" description="base slice, then must support on sliced"/>
+  <test gen="true" id="pat-msonslice1" register="pat-msonslice1-slicer" description="base slice, then must support on unsliced as well as sliced"/>
+  <test gen="true" id="obs-badfixed" fail="true" reason="fixed value type mismatch" description="fixed value type is wrong"/>
+  <test gen="true" id="obs-badpattern" fail="true" reason="pattern value type mismatch" description="pattern value type is wrong"/>
+  <test gen="true" id="medstmt-au" debug="false" description="complex slicing and then addition of more slices, layer 1"/>
+  <test gen="true" id="medstmt-nsw" register="medstmt-au" description="complex slicing and then addition of more slices"/>
+  <test gen="true" id="ca-patient" description="caused a failure in recursion on type slice procesing"/>
+  <test gen="true" sort="true" register="ext-sort-issue-base" id="ext-sort-issue" description="sorting this extension differential caused it to get out of order"/>
+  <test gen="true" register="dk1-extension" id="dk1" new-slice-processing="false" description="Generating this profiled extension resulted in duplicate slices for Appointment.extension:legalBasis.value[x]:valueCodeableConcept"/>
+  <test gen="true" id="obs-rebind" description="Changing the binding strength without changing the valueset"/>
+  <test gen="true" id="ihe1" fail="true" description="Use Reference on base of resource"/>
+  <test gen="true" id="ihe2" fail="true" description="Use wrong profile"/>
+  <test gen="true" id="obs-unit" fail="true" description=".. in path"/>
+  <test gen="true" register="au-med" id="au-med-k" sort="true" debug="false" description="constrain slice"/>
+  <test gen="true" id="medstmt-ips" description="constrain extension on a choice element for all types"/>
+  <test gen="true" id="sushi1" description="Rebind an extension"/>
+  <test gen="true" id="sushi2" description="rebind an extension - with sliceName"/>
+  <test gen="true" id="sushi3" fail="true" register="sushi3-dep" description="Caused an NPE in the snapshot generator (but will fail because of the missing slice name)"/>
+  <test gen="true" register="nl-med-profile" id="nl-med" sort="true" debug="false" description="extension slicing problem"/>
+  <test gen="true" register="telus-oo-ext" id="telus-oo" version="4.0.0" sort="true" debug="false" description="nested extension problem"/>
+  <test gen="true" id="pat-xver-extension" debug="false" description="check use of xversion extensions"/>
+  <test gen="true" id="ext-recursion-1" fail="true"/>
+  <test gen="true" id="ext-recursion-2"  debug="false" description="extension profile refers to itself"/>
+  <test gen="true" id="org2a" register="org1a" description="Constraining sliced content"/>
+  <test gen="true" id="org2b" register="org1b" description="Constraining sliced content"/>
+  <test gen="true" id="simplifier-1" register="simplfier-1-dt1,simplfier-1-dt2,simplfier-1-dt3,simplfier-1-dt4" description="Complex nested slicing pattern from Simplifier definitions" fail="true"/>
+  <test gen="true" id="in-obs" description="Problem with valid elements not being picked up" fail="false"/>
+  <test gen="true" id="obs-ms-base" description="Check MustSupport and set up later tests" fail="false"/>
+  <test gen="true" id="obs-ms-bad" register="obs-ms-base-input" description="Check MustSupport derivation" fail="true"/>  
+  <test gen="true" id="zib-BodyHeight" debug="false" register="zib-bodyheight-base" description="minimum cardinalities on slices"/>
+  <test gen="true" id="ccda-problem-section" debug="false" register="cda-section" description="CCDA test implied minimum by group constraint"/>
+  <test gen="true" id="params-nested-slices" debug="false" description="Complex nested slices test case"/>
+  <test gen="true" id="cond" debug="false" register="cond-us-core" description="Slice cardinality test case"/>
+  <test gen="true" id="cond2" debug="false" register="cond-us-core" description="Slice cardinality test case - second slice"/>
+  <test gen="true" id="eob-base" debug="false" description="Base profiles on adjudication"/>
+  <test gen="true" id="eob-nested" debug="false" register="eob-base-input" description="more profiling on adjudication"/>
+  <test gen="true" id="type-slice-missing" debug="false" register="cond-us-core" description="Missing slice on type slicing"/> 
+  <test gen="true" id="uk-core-composition" debug="false" register="cond-us-core" description="Bug in handling nested types"/> 
+  <test gen="true" id="slice23" debug="false" register="otherId" description="reuse slice in profile that defines it"/> 
+  <test gen="true" id="complex-extension" debug="false" description="type constraints on a complex extension"/> 
+  <test gen="true" id="complex-extension2" debug="false" description="type constraints on a complex extension (no explicit slice)"/> 
+<!-- can't figure this out in R5  <test gen="true" id="choice_min_1" debug="false" description="choice on an element with min=1"/>  -->
+  <test gen="true" id="ext-codeable-reference" debug="false" description="binding on CodeableReference"/> 
+<!--  <test gen="true" register="pas-identifier, pas-base-org" id="pas-org" debug="false" description="datatype profile = check reflected into snapshot"/>  -->
+  <test gen="true" id="ts-case1" debug="false" description="Type Slicing case 1: do nothing"/> 
+  <test gen="true" id="ts-case2" debug="false" description="Type Slicing case 1: just a renamed type slice"/> 
+  <test gen="true" id="cdshooks-element" debug="false" description="abstract type in logical model"/> 
+  <test gen="true" id="cdshooks-services" debug="false" register="cdshooks-element" description="abstract type in logical model"/> 
+  <test gen="true" id="logical3" debug="false" description="reported issue with logical models using BackboneElement"/> 
+  <test gen="true" id="logical-boo" debug="false" register="logical-foo" description="another reported issue with logical models using BackboneElement"/> 
+  <test gen="true" id="logical-goo" debug="false" register="logical-boo" description="another reported issue with logical models using BackboneElement"/> 
+  <test gen="true" id="comp-deep" debug="false" description="Deep content references in Composition"/> 
+  <test gen="true" id="ext-ccuk" fail="true" reason="trying to slice on the root" description="Unexpected Issues processing extension profile"/> 
+  <test gen="true" id="logical-base-child" register="logical-base-parent" description="constraining when specialising"/> 
+  <test gen="true" id="obs-perf" description="Observation.performer generating short description, definition and comments wrong (https://chat.fhir.org/#narrow/stream/179252-IG-creation/topic/Broken.20snapshot.20generation)"/> 
+  <test gen="true" id="pat-cm" debug="false" description="Claimed issue with sparse differential interpretation (https://chat.fhir.org/#narrow/stream/215610-shorthand/topic/.E2.9C.94.20Mapping.20value.5Bx.5D.20in.20extension.20elements)"/> 
+  <test gen="true" id="profile-patient-op-base" debug="false" description="Test Obligation Profile generation"/>
+  <test gen="true" id="profile-patient-op3" debug="false" register="profile-patient-op-base-input,profile-patient-op1,profile-patient-op2,profile-patient-op2a"
+     description="Test Obligation Profile generation"/>
+  <test gen="true" id="reslicing-profile" debug="false"  description="Bug: pattern value was getting lost"/>
+  <test gen="true" id="mi-use-derived" description="A simple case of refining a profile further" register="mi-defn-base,mi-defn-derived,mi-use-base"/>
+  <test gen="true" id="mi-use-distinct" fail="true" reason="invalid constrained type Reference from Reference in http://hl7.org/fhir/test/StructureDefinition/mi-use-distinct" description="An illegal constraint, won't build" register="mi-defn-base,mi-defn-distinct,mi-use-base"/>
+  <test gen="true" id="mi-use-imposed" description="The profile is refined further *using the imposeProfile* extension" register="mi-defn-base,mi-defn-imposed,mi-use-base"/>
+  <test gen="true" id="address-no-examples" description="Using extension to suppress examples"/>
+  <test gen="true" id="ext-mgmt" description="Check inheritance of extensions on elements (level1)"/>
+  <test gen="true" id="ext-mgmt2" register="ext-mgmt-expected" description="Check inheritance of extensions on elements (level2)"/>
+  <test gen="true" id="dr-sparse" description="see https://chat.fhir.org/#narrow/stream/215610-shorthand/topic/Mapping.20only.20fsh.20generates.20incomplete.20StructureDefinition"/>
+  <test gen="true" id="extension-type-slice" description="handle type slicing in sub-extension value properly"/>
+  <test gen="true" id="profile-mapping-1" description="checking mapping inheritance works correctly"/>
+  <test gen="true" id="profile-mapping-2" register="profile-mapping-1-expected" description="checking mapping inheritance works correctly"/>
+  <test gen="true" id="profile-mapping-3" register="profile-mapping-1-expected" description="checking mapping inheritance works correctly"/>
+  <test gen="true" id="profile-mapping-4" register="profile-mapping-1-expected" description="checking mapping inheritance works correctly"/>
+  <test gen="true" id="type-slicing-exclusion" register="type-slicing-exclusion-base" description="found bug around excluding type choices in type slicing"/>
+  <test gen="true" id="l1-resource" register="l1-datatype" description="Inherit description from data type profile on the derived differential #1"/> 
+  <test gen="true" id="l2-resource" register="l1-resource-input,l1-datatype,l2-datatype" description="Inherit description from data type profile on the derived differential #2"/> 
+  <test gen="true" id="ILCorePractitioner" debug="false" description="slicing but with details for all slices "/> 
+  <test gen="true" id="slicing-profile-child" register="slicing-profile-parent" description="walking into the extension wrongly"/>
+  <test gen="true" id="sd-comp-hist" register="sd-comp-supp1,clinicaldocument" description="slicing default properties problem"/>
+  <test gen="true" id="reslicing-profile-parent" debug="false" description="slicing Composition.section.section wrongly"/>
+  <test gen="true" id="reslicing-profile-child" debug="false" register="reslicing-profile-parent" description="reslicing Composition.section.section wrongly"/>
+  <test gen="true" id="on-questionnaire" debug="false" register="on-core-short-string,on-core-uri-label,on-group-note-info,on-option-note-info,on-question-note-info,on-sdc-same-line" description="producing duplicate extensions"/>
+  <test gen="true" id="us-cat" debug="false" description="set property on the slicer, it must propagate onto the slice"/>
+  <test gen="true" id="sd-diamond" debug="false" register="sd-diamond-base" description="test for diamond inheritance that follows from us-cat"/>
+  <test gen="true" id="multi-profile" debug="false" register="multi-additional-base,multi-dt-base,multi-dt-other,multi-dt-both" description="basic tests for multiple inheritance"/>
+  <test gen="true" id="ext-profile" debug="false" description="wasn't picking up cardinality restrictions from extension"/>
+  <test gen="true" id="lm-spec" debug="false" register="lm-base" description="it's a specialization not a constraint"/>
+  <test gen="true" id="obs-simple" debug="false" description="See https://chat.fhir.org/#narrow/channel/179177-conformance/topic/Where.20are.20the.20invariants.20on.20datatype.20roots.3F/near/530126098"/>
+  <test gen="true" id="sd-nested-ext" debug="false" register="sd-nested-ext-src2" description="inner nested extension is a problem"/>
+  <test gen="true" id="pat-no-defn" debug="false" description="ElementDefinition with no definition (extension instead)"/>
+  <test gen="true" id="mr-type-support" debug="false" register="mr-type-support-base" description="Duplicating must-support extensions on type"/>
+  <test gen="true" id="comp-nested" debug="false" register="comp-nested-base" description="Complicated subslicing problem"/>
+  <test gen="true" id="es-xver" debug="true" description="ContentReference profile created an illegal path"/>
+  <test gen="true" id="xt-logical" debug="true" register="xt-logical-base" description="Logical Model specialization that produced elements out of order"/>
+</snapshot-generation-tests>

@@ -1,0 +1,1595 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="on-ocean-questionnaire"/>
+  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm">
+    <valueInteger value="1">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-conformance-derivedFrom">
+        <valueCanonical value="http://ontariohealth.ca/fhir/questionnaire/ImplementationGuide/ca.ontariohealth.questionnaire.draft"/>
+      </extension>
+    </valueInteger>
+  </extension>
+  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+    <valueCode value="informative">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-conformance-derivedFrom">
+        <valueCanonical value="http://ontariohealth.ca/fhir/questionnaire/ImplementationGuide/ca.ontariohealth.questionnaire.draft"/>
+      </extension>
+    </valueCode>
+  </extension>
+  <url value="http://ontariohealth.ca/fhir/questionnaire/StructureDefinition/on-ocean-questionnaire"/>
+  <version value="1.0.0-draft"/>
+  <name value="SDCQuestionnaireOntario"/>
+  <title value="Ontario Ocean Questionnaire profile"/>
+  <status value="active"/>
+  <date value="2025-04-02T21:34:51+11:00"/>
+  <publisher value="Ontario Health"/>
+  <contact>
+    <name value="Ontario Health"/>
+    <telecom>
+      <system value="url"/>
+      <value value="http://www.ontariohealth.ca"/>
+    </telecom>
+  </contact>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="http://www.ontariohealth.ca"/>
+    </telecom>
+  </contact>
+  <description value="Defines additional the Questionnaire requirements to align with used capabilities of the legacy Ocean form tool."/>
+  <jurisdiction>
+    <coding>
+      <system value="urn:iso:std:iso:3166"/>
+      <code value="CA"/>
+      <display value="Canada"/>
+    </coding>
+  </jurisdiction>
+  <fhirVersion value="4.0.1"/>
+  <mapping>
+    <identity value="ontario-fhir-ocean"/>
+    <uri value="https://www.oceanmd.com/ocean-forms-library/"/>
+    <name value="Ocean MD Forms"/>
+  </mapping>
+  <mapping>
+    <identity value="workflow"/>
+    <uri value="http://hl7.org/fhir/workflow"/>
+    <name value="Workflow Pattern"/>
+  </mapping>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="w5"/>
+    <uri value="http://hl7.org/fhir/fivews"/>
+    <name value="FiveWs Pattern Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="objimpl"/>
+    <uri value="http://hl7.org/fhir/object-implementation"/>
+    <name value="Object Implementation Information"/>
+  </mapping>
+  <mapping>
+    <identity value="v2"/>
+    <uri value="http://hl7.org/v2"/>
+    <name value="HL7 v2 Mapping"/>
+  </mapping>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Questionnaire"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Questionnaire"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Questionnaire">
+      <path value="Questionnaire"/>
+      <short value="Ontario Ocean Questionnaire profile"/>
+      <definition value="Defines additional the Questionnaire requirements to align with used capabilities of the legacy Ocean form tool."/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="eform"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.extension">
+      <path value="Questionnaire.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Questionnaire.extension:launchContext">
+      <path value="Questionnaire.extension"/>
+      <sliceName value="launchContext"/>
+      <requirements value="Needed to support population and logic based on patient age, gender, etc."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.extension:launchContext.extension:name">
+      <path value="Questionnaire.extension.extension"/>
+      <sliceName value="name"/>
+    </element>
+    <element id="Questionnaire.extension:launchContext.extension:name.value[x]">
+      <path value="Questionnaire.extension.extension.value[x]"/>
+      <patternCoding>
+        <system value="http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext"/>
+        <code value="patient"/>
+      </patternCoding>
+    </element>
+    <element id="Questionnaire.extension:launchContext.extension:type">
+      <path value="Questionnaire.extension.extension"/>
+      <sliceName value="type"/>
+    </element>
+    <element id="Questionnaire.extension:launchContext.extension:type.value[x]">
+      <path value="Questionnaire.extension.extension.value[x]"/>
+      <patternCode value="Patient"/>
+    </element>
+    <element id="Questionnaire.extension:variable">
+      <path value="Questionnaire.extension"/>
+      <sliceName value="variable"/>
+      <requirements value="Allows capturing answers or totals for use in other logic"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/variable|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.extension:variable.value[x]">
+      <path value="Questionnaire.extension.value[x]"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.extension:variable.value[x].language">
+      <path value="Questionnaire.extension.value[x].language"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.extension:variable.value[x].expression">
+      <path value="Questionnaire.extension.value[x].expression"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.url">
+      <path value="Questionnaire.url"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="eform/@ref"/>
+        <comment value="Will need to place a URI root on the front of the ref to make it a proper URI"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.version">
+      <path value="Questionnaire.version"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="eform/@revision"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.title">
+      <path value="Questionnaire.title"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="eform/@title"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.title.extension">
+      <path value="Questionnaire.title.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <min value="1"/>
+    </element>
+    <element id="Questionnaire.title.extension:short-string">
+      <path value="Questionnaire.title.extension"/>
+      <sliceName value="short-string"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://ontariohealth.ca/fhir/questionnaire/StructureDefinition/core-short-string"/>
+      </type>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="eform/@shortForm"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.status">
+      <path value="Questionnaire.status"/>
+      <patternCode value="active"/>
+    </element>
+    <element id="Questionnaire.description">
+      <path value="Questionnaire.description"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="eform/description"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.description.extension">
+      <path value="Questionnaire.description.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <min value="1"/>
+    </element>
+    <element id="Questionnaire.description.extension:short-string">
+      <path value="Questionnaire.description.extension"/>
+      <sliceName value="short-string"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://ontariohealth.ca/fhir/questionnaire/StructureDefinition/core-short-string"/>
+      </type>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="eform/tagline"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.useContext">
+      <path value="Questionnaire.useContext"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="code"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Questionnaire.useContext:focus">
+      <path value="Questionnaire.useContext"/>
+      <sliceName value="focus"/>
+      <min value="0"/>
+      <max value="*"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.useContext:focus.code">
+      <path value="Questionnaire.useContext.code"/>
+      <patternCoding>
+        <system value="http://terminology.hl7.org/CodeSystem/usage-context-type"/>
+        <code value="focus"/>
+      </patternCoding>
+    </element>
+    <element id="Questionnaire.useContext:focus.value[x]">
+      <path value="Questionnaire.useContext.value[x]"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <mustSupport value="true"/>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://ontariohealth.ca/fhir/questionnaire/ValueSet/on-questionnaire-topic-codes"/>
+      </binding>
+    </element>
+    <element id="Questionnaire.useContext:focus.value[x].coding">
+      <path value="Questionnaire.useContext.value[x].coding"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.useContext:focus.value[x].coding.code">
+      <path value="Questionnaire.useContext.value[x].coding.code"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="eform/tags/tag"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.useContext:focus.value[x].text">
+      <path value="Questionnaire.useContext.value[x].text"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="eform/keywords"/>
+        <comment value="Each keyword will be a separate useContext repetition"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item">
+      <path value="Questionnaire.item"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="type"/>
+        </discriminator>
+        <rules value="closed"/>
+      </slicing>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="eform/mainSection, section, item"/>
+        <comment value="Will often not be mapped.  Only needed if root section has a title or rendering expectations"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item.extension">
+      <path value="Questionnaire.item.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Questionnaire.item.extension:enableWhenExpression">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="enableWhenExpression"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item.extension:enableWhenExpression.value[x]">
+      <path value="Questionnaire.item.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@showIf"/>
+        <comment value="For complex expressions that can't be expressed with enableWhen repetitions or hidden"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item.extension:hidden">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="hidden"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-hidden|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item.extension:hidden.value[x]">
+      <path value="Questionnaire.item.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@showIf, @showIf"/>
+        <comment value="If fixed to 'false'"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item.extension:renderStyle">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="renderStyle"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-style|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="foo"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item.extension:renderStyle.value[x]">
+      <path value="Questionnaire.item.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="hints/hint[.='GREY_BG', 'WHITE_BG', 'BORDER']"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item.linkId">
+      <path value="Questionnaire.item.linkId"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@ref"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item.text">
+      <path value="Questionnaire.item.text"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="c"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item.text.extension">
+      <path value="Questionnaire.item.text.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Questionnaire.item.text.extension:translation">
+      <path value="Questionnaire.item.text.extension"/>
+      <sliceName value="translation"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/translation|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="/eform/stringTranslations/str[current().contains(@ref)]"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item.text.extension:translation.extension:lang">
+      <path value="Questionnaire.item.text.extension.extension"/>
+      <sliceName value="lang"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item.text.extension:translation.extension:lang.value[x]">
+      <path value="Questionnaire.item.text.extension.extension.value[x]"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@locale"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item.text.extension:translation.extension:content">
+      <path value="Questionnaire.item.text.extension.extension"/>
+      <sliceName value="content"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item.text.extension:translation.extension:content.value[x]">
+      <path value="Questionnaire.item.text.extension.extension.value[x]"/>
+      <type>
+        <code value="string"/>
+      </type>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="text()"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item.text.extension:renderStyle">
+      <path value="Questionnaire.item.text.extension"/>
+      <sliceName value="renderStyle"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-style|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item.text.extension:renderStyle.value[x]">
+      <path value="Questionnaire.item.text.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="eFormSection/@headerStyle"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item.enableWhen">
+      <path value="Questionnaire.item.enableWhen"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@showIf"/>
+        <comment value="For simple expressions (comparisons with answer values or answer exists, separated by all &amp;&amp; or all ||)"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item.enableWhen.question">
+      <path value="Questionnaire.item.enableWhen.question"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item.enableWhen.operator">
+      <path value="Questionnaire.item.enableWhen.operator"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item.enableWhen.answer[x]">
+      <path value="Questionnaire.item.enableWhen.answer[x]"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group">
+      <path value="Questionnaire.item"/>
+      <sliceName value="group"/>
+      <min value="0"/>
+      <max value="*"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:enableWhenExpression">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="enableWhenExpression"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:hidden">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="hidden"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-hidden|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:renderStyle">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="renderStyle"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-style|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:itemControl">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="itemControl"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:itemControl.value[x]">
+      <path value="Questionnaire.item.extension.value[x]"/>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://ontariohealth.ca/fhir/questionnaire/ValueSet/on-questionnaire-group-item-control"/>
+      </binding>
+    </element>
+    <element id="Questionnaire.item:group.extension:targetConstraint">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="targetConstraint"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/targetConstraint|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="validator"/>
+        <comment value="If not handled with required or other element/extension"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:group.extension:targetConstraint.extension:key">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="key"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:targetConstraint.extension:severity">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="severity"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:targetConstraint.extension:severity.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <patternCode value="error"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:targetConstraint.extension:expression">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="expression"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@validIf"/>
+        <comment value="Convert to FHIRPath (or CQL?)"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:group.extension:targetConstraint.extension:human">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="human"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@message"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:group.extension:variable">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="variable"/>
+      <requirements value="Allows capturing answers or totals for use in other logic"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/variable|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:variable.value[x]">
+      <path value="Questionnaire.item.extension.value[x]"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:variable.value[x].language">
+      <path value="Questionnaire.item.extension.value[x].language"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:variable.value[x].expression">
+      <path value="Questionnaire.item.extension.value[x].expression"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="noteInfo"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://ontariohealth.ca/fhir/questionnaire/StructureDefinition/group-note-info"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:enableWhenExpression">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="enableWhenExpression"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:enableWhenExpression.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:enableWhenExpression.value[x].language">
+      <path value="Questionnaire.item.extension.extension.value[x].language"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:enableWhenExpression.value[x].expression">
+      <path value="Questionnaire.item.extension.extension.value[x].expression"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@makeNoteIf"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:sortIndex">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="sortIndex"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:sortIndex.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@noteIndex"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:text">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="text"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:text.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="cNote"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:ownLine">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="ownLine"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:ownLine.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@ownLine"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:quoteAnswer">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="quoteAnswer"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:quoteAnswer.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@quoteAnswers"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:style">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="style"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:style.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@flag"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:groupItems">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="groupItems"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:groupItems.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="groupItems"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:listSeparator">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="listSeparator"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:listSeparator.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="listSep"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:lastSeparator">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="lastSeparator"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.extension:noteInfo.extension:lastSeparator.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="lastSep"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:group.text.extension:translation">
+      <path value="Questionnaire.item.text.extension"/>
+      <sliceName value="translation"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/translation|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.text.extension:translation.extension:lang">
+      <path value="Questionnaire.item.text.extension.extension"/>
+      <sliceName value="lang"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.text.extension:translation.extension:content">
+      <path value="Questionnaire.item.text.extension.extension"/>
+      <sliceName value="content"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.text.extension:renderStyle">
+      <path value="Questionnaire.item.text.extension"/>
+      <sliceName value="renderStyle"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-style|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:group.type">
+      <path value="Questionnaire.item.type"/>
+      <patternCode value="group"/>
+    </element>
+    <element id="Questionnaire.item:group.required">
+      <path value="Questionnaire.item.required"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="validator/@allowEmpty=false, or validator/@type='MANDATORY'"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:group.item">
+      <path value="Questionnaire.item.item"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="items/*"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:display">
+      <path value="Questionnaire.item"/>
+      <sliceName value="display"/>
+      <min value="0"/>
+      <max value="*"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:display.extension:enableWhenExpression">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="enableWhenExpression"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:display.extension:hidden">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="hidden"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-hidden|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:display.extension:renderStyle">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="renderStyle"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-style|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:display.text.extension:translation">
+      <path value="Questionnaire.item.text.extension"/>
+      <sliceName value="translation"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/translation|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:display.text.extension:translation.extension:lang">
+      <path value="Questionnaire.item.text.extension.extension"/>
+      <sliceName value="lang"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:display.text.extension:translation.extension:content">
+      <path value="Questionnaire.item.text.extension.extension"/>
+      <sliceName value="content"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:display.text.extension:renderStyle">
+      <path value="Questionnaire.item.text.extension"/>
+      <sliceName value="renderStyle"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-style|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:display.text.extension:xhtml">
+      <path value="Questionnaire.item.text.extension"/>
+      <sliceName value="xhtml"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-xhtml|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:display.text.extension:xhtml.value[x]">
+      <path value="Questionnaire.item.text.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="items/picture, refs/ref"/>
+        <comment value="For picture: &lt;img src='@fileRef' height='@height' width='@width'/&gt;.  For ref: text followed by &lt;a href=''&gt;&lt;/a&gt; for ref (must be in 'footer' group)"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:display.type">
+      <path value="Questionnaire.item.type"/>
+      <patternCode value="display"/>
+    </element>
+    <element id="Questionnaire.item:question">
+      <path value="Questionnaire.item"/>
+      <sliceName value="question"/>
+      <min value="0"/>
+      <max value="*"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:enableWhenExpression">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="enableWhenExpression"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:hidden">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="hidden"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-hidden|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:renderStyle">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="renderStyle"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-style|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:choiceOrientation">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="choiceOrientation"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:choiceOrientation.value[x]">
+      <path value="Questionnaire.item.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="hints/hint[.='VERTICAL_STACKING']"/>
+        <comment value="When code is 'vertical'"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:calculatedExpression">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="calculatedExpression"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:calculatedExpression.value[x]">
+      <path value="Questionnaire.item.extension.value[x]"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:calculatedExpression.value[x].language">
+      <path value="Questionnaire.item.extension.value[x].language"/>
+      <patternCode value="text/fhirpath"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:calculatedExpression.value[x].expression">
+      <path value="Questionnaire.item.extension.value[x].expression"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@formula"/>
+        <comment value="Will need to convert to FHIRPath"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:initialExpression">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="initialExpression"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:initialExpression.value[x]">
+      <path value="Questionnaire.item.extension.value[x]"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:initialExpression.value[x].language">
+      <path value="Questionnaire.item.extension.value[x].language"/>
+      <patternCode value="text/fhirpath"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:initialExpression.value[x].expression">
+      <path value="Questionnaire.item.extension.value[x].expression"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="text"/>
+        <comment value="When an expression with @ or ="/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:itemControl">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="itemControl"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:itemControl.value[x]">
+      <path value="Questionnaire.item.extension.value[x]"/>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://ontariohealth.ca/fhir/questionnaire/ValueSet/on-questionnaire-question-item-control"/>
+      </binding>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="hints/hint[.='USE_BUTTONS_FOR_MENU']"/>
+        <comment value="Maps to radio-button"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:minLength">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="minLength"/>
+      <requirements value="Needed to force full length for dates"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/minLength|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:minValue">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="minValue"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/minValue|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:minValue.value[x]">
+      <path value="Questionnaire.item.extension.value[x]"/>
+      <type>
+        <code value="date"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:minValue.value[x].extension">
+      <path value="Questionnaire.item.extension.value[x].extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Questionnaire.item:question.extension:minValue.value[x].extension:cqf-expression">
+      <path value="Questionnaire.item.extension.value[x].extension"/>
+      <sliceName value="cqf-expression"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/cqf-expression|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:minValue.value[x].extension:cqf-expression.value[x].language">
+      <path value="Questionnaire.item.extension.value[x].extension.value[x].language"/>
+      <patternCode value="text/fhirpath"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:minValue.value[x].extension:cqf-expression.value[x].expression">
+      <path value="Questionnaire.item.extension.value[x].extension.value[x].expression"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="validatior/@validIf"/>
+        <comment value="For comparisons to dates in other fields or current date"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:supportLink">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="supportLink"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-supportLink|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="hyperlink"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:supportLink.value[x]">
+      <path value="Questionnaire.item.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="hyperlink/@url"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:supportLink.value[x].extension">
+      <path value="Questionnaire.item.extension.value[x].extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Questionnaire.item:question.extension:supportLink.value[x].extension:uriLabel">
+      <path value="Questionnaire.item.extension.value[x].extension"/>
+      <sliceName value="uriLabel"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://ontariohealth.ca/fhir/questionnaire/StructureDefinition/core-uri-label"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:supportLink.value[x].extension:uriLabel.value[x]">
+      <path value="Questionnaire.item.extension.value[x].extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="hyperlink/@text"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:targetConstraint">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="targetConstraint"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/targetConstraint|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="validator"/>
+        <comment value="If not handled with required or other element/extension"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:targetConstraint.extension:key">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="key"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:targetConstraint.extension:severity">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="severity"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:targetConstraint.extension:severity.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <patternCode value="error"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:targetConstraint.extension:expression">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="expression"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@validIf"/>
+        <comment value="Convert to FHIRPath (or CQL?)"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:targetConstraint.extension:human">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="human"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@message"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:sameLine">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="sameLine"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://ontariohealth.ca/fhir/questionnaire/StructureDefinition/sdc-same-line"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:sameLine.value[x]">
+      <path value="Questionnaire.item.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="hints/hint[.='SAME_LINE']"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo">
+      <path value="Questionnaire.item.extension"/>
+      <sliceName value="noteInfo"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://ontariohealth.ca/fhir/questionnaire/StructureDefinition/question-note-info"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:enableWhenExpression">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="enableWhenExpression"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:enableWhenExpression.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:enableWhenExpression.value[x].language">
+      <path value="Questionnaire.item.extension.extension.value[x].language"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:enableWhenExpression.value[x].expression">
+      <path value="Questionnaire.item.extension.extension.value[x].expression"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@makeNoteIf"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:sortIndex">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="sortIndex"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:sortIndex.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:text">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="text"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:text.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@cNote"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:ownLine">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="ownLine"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:ownLine.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@ownLine"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:quoteAnswer">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="quoteAnswer"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:quoteAnswer.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@quoteAnswer"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:style">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="style"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:style.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@flag"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:negativeText">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="negativeText"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:negativeText.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="negNote"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:positiveText">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="positiveText"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:positiveText.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="posNote"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:negativeStyle">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="negativeStyle"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:negativeStyle.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@negFlag"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:studyColumnHeader">
+      <path value="Questionnaire.item.extension.extension"/>
+      <sliceName value="studyColumnHeader"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.extension:noteInfo.extension:studyColumnHeader.value[x]">
+      <path value="Questionnaire.item.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="studyColumnHeader"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.definition">
+      <path value="Questionnaire.item.definition"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@emrField"/>
+        <comment value="These will need to be turned into data element URIs or mapped to standard FHIR element URIs"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.text.extension:translation">
+      <path value="Questionnaire.item.text.extension"/>
+      <sliceName value="translation"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/translation|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.text.extension:translation.extension:lang">
+      <path value="Questionnaire.item.text.extension.extension"/>
+      <sliceName value="lang"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.text.extension:translation.extension:content">
+      <path value="Questionnaire.item.text.extension.extension"/>
+      <sliceName value="content"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.text.extension:renderStyle">
+      <path value="Questionnaire.item.text.extension"/>
+      <sliceName value="renderStyle"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-style|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.type">
+      <path value="Questionnaire.item.type"/>
+      <mustSupport value="true"/>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://ontariohealth.ca/fhir/questionnaire/ValueSet/on-questionnaire-question-item-type"/>
+      </binding>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@type"/>
+        <comment value="See mapping spreadsheet"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.required">
+      <path value="Questionnaire.item.required"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="validator/@allowEmpty=false, or validator/@type='MANDATORY'"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.repeats">
+      <path value="Questionnaire.item.repeats"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@type"/>
+        <comment value="True if CHECKBOX or MENU_MULTI_SELECT"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.readOnly">
+      <path value="Questionnaire.item.readOnly"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@type"/>
+        <comment value="True if LABEL or FORMULA"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.maxLength">
+      <path value="Questionnaire.item.maxLength"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="validatior/@validIf"/>
+        <comment value="For foo.r.length &lt;= NUM patterns"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.answerOption">
+      <path value="Questionnaire.item.answerOption"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="choices/choice"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.answerOption.extension">
+      <path value="Questionnaire.item.answerOption.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Questionnaire.item:question.answerOption.extension:noteInfo">
+      <path value="Questionnaire.item.answerOption.extension"/>
+      <sliceName value="noteInfo"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://ontariohealth.ca/fhir/questionnaire/StructureDefinition/option-note-info"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.answerOption.extension:noteInfo.extension:text">
+      <path value="Questionnaire.item.answerOption.extension.extension"/>
+      <sliceName value="text"/>
+    </element>
+    <element id="Questionnaire.item:question.answerOption.extension:noteInfo.extension:text.value[x]">
+      <path value="Questionnaire.item.answerOption.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="note"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.answerOption.extension:noteInfo.extension:style">
+      <path value="Questionnaire.item.answerOption.extension.extension"/>
+      <sliceName value="style"/>
+    </element>
+    <element id="Questionnaire.item:question.answerOption.extension:noteInfo.extension:style.value[x]">
+      <path value="Questionnaire.item.answerOption.extension.extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@flag"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.answerOption.value[x]">
+      <path value="Questionnaire.item.answerOption.value[x]"/>
+      <type>
+        <code value="Coding"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.answerOption.value[x].extension:weight">
+      <path value="Questionnaire.item.answerOption.value[x].extension"/>
+      <sliceName value="weight"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/itemWeight|5.2.0"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.answerOption.value[x].extension:weight.value[x]">
+      <path value="Questionnaire.item.answerOption.value[x].extension.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@points"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.answerOption.value[x].system">
+      <path value="Questionnaire.item.answerOption.value[x].system"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.answerOption.value[x].code">
+      <path value="Questionnaire.item.answerOption.value[x].code"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="@val"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.answerOption.value[x].display">
+      <path value="Questionnaire.item.answerOption.value[x].display"/>
+      <min value="1"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="display"/>
+      </mapping>
+    </element>
+    <element id="Questionnaire.item:question.initial">
+      <path value="Questionnaire.item.initial"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item:question.initial.value[x]">
+      <path value="Questionnaire.item.initial.value[x]"/>
+      <mustSupport value="true"/>
+      <mapping>
+        <identity value="ontario-fhir-ocean"/>
+        <map value="text"/>
+        <comment value="When just a constant"/>
+      </mapping>
+    </element>
+  </differential>
+</StructureDefinition>
