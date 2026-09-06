@@ -13,6 +13,8 @@
     " * 'packages': An array of String, packages to load for this validation. format id#version, where the version part is optional",
     " * 'supporting': An array of string, other files to load before doing the validation",
     " * 'profiles': An alias for supporting",
+    " * 'launch-context': An object naming the launch contexts to supply, as name : reference - the same thing the -launch-context command line parameter supplies. Where the reference names a file in the test cases, it is extracted and the absolute path is what the validator is given, so that it does the same loading it would do for a real run; a reference that names nothing is passed through as written, which is how the unresolvable cases are set up",
+    " * 'usage': A UsageContext (or an array of them) that the caller declares to apply - the same thing the -usage command line parameter supplies. Additional bindings scoped to a use context only apply when it is declared here. Note that UsageContext.value[x] is CodeableConcept | Quantity | Range | Reference; there is no valueCoding",
     " * 'logical': For some logical models, they cannot be automatically recognized; they have to configured in advance. This is the URL of the logical model to parse with (e..g the base model)",
     " * 'bundle-param' : A string that functions as a bundle parameter - this is specifically for testing the parameter functionality",
     " * 'examples': if to allow http://example.org and http://acme.com references without validating them (spec mode)",
@@ -1134,6 +1136,158 @@
       ],
       "module": "questionnaire",
       "java": "java/R4.questionnaireResponse-enableWhenEx-test-fail-base.json"
+    },
+    {
+      "name": "enablewhen-variable-qr",
+      "file": "questionnaire/enablewhen-variable-qr.json",
+      "description": "gh#2404: an item enabled by an SDC enableWhenExpression that references a Questionnaire-level variable (%age). The item is enabled, so its answers are legitimate",
+      "version": "4.0",
+      "packages": [
+        "hl7.fhir.uv.sdc#4.0.0-ballot"
+      ],
+      "supporting": [
+        "questionnaire/enablewhen-variable-q.json"
+      ],
+      "module": "questionnaire",
+      "java": "java/R4.enablewhen-variable-qr-base.json"
+    },
+    {
+      "name": "answerconstraint-qr",
+      "file": "questionnaire/answerconstraint-qr.json",
+      "description": "gh#2549: Questionnaire.item.answerConstraint carried as the R5 cross-version extension on an R4 Questionnaire. Six items: optionsOrType and optionsOrString against choice and open-choice, plus unconstrained controls to compare against",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/answerconstraint-q.json"
+      ],
+      "module": "questionnaire",
+      "java": "java/R4.answerconstraint-qr-base.json"
+    },
+    {
+      "name": "enablewhen-launchcontext-female",
+      "file": "questionnaire/enablewhen-launchcontext-qr.json",
+      "description": "gh#2404: %patient is supplied and is female, so the enableWhenExpression evaluates, the item is enabled, and its answer is legitimate",
+      "version": "4.0",
+      "packages": [
+        "hl7.fhir.uv.sdc#4.0.0-ballot"
+      ],
+      "launch-context" : {
+        "patient" : "questionnaire/launchcontext-patient-female.json"
+      },
+      "supporting": [
+        "questionnaire/enablewhen-launchcontext-q.json"
+      ],
+      "module": "questionnaire",
+      "java": "java/R4.enablewhen-launchcontext-female-base.json"
+    },
+    {
+      "name": "enablewhen-launchcontext-male",
+      "file": "questionnaire/enablewhen-launchcontext-qr.json",
+      "description": "gh#2404: %patient is supplied and is male, so the item is not enabled - and it has an answer, which is an error",
+      "version": "4.0",
+      "packages": [
+        "hl7.fhir.uv.sdc#4.0.0-ballot"
+      ],
+      "launch-context" : {
+        "patient" : "questionnaire/launchcontext-patient-male.json"
+      },
+      "supporting": [
+        "questionnaire/enablewhen-launchcontext-q.json"
+      ],
+      "module": "questionnaire",
+      "java": "java/R4.enablewhen-launchcontext-male-base.json"
+    },
+    {
+      "name": "enablewhen-launchcontext-missing",
+      "file": "questionnaire/enablewhen-launchcontext-qr.json",
+      "description": "gh#2404: the launch context names a file that does not exist. That is an error, and %patient is not available",
+      "version": "4.0",
+      "packages": [
+        "hl7.fhir.uv.sdc#4.0.0-ballot"
+      ],
+      "launch-context" : {
+        "patient" : "questionnaire/no-such-patient-anywhere.json"
+      },
+      "supporting": [
+        "questionnaire/enablewhen-launchcontext-q.json"
+      ],
+      "module": "questionnaire",
+      "java": "java/R4.enablewhen-launchcontext-missing-base.json"
+    },
+    {
+      "name": "enablewhen-launchcontext-not-a-resource",
+      "file": "questionnaire/enablewhen-launchcontext-qr.json",
+      "description": "gh#2404: the launch context names a file that is not a FHIR resource. That is an error, and %patient is not available",
+      "version": "4.0",
+      "packages": [
+        "hl7.fhir.uv.sdc#4.0.0-ballot"
+      ],
+      "launch-context" : {
+        "patient" : "questionnaire/launchcontext-not-a-resource.json"
+      },
+      "supporting": [
+        "questionnaire/enablewhen-launchcontext-q.json"
+      ],
+      "module": "questionnaire",
+      "java": "java/R4.enablewhen-launchcontext-not-a-resource-base.json"
+    },
+    {
+      "name": "enablewhen-launchcontext-wrong-type",
+      "file": "questionnaire/enablewhen-launchcontext-qr.json",
+      "description": "gh#2404: the questionnaire declares the patient launch context as a Patient, but a Practitioner was supplied. That is an error, and the value is not used",
+      "version": "4.0",
+      "packages": [
+        "hl7.fhir.uv.sdc#4.0.0-ballot"
+      ],
+      "launch-context" : {
+        "patient" : "questionnaire/launchcontext-practitioner.json"
+      },
+      "supporting": [
+        "questionnaire/enablewhen-launchcontext-q.json"
+      ],
+      "module": "questionnaire",
+      "java": "java/R4.enablewhen-launchcontext-wrong-type-base.json"
+    },
+    {
+      "name": "enablewhen-launchcontext-other-name",
+      "file": "questionnaire/enablewhen-launchcontext-qr.json",
+      "description": "gh#2404: a launch context the questionnaire never declares is ignored without comment - but it does not stand in for %patient, which is still not available",
+      "version": "4.0",
+      "packages": [
+        "hl7.fhir.uv.sdc#4.0.0-ballot"
+      ],
+      "launch-context" : {
+        "encounter" : "questionnaire/launchcontext-patient-female.json"
+      },
+      "supporting": [
+        "questionnaire/enablewhen-launchcontext-q.json"
+      ],
+      "module": "questionnaire",
+      "java": "java/R4.enablewhen-launchcontext-other-name-base.json"
+    },
+    {
+      "name": "answerconstraint-badcode-qr",
+      "file": "questionnaire/answerconstraint-badcode-qr.json",
+      "description": "gh#2549: answerConstraint = optionsOrType permits any Coding, so the value set is not checked - but the code itself still is, and this one is not valid",
+      "version": "4.0",
+      "supporting": [
+        "questionnaire/answerconstraint-q.json"
+      ],
+      "module": "questionnaire",
+      "java": "java/R4.answerconstraint-badcode-qr-base.json"
+    },
+    {
+      "name": "enablewhen-launchcontext-qr",
+      "file": "questionnaire/enablewhen-launchcontext-qr.json",
+      "description": "gh#2404: the enableWhenExpression refers to %patient, which is not available when validating a QuestionnaireResponse on its own. The item must not be reported as disabled",
+      "version": "4.0",
+      "packages": [
+        "hl7.fhir.uv.sdc#4.0.0-ballot"
+      ],
+      "supporting": [
+        "questionnaire/enablewhen-launchcontext-q.json"
+      ],
+      "module": "questionnaire",
+      "java": "java/R4.enablewhen-launchcontext-qr-base.json"
     },
     {
       "name": "questionnaireResponse-enableWhen-test-nested",
@@ -12366,6 +12520,129 @@
       ],
       "module": "profile",
       "java": "java/R4.pas-diagnosis-type-ba-notx-base.json"
+    },
+    {
+      "name": "usage-context-jurisdiction-no",
+      "file": "patient-gender-unknown.json",
+      "version": "5.0",
+      "description": "checking jurisdiction is applied correctly as usage context",
+      "module": "profile",
+      "supporting" : ["patient-profile-usage-jurisdiction.xml", "ValueSet-male-female.json"],
+      "java": "java/R5.usage-context-jurisdiction-no-base.json"
+    },
+    {
+      "name": "usage-context-jurisdiction-us",
+      "file": "patient-gender-unknown.json",
+      "version": "5.0",
+      "description": "checking jurisdiction is applied correctly as usage context",
+      "module": "profile",
+      "usage" : {
+        "code" : {
+          "system" : "http://terminology.hl7.org/CodeSystem/usage-context-type",
+          "code" : "jurisdiction"
+        },
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "urn:iso:std:iso:3166",
+            "code" : "US"
+          }]
+        }
+      },
+      "supporting" : ["patient-profile-usage-jurisdiction.xml", "ValueSet-male-female.json"],
+      "java": "java/R5.usage-context-jurisdiction-us-base.json"
+    },
+    {
+      "name": "usage-context-gender-none",
+      "file": "observation-menstrual-cycle-day.json",
+      "version": "5.0",
+      "description": "two additional bindings, each scoped to a gender use context. No use context is declared, so neither is in scope and the code is not checked against either",
+      "module": "profile",
+      "supporting" : ["observation-profile-gender-observables.json", "ValueSet-menstrual-observables.json", "ValueSet-semen-observables.json"],
+      "java": "java/R5.usage-context-gender-none-base.json"
+    },
+    {
+      "name": "usage-context-gender-female-match",
+      "file": "observation-menstrual-cycle-day.json",
+      "version": "5.0",
+      "description": "gender=female is declared, so the menstrual binding is in scope, and the code is in it",
+      "module": "profile",
+      "usage" : {
+        "code" : {
+          "system" : "http://terminology.hl7.org/CodeSystem/usage-context-type",
+          "code" : "gender"
+        },
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/administrative-gender",
+            "code" : "female"
+          }]
+        }
+      },
+      "supporting" : ["observation-profile-gender-observables.json", "ValueSet-menstrual-observables.json", "ValueSet-semen-observables.json"],
+      "java": "java/R5.usage-context-gender-female-match-base.json"
+    },
+    {
+      "name": "usage-context-gender-female-mismatch",
+      "file": "observation-semen-motility.json",
+      "version": "5.0",
+      "description": "gender=female is declared, so the menstrual binding is in scope - but this is a semen code, which is not in it",
+      "module": "profile",
+      "usage" : {
+        "code" : {
+          "system" : "http://terminology.hl7.org/CodeSystem/usage-context-type",
+          "code" : "gender"
+        },
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/administrative-gender",
+            "code" : "female"
+          }]
+        }
+      },
+      "supporting" : ["observation-profile-gender-observables.json", "ValueSet-menstrual-observables.json", "ValueSet-semen-observables.json"],
+      "java": "java/R5.usage-context-gender-female-mismatch-base.json"
+    },
+    {
+      "name": "usage-context-gender-male-match",
+      "file": "observation-semen-motility.json",
+      "version": "5.0",
+      "description": "gender=male is declared, so the semen binding is in scope, and the code is in it",
+      "module": "profile",
+      "usage" : {
+        "code" : {
+          "system" : "http://terminology.hl7.org/CodeSystem/usage-context-type",
+          "code" : "gender"
+        },
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/administrative-gender",
+            "code" : "male"
+          }]
+        }
+      },
+      "supporting" : ["observation-profile-gender-observables.json", "ValueSet-menstrual-observables.json", "ValueSet-semen-observables.json"],
+      "java": "java/R5.usage-context-gender-male-match-base.json"
+    },
+    {
+      "name": "usage-context-gender-male-mismatch",
+      "file": "observation-menstrual-cycle-day.json",
+      "version": "5.0",
+      "description": "gender=male is declared, so the semen binding is in scope - but this is a menstrual code, which is not in it",
+      "module": "profile",
+      "usage" : {
+        "code" : {
+          "system" : "http://terminology.hl7.org/CodeSystem/usage-context-type",
+          "code" : "gender"
+        },
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/administrative-gender",
+            "code" : "male"
+          }]
+        }
+      },
+      "supporting" : ["observation-profile-gender-observables.json", "ValueSet-menstrual-observables.json", "ValueSet-semen-observables.json"],
+      "java": "java/R5.usage-context-gender-male-mismatch-base.json"
     },
     {
       "name": "zzz",

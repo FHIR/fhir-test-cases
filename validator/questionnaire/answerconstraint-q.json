@@ -1,0 +1,93 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "answerconstraint-example",
+  "url": "http://example.org/Questionnaire/answerconstraint-example",
+  "status": "active",
+  "contained": [
+    {
+      "resourceType": "ValueSet",
+      "id": "test-medication-vs",
+      "status": "active",
+      "compose": {
+        "include": [
+          {
+            "system": "http://snomed.info/sct",
+            "concept": [
+              { "code": "387517004", "display": "Paracetamol" },
+              { "code": "387458008", "display": "Aspirin" }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "linkId": "medication-no-constraint",
+      "text": "Current medication — no answerConstraint (baseline, for comparison only)",
+      "type": "open-choice",
+      "repeats": true,
+      "answerValueSet": "#test-medication-vs"
+    },
+    {
+      "linkId": "medication-optionsOrType",
+      "text": "Current medication — answerConstraint = optionsOrType",
+      "type": "open-choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-Questionnaire.item.answerConstraint",
+          "valueCode": "optionsOrType"
+        }
+      ],
+      "answerValueSet": "#test-medication-vs"
+    },
+    {
+      "linkId": "medication-optionsOrString",
+      "text": "Current medication — answerConstraint = optionsOrString",
+      "type": "open-choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-Questionnaire.item.answerConstraint",
+          "valueCode": "optionsOrString"
+        }
+      ],
+      "answerValueSet": "#test-medication-vs"
+    },
+    {
+      "linkId": "medication-open-choice-no-constraint-string",
+      "text": "Current medication (open-choice) — no answerConstraint (control, for comparison only)",
+      "type": "open-choice",
+      "answerValueSet": "#test-medication-vs"
+    },
+    {
+      "linkId": "medication-choice-optionsOrString",
+      "text": "Current medication (choice) — answerConstraint = optionsOrString",
+      "type": "choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-Questionnaire.item.answerConstraint",
+          "valueCode": "optionsOrString"
+        }
+      ],
+      "answerValueSet": "#test-medication-vs"
+    },
+    {
+      "linkId": "medication-optionsOrType-bad-code",
+      "text": "Current medication \u2014 answerConstraint = optionsOrType, answered with a code that is not valid",
+      "type": "open-choice",
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/5.0/StructureDefinition/extension-Questionnaire.item.answerConstraint",
+          "valueCode": "optionsOrType"
+        }
+      ],
+      "answerValueSet": "#test-medication-vs"
+    },
+    {
+      "linkId": "medication-choice-no-constraint",
+      "text": "Current medication (choice) — no answerConstraint (control, for comparison only)",
+      "type": "choice",
+      "answerValueSet": "#test-medication-vs"
+    }
+  ]
+}
