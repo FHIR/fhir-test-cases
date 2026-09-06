@@ -1,0 +1,71 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "observation-gender-observables",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/observation-gender-observables",
+  "version": "1.0.0",
+  "name": "ObservationGenderObservables",
+  "title": "Observation - gender specific reproductive observables",
+  "status": "draft",
+  "experimental": true,
+  "description": "Two additional bindings on Observation.code, each in scope only for a particular gender use context. Which one applies - if either - is decided by the use contexts the caller declares, not by anything in the resource",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.code",
+        "path": "Observation.code",
+        "binding": {
+          "strength": "example",
+          "valueSet": "http://hl7.org/fhir/ValueSet/observation-codes",
+          "additional": [
+            {
+              "purpose": "required",
+              "valueSet": "http://hl7.org/fhir/test/ValueSet/menstrual-observables",
+              "usage": [
+                {
+                  "code": {
+                    "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+                    "code": "gender"
+                  },
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/administrative-gender",
+                        "code": "female"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "purpose": "required",
+              "valueSet": "http://hl7.org/fhir/test/ValueSet/semen-observables",
+              "usage": [
+                {
+                  "code": {
+                    "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+                    "code": "gender"
+                  },
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://hl7.org/fhir/administrative-gender",
+                        "code": "male"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
