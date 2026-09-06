@@ -1,0 +1,49 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "enablewhen-launchcontext",
+  "url": "http://example.org/Questionnaire/enablewhen-launchcontext",
+  "version": "0.1.0",
+  "name": "EnableWhenLaunchContext",
+  "title": "enableWhen against a launchContext variable",
+  "status": "draft",
+  "experimental": true,
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext",
+      "extension": [
+        {
+          "url": "name",
+          "valueCoding": {
+            "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext",
+            "code": "patient"
+          }
+        },
+        {
+          "url": "type",
+          "valueCode": "Patient"
+        },
+        {
+          "url": "description",
+          "valueString": "The patient the form is being filled in for"
+        }
+      ]
+    }
+  ],
+  "item": [
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%patient.gender = 'female'"
+          }
+        }
+      ],
+      "linkId": "pregnancy",
+      "text": "Are you currently pregnant?",
+      "type": "boolean",
+      "repeats": false
+    }
+  ]
+}

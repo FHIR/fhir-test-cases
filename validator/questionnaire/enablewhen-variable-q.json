@@ -1,0 +1,158 @@
+{
+    "resourceType": "Questionnaire",
+    "id": "QR-EnableWhen-validation",
+    "extension": [
+        {
+            "url": "http://hl7.org/fhir/StructureDefinition/variable",
+            "valueExpression": {
+                "name": "age",
+                "language": "text/fhirpath",
+                "expression": "repeat(item).where(linkId='e2a16e4d-2765-4b61-b286-82cfc6356b30').answer.value"
+            }
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext",
+            "extension": [
+                {
+                    "url": "name",
+                    "valueCoding": {
+                        "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext",
+                        "code": "patient"
+                    }
+                },
+                {
+                    "url": "type",
+                    "valueCode": "Patient"
+                },
+                {
+                    "url": "description",
+                    "valueString": "The patient that is to be used to pre-populate the form"
+                }
+            ]
+        },
+        {
+            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext",
+            "extension": [
+                {
+                    "url": "name",
+                    "valueCoding": {
+                        "system": "http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext",
+                        "code": "user"
+                    }
+                },
+                {
+                    "url": "type",
+                    "valueCode": "Practitioner"
+                },
+                {
+                    "url": "description",
+                    "valueString": "The practitioner user that is to be used to pre-populate the form"
+                }
+            ]
+        }
+    ],
+    "url": "https://smartforms.csiro.au/ig/Questionnaire/QR-EnableWhen-validation",
+    "version": "0.1.0",
+    "name": "QREnableWhenValidation",
+    "title": "QR EnableWhen validation",
+    "status": "draft",
+    "experimental": true,
+    "subjectType": [
+        "Patient"
+    ],
+    "date": "2026-04-17",
+    "item": [
+        {
+            "extension": [
+                {
+                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+                    "valueCodeableConcept": {
+                        "coding": [
+                            {
+                                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                                "code": "tab-container"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "linkId": "fd5af92e-c248-497a-8007-ee0952ccd4d9",
+            "type": "group",
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression",
+                            "valueExpression": {
+                                "language": "text/fhirpath",
+                                "expression": "%age.exists()"
+                            }
+                        }
+                    ],
+                    "linkId": "2e82032a-dc28-45f2-916e-862303d39fe5",
+                    "text": "About the health check",
+                    "type": "group",
+                    "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "today()"
+                                    }
+                                }
+                            ],
+                            "linkId": "63fe14f3-2374-4382-bce7-180e2747c97f",
+                            "text": "Date this health check commenced",
+                            "type": "date",
+                            "repeats": false
+                        }
+                    ]
+                },
+                {
+                    "linkId": "5b224753-9365-44e3-823b-9c17e7394005",
+                    "text": "Patient details",
+                    "type": "group",
+                    "repeats": false,
+                    "item": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "(%patient.name.where(use='official').select((family | (given | prefix).join(' ')).join(', ').where($this != '') | text) | %patient.name.select((family | (given | prefix).join(' ')).join(', ').where($this != '') | text)).first()"
+                                    }
+                                }
+                            ],
+                            "linkId": "17596726-34cf-4133-9960-7081e1d63558",
+                            "text": "Name",
+                            "type": "string",
+                            "repeats": false,
+                            "readOnly": true
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression",
+                                    "valueExpression": {
+                                        "language": "text/fhirpath",
+                                        "expression": "iif(today().toString().select(substring(5,2) & substring(8,2)).toInteger() > %patient.birthDate.toString().select(substring(5,2) & substring(8,2)).toInteger(), today().toString().substring(0,4).toInteger() - %patient.birthDate.toString().substring(0,4).toInteger(), today().toString().substring(0,4).toInteger() - %patient.birthDate.toString().substring(0,4).toInteger() - 1)"
+                                    }
+                                }
+                            ],
+                            "linkId": "e2a16e4d-2765-4b61-b286-82cfc6356b30",
+                            "text": "Age",
+                            "type": "integer",
+                            "repeats": false,
+                            "readOnly": true
+                        }                            
+                    ]
+                }
+                 
+                
+            ]
+        }]
+}
