@@ -1,0 +1,8 @@
+map "http://github.com/hapifhir/org.hl7.fhir.core/org.hl7.fhir.r4.tests/qr2cda" = "qr2cda"
+
+uses "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse" alias QuestionnaireResponse as source
+uses "http://hl7.org/fhir/cdatest/StructureDefinition/ClinicalDocument" alias ClinicalDocument as target
+
+group QuestionnaireResponse(source src : QuestionnaireResponse, target tgt : ClinicalDocument) {
+  src -> tgt.title as title, title.data= evaluate(src, iif(src.is(QuestionnaireResponse),"Hello CDA","badbadbad")) "eval";
+}

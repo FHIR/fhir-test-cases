@@ -1,0 +1,8 @@
+map "http://github.com/hapifhir/org.hl7.fhir.core/org.hl7.fhir.r4.tests/qr2reference" = "qr2reference"
+
+uses "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse" alias QuestionnaireResponse as source
+uses "http://hl7.org/fhir/StructureDefinition/Basic" alias Basic as target
+
+group QuestionnaireResponse(source src : QuestionnaireResponse, target tgt : Basic) {
+  src -> tgt.extension as ext, ext.value = create('Reference') as reference, reference.reference = reference(src) "value";
+}
