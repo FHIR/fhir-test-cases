@@ -524,6 +524,111 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "LiteralValuesGenerator",
+            "details" : "Literal values in mappings: 'value' instead of 'expression', on an entry and inside parts. A value of any JSON type is used as its text; an empty value suppresses the element",
+            "mode": "profile",
+            "profile": "http://hl7.org/fhir/uv/howto/StructureDefinition/test-patient-profile",
+            "data": "patient-cases.xlsx;Patients",
+            "format": "json",
+            "filename": "output/Patient3-$counter$.json",
+            "bundle": false,
+            "tables": {
+                "genders": "patient-genders.csv"
+            },
+            "mappings": [
+                {
+                    "path": "TestPatientProfile.name",
+                    "parts": [
+                        {
+                            "name": "family",
+                            "value": "Literal"
+                        },
+                        {
+                            "name": "given",
+                            "expression": "column('Given Name')"
+                        }
+                    ]
+                },
+                {
+                    "path": "TestPatientProfile.identifier",
+                    "parts": [
+                        {
+                            "name": "system",
+                            "value": "http://acme.org/identifiers/literal"
+                        },
+                        {
+                            "name": "value",
+                            "expression": "column('Patient ID')"
+                        }
+                    ]
+                },
+                {
+                    "path": "TestPatientProfile.communication.preferred",
+                    "value": false
+                },
+                {
+                    "path": "TestPatientProfile.birthDate",
+                    "value": ""
+                },
+                {
+                    "path": "TestPatientProfile.gender",
+                    "value": "unknown"
+                },
+                {
+                    "path": "TestPatientProfile.id",
+                    "expression": "column('Patient ID')"
+                }
+            ]
+        },
+        {
+            "name": "BinaryGenerator",
+            "details" : "A base64Binary value given in a mapping: whitespace is allowed by FHIR and is stripped, and what remains is checked",
+            "mode": "profile",
+            "profile": "http://hl7.org/fhir/StructureDefinition/Binary",
+            "data": "patient-cases.xlsx;Patients",
+            "format": "json",
+            "filename": "output/Binary-$counter$.json",
+            "bundle": false,
+            "mappings": [
+                {
+                    "path": "Binary.id",
+                    "expression": "column('Patient ID')"
+                },
+                {
+                    "path": "Binary.contentType",
+                    "value": "text/plain"
+                },
+                {
+                    "path": "Binary.data",
+                    "value": "U29tZSBCaW5h\ncnkgVmFsdWU="
+                }
+            ]
+        },
+        {
+            "name": "BinaryRejectedGenerator",
+            "details" : "A base64Binary value that is not base64 is rejected, logged, and replaced by a generated value",
+            "mode": "profile",
+            "profile": "http://hl7.org/fhir/StructureDefinition/Binary",
+            "data": "patient-cases.xlsx;Patients",
+            "format": "json",
+            "filename": "output/BinaryRejected-$counter$.json",
+            "bundle": false,
+            "mappings": [
+                {
+                    "path": "Binary.id",
+                    "expression": "column('Patient ID')"
+                },
+                {
+                    "path": "Binary.contentType",
+                    "value": "text/plain"
+                },
+                {
+                    "path": "Binary.data",
+                    "value": "this is not base64!"
+                }
+            ]
         }
     ]
 }
