@@ -629,6 +629,30 @@
                     "value": "this is not base64!"
                 }
             ]
+        },
+        {
+            "name": "RequiredOnlyGenerator",
+            "details" : "requiredOnly: only the elements the profile makes mandatory at the top level are generated, plus any that are mapped or fixed",
+            "mode": "profile",
+            "profile": "http://hl7.org/fhir/uv/howto/StructureDefinition/test-patient-profile",
+            "data": "patient-cases.xlsx;Patients",
+            "format": "json",
+            "filename": "output/Patient5-$counter$.json",
+            "bundle": false,
+            "requiredOnly": true,
+            "tables": {
+                "genders": "patient-genders.csv"
+            },
+            "mappings": [
+                {
+                    "path": "TestPatientProfile.id",
+                    "expression": "column('Patient ID')"
+                },
+                {
+                    "path": "TestPatientProfile.gender",
+                    "expression": "lookup('genders', 'gender', column('Sex'), 'code')"
+                }
+            ]
         }
     ]
 }
