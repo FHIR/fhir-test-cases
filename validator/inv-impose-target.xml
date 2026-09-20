@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="inv-impose-target"/> 
+  <url value="http://hl7.org/fhir/test/StructureDefinition/inv-impose-target"/> 
+  <name value="InvImposeTarget"/> 
+  <title value="Invariant Impose Target"/> 
+  <status value="draft"/> 
+  <description value="A profile that defines two invariants (imp-1 and imp-3). inv-impose-source imposes this profile, and so is allowed to restate imp-1/imp-3 with source pointing here"/> 
+  <fhirVersion value="5.0.0"/> 
+  <kind value="resource"/> 
+  <abstract value="false"/> 
+  <type value="Patient"/> 
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/> 
+  <derivation value="constraint"/> 
+  <differential> 
+    <element id="Patient.identifier">
+      <path value="Patient.identifier"/> 
+      <constraint> 
+        <key value="imp-1"/> 
+        <severity value="error"/> 
+        <human value="Identifiers must have a system"/> 
+        <expression value="system.exists()"/> 
+        <source value="http://hl7.org/fhir/test/StructureDefinition/inv-impose-target"/> 
+      </constraint> 
+    </element> 
+    <element id="Patient.address">
+      <path value="Patient.address"/> 
+      <constraint> 
+        <key value="imp-3"/> 
+        <severity value="error"/> 
+        <human value="Addresses must have a country"/> 
+        <expression value="country.exists()"/> 
+        <source value="http://hl7.org/fhir/test/StructureDefinition/inv-impose-target"/> 
+      </constraint> 
+    </element> 
+  </differential> 
+</StructureDefinition> 

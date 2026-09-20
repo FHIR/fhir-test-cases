@@ -38,7 +38,7 @@
     "severity" : "warning",
     "code" : "not-found",
     "details" : {
-      "text" : "A definition for CodeSystem 'http://example.org/fhir/animal-breed' could not be found, so the code cannot be validated"
+      "text" : "A definition for the code system 'http://example.org/fhir/animal-breed' could not be found, so this coding was not checked. The CodeableConcept is still valid: another coding is in the value set"
     },
     "diagnostics" : "[14,29]",
     "expression" : ["Patient.extension[0].extension[1].value.ofType(CodeableConcept).coding[1].system"]
@@ -59,6 +59,19 @@
     },
     "diagnostics" : "[14,29]",
     "expression" : ["Patient.extension[0].extension[1].value.ofType(CodeableConcept).coding[0]"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-context",
+      "valueString" : "http://hl7.org/fhir/StructureDefinition/Patient|4.0.1"
+    }],
+    "severity" : "information",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "Reference to draft CodeSystem http://hl7.org/fhir/animal-genderstatus|4.0.1"
+    },
+    "diagnostics" : "[28,29]",
+    "expression" : ["Patient.extension[0].extension[2].value.ofType(CodeableConcept)"]
   },
   {
     "extension" : [{

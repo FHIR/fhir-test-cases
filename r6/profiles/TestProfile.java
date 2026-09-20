@@ -133,7 +133,7 @@ public class TestProfile extends PEGeneratedBase {
   private Identifier identifier;  // Business Identifier for observation
 
   @Min("1") @Max("1") @Doco("registered | in-process | specimen-in-process | preliminary | final | amended | corrected | appended | cancelled | entered-in-error | unknown | cannot-be-obtained")
-  @BindingStrength("required") @ValueSet("http://hl7.org/fhir/ValueSet/observation-status|6.0.0-ballot4")
+  @BindingStrength("required") @ValueSet("http://hl7.org/fhir/ValueSet/observation-status|6.0.0-snapshot1")
   @Definition("The status of the result value.")
   private String status;// @NotNull  // registered | in-process | specimen-in-process | preliminary | final | amended | corrected | appended | cancelled | entered-in-error | unknown | cannot-be-obtained
 
