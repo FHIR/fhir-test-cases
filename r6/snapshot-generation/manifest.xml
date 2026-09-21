@@ -290,4 +290,11 @@
   <test gen="true" id="comp-nested" debug="false" register="comp-nested-base" description="Complicated subslicing problem"/>
   <test gen="true" id="es-xver" debug="true" description="ContentReference profile created an illegal path"/>
   <test gen="true" id="xt-logical" debug="true" register="xt-logical-base" description="Logical Model specialization that produced elements out of order"/>
+  <test gen="true" id="oblbinding" debug="false" register="oblbinding-obligations" description="additional bindings and obligations inherited from an obligation profile (#2593, #2602)">
+    <rule text="The obligation profile's additional binding must be in the snapshot, once" fhirpath="fixture('oblbinding-output').snapshot.element.where(path = 'Patient.maritalStatus').binding.additional.where(valueSet = 'http://example.org/fhir/ValueSet/obl-marital-status').count() = 1"/>
+    <rule text="The base binding's strength and value set must survive" fhirpath="fixture('oblbinding-output').snapshot.element.where(path = 'Patient.maritalStatus').binding.where(strength.exists() and valueSet.exists()).exists()"/>
+    <rule text="The additional binding must not be written into the differential" fhirpath="fixture('oblbinding-output').differential.element.where(path = 'Patient.maritalStatus').binding.empty()"/>
+    <rule text="The obligation must be copied onto an element the differential touches" fhirpath="fixture('oblbinding-output').snapshot.element.where(path = 'Patient.maritalStatus').extension.where(url = 'http://hl7.org/fhir/StructureDefinition/obligation').exists()"/>
+    <rule text="A tools-namespace obligation must be copied onto an element the differential does not touch" fhirpath="fixture('oblbinding-output').snapshot.element.where(path = 'Patient.birthDate').extension.where(url = 'http://hl7.org/fhir/tools/StructureDefinition/obligation' or url = 'http://hl7.org/fhir/StructureDefinition/obligation').exists()"/>
+  </test>
 </snapshot-generation-tests>

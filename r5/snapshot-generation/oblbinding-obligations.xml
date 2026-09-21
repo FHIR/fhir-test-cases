@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="oblbinding-obligations"/>
+  <extension url="http://hl7.org/fhir/tools/StructureDefinition/obligation-profile">
+    <valueBoolean value="true"/>
+  </extension>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/oblbinding-obligations"/>
+  <name value="OblBindingObligations"/>
+  <status value="draft"/>
+  <description value="obligation profile for oblbinding: an additional binding and an obligation on an element the derived profile touches, and a tools-namespace obligation on one it does not"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Patient.birthDate">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/obligation">
+        <extension url="code">
+          <valueCode value="SHALL:populate-if-known"/>
+        </extension>
+      </extension>
+      <path value="Patient.birthDate"/>
+    </element>
+    <element id="Patient.maritalStatus">
+      <extension url="http://hl7.org/fhir/StructureDefinition/obligation">
+        <extension url="code">
+          <valueCode value="SHALL:populate-if-known"/>
+        </extension>
+      </extension>
+      <path value="Patient.maritalStatus"/>
+      <binding>
+        <additional>
+          <purpose value="preferred"/>
+          <valueSet value="http://example.org/fhir/ValueSet/obl-marital-status"/>
+        </additional>
+      </binding>
+    </element>
+  </differential>
+</StructureDefinition>
