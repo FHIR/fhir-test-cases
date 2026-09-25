@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="sd-root-logical"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/sd-root-logical"/>
+  <name value="SdRootLogical"/>
+  <title value="sd-root-logical"/>
+  <status value="draft"/>
+  <description value="Logical model whose root element sets everything: only contentReference and condition are errors - meaningWhenMissing, orderMeaning, isModifier, isModifierReason and isSummary are allowed in a logical model"/>
+  <fhirVersion value="5.0.0"/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="http://hl7.org/fhir/test/StructureDefinition/RootTestLogical"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Base"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="RootTestLogical">
+      <path value="RootTestLogical"/>
+      <short value="root short"/>
+      <definition value="root definition"/>
+      <min value="0"/>
+      <max value="*"/>
+      <!-- never allowed on a root: there's nothing before the root for it to refer to -->
+      <contentReference value="#RootTestLogical"/>
+      <!-- allowed in a logical model -->
+      <meaningWhenMissing value="means nothing in particular"/>
+      <orderMeaning value="ordered by importance"/>
+      <!-- never allowed on a root: whether an element is allowed can't depend on its own content -->
+      <condition value="ele-1"/>
+      <!-- allowed in a logical model -->
+      <isModifier value="true"/>
+      <isModifierReason value="because the root says so"/>
+      <isSummary value="true"/>
+    </element>
+    <element id="RootTestLogical.value">
+      <path value="RootTestLogical.value"/>
+      <short value="a value"/>
+      <definition value="a value"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

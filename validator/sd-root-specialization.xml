@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="sd-root-specialization"/>
+  <url value="http://hl7.org/fhir/StructureDefinition/Annotation"/>
+  <name value="SdRootSpecialization"/>
+  <title value="sd-root-specialization"/>
+  <status value="draft"/>
+  <description value="Data type specialization - written as core would (the core URL and type name, since only core can define non-logical types) - whose root element sets isModifier, isModifierReason and isSummary (allowed, since this is a specialization) and contentReference, condition, meaningWhenMissing and orderMeaning (not allowed)"/>
+  <fhirVersion value="5.0.0"/>
+  <kind value="complex-type"/>
+  <abstract value="false"/>
+  <type value="Annotation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/DataType"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="Annotation">
+      <path value="Annotation"/>
+      <short value="root short"/>
+      <definition value="root definition"/>
+      <min value="0"/>
+      <max value="*"/>
+      <!-- never allowed on a root: there's nothing before the root for it to refer to -->
+      <contentReference value="#Annotation"/>
+      <!-- not allowed on the root of anything but a logical model -->
+      <meaningWhenMissing value="means nothing in particular"/>
+      <orderMeaning value="ordered by importance"/>
+      <!-- never allowed on a root: whether an element is allowed can't depend on its own content -->
+      <condition value="ele-1"/>
+      <!-- allowed: a specialization defines these -->
+      <isModifier value="true"/>
+      <isModifierReason value="because the root says so"/>
+      <isSummary value="true"/>
+    </element>
+    <element id="Annotation.value">
+      <path value="Annotation.value"/>
+      <short value="a value"/>
+      <definition value="a value"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>
