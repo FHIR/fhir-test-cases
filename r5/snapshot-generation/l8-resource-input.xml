@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="l8-resource"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/l8-resource"/>
+  <name value="L8ResourceName"/>
+  <title value="L8 Resource Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="The differential's binding overrules the type profile's binding"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.category">
+      <path value="Observation.category"/>
+      <type>
+        <code value="CodeableConcept"/>
+        <profile value="http://hl7.org/fhir/test/StructureDefinition/l8-datatype"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://example.org/fhir/ValueSet/from-differential"/>
+      </binding>
+    </element>
+  </differential>
+</StructureDefinition>

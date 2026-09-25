@@ -1,12 +1,12 @@
 {
   "resourceType" : "StructureDefinition",
-  "id" : "l7-resource",
-  "url" : "http://hl7.org/fhir/test/StructureDefinition/l7-resource",
-  "name" : "L7ResourceName",
-  "title" : "L7 Resource Title",
+  "id" : "l13-resource",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/l13-resource",
+  "name" : "L13ResourceName",
+  "title" : "L13 Resource Title",
   "status" : "draft",
   "publisher" : "FHIR",
-  "description" : "Applies a data type profile to an element that the base profile has already constrained",
+  "description" : "Adds a new slice, with a data type profile, to an element the base profile has already sliced",
   "fhirVersion" : "4.0.1",
   "mapping" : [{
     "identity" : "workflow",
@@ -41,7 +41,7 @@
   "kind" : "resource",
   "abstract" : true,
   "type" : "Observation",
-  "baseDefinition" : "http://hl7.org/fhir/test/StructureDefinition/l7-base",
+  "baseDefinition" : "http://hl7.org/fhir/test/StructureDefinition/l13-base",
   "derivation" : "constraint",
   "snapshot" : {
     "element" : [{
@@ -917,12 +917,133 @@
     {
       "id" : "Observation.category",
       "path" : "Observation.category",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "$this"
+        }],
+        "rules" : "open"
+      },
       "short" : "Classification of  type of observation",
       "definition" : "A code that classifies the general type of observation being made.",
       "comment" : "In addition to the required category valueset, this element allows various categorization schemes based on the owner’s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set.",
       "requirements" : "Used for filtering what observations are retrieved and displayed.",
       "min" : 1,
-      "max" : "5",
+      "max" : "*",
+      "base" : {
+        "path" : "Observation.category",
+        "min" : 0,
+        "max" : "*"
+      },
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "constraint" : [{
+        "key" : "ele-1",
+        "severity" : "error",
+        "human" : "All FHIR elements must have a @value or children",
+        "expression" : "hasValue() or (children().count() > id.count())",
+        "source" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }],
+      "mustSupport" : false,
+      "isModifier" : false,
+      "isSummary" : false,
+      "binding" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+          "valueString" : "ObservationCategory"
+        }],
+        "strength" : "preferred",
+        "description" : "Codes for high level observation categories.",
+        "valueSet" : "http://hl7.org/fhir/ValueSet/observation-category"
+      },
+      "mapping" : [{
+        "identity" : "workflow",
+        "map" : "Event.category"
+      },
+      {
+        "identity" : "w5",
+        "map" : "FiveWs.class"
+      },
+      {
+        "identity" : "v2",
+        "map" : "OBX-29"
+      },
+      {
+        "identity" : "rim",
+        "map" : ".outboundRelationship[typeCode=\"COMP].target[classCode=\"LIST\", moodCode=\"EVN\"].code"
+      }]
+    },
+    {
+      "id" : "Observation.category:a",
+      "path" : "Observation.category",
+      "sliceName" : "a",
+      "short" : "Classification of  type of observation",
+      "definition" : "A code that classifies the general type of observation being made.",
+      "comment" : "In addition to the required category valueset, this element allows various categorization schemes based on the owner’s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set.",
+      "requirements" : "Used for filtering what observations are retrieved and displayed.",
+      "min" : 0,
+      "max" : "*",
+      "base" : {
+        "path" : "Observation.category",
+        "min" : 0,
+        "max" : "*"
+      },
+      "type" : [{
+        "code" : "CodeableConcept"
+      }],
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://example.org/codes",
+          "code" : "a"
+        }]
+      },
+      "constraint" : [{
+        "key" : "ele-1",
+        "severity" : "error",
+        "human" : "All FHIR elements must have a @value or children",
+        "expression" : "hasValue() or (children().count() > id.count())",
+        "source" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }],
+      "mustSupport" : false,
+      "isModifier" : false,
+      "isSummary" : false,
+      "binding" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+          "valueString" : "ObservationCategory"
+        }],
+        "strength" : "preferred",
+        "description" : "Codes for high level observation categories.",
+        "valueSet" : "http://hl7.org/fhir/ValueSet/observation-category"
+      },
+      "mapping" : [{
+        "identity" : "workflow",
+        "map" : "Event.category"
+      },
+      {
+        "identity" : "w5",
+        "map" : "FiveWs.class"
+      },
+      {
+        "identity" : "v2",
+        "map" : "OBX-29"
+      },
+      {
+        "identity" : "rim",
+        "map" : ".outboundRelationship[typeCode=\"COMP].target[classCode=\"LIST\", moodCode=\"EVN\"].code"
+      }]
+    },
+    {
+      "id" : "Observation.category:b",
+      "path" : "Observation.category",
+      "sliceName" : "b",
+      "short" : "Classification of  type of observation",
+      "definition" : "A code that classifies the general type of observation being made.",
+      "comment" : "In addition to the required category valueset, this element allows various categorization schemes based on the owner’s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set.",
+      "requirements" : "Used for filtering what observations are retrieved and displayed.",
+      "min" : 1,
+      "max" : "1",
       "base" : {
         "path" : "Observation.category",
         "min" : 0,
@@ -930,18 +1051,14 @@
       },
       "type" : [{
         "code" : "CodeableConcept",
-        "profile" : ["http://hl7.org/fhir/test/StructureDefinition/l7-datatype"]
+        "profile" : ["http://hl7.org/fhir/test/StructureDefinition/l13-datatype"]
       }],
       "patternCodeableConcept" : {
-        "text" : "fixed text"
+        "coding" : [{
+          "system" : "http://example.org/codes",
+          "code" : "b"
+        }]
       },
-      "minValueQuantity" : {
-        "value" : 5.0
-      },
-      "maxValueQuantity" : {
-        "value" : 20.0
-      },
-      "maxLength" : 40,
       "constraint" : [{
         "key" : "ele-1",
         "severity" : "error",
@@ -950,55 +1067,20 @@
         "source" : "http://hl7.org/fhir/StructureDefinition/Element"
       },
       {
-        "key" : "b1",
+        "key" : "t13",
         "severity" : "error",
-        "human" : "base-1",
-        "expression" : "text.exists()",
-        "source" : "http://hl7.org/fhir/test/StructureDefinition/l7-base"
-      },
-      {
-        "key" : "k-shared",
-        "severity" : "error",
-        "human" : "shared constraint",
-        "expression" : "coding.exists() implies text.exists()",
-        "source" : "http://hl7.org/fhir/test/StructureDefinition/l7-base"
-      },
-      {
-        "key" : "t7",
-        "severity" : "error",
-        "human" : "type-7",
+        "human" : "type-13",
         "expression" : "coding.exists()",
-        "source" : "http://hl7.org/fhir/test/StructureDefinition/l7-datatype"
+        "source" : "http://hl7.org/fhir/test/StructureDefinition/l13-datatype"
       }],
-      "mustHaveValue" : true,
-      "valueAlternatives" : ["http://example.org/fhir/StructureDefinition/alt-b"],
       "mustSupport" : true,
       "isModifier" : false,
       "isSummary" : false,
       "binding" : {
         "strength" : "required",
-        "valueSet" : "http://example.org/fhir/ValueSet/from-type",
-        "additional" : [{
-          "key" : "a1",
-          "purpose" : "candidate",
-          "valueSet" : "http://example.org/fhir/ValueSet/additional-1"
-        },
-        {
-          "key" : "a2",
-          "purpose" : "current",
-          "valueSet" : "http://example.org/fhir/ValueSet/additional-2"
-        },
-        {
-          "key" : "a3",
-          "purpose" : "maximum",
-          "valueSet" : "http://example.org/fhir/ValueSet/additional-3"
-        }]
+        "valueSet" : "http://example.org/fhir/ValueSet/from-type-13"
       },
       "mapping" : [{
-        "identity" : "m7",
-        "map" : "base-map"
-      },
-      {
         "identity" : "workflow",
         "map" : "Event.category"
       },
@@ -1015,8 +1097,8 @@
         "map" : ".outboundRelationship[typeCode=\"COMP].target[classCode=\"LIST\", moodCode=\"EVN\"].code"
       },
       {
-        "identity" : "m8",
-        "map" : "type-map"
+        "identity" : "m13",
+        "map" : "type-map-13"
       }]
     },
     {
@@ -2860,12 +2942,19 @@
   },
   "differential" : {
     "element" : [{
-      "id" : "Observation.category",
+      "id" : "Observation.category:b",
       "path" : "Observation.category",
+      "sliceName" : "b",
       "type" : [{
         "code" : "CodeableConcept",
-        "profile" : ["http://hl7.org/fhir/test/StructureDefinition/l7-datatype"]
-      }]
+        "profile" : ["http://hl7.org/fhir/test/StructureDefinition/l13-datatype"]
+      }],
+      "patternCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://example.org/codes",
+          "code" : "b"
+        }]
+      }
     }]
   }
 }

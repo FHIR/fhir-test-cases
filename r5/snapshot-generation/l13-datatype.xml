@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="l13-datatype"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/l13-datatype"/>
+  <name value="L13DataTypeName"/>
+  <title value="L13 Data Type Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="CodeableConcept profile used on a new slice of an already sliced element"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="complex-type"/>
+  <abstract value="false"/>
+  <type value="CodeableConcept"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/CodeableConcept"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="CodeableConcept">
+      <path value="CodeableConcept"/>
+      <short value="l13 Type Short"/>
+      <!-- the new slice becomes 1..1 -->
+      <min value="1"/>
+      <max value="1"/>
+      <constraint>
+        <key value="t13"/>
+        <severity value="error"/>
+        <human value="type-13"/>
+        <expression value="coding.exists()"/>
+      </constraint>
+      <mustSupport value="true"/>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://example.org/fhir/ValueSet/from-type-13"/>
+      </binding>
+      <mapping>
+        <identity value="m13"/>
+        <map value="type-map-13"/>
+      </mapping>
+    </element>
+  </differential>
+</StructureDefinition>

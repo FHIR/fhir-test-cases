@@ -1191,6 +1191,14 @@
         <xpath value="@value|f:*|h:div"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
+      <constraint>
+        <key value="mqty-1"/>
+        <severity value="error"/>
+        <human value="There SHALL be a code if there is a value and it SHALL be an expression of currency.  If system is present, it SHALL be ISO 4217 (system = &quot;urn:iso:std:iso:4217&quot; - currency)."/>
+        <expression value="(code.exists() or value.empty()) and (system.empty() or system = 'urn:iso:std:iso:4217')"/>
+        <xpath value="(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='urn:iso:std:iso:4217')"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/MoneyQuantity"/>
+      </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>

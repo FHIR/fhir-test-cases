@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="l13-base"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/l13-base"/>
+  <name value="L13BaseName"/>
+  <title value="L13 Base Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="Base profile that slices Observation.category, so that l13-resource adds a new slice to an element that is already sliced"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.category">
+      <path value="Observation.category"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="$this"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Observation.category:a">
+      <path value="Observation.category"/>
+      <sliceName value="a"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://example.org/codes"/>
+          <code value="a"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+  </differential>
+</StructureDefinition>
