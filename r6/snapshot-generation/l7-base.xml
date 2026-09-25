@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="l7-base"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/l7-base"/>
+  <name value="L7BaseName"/>
+  <title value="L7 Base Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="Base profile that constrains Observation.category, so the type profile root has something to merge with"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.category">
+      <path value="Observation.category"/>
+      <code>
+        <system value="http://example.org/codes"/>
+        <code value="base-code"/>
+      </code>
+      <max value="5"/>
+      <patternCodeableConcept>
+        <text value="fixed text"/>
+      </patternCodeableConcept>
+      <minValueQuantity>
+        <value value="5.0"/>
+      </minValueQuantity>
+      <maxValueQuantity>
+        <value value="50.0"/>
+      </maxValueQuantity>
+      <maxLength value="100"/>
+      <constraint>
+        <key value="b1"/>
+        <severity value="error"/>
+        <human value="base-1"/>
+        <expression value="text.exists()"/>
+      </constraint>
+      <constraint>
+        <key value="k-shared"/>
+        <severity value="error"/>
+        <human value="shared constraint"/>
+        <expression value="coding.exists() implies text.exists()"/>
+      </constraint>
+      <mustHaveValue value="true"/>
+      <valueAlternatives value="http://example.org/fhir/StructureDefinition/alt-a"/>
+      <valueAlternatives value="http://example.org/fhir/StructureDefinition/alt-b"/>
+      <binding>
+        <strength value="extensible"/>
+        <valueSet value="http://example.org/fhir/ValueSet/from-base"/>
+        <additional>
+          <key value="a1"/>
+          <purpose value="candidate"/>
+          <valueSet value="http://example.org/fhir/ValueSet/additional-1"/>
+        </additional>
+        <additional>
+          <key value="a2"/>
+          <purpose value="current"/>
+          <valueSet value="http://example.org/fhir/ValueSet/additional-2"/>
+        </additional>
+      </binding>
+      <mapping>
+        <identity value="m7"/>
+        <map value="base-map"/>
+      </mapping>
+    </element>
+  </differential>
+</StructureDefinition>

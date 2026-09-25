@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="l7-datatype"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/l7-datatype"/>
+  <name value="L7DataTypeName"/>
+  <title value="L7 Data Type Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="CodeableConcept profile whose root carries one of everything, to check each migration rule"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="complex-type"/>
+  <abstract value="false"/>
+  <type value="CodeableConcept"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/CodeableConcept"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="CodeableConcept">
+      <path value="CodeableConcept"/>
+      <!-- merged: codes are unioned -->
+      <code>
+        <system value="http://example.org/codes"/>
+        <code value="type-code"/>
+      </code>
+      <code>
+        <system value="http://example.org/codes"/>
+        <code value="base-code"/>
+      </code>
+      <!-- never migrated: short, definition, comment, requirements, alias, example -->
+      <short value="l7 Type Short"/>
+      <definition value="l7 Type Definition"/>
+      <comment value="l7 Type Comment"/>
+      <requirements value="l7 Type Requirements"/>
+      <alias value="l7-alias"/>
+      <!-- min: highest wins (type 1 over base 0); max: lowest wins (base 5 over *) -->
+      <min value="1"/>
+      <!-- agrees with the base pattern, so no error -->
+      <patternCodeableConcept>
+        <text value="fixed text"/>
+      </patternCodeableConcept>
+      <example>
+        <label value="l7 example"/>
+        <valueCodeableConcept>
+          <text value="an example"/>
+        </valueCodeableConcept>
+      </example>
+      <!-- minValue: highest (base 5.0); maxValue: lowest (type 20.0); maxLength: lowest (type 40) -->
+      <minValueQuantity>
+        <value value="3.0"/>
+      </minValueQuantity>
+      <maxValueQuantity>
+        <value value="20.0"/>
+      </maxValueQuantity>
+      <maxLength value="40"/>
+      <!-- never migrated -->
+      <condition value="t7"/>
+      <!-- k-shared matches the base exactly, so it is ignored; t7 is added -->
+      <constraint>
+        <key value="k-shared"/>
+        <severity value="error"/>
+        <human value="shared constraint"/>
+        <expression value="coding.exists() implies text.exists()"/>
+      </constraint>
+      <constraint>
+        <key value="t7"/>
+        <severity value="error"/>
+        <human value="type-7"/>
+        <expression value="coding.exists()"/>
+      </constraint>
+      <!-- intersection with the base: alt-b -->
+      <valueAlternatives value="http://example.org/fhir/StructureDefinition/alt-b"/>
+      <valueAlternatives value="http://example.org/fhir/StructureDefinition/alt-c"/>
+      <!-- true if either is true -->
+      <mustSupport value="true"/>
+      <!-- the type binding replaces the base binding; additional bindings merge by key -->
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://example.org/fhir/ValueSet/from-type"/>
+        <additional>
+          <key value="a1"/>
+          <purpose value="candidate"/>
+          <valueSet value="http://example.org/fhir/ValueSet/additional-1"/>
+        </additional>
+        <additional>
+          <key value="a3"/>
+          <purpose value="maximum"/>
+          <valueSet value="http://example.org/fhir/ValueSet/additional-3"/>
+        </additional>
+      </binding>
+      <!-- merge by identity + map: m7/base-map is a duplicate, m8/type-map is added -->
+      <mapping>
+        <identity value="m7"/>
+        <map value="base-map"/>
+      </mapping>
+      <mapping>
+        <identity value="m8"/>
+        <map value="type-map"/>
+      </mapping>
+    </element>
+  </differential>
+</StructureDefinition>

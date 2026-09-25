@@ -1,14 +1,12 @@
 {
   "resourceType" : "StructureDefinition",
-  "id" : "l4-resource",
-  "url" : "http://hl7.org/fhir/test/StructureDefinition/l4-resource",
-  "name" : "L1ResourceName",
-  "title" : "L1 Resource Title",
+  "id" : "l8-resource",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/l8-resource",
+  "name" : "L8ResourceName",
+  "title" : "L8 Resource Title",
   "status" : "draft",
   "publisher" : "FHIR",
-  "description" : "L1 Resource Description",
-  "purpose" : "L1 Resource Purpose",
-  "copyright" : "L1 Resource Copyright",
+  "description" : "The differential's binding overrules the type profile's binding",
   "fhirVersion" : "4.0.1",
   "mapping" : [{
     "identity" : "workflow",
@@ -935,7 +933,8 @@
         "max" : "*"
       },
       "type" : [{
-        "code" : "CodeableConcept"
+        "code" : "CodeableConcept",
+        "profile" : ["http://hl7.org/fhir/test/StructureDefinition/l8-datatype"]
       }],
       "constraint" : [{
         "key" : "ele-1",
@@ -948,13 +947,13 @@
       "isModifier" : false,
       "isSummary" : false,
       "binding" : {
-        "extension" : [{
-          "url" : "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-          "valueString" : "ObservationCategory"
-        }],
-        "strength" : "preferred",
-        "description" : "Codes for high level observation categories.",
-        "valueSet" : "http://hl7.org/fhir/ValueSet/observation-category"
+        "strength" : "required",
+        "valueSet" : "http://example.org/fhir/ValueSet/from-differential",
+        "additional" : [{
+          "key" : "a1",
+          "purpose" : "candidate",
+          "valueSet" : "http://example.org/fhir/ValueSet/additional-1"
+        }]
       },
       "mapping" : [{
         "identity" : "workflow",
@@ -1576,34 +1575,23 @@
       "definition" : "Comments about the observation or the results.",
       "comment" : "May include general statements about the observation, or statements about significant, unexpected or unreliable results values, or information about its source when relevant to its interpretation.",
       "requirements" : "Need to be able to provide free text additional information.",
-      "min" : 1,
-      "max" : "1",
+      "min" : 0,
+      "max" : "*",
       "base" : {
         "path" : "Observation.note",
         "min" : 0,
         "max" : "*"
       },
       "type" : [{
-        "code" : "Annotation",
-        "profile" : ["http://hl7.org/fhir/test/StructureDefinition/l4-datatype"]
+        "code" : "Annotation"
       }],
-      "minValueQuantity" : {
-        "value" : 3.0
-      },
       "constraint" : [{
         "key" : "ele-1",
         "severity" : "error",
         "human" : "All FHIR elements must have a @value or children",
         "expression" : "hasValue() or (children().count() > id.count())",
         "source" : "http://hl7.org/fhir/StructureDefinition/Element"
-      },
-      {
-        "key" : "t1",
-        "severity" : "error",
-        "human" : "type-1",
-        "source" : "http://hl7.org/fhir/test/StructureDefinition/l4-datatype"
       }],
-      "mustHaveValue" : true,
       "mustSupport" : false,
       "isModifier" : false,
       "isSummary" : false,
@@ -1618,10 +1606,6 @@
       {
         "identity" : "rim",
         "map" : "subjectOf.observationEvent[code=\"annotation\"].value"
-      },
-      {
-        "identity" : "m1",
-        "map" : "map1"
       }]
     },
     {
@@ -2829,12 +2813,16 @@
   },
   "differential" : {
     "element" : [{
-      "id" : "Observation.note",
-      "path" : "Observation.note",
+      "id" : "Observation.category",
+      "path" : "Observation.category",
       "type" : [{
-        "code" : "Annotation",
-        "profile" : ["http://hl7.org/fhir/test/StructureDefinition/l4-datatype"]
-      }]
+        "code" : "CodeableConcept",
+        "profile" : ["http://hl7.org/fhir/test/StructureDefinition/l8-datatype"]
+      }],
+      "binding" : {
+        "strength" : "required",
+        "valueSet" : "http://example.org/fhir/ValueSet/from-differential"
+      }
     }]
   }
 }

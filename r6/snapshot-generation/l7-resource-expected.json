@@ -1,14 +1,12 @@
 {
   "resourceType" : "StructureDefinition",
-  "id" : "l4-resource",
-  "url" : "http://hl7.org/fhir/test/StructureDefinition/l4-resource",
-  "name" : "L1ResourceName",
-  "title" : "L1 Resource Title",
+  "id" : "l7-resource",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/l7-resource",
+  "name" : "L7ResourceName",
+  "title" : "L7 Resource Title",
   "status" : "draft",
   "publisher" : "FHIR",
-  "description" : "L1 Resource Description",
-  "purpose" : "L1 Resource Purpose",
-  "copyright" : "L1 Resource Copyright",
+  "description" : "Applies a data type profile to an element that the base profile has already constrained",
   "fhirVersion" : "4.0.1",
   "mapping" : [{
     "identity" : "workflow",
@@ -43,13 +41,9 @@
   "kind" : "resource",
   "abstract" : true,
   "type" : "Observation",
-  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Observation",
+  "baseDefinition" : "http://hl7.org/fhir/test/StructureDefinition/l7-base",
   "derivation" : "constraint",
   "snapshot" : {
-    "extension" : [{
-      "url" : "http://hl7.org/fhir/tools/StructureDefinition/snapshot-base-version",
-      "valueString" : "6.0.0-snapshot1"
-    }],
     "element" : [{
       "id" : "Observation",
       "path" : "Observation",
@@ -923,40 +917,96 @@
     {
       "id" : "Observation.category",
       "path" : "Observation.category",
+      "code" : [{
+        "system" : "http://example.org/codes",
+        "code" : "base-code"
+      },
+      {
+        "system" : "http://example.org/codes",
+        "code" : "type-code"
+      }],
       "short" : "Classification of  type of observation",
       "definition" : "A code that classifies the general type of observation being made.",
       "comment" : "In addition to the required category valueset, this element allows various categorization schemes based on the owner’s definition of the category and effectively multiple categories can be used at once.  The level of granularity is defined by the category concepts in the value set.",
       "requirements" : "Used for filtering what observations are retrieved and displayed.",
-      "min" : 0,
-      "max" : "*",
+      "min" : 1,
+      "max" : "5",
       "base" : {
         "path" : "Observation.category",
         "min" : 0,
         "max" : "*"
       },
       "type" : [{
-        "code" : "CodeableConcept"
+        "code" : "CodeableConcept",
+        "profile" : ["http://hl7.org/fhir/test/StructureDefinition/l7-datatype"]
       }],
+      "patternCodeableConcept" : {
+        "text" : "fixed text"
+      },
+      "minValueQuantity" : {
+        "value" : 5.0
+      },
+      "maxValueQuantity" : {
+        "value" : 20.0
+      },
+      "maxLength" : 40,
       "constraint" : [{
         "key" : "ele-1",
         "severity" : "error",
         "human" : "All FHIR elements must have a @value or children",
         "expression" : "hasValue() or (children().count() > id.count())",
         "source" : "http://hl7.org/fhir/StructureDefinition/Element"
+      },
+      {
+        "key" : "b1",
+        "severity" : "error",
+        "human" : "base-1",
+        "expression" : "text.exists()",
+        "source" : "http://hl7.org/fhir/test/StructureDefinition/l7-base"
+      },
+      {
+        "key" : "k-shared",
+        "severity" : "error",
+        "human" : "shared constraint",
+        "expression" : "coding.exists() implies text.exists()",
+        "source" : "http://hl7.org/fhir/test/StructureDefinition/l7-base"
+      },
+      {
+        "key" : "t7",
+        "severity" : "error",
+        "human" : "type-7",
+        "expression" : "coding.exists()",
+        "source" : "http://hl7.org/fhir/test/StructureDefinition/l7-datatype"
       }],
-      "mustSupport" : false,
+      "mustHaveValue" : true,
+      "valueAlternatives" : ["http://example.org/fhir/StructureDefinition/alt-b"],
+      "mustSupport" : true,
       "isModifier" : false,
       "isSummary" : false,
       "binding" : {
-        "extension" : [{
-          "url" : "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
-          "valueString" : "ObservationCategory"
-        }],
-        "strength" : "preferred",
-        "description" : "Codes for high level observation categories.",
-        "valueSet" : "http://hl7.org/fhir/ValueSet/observation-category"
+        "strength" : "required",
+        "valueSet" : "http://example.org/fhir/ValueSet/from-type",
+        "additional" : [{
+          "key" : "a1",
+          "purpose" : "candidate",
+          "valueSet" : "http://example.org/fhir/ValueSet/additional-1"
+        },
+        {
+          "key" : "a2",
+          "purpose" : "current",
+          "valueSet" : "http://example.org/fhir/ValueSet/additional-2"
+        },
+        {
+          "key" : "a3",
+          "purpose" : "maximum",
+          "valueSet" : "http://example.org/fhir/ValueSet/additional-3"
+        }]
       },
       "mapping" : [{
+        "identity" : "m7",
+        "map" : "base-map"
+      },
+      {
         "identity" : "workflow",
         "map" : "Event.category"
       },
@@ -971,6 +1021,10 @@
       {
         "identity" : "rim",
         "map" : ".outboundRelationship[typeCode=\"COMP].target[classCode=\"LIST\", moodCode=\"EVN\"].code"
+      },
+      {
+        "identity" : "m8",
+        "map" : "type-map"
       }]
     },
     {
@@ -1576,34 +1630,23 @@
       "definition" : "Comments about the observation or the results.",
       "comment" : "May include general statements about the observation, or statements about significant, unexpected or unreliable results values, or information about its source when relevant to its interpretation.",
       "requirements" : "Need to be able to provide free text additional information.",
-      "min" : 1,
-      "max" : "1",
+      "min" : 0,
+      "max" : "*",
       "base" : {
         "path" : "Observation.note",
         "min" : 0,
         "max" : "*"
       },
       "type" : [{
-        "code" : "Annotation",
-        "profile" : ["http://hl7.org/fhir/test/StructureDefinition/l4-datatype"]
+        "code" : "Annotation"
       }],
-      "minValueQuantity" : {
-        "value" : 3.0
-      },
       "constraint" : [{
         "key" : "ele-1",
         "severity" : "error",
         "human" : "All FHIR elements must have a @value or children",
         "expression" : "hasValue() or (children().count() > id.count())",
         "source" : "http://hl7.org/fhir/StructureDefinition/Element"
-      },
-      {
-        "key" : "t1",
-        "severity" : "error",
-        "human" : "type-1",
-        "source" : "http://hl7.org/fhir/test/StructureDefinition/l4-datatype"
       }],
-      "mustHaveValue" : true,
       "mustSupport" : false,
       "isModifier" : false,
       "isSummary" : false,
@@ -1618,10 +1661,6 @@
       {
         "identity" : "rim",
         "map" : "subjectOf.observationEvent[code=\"annotation\"].value"
-      },
-      {
-        "identity" : "m1",
-        "map" : "map1"
       }]
     },
     {
@@ -2829,11 +2868,11 @@
   },
   "differential" : {
     "element" : [{
-      "id" : "Observation.note",
-      "path" : "Observation.note",
+      "id" : "Observation.category",
+      "path" : "Observation.category",
       "type" : [{
-        "code" : "Annotation",
-        "profile" : ["http://hl7.org/fhir/test/StructureDefinition/l4-datatype"]
+        "code" : "CodeableConcept",
+        "profile" : ["http://hl7.org/fhir/test/StructureDefinition/l7-datatype"]
       }]
     }]
   }
