@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="tp-root-cc"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/tp-root-cc"/>
+  <name value="TpRootCC"/>
+  <status value="draft"/>
+  <description value="CodeableConcept profile with a required binding and an invariant on its root - both get merged into the element that uses the profile"/>
+  <fhirVersion value="5.0.0"/>
+  <kind value="complex-type"/>
+  <abstract value="false"/>
+  <type value="CodeableConcept"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/CodeableConcept"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="CodeableConcept">
+      <path value="CodeableConcept"/>
+      <constraint>
+        <key value="tpr-1"/>
+        <severity value="error"/>
+        <human value="A text description is required"/>
+        <expression value="text.exists()"/>
+      </constraint>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://hl7.org/fhir/test/ValueSet/tp-root-vs"/>
+      </binding>
+    </element>
+  </differential>
+</StructureDefinition>
