@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="ext-slicing-no-ordered"/>
+  <url value="http://hl7.org/fhir/tests/StructureDefinition/ext-slicing-no-ordered"/>
+  <name value="ExtensionSlicingWithoutOrdered"/>
+  <status value="draft"/>
+  <description value="An extension slicing entry that omits slicing.ordered sits in the slicing entry's trailing content. slicing.ordered is 0..1 and its absence means 'not ordered', so this is ordinary extension slicing and the trailing content still has to propagate into the named slice."/>
+  <fhirVersion value="5.0.0"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Patient.identifier">
+      <path value="Patient.identifier"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="system"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Patient.identifier.extension">
+      <path value="Patient.identifier.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Patient.identifier.period">
+      <path value="Patient.identifier.period"/>
+      <max value="0"/>
+    </element>
+    <element id="Patient.identifier:mrn">
+      <path value="Patient.identifier"/>
+      <sliceName value="mrn"/>
+      <min value="1"/>
+    </element>
+  </differential>
+</StructureDefinition>
