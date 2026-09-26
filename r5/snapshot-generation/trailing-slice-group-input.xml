@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="trailing-slice-group"/>
+  <url value="http://hl7.org/fhir/tests/StructureDefinition/trailing-slice-group"/>
+  <name value="TrailingSliceGroup"/>
+  <status value="draft"/>
+  <description value="Slices Patient.link, whose subtree ends the snapshot, so nothing of shallower-or-equal depth follows it. The slice cardinality sums still have to be checked, and the auto-added slicing entry still has to take the minimum its slices add up to."/>
+  <fhirVersion value="5.0.0"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/tests/StructureDefinition/trailing-slice-group-base"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Patient.link:mother">
+      <path value="Patient.link"/>
+      <sliceName value="mother"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="Patient.link:father">
+      <path value="Patient.link"/>
+      <sliceName value="father"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+  </differential>
+</StructureDefinition>
