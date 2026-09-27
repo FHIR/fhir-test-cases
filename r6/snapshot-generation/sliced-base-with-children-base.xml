@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="sliced-base-with-children-base"/>
+  <url value="http://hl7.org/fhir/tests/StructureDefinition/sliced-base-with-children-base"/>
+  <name value="SlicedBaseWithChildrenBase"/>
+  <status value="active"/>
+  <description value="Slices Observation.value[x] by type and declares one named slice, and also constrains a child of the unsliced element. The child rows sit between the slicing entry and the named slice, which is what makes the index findBaseSlices is given matter."/>
+  <fhirVersion value="5.0.0"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.value[x]">
+      <path value="Observation.value[x]"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <rules value="open"/>
+        <ordered value="false"/>
+      </slicing>
+    </element>
+    <element id="Observation.value[x].extension">
+      <path value="Observation.value[x].extension"/>
+      <short value="a constrained child of the unsliced element"/>
+    </element>
+    <element id="Observation.value[x]:valueQuantity">
+      <path value="Observation.value[x]"/>
+      <sliceName value="valueQuantity"/>
+      <type>
+        <code value="Quantity"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>
