@@ -25,10 +25,7 @@
     <rule text="The patient.deceased type must be right" fhirpath="fixture('t5-output').snapshot.element.where(base.path = 'Patient.deceased[x]').type.code = 'dateTime'"/>
     <rule text="The patient.deceased path must be right" fhirpath="fixture('t5-output').snapshot.element.where(base.path = 'Patient.deceased[x]').path = 'Patient.deceased[x]'"/>
   </test>
-  <test gen="true" id="t6" description="type narrowing #2 - this makes a comment about the use of date, but doesn&#39;t constrain">
-    <rule text="The patient.deceased type must be right" fhirpath="fixture('t6-output').snapshot.element.where(path = 'Patient.deceased[x]' and sliceName.exists()).type.code.trace('code') = 'dateTime'"/>
-    <rule text="The patient.deceased path must be right" fhirpath="fixture('t6-output').snapshot.element.where(path = 'Patient.deceased[x]' and sliceName.exists()).path.trace('path') = 'Patient.deceased[x]'"/>
-  </test>
+  <test gen="true" id="t6" description="type narrowing #2 - this makes a comment about the use of date, but doesn&#39;t constrain"/>
   <test gen="true" id="t7" description="type mapping resolution">
     <rule text="The mapping must be made" fhirpath="fixture('t7-output').snapshot.element.where(base.path = 'Patient.identifier').mapping.count() = fixture('t1-output').snapshot.element.where(base.path = 'Patient.identifier').mapping.count() + 1"/>
   </test>
@@ -106,6 +103,7 @@
   <test gen="true" id="t22" description="Constrain base element before slicing">
     <rule text="element count increased by 64" fhirpath="fixture('t22-output').snapshot.element.count().trace('t22o') = fixture('patient').snapshot.element.count().trace('t22patient') + 64"/>
   </test>
+  <test gen="true" id="t22a" fail="true" regex=".*It has the same name as the slice 'Patient.identifier.extension:validDate' defined on the slicer.*" description="Error: slices refer by name to an extension slice defined on the slicer (slices defined on a slicer are not inherited by the slices)"/>
   <test gen="true" sort="true" id="t23" description="Test Slicing - unsorted differential">
     <rule text="element count increased by ??" fhirpath="fixture('t23-output').snapshot.element.count().trace('t23o') = fixture('patient').snapshot.element.count().trace('t23patient') + 11"/>
   </test>

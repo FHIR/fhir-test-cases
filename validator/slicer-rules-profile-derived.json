@@ -1,0 +1,47 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "slicer-rules-derived",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/slicer-rules-derived",
+  "version" : "1.0.0",
+  "name" : "SlicerRulesDerived",
+  "title" : "Slicer Rules Derived",
+  "status" : "draft",
+  "description" : "Test profile: the rules on the inherited slicer apply to the new slice, and the rules added to the slicer here apply to the inherited slice",
+  "fhirVersion" : "5.0.0",
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Patient",
+  "baseDefinition" : "http://hl7.org/fhir/test/StructureDefinition/slicer-rules-base",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Patient.identifier",
+      "path" : "Patient.identifier",
+      "constraint" : [{
+        "key" : "srd-1",
+        "severity" : "error",
+        "human" : "Identifiers must have a period",
+        "expression" : "period.exists()",
+        "source" : "http://hl7.org/fhir/test/StructureDefinition/slicer-rules-derived"
+      }]
+    },
+    {
+      "id" : "Patient.identifier.use",
+      "path" : "Patient.identifier.use",
+      "min" : 1
+    },
+    {
+      "id" : "Patient.identifier:ssn",
+      "path" : "Patient.identifier",
+      "sliceName" : "ssn",
+      "min" : 0,
+      "max" : "*"
+    },
+    {
+      "id" : "Patient.identifier:ssn.system",
+      "path" : "Patient.identifier.system",
+      "min" : 1,
+      "fixedUri" : "http://example.org/ssn"
+    }]
+  }
+}

@@ -1695,7 +1695,7 @@
           <path value="$this"/>
         </discriminator>
         <ordered value="false"/>
-        <rules value="open"/>
+        <rules value="closed"/>
       </slicing>
       <short value="Actual result"/>
       <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
@@ -2216,147 +2216,6 @@
         <map value="363714003 |Interprets|"/>
       </mapping>
     </element>
-    <element id="Observation.value[x]:valueCodeableConcept.id">
-      <path value="Observation.value[x].id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueCodeableConcept.extension">
-      <path value="Observation.value[x].extension"/>
-      <slicing>
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <description value="Extensions are always sliced by (at least) url"/>
-        <rules value="open"/>
-      </slicing>
-      <short value="Additional Content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueCodeableConcept.extension:valueReference">
-      <path value="Observation.value[x].extension"/>
-      <sliceName value="valueReference"/>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://nictiz.nl/fhir/StructureDefinition/bc-observation-valuereference"/>
-      </type>
-      <isModifier value="false"/>
-      <mapping>
-        <identity value="gebz-peri-v3.2"/>
-        <map value="peri32-dataelement-2270"/>
-        <comment value="Zorgaanbieder"/>
-      </mapping>
-      <mapping>
-        <identity value="gebz-peri-v3.2"/>
-        <map value="peri32-dataelement-2938"/>
-        <comment value="Voorkeursziekenhuis"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueCodeableConcept.coding">
-      <path value="Observation.value[x].coding"/>
-      <short value="Code defined by a terminology system"/>
-      <definition value="A reference to a code defined by a terminology system."/>
-      <comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true."/>
-      <requirements value="Allows for translations and alternate encodings within a code system.  Also supports communication of the same instance to systems requiring different encodings."/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="CodeableConcept.coding"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Coding"/>
-      </type>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="v2"/>
-        <map value="C*E.1-8, C*E.10-22"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="union(., ./translation)"/>
-      </mapping>
-      <mapping>
-        <identity value="orim"/>
-        <map value="fhir:CodeableConcept.coding rdfs:subPropertyOf dt:CD.coding"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueCodeableConcept.text">
-      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
-        <valueBoolean value="true"/>
-      </extension>
-      <path value="Observation.value[x].text"/>
-      <short value="Plain text representation of the concept"/>
-      <definition value="A human language representation of the concept as seen/selected/uttered by the user who entered the data and/or which represents the intended meaning of the user."/>
-      <comment value="Very often the text is the same as a displayName of one of the codings."/>
-      <requirements value="The codes from the terminologies do not always capture the correct meaning with all the nuances of the human using them, or sometimes there is no appropriate code at all. In these cases, the text is used to capture the full meaning of the source."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="CodeableConcept.text"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="v2"/>
-        <map value="C*E.9. But note many systems use C*E.2 for this"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="./originalText[mediaType/code=&quot;text/plain&quot;]/data"/>
-      </mapping>
-      <mapping>
-        <identity value="orim"/>
-        <map value="fhir:CodeableConcept.text rdfs:subPropertyOf dt:CD.originalText"/>
-      </mapping>
-    </element>
     <element id="Observation.value[x]:valueQuantity">
       <path value="Observation.value[x]"/>
       <sliceName value="valueQuantity"/>
@@ -2445,228 +2304,6 @@
       <mapping>
         <identity value="sct-attr"/>
         <map value="363714003 |Interprets|"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueQuantity.id">
-      <path value="Observation.value[x].id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueQuantity.extension">
-      <path value="Observation.value[x].extension"/>
-      <slicing>
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <description value="Extensions are always sliced by (at least) url"/>
-        <rules value="open"/>
-      </slicing>
-      <short value="Additional Content defined by implementations"/>
-      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
-      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
-      <alias value="extensions"/>
-      <alias value="user content"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-      <mapping>
-        <identity value="rim"/>
-        <map value="n/a"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueQuantity.extension:valueReference">
-      <path value="Observation.value[x].extension"/>
-      <sliceName value="valueReference"/>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://nictiz.nl/fhir/StructureDefinition/bc-observation-valuereference"/>
-      </type>
-      <isModifier value="false"/>
-      <mapping>
-        <identity value="gebz-peri-v3.2"/>
-        <map value="peri32-dataelement-2270"/>
-        <comment value="Zorgaanbieder"/>
-      </mapping>
-      <mapping>
-        <identity value="gebz-peri-v3.2"/>
-        <map value="peri32-dataelement-2938"/>
-        <comment value="Voorkeursziekenhuis"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueQuantity.value">
-      <path value="Observation.value[x].value"/>
-      <short value="Numerical value (with implicit precision)"/>
-      <definition value="The value of the measured amount. The value includes an implicit precision in the presentation of the value."/>
-      <comment value="The implicit precision in the value should always be honored. Monetary values have their own rules for handling precision (refer to standard accounting text books)."/>
-      <requirements value="Precision is handled implicitly in almost all cases of measurement."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Quantity.value"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="decimal"/>
-      </type>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="v2"/>
-        <map value="SN.2  / CQ - N/A"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="PQ.value, CO.value, MO.value, IVL.high or IVL.low depending on the value"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueQuantity.comparator">
-      <path value="Observation.value[x].comparator"/>
-      <short value="&lt; | &lt;= | &gt;= | &gt; - how to understand the value"/>
-      <definition value="How the value should be understood and represented - whether the actual value is greater or less than the stated value due to measurement issues; e.g. if the comparator is &quot;&lt;&quot; , then the real value is &lt; stated value."/>
-      <comment value="This is labeled as &quot;Is Modifier&quot; because the comparator modifies the interpretation of the value significantly. If there is no comparator, then there is no modification of the value."/>
-      <requirements value="Need a framework for handling measures where the value is &lt;5ug/L or &gt;400mg/L due to the limitations of measuring methodology."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Quantity.comparator"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <meaningWhenMissing value="If there is no comparator, then there is no modification of the value"/>
-      <isModifier value="true"/>
-      <isSummary value="true"/>
-      <binding>
-        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
-          <valueString value="QuantityComparator"/>
-        </extension>
-        <strength value="required"/>
-        <description value="How the Quantity should be understood and represented."/>
-        <valueSetReference>
-          <reference value="http://hl7.org/fhir/ValueSet/quantity-comparator|3.0.2"/>
-        </valueSetReference>
-      </binding>
-      <mapping>
-        <identity value="v2"/>
-        <map value="SN.1  / CQ.1"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="IVL properties"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueQuantity.unit">
-      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
-        <valueBoolean value="true"/>
-      </extension>
-      <path value="Observation.value[x].unit"/>
-      <short value="Unit representation"/>
-      <definition value="A human-readable form of the unit."/>
-      <requirements value="There are many representations for units of measure and in many contexts, particular representations are fixed and required. I.e. mcg for micrograms."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Quantity.unit"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="v2"/>
-        <map value="(see OBX.6 etc.) / CQ.2"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="PQ.unit"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueQuantity.system">
-      <path value="Observation.value[x].system"/>
-      <short value="System that defines coded unit form"/>
-      <definition value="The identification of the system that provides the coded form of the unit."/>
-      <requirements value="Need to know the system that defines the coded form of the unit."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Quantity.system"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="uri"/>
-      </type>
-      <condition value="qty-3"/>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="v2"/>
-        <map value="(see OBX.6 etc.) / CQ.2"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="CO.codeSystem, PQ.translation.codeSystem"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueQuantity.code">
-      <path value="Observation.value[x].code"/>
-      <short value="Coded form of the unit"/>
-      <definition value="A computer processable form of the unit in some unit representation system."/>
-      <comment value="The preferred system is UCUM, but SNOMED CT can also be used (for customary units) or ISO 4217 for currency.  The context of use may additionally require a code from a particular system."/>
-      <requirements value="Need a computable form of the unit that is fixed across all forms. UCUM provides this for quantities, but SNOMED CT provides many units of interest."/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Quantity.code"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="code"/>
-      </type>
-      <isSummary value="true"/>
-      <mapping>
-        <identity value="v2"/>
-        <map value="(see OBX.6 etc.) / CQ.2"/>
-      </mapping>
-      <mapping>
-        <identity value="rim"/>
-        <map value="PQ.code, MO.currency, PQ.translation.code"/>
       </mapping>
     </element>
     <element id="Observation.value[x]:valueBoolean">
@@ -2799,99 +2436,6 @@
         <map value="363714003 |Interprets|"/>
       </mapping>
     </element>
-    <element id="Observation.value[x]:valueBoolean.id">
-      <path value="Observation.value[x].id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references)"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-    </element>
-    <element id="Observation.value[x]:valueBoolean.extension">
-      <path value="Observation.value[x].extension"/>
-      <slicing>
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-    </element>
-    <element id="Observation.value[x]:valueBoolean.extension:valueReference">
-      <path value="Observation.value[x].extension"/>
-      <sliceName value="valueReference"/>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://nictiz.nl/fhir/StructureDefinition/bc-observation-valuereference"/>
-      </type>
-      <isModifier value="false"/>
-      <mapping>
-        <identity value="gebz-peri-v3.2"/>
-        <map value="peri32-dataelement-2270"/>
-        <comment value="Zorgaanbieder"/>
-      </mapping>
-      <mapping>
-        <identity value="gebz-peri-v3.2"/>
-        <map value="peri32-dataelement-2938"/>
-        <comment value="Voorkeursziekenhuis"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueBoolean.value">
-      <path value="Observation.value[x].value"/>
-      <representation value="xmlAttr"/>
-      <short value="Primitive value for boolean"/>
-      <definition value="The actual value"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="boolean.value"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code>
-          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type">
-            <valueString value="boolean"/>
-          </extension>
-          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type">
-            <valueString value="xsd:boolean"/>
-          </extension>
-          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-rdf-type">
-            <valueString value="xsd:boolean"/>
-          </extension>
-        </code>
-      </type>
-    </element>
     <element id="Observation.value[x]:valueString">
       <path value="Observation.value[x]"/>
       <sliceName value="valueString"/>
@@ -2951,100 +2495,6 @@
         <identity value="sct-attr"/>
         <map value="363714003 |Interprets|"/>
       </mapping>
-    </element>
-    <element id="Observation.value[x]:valueString.id">
-      <path value="Observation.value[x].id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references)"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.id"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code value="string"/>
-      </type>
-    </element>
-    <element id="Observation.value[x]:valueString.extension">
-      <path value="Observation.value[x].extension"/>
-      <slicing>
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-    </element>
-    <element id="Observation.value[x]:valueString.extension:valueReference">
-      <path value="Observation.value[x].extension"/>
-      <sliceName value="valueReference"/>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://nictiz.nl/fhir/StructureDefinition/bc-observation-valuereference"/>
-      </type>
-      <isModifier value="false"/>
-      <mapping>
-        <identity value="gebz-peri-v3.2"/>
-        <map value="peri32-dataelement-2270"/>
-        <comment value="Zorgaanbieder"/>
-      </mapping>
-      <mapping>
-        <identity value="gebz-peri-v3.2"/>
-        <map value="peri32-dataelement-2938"/>
-        <comment value="Voorkeursziekenhuis"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueString.value">
-      <path value="Observation.value[x].value"/>
-      <representation value="xmlAttr"/>
-      <short value="Primitive value for string"/>
-      <definition value="The actual value"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="string.value"/>
-        <min value="0"/>
-        <max value="1"/>
-      </base>
-      <type>
-        <code>
-          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type">
-            <valueString value="string"/>
-          </extension>
-          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type">
-            <valueString value="xsd:string"/>
-          </extension>
-          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-rdf-type">
-            <valueString value="xsd:string"/>
-          </extension>
-        </code>
-      </type>
-      <maxLength value="1048576"/>
     </element>
     <element id="Observation.value[x]:valueDateTime">
       <path value="Observation.value[x]"/>
@@ -3116,101 +2566,263 @@
         <map value="363714003 |Interprets|"/>
       </mapping>
     </element>
-    <element id="Observation.value[x]:valueDateTime.id">
-      <path value="Observation.value[x].id"/>
-      <representation value="xmlAttr"/>
-      <short value="xml:id (or equivalent in JSON)"/>
-      <definition value="unique id for the element within a resource (for internal references)"/>
+    <element id="Observation.value[x]:valueRange">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/implied-type-slice">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.value[x]"/>
+      <sliceName value="valueRange"/>
+      <short value="Actual result"/>
+      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
+      <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;'value' + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](http://hl7.org/fhir/STU3/observation.html#notes) below."/>
+      <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
       <min value="0"/>
       <max value="1"/>
       <base>
-        <path value="Element.id"/>
+        <path value="Observation.value[x]"/>
         <min value="0"/>
         <max value="1"/>
       </base>
       <type>
-        <code value="string"/>
+        <code value="Range"/>
       </type>
+      <condition value="obs-7"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.notDone, Event.notDoneReason  (maps to valeu[x] or dataAbsentReason)"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 441742003 |Evaluation finding|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.2, OBX.5, OBX.6"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="363714003 |Interprets|"/>
+      </mapping>
     </element>
-    <element id="Observation.value[x]:valueDateTime.extension">
-      <path value="Observation.value[x].extension"/>
-      <slicing>
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <ordered value="false"/>
-        <rules value="open"/>
-      </slicing>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
-      <min value="0"/>
-      <max value="*"/>
-      <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-      </type>
-    </element>
-    <element id="Observation.value[x]:valueDateTime.extension:valueReference">
-      <path value="Observation.value[x].extension"/>
-      <sliceName value="valueReference"/>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
+    <element id="Observation.value[x]:valueRatio">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/implied-type-slice">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.value[x]"/>
+      <sliceName value="valueRatio"/>
+      <short value="Actual result"/>
+      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
+      <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;'value' + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](http://hl7.org/fhir/STU3/observation.html#notes) below."/>
+      <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
       <min value="0"/>
       <max value="1"/>
       <base>
-        <path value="Element.extension"/>
-        <min value="0"/>
-        <max value="*"/>
-      </base>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://nictiz.nl/fhir/StructureDefinition/bc-observation-valuereference"/>
-      </type>
-      <isModifier value="false"/>
-      <mapping>
-        <identity value="gebz-peri-v3.2"/>
-        <map value="peri32-dataelement-2270"/>
-        <comment value="Zorgaanbieder"/>
-      </mapping>
-      <mapping>
-        <identity value="gebz-peri-v3.2"/>
-        <map value="peri32-dataelement-2938"/>
-        <comment value="Voorkeursziekenhuis"/>
-      </mapping>
-    </element>
-    <element id="Observation.value[x]:valueDateTime.value">
-      <path value="Observation.value[x].value"/>
-      <representation value="xmlAttr"/>
-      <short value="Primitive value for dateTime"/>
-      <definition value="The actual value"/>
-      <min value="0"/>
-      <max value="1"/>
-      <base>
-        <path value="dateTime.value"/>
+        <path value="Observation.value[x]"/>
         <min value="0"/>
         <max value="1"/>
       </base>
       <type>
-        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-regex">
-          <valueString value="-?([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?"/>
-        </extension>
-        <code>
-          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type">
-            <valueString value="string"/>
-          </extension>
-          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type">
-            <valueString value="xsd:gYear OR xsd:gYearMonth OR xsd:date OR xsd:dateTime"/>
-          </extension>
-          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-rdf-type">
-            <valueString value="xsd:gYear OR xsd:gYearMonth OR xsd:date OR xsd:dateTime"/>
-          </extension>
-        </code>
+        <code value="Ratio"/>
       </type>
+      <condition value="obs-7"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.notDone, Event.notDoneReason  (maps to valeu[x] or dataAbsentReason)"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 441742003 |Evaluation finding|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.2, OBX.5, OBX.6"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="363714003 |Interprets|"/>
+      </mapping>
+    </element>
+    <element id="Observation.value[x]:valueSampledData">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/implied-type-slice">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.value[x]"/>
+      <sliceName value="valueSampledData"/>
+      <short value="Actual result"/>
+      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
+      <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;'value' + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](http://hl7.org/fhir/STU3/observation.html#notes) below."/>
+      <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Observation.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="SampledData"/>
+      </type>
+      <condition value="obs-7"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.notDone, Event.notDoneReason  (maps to valeu[x] or dataAbsentReason)"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 441742003 |Evaluation finding|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.2, OBX.5, OBX.6"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="363714003 |Interprets|"/>
+      </mapping>
+    </element>
+    <element id="Observation.value[x]:valueAttachment">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/implied-type-slice">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.value[x]"/>
+      <sliceName value="valueAttachment"/>
+      <short value="Actual result"/>
+      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
+      <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;'value' + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](http://hl7.org/fhir/STU3/observation.html#notes) below."/>
+      <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Observation.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Attachment"/>
+      </type>
+      <condition value="obs-7"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.notDone, Event.notDoneReason  (maps to valeu[x] or dataAbsentReason)"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 441742003 |Evaluation finding|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.2, OBX.5, OBX.6"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="363714003 |Interprets|"/>
+      </mapping>
+    </element>
+    <element id="Observation.value[x]:valueTime">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/implied-type-slice">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.value[x]"/>
+      <sliceName value="valueTime"/>
+      <short value="Actual result"/>
+      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
+      <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;'value' + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](http://hl7.org/fhir/STU3/observation.html#notes) below."/>
+      <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Observation.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="time"/>
+      </type>
+      <condition value="obs-7"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.notDone, Event.notDoneReason  (maps to valeu[x] or dataAbsentReason)"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 441742003 |Evaluation finding|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.2, OBX.5, OBX.6"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="363714003 |Interprets|"/>
+      </mapping>
+    </element>
+    <element id="Observation.value[x]:valuePeriod">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/implied-type-slice">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.value[x]"/>
+      <sliceName value="valuePeriod"/>
+      <short value="Actual result"/>
+      <definition value="The information determined as a result of making the observation, if the information has a simple value."/>
+      <comment value="Normally, an observation will have either a single value or a set of related observations. A few observations (e.g. Apgar score) may have both a value and related observations (for an Apgar score, the observations from which the measure is derived). If a value is present, the datatype for this element should be determined by Observation.code. This element has a variable name depending on the type as follows: valueQuantity, valueCodeableConcept, valueString, valueBoolean, valueRange, valueRatio, valueSampledData, valueAttachment, valueTime, valueDateTime, or valuePeriod. (The name format is &quot;'value' + the type name&quot; with a capital on the first letter of the type).&#xD;&#xD;&#xD;If the data element is usually coded or if the type associated with the Observation.value defines a coded value, use CodeableConcept instead of string datatype even if the value is uncoded text.  A value set is bound to the ValueCodeableConcept element.    For further discussion and examples see the  [notes section](http://hl7.org/fhir/STU3/observation.html#notes) below."/>
+      <requirements value="An observation exists to have a value, though it may not if it is in error, or if it represents a group of observations."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Observation.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Period"/>
+      </type>
+      <condition value="obs-7"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.notDone, Event.notDoneReason  (maps to valeu[x] or dataAbsentReason)"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-concept"/>
+        <map value="&lt; 441742003 |Evaluation finding|"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX.2, OBX.5, OBX.6"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="value"/>
+      </mapping>
+      <mapping>
+        <identity value="sct-attr"/>
+        <map value="363714003 |Interprets|"/>
+      </mapping>
     </element>
     <element id="Observation.dataAbsentReason">
       <path value="Observation.dataAbsentReason"/>
@@ -5182,33 +4794,6 @@
       <type>
         <code value="Quantity"/>
       </type>
-      <type>
-        <code value="CodeableConcept"/>
-      </type>
-      <type>
-        <code value="string"/>
-      </type>
-      <type>
-        <code value="Range"/>
-      </type>
-      <type>
-        <code value="Ratio"/>
-      </type>
-      <type>
-        <code value="SampledData"/>
-      </type>
-      <type>
-        <code value="Attachment"/>
-      </type>
-      <type>
-        <code value="time"/>
-      </type>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <type>
-        <code value="Period"/>
-      </type>
       <isSummary value="true"/>
       <mapping>
         <identity value="sct-concept"/>
@@ -5655,33 +5240,6 @@
       </base>
       <type>
         <code value="Quantity"/>
-      </type>
-      <type>
-        <code value="CodeableConcept"/>
-      </type>
-      <type>
-        <code value="string"/>
-      </type>
-      <type>
-        <code value="Range"/>
-      </type>
-      <type>
-        <code value="Ratio"/>
-      </type>
-      <type>
-        <code value="SampledData"/>
-      </type>
-      <type>
-        <code value="Attachment"/>
-      </type>
-      <type>
-        <code value="time"/>
-      </type>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <type>
-        <code value="Period"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -6322,34 +5880,7 @@
         <max value="1"/>
       </base>
       <type>
-        <code value="Quantity"/>
-      </type>
-      <type>
         <code value="CodeableConcept"/>
-      </type>
-      <type>
-        <code value="string"/>
-      </type>
-      <type>
-        <code value="Range"/>
-      </type>
-      <type>
-        <code value="Ratio"/>
-      </type>
-      <type>
-        <code value="SampledData"/>
-      </type>
-      <type>
-        <code value="Attachment"/>
-      </type>
-      <type>
-        <code value="time"/>
-      </type>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <type>
-        <code value="Period"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -6801,33 +6332,6 @@
       </base>
       <type>
         <code value="Quantity"/>
-      </type>
-      <type>
-        <code value="CodeableConcept"/>
-      </type>
-      <type>
-        <code value="string"/>
-      </type>
-      <type>
-        <code value="Range"/>
-      </type>
-      <type>
-        <code value="Ratio"/>
-      </type>
-      <type>
-        <code value="SampledData"/>
-      </type>
-      <type>
-        <code value="Attachment"/>
-      </type>
-      <type>
-        <code value="time"/>
-      </type>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <type>
-        <code value="Period"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -7468,34 +6972,7 @@
         <max value="1"/>
       </base>
       <type>
-        <code value="Quantity"/>
-      </type>
-      <type>
         <code value="CodeableConcept"/>
-      </type>
-      <type>
-        <code value="string"/>
-      </type>
-      <type>
-        <code value="Range"/>
-      </type>
-      <type>
-        <code value="Ratio"/>
-      </type>
-      <type>
-        <code value="SampledData"/>
-      </type>
-      <type>
-        <code value="Attachment"/>
-      </type>
-      <type>
-        <code value="time"/>
-      </type>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <type>
-        <code value="Period"/>
       </type>
       <isSummary value="true"/>
       <mapping>
@@ -7946,34 +7423,7 @@
         <max value="1"/>
       </base>
       <type>
-        <code value="Quantity"/>
-      </type>
-      <type>
         <code value="CodeableConcept"/>
-      </type>
-      <type>
-        <code value="string"/>
-      </type>
-      <type>
-        <code value="Range"/>
-      </type>
-      <type>
-        <code value="Ratio"/>
-      </type>
-      <type>
-        <code value="SampledData"/>
-      </type>
-      <type>
-        <code value="Attachment"/>
-      </type>
-      <type>
-        <code value="time"/>
-      </type>
-      <type>
-        <code value="dateTime"/>
-      </type>
-      <type>
-        <code value="Period"/>
       </type>
       <isSummary value="true"/>
       <mapping>

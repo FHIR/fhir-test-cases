@@ -658,7 +658,7 @@
           <path value="$this"/>
         </discriminator>
         <ordered value="false"/>
-        <rules value="open"/>
+        <rules value="closed"/>
       </slicing>
       <short value="Indicates if the individual is deceased or not"/>
       <definition value="Indicates if the individual is deceased or not."/>
@@ -717,6 +717,50 @@
       </base>
       <type>
         <code value="dateTime"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="true"/>
+      <isModifierReason value="This element is labeled as a modifier because once a patient is marked as deceased, the actions that are appropriate to perform on the patient may be significantly different."/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="v2"/>
+        <map value="PID-30  (bool) and PID-29 (datetime)"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="player[classCode=PSN|ANM and determinerCode=INSTANCE]/deceasedInd, player[classCode=PSN|ANM and determinerCode=INSTANCE]/deceasedTime"/>
+      </mapping>
+      <mapping>
+        <identity value="cda"/>
+        <map value="n/a"/>
+      </mapping>
+    </element>
+    <element id="Patient.deceased[x]:deceasedBoolean">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/implied-type-slice">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Patient.deceased[x]"/>
+      <sliceName value="deceasedBoolean"/>
+      <short value="Indicates if the individual is deceased or not"/>
+      <definition value="Indicates if the individual is deceased or not."/>
+      <comment value="If there's no value in the instance, it means there is no statement on whether or not the individual is deceased. Most systems will interpret the absence of a value as a sign of the person being alive."/>
+      <requirements value="The fact that a patient is deceased influences the clinical process. Also, in human communication and relation management it is necessary to know whether the person is alive."/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Patient.deceased[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="boolean"/>
       </type>
       <constraint>
         <key value="ele-1"/>

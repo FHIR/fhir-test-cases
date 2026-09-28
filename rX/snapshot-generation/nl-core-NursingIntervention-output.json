@@ -2792,7 +2792,7 @@
           "path" : "$this"
         }],
         "ordered" : false,
-        "rules" : "open"
+        "rules" : "closed"
       },
       "short" : "When activity is to occur",
       "definition" : "The period, timing or frequency upon which the described activity is to occur.",
@@ -3215,7 +3215,7 @@
           "path" : "$this"
         }],
         "ordered" : false,
-        "rules" : "open"
+        "rules" : "closed"
       },
       "short" : "Length/Range of lengths, or (Start and/or end) limits",
       "definition" : "Either a duration for the length of the timing schedule, a range of possible length, or outer bounds for start and/or end limits of the timing schedule.",
@@ -3440,6 +3440,76 @@
       {
         "identity" : "rim",
         "map" : "./high"
+      }]
+    },
+    {
+      "id" : "CarePlan.activity.detail.scheduled[x]:scheduledTiming.repeat.bounds[x]:boundsDuration",
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/implied-type-slice",
+        "valueBoolean" : true
+      }],
+      "path" : "CarePlan.activity.detail.scheduled[x].repeat.bounds[x]",
+      "sliceName" : "boundsDuration",
+      "short" : "Length/Range of lengths, or (Start and/or end) limits",
+      "definition" : "Either a duration for the length of the timing schedule, a range of possible length, or outer bounds for start and/or end limits of the timing schedule.",
+      "min" : 0,
+      "max" : "1",
+      "base" : {
+        "path" : "Timing.repeat.bounds[x]",
+        "min" : 0,
+        "max" : "1"
+      },
+      "type" : [{
+        "code" : "Duration"
+      }],
+      "constraint" : [{
+        "key" : "ele-1",
+        "severity" : "error",
+        "human" : "All FHIR elements must have a @value or children",
+        "expression" : "hasValue() or (children().count() > id.count())",
+        "xpath" : "@value|f:*|h:div",
+        "source" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }],
+      "isModifier" : false,
+      "isSummary" : true,
+      "mapping" : [{
+        "identity" : "rim",
+        "map" : "IVL(TS) used in a QSI"
+      }]
+    },
+    {
+      "id" : "CarePlan.activity.detail.scheduled[x]:scheduledTiming.repeat.bounds[x]:boundsRange",
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/implied-type-slice",
+        "valueBoolean" : true
+      }],
+      "path" : "CarePlan.activity.detail.scheduled[x].repeat.bounds[x]",
+      "sliceName" : "boundsRange",
+      "short" : "Length/Range of lengths, or (Start and/or end) limits",
+      "definition" : "Either a duration for the length of the timing schedule, a range of possible length, or outer bounds for start and/or end limits of the timing schedule.",
+      "min" : 0,
+      "max" : "1",
+      "base" : {
+        "path" : "Timing.repeat.bounds[x]",
+        "min" : 0,
+        "max" : "1"
+      },
+      "type" : [{
+        "code" : "Range"
+      }],
+      "constraint" : [{
+        "key" : "ele-1",
+        "severity" : "error",
+        "human" : "All FHIR elements must have a @value or children",
+        "expression" : "hasValue() or (children().count() > id.count())",
+        "xpath" : "@value|f:*|h:div",
+        "source" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }],
+      "isModifier" : false,
+      "isSummary" : true,
+      "mapping" : [{
+        "identity" : "rim",
+        "map" : "IVL(TS) used in a QSI"
       }]
     },
     {
@@ -3985,6 +4055,94 @@
       "mapping" : [{
         "identity" : "rim",
         "map" : "QSC.code"
+      }]
+    },
+    {
+      "id" : "CarePlan.activity.detail.scheduled[x]:scheduledPeriod",
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/implied-type-slice",
+        "valueBoolean" : true
+      }],
+      "path" : "CarePlan.activity.detail.scheduled[x]",
+      "sliceName" : "scheduledPeriod",
+      "short" : "When activity is to occur",
+      "definition" : "The period, timing or frequency upon which the described activity is to occur.",
+      "requirements" : "Allows prompting for activities and detection of missed planned activities.",
+      "min" : 0,
+      "max" : "1",
+      "base" : {
+        "path" : "CarePlan.activity.detail.scheduled[x]",
+        "min" : 0,
+        "max" : "1"
+      },
+      "type" : [{
+        "code" : "Period"
+      }],
+      "constraint" : [{
+        "key" : "ele-1",
+        "severity" : "error",
+        "human" : "All FHIR elements must have a @value or children",
+        "expression" : "hasValue() or (children().count() > id.count())",
+        "xpath" : "@value|f:*|h:div",
+        "source" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }],
+      "isModifier" : false,
+      "isSummary" : false,
+      "mapping" : [{
+        "identity" : "workflow",
+        "map" : "Request.occurrence[x]"
+      },
+      {
+        "identity" : "v2",
+        "map" : "TQ1"
+      },
+      {
+        "identity" : "rim",
+        "map" : ".effectiveTime"
+      }]
+    },
+    {
+      "id" : "CarePlan.activity.detail.scheduled[x]:scheduledString",
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/tools/StructureDefinition/implied-type-slice",
+        "valueBoolean" : true
+      }],
+      "path" : "CarePlan.activity.detail.scheduled[x]",
+      "sliceName" : "scheduledString",
+      "short" : "When activity is to occur",
+      "definition" : "The period, timing or frequency upon which the described activity is to occur.",
+      "requirements" : "Allows prompting for activities and detection of missed planned activities.",
+      "min" : 0,
+      "max" : "1",
+      "base" : {
+        "path" : "CarePlan.activity.detail.scheduled[x]",
+        "min" : 0,
+        "max" : "1"
+      },
+      "type" : [{
+        "code" : "string"
+      }],
+      "constraint" : [{
+        "key" : "ele-1",
+        "severity" : "error",
+        "human" : "All FHIR elements must have a @value or children",
+        "expression" : "hasValue() or (children().count() > id.count())",
+        "xpath" : "@value|f:*|h:div",
+        "source" : "http://hl7.org/fhir/StructureDefinition/Element"
+      }],
+      "isModifier" : false,
+      "isSummary" : false,
+      "mapping" : [{
+        "identity" : "workflow",
+        "map" : "Request.occurrence[x]"
+      },
+      {
+        "identity" : "v2",
+        "map" : "TQ1"
+      },
+      {
+        "identity" : "rim",
+        "map" : ".effectiveTime"
       }]
     },
     {

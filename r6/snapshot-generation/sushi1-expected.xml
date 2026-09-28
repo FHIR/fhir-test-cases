@@ -454,8 +454,8 @@
     <element id="Patient.extension:CS.extension:code">
       <path value="Patient.extension.extension"/>
       <sliceName value="code"/>
-      <short value="Extension"/>
-      <definition value="An Extension"/>
+      <short value="Nation code of citizenship"/>
+      <definition value="Nation code representing the citizenship of patient."/>
       <min value="0"/>
       <max value="1"/>
       <base>
@@ -574,6 +574,51 @@
     </element>
     <element id="Patient.extension:CS.extension:code.value[x]">
       <path value="Patient.extension.extension.value[x]"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="closed"/>
+      </slicing>
+      <short value="Value of extension"/>
+      <definition value="Value of extension - must be one of a constrained set of the data types (see [Extensibility](http://hl7.org/fhir/R5/extensibility.html) for a list)."/>
+      <min value="1"/>
+      <max value="1"/>
+      <base>
+        <path value="Extension.value[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <condition value="ext-1"/>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+          <valueString value="Country"/>
+        </extension>
+        <strength value="preferred"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/country"/>
+      </binding>
+      <mapping>
+        <identity value="rim"/>
+        <map value="N/A"/>
+      </mapping>
+    </element>
+    <element id="Patient.extension:CS.extension:code.value[x]:valueCodeableConcept">
+      <path value="Patient.extension.extension.value[x]"/>
+      <sliceName value="valueCodeableConcept"/>
       <short value="Value of extension"/>
       <definition value="Value of extension - must be one of a constrained set of the data types (see [Extensibility](http://hl7.org/fhir/extensibility.html) for a list)."/>
       <min value="1"/>

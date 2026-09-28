@@ -1,0 +1,54 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "slicer-rules-base",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/slicer-rules-base",
+  "version" : "1.0.0",
+  "name" : "SlicerRulesBase",
+  "title" : "Slicer Rules Base",
+  "status" : "draft",
+  "description" : "Test profile: constraints on the slicer (Patient.identifier) apply to all the slices, including slices that don't restate them",
+  "fhirVersion" : "5.0.0",
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Patient",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [{
+      "id" : "Patient.identifier",
+      "path" : "Patient.identifier",
+      "slicing" : {
+        "discriminator" : [{
+          "type" : "value",
+          "path" : "system"
+        }],
+        "rules" : "open"
+      },
+      "constraint" : [{
+        "key" : "srb-1",
+        "severity" : "error",
+        "human" : "Identifier values must start with 'X'",
+        "expression" : "value.exists() implies value.startsWith('X')",
+        "source" : "http://hl7.org/fhir/test/StructureDefinition/slicer-rules-base"
+      }]
+    },
+    {
+      "id" : "Patient.identifier.value",
+      "path" : "Patient.identifier.value",
+      "min" : 1
+    },
+    {
+      "id" : "Patient.identifier:mrn",
+      "path" : "Patient.identifier",
+      "sliceName" : "mrn",
+      "min" : 0,
+      "max" : "*"
+    },
+    {
+      "id" : "Patient.identifier:mrn.system",
+      "path" : "Patient.identifier.system",
+      "min" : 1,
+      "fixedUri" : "http://example.org/mrn"
+    }]
+  }
+}

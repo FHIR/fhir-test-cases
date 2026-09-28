@@ -1339,7 +1339,7 @@
       <definition value="Indicates a date on which this identifier value was deemed to apply to this instance."/>
       <comment value="When referencing business objects where an identifier might not be globally unique but is instead re-used, allows determination of which object applies (on the presumption that the identifiers on the referenced object have an identifier.period or other metadata that indicates when that identifier was valid for the business object)."/>
       <min value="1"/>
-      <max value="1"/>
+      <max value="*"/>
       <base>
         <path value="Element.extension"/>
         <min value="0"/>
@@ -1363,7 +1363,6 @@
         <expression value="extension.exists() != value.exists()"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -1424,7 +1423,7 @@
       <definition value="A coded type for the identifier that can be used to determine which identifier to use for a specific purpose."/>
       <comment value="This element deals only with general categories of identifiers.  It SHOULD not be used for codes that correspond 1..1 with the Identifier.system. Some identifiers may fall into multiple categories due to common usage.   Where the system is known, a type is unnecessary because the type is always part of the system definition. However systems often need to handle identifiers where the system is not known. There is not a 1:1 relationship between type and system, since many different systems have the same type."/>
       <requirements value="Allows users to make use of identifiers when the identifier system is not known."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="Identifier.type"/>
@@ -1441,7 +1440,6 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
@@ -1546,7 +1544,7 @@
       <definition value="A reference to a code defined by a terminology system."/>
       <comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true."/>
       <requirements value="Allows for alternative encodings within a code system, and translations to other code systems."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="*"/>
       <base>
         <path value="CodeableConcept.coding"/>
@@ -1563,7 +1561,6 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -1696,7 +1693,7 @@
       <definition value="The identification of the code system that defines the meaning of the symbol in the code."/>
       <comment value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should be an absolute reference to some definition that establishes the system clearly and unambiguously."/>
       <requirements value="Need to be unambiguous about the source of the definition of the symbol."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="Coding.system"/>
@@ -1714,7 +1711,6 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -1772,7 +1768,7 @@
       <short value="Symbol in syntax defined by the system"/>
       <definition value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)."/>
       <requirements value="Need to refer to a particular code in the system."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="Coding.code"/>
@@ -1791,7 +1787,6 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -1939,7 +1934,7 @@
       <definition value="Establishes the namespace for the value - that is, an absolute URL that describes a set values that are unique."/>
       <comment value="Identifier.system is always case sensitive."/>
       <requirements value="There are many sets  of identifiers.  To perform matching of two identifiers, we need to know what set we're dealing with. The system identifies a particular set of unique identifiers."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="Identifier.system"/>
@@ -1960,7 +1955,6 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -1981,7 +1975,7 @@
       <short value="The value that is unique"/>
       <definition value="The portion of the identifier typically relevant to the user and which is unique within the context of the system."/>
       <comment value="If the value is a full URI, then the system SHALL be urn:ietf:rfc:3986.  The value's primary purpose is computational mapping.  As a result, it may be normalized for comparison purposes (e.g. removing non-significant whitespace, dashes, etc.)  A value formatted for human display can be conveyed using the [http://hl7.org/fhir/StructureDefinition/rendered-value](http://hl7.org/fhir/extensions/StructureDefinition-rendered-value.html)). Identifier.value is to be treated as case sensitive unless knowledge of the Identifier.system allows the processer to be confident that non-case-sensitive processing is safe."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="Identifier.value"/>
@@ -2003,7 +1997,6 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -2243,7 +2236,6 @@
         <expression value="extension.exists() != value.exists()"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Extension"/>
       </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="false"/>
       <mapping>
@@ -2304,7 +2296,7 @@
       <definition value="A coded type for the identifier that can be used to determine which identifier to use for a specific purpose."/>
       <comment value="This element deals only with general categories of identifiers.  It SHOULD not be used for codes that correspond 1..1 with the Identifier.system. Some identifiers may fall into multiple categories due to common usage.   Where the system is known, a type is unnecessary because the type is always part of the system definition. However systems often need to handle identifiers where the system is not known. There is not a 1:1 relationship between type and system, since many different systems have the same type."/>
       <requirements value="Allows users to make use of identifiers when the identifier system is not known."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="Identifier.type"/>
@@ -2321,7 +2313,6 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <binding>
@@ -2426,7 +2417,7 @@
       <definition value="A reference to a code defined by a terminology system."/>
       <comment value="Codes may be defined very casually in enumerations, or code lists, up to very formal definitions such as SNOMED CT - see the HL7 v3 Core Principles for more information.  Ordering of codings is undefined and SHALL NOT be used to infer meaning. Generally, at most only one of the coding values will be labeled as UserSelected = true."/>
       <requirements value="Allows for alternative encodings within a code system, and translations to other code systems."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="*"/>
       <base>
         <path value="CodeableConcept.coding"/>
@@ -2443,7 +2434,6 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -2576,7 +2566,7 @@
       <definition value="The identification of the code system that defines the meaning of the symbol in the code."/>
       <comment value="The URI may be an OID (urn:oid:...) or a UUID (urn:uuid:...).  OIDs and UUIDs SHALL be references to the HL7 OID registry. Otherwise, the URI should come from HL7's list of FHIR defined special URIs or it should be an absolute reference to some definition that establishes the system clearly and unambiguously."/>
       <requirements value="Need to be unambiguous about the source of the definition of the symbol."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="Coding.system"/>
@@ -2594,7 +2584,6 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -2652,7 +2641,7 @@
       <short value="Symbol in syntax defined by the system"/>
       <definition value="A symbol in syntax defined by the system. The symbol may be a predefined code or an expression in a syntax defined by the coding system (e.g. post-coordination)."/>
       <requirements value="Need to refer to a particular code in the system."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="Coding.code"/>
@@ -2671,7 +2660,6 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -2819,7 +2807,7 @@
       <definition value="Establishes the namespace for the value - that is, an absolute URL that describes a set values that are unique."/>
       <comment value="Identifier.system is always case sensitive."/>
       <requirements value="There are many sets  of identifiers.  To perform matching of two identifiers, we need to know what set we're dealing with. The system identifies a particular set of unique identifiers."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="Identifier.system"/>
@@ -2840,7 +2828,6 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -2861,7 +2848,7 @@
       <short value="The value that is unique"/>
       <definition value="The portion of the identifier typically relevant to the user and which is unique within the context of the system."/>
       <comment value="If the value is a full URI, then the system SHALL be urn:ietf:rfc:3986.  The value's primary purpose is computational mapping.  As a result, it may be normalized for comparison purposes (e.g. removing non-significant whitespace, dashes, etc.)  A value formatted for human display can be conveyed using the [http://hl7.org/fhir/StructureDefinition/rendered-value](http://hl7.org/fhir/extensions/StructureDefinition-rendered-value.html)). Identifier.value is to be treated as case sensitive unless knowledge of the Identifier.system allows the processer to be confident that non-case-sensitive processing is safe."/>
-      <min value="1"/>
+      <min value="0"/>
       <max value="1"/>
       <base>
         <path value="Identifier.value"/>
@@ -2883,7 +2870,6 @@
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
-      <mustSupport value="true"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
@@ -4449,6 +4435,10 @@
       <path value="Patient.identifier.extension"/>
       <sliceName value="validDate"/>
       <min value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/identifier-validDate"/>
+      </type>
     </element>
     <element id="Patient.identifier:MRN.type">
       <path value="Patient.identifier.type"/>
@@ -4485,6 +4475,10 @@
       <path value="Patient.identifier.extension"/>
       <sliceName value="validDate"/>
       <max value="0"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/identifier-validDate"/>
+      </type>
     </element>
     <element id="Patient.identifier:JHN.type">
       <path value="Patient.identifier.type"/>

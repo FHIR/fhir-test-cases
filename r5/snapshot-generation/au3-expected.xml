@@ -1118,7 +1118,7 @@
           <path value="$this"/>
         </discriminator>
         <ordered value="false"/>
-        <rules value="open"/>
+        <rules value="closed"/>
       </slicing>
       <short value="Clinically relevant time/time-period for observation"/>
       <definition value="The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the &quot;physiologically relevant time&quot;. This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself."/>
@@ -1197,6 +1197,150 @@
         <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
       </constraint>
       <mustSupport value="true"/>
+      <isModifier value="false"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.occurrence[x]"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="FiveWs.done[x]"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-14, and/or OBX-19 after v2.4  (depends on who observation made)"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="effectiveTime"/>
+      </mapping>
+    </element>
+    <element id="Observation.effective[x]:effectivePeriod">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/implied-type-slice">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.effective[x]"/>
+      <sliceName value="effectivePeriod"/>
+      <short value="Clinically relevant time/time-period for observation"/>
+      <definition value="The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the &quot;physiologically relevant time&quot;. This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself."/>
+      <comment value="At least a date should be present unless this observation is a historical report.  For recording imprecise or &quot;fuzzy&quot; times (For example, a blood glucose measurement taken &quot;after breakfast&quot;) use the [Timing](http://hl7.org/fhir/R5/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events."/>
+      <requirements value="Knowing when an observation was deemed true is important to its relevance as well as determining trends."/>
+      <alias value="Occurrence"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Observation.effective[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Period"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.occurrence[x]"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="FiveWs.done[x]"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-14, and/or OBX-19 after v2.4  (depends on who observation made)"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="effectiveTime"/>
+      </mapping>
+    </element>
+    <element id="Observation.effective[x]:effectiveTiming">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/implied-type-slice">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.effective[x]"/>
+      <sliceName value="effectiveTiming"/>
+      <short value="Clinically relevant time/time-period for observation"/>
+      <definition value="The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the &quot;physiologically relevant time&quot;. This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself."/>
+      <comment value="At least a date should be present unless this observation is a historical report.  For recording imprecise or &quot;fuzzy&quot; times (For example, a blood glucose measurement taken &quot;after breakfast&quot;) use the [Timing](http://hl7.org/fhir/R5/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events."/>
+      <requirements value="Knowing when an observation was deemed true is important to its relevance as well as determining trends."/>
+      <alias value="Occurrence"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Observation.effective[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="Timing"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
+      <isModifier value="false"/>
+      <isSummary value="true"/>
+      <mapping>
+        <identity value="workflow"/>
+        <map value="Event.occurrence[x]"/>
+      </mapping>
+      <mapping>
+        <identity value="w5"/>
+        <map value="FiveWs.done[x]"/>
+      </mapping>
+      <mapping>
+        <identity value="v2"/>
+        <map value="OBX-14, and/or OBX-19 after v2.4  (depends on who observation made)"/>
+      </mapping>
+      <mapping>
+        <identity value="rim"/>
+        <map value="effectiveTime"/>
+      </mapping>
+    </element>
+    <element id="Observation.effective[x]:effectiveInstant">
+      <extension url="http://hl7.org/fhir/tools/StructureDefinition/implied-type-slice">
+        <valueBoolean value="true"/>
+      </extension>
+      <path value="Observation.effective[x]"/>
+      <sliceName value="effectiveInstant"/>
+      <short value="Clinically relevant time/time-period for observation"/>
+      <definition value="The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the &quot;physiologically relevant time&quot;. This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself."/>
+      <comment value="At least a date should be present unless this observation is a historical report.  For recording imprecise or &quot;fuzzy&quot; times (For example, a blood glucose measurement taken &quot;after breakfast&quot;) use the [Timing](http://hl7.org/fhir/R5/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events."/>
+      <requirements value="Knowing when an observation was deemed true is important to its relevance as well as determining trends."/>
+      <alias value="Occurrence"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Observation.effective[x]"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="instant"/>
+      </type>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() or (children().count() &gt; id.count())"/>
+        <source value="http://hl7.org/fhir/StructureDefinition/Element"/>
+      </constraint>
+      <mustSupport value="false"/>
       <isModifier value="false"/>
       <isSummary value="true"/>
       <mapping>
