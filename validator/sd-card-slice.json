@@ -1,0 +1,44 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "sd-card-slice",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/sd-card-slice",
+  "version": "1.0.0",
+  "name": "SdCardSlice",
+  "status": "draft",
+  "description": "The slicer has max 1, and the slice has min 2",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.component",
+        "path": "Observation.component",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "code.text"
+            }
+          ],
+          "rules": "open"
+        },
+        "max": "1"
+      },
+      {
+        "id": "Observation.component:a",
+        "path": "Observation.component",
+        "sliceName": "a",
+        "min": 2
+      },
+      {
+        "id": "Observation.component:a.code.text",
+        "path": "Observation.component.code.text",
+        "fixedString": "a"
+      }
+    ]
+  }
+}
