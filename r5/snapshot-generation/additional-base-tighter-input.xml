@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="additional-base-tighter"/>
+  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-additionalBase">
+    <valueCanonical value="http://hl7.org/fhir/tests/StructureDefinition/additional-base-tighter-ab"/>
+  </extension>
+  <url value="http://hl7.org/fhir/tests/StructureDefinition/additional-base-tighter"/>
+  <name value="AdditionalBaseTighter"/>
+  <status value="draft"/>
+  <description value="Both bases pattern Patient.maritalStatus with a different coding, and disagree on min and maxLength. An instance has to satisfy both, so the merged pattern is the union of the codings and the tighter of each limit wins."/>
+  <fhirVersion value="5.0.0"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient"/>
+      <short value="Short from the profile"/>
+    </element>
+    <element>
+      <path value="Patient.name"/>
+      <min value="1"/>
+    </element>
+    <element>
+      <path value="Patient.name.family"/>
+      <maxLength value="32"/>
+    </element>
+    <element>
+      <path value="Patient.maritalStatus"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/v3-MaritalStatus"/>
+          <code value="S"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+  </differential>
+</StructureDefinition>
