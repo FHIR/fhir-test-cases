@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="l17d-base"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/l17d-base"/>
+  <name value="L17dBaseName"/>
+  <title value="L17d Base Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="Slices Observation.component by code, with an invariant on the slicer and a constraint on a child of the slicer, and a slice 'a'"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.component">
+      <path value="Observation.component"/>
+      <slicing>
+        <discriminator>
+          <type value="pattern"/>
+          <path value="code"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+      <constraint>
+        <key value="l17d-1"/>
+        <severity value="error"/>
+        <human value="A component must have a value or a data absent reason"/>
+        <expression value="value.exists() or dataAbsentReason.exists()"/>
+      </constraint>
+    </element>
+    <element id="Observation.component.interpretation">
+      <path value="Observation.component.interpretation"/>
+      <max value="0"/>
+    </element>
+    <element id="Observation.component:a">
+      <path value="Observation.component"/>
+      <sliceName value="a"/>
+      <max value="1"/>
+    </element>
+    <element id="Observation.component:a.code">
+      <path value="Observation.component.code"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://example.org/codes"/>
+          <code value="a"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+  </differential>
+</StructureDefinition>

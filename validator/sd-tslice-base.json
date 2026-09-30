@@ -1,0 +1,65 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "sd-tslice-base",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/sd-tslice-base",
+  "name": "SdTSliceBase",
+  "title": "Type Slice Binding Base",
+  "status": "draft",
+  "publisher": "FHIR",
+  "description": "Like the vital signs profile: Observation.value[x] allows many types, with a binding and a maxLength that only make sense for some of them",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": true,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.value[x]",
+        "path": "Observation.value[x]",
+        "type": [
+          {
+            "code": "Quantity"
+          },
+          {
+            "code": "CodeableConcept"
+          },
+          {
+            "code": "string"
+          },
+          {
+            "code": "boolean"
+          },
+          {
+            "code": "integer"
+          },
+          {
+            "code": "Range"
+          },
+          {
+            "code": "Ratio"
+          },
+          {
+            "code": "SampledData"
+          },
+          {
+            "code": "time"
+          },
+          {
+            "code": "dateTime"
+          },
+          {
+            "code": "Period"
+          }
+        ],
+        "maxLength": 100,
+        "binding": {
+          "strength": "extensible",
+          "description": "Common UCUM units for recording Vital Signs.",
+          "valueSet": "http://hl7.org/fhir/ValueSet/ucum-vitals-common"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "tslice-binding",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/tslice-binding",
+  "name": "TSliceBinding",
+  "title": "Type Slice Binding",
+  "status": "draft",
+  "publisher": "FHIR",
+  "description": "Like US Core pediatric BMI (R4): slices value[x] by type. The binding and the maxLength on the unsliced element are only carried into the slices whose type can have them, including the implied slices",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/test/StructureDefinition/tslice-binding-base",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.value[x]:valueQuantity",
+        "path": "Observation.value[x]",
+        "sliceName": "valueQuantity",
+        "type": [
+          {
+            "code": "Quantity"
+          }
+        ],
+        "mustSupport": true
+      },
+      {
+        "id": "Observation.value[x]:valueInteger",
+        "path": "Observation.value[x]",
+        "sliceName": "valueInteger",
+        "type": [
+          {
+            "code": "integer"
+          }
+        ],
+        "minValueInteger": 0
+      }
+    ]
+  }
+}
