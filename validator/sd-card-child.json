@@ -1,0 +1,57 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "sd-card-child",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/sd-card-child",
+  "version": "1.0.0",
+  "name": "SdCardChild",
+  "status": "draft",
+  "description": "The slicer's child value[x] has max 0, and the slice's child value[x] has min 1",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.component",
+        "path": "Observation.component",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "code.text"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Observation.component.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "integer"
+          }
+        ],
+        "max": "0"
+      },
+      {
+        "id": "Observation.component:a",
+        "path": "Observation.component",
+        "sliceName": "a"
+      },
+      {
+        "id": "Observation.component:a.code.text",
+        "path": "Observation.component.code.text",
+        "fixedString": "a"
+      },
+      {
+        "id": "Observation.component:a.value[x]",
+        "path": "Observation.component.value[x]",
+        "min": 1
+      }
+    ]
+  }
+}

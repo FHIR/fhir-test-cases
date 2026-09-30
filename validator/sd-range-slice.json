@@ -1,0 +1,57 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "sd-range-slice",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/sd-range-slice",
+  "version": "1.0.0",
+  "name": "SdRangeSlice",
+  "status": "draft",
+  "description": "The slicer's child sets maxValue 3, and the slice's child sets minValue 5, so no value can meet both",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.component",
+        "path": "Observation.component",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "code.text"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Observation.component.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "integer"
+          }
+        ],
+        "maxValueInteger": 3
+      },
+      {
+        "id": "Observation.component:a",
+        "path": "Observation.component",
+        "sliceName": "a"
+      },
+      {
+        "id": "Observation.component:a.code.text",
+        "path": "Observation.component.code.text",
+        "fixedString": "a"
+      },
+      {
+        "id": "Observation.component:a.value[x]",
+        "path": "Observation.component.value[x]",
+        "minValueInteger": 5
+      }
+    ]
+  }
+}

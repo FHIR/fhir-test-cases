@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="l17c-base"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/l17c-base"/>
+  <name value="L17cBaseName"/>
+  <title value="L17c Base Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="Type slices Observation.value[x] (Quantity, CodeableConcept, string) with an invariant on the slicer, and a slice for Quantity"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.value[x]">
+      <path value="Observation.value[x]"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <rules value="closed"/>
+      </slicing>
+      <type>
+        <code value="Quantity"/>
+      </type>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <type>
+        <code value="string"/>
+      </type>
+      <constraint>
+        <key value="l17c-1"/>
+        <severity value="error"/>
+        <human value="The value must not be empty"/>
+        <expression value="hasValue() or children().exists()"/>
+      </constraint>
+    </element>
+    <element id="Observation.value[x]:valueQuantity">
+      <path value="Observation.value[x]"/>
+      <sliceName value="valueQuantity"/>
+      <type>
+        <code value="Quantity"/>
+      </type>
+    </element>
+    <element id="Observation.value[x]:valueQuantity.system">
+      <path value="Observation.value[x].system"/>
+      <fixedUri value="http://unitsofmeasure.org"/>
+    </element>
+  </differential>
+</StructureDefinition>
