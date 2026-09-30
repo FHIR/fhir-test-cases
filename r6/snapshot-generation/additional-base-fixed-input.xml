@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="additional-base-fixed"/>
+  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-additionalBase">
+    <valueCanonical value="http://hl7.org/fhir/tests/StructureDefinition/additional-base-fixed-ab"/>
+  </extension>
+  <url value="http://hl7.org/fhir/tests/StructureDefinition/additional-base-fixed"/>
+  <name value="AdditionalBaseFixed"/>
+  <status value="draft"/>
+  <description value="The additional base fixes Patient.maritalStatus to the coding M, and the profile patterns it with the coding S. A fixed value is exact, so it can't also contain S: the bases are incompatible, and snapshot generation fails"/>
+  <fhirVersion value="5.0.0"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient"/>
+      <short value="Short from the profile"/>
+    </element>
+    <element>
+      <path value="Patient.name"/>
+      <min value="1"/>
+    </element>
+    <element>
+      <path value="Patient.name.family"/>
+      <maxLength value="32"/>
+    </element>
+    <element>
+      <path value="Patient.maritalStatus"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/v3-MaritalStatus"/>
+          <code value="S"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+  </differential>
+</StructureDefinition>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="additional-base-fixed-ab"/>
+  <url value="http://hl7.org/fhir/tests/StructureDefinition/additional-base-fixed-ab"/>
+  <name value="AdditionalBaseFixedAB"/>
+  <status value="active"/>
+  <description value="The additional base. Fixes the marital status to the single coding M."/>
+  <fhirVersion value="5.0.0"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient"/>
+      <short value="Short from the additional base"/>
+    </element>
+    <element>
+      <path value="Patient.name"/>
+      <min value="2"/>
+    </element>
+    <element>
+      <path value="Patient.name.family"/>
+      <maxLength value="64"/>
+    </element>
+    <element>
+      <path value="Patient.maritalStatus"/>
+      <fixedCodeableConcept>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/v3-MaritalStatus"/>
+          <code value="M"/>
+        </coding>
+      </fixedCodeableConcept>
+    </element>
+  </differential>
+</StructureDefinition>
