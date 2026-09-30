@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="profile-mapping-5"/>
+  <url value="http://hl7.org/fhir/tests/StructureDefinition/profile-mapping-5"/>
+  <name value="ProfileMappingIdentityCollision"/>
+  <status value="draft"/>
+  <description value="Re-declares the base profile's mapping identity for a different URI under a different name, so the base's declaration has to be renamed out of the way. The renamed declaration has to carry the new identity and has to survive into the snapshot, because element mappings are resolved by identity."/>
+  <fhirVersion value="5.0.0"/>
+  <mapping>
+    <identity value="map1"/>
+    <uri value="http://example.org/map-other"/>
+    <name value="A different map, declared in the derived profile"/>
+  </mapping>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/tests/StructureDefinition/profile-mapping-1"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Patient.gender">
+      <path value="Patient.gender"/>
+      <mapping>
+        <identity value="map1"/>
+        <map value="the derived profile's own map"/>
+      </mapping>
+    </element>
+  </differential>
+</StructureDefinition>
