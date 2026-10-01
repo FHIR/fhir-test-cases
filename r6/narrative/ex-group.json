@@ -1,0 +1,178 @@
+{
+  "resourceType": "Group",
+  "id": "ex-group",
+  "url": "http://example.org/fhir/Group/ex-group",
+  "identifier": [
+    {
+      "system": "http://example.org/research-groups",
+      "value": "G-0023"
+    }
+  ],
+  "version": "1.0.0",
+  "name": "DiabetesStudyCohortA",
+  "title": "Diabetes study cohort A",
+  "status": "active",
+  "publisher": "Example Research Org",
+  "description": "Adults with **type 2 diabetes** enrolled in the first arm of the study",
+  "purpose": "Defines the cohort for the **first arm** of the study",
+  "type": "person",
+  "membership": "enumerated",
+  "code": {
+    "text": "Study participants"
+  },
+  "quantity": 4,
+  "managingEntity": {
+    "reference": "Organization/f001",
+    "display": "Burgers University Medical Center"
+  },
+  "combinationMethod": "all-of",
+  "characteristic": [
+    {
+      "code": {
+        "coding": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "439401001",
+            "display": "Diagnosis"
+          }
+        ]
+      },
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "44054006",
+            "display": "Diabetes mellitus type 2"
+          }
+        ]
+      },
+      "exclude": false,
+      "description": "Has a recorded diagnosis of type 2 diabetes",
+      "method": [
+        {
+          "text": "Problem list review"
+        }
+      ],
+      "determiner": {
+        "reference": "Practitioner/ex-pract",
+        "display": "Dr Adam Careful"
+      },
+      "relativeTime": [
+        {
+          "contextCode": {
+            "text": "Study enrolment"
+          },
+          "offsetDuration": {
+            "value": -12,
+            "unit": "months",
+            "system": "http://unitsofmeasure.org",
+            "code": "mo"
+          },
+          "text": "diagnosed in the year before enrolment"
+        }
+      ]
+    },
+    {
+      "code": {
+        "text": "Age"
+      },
+      "valueRange": {
+        "low": {
+          "value": 18,
+          "unit": "years",
+          "system": "http://unitsofmeasure.org",
+          "code": "a"
+        },
+        "high": {
+          "value": 75,
+          "unit": "years",
+          "system": "http://unitsofmeasure.org",
+          "code": "a"
+        }
+      },
+      "exclude": false,
+      "instancesUnsignedInt": 1,
+      "relativeTime": [
+        {
+          "contextReference": {
+            "reference": "PlanDefinition/study",
+            "display": "Study protocol"
+          },
+          "contextPath": "action.timing",
+          "offsetRange": {
+            "low": {
+              "value": 0,
+              "unit": "days",
+              "system": "http://unitsofmeasure.org",
+              "code": "d"
+            },
+            "high": {
+              "value": 30,
+              "unit": "days",
+              "system": "http://unitsofmeasure.org",
+              "code": "d"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "code": {
+        "text": "Pregnant"
+      },
+      "valueBoolean": true,
+      "exclude": true,
+      "durationDuration": {
+        "value": 9,
+        "unit": "months",
+        "system": "http://unitsofmeasure.org",
+        "code": "mo"
+      },
+      "period": {
+        "start": "2024-01-01"
+      }
+    }
+  ],
+  "member": [
+    {
+      "entity": {
+        "reference": "Patient/pat1",
+        "display": "Peter Chalmers"
+      },
+      "involvement": [
+        {
+          "text": "Intervention arm"
+        }
+      ],
+      "period": {
+        "start": "2024-02-01"
+      }
+    },
+    {
+      "entity": {
+        "reference": "Patient/pat2",
+        "display": "Bénédicte du Marché"
+      },
+      "period": {
+        "start": "2024-02-03"
+      }
+    },
+    {
+      "entity": {
+        "reference": "Patient/pat3",
+        "display": "Henry Levin"
+      },
+      "period": {
+        "start": "2024-02-05",
+        "end": "2024-06-30"
+      },
+      "inactive": true
+    },
+    {
+      "entity": {
+        "reference": "Patient/pat4",
+        "display": "Ruth Brown"
+      }
+    }
+  ]
+}
