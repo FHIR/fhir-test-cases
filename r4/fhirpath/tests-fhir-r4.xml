@@ -885,6 +885,8 @@ Any text enclosed within is ignored
 		<test name="testEquality26" inputfile="patient-example.xml"><expression>name.take(2) = name.take(2).first() | name.take(2).last()</expression><output type="boolean">true</output></test>
 		<test name="testEquality27" inputfile="patient-example.xml"><expression>name.take(2) = name.take(2).last() | name.take(2).first()</expression><output type="boolean">false</output></test>
 		<test name="testEquality28" inputfile="observation-example.xml"><expression>Observation.value = 185 '[lb_av]'</expression><output type="boolean">true</output></test>
+		<test name="testEquality29" inputfile="patient-example.xml"><expression>name.first() = 'Peter'</expression></test>
+		<test name="testEquality30" inputfile="patient-example.xml"><expression>'Peter' = name.first()</expression></test>
 	</group>
 
 	<group name="testNEquality">
@@ -912,6 +914,14 @@ Any text enclosed within is ignored
 		<test name="testNEquality22" inputfile="patient-example.xml"><expression>(1.2 / 1.8).round(2) != 0.6666667</expression><output type="boolean">true</output></test>
 		<test name="testNEquality23" inputfile="patient-example.xml"><expression>(1.2 / 1.8).round(2) != 0.67</expression><output type="boolean">false</output></test>
 		<test name="testNEquality24" inputfile="observation-example.xml"><expression>Observation.value != 185 'kg'</expression><output type="boolean">true</output></test>
+		<test name="testNEquality25" inputfile="patient-example.xml"><expression>name.first() != 'Peter'</expression></test>
+		<test name="testNEquality26" inputfile="patient-example.xml"><expression>'Peter' != name.first()</expression></test>
+	</group>
+
+	<group name="testHasValue">
+		<test name="testHasValue1" inputfile="patient-example.xml"><expression>name.first().given.first().hasValue()</expression><output type="boolean">true</output></test>
+		<test name="testHasValue2" inputfile="patient-example.xml"><expression>name.first().hasValue()</expression><output type="boolean">false</output></test>
+		<test name="testHasValue3" inputfile="patient-example.xml"><expression>name.first().given.first().hasValue() and name.first() != 'Peter'</expression></test>
 	</group>
 
 	<group name="testEquivalent">
