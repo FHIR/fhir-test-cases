@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Provenance xmlns="http://hl7.org/fhir">
+  <id value="example-circular"/>
+  <!-- tests that summaries of resources that refer to each other in a loop don't recurse for ever: 
+    the summary of this Provenance includes the summary of #p1, which includes the summary of #p2, 
+    which includes the summary of #p1 again, and so on, until MAX_SUMMARY_RECURSION is reached -->
+  <contained>
+    <Provenance>
+      <id value="p1"/>
+      <target>
+        <reference value="#p2"/>
+      </target>
+      <recorded value="2024-03-01T10:05:00+10:00"/>
+      <agent>
+        <who>
+          <display value="Dr Adam Careful"/>
+        </who>
+      </agent>
+    </Provenance>
+  </contained>
+  <contained>
+    <Provenance>
+      <id value="p2"/>
+      <target>
+        <reference value="#p1"/>
+      </target>
+      <recorded value="2024-03-01T10:06:00+10:00"/>
+      <agent>
+        <who>
+          <display value="Dr Adam Careful"/>
+        </who>
+      </agent>
+    </Provenance>
+  </contained>
+  <target>
+    <reference value="#p1"/>
+  </target>
+  <recorded value="2024-03-01T10:07:00+10:00"/>
+  <agent>
+    <who>
+      <display value="Dr Adam Careful"/>
+    </who>
+  </agent>
+</Provenance>
