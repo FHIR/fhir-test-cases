@@ -1045,8 +1045,8 @@ Any text enclosed within is ignored
 		<test name="testEquality26" testing="=" inputfile="patient-example.xml"><expression>name.take(2) = name.take(2).first() | name.take(2).last()</expression><output type="boolean">true</output></test>
 		<test name="testEquality27" testing="=" inputfile="patient-example.xml"><expression>name.take(2) = name.take(2).last() | name.take(2).first()</expression><output type="boolean">false</output></test>
 		<test name="testEquality28" testing="=" inputfile="observation-example.xml"><expression>Observation.value = 185 '[lb_av]'</expression><output type="boolean">true</output></test>
-		<test name="testEquality29" testing="=" inputfile="patient-example.xml" description="A primitive and a complex value are not comparable, so the result is empty"><expression>name.first() = 'Peter'</expression></test>
-		<test name="testEquality30" testing="=" inputfile="patient-example.xml" description="A primitive and a complex value are not comparable, so the result is empty"><expression>'Peter' = name.first()</expression></test>
+		<test name="testEquality29" testing="=" inputfile="patient-example.xml" description="A primitive and a complex value are different types, so they are not equal"><expression>name.first() = 'Peter'</expression><output type="boolean">false</output></test>
+		<test name="testEquality30" testing="=" inputfile="patient-example.xml" description="A primitive and a complex value are different types, so they are not equal"><expression>'Peter' = name.first()</expression><output type="boolean">false</output></test>
 	</group>
 
 	<group name="testNEquality">
@@ -1074,14 +1074,14 @@ Any text enclosed within is ignored
 		<test name="testNEquality22" testing="!=" inputfile="patient-example.xml"><expression>(1.2 / 1.8).round(2) != 0.6666667</expression><output type="boolean">true</output></test>
 		<test name="testNEquality23" testing="!=" inputfile="patient-example.xml"><expression>(1.2 / 1.8).round(2) != 0.67</expression><output type="boolean">false</output></test>
 		<test name="testNEquality24" testing="!=" inputfile="observation-example.xml"><expression>Observation.value != 185 'kg'</expression><output type="boolean">true</output></test>
-		<test name="testNEquality25" testing="!=" inputfile="patient-example.xml" description="A primitive and a complex value are not comparable, so the result is empty"><expression>name.first() != 'Peter'</expression></test>
-		<test name="testNEquality26" testing="!=" inputfile="patient-example.xml" description="A primitive and a complex value are not comparable, so the result is empty"><expression>'Peter' != name.first()</expression></test>
+		<test name="testNEquality25" testing="!=" inputfile="patient-example.xml" description="A primitive and a complex value are different types, so they are not equal"><expression>name.first() != 'Peter'</expression><output type="boolean">true</output></test>
+		<test name="testNEquality26" testing="!=" inputfile="patient-example.xml" description="A primitive and a complex value are different types, so they are not equal"><expression>'Peter' != name.first()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testHasValue" description="hasValue() is true only for a primitive with a value">
 		<test name="testHasValue1" testing="hasValue" inputfile="patient-example.xml"><expression>name.first().given.first().hasValue()</expression><output type="boolean">true</output></test>
 		<test name="testHasValue2" testing="hasValue" inputfile="patient-example.xml" description="Only a primitive has a value: a complex type is never hasValue(), even when it has content"><expression>name.first().hasValue()</expression><output type="boolean">false</output></test>
-		<test name="testHasValue3" testing="hasValue" inputfile="patient-example.xml" description="A complex item never has a value, and it isn't comparable to a string - the pattern used in a context invariant that applies to both a code and a TypeRef"><expression>name.first().given.first().hasValue() and name.first() != 'Peter'</expression></test>
+		<test name="testHasValue3" testing="hasValue" inputfile="patient-example.xml" description="A complex item never has a value, and it is not equal to a string - the pattern used in a context invariant that applies to both a code and a TypeRef"><expression>name.first().given.first().hasValue() and name.first() != 'Peter'</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testEquivalent">

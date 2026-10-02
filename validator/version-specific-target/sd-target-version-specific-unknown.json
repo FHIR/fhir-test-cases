@@ -1,0 +1,70 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "sd-target-version-specific-unknown",
+  "url": "http://example.org/fhir/StructureDefinition/sd-target-version-specific-unknown",
+  "name": "SdTargetVersionSpecificUnknown",
+  "status": "draft",
+  "fhirVersion": "5.0.0",
+  "kind": "complex-type",
+  "abstract": false,
+  "context": [
+    {
+      "type": "element",
+      "expression": "Observation"
+    }
+  ],
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Extension",
+        "path": "Extension",
+        "short": "A reference with a version specific target",
+        "definition": "A reference with a version specific target.",
+        "max": "1"
+      },
+      {
+        "id": "Extension.extension",
+        "path": "Extension.extension",
+        "max": "0"
+      },
+      {
+        "id": "Extension.url",
+        "path": "Extension.url",
+        "fixedUri": "http://example.org/fhir/StructureDefinition/sd-target-version-specific-unknown"
+      },
+      {
+        "id": "Extension.value[x]",
+        "path": "Extension.value[x]",
+        "min": 1,
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Binary",
+              "http://hl7.org/fhir/StructureDefinition/NotAResourceType"
+            ],
+            "_targetProfile": [
+              null,
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/version-specific-use",
+                    "extension": [
+                      {
+                        "url": "endFhirVersion",
+                        "valueCode": "4.3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "resourceType": "SearchParameter",
+  "id": "sp-version-specific-base",
+  "url": "http://example.org/fhir/SearchParameter/sp-version-specific-base",
+  "name": "SpVersionSpecificBase",
+  "status": "draft",
+  "description": "Bases for different FHIR versions: only the ones for the version being validated are checked",
+  "code": "test-ext",
+  "base": [
+    "Observation",
+    "DeviceUseStatement",
+    "DeviceUsage"
+  ],
+  "_base": [
+    null,
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/version-specific-use",
+          "extension": [
+            {
+              "url": "endFhirVersion",
+              "valueCode": "4.3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/version-specific-use",
+          "extension": [
+            {
+              "url": "startFhirVersion",
+              "valueCode": "5.0"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "type": "token",
+  "expression": "Resource.extension('http://example.org/fhir/StructureDefinition/test-ext').value",
+  "processingMode": "normal"
+}
