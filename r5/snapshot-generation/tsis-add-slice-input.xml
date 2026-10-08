@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="tsis-add-slice"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/tsis-add-slice"/>
+  <name value="TsisAddSliceName"/>
+  <title value="Tsis Add Slice Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="Adds a new slice (MeanBP, a different LOINC code) under the slicer inherited from tsis-base, and uses the type specific name (valueQuantity) inside it. The new slice is built from the unsliced component, so its value[x] allows all the types (not just the Quantity the inherited slices allow): a closed type slicer, the valueQuantity slice, and implied slices for the other types"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/test/StructureDefinition/tsis-base"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.component:MeanBP">
+      <path value="Observation.component"/>
+      <sliceName value="MeanBP"/>
+      <min value="0"/>
+      <max value="1"/>
+    </element>
+    <element id="Observation.component:MeanBP.code">
+      <path value="Observation.component.code"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="8478-0"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:MeanBP.valueQuantity">
+      <path value="Observation.component.valueQuantity"/>
+      <short value="Mean value"/>
+    </element>
+  </differential>
+</StructureDefinition>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="tsis-explicit"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/tsis-explicit"/>
+  <name value="TsisExplicitName"/>
+  <title value="Tsis Explicit Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="The same as tsis-shortcut, but with the type slicing written out in full: a slicer on value[x] and a valueQuantity slice, inside a slice inherited from tsis-base"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/test/StructureDefinition/tsis-base"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.component:SystolicBP">
+      <path value="Observation.component"/>
+      <sliceName value="SystolicBP"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Observation.component:SystolicBP.value[x]">
+      <path value="Observation.component.value[x]"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="closed"/>
+      </slicing>
+    </element>
+    <element id="Observation.component:SystolicBP.value[x]:valueQuantity">
+      <path value="Observation.component.value[x]"/>
+      <sliceName value="valueQuantity"/>
+      <short value="Systolic value"/>
+      <type>
+        <code value="Quantity"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Observation.component:SystolicBP.value[x]:valueQuantity.value">
+      <path value="Observation.component.value[x].value"/>
+      <short value="Systolic number"/>
+      <mustSupport value="true"/>
+    </element>
+  </differential>
+</StructureDefinition>

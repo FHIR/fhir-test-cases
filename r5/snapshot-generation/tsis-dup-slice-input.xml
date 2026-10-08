@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="tsis-dup-slice"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/tsis-dup-slice"/>
+  <name value="TsisDupSliceName"/>
+  <title value="Tsis Dup Slice Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="Error: the differential defines two slices of Observation.component with the same name (SystolicBP) and different LOINC codes"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.component">
+      <path value="Observation.component"/>
+      <slicing>
+        <discriminator>
+          <type value="pattern"/>
+          <path value="code"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Observation.component:SystolicBP">
+      <path value="Observation.component"/>
+      <sliceName value="SystolicBP"/>
+      <min value="0"/>
+      <max value="1"/>
+    </element>
+    <element id="Observation.component:SystolicBP.code">
+      <path value="Observation.component.code"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="8480-6"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:SystolicBP">
+      <path value="Observation.component"/>
+      <sliceName value="SystolicBP"/>
+      <min value="0"/>
+      <max value="1"/>
+    </element>
+    <element id="Observation.component:SystolicBP.code">
+      <path value="Observation.component.code"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="8478-0"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+  </differential>
+</StructureDefinition>
