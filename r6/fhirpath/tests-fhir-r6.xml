@@ -1854,9 +1854,156 @@ Any text enclosed within is ignored
 	</group>
 	
 	<group name="HTMLChecks">
-    <test name="htmlTest01" testing="htmlChecks" mode="html" inputfile="patient-example.xml"><expression>text.div.htmlChecks()</expression><output type="boolean">true</output></test>
-    <test name="htmlTest02" testing="htmlChecks" mode="html" inputfile="parameters-example-html.xml"><expression>%resource.parameter.where(name='goodHtml').value.htmlChecks()</expression><output type="boolean">true</output></test>
-    <test name="htmlTest03" testing="htmlChecks" mode="html" inputfile="parameters-example-html.xml"><expression>%resource.parameter.where(name='badHtml').value.htmlChecks()</expression><output type="boolean">false</output></test>
-    <test name="htmlTest04" testing="htmlChecks" mode="html" inputfile="parameters-example-html.xml"><expression>%resource.parameter.where(name='notString').value.htmlChecks().empty()</expression><output type="boolean">true</output></test>
+      <test name="htmlTest01" testing="htmlChecks" mode="html" inputfile="patient-example.xml"><expression>text.div.htmlChecks()</expression><output type="boolean">true</output></test>
+      <test name="htmlTest02" testing="htmlChecks" mode="html" inputfile="parameters-example-html.xml"><expression>%resource.parameter.where(name='goodHtml').value.htmlChecks()</expression><output type="boolean">true</output></test>
+      <test name="htmlTest03" testing="htmlChecks" mode="html" inputfile="parameters-example-html.xml"><expression>%resource.parameter.where(name='badHtml').value.htmlChecks()</expression><output type="boolean">false</output></test>
+      <test name="htmlTest04" testing="htmlChecks" mode="html" inputfile="parameters-example-html.xml"><expression>%resource.parameter.where(name='notString').value.htmlChecks().empty()</expression><output type="boolean">true</output></test>
+	</group>
+
+	<group name="isSemanticChecks" mode="semantic">
+      <!-- these next few tests exercise a subtle area of type evaluation logic. As expression tests, they are not 
+  	    particularly exotic - pick the Observation.effective from the Observation before evaluation, and then evaluate 
+		normally. 
+
+		Where they get interesting is when evaluating types - the 'is' changes the interpretation of what follows
+      -->
+      <test name="isEffectOnLogic1Base" testing="is" inputfile="observation-example.xml" context="Observation.effective">
+	    <expression>$this.toString().length() >= 10</expression>
+	    <output type="boolean">true</output>
+      </test>
+      <test name="isEffectOnLogic2Base" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="dateTime">
+		<expression>$this.toString().length() > 10</expression>
+		<output type="boolean">false</output>
+	  </test>
+      <test name="isEffectOnLogic3Base" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+		<expression invalid="semantic">$this.toString().length() > 10</expression>
+	  </test>
+      <test name="isEffectOnLogic1" testing="is" inputfile="observation-example.xml" context="Observation.effective">
+	    <expression>$this is dateTime implies $this.toString().length() >= 10</expression>
+	    <output type="boolean">true</output>
+      </test>
+      <test name="isEffectOnLogic2" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="dateTime">
+		<expression>$this is dateTime implies $this.toString().length() > 10</expression>
+		<output type="boolean">false</output>
+	  </test>
+      <test name="isEffectOnLogic3" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+		<expression>$this is dateTime implies $this.toString().length() > 10</expression>
+		<output type="boolean">false</output>
+	  </test>
+
+      <!-- type guards: a type test ('is' operator or .is() function) used by a logical operator to decide whether the other
+        operand matters. The guarded operand is type checked against the narrowed set of types:
+          - A implies B, A and B, iif(A, B, ..) : B is checked assuming A is true
+          - A or B, iif(A, .., B)                : B is checked assuming A is false
+        where A can be X is T, X.is(T), (X is T).not(), or combinations of those with and/or. When the narrowed set is
+        empty, the guarded operand is unreachable and is not an error. A contextType of 'Period|Timing' means the focus
+        could be either type. Execution is always against the (dateTime) data in the example.
+      -->
+      <test name="isGuardFnImplies" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression>$this.is(dateTime) implies $this.toString().length() >= 10</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardFnImpliesBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period|Timing">
+        <expression invalid="semantic">$this.is(Period) implies $this.toString().length() >= 10</expression>
+      </test>
+      <test name="isGuardImpliesBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period|Timing">
+        <expression invalid="semantic">$this is Period implies $this.toString().length() >= 10</expression>
+      </test>
+      <test name="isGuardImpliesEmpty" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period|Timing">
+        <expression>$this is dateTime implies $this.toString().length() >= 10</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardOrTypesImplies" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression>($this is dateTime or $this is instant) implies $this.toString().length() >= 10</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardOrTypesImpliesBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression invalid="semantic">($this is dateTime or $this is Period) implies $this.toString().length() >= 10</expression>
+      </test>
+      <test name="isGuardOrTypesImpliesAll" testing="is" inputfile="observation-example.xml" context="Observation.effective">
+        <expression>($this is dateTime or $this is Period) implies $this.toString().length() >= 10</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardOrFnTypesImpliesBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression invalid="semantic">($this.is(dateTime) or $this.is(Period)) implies $this.toString().length() >= 10</expression>
+      </test>
+      <test name="isGuardAndOtherImplies" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression>($this is dateTime and %resource.status = 'final') implies $this.toString().length() >= 10</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardOtherAndImplies" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression>(%resource.status = 'final' and $this is dateTime) implies $this.toString().length() >= 10</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardOrOtherImpliesBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression invalid="semantic">($this is dateTime or %resource.status = 'final') implies $this.toString().length() >= 10</expression>
+      </test>
+      <test name="isGuardOrOtherImpliesNoParensBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression invalid="semantic">$this is dateTime or %resource.status = 'final' implies $this.toString().length() >= 10</expression>
+      </test>
+      <test name="isGuardOrInnerImplies" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression>$this is Period or (%resource.status = 'final' implies $this.toString().length() >= 10)</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardOrInnerImpliesBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period|Timing">
+        <expression invalid="semantic">$this is Period or (%resource.status = 'final' implies $this.toString().length() >= 10)</expression>
+      </test>
+      <test name="isGuardAnd" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression>$this is dateTime and $this.toString().length() >= 10</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardAndBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period|Timing">
+        <expression invalid="semantic">$this is Period and $this.toString().length() >= 10</expression>
+      </test>
+      <test name="isGuardOr" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression>$this is Period or $this.toString().length() >= 10</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardOrBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period|Timing">
+        <expression invalid="semantic">$this is Period or $this.toString().length() >= 10</expression>
+      </test>
+      <test name="isGuardOrBoth" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period|Timing">
+        <expression>$this is Period or $this is Timing or $this.toString().length() >= 10</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardXorBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression invalid="semantic">$this is dateTime xor $this.toString().length() >= 10</expression>
+      </test>
+      <test name="isGuardNotImplies" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression>($this is Period).not() implies $this.toString().length() >= 10</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardNotImpliesBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period|Timing">
+        <expression invalid="semantic">($this is Period).not() implies $this.toString().length() >= 10</expression>
+      </test>
+      <test name="isGuardIifTrue" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression>iif($this is dateTime, $this.toString().length() >= 10, true)</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardIifElse" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression>iif($this is Period, true, $this.toString().length() >= 10)</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardIifBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression invalid="semantic">iif($this is Period, $this.toString().length() >= 10, true)</expression>
+      </test>
+      <test name="isGuardNested" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period|Timing">
+        <expression>$this is Period implies ($this is dateTime implies $this.toString().length() >= 10)</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardSupertypeBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression invalid="semantic">$this is Element implies $this.toString().length() >= 10</expression>
+      </test>
+      <test name="isGuardOtherExpressionBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression invalid="semantic">$this.start is dateTime implies $this.toString().length() >= 10</expression>
+      </test>
+      <test name="isGuardOfType" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression>$this.ofType(dateTime).toString().length() >= 10</expression>
+        <output type="boolean">true</output>
+      </test>
+      <test name="isGuardAs" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
+        <expression>($this as dateTime).toString().length() >= 10</expression>
+        <output type="boolean">true</output>
+      </test>
 	</group>
 </tests>

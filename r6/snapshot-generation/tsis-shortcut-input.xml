@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="tsis-shortcut"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/tsis-shortcut"/>
+  <name value="TsisShortcutName"/>
+  <title value="Tsis Shortcut Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="Like AU Core blood pressure: uses the type specific name (valueQuantity) inside a slice inherited from tsis-base, where value[x] is already restricted to Quantity but not type sliced. This is the short cut for type slicing, so the snapshot has a closed type slicer on value[x] with one valueQuantity slice - and only one of each"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/test/StructureDefinition/tsis-base"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.component:SystolicBP">
+      <path value="Observation.component"/>
+      <sliceName value="SystolicBP"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Observation.component:SystolicBP.valueQuantity">
+      <path value="Observation.component.valueQuantity"/>
+      <short value="Systolic value"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Observation.component:SystolicBP.valueQuantity.value">
+      <path value="Observation.component.valueQuantity.value"/>
+      <short value="Systolic number"/>
+      <mustSupport value="true"/>
+    </element>
+  </differential>
+</StructureDefinition>

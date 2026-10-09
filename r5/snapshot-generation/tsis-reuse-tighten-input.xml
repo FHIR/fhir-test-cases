@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="tsis-reuse-tighten"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/tsis-reuse-tighten"/>
+  <name value="TsisReuseTightenName"/>
+  <title value="Tsis Reuse Tighten Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="Control for tsis-reuse-slice: constrains the inherited SystolicBP slice with a pattern that conforms to the inherited one (same code, adds a display). That's a valid constraint, not a conflict"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/test/StructureDefinition/tsis-base"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.component:SystolicBP">
+      <path value="Observation.component"/>
+      <sliceName value="SystolicBP"/>
+    </element>
+    <element id="Observation.component:SystolicBP.code">
+      <path value="Observation.component.code"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="8480-6"/>
+          <display value="Systolic blood pressure"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+  </differential>
+</StructureDefinition>
