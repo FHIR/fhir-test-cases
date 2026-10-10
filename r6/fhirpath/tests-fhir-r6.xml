@@ -1959,6 +1959,10 @@ Any text enclosed within is ignored
         <expression>$this is Period or $this.toString().length() >= 10</expression>
         <output type="boolean">true</output>
       </test>
+      <test name="isGuardOr2" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period|dateTime">
+        <expression>$this is Period or $this.toString().length() >= 10</expression>
+        <output type="boolean">true</output>
+      </test>
       <test name="isGuardOrBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period|Timing">
         <expression invalid="semantic">$this is Period or $this.toString().length() >= 10</expression>
       </test>
@@ -1968,6 +1972,10 @@ Any text enclosed within is ignored
       </test>
       <test name="isGuardXorBad" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
         <expression invalid="semantic">$this is dateTime xor $this.toString().length() >= 10</expression>
+      </test>
+      <test name="isGuardXorBad2" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period|dateTime">
+        <expression>$this is dateTime xor $this.toString().length() >= 10</expression>
+		<output type="boolean">false</output>
       </test>
       <test name="isGuardNotImplies" testing="is" inputfile="observation-example.xml" context="Observation.effective" contextType="Period">
         <expression>($this is Period).not() implies $this.toString().length() >= 10</expression>
