@@ -664,6 +664,14 @@ Any text enclosed within is ignored
 			<expression>Questionnaire.descendants().linkId.select(substring(0,1)).distinct().count()</expression>
 			<output type="integer">2</output>
 		</test>
+
+		<test name="testDistinct7" testing="isDistinct" description="string values, one repeated" inputfile="patient-example.xml"><expression>Patient.name.given.isDistinct()</expression><output type="boolean">false</output></test>
+		<test name="testDistinct8" testing="isDistinct" description="string values, none repeated" inputfile="patient-example.xml"><expression>Patient.name.given.distinct().isDistinct()</expression><output type="boolean">true</output></test>
+		<test name="testDistinct9" testing="isDistinct" description="a code and a string with the same value are not distinct" inputfile="patient-example.xml"><expression>Patient.gender.combine('male').isDistinct()</expression><output type="boolean">false</output></test>
+		<test name="testDistinct10" testing="isDistinct" description="a code and a string with different values" inputfile="patient-example.xml"><expression>Patient.gender.combine('female').isDistinct()</expression><output type="boolean">true</output></test>
+		<test name="testDistinct11" testing="isDistinct" description="a uri and a string with the same value are not distinct" inputfile="codesystem-example.xml"><expression>CodeSystem.url.combine('http://hl7.org/fhir/CodeSystem/example').isDistinct()</expression><output type="boolean">false</output></test>
+		<test name="testDistinct12" testing="isDistinct" description="a string and an integer" inputfile="patient-example.xml"><expression>'1'.combine(2).isDistinct()</expression><output type="boolean">true</output></test>
+		<test name="testDistinct13" testing="isDistinct" description="decimals with different precision" inputfile="patient-example.xml"><expression>1.0.combine(1.00).isDistinct()</expression><output type="boolean">false</output></test>
 	</group>
 
 	<group name="testCount">
