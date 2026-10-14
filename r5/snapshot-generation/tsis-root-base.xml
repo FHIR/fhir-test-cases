@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="tsis-root-base"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/tsis-root-base"/>
+  <name value="TsisRootBaseName"/>
+  <title value="Tsis Root Base Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="Restricts Observation.value[x] to Quantity without type slicing it, and constrains a child of the Quantity, so the snapshot has the Quantity children under the unsliced value[x]"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.value[x]">
+      <path value="Observation.value[x]"/>
+      <type>
+        <code value="Quantity"/>
+      </type>
+    </element>
+    <element id="Observation.value[x].system">
+      <path value="Observation.value[x].system"/>
+      <fixedUri value="http://unitsofmeasure.org"/>
+    </element>
+  </differential>
+</StructureDefinition>

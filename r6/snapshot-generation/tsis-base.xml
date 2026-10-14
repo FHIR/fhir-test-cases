@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="tsis-base"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/tsis-base"/>
+  <name value="TsisBaseName"/>
+  <title value="Tsis Base Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="Like the R4 bp profile: slices Observation.component by code, and restricts value[x] in each slice to Quantity without type slicing it, and constrains a child of the Quantity, so the snapshot has the Quantity children under the unsliced value[x] (as the R4 bp snapshot does)"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.component">
+      <path value="Observation.component"/>
+      <slicing>
+        <discriminator>
+          <type value="pattern"/>
+          <path value="code"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <min value="2"/>
+    </element>
+    <element id="Observation.component:SystolicBP">
+      <path value="Observation.component"/>
+      <sliceName value="SystolicBP"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="Observation.component:SystolicBP.code">
+      <path value="Observation.component.code"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="8480-6"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:SystolicBP.value[x]">
+      <path value="Observation.component.value[x]"/>
+      <type>
+        <code value="Quantity"/>
+      </type>
+    </element>
+    <element id="Observation.component:SystolicBP.value[x].system">
+      <path value="Observation.component.value[x].system"/>
+      <fixedUri value="http://unitsofmeasure.org"/>
+    </element>
+    <element id="Observation.component:DiastolicBP">
+      <path value="Observation.component"/>
+      <sliceName value="DiastolicBP"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="Observation.component:DiastolicBP.code">
+      <path value="Observation.component.code"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="8462-4"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:DiastolicBP.value[x]">
+      <path value="Observation.component.value[x]"/>
+      <type>
+        <code value="Quantity"/>
+      </type>
+    </element>
+    <element id="Observation.component:DiastolicBP.value[x].system">
+      <path value="Observation.component.value[x].system"/>
+      <fixedUri value="http://unitsofmeasure.org"/>
+    </element>
+  </differential>
+</StructureDefinition>

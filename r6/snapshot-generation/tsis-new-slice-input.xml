@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="tsis-new-slice"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/tsis-new-slice"/>
+  <name value="TsisNewSliceName"/>
+  <title value="Tsis New Slice Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="Control for tsis-shortcut: the slice is defined in this profile rather than inherited, and the type specific name (valueQuantity) is used inside it. The snapshot has a closed type slicer on the slice's value[x] with one valueQuantity slice"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.component">
+      <path value="Observation.component"/>
+      <slicing>
+        <discriminator>
+          <type value="pattern"/>
+          <path value="code"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Observation.component:SystolicBP">
+      <path value="Observation.component"/>
+      <sliceName value="SystolicBP"/>
+      <min value="0"/>
+      <max value="1"/>
+    </element>
+    <element id="Observation.component:SystolicBP.code">
+      <path value="Observation.component.code"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="8480-6"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:SystolicBP.valueQuantity">
+      <path value="Observation.component.valueQuantity"/>
+      <short value="Systolic value"/>
+    </element>
+    <element id="Observation.component:SystolicBP.valueQuantity.value">
+      <path value="Observation.component.valueQuantity.value"/>
+      <short value="Systolic number"/>
+    </element>
+  </differential>
+</StructureDefinition>

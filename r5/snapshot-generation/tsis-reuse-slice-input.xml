@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="tsis-reuse-slice"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/tsis-reuse-slice"/>
+  <name value="TsisReuseSliceName"/>
+  <title value="Tsis Reuse Slice Title"/>
+  <status value="draft"/>
+  <publisher value="FHIR"/>
+  <description value="Error: names the inherited SystolicBP slice as if defining a new slice, with a different LOINC code. That constrains the inherited slice, and its pattern doesn't conform to the pattern inherited from tsis-base"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="true"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/test/StructureDefinition/tsis-base"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.component:SystolicBP">
+      <path value="Observation.component"/>
+      <sliceName value="SystolicBP"/>
+    </element>
+    <element id="Observation.component:SystolicBP.code">
+      <path value="Observation.component.code"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="8478-0"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+  </differential>
+</StructureDefinition>
