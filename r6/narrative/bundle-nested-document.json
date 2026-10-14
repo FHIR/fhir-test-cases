@@ -1,0 +1,100 @@
+{
+  "resourceType": "Bundle",
+  "id": "bundle-nested-document",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:0b1c2d3e-0000-4000-8000-000000000011",
+      "resource": {
+        "resourceType": "DocumentReference",
+        "id": "docref",
+        "status": "current",
+        "content": [
+          {
+            "attachment": {
+              "contentType": "application/fhir+json",
+              "url": "urn:uuid:0b1c2d3e-0000-4000-8000-000000000012",
+              "title": "Report"
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "DocumentReference"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:0b1c2d3e-0000-4000-8000-000000000012",
+      "resource": {
+        "resourceType": "Bundle",
+        "id": "document",
+        "identifier": {
+          "system": "urn:ietf:rfc:3986",
+          "value": "urn:uuid:0b1c2d3e-0000-4000-8000-000000000030"
+        },
+        "type": "document",
+        "timestamp": "2026-10-12T10:00:00+02:00",
+        "entry": [
+          {
+            "fullUrl": "urn:uuid:0b1c2d3e-0000-4000-8000-000000000031",
+            "resource": {
+              "resourceType": "Composition",
+              "id": "composition",
+              "status": "final",
+              "type": {
+                "coding": [
+                  {
+                    "system": "http://loinc.org",
+                    "code": "11488-4",
+                    "display": "Consult note"
+                  }
+                ]
+              },
+              "subject": [
+                {
+                  "reference": "urn:uuid:0b1c2d3e-0000-4000-8000-000000000032"
+                }
+              ],
+              "date": "2026-10-12T10:00:00+02:00",
+              "author": [
+                {
+                  "reference": "urn:uuid:0b1c2d3e-0000-4000-8000-000000000032"
+                }
+              ],
+              "title": "Report",
+              "section": [
+                {
+                  "title": "Assessment",
+                  "text": {
+                    "status": "generated",
+                    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Assessment text.</p></div>"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "fullUrl": "urn:uuid:0b1c2d3e-0000-4000-8000-000000000032",
+            "resource": {
+              "resourceType": "Patient",
+              "id": "patient",
+              "name": [
+                {
+                  "family": "Test",
+                  "given": [
+                    "Anna"
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Bundle"
+      }
+    }
+  ]
+}
