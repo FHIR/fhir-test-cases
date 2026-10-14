@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="sd-child-type"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/sd-child-type"/>
+  <name value="SdChildType"/>
+  <title value="sd-child-type"/>
+  <status value="draft"/>
+  <description value="Children of an element whose type is abstract define a new (anonymous) type; children of an element whose type is concrete can only constrain the elements that type already defines (an anonymous profile)"/>
+  <fhirVersion value="5.0.0"/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="http://hl7.org/fhir/test/StructureDefinition/ChildType"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Base"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="ChildType">
+      <path value="ChildType"/>
+      <short value="root"/>
+      <definition value="root"/>
+      <min value="0"/>
+      <max value="*"/>
+    </element>
+    <!-- BackboneElement is abstract, so the children define a new anonymous type -->
+    <element id="ChildType.group">
+      <path value="ChildType.group"/>
+      <short value="group"/>
+      <definition value="group"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="BackboneElement"/>
+      </type>
+    </element>
+    <!-- fine -->
+    <element id="ChildType.group.anything">
+      <path value="ChildType.group.anything"/>
+      <short value="anything"/>
+      <definition value="anything"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <!-- Coding is concrete, so the children can only constrain the elements of Coding -->
+    <element id="ChildType.code">
+      <path value="ChildType.code"/>
+      <short value="code"/>
+      <definition value="code"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Coding"/>
+      </type>
+    </element>
+    <!-- fine: Coding.system -->
+    <element id="ChildType.code.system">
+      <path value="ChildType.code.system"/>
+      <short value="system"/>
+      <definition value="system"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <!-- error: Coding has no element 'priority' -->
+    <element id="ChildType.code.priority">
+      <path value="ChildType.code.priority"/>
+      <short value="priority"/>
+      <definition value="priority"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="integer"/>
+      </type>
+    </element>
+    <!-- a choice: the children must be defined by all the (concrete) types -->
+    <element id="ChildType.value[x]">
+      <path value="ChildType.value[x]"/>
+      <short value="value[x]"/>
+      <definition value="value[x]"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Quantity"/>
+      </type>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <!-- fine: both Quantity and string have extension -->
+    <element id="ChildType.value[x].extension">
+      <path value="ChildType.value[x].extension"/>
+      <short value="extension"/>
+      <definition value="extension"/>
+      <min value="0"/>
+      <max value="*"/>
+    </element>
+    <!-- error: string has no element 'unit' -->
+    <element id="ChildType.value[x].unit">
+      <path value="ChildType.value[x].unit"/>
+      <short value="unit"/>
+      <definition value="unit"/>
+      <min value="0"/>
+      <max value="1"/>
+    </element>
+    <!-- a concrete logical model (sd-child-type-target) that only has a differential -->
+    <element id="ChildType.other">
+      <path value="ChildType.other"/>
+      <short value="other"/>
+      <definition value="other"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="http://hl7.org/fhir/test/StructureDefinition/ChildTypeTarget"/>
+      </type>
+    </element>
+    <!-- fine: defined by ChildTypeTarget -->
+    <element id="ChildType.other.name">
+      <path value="ChildType.other.name"/>
+      <short value="name"/>
+      <definition value="name"/>
+      <min value="0"/>
+      <max value="1"/>
+    </element>
+    <!-- error: not defined by ChildTypeTarget -->
+    <element id="ChildType.other.bogus">
+      <path value="ChildType.other.bogus"/>
+      <short value="bogus"/>
+      <definition value="bogus"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>
