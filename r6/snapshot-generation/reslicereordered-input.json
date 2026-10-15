@@ -1,0 +1,66 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "reslicereordered",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/reslicereordered",
+  "name": "Reslicereordered",
+  "status": "draft",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "derivation": "constraint",
+  "baseDefinition": "http://hl7.org/fhir/test/StructureDefinition/inherited-reslicing-base",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient",
+        "path": "Patient",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Patient.telecom",
+        "path": "Patient.telecom",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "ContactPoint"
+          }
+        ],
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Patient.telecom:email",
+        "path": "Patient.telecom",
+        "min": 0,
+        "max": "1",
+        "sliceName": "email",
+        "type": [
+          {
+            "code": "ContactPoint"
+          }
+        ]
+      },
+      {
+        "id": "Patient.telecom:phone",
+        "path": "Patient.telecom",
+        "min": 0,
+        "max": "*",
+        "sliceName": "phone",
+        "type": [
+          {
+            "code": "ContactPoint"
+          }
+        ]
+      }
+    ]
+  }
+}
