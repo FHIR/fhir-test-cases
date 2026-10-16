@@ -1,0 +1,43 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "guide-shared-invariant",
+  "url": "http://example.org/recursive-sections/StructureDefinition/guide-shared-invariant",
+  "version": "0.1.0",
+  "name": "GuideSharedInvariant",
+  "status": "active",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Composition",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Composition",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Composition.section.section",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/contentReferenceProfile",
+            "valueUri": "http://example.org/recursive-sections/StructureDefinition/reusable-section#Composition.section"
+          }
+        ],
+        "path": "Composition.section.section",
+        "constraint": [
+          {
+            "key": "cmp-2",
+            "severity": "error",
+            "human": "A section can only have an emptyReason if it is empty",
+            "expression": "emptyReason.empty() or entry.empty()",
+            "source": "http://hl7.org/fhir/StructureDefinition/Composition"
+          }
+        ]
+      },
+      {
+        "id": "Composition.section.section.title",
+        "path": "Composition.section.section.title",
+        "min": 0,
+        "max": "1"
+      }
+    ]
+  }
+}
