@@ -1,0 +1,89 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "BasePatient",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/BasePatient",
+  "version": "0.1.0",
+  "name": "BasePatient",
+  "title": "Base Patient",
+  "status": "draft",
+  "description": "Slices link by type and defines the kind extension on the slicing entry, so every link may carry it.",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient.link",
+        "path": "Patient.link",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "type"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Patient.link.extension",
+        "path": "Patient.link.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Patient.link.extension:kind",
+        "path": "Patient.link.extension",
+        "sliceName": "kind",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/test/StructureDefinition/link-kind"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Patient.link:replacedBy",
+        "path": "Patient.link",
+        "sliceName": "replacedBy",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Patient.link:replacedBy.extension:kind",
+        "path": "Patient.link.extension",
+        "sliceName": "kind",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/test/StructureDefinition/link-kind"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Patient.link:replacedBy.type",
+        "path": "Patient.link.type",
+        "patternCode": "replaced-by"
+      }
+    ]
+  }
+}

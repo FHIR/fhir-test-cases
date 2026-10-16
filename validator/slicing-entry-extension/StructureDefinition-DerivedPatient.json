@@ -1,0 +1,49 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "DerivedPatient",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/DerivedPatient",
+  "version": "0.1.0",
+  "name": "DerivedPatient",
+  "title": "Derived Patient",
+  "status": "draft",
+  "description": "Adds the kind extension value as a second discriminator and a seeAlso slice distinguished by type alone.",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/test/StructureDefinition/BasePatient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient.link",
+        "path": "Patient.link",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "type"
+            },
+            {
+              "type": "value",
+              "path": "extension('http://hl7.org/fhir/test/StructureDefinition/link-kind').value.ofType(code)"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Patient.link:seeAlso",
+        "path": "Patient.link",
+        "sliceName": "seeAlso",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Patient.link:seeAlso.type",
+        "path": "Patient.link.type",
+        "patternCode": "seealso"
+      }
+    ]
+  }
+}
