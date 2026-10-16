@@ -1,0 +1,56 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "inherited-reslicing-base",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/inherited-reslicing-base",
+  "name": "InheritedReslicingBase",
+  "status": "draft",
+  "fhirVersion": "6.0.0-snapshot1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient.telecom",
+        "path": "Patient.telecom",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Patient.telecom:phone",
+        "path": "Patient.telecom",
+        "sliceName": "phone",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Patient.telecom:phone.system",
+        "path": "Patient.telecom.system",
+        "min": 1,
+        "fixedCode": "phone"
+      },
+      {
+        "id": "Patient.telecom:email",
+        "path": "Patient.telecom",
+        "sliceName": "email",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Patient.telecom:email.system",
+        "path": "Patient.telecom.system",
+        "min": 1,
+        "fixedCode": "email"
+      }
+    ]
+  }
+}
