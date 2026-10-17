@@ -411,6 +411,8 @@ Any text enclosed within is ignored
 		<test name="testStringQuantityWeekLiteralToQuantity" inputfile="patient-example.xml"><expression>'1 \'wk\''.toQuantity() = 1 week</expression><output type="boolean">true</output></test>
 		<test name="testStringQuantityMonthLiteralToQuantity" inputfile="patient-example.xml"><expression>'1 \'mo\''.toQuantity() = 1 month</expression></test>
 		<test name="testStringQuantityYearLiteralToQuantity" inputfile="patient-example.xml"><expression>'1 \'a\''.toQuantity() = 1 year</expression></test>
+		<test name="testStringQuantityMonthToQuantityEquivalent" description="the quantity converted from '1 month' is equivalent to the calendar duration 1 month" inputfile="patient-example.xml"><expression>'1 month'.toQuantity() ~ 1 month</expression><output type="boolean">true</output></test>
+		<test name="testStringQuantityYearToQuantityEquivalent" description="the quantity converted from '1 year' is equivalent to the calendar duration 1 year" inputfile="patient-example.xml"><expression>'1 year'.toQuantity() ~ 1 year</expression><output type="boolean">true</output></test>
 		<test name="testStringDecimalLiteralToQuantity" inputfile="patient-example.xml"><expression>'1.0'.toQuantity() ~ 1 '1'</expression><output type="boolean">true</output></test>
 
 		<test name="testIntegerLiteralConvertsToBoolean" inputfile="patient-example.xml"><expression>1.convertsToBoolean()</expression><output type="boolean">true</output></test>
@@ -892,6 +894,7 @@ Any text enclosed within is ignored
 		<test name="testEquality33" inputfile="patient-example.xml"><expression>10 = 10.0</expression><output type="boolean">true</output></test>
 		<test name="testEquality34" inputfile="patient-example.xml"><expression>1.50 = 1.5</expression><output type="boolean">true</output></test>
 		<test name="testEquality35" inputfile="patient-example.xml"><expression>100.toDecimal() = 1.0</expression><output type="boolean">false</output></test>
+		<test name="testEquality36" description="for equality, the calendar duration year and the UCUM unit a are not comparable" inputfile="patient-example.xml"><expression>1 year = 1 'a'</expression></test>
 	</group>
 
 	<group name="testNEquality">
@@ -954,6 +957,12 @@ Any text enclosed within is ignored
 		<test name="testEquivalent22" inputfile="observation-example.xml"><expression>Observation.value ~ 185 '[lb_av]'</expression><output type="boolean">true</output></test>
 		<test name="testEquivalent23" inputfile="observation-example.xml"><expression>(1 | 2 | 3) ~ (1 | 2 | 3)</expression><output type="boolean">true</output></test>
 		<test name="testEquivalent23" inputfile="observation-example.xml"><expression>(1 | 2 | 3) ~ (3 | 2 | 1)</expression><output type="boolean">true</output></test>
+		<test name="testEquivalent24" description="for equivalence, the calendar duration year matches the UCUM unit a" inputfile="patient-example.xml"><expression>1 year ~ 1 'a'</expression><output type="boolean">true</output></test>
+		<test name="testEquivalent25" inputfile="patient-example.xml"><expression>2 years ~ 2 'a'</expression><output type="boolean">true</output></test>
+		<test name="testEquivalent26" description="for equivalence, the calendar duration month matches the UCUM unit mo" inputfile="patient-example.xml"><expression>1 month ~ 1 'mo'</expression><output type="boolean">true</output></test>
+		<test name="testEquivalent27" description="a year is not equivalent to a day" inputfile="patient-example.xml"><expression>1 year ~ 1 day</expression><output type="boolean">false</output></test>
+		<test name="testEquivalent28" description="quantities that can't be compared are not equivalent" inputfile="patient-example.xml"><expression>1 'x' ~ 1 year</expression><output type="boolean">false</output></test>
+		<test name="testEquivalent29" description="quantities that can't be compared are not equivalent" inputfile="patient-example.xml"><expression>1 year ~ 1 'kg'</expression><output type="boolean">false</output></test>
 	</group>
 
 	<group name="testNotEquivalent">
@@ -979,6 +988,8 @@ Any text enclosed within is ignored
 		<test name="testNotEquivalent20" inputfile="patient-example.xml"><expression>name.take(2).given !~ name.take(2).first().given | name.take(2).last().given</expression><output type="boolean">false</output></test>
 		<test name="testNotEquivalent21" inputfile="patient-example.xml"><expression>name.take(2).given !~ name.take(2).last().given | name.take(2).first().given</expression><output type="boolean">false</output></test>
 		<test name="testNotEquivalent22" inputfile="observation-example.xml"><expression>Observation.value !~ 185 'kg'</expression><output type="boolean">true</output></test>
+		<test name="testNotEquivalent23" description="a year is not equivalent to a day" inputfile="patient-example.xml"><expression>1 year !~ 1 day</expression><output type="boolean">true</output></test>
+		<test name="testNotEquivalent24" inputfile="patient-example.xml"><expression>1 month !~ 1 'mo'</expression><output type="boolean">false</output></test>
 	</group>
 
 	<group name="testLessThan">
