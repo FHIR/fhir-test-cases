@@ -15,6 +15,8 @@
   valueset-example-expansion.xml
   patient-example-name.xml
   parameters-example-types.xml
+  parameters-example-quantities.xml
+  parameters-example-decimals.xml
   ccda.xml
   patient-example-period.xml
   explanationofbenefit-example.json
@@ -1216,6 +1218,25 @@ Any text enclosed within is ignored
 		<test name="testLessThanEmpty3" testing="&lt;" inputfile="patient-example.xml"><expression>{} &lt; {}</expression></test>
 	</group>
 
+	<group name="testQuantityUnitComparison" description="Comparing quantities that have no UCUM code, by unit text or the lack of a unit">
+		<!-- left: parameter[0] = 1 with no unit; right: parameter[1] = 1 with no unit -->
+		<test name="testQuantityNoUnitEqual" testing="=" description="two quantities with the same value and no unit are equal" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[0].value = Parameters.parameter[1].value</expression><output type="boolean">true</output></test>
+		<!-- left: parameter[0] = 1 with no unit; right: parameter[1] = 1 with no unit -->
+		<test name="testQuantityNoUnitEquivalent" testing="~" description="two quantities with the same value and no unit are equivalent" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[0].value ~ Parameters.parameter[1].value</expression><output type="boolean">true</output></test>
+		<!-- left: parameter[2] = 1 with unit text "tablets" and no code; right: parameter[3] = 1 with unit text "tablets" and no code -->
+		<test name="testQuantityUnitTextEqual" testing="=" description="two quantities with the same value and the same unit text (no code) are equal" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[2].value = Parameters.parameter[3].value</expression><output type="boolean">true</output></test>
+		<!-- left: parameter[2] = 1 with unit text "tablets" and no code; right: parameter[3] = 1 with unit text "tablets" and no code -->
+		<test name="testQuantityUnitTextEquivalent" testing="~" description="two quantities with the same value and the same unit text (no code) are equivalent" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[2].value ~ Parameters.parameter[3].value</expression><output type="boolean">true</output></test>
+		<!-- left: parameter[2] = 1 with unit text "tablets" and no code; right: parameter[0] = 1 with no unit -->
+		<test name="testQuantityUnitVsNoUnitEqual" testing="=" description="a quantity with a unit and one without are not comparable, whichever side the unit is on" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[2].value = Parameters.parameter[0].value</expression></test>
+		<!-- left: parameter[0] = 1 with no unit; right: parameter[2] = 1 with unit text "tablets" and no code -->
+		<test name="testQuantityNoUnitVsUnitEqual" testing="=" description="a quantity with a unit and one without are not comparable, whichever side the unit is on" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[0].value = Parameters.parameter[2].value</expression></test>
+		<!-- left: parameter[2] = 1 with unit text "tablets" and no code; right: parameter[0] = 1 with no unit -->
+		<test name="testQuantityUnitVsNoUnitEquivalent" testing="~" description="a quantity with a unit is not equivalent to one without, whichever side the unit is on" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[2].value ~ Parameters.parameter[0].value</expression><output type="boolean">false</output></test>
+		<!-- left: parameter[0] = 1 with no unit; right: parameter[2] = 1 with unit text "tablets" and no code -->
+		<test name="testQuantityNoUnitVsUnitEquivalent" testing="~" description="a quantity with a unit is not equivalent to one without, whichever side the unit is on" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[0].value ~ Parameters.parameter[2].value</expression><output type="boolean">false</output></test>
+	</group>
+
 	<group name="testLessOrEqual">
 		<test name="testLessOrEqual1" testing="&lt;=" inputfile="patient-example.xml"><expression>1 &lt;= 2</expression><output type="boolean">true</output></test>
 		<test name="testLessOrEqual2" testing="&lt;=" inputfile="patient-example.xml"><expression>1.0 &lt;= 1.2</expression><output type="boolean">true</output></test>
@@ -1693,6 +1714,15 @@ Any text enclosed within is ignored
 		<test name="LowBoundaryDecimal14" testing="lowBoundary"><expression>0.0034.lowBoundary(1)</expression><output type="decimal">0.0</output></test>
 		<test name="LowBoundaryDecimal15" testing="lowBoundary"><expression>(-0.0034).lowBoundary(1)</expression><output type="decimal">-0.0</output></test>
 
+		<test name="LowBoundaryDecimalCarry1" testing="lowBoundary" description="rounding the magnitude up carries into the digits to the left"><expression>(-9.96).lowBoundary(1)</expression><output type="decimal">-10.0</output></test>
+		<test name="LowBoundaryDecimalCarry2" testing="lowBoundary" description="rounding the magnitude up carries into the digits to the left"><expression>(-99.96).lowBoundary(1)</expression><output type="decimal">-100.0</output></test>
+		<test name="LowBoundaryDecimalCarry3" testing="lowBoundary" description="rounding the magnitude up carries into the digits to the left"><expression>(-9).lowBoundary(0)</expression><output type="decimal">-10</output></test>
+		<test name="LowBoundaryDecimalBorrow1" testing="lowBoundary" description="no leading zero when the boundary borrows from the first digit"><expression>10.lowBoundary(0)</expression><output type="decimal">9</output></test>
+		<test name="LowBoundaryDecimalBorrow2" testing="lowBoundary" description="no leading zero when the boundary borrows from the first digit"><expression>100.lowBoundary(2)</expression><output type="decimal">99.50</output></test>
+		<test name="LowBoundaryDecimalExponent1" testing="lowBoundary" description="9.5e2: the precision is in the mantissa, and the result has no exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[0].value.lowBoundary(0)</expression><output type="decimal">945</output></test>
+		<test name="LowBoundaryDecimalExponent2" testing="lowBoundary" description="1.5e-3: a negative exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[1].value.lowBoundary()</expression><output type="decimal">0.00145000</output></test>
+		<test name="LowBoundaryDecimalExponent3" testing="lowBoundary" description="-9.5e2: a negative value with an exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[2].value.lowBoundary(0)</expression><output type="decimal">-955</output></test>
+		<test name="LowBoundaryDecimalExponent4" testing="lowBoundary" description="1.5E2: an upper case exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[3].value.lowBoundary(1)</expression><output type="decimal">145.0</output></test>
 		<test name="LowBoundaryQuantity" testing="lowBoundary"><expression>1.587 'cm'.lowBoundary(8)</expression><output type="Quantity">1.58650000 'cm'</output></test>
 		<test name="LowBoundaryDateMonth" testing="lowBoundary"><expression>@2014.lowBoundary(6)</expression><output type="dateTime">@2014-01</output></test>
 		<test name="LowBoundaryDateTimeMillisecond1" testing="lowBoundary"><expression>@2014-01-01T08.lowBoundary(17)</expression><output type="dateTime">@2014-01-01T08:00:00.000+14:00</output></test>
@@ -1720,6 +1750,15 @@ Any text enclosed within is ignored
 		<test name="HighBoundaryDecimal15" testing="highBoundary"><expression>0.0034.highBoundary(1)</expression><output type="decimal">0.0</output></test> 
 		<test name="HighBoundaryDecimal16" testing="highBoundary"><expression>-0.0034.highBoundary(1)</expression><output type="decimal">0.0</output></test> 
 		<test name="HighBoundaryDecimal" testing="highBoundary"><expression>1.587.highBoundary(8)</expression><output type="decimal">1.58750000</output></test>
+		<test name="HighBoundaryDecimalCarry1" testing="highBoundary" description="rounding up carries into the digits to the left"><expression>9.95.highBoundary(1)</expression><output type="decimal">10.0</output></test>
+		<test name="HighBoundaryDecimalCarry2" testing="highBoundary" description="rounding up carries into the digits to the left"><expression>0.996.highBoundary(1)</expression><output type="decimal">1.0</output></test>
+		<test name="HighBoundaryDecimalCarry3" testing="highBoundary" description="rounding up carries into the digits to the left"><expression>99.96.highBoundary(1)</expression><output type="decimal">100.0</output></test>
+		<test name="HighBoundaryDecimalCarry4" testing="highBoundary" description="rounding up carries into the digits to the left"><expression>9.highBoundary(0)</expression><output type="decimal">10</output></test>
+		<test name="HighBoundaryDecimalExponent1" testing="highBoundary" description="9.5e2: the precision is in the mantissa, and the result has no exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[0].value.highBoundary(0)</expression><output type="decimal">955</output></test>
+		<test name="HighBoundaryDecimalExponent2" testing="highBoundary" description="9.5e2 at the default precision" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[0].value.highBoundary()</expression><output type="decimal">955.00000000</output></test>
+		<test name="HighBoundaryDecimalExponent3" testing="highBoundary" description="1.5e-3: a negative exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[1].value.highBoundary()</expression><output type="decimal">0.00155000</output></test>
+		<test name="HighBoundaryDecimalExponent4" testing="highBoundary" description="-9.5e2: a negative value with an exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[2].value.highBoundary(0)</expression><output type="decimal">-945</output></test>
+		<test name="HighBoundaryDecimalExponent5" testing="highBoundary" description="1.5E2: an upper case exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[3].value.highBoundary(1)</expression><output type="decimal">155.0</output></test>
 		<test name="HighBoundaryQuantity" testing="highBoundary"><expression>1.587 'm'.highBoundary(8)</expression><output type="Quantity">1.58750000 'm'</output></test>
 		<test name="HighBoundaryDateMonth" testing="highBoundary"><expression>@2014.highBoundary(6)</expression><output type="dateTime">@2014-12</output></test>
 		<test name="HighBoundaryDateTimeMillisecond1" testing="highBoundary"><expression>@2014-01-01T08.highBoundary(17)</expression><output type="dateTime">@2014-01-01T08:00:59.999-12:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->
