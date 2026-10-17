@@ -1,0 +1,31 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "sd-canonical-implements-cycle",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/sd-canonical-implements-cycle",
+  "version": "1.0.0",
+  "name": "SdCanonicalImplementsCycle",
+  "status": "draft",
+  "description": "A canonical element may not target a resource whose implemented interfaces form a cycle without reaching CanonicalResource",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Library",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Library",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Library.relatedArtifact.resource",
+        "path": "Library.relatedArtifact.resource",
+        "type": [
+          {
+            "code": "canonical",
+            "targetProfile": [
+              "http://hl7.org/fhir/test/StructureDefinition/SdCycleTarget"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
