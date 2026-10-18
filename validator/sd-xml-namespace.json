@@ -1,0 +1,92 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "sd-xml-namespace",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/tools/StructureDefinition/xml-namespace",
+      "valueUri": "noNamespace"
+    }
+  ],
+  "url": "http://example.org/fhir/StructureDefinition/sd-xml-namespace",
+  "name": "SdXmlNamespace",
+  "status": "draft",
+  "fhirVersion": "4.0.1",
+  "description": "Logical model for XML formats: the model has the xml-namespace extension with the special value noNamespace, an attribute is in the XML Schema instance namespace, and two elements are in namespaces that the test fetcher does not resolve (http://hl7.org/fhir/invalid/...), one with the xml-namespace extension and one with the older elementdefinition-namespace extension.",
+  "kind": "logical",
+  "abstract": false,
+  "type": "http://example.org/fhir/StructureDefinition/Message",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Element",
+  "derivation": "specialization",
+  "differential": {
+    "element": [
+      {
+        "id": "Message",
+        "path": "Message",
+        "short": "Message",
+        "definition": "Root element of the XML document.",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Message.noNamespaceSchemaLocation",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/xml-namespace",
+            "valueUri": "http://www.w3.org/2001/XMLSchema-instance"
+          }
+        ],
+        "path": "Message.noNamespaceSchemaLocation",
+        "representation": [
+          "xmlAttr"
+        ],
+        "short": "xsi:noNamespaceSchemaLocation",
+        "definition": "Location of the XML schema.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ]
+      },
+      {
+        "id": "Message.text",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace",
+            "valueUri": "http://hl7.org/fhir/invalid/xml-namespace-old"
+          }
+        ],
+        "path": "Message.text",
+        "short": "Text",
+        "definition": "Text of the message.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ]
+      },
+      {
+        "id": "Message.code",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/tools/StructureDefinition/xml-namespace",
+            "valueUri": "http://hl7.org/fhir/invalid/xml-namespace"
+          }
+        ],
+        "path": "Message.code",
+        "short": "Code",
+        "definition": "Code of the message.",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ]
+      }
+    ]
+  }
+}
