@@ -1086,6 +1086,10 @@ Any text enclosed within is ignored
 		<test name="testEquality34" testing="=" inputfile="patient-example.xml" description="Trailing zeros after the decimal point are insignificant"><expression>1.50 = 1.5</expression><output type="boolean">true</output></test>
 		<test name="testEquality35" testing="=" inputfile="patient-example.xml" description="A decimal without a decimal point keeps its trailing zeros"><expression>100.toDecimal() = 1.0</expression><output type="boolean">false</output></test>
 		<test name="testEquality36" testing="=" description="for equality, the calendar duration year and the UCUM unit a are not comparable" inputfile="patient-example.xml"><expression>1 year = 1 'a'</expression></test>
+		<test name="testEquality37" testing="=" description="a quantity with a unit and one without a unit give the same result in both orders" inputfile="observation-quantity-unit-only.xml"><expression>Observation.component[0].value = Observation.component[1].value</expression></test>
+		<test name="testEquality38" testing="=" description="a quantity with a unit and one without a unit give the same result in both orders" inputfile="observation-quantity-unit-only.xml"><expression>Observation.component[1].value = Observation.component[0].value</expression></test>
+		<test name="testEquality39" testing="=" description="two quantities without a unit and with the same value" inputfile="observation-quantity-unit-only.xml"><expression>Observation.component[1].value = Observation.component[2].value</expression><output type="boolean">true</output></test>
+		<test name="testEquality40" testing="=" description="a calendar duration and a quantity without a unit" inputfile="observation-quantity-unit-only.xml"><expression>1 year = Observation.component[1].value</expression></test>
 	</group>
 
 	<group name="testNEquality">
@@ -1115,6 +1119,7 @@ Any text enclosed within is ignored
 		<test name="testNEquality24" testing="!=" inputfile="observation-example.xml"><expression>Observation.value != 185 'kg'</expression><output type="boolean">true</output></test>
 		<test name="testNEquality25" testing="!=" inputfile="patient-example.xml" description="A primitive and a complex value are different types, so they are not equal"><expression>name.first() != 'Peter'</expression><output type="boolean">true</output></test>
 		<test name="testNEquality26" testing="!=" inputfile="patient-example.xml" description="A primitive and a complex value are different types, so they are not equal"><expression>'Peter' != name.first()</expression><output type="boolean">true</output></test>
+		<test name="testNEquality27" testing="!=" description="a quantity with a unit and one without a unit" inputfile="observation-quantity-unit-only.xml"><expression>Observation.component[0].value != Observation.component[1].value</expression></test>
 	</group>
 
 	<group name="testHasValue" description="hasValue() is true only for a primitive with a value">
@@ -1154,6 +1159,9 @@ Any text enclosed within is ignored
 		<test name="testEquivalent28" testing="~" description="a year is not equivalent to a day" inputfile="patient-example.xml"><expression>1 year ~ 1 day</expression><output type="boolean">false</output></test>
 		<test name="testEquivalent29" testing="~" description="quantities that can't be compared are not equivalent" inputfile="patient-example.xml"><expression>1 'x' ~ 1 year</expression><output type="boolean">false</output></test>
 		<test name="testEquivalent30" testing="~" description="quantities that can't be compared are not equivalent" inputfile="patient-example.xml"><expression>1 year ~ 1 'kg'</expression><output type="boolean">false</output></test>
+		<test name="testEquivalent31" testing="~" description="a quantity with a unit and one without a unit give the same result in both orders" inputfile="observation-quantity-unit-only.xml"><expression>Observation.component[0].value ~ Observation.component[1].value</expression><output type="boolean">false</output></test>
+		<test name="testEquivalent32" testing="~" description="a quantity with a unit and one without a unit give the same result in both orders" inputfile="observation-quantity-unit-only.xml"><expression>Observation.component[1].value ~ Observation.component[0].value</expression><output type="boolean">false</output></test>
+		<test name="testEquivalent33" testing="~" description="two quantities without a unit and with the same value" inputfile="observation-quantity-unit-only.xml"><expression>Observation.component[1].value ~ Observation.component[2].value</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testNotEquivalent">
@@ -1181,6 +1189,7 @@ Any text enclosed within is ignored
 		<test name="testNotEquivalent22" testing="!~" inputfile="observation-example.xml"><expression>Observation.value !~ 185 'kg'</expression><output type="boolean">true</output></test>
 		<test name="testNotEquivalent23" testing="!~" description="a year is not equivalent to a day" inputfile="patient-example.xml"><expression>1 year !~ 1 day</expression><output type="boolean">true</output></test>
 		<test name="testNotEquivalent24" testing="!~" inputfile="patient-example.xml"><expression>1 month !~ 1 'mo'</expression><output type="boolean">false</output></test>
+		<test name="testNotEquivalent25" testing="!~" description="a quantity with a unit and one without a unit" inputfile="observation-quantity-unit-only.xml"><expression>Observation.component[0].value !~ Observation.component[1].value</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testLessThan">
