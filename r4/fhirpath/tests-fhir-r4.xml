@@ -564,6 +564,7 @@ Any text enclosed within is ignored
 	<group name="testIndexer">
 		<test name="testIndexer1" inputfile="patient-example.xml"><expression>Patient.name[0].given = 'Peter' | 'James'</expression><output type="boolean">true</output></test>
 		<test name="testIndexer2" inputfile="patient-example.xml"><expression>Patient.name[1].given = 'Jim'</expression><output type="boolean">true</output></test>
+		<test name="testIndexer3" description="a negative index is out of range, so the result is empty" inputfile="patient-example.xml"><expression>Patient.name[-1]</expression></test>
 	</group>
 
 	<group name="testSingle">
@@ -586,6 +587,8 @@ Any text enclosed within is ignored
 		<test name="testSkip2" inputfile="patient-example.xml"><expression>(0 | 1 | 2).skip(2) = 2</expression><output type="boolean">true</output></test>
 		<test name="testSkip3" inputfile="patient-example.xml"><expression>Patient.name.skip(1).given.trace('test') = 'Jim' | 'Peter' | 'James'</expression><output type="boolean">true</output></test>
 		<test name="testSkip4" inputfile="patient-example.xml"><expression>Patient.name.skip(3).given.exists() = false</expression><output type="boolean">true</output></test>
+		<test name="testSkip5" description="skip() with a negative count returns the input" inputfile="patient-example.xml"><expression>Patient.name.skip(-1).count() = Patient.name.count()</expression><output type="boolean">true</output></test>
+		<test name="testSkip6" description="skip(0) returns the input" inputfile="patient-example.xml"><expression>Patient.name.skip(0).count() = Patient.name.count()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testTake">
@@ -1290,6 +1293,7 @@ Any text enclosed within is ignored
 		<test name="testDivide4" inputfile="patient-example.xml"><expression>1 / 2 = 0.5</expression><output type="boolean">true</output></test>
 		<test name="testDivide5" inputfile="patient-example.xml"><expression>(1.2 / 1.8).round(2) = 0.67</expression><output type="boolean">true</output></test>
 		<test name="testDivide6" inputfile="patient-example.xml"><expression>1 / 0</expression></test>
+		<test name="testDivide7" description="division by zero is empty, also when the dividend is zero" inputfile="patient-example.xml"><expression>0.0 / 0</expression></test>
 	</group>
 
 	<group name="testDiv">
@@ -1298,6 +1302,7 @@ Any text enclosed within is ignored
 		<test name="testDiv3" inputfile="patient-example.xml"><expression>5 div 2 = 2</expression><output type="boolean">true</output></test>
 		<test name="testDiv4" inputfile="patient-example.xml"><expression>2.2 div 1.8 = 1</expression><output type="boolean">true</output></test>
 		<test name="testDiv5" inputfile="patient-example.xml"><expression>5 div 0</expression></test>
+		<test name="testDiv6" description="div by a decimal zero is empty, also when the dividend is zero" inputfile="patient-example.xml"><expression>0 div 0.0</expression></test>
 	</group>
 
 	<group name="testMod">
@@ -1306,6 +1311,9 @@ Any text enclosed within is ignored
 		<test name="testMod3" inputfile="patient-example.xml"><expression>5 mod 2 = 1</expression><output type="boolean">true</output></test>
 		<test name="testMod4" inputfile="patient-example.xml"><expression>2.2 mod 1.8 = 0.4</expression><output type="boolean">true</output></test>
 		<test name="testMod5" inputfile="patient-example.xml"><expression>5 mod 0</expression></test>
+		<test name="testMod6" description="a decimal mod by zero is empty" inputfile="patient-example.xml"><expression>5.5 mod 0</expression></test>
+		<test name="testMod7" description="a mod by a decimal zero is empty" inputfile="patient-example.xml"><expression>5 mod 0.0</expression></test>
+		<test name="testMod8" description="mod by zero is empty, also when the dividend is zero" inputfile="patient-example.xml"><expression>0.0 mod 0</expression></test>
 	</group>
 
 	<group name="testRound">
