@@ -232,6 +232,7 @@ Any text enclosed within is ignored
 			<output type="string">Peter</output>
 			<output type="string">James</output>
 		</test>
+		<test name="testEscapedIdentifierUnicode" testing="paths" inputfile="patient-example.xml"><expression>Patient.`\u006eame`.given.first()</expression><output type="string">Peter</output></test>
 		<test name="testSimpleBackTick1" testing="paths" inputfile="patient-example.xml">
 			<expression>`Patient`.name.`given`</expression>
 			<output type="string">Peter</output>
@@ -448,6 +449,7 @@ Any text enclosed within is ignored
 		<test name="testLiteralDateTimeTZEqualTrue" testing="=" inputfile="patient-example.xml"><expression>@2017-11-05T01:30:00.0-04:00 = @2017-11-05T00:30:00.0-05:00</expression><output type="boolean">true</output></test>
 
 		<test name="testLiteralUnicode" testing="literal" inputfile="patient-example.xml"><expression>Patient.name.given.first() = 'P\u0065ter'</expression><output type="boolean">true</output></test>
+		<test name="testLiteralUnicodeInvalid" testing="literal" inputfile="patient-example.xml"><expression invalid="syntax">'\u+041'</expression></test>
 
 		<test name="testCollectionNotEmpty" testing="not" inputfile="patient-example.xml"><expression>Patient.name.given.empty().not()</expression><output type="boolean">true</output></test>
 		<test name="testCollectionNotEqualEmpty" testing="!=" inputfile="patient-example.xml"><expression>Patient.name.given != {}</expression></test>
