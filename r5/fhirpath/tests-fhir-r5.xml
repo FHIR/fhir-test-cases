@@ -764,6 +764,8 @@ Any text enclosed within is ignored
 		<test name="testSkip4" testing="skip" inputfile="patient-example.xml"><expression>Patient.name.skip(3).given.exists() = false</expression><output type="boolean">true</output></test>
 		<test name="testSkip5" testing="skip" description="skip() with a negative count returns the input" inputfile="patient-example.xml"><expression>Patient.name.skip(-1).count() = Patient.name.count()</expression><output type="boolean">true</output></test>
 		<test name="testSkip6" testing="skip" description="skip(0) returns the input" inputfile="patient-example.xml"><expression>Patient.name.skip(0).count() = Patient.name.count()</expression><output type="boolean">true</output></test>
+		<test name="testSkip7" testing="skip" description="skip() with an empty count returns empty" inputfile="patient-example.xml"><expression>(0 | 1 | 2).skip({}).empty()</expression><output type="boolean">true</output></test>
+		<test name="testSkip8" testing="skip" inputfile="patient-example.xml"><expression>{}.skip({}).empty()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testTake">
@@ -774,6 +776,8 @@ Any text enclosed within is ignored
 		<test name="testTake5" testing="take" inputfile="patient-example.xml"><expression>Patient.name.take(3).given.count() = 5</expression><output type="boolean">true</output></test>
 		<test name="testTake6" testing="take" inputfile="patient-example.xml"><expression>Patient.name.take(4).given.count() = 5</expression><output type="boolean">true</output></test>
 		<test name="testTake7" testing="take" inputfile="patient-example.xml"><expression>Patient.name.take(0).given.exists() = false</expression><output type="boolean">true</output></test>
+		<test name="testTake8" testing="take" description="take() with an empty count returns empty" inputfile="patient-example.xml"><expression>(0 | 1 | 2).take({}).empty()</expression><output type="boolean">true</output></test>
+		<test name="testTake9" testing="take" inputfile="patient-example.xml"><expression>{}.take({}).empty()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testIif">
