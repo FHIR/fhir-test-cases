@@ -1090,6 +1090,10 @@ Any text enclosed within is ignored
 		<test name="testEquality34" testing="=" inputfile="patient-example.xml" description="Trailing zeros after the decimal point are insignificant"><expression>1.50 = 1.5</expression><output type="boolean">true</output></test>
 		<test name="testEquality35" testing="=" inputfile="patient-example.xml" description="A decimal without a decimal point keeps its trailing zeros"><expression>100.toDecimal() = 1.0</expression><output type="boolean">false</output></test>
 		<test name="testEquality36" testing="=" description="for equality, the calendar duration year and the UCUM unit a are not comparable" inputfile="patient-example.xml"><expression>1 year = 1 'a'</expression></test>
+		<test name="testEquality37" testing="=" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 = @2015-02-04T10:00</expression><output type="boolean">true</output></test>
+		<test name="testEquality38" testing="=" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 = @2015-02-04T11:00</expression><output type="boolean">false</output></test>
+		<test name="testEquality39" testing="=" description="dateTimes with different precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00:00 = @2015-02-04T10:00</expression></test>
+		<test name="testEquality40" testing="=" description="dateTimes with minute precision and an offset" inputfile="patient-example.xml"><expression>@2015-02-04T10:00-05:00 = @2015-02-04T10:00-05:00</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testNEquality">
@@ -1119,6 +1123,7 @@ Any text enclosed within is ignored
 		<test name="testNEquality24" testing="!=" inputfile="observation-example.xml"><expression>Observation.value != 185 'kg'</expression><output type="boolean">true</output></test>
 		<test name="testNEquality25" testing="!=" inputfile="patient-example.xml" description="A primitive and a complex value are different types, so they are not equal"><expression>name.first() != 'Peter'</expression><output type="boolean">true</output></test>
 		<test name="testNEquality26" testing="!=" inputfile="patient-example.xml" description="A primitive and a complex value are different types, so they are not equal"><expression>'Peter' != name.first()</expression><output type="boolean">true</output></test>
+		<test name="testNEquality27" testing="!=" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 != @2015-02-04T11:00</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testHasValue" description="hasValue() is true only for a primitive with a value">
@@ -1158,6 +1163,7 @@ Any text enclosed within is ignored
 		<test name="testEquivalent28" testing="~" description="a year is not equivalent to a day" inputfile="patient-example.xml"><expression>1 year ~ 1 day</expression><output type="boolean">false</output></test>
 		<test name="testEquivalent29" testing="~" description="quantities that can't be compared are not equivalent" inputfile="patient-example.xml"><expression>1 'x' ~ 1 year</expression><output type="boolean">false</output></test>
 		<test name="testEquivalent30" testing="~" description="quantities that can't be compared are not equivalent" inputfile="patient-example.xml"><expression>1 year ~ 1 'kg'</expression><output type="boolean">false</output></test>
+		<test name="testEquivalent31" testing="~" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 ~ @2015-02-04T10:00</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testNotEquivalent">
@@ -1361,6 +1367,7 @@ Any text enclosed within is ignored
 			<output type="boolean">true</output>
 			<output type="string">Peter</output>
 		</test> <!-- merge duplicates -->
+		<test name="testUnion13" testing="|" description="the union removes a repeated dateTime with minute precision" inputfile="patient-example.xml"><expression>(@2015-02-04T10:00 | @2015-02-04T10:00).count() = 1</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testIntersect">
@@ -1486,6 +1493,8 @@ Any text enclosed within is ignored
 		<test name="testPlusEmpty1" testing="+" inputfile="patient-example.xml"><expression>1 + {}</expression></test>
 		<test name="testPlusEmpty2" testing="+" inputfile="patient-example.xml"><expression>{} + 1</expression></test>
 		<test name="testPlusEmpty3" testing="+" inputfile="patient-example.xml"><expression>{} + {}</expression></test>
+		<test name="testPlusDate23" testing="+" description="a dateTime with minute precision plus a calendar duration" inputfile="patient-example.xml"><expression>@2015-02-04T10:00Z + 1 hour = @2015-02-04T11:00Z</expression><output type="boolean">true</output></test>
+		<test name="testPlusDate24" testing="+" description="a dateTime written with the hour only plus a calendar duration" inputfile="patient-example.xml"><expression>@2015-02-04T10Z + 1 hour = @2015-02-04T11Z</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testConcatenate">
@@ -1509,6 +1518,7 @@ Any text enclosed within is ignored
 		<test name="testMinusEmpty1" testing="-" inputfile="patient-example.xml"><expression>1 - {}</expression></test>
 		<test name="testMinusEmpty2" testing="-" inputfile="patient-example.xml"><expression>{} - 1</expression></test>
 		<test name="testMinusEmpty3" testing="-" inputfile="patient-example.xml"><expression>{} - {}</expression></test>
+		<test name="testMinus9" testing="-" description="a dateTime with minute precision minus a calendar duration" inputfile="patient-example.xml"><expression>@2015-02-04T10:00Z - 1 day = @2015-02-03T10:00Z</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testMultiply">
