@@ -814,6 +814,9 @@ Any text enclosed within is ignored
 		<test name="testEscapeJson" version="2.1.0" inputfile="patient-example.xml"><expression>'"1&lt;2"'.escape('json')</expression><output type="string">\"1&lt;2\"</output></test>
 		<test name="testUnescapeHtml" version="2.1.0" inputfile="patient-example.xml"><expression>'&amp;quot;1&amp;lt;2&amp;quot;'.unescape('html')</expression><output type="string">"1&lt;2"</output></test>
 		<test name="testUnescapeJson" version="2.1.0" inputfile="patient-example.xml"><expression>'\"1&lt;2\"'.unescape('json')</expression><output type="string">"1&lt;2"</output></test>
+		<test name="testUnescapeJson2" version="2.1.0" description="unescape('json') reverses escape('json')" inputfile="patient-example.xml"><expression>'"1&lt;2"'.escape('json').unescape('json')</expression><output type="string">"1&lt;2"</output></test>
+		<test name="testUnescapeJson3" version="2.1.0" description="a \u escape is replaced by its character" inputfile="patient-example.xml"><expression>'\\u0041B'.unescape('json')</expression><output type="string">AB</output></test>
+		<test name="testUnescapeJson4" version="2.1.0" description="an escaped quote in the string is unescaped" inputfile="patient-example.xml"><expression>'\\"1&lt;2\\"'.unescape('json')</expression><output type="string">"1&lt;2"</output></test>
 	</group>
 
 	<group name="testTrim">
