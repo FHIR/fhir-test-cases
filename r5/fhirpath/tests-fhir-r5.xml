@@ -15,6 +15,8 @@
   valueset-example-expansion.xml
   patient-example-name.xml
   parameters-example-types.xml
+  parameters-example-quantities.xml
+  parameters-example-decimals.xml
   ccda.xml
   patient-example-period.xml
   explanationofbenefit-example.json
@@ -230,6 +232,7 @@ Any text enclosed within is ignored
 			<output type="string">Peter</output>
 			<output type="string">James</output>
 		</test>
+		<test name="testEscapedIdentifierUnicode" testing="paths" inputfile="patient-example.xml"><expression>Patient.`\u006eame`.given.first()</expression><output type="string">Peter</output></test>
 		<test name="testSimpleBackTick1" testing="paths" inputfile="patient-example.xml">
 			<expression>`Patient`.name.`given`</expression>
 			<output type="string">Peter</output>
@@ -446,6 +449,7 @@ Any text enclosed within is ignored
 		<test name="testLiteralDateTimeTZEqualTrue" testing="=" inputfile="patient-example.xml"><expression>@2017-11-05T01:30:00.0-04:00 = @2017-11-05T00:30:00.0-05:00</expression><output type="boolean">true</output></test>
 
 		<test name="testLiteralUnicode" testing="literal" inputfile="patient-example.xml"><expression>Patient.name.given.first() = 'P\u0065ter'</expression><output type="boolean">true</output></test>
+		<test name="testLiteralUnicodeInvalid" testing="literal" inputfile="patient-example.xml"><expression invalid="syntax">'\u+041'</expression></test>
 
 		<test name="testCollectionNotEmpty" testing="not" inputfile="patient-example.xml"><expression>Patient.name.given.empty().not()</expression><output type="boolean">true</output></test>
 		<test name="testCollectionNotEqualEmpty" testing="!=" inputfile="patient-example.xml"><expression>Patient.name.given != {}</expression></test>
@@ -556,6 +560,8 @@ Any text enclosed within is ignored
 		<test name="testStringQuantityWeekLiteralToQuantity" testing="toQuantity" inputfile="patient-example.xml"><expression>'1 \'wk\''.toQuantity() = 1 week</expression><output type="boolean">true</output></test>
 		<test name="testStringQuantityMonthLiteralToQuantity" testing="toQuantity" inputfile="patient-example.xml"><expression>'1 \'mo\''.toQuantity() = 1 month</expression></test>
 		<test name="testStringQuantityYearLiteralToQuantity" testing="toQuantity" inputfile="patient-example.xml"><expression>'1 \'a\''.toQuantity() = 1 year</expression></test>
+		<test name="testStringQuantityMonthToQuantityEquivalent" testing="toQuantity" description="the quantity converted from '1 month' is equivalent to the calendar duration 1 month" inputfile="patient-example.xml"><expression>'1 month'.toQuantity() ~ 1 month</expression><output type="boolean">true</output></test>
+		<test name="testStringQuantityYearToQuantityEquivalent" testing="toQuantity" description="the quantity converted from '1 year' is equivalent to the calendar duration 1 year" inputfile="patient-example.xml"><expression>'1 year'.toQuantity() ~ 1 year</expression><output type="boolean">true</output></test>
 		<test name="testStringDecimalLiteralToQuantity" testing="toQuantity" inputfile="patient-example.xml"><expression>'1.0'.toQuantity() ~ 1 '1'</expression><output type="boolean">true</output></test>
 
 		<test name="testIntegerLiteralConvertsToBoolean" testing="convertsToBoolean" inputfile="patient-example.xml"><expression>1.convertsToBoolean()</expression><output type="boolean">true</output></test>
@@ -735,6 +741,7 @@ Any text enclosed within is ignored
 	<group name="testIndexer">
 		<test name="testIndexer1" testing="[]" inputfile="patient-example.xml"><expression>Patient.name[0].given = 'Peter' | 'James'</expression><output type="boolean">true</output></test>
 		<test name="testIndexer2" testing="[]" inputfile="patient-example.xml"><expression>Patient.name[1].given = 'Jim'</expression><output type="boolean">true</output></test>
+		<test name="testIndexer3" testing="[]" description="a negative index is out of range, so the result is empty" inputfile="patient-example.xml"><expression>Patient.name[-1]</expression></test>
 	</group>
 
 	<group name="testSingle">
@@ -757,6 +764,10 @@ Any text enclosed within is ignored
 		<test name="testSkip2" testing="skip" inputfile="patient-example.xml"><expression>(0 | 1 | 2).skip(2) = 2</expression><output type="boolean">true</output></test>
 		<test name="testSkip3" testing="skip" inputfile="patient-example.xml"><expression>Patient.name.skip(1).given.trace('test') = 'Jim' | 'Peter' | 'James'</expression><output type="boolean">true</output></test>
 		<test name="testSkip4" testing="skip" inputfile="patient-example.xml"><expression>Patient.name.skip(3).given.exists() = false</expression><output type="boolean">true</output></test>
+		<test name="testSkip5" testing="skip" description="skip() with a negative count returns the input" inputfile="patient-example.xml"><expression>Patient.name.skip(-1).count() = Patient.name.count()</expression><output type="boolean">true</output></test>
+		<test name="testSkip6" testing="skip" description="skip(0) returns the input" inputfile="patient-example.xml"><expression>Patient.name.skip(0).count() = Patient.name.count()</expression><output type="boolean">true</output></test>
+		<test name="testSkip7" testing="skip" description="skip() with an empty count returns empty" inputfile="patient-example.xml"><expression>(0 | 1 | 2).skip({}).empty()</expression><output type="boolean">true</output></test>
+		<test name="testSkip8" testing="skip" inputfile="patient-example.xml"><expression>{}.skip({}).empty()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testTake">
@@ -767,6 +778,8 @@ Any text enclosed within is ignored
 		<test name="testTake5" testing="take" inputfile="patient-example.xml"><expression>Patient.name.take(3).given.count() = 5</expression><output type="boolean">true</output></test>
 		<test name="testTake6" testing="take" inputfile="patient-example.xml"><expression>Patient.name.take(4).given.count() = 5</expression><output type="boolean">true</output></test>
 		<test name="testTake7" testing="take" inputfile="patient-example.xml"><expression>Patient.name.take(0).given.exists() = false</expression><output type="boolean">true</output></test>
+		<test name="testTake8" testing="take" description="take() with an empty count returns empty" inputfile="patient-example.xml"><expression>(0 | 1 | 2).take({}).empty()</expression><output type="boolean">true</output></test>
+		<test name="testTake9" testing="take" inputfile="patient-example.xml"><expression>{}.take({}).empty()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testIif">
@@ -992,6 +1005,9 @@ Any text enclosed within is ignored
 		<test name="testEscapeJson" testing="escape" version="2.1.0" inputfile="patient-example.xml"><expression>'"1&lt;2"'.escape('json')</expression><output type="string">\"1&lt;2\"</output></test>
 		<test name="testUnescapeHtml" testing="unescape" version="2.1.0" inputfile="patient-example.xml"><expression>'&amp;quot;1&amp;lt;2&amp;quot;'.unescape('html')</expression><output type="string">"1&lt;2"</output></test>
 		<test name="testUnescapeJson" testing="unescape" version="2.1.0" inputfile="patient-example.xml"><expression>'\"1&lt;2\"'.unescape('json')</expression><output type="string">"1&lt;2"</output></test>
+		<test name="testUnescapeJson2" testing="unescape" version="2.1.0" description="unescape('json') reverses escape('json')" inputfile="patient-example.xml"><expression>'"1&lt;2"'.escape('json').unescape('json')</expression><output type="string">"1&lt;2"</output></test>
+		<test name="testUnescapeJson3" testing="unescape" version="2.1.0" description="a \u escape is replaced by its character" inputfile="patient-example.xml"><expression>'\\u0041B'.unescape('json')</expression><output type="string">AB</output></test>
+		<test name="testUnescapeJson4" testing="unescape" version="2.1.0" description="an escaped quote in the string is unescaped" inputfile="patient-example.xml"><expression>'\\"1&lt;2\\"'.unescape('json')</expression><output type="string">"1&lt;2"</output></test>
 	</group>
 
 	<group name="testTrim">
@@ -1083,6 +1099,11 @@ Any text enclosed within is ignored
 		<test name="testEquality33" testing="=" inputfile="patient-example.xml" description="An integer equals the decimal with the same value"><expression>10 = 10.0</expression><output type="boolean">true</output></test>
 		<test name="testEquality34" testing="=" inputfile="patient-example.xml" description="Trailing zeros after the decimal point are insignificant"><expression>1.50 = 1.5</expression><output type="boolean">true</output></test>
 		<test name="testEquality35" testing="=" inputfile="patient-example.xml" description="A decimal without a decimal point keeps its trailing zeros"><expression>100.toDecimal() = 1.0</expression><output type="boolean">false</output></test>
+		<test name="testEquality36" testing="=" description="for equality, the calendar duration year and the UCUM unit a are not comparable" inputfile="patient-example.xml"><expression>1 year = 1 'a'</expression></test>
+		<test name="testEquality37" testing="=" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 = @2015-02-04T10:00</expression><output type="boolean">true</output></test>
+		<test name="testEquality38" testing="=" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 = @2015-02-04T11:00</expression><output type="boolean">false</output></test>
+		<test name="testEquality39" testing="=" description="dateTimes with different precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00:00 = @2015-02-04T10:00</expression></test>
+		<test name="testEquality40" testing="=" description="dateTimes with minute precision and an offset" inputfile="patient-example.xml"><expression>@2015-02-04T10:00-05:00 = @2015-02-04T10:00-05:00</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testNEquality">
@@ -1112,6 +1133,7 @@ Any text enclosed within is ignored
 		<test name="testNEquality24" testing="!=" inputfile="observation-example.xml"><expression>Observation.value != 185 'kg'</expression><output type="boolean">true</output></test>
 		<test name="testNEquality25" testing="!=" inputfile="patient-example.xml" description="A primitive and a complex value are different types, so they are not equal"><expression>name.first() != 'Peter'</expression><output type="boolean">true</output></test>
 		<test name="testNEquality26" testing="!=" inputfile="patient-example.xml" description="A primitive and a complex value are different types, so they are not equal"><expression>'Peter' != name.first()</expression><output type="boolean">true</output></test>
+		<test name="testNEquality27" testing="!=" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 != @2015-02-04T11:00</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testHasValue" description="hasValue() is true only for a primitive with a value">
@@ -1145,6 +1167,13 @@ Any text enclosed within is ignored
 		<test name="testEquivalent22" testing="~" inputfile="observation-example.xml"><expression>Observation.value ~ 185 '[lb_av]'</expression><output type="boolean">true</output></test>
 		<test name="testEquivalent23" testing="~" inputfile="observation-example.xml"><expression>(1 | 2 | 3) ~ (1 | 2 | 3)</expression><output type="boolean">true</output></test>
 		<test name="testEquivalent24" testing="~" inputfile="observation-example.xml"><expression>(1 | 2 | 3) ~ (3 | 2 | 1)</expression><output type="boolean">true</output></test>
+		<test name="testEquivalent25" testing="~" description="for equivalence, the calendar duration year matches the UCUM unit a" inputfile="patient-example.xml"><expression>1 year ~ 1 'a'</expression><output type="boolean">true</output></test>
+		<test name="testEquivalent26" testing="~" inputfile="patient-example.xml"><expression>2 years ~ 2 'a'</expression><output type="boolean">true</output></test>
+		<test name="testEquivalent27" testing="~" description="for equivalence, the calendar duration month matches the UCUM unit mo" inputfile="patient-example.xml"><expression>1 month ~ 1 'mo'</expression><output type="boolean">true</output></test>
+		<test name="testEquivalent28" testing="~" description="a year is not equivalent to a day" inputfile="patient-example.xml"><expression>1 year ~ 1 day</expression><output type="boolean">false</output></test>
+		<test name="testEquivalent29" testing="~" description="quantities that can't be compared are not equivalent" inputfile="patient-example.xml"><expression>1 'x' ~ 1 year</expression><output type="boolean">false</output></test>
+		<test name="testEquivalent30" testing="~" description="quantities that can't be compared are not equivalent" inputfile="patient-example.xml"><expression>1 year ~ 1 'kg'</expression><output type="boolean">false</output></test>
+		<test name="testEquivalent31" testing="~" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 ~ @2015-02-04T10:00</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testNotEquivalent">
@@ -1170,6 +1199,8 @@ Any text enclosed within is ignored
 		<test name="testNotEquivalent20" testing="!~" inputfile="patient-example.xml"><expression>name.take(2).given !~ name.take(2).first().given | name.take(2).last().given</expression><output type="boolean">false</output></test>
 		<test name="testNotEquivalent21" testing="!~" inputfile="patient-example.xml"><expression>name.take(2).given !~ name.take(2).last().given | name.take(2).first().given</expression><output type="boolean">false</output></test>
 		<test name="testNotEquivalent22" testing="!~" inputfile="observation-example.xml"><expression>Observation.value !~ 185 'kg'</expression><output type="boolean">true</output></test>
+		<test name="testNotEquivalent23" testing="!~" description="a year is not equivalent to a day" inputfile="patient-example.xml"><expression>1 year !~ 1 day</expression><output type="boolean">true</output></test>
+		<test name="testNotEquivalent24" testing="!~" inputfile="patient-example.xml"><expression>1 month !~ 1 'mo'</expression><output type="boolean">false</output></test>
 	</group>
 
 	<group name="testLessThan">
@@ -1200,9 +1231,29 @@ Any text enclosed within is ignored
 		<test name="testLessThan25" testing="&lt;" inputfile="patient-example.xml"><expression>@T10:30 &lt; @T10:30:00</expression></test>
 		<test name="testLessThan26" testing="&lt;" inputfile="patient-example.xml"><expression>@2018-03-01T10:30:00 &lt; @2018-03-01T10:30:00.0</expression><output type="boolean">false</output></test>
 		<test name="testLessThan27" testing="&lt;" inputfile="patient-example.xml"><expression>@T10:30:00 &lt; @T10:30:00.0</expression><output type="boolean">false</output></test>
+		<test name="testLessThan28" testing="&lt;" description="a comparison does not change the timezone of the value it compares" inputfile="patient-example.xml"><expression>(Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime').value &lt; @1975-01-01T00:00:00Z) and Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime').value.toString() = '1974-12-25T14:35:45-05:00'</expression><output type="boolean">true</output></test>
 		<test name="testLessThanEmpty1" testing="&lt;" inputfile="patient-example.xml"><expression>1 &lt; {}</expression></test>
 		<test name="testLessThanEmpty2" testing="&lt;" inputfile="patient-example.xml"><expression>{} &lt; 1</expression></test>
 		<test name="testLessThanEmpty3" testing="&lt;" inputfile="patient-example.xml"><expression>{} &lt; {}</expression></test>
+	</group>
+
+	<group name="testQuantityUnitComparison" description="Comparing quantities that have no UCUM code, by unit text or the lack of a unit">
+		<!-- left: parameter[0] = 1 with no unit; right: parameter[1] = 1 with no unit -->
+		<test name="testQuantityNoUnitEqual" testing="=" description="two quantities with the same value and no unit are equal" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[0].value = Parameters.parameter[1].value</expression><output type="boolean">true</output></test>
+		<!-- left: parameter[0] = 1 with no unit; right: parameter[1] = 1 with no unit -->
+		<test name="testQuantityNoUnitEquivalent" testing="~" description="two quantities with the same value and no unit are equivalent" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[0].value ~ Parameters.parameter[1].value</expression><output type="boolean">true</output></test>
+		<!-- left: parameter[2] = 1 with unit text "tablets" and no code; right: parameter[3] = 1 with unit text "tablets" and no code -->
+		<test name="testQuantityUnitTextEqual" testing="=" description="two quantities with the same value and the same unit text (no code) are equal" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[2].value = Parameters.parameter[3].value</expression><output type="boolean">true</output></test>
+		<!-- left: parameter[2] = 1 with unit text "tablets" and no code; right: parameter[3] = 1 with unit text "tablets" and no code -->
+		<test name="testQuantityUnitTextEquivalent" testing="~" description="two quantities with the same value and the same unit text (no code) are equivalent" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[2].value ~ Parameters.parameter[3].value</expression><output type="boolean">true</output></test>
+		<!-- left: parameter[2] = 1 with unit text "tablets" and no code; right: parameter[0] = 1 with no unit -->
+		<test name="testQuantityUnitVsNoUnitEqual" testing="=" description="a quantity with a unit and one without are not comparable, whichever side the unit is on" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[2].value = Parameters.parameter[0].value</expression></test>
+		<!-- left: parameter[0] = 1 with no unit; right: parameter[2] = 1 with unit text "tablets" and no code -->
+		<test name="testQuantityNoUnitVsUnitEqual" testing="=" description="a quantity with a unit and one without are not comparable, whichever side the unit is on" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[0].value = Parameters.parameter[2].value</expression></test>
+		<!-- left: parameter[2] = 1 with unit text "tablets" and no code; right: parameter[0] = 1 with no unit -->
+		<test name="testQuantityUnitVsNoUnitEquivalent" testing="~" description="a quantity with a unit is not equivalent to one without, whichever side the unit is on" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[2].value ~ Parameters.parameter[0].value</expression><output type="boolean">false</output></test>
+		<!-- left: parameter[0] = 1 with no unit; right: parameter[2] = 1 with unit text "tablets" and no code -->
+		<test name="testQuantityNoUnitVsUnitEquivalent" testing="~" description="a quantity with a unit is not equivalent to one without, whichever side the unit is on" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[0].value ~ Parameters.parameter[2].value</expression><output type="boolean">false</output></test>
 	</group>
 
 	<group name="testLessOrEqual">
@@ -1326,6 +1377,7 @@ Any text enclosed within is ignored
 			<output type="boolean">true</output>
 			<output type="string">Peter</output>
 		</test> <!-- merge duplicates -->
+		<test name="testUnion13" testing="|" description="the union removes a repeated dateTime with minute precision" inputfile="patient-example.xml"><expression>(@2015-02-04T10:00 | @2015-02-04T10:00).count() = 1</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testIntersect">
@@ -1451,6 +1503,8 @@ Any text enclosed within is ignored
 		<test name="testPlusEmpty1" testing="+" inputfile="patient-example.xml"><expression>1 + {}</expression></test>
 		<test name="testPlusEmpty2" testing="+" inputfile="patient-example.xml"><expression>{} + 1</expression></test>
 		<test name="testPlusEmpty3" testing="+" inputfile="patient-example.xml"><expression>{} + {}</expression></test>
+		<test name="testPlusDate23" testing="+" description="a dateTime with minute precision plus a calendar duration" inputfile="patient-example.xml"><expression>@2015-02-04T10:00Z + 1 hour = @2015-02-04T11:00Z</expression><output type="boolean">true</output></test>
+		<test name="testPlusDate24" testing="+" description="a dateTime written with the hour only plus a calendar duration" inputfile="patient-example.xml"><expression>@2015-02-04T10Z + 1 hour = @2015-02-04T11Z</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testConcatenate">
@@ -1474,6 +1528,7 @@ Any text enclosed within is ignored
 		<test name="testMinusEmpty1" testing="-" inputfile="patient-example.xml"><expression>1 - {}</expression></test>
 		<test name="testMinusEmpty2" testing="-" inputfile="patient-example.xml"><expression>{} - 1</expression></test>
 		<test name="testMinusEmpty3" testing="-" inputfile="patient-example.xml"><expression>{} - {}</expression></test>
+		<test name="testMinus9" testing="-" description="a dateTime with minute precision minus a calendar duration" inputfile="patient-example.xml"><expression>@2015-02-04T10:00Z - 1 day = @2015-02-03T10:00Z</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testMultiply">
@@ -1495,6 +1550,7 @@ Any text enclosed within is ignored
 		<test name="testDivideEmpty1" testing="/" inputfile="patient-example.xml"><expression>1 / {}</expression></test>
 		<test name="testDivideEmpty2" testing="/" inputfile="patient-example.xml"><expression>{} / 1</expression></test>
 		<test name="testDivideEmpty3" testing="/" inputfile="patient-example.xml"><expression>{} / {}</expression></test>
+		<test name="testDivide7" testing="/" description="division by zero is empty, also when the dividend is zero" inputfile="patient-example.xml"><expression>0.0 / 0</expression></test>
 	</group>
 
 	<group name="testDiv">
@@ -1507,6 +1563,7 @@ Any text enclosed within is ignored
 		<test name="testDivEmpty1" testing="div" inputfile="patient-example.xml"><expression>1 div {}</expression></test>
 		<test name="testDivEmpty2" testing="div" inputfile="patient-example.xml"><expression>{} div 1</expression></test>
 		<test name="testDivEmpty3" testing="div" inputfile="patient-example.xml"><expression>{} div {}</expression></test>
+		<test name="testDiv7" testing="div" description="div by a decimal zero is empty, also when the dividend is zero" inputfile="patient-example.xml"><expression>0 div 0.0</expression></test>
 	</group>
 
 	<group name="testMod">
@@ -1519,6 +1576,9 @@ Any text enclosed within is ignored
 		<test name="testModEmpty1" testing="mod" inputfile="patient-example.xml"><expression>1 mod {}</expression></test>
 		<test name="testModEmpty2" testing="mod" inputfile="patient-example.xml"><expression>{} mod 1</expression></test>
 		<test name="testModEmpty3" testing="mod" inputfile="patient-example.xml"><expression>{} mod {}</expression></test>
+		<test name="testMod7" testing="mod" description="a decimal mod by zero is empty" inputfile="patient-example.xml"><expression>5.5 mod 0</expression></test>
+		<test name="testMod8" testing="mod" description="a mod by a decimal zero is empty" inputfile="patient-example.xml"><expression>5 mod 0.0</expression></test>
+		<test name="testMod9" testing="mod" description="mod by zero is empty, also when the dividend is zero" inputfile="patient-example.xml"><expression>0.0 mod 0</expression></test>
 	</group>
 
 	<group name="testRound">
@@ -1682,6 +1742,15 @@ Any text enclosed within is ignored
 		<test name="LowBoundaryDecimal14" testing="lowBoundary"><expression>0.0034.lowBoundary(1)</expression><output type="decimal">0.0</output></test>
 		<test name="LowBoundaryDecimal15" testing="lowBoundary"><expression>(-0.0034).lowBoundary(1)</expression><output type="decimal">-0.0</output></test>
 
+		<test name="LowBoundaryDecimalCarry1" testing="lowBoundary" description="rounding the magnitude up carries into the digits to the left"><expression>(-9.96).lowBoundary(1)</expression><output type="decimal">-10.0</output></test>
+		<test name="LowBoundaryDecimalCarry2" testing="lowBoundary" description="rounding the magnitude up carries into the digits to the left"><expression>(-99.96).lowBoundary(1)</expression><output type="decimal">-100.0</output></test>
+		<test name="LowBoundaryDecimalCarry3" testing="lowBoundary" description="rounding the magnitude up carries into the digits to the left"><expression>(-9).lowBoundary(0)</expression><output type="decimal">-10</output></test>
+		<test name="LowBoundaryDecimalBorrow1" testing="lowBoundary" description="no leading zero when the boundary borrows from the first digit"><expression>10.lowBoundary(0)</expression><output type="decimal">9</output></test>
+		<test name="LowBoundaryDecimalBorrow2" testing="lowBoundary" description="no leading zero when the boundary borrows from the first digit"><expression>100.lowBoundary(2)</expression><output type="decimal">99.50</output></test>
+		<test name="LowBoundaryDecimalExponent1" testing="lowBoundary" description="9.5e2: the precision is in the mantissa, and the result has no exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[0].value.lowBoundary(0)</expression><output type="decimal">945</output></test>
+		<test name="LowBoundaryDecimalExponent2" testing="lowBoundary" description="1.5e-3: a negative exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[1].value.lowBoundary()</expression><output type="decimal">0.00145000</output></test>
+		<test name="LowBoundaryDecimalExponent3" testing="lowBoundary" description="-9.5e2: a negative value with an exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[2].value.lowBoundary(0)</expression><output type="decimal">-955</output></test>
+		<test name="LowBoundaryDecimalExponent4" testing="lowBoundary" description="1.5E2: an upper case exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[3].value.lowBoundary(1)</expression><output type="decimal">145.0</output></test>
 		<test name="LowBoundaryQuantity" testing="lowBoundary"><expression>1.587 'cm'.lowBoundary(8)</expression><output type="Quantity">1.58650000 'cm'</output></test>
 		<test name="LowBoundaryDateMonth" testing="lowBoundary"><expression>@2014.lowBoundary(6)</expression><output type="dateTime">@2014-01</output></test>
 		<test name="LowBoundaryDateTimeMillisecond1" testing="lowBoundary"><expression>@2014-01-01T08.lowBoundary(17)</expression><output type="dateTime">@2014-01-01T08:00:00.000+14:00</output></test>
@@ -1709,6 +1778,15 @@ Any text enclosed within is ignored
 		<test name="HighBoundaryDecimal15" testing="highBoundary"><expression>0.0034.highBoundary(1)</expression><output type="decimal">0.0</output></test> 
 		<test name="HighBoundaryDecimal16" testing="highBoundary"><expression>-0.0034.highBoundary(1)</expression><output type="decimal">0.0</output></test> 
 		<test name="HighBoundaryDecimal" testing="highBoundary"><expression>1.587.highBoundary(8)</expression><output type="decimal">1.58750000</output></test>
+		<test name="HighBoundaryDecimalCarry1" testing="highBoundary" description="rounding up carries into the digits to the left"><expression>9.95.highBoundary(1)</expression><output type="decimal">10.0</output></test>
+		<test name="HighBoundaryDecimalCarry2" testing="highBoundary" description="rounding up carries into the digits to the left"><expression>0.996.highBoundary(1)</expression><output type="decimal">1.0</output></test>
+		<test name="HighBoundaryDecimalCarry3" testing="highBoundary" description="rounding up carries into the digits to the left"><expression>99.96.highBoundary(1)</expression><output type="decimal">100.0</output></test>
+		<test name="HighBoundaryDecimalCarry4" testing="highBoundary" description="rounding up carries into the digits to the left"><expression>9.highBoundary(0)</expression><output type="decimal">10</output></test>
+		<test name="HighBoundaryDecimalExponent1" testing="highBoundary" description="9.5e2: the precision is in the mantissa, and the result has no exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[0].value.highBoundary(0)</expression><output type="decimal">955</output></test>
+		<test name="HighBoundaryDecimalExponent2" testing="highBoundary" description="9.5e2 at the default precision" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[0].value.highBoundary()</expression><output type="decimal">955.00000000</output></test>
+		<test name="HighBoundaryDecimalExponent3" testing="highBoundary" description="1.5e-3: a negative exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[1].value.highBoundary()</expression><output type="decimal">0.00155000</output></test>
+		<test name="HighBoundaryDecimalExponent4" testing="highBoundary" description="-9.5e2: a negative value with an exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[2].value.highBoundary(0)</expression><output type="decimal">-945</output></test>
+		<test name="HighBoundaryDecimalExponent5" testing="highBoundary" description="1.5E2: an upper case exponent" inputfile="parameters-example-decimals.xml"><expression>Parameters.parameter[3].value.highBoundary(1)</expression><output type="decimal">155.0</output></test>
 		<test name="HighBoundaryQuantity" testing="highBoundary"><expression>1.587 'm'.highBoundary(8)</expression><output type="Quantity">1.58750000 'm'</output></test>
 		<test name="HighBoundaryDateMonth" testing="highBoundary"><expression>@2014.highBoundary(6)</expression><output type="dateTime">@2014-12</output></test>
 		<test name="HighBoundaryDateTimeMillisecond1" testing="highBoundary"><expression>@2014-01-01T08.highBoundary(17)</expression><output type="dateTime">@2014-01-01T08:00:59.999-12:00</output></test> <!-- because T08 is not legal in FHIR - must be converted to 08:00 internally first -->

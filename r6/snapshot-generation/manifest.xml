@@ -354,6 +354,28 @@
   <test gen="true" id="pat-no-defn" debug="false" description="ElementDefinition with no definition (extension instead)"/>
   <test gen="true" id="mr-type-support" debug="false" register="mr-type-support-base" description="Duplicating must-support extensions on type"/>
   <test gen="true" id="comp-nested" debug="false" register="comp-nested-base" description="Complicated subslicing problem"/>
+  <test gen="true" id="dtreslice" register="dtreslice-base" description="Control: walking into datatype children of a new phone/work reslice preserves child constraints (Core #2738)">
+    <rule text="The reslice is required and at most one" fhirpath="fixture('dtreslice-output').snapshot.element.where(id = 'Patient.telecom:phone/work').all(min = 1 and max = '1')"/>
+    <rule text="The inherited phone slice remains" fhirpath="fixture('dtreslice-output').snapshot.element.where(id = 'Patient.telecom:phone').count() = 1"/>
+    <rule text="The reslice system is phone" fhirpath="fixture('dtreslice-output').snapshot.element.where(id = 'Patient.telecom:phone/work.system').fixed = 'phone'"/>
+    <rule text="The reslice use is work" fhirpath="fixture('dtreslice-output').snapshot.element.where(id = 'Patient.telecom:phone/work.use').fixed = 'work'"/>
+    <rule text="The reslice value is required" fhirpath="fixture('dtreslice-output').snapshot.element.where(id = 'Patient.telecom:phone/work.value').min = 1"/>
+  </test>
+  <test gen="true" id="dtcontentref" register="dtcontentref-label" description="A new extension under Composition.section.section must not recurse into its already processed parent or lose child constraints (Core #2738)">
+    <rule text="The label slice occurs exactly once and is required" fhirpath="fixture('dtcontentref-output').snapshot.element.where(id = 'Composition.section:summary.section:details.extension:label').check(count() = 1, 'one label slice').all(min = 1 and max = '1' and type.profile = 'http://hl7.org/fhir/test/StructureDefinition/dtcontentref-label')"/>
+    <rule text="The fixed label value and required cardinality survive datatype expansion" fhirpath="fixture('dtcontentref-output').snapshot.element.where(id = 'Composition.section:summary.section:details.extension:label.value[x]').check(count() = 1, 'one label value').all(min = 1 and fixed = 'Nested section label')"/>
+    <rule text="The simple label extension prohibits nested extensions" fhirpath="fixture('dtcontentref-output').snapshot.element.where(id = 'Composition.section:summary.section:details.extension:label.extension').max = '0'"/>
+    <rule text="The summary title is retained" fhirpath="fixture('dtcontentref-output').snapshot.element.where(id = 'Composition.section:summary.title').fixed = 'Summary'"/>
+    <rule text="The details title is retained" fhirpath="fixture('dtcontentref-output').snapshot.element.where(id = 'Composition.section:summary.section:details.title').fixed = 'Details'"/>
+  </test>
+  <test gen="true" id="dtredirector" register="dtcontentref-label,dtredirector-extension" description="Entering datatype children must leave a usable redirection stack for a subsequent contentReference expansion (Core #2738)">
+    <rule text="The nested extension is required and at most one" fhirpath="fixture('dtredirector-output').snapshot.element.where(id = 'Composition.section:summary.section:details.extension:label.extension').check(count() = 1, 'one nested extension').all(min = 1 and max = '1')"/>
+    <rule text="Further nested extensions are prohibited" fhirpath="fixture('dtredirector-output').snapshot.element.where(id = 'Composition.section:summary.section:details.extension:label.extension.extension').max = '0'"/>
+    <rule text="The nested extension URL is retained" fhirpath="fixture('dtredirector-output').snapshot.element.where(id = 'Composition.section:summary.section:details.extension:label.extension.url').fixed = 'child'"/>
+    <rule text="The required nested value is retained" fhirpath="fixture('dtredirector-output').snapshot.element.where(id = 'Composition.section:summary.section:details.extension:label.extension.value[x]').check(count() = 1, 'one nested value').all(min = 1 and fixed = 'Nested extension value')"/>
+    <rule text="The summary title is retained" fhirpath="fixture('dtredirector-output').snapshot.element.where(id = 'Composition.section:summary.title').fixed = 'Summary'"/>
+    <rule text="The details title is retained" fhirpath="fixture('dtredirector-output').snapshot.element.where(id = 'Composition.section:summary.section:details.title').fixed = 'Details'"/>
+  </test>
   <test gen="true" id="es-xver" debug="true" description="ContentReference profile created an illegal path"/>
   <test gen="true" id="xt-logical" debug="true" register="xt-logical-base" description="Logical Model specialization that produced elements out of order"/>
   <test gen="true" id="oblbinding" debug="false" register="oblbinding-obligations" description="additional bindings and obligations inherited from an obligation profile (#2593, #2602)">

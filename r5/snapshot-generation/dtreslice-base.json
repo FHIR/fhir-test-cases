@@ -1,0 +1,54 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "dtreslice-base",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/dtreslice-base",
+  "name": "DtresliceBase",
+  "status": "draft",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "derivation": "constraint",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient",
+        "path": "Patient",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Patient.telecom",
+        "path": "Patient.telecom",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "ContactPoint"
+          }
+        ],
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Patient.telecom:phone",
+        "path": "Patient.telecom",
+        "min": 0,
+        "max": "*",
+        "sliceName": "phone",
+        "type": [
+          {
+            "code": "ContactPoint"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -13508,6 +13508,161 @@
       "java": "java/R5.mv-src-subsumption-cant-tell-base.json"
     },
     {
+      "name": "viewdefinition-profile-definition",
+      "file": "viewdefinition-profile-definition.json",
+      "module": "profile",
+      "tags": ["additional-resource"],
+      "description": "A ViewDefinition validated against the ShareableViewDefinition profile: resourceDefinition names ViewDefinition, the additional resource that the profile constrains, not the profile, so it is valid",
+      "version": "5.0",
+      "packages": ["hl7.fhir.uv.sql-on-fhir#3.0.0-ballot"],
+      "java": "java/R5.viewdefinition-profile-definition-base.json",
+      "profile": {
+        "source": "http://hl7.org/fhir/uv/sql-on-fhir/StructureDefinition/ShareableViewDefinition",
+        "java": "java/R5.viewdefinition-profile-definition-profile.json"
+      }
+    },
+    {
+      "name": "viewdefinition-profile-definition-wrong",
+      "file": "viewdefinition-profile-definition-wrong.json",
+      "module": "profile",
+      "tags": ["additional-resource"],
+      "description": "A ViewDefinition validated against the ShareableViewDefinition profile, with the profile in resourceDefinition: it is reported as the wrong value, in the base and in the profile validation",
+      "version": "5.0",
+      "packages": ["hl7.fhir.uv.sql-on-fhir#3.0.0-ballot"],
+      "java": "java/R5.viewdefinition-profile-definition-wrong-base.json",
+      "profile": {
+        "source": "http://hl7.org/fhir/uv/sql-on-fhir/StructureDefinition/ShareableViewDefinition",
+        "java": "java/R5.viewdefinition-profile-definition-wrong-profile.json"
+      }
+    },
+    {
+      "name": "viewdefinition-profile-definition-absent",
+      "file": "viewdefinition-profile-definition-absent.json",
+      "module": "profile",
+      "tags": ["additional-resource"],
+      "description": "A ViewDefinition with no resourceDefinition, validated against the ShareableViewDefinition profile: the error names ViewDefinition, not the profile",
+      "version": "5.0",
+      "packages": ["hl7.fhir.uv.sql-on-fhir#3.0.0-ballot"],
+      "java": "java/R5.viewdefinition-profile-definition-absent-base.json",
+      "profile": {
+        "source": "http://hl7.org/fhir/uv/sql-on-fhir/StructureDefinition/ShareableViewDefinition",
+        "java": "java/R5.viewdefinition-profile-definition-absent-profile.json"
+      }
+    },
+    {
+      "name": "viewdefinition-profile-definition-derived",
+      "file": "viewdefinition-profile-definition-derived.json",
+      "module": "profile",
+      "tags": ["additional-resource"],
+      "description": "A ViewDefinition validated against a profile on ShareableViewDefinition: resourceDefinition is checked against ViewDefinition, two steps up the baseDefinition chain",
+      "version": "5.0",
+      "packages": ["hl7.fhir.uv.sql-on-fhir#3.0.0-ballot"],
+      "java": "java/R5.viewdefinition-profile-definition-derived-base.json",
+      "profile": {
+        "source": "viewdefinition-derived-profile.json",
+        "java": "java/R5.viewdefinition-profile-definition-derived-profile.json"
+      }
+    },
+    {
+      "name": "patient-resourcedefinition",
+      "file": "patient-resourcedefinition.json",
+      "module": "profile",
+      "tags": ["additional-resource"],
+      "description": "A Patient (not an additional resource) with a resourceDefinition naming a Patient profile, validated against that profile: the value is compared with the Patient definition, not the profile",
+      "version": "5.0",
+      "java": "java/R5.patient-resourcedefinition-base.json",
+      "profile": {
+        "source": "patient-resourcedefinition-profile.json",
+        "java": "java/R5.patient-resourcedefinition-profile.json"
+      }
+    },
+    {
+      "name": "sd-canonical-implements",
+      "file": "sd-canonical-implements.json",
+      "module": "sd",
+      "tags": ["implements"],
+      "description": "A canonical element may target ViewDefinition, which implements MetadataResource, which implements CanonicalResource",
+      "version": "5.0",
+      "packages": ["hl7.fhir.uv.sql-on-fhir#3.0.0-ballot"],
+      "java": "java/R5.sd-canonical-implements-base.json"
+    },
+    {
+      "name": "sd-canonical-implements-multiple",
+      "file": "sd-canonical-implements-multiple.json",
+      "module": "sd",
+      "tags": ["implements"],
+      "description": "A canonical element may target a resource that implements more than one interface, when one of them that is not the first is a canonical resource",
+      "version": "5.0",
+      "supporting": ["sd-canonical-implements-multiple-interface.json", "sd-canonical-implements-multiple-target.json"],
+      "java": "java/R5.sd-canonical-implements-multiple-base.json"
+    },
+    {
+      "name": "sd-canonical-implements-wrong-target",
+      "file": "sd-canonical-implements-wrong-target.json",
+      "module": "sd",
+      "tags": ["implements"],
+      "description": "A canonical element may not target Patient, which is not a canonical resource",
+      "version": "5.0",
+      "java": "java/R5.sd-canonical-implements-wrong-target-base.json"
+    },
+    {
+      "name": "sd-canonical-implements-not-canonical",
+      "file": "sd-canonical-implements-not-canonical.json",
+      "module": "sd",
+      "tags": ["implements"],
+      "description": "A canonical element may not target a resource whose only implemented interface is not a canonical resource",
+      "version": "5.0",
+      "supporting": ["sd-canonical-implements-multiple-interface.json", "sd-canonical-implements-not-canonical-target.json"],
+      "java": "java/R5.sd-canonical-implements-not-canonical-base.json"
+    },
+    {
+      "name": "sd-canonical-implements-cycle",
+      "file": "sd-canonical-implements-cycle.json",
+      "module": "sd",
+      "tags": ["implements"],
+      "description": "A canonical element may not target a resource whose implemented interfaces form a cycle without reaching CanonicalResource (and checking it terminates)",
+      "version": "5.0",
+      "supporting": ["sd-canonical-implements-cycle-a.json", "sd-canonical-implements-cycle-b.json", "sd-canonical-implements-cycle-target.json"],
+      "java": "java/R5.sd-canonical-implements-cycle-base.json"
+    },
+    {
+      "name": "cs-classified-with-no-version-needed",
+      "file": "cs-classified-with-no-version-needed.json",
+      "module": "tx",
+      "tags": ["classified-with"],
+      "description": "CodeSystem with hierarchyMeaning = classified-with and no versionNeeded: warning",
+      "version": "5.0",
+      "java": "java/R5.cs-classified-with-no-version-needed-base.json"
+    },
+    {
+      "name": "cs-classified-with-version-needed-false",
+      "file": "cs-classified-with-version-needed-false.json",
+      "module": "tx",
+      "tags": ["classified-with"],
+      "description": "CodeSystem with hierarchyMeaning = classified-with and versionNeeded = false: warning",
+      "version": "5.0",
+      "java": "java/R5.cs-classified-with-version-needed-false-base.json"
+    },
+    {
+      "name": "cs-classified-with-version-needed",
+      "file": "cs-classified-with-version-needed.json",
+      "module": "tx",
+      "tags": ["classified-with"],
+      "description": "CodeSystem with hierarchyMeaning = classified-with and versionNeeded = true: no issues",
+      "version": "5.0",
+      "java": "java/R5.cs-classified-with-version-needed-base.json"
+    },
+    {
+      "name": "sd-xml-namespace",
+      "file": "sd-xml-namespace.json",
+      "module": "sd",
+      "tags": ["xml-namespace"],
+      "suppress": ["StructureDefinition/elementdefinition-namespace|"],
+      "description": "The values of the xml-namespace extension (and of the older elementdefinition-namespace extension) are XML namespace names, including the special value noNamespace, not references to definitions: they are not checked for resolution",
+      "version": "4.0",
+      "java": "java/R4.sd-xml-namespace-base.json"
+    },
+    {
       "name": "zzz",
       "file": "zzz.json",
       "description": "hack for close ups",
