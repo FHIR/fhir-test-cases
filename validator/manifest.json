@@ -13725,6 +13725,160 @@
       "java": "java/R5.content-reference-profile-sd-unresolvable-fragment-base.json"
     },
     {
+      "name": "content-reference-profile/bundle-alternative-guides",
+      "file": "content-reference-profile/bundle-alternative-guides.json",
+      "version": "5.0",
+      "tags": [
+        "content-reference-profile"
+      ],
+      "no-tx": "true",
+      "description": "Two alternative profiles on Bundle.entry.resource, guide and guide-other, both reference reusable-section for the subsections, and the subsection of the entry has no title. No candidate matches, and the title error is reported under each candidate: the failed check under the first profile is not taken as a completed check when the same parsed element is validated again against the same referenced element under the second profile.",
+      "profiles": [
+        "content-reference-profile/StructureDefinition-reusable-section.json",
+        "content-reference-profile/StructureDefinition-guide.json",
+        "content-reference-profile/StructureDefinition-guide-other.json"
+      ],
+      "profile": {
+        "source": "content-reference-profile/StructureDefinition-bundle-alternative-guides.json",
+        "java": "java/R5.content-reference-profile-bundle-alternative-guides-profile.json"
+      },
+      "module": "profile",
+      "java": "java/R5.content-reference-profile-bundle-alternative-guides-base.json"
+    },
+    {
+      "name": "content-reference-profile/cyclic-valid",
+      "file": "content-reference-profile/composition-valid.json",
+      "version": "5.0",
+      "tags": [
+        "content-reference-profile"
+      ],
+      "no-tx": "true",
+      "description": "Reference cycle: guide-cyclic lets section.section reference Composition.section of reusable-section-cyclic, which references Composition.section.section of guide-cyclic back, so each element below a top-level section is defined by both profiles. A titled subsection without entry: no error, and the validation terminates.",
+      "profiles": [
+        "content-reference-profile/StructureDefinition-reusable-section-cyclic.json"
+      ],
+      "profile": {
+        "source": "content-reference-profile/StructureDefinition-guide-cyclic.json",
+        "java": "java/R5.content-reference-profile-cyclic-valid-profile.json"
+      },
+      "module": "profile",
+      "java": "java/R5.content-reference-profile-cyclic-valid-base.json"
+    },
+    {
+      "name": "content-reference-profile/cyclic-missing-title",
+      "file": "content-reference-profile/composition-missing-title.json",
+      "version": "5.0",
+      "tags": [
+        "content-reference-profile"
+      ],
+      "no-tx": "true",
+      "description": "Reference cycle: guide-cyclic lets section.section reference Composition.section of reusable-section-cyclic, which references Composition.section.section of guide-cyclic back, so each element below a top-level section is defined by both profiles. The subsection and its subsection lack the title that reusable-section-cyclic requires: one error per level and nothing else.",
+      "profiles": [
+        "content-reference-profile/StructureDefinition-reusable-section-cyclic.json"
+      ],
+      "profile": {
+        "source": "content-reference-profile/StructureDefinition-guide-cyclic.json",
+        "java": "java/R5.content-reference-profile-cyclic-missing-title-profile.json"
+      },
+      "module": "profile",
+      "java": "java/R5.content-reference-profile-cyclic-missing-title-base.json"
+    },
+    {
+      "name": "content-reference-profile/cyclic-entry-in-subsection",
+      "file": "content-reference-profile/composition-entry-in-subsection.json",
+      "version": "5.0",
+      "tags": [
+        "content-reference-profile"
+      ],
+      "no-tx": "true",
+      "description": "Reference cycle: guide-cyclic lets section.section reference Composition.section of reusable-section-cyclic, which references Composition.section.section of guide-cyclic back, so each element below a top-level section is defined by both profiles. The subsection has an entry, which guide-cyclic prohibits: one error, from the other profile of the cycle.",
+      "profiles": [
+        "content-reference-profile/StructureDefinition-reusable-section-cyclic.json"
+      ],
+      "profile": {
+        "source": "content-reference-profile/StructureDefinition-guide-cyclic.json",
+        "java": "java/R5.content-reference-profile-cyclic-entry-in-subsection-profile.json"
+      },
+      "module": "profile",
+      "java": "java/R5.content-reference-profile-cyclic-entry-in-subsection-base.json"
+    },
+    {
+      "name": "content-reference-profile/cyclic-missing-title-with-entry",
+      "file": "content-reference-profile/composition-missing-title-with-entry.json",
+      "version": "5.0",
+      "tags": [
+        "content-reference-profile"
+      ],
+      "no-tx": "true",
+      "description": "Reference cycle: guide-cyclic lets section.section reference Composition.section of reusable-section-cyclic, which references Composition.section.section of guide-cyclic back, so each element below a top-level section is defined by both profiles. The subsection lacks the title and has an entry: one error from each profile of the cycle.",
+      "profiles": [
+        "content-reference-profile/StructureDefinition-reusable-section-cyclic.json"
+      ],
+      "profile": {
+        "source": "content-reference-profile/StructureDefinition-guide-cyclic.json",
+        "java": "java/R5.content-reference-profile-cyclic-missing-title-with-entry-profile.json"
+      },
+      "module": "profile",
+      "java": "java/R5.content-reference-profile-cyclic-missing-title-with-entry-base.json"
+    },
+    {
+      "name": "content-reference-profile/sd-differing-references",
+      "file": "content-reference-profile/StructureDefinition-differing-references.json",
+      "version": "5.0",
+      "tags": [
+        "content-reference-profile"
+      ],
+      "no-tx": "true",
+      "description": "Profile validation with a stored snapshot: the differential references Questionnaire.item, the snapshot element of the same id references Questionnaire.missing. The differential reference does not hide the snapshot reference: one error, on the extension in the snapshot. Messages about the type codes of the stored snapshot (no terminology server) and about its experimental bindings are suppressed.",
+      "profiles": [
+        "content-reference-profile/StructureDefinition-contentReferenceProfile.json"
+      ],
+            "suppress": [
+        "could not be validated in the absence of a terminology server",
+        "which is experimental, but this structure is not labeled as experimental"
+      ],
+"module": "sd",
+      "java": "java/R5.content-reference-profile-sd-differing-references-base.json"
+    },
+    {
+      "name": "content-reference-profile/sd-repeated-reference",
+      "file": "content-reference-profile/StructureDefinition-repeated-reference.json",
+      "version": "5.0",
+      "tags": [
+        "content-reference-profile"
+      ],
+      "no-tx": "true",
+      "description": "Profile validation with a stored snapshot: the differential and the snapshot element of the same id carry the same reference to Questionnaire.missing. One error, on the extension in the differential; the identical snapshot value is not reported again. Messages about the type codes of the stored snapshot (no terminology server) and about its experimental bindings are suppressed.",
+      "profiles": [
+        "content-reference-profile/StructureDefinition-contentReferenceProfile.json"
+      ],
+            "suppress": [
+        "could not be validated in the absence of a terminology server",
+        "which is experimental, but this structure is not labeled as experimental"
+      ],
+"module": "sd",
+      "java": "java/R5.content-reference-profile-sd-repeated-reference-base.json"
+    },
+    {
+      "name": "content-reference-profile/sd-snapshot-only-reference",
+      "file": "content-reference-profile/StructureDefinition-snapshot-only-reference.json",
+      "version": "5.0",
+      "tags": [
+        "content-reference-profile"
+      ],
+      "no-tx": "true",
+      "description": "Profile validation with a stored snapshot: only the snapshot references Questionnaire.missing, the differential element has no extension. One error, on the extension in the snapshot. Messages about the type codes of the stored snapshot (no terminology server) and about its experimental bindings are suppressed.",
+      "profiles": [
+        "content-reference-profile/StructureDefinition-contentReferenceProfile.json"
+      ],
+            "suppress": [
+        "could not be validated in the absence of a terminology server",
+        "which is experimental, but this structure is not labeled as experimental"
+      ],
+"module": "sd",
+      "java": "java/R5.content-reference-profile-sd-snapshot-only-reference-base.json"
+    },
+    {
       "name": "viewdefinition-profile-definition",
       "file": "viewdefinition-profile-definition.json",
       "module": "profile",
