@@ -110,6 +110,11 @@
 				<xs:documentation>A reference to area of the specification under that the tests in this group cover.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="mode" type="ModeType">
+			<xs:annotation>
+				<xs:documentation>The mode for all the tests in this group, unless a test gives its own. A group with mode 'custom' contains tests of functions that are not part of FHIRPath: engines run them only if they implement those functions (see the group's description and notes).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 	</xs:complexType>
 	<xs:complexType name="Test">
 		<xs:sequence>
@@ -265,6 +270,9 @@
 			</xs:enumeration>
 			<xs:enumeration value="cda">
 				<xs:annotation><xs:documentation>Indicates the test is evaluating a CDA document, as opposed to a FHIR resource.</xs:documentation></xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="custom">
+				<xs:annotation><xs:documentation>Indicates the tests exercise functions that are not part of FHIRPath or of the FHIR specification's additional FHIRPath functions, but an extension provided by a particular engine (as the group's description says). Other engines should skip them unless they choose to implement the same functions. Usually given on a group.</xs:documentation></xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="tx">
 				<xs:annotation><xs:documentation>Indicates the test is expected to have access to the %terminologies environment variable, allowing access to terminology services as described in the FHIRPath topic in the FHIR specification.</xs:documentation></xs:annotation>

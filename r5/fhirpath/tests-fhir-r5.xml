@@ -23,6 +23,7 @@
   appointment-examplereq.json
   diagnosticreport-eric.json
   patient-container-example.json
+  bundle-document-ips.json (for the documentFunctions group, which is mode="custom")
 
   The test schema for this test suite is maintained in the FHIRPath specification repository:
   https://github.com/HL7/FHIRPath/blob/master/tests/testSchema.xsd
@@ -2101,5 +2102,67 @@ Any text enclosed within is ignored
         <expression>($this as dateTime).toString().length() >= 10</expression>
         <output type="boolean">true</output>
       </test>
+	</group>
+	<group name="documentFunctions" mode="custom" description="Functions for FHIR documents: section(), entry(), entryIn(), resources() and resourcesIn(). These are not part of FHIRPath, nor of the FHIR specification's additional FHIRPath functions - they are an extension of the HL7 Java reference implementation (org.hl7.fhir.core), so other engines run them only if they choose to implement the functions">
+		<notes>
+  section(system, code [, min, max]): on documents (Bundles) or Compositions (a document's Composition is its first Composition entry), the
+    Composition's sections, nested ones too, whose code has a coding with that system and code.
+  entry(system, code [, min, max]): on sections, their entries (resolved in the document) whose code has a coding with that system and code.
+  entryIn(valueSet [, min, max]): as entry(), with a code in the value set (a canonical, with |version or not).
+  resources(system, code [, type]): on documents, or anything in one, every resource in the document whose code has a coding with
+    that system and code (and of that type, when one is given).
+  resourcesIn(valueSet [, type]): as resources(), with a code in the value set.
+
+  A resource's code is its code, vaccineCode or medication (a CodeableConcept, or a CodeableReference's concept).
+  min and max are both given or neither; max may be '*'. When the number found for an input item is outside min..max, that item adds
+  nothing to the output - it is not an error. A value set that can't be found, or a membership that can't be determined, is an error.
+  References are resolved by fullUrl (absolute; relative, against the base of the Composition's fullUrl, or else by type and id),
+  and '#id' as a resource contained in the Composition; one that can't be resolved is left out.
+		</notes>
+		<test name="testSection1" testing="section" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').count()</expression><output type="integer">1</output></test>
+		<test name="testSection2" testing="section" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').title</expression><output type="string">Problems</output></test>
+		<test name="testSection3" testing="section" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4', 1, 1).exists()</expression><output type="boolean">true</output></test>
+		<test name="testSection4" testing="section" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4', 0, '*').exists()</expression><output type="boolean">true</output></test>
+		<test name="testSection5" testing="section" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4', 2, '*').exists()</expression><output type="boolean">false</output></test>
+		<test name="testSection6" testing="section" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11348-0', 0, 0).empty()</expression><output type="boolean">true</output></test>
+		<test name="testSection7" testing="section" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '8716-3').title</expression><output type="string">Vital signs</output></test>
+		<test name="testSection8" testing="section" inputfile="bundle-document-ips.json"><expression>Bundle.entry.resource.ofType(Composition).section('http://loinc.org', '48765-2').count()</expression><output type="integer">1</output></test>
+		<test name="testSection9" testing="section" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://snomed.info/sct', '11450-4').empty()</expression><output type="boolean">true</output></test>
+		<test name="testSection10" testing="section" inputfile="bundle-document-ips.json"><expression>Bundle.entry.resource.ofType(Patient).section('http://loinc.org', '11450-4').empty()</expression><output type="boolean">true</output></test>
+		<test name="testSection11" testing="section" inputfile="bundle-document-ips.json"><expression invalid="execution">Bundle.section('http://loinc.org', '11450-4', 2, 1)</expression></test>
+		<test name="testSection12" testing="section" inputfile="bundle-document-ips.json"><expression invalid="execution">Bundle.section('http://loinc.org', '11450-4', 1, 'many')</expression></test>
+		<test name="testSection13" testing="section" inputfile="bundle-document-ips.json"><expression invalid="syntax">Bundle.section('http://loinc.org', '11450-4', 1)</expression></test>
+		<test name="testEntry1" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct', '38341003').id</expression><output type="id">c1</output></test>
+		<test name="testEntry2" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct', '44054006').id</expression><output type="id">c2</output></test>
+		<test name="testEntry3" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct', '195967001').empty()</expression><output type="boolean">true</output></test>
+		<test name="testEntry4" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '10160-0').entry('http://snomed.info/sct', '108774000').id</expression><output type="id">m1</output></test>
+		<test name="testEntry5" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '10160-0').entry('http://snomed.info/sct', '387207008').id</expression><output type="id">med2</output></test>
+		<test name="testEntry6" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11369-6').entry('http://snomed.info/sct', '871875004').id</expression><output type="id">i1</output></test>
+		<test name="testEntry7" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '30954-2').entry('http://loinc.org', '8480-6').empty()</expression><output type="boolean">true</output></test>
+		<test name="testEntry8" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '8716-3').entry('http://loinc.org', '8480-6').id</expression><output type="id">o1</output></test>
+		<test name="testEntry9" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct', '38341003', 1, 1).exists()</expression><output type="boolean">true</output></test>
+		<test name="testEntry10" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct', '38341003', 2, '*').exists()</expression><output type="boolean">false</output></test>
+		<test name="testEntry11" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '48765-2').entry('http://snomed.info/sct', '764146007').patient.reference</expression><output type="string">urn:uuid:5b6a5a3e-46f3-4a4e-9c3b-8f0e1b2d6a03</output></test>
+		<test name="testEntry12" testing="entry" inputfile="bundle-document-ips.json"><expression invalid="syntax">Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct')</expression></test>
+		<test name="testEntryIn1" testing="entryIn" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entryIn('http://hl7.org/fhir/ValueSet/data-absent-reason').id</expression><output type="id">c4</output></test>
+		<test name="testEntryIn2" testing="entryIn" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entryIn('http://hl7.org/fhir/ValueSet/data-absent-reason', 1, 1).exists()</expression><output type="boolean">true</output></test>
+		<test name="testEntryIn3" testing="entryIn" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entryIn('http://hl7.org/fhir/ValueSet/data-absent-reason', 0, 0).exists()</expression><output type="boolean">false</output></test>
+		<test name="testEntryIn4" testing="entryIn" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '48765-2').entryIn('http://hl7.org/fhir/ValueSet/data-absent-reason').empty()</expression><output type="boolean">true</output></test>
+		<test name="testEntryIn5" testing="entryIn" inputfile="bundle-document-ips.json"><expression invalid="execution">Bundle.section('http://loinc.org', '11450-4').entryIn('http://example.org/fhir/ValueSet/not-a-value-set')</expression></test>
+		<test name="testEntryIn6" testing="entryIn" inputfile="bundle-document-ips.json"><expression invalid="execution">Bundle.section('http://loinc.org', '11450-4').entryIn('not a value set')</expression></test>
+		<test name="testResources1" testing="resources" inputfile="bundle-document-ips.json"><expression>Bundle.resources('http://snomed.info/sct', '195967001').id</expression><output type="id">c3</output></test>
+		<test name="testResources2" testing="resources" inputfile="bundle-document-ips.json"><expression>Bundle.resources('http://snomed.info/sct', '38341003', 'Condition').id</expression><output type="id">c1</output></test>
+		<test name="testResources3" testing="resources" inputfile="bundle-document-ips.json"><expression>Bundle.resources('http://snomed.info/sct', '38341003', 'Observation').empty()</expression><output type="boolean">true</output></test>
+		<test name="testResources4" testing="resources" inputfile="bundle-document-ips.json"><expression>Bundle.entry.resource.ofType(Composition).resources('http://snomed.info/sct', '108774000').id</expression><output type="id">m1</output></test>
+		<test name="testResources5" testing="resources" inputfile="bundle-document-ips.json"><expression>Bundle.resources('http://snomed.info/sct', '871875004').id</expression><output type="id">i1</output></test>
+		<test name="testResources6" testing="resources" inputfile="bundle-document-ips.json"><expression>Bundle.resources('http://snomed.info/sct', '387207008').empty()</expression><output type="boolean">true</output></test>
+		<test name="testResources7" testing="resources" inputfile="bundle-document-ips.json"><expression invalid="execution">Bundle.resources('http://snomed.info/sct', '38341003', 'condition')</expression></test>
+		<test name="testResourcesIn1" testing="resourcesIn" inputfile="bundle-document-ips.json"><expression>Bundle.resourcesIn('http://hl7.org/fhir/ValueSet/data-absent-reason').id</expression><output type="id">c4</output></test>
+		<test name="testResourcesIn2" testing="resourcesIn" inputfile="bundle-document-ips.json"><expression>Bundle.resourcesIn('http://hl7.org/fhir/ValueSet/data-absent-reason', 'Observation').empty()</expression><output type="boolean">true</output></test>
+		<test name="testResourcesIn3" testing="resourcesIn" inputfile="bundle-document-ips.json"><expression invalid="execution">Bundle.resourcesIn('http://example.org/fhir/ValueSet/not-a-value-set')</expression></test>
+		<test name="testDocumentElement1" testing="entry" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct', '44054006').id = 'c2'</expression><output type="boolean">true</output></test>
+		<test name="testDocumentElement2" testing="resources" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.resources('http://snomed.info/sct', '871875004').id = 'i1'</expression><output type="boolean">true</output></test>
+		<test name="testDocumentElement3" testing="entryIn" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entryIn('http://hl7.org/fhir/ValueSet/data-absent-reason').id = 'c4'</expression><output type="boolean">true</output></test>
+		<test name="testDocumentElement4" testing="entry" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '10160-0').entry('http://snomed.info/sct', '387207008').id = 'med2'</expression><output type="boolean">true</output></test>
 	</group>
 </tests>

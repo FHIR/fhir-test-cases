@@ -1,0 +1,53 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "ips-clinical-profile",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/ips-clinical-profile",
+  "name": "TestProfile",
+  "title": "Test Profile",
+  "status": "active",
+  "date": "2026-10-23T00:50:39.266Z",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Bundle",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Bundle",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Bundle",
+        "path": "Bundle",
+        "constraint": [
+          {
+            "key": "cp-1",
+            "severity": "error",
+            "human": "Must have a problem list",
+            "expression": "Bundle.section('http://loinc.org', '11450-4').exists()",
+            "source": "http://hl7.org/fhir/test/StructureDefinition/ips-clinical-profile"
+          },
+          {
+            "key": "cp-2",
+            "severity": "error",
+            "human": "Must have a nut allergy",
+            "expression": "Bundle.section('http://loinc.org', '48765-2').entryIn('http://phinvads.cdc.gov/fhir/ValueSet/2.16.840.1.113883.3.88.12.3221.6.2').exists()",
+            "source": "http://hl7.org/fhir/test/StructureDefinition/ips-clinical-profile"
+          },
+          {
+            "key": "cp-4",
+            "severity": "error",
+            "human": "Vital signs need performer",
+            "expression": "Bundle.resourcesIn('http://hl7.org/fhir/ValueSet/observation-vitalsignresult').performer.exists()",
+            "source": "http://hl7.org/fhir/test/StructureDefinition/ips-clinical-profile"
+          },
+          {
+            "key": "cp-3",
+            "severity": "error",
+            "human": "some other rule",
+            "expression": "exists()",
+            "source": "http://hl7.org/fhir/test/StructureDefinition/ips-clinical-profile"
+          }
+        ]
+      }
+    ]
+  }
+}
