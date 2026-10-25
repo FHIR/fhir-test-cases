@@ -2115,8 +2115,10 @@ Any text enclosed within is ignored
   A resource's code is its code, vaccineCode or medication (a CodeableConcept, or a CodeableReference's concept).
   min and max are both given or neither; max may be '*'. When the number found for an input item is outside min..max, that item adds
   nothing to the output - it is not an error. A value set that can't be found, or a membership that can't be determined, is an error.
-  References are resolved by fullUrl (absolute; relative, against the base of the Composition's fullUrl, or else by type and id),
-  and '#id' as a resource contained in the Composition; one that can't be resolved is left out.
+  References are resolved in the document as the validator resolves references in a Bundle: an absolute reference by fullUrl, a
+  relative one (Type/id) against the base of the Composition's fullUrl when that is a RESTful URL (before R4, also by type and id),
+  and '#id' as a resource contained in the Composition. A fragment on a reference is ignored, and more than one match is no match.
+  One that can't be resolved is left out.
 		</notes>
 		<test name="testSection1" testing="section" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').count()</expression><output type="integer">1</output></test>
 		<test name="testSection2" testing="section" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').title</expression><output type="string">Problems</output></test>
@@ -2132,7 +2134,7 @@ Any text enclosed within is ignored
 		<test name="testSection12" testing="section" inputfile="bundle-document-ips.json"><expression invalid="execution">Bundle.section('http://loinc.org', '11450-4', 1, 'many')</expression></test>
 		<test name="testSection13" testing="section" inputfile="bundle-document-ips.json"><expression invalid="syntax">Bundle.section('http://loinc.org', '11450-4', 1)</expression></test>
 		<test name="testEntry1" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct', '38341003').id</expression><output type="id">c1</output></test>
-		<test name="testEntry2" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct', '44054006').id</expression><output type="id">c2</output></test>
+		<test name="testEntry2" testing="entry" inputfile="bundle-document-ips.json" description="Condition/c2 is a relative reference, and the Composition's fullUrl is not a RESTful URL, so it doesn't resolve - even though there is an entry whose fullUrl ends with Condition/c2"><expression>Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct', '44054006').empty()</expression><output type="boolean">true</output></test>
 		<test name="testEntry3" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct', '195967001').empty()</expression><output type="boolean">true</output></test>
 		<test name="testEntry4" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '10160-0').entry('http://snomed.info/sct', '108774000').id</expression><output type="id">m1</output></test>
 		<test name="testEntry5" testing="entry" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '10160-0').entry('http://snomed.info/sct', '387207008').id</expression><output type="id">med2</output></test>
@@ -2159,7 +2161,7 @@ Any text enclosed within is ignored
 		<test name="testResourcesIn1" testing="resourcesIn" inputfile="bundle-document-ips.json"><expression>Bundle.resourcesIn('http://hl7.org/fhir/ValueSet/data-absent-reason').id</expression><output type="id">c4</output></test>
 		<test name="testResourcesIn2" testing="resourcesIn" inputfile="bundle-document-ips.json"><expression>Bundle.resourcesIn('http://hl7.org/fhir/ValueSet/data-absent-reason', 'Observation').empty()</expression><output type="boolean">true</output></test>
 		<test name="testResourcesIn3" testing="resourcesIn" inputfile="bundle-document-ips.json"><expression invalid="execution">Bundle.resourcesIn('http://example.org/fhir/ValueSet/not-a-value-set')</expression></test>
-		<test name="testDocumentElement1" testing="entry" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct', '44054006').id = 'c2'</expression><output type="boolean">true</output></test>
+		<test name="testDocumentElement1" testing="entry" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct', '38341003').id = 'c1'</expression><output type="boolean">true</output></test>
 		<test name="testDocumentElement2" testing="resources" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.resources('http://snomed.info/sct', '871875004').id = 'i1'</expression><output type="boolean">true</output></test>
 		<test name="testDocumentElement3" testing="entryIn" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entryIn('http://hl7.org/fhir/ValueSet/data-absent-reason').id = 'c4'</expression><output type="boolean">true</output></test>
 		<test name="testDocumentElement4" testing="entry" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '10160-0').entry('http://snomed.info/sct', '387207008').id = 'med2'</expression><output type="boolean">true</output></test>
