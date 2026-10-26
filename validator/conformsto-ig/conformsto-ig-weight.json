@@ -1,0 +1,46 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "conformsto-ig-weight",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/conformsto-ig-weight",
+  "version": "0.1.0",
+  "name": "ConformstoIgWeight",
+  "title": "Body weight (pattern on code)",
+  "status": "active",
+  "description": "Selected by a pattern on Observation.code: the value must be a Quantity",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation",
+        "path": "Observation"
+      },
+      {
+        "id": "Observation.code",
+        "path": "Observation.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "29463-7"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.value[x]",
+        "path": "Observation.value[x]",
+        "min": 1,
+        "type": [
+          {
+            "code": "Quantity"
+          }
+        ]
+      }
+    ]
+  }
+}

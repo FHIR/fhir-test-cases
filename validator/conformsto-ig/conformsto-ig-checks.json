@@ -1,0 +1,109 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "conformsto-ig-checks",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/conformsto-ig-checks",
+  "version": "0.1.0",
+  "name": "ConformsToIgChecks",
+  "title": "conformsTo() naming an IG",
+  "status": "active",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Bundle",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Bundle",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Bundle",
+        "path": "Bundle",
+        "constraint": [
+          {
+            "key": "ig-1",
+            "severity": "error",
+            "human": "weight-good conforms to the IG: pattern on code: meets the profile",
+            "expression": "entry.resource.where(id = 'weight-good').conformsTo('http://hl7.org/fhir/test/ImplementationGuide/conformsto-ig')"
+          },
+          {
+            "key": "ig-2",
+            "severity": "error",
+            "human": "weight-bad conforms to the IG: pattern on code: fails the profile (value is not a Quantity)",
+            "expression": "entry.resource.where(id = 'weight-bad').conformsTo('http://hl7.org/fhir/test/ImplementationGuide/conformsto-ig')"
+          },
+          {
+            "key": "ig-3",
+            "severity": "error",
+            "human": "hr-good conforms to the IG: slice fixing system and code: meets the profile",
+            "expression": "entry.resource.where(id = 'hr-good').conformsTo('http://hl7.org/fhir/test/ImplementationGuide/conformsto-ig')"
+          },
+          {
+            "key": "ig-4",
+            "severity": "error",
+            "human": "hr-bad conforms to the IG: slice fixing system and code: fails the profile (no effective)",
+            "expression": "entry.resource.where(id = 'hr-bad').conformsTo('http://hl7.org/fhir/test/ImplementationGuide/conformsto-ig')"
+          },
+          {
+            "key": "ig-5",
+            "severity": "error",
+            "human": "cond-good conforms to the IG: required binding on code: meets the profile",
+            "expression": "entry.resource.where(id = 'cond-good').conformsTo('http://hl7.org/fhir/test/ImplementationGuide/conformsto-ig')"
+          },
+          {
+            "key": "ig-6",
+            "severity": "error",
+            "human": "cond-bad conforms to the IG: required binding on code: fails the profile (no onset)",
+            "expression": "entry.resource.where(id = 'cond-bad').conformsTo('http://hl7.org/fhir/test/ImplementationGuide/conformsto-ig')"
+          },
+          {
+            "key": "ig-7",
+            "severity": "error",
+            "human": "cond-other conforms to the IG: code not in the bound value set: no profile applies",
+            "expression": "entry.resource.where(id = 'cond-other').conformsTo('http://hl7.org/fhir/test/ImplementationGuide/conformsto-ig')"
+          },
+          {
+            "key": "ig-8",
+            "severity": "error",
+            "human": "other-obs conforms to the IG: no profile applies to this code",
+            "expression": "entry.resource.where(id = 'other-obs').conformsTo('http://hl7.org/fhir/test/ImplementationGuide/conformsto-ig')"
+          },
+          {
+            "key": "ig-9",
+            "severity": "error",
+            "human": "p-good conforms to the IG: global profile: meets it",
+            "expression": "entry.resource.where(id = 'p-good').conformsTo('http://hl7.org/fhir/test/ImplementationGuide/conformsto-ig')"
+          },
+          {
+            "key": "ig-10",
+            "severity": "error",
+            "human": "p-bad conforms to the IG: global profile: fails it (no birthDate)",
+            "expression": "entry.resource.where(id = 'p-bad').conformsTo('http://hl7.org/fhir/test/ImplementationGuide/conformsto-ig')"
+          },
+          {
+            "key": "ig-11",
+            "severity": "error",
+            "human": "weight-good conforms to the IG: named by package id",
+            "expression": "entry.resource.where(id = 'weight-good').conformsTo('hl7.fhir.test.conformsto')"
+          },
+          {
+            "key": "ig-12",
+            "severity": "error",
+            "human": "weight-bad conforms to the IG: named by package id and version",
+            "expression": "entry.resource.where(id = 'weight-bad').conformsTo('hl7.fhir.test.conformsto#0.1.0')"
+          },
+          {
+            "key": "ig-13",
+            "severity": "error",
+            "human": "weight-good conforms to the IG: named by url and version",
+            "expression": "entry.resource.where(id = 'weight-good').conformsTo('http://hl7.org/fhir/test/ImplementationGuide/conformsto-ig|0.1.0')"
+          },
+          {
+            "key": "ig-14",
+            "severity": "error",
+            "human": "weight-good conforms to the IG: names neither a profile nor an IG",
+            "expression": "entry.resource.where(id = 'weight-good').conformsTo('hl7.fhir.test.not-an-ig')"
+          }
+        ]
+      }
+    ]
+  }
+}

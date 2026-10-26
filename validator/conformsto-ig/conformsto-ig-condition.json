@@ -1,0 +1,38 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "conformsto-ig-condition",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/conformsto-ig-condition",
+  "version": "0.1.0",
+  "name": "ConformstoIgCondition",
+  "title": "Condition (required binding on code)",
+  "status": "active",
+  "description": "Selected by a required binding on Condition.code: an onset is required",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Condition",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Condition",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Condition",
+        "path": "Condition"
+      },
+      {
+        "id": "Condition.code",
+        "path": "Condition.code",
+        "min": 1,
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://hl7.org/fhir/test/ValueSet/conformsto-ig-conditions"
+        }
+      },
+      {
+        "id": "Condition.onset[x]",
+        "path": "Condition.onset[x]",
+        "min": 1
+      }
+    ]
+  }
+}
