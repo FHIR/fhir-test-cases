@@ -1769,7 +1769,7 @@ Any text enclosed within is ignored
         <output type="boolean">true</output>
       </test>
 	</group>
-	<group name="documentFunctions" mode="custom" description="Functions for FHIR documents: section(), entry(), entryIn(), resources() and resourcesIn(). These are not part of FHIRPath, nor of the FHIR specification's additional FHIRPath functions - they are an extension of the HL7 Java reference implementation (org.hl7.fhir.core), so other engines run them only if they choose to implement the functions">
+	<group name="documentFunctions" mode="custom" description="Functions for FHIR documents: section(), entry(), entryIn(), resources(), resourcesIn() and sameSubject(). These are not part of FHIRPath, nor of the FHIR specification's additional FHIRPath functions - they are an extension of the HL7 Java reference implementation (org.hl7.fhir.core), so other engines run them only if they choose to implement the functions">
 		<notes>
   section(system, code [, min, max]): on documents (Bundles) or Compositions (a document's Composition is its first Composition entry), the
     Composition's sections, nested ones too, whose code has a coding with that system and code.
@@ -1778,6 +1778,10 @@ Any text enclosed within is ignored
   resources(system, code [, type]): on documents, or anything in one, every resource in the document whose code has a coding with
     that system and code (and of that type, when one is given).
   resourcesIn(valueSet [, type]): as resources(), with a code in the value set.
+  sameSubject([other]): whether the focus resource has the same subject (its subject or its patient) as other - or, without other, as the
+    Composition of the document the evaluation is on (a Bundle of type document). Empty if the focus or other isn't a single resource, either
+    has no subject (or more than one), or, without other, the evaluation isn't on a document. Otherwise true if both references are present and
+    identical strings; else if both identifiers are present and have identical system and value; otherwise false.
 
   A resource's code is its code, vaccineCode or medication (a CodeableConcept, or a CodeableReference's concept).
   min and max are both given or neither; max may be '*'. When the number found for an input item is outside min..max, that item adds
@@ -1826,9 +1830,27 @@ Any text enclosed within is ignored
 		<test name="testResourcesIn1" testing="resourcesIn" inputfile="bundle-document-ips.json"><expression>Bundle.resourcesIn('http://hl7.org/fhir/ValueSet/data-absent-reason').id</expression><output type="id">c4</output></test>
 		<test name="testResourcesIn2" testing="resourcesIn" inputfile="bundle-document-ips.json"><expression>Bundle.resourcesIn('http://hl7.org/fhir/ValueSet/data-absent-reason', 'Observation').empty()</expression><output type="boolean">true</output></test>
 		<test name="testResourcesIn3" testing="resourcesIn" inputfile="bundle-document-ips.json"><expression invalid="execution">Bundle.resourcesIn('http://example.org/fhir/ValueSet/not-a-value-set')</expression></test>
+		<test name="testSameSubject1" testing="sameSubject" inputfile="bundle-document-ips.json"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c1').sameSubject()</expression><output type="boolean">true</output></test>
+		<test name="testSameSubject2" testing="sameSubject" inputfile="bundle-document-ips.json"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c5').sameSubject()</expression><output type="boolean">false</output></test>
+		<test name="testSameSubject3" testing="sameSubject" inputfile="bundle-document-ips.json" description="patient (AllergyIntolerance), not subject"><expression>Bundle.entry.resource.ofType(AllergyIntolerance).sameSubject()</expression><output type="boolean">true</output></test>
+		<test name="testSameSubject4" testing="sameSubject" inputfile="bundle-document-ips.json"><expression>Bundle.entry.resource.ofType(Composition).sameSubject()</expression><output type="boolean">true</output></test>
+		<test name="testSameSubject5" testing="sameSubject" inputfile="bundle-document-ips.json" description="a Patient has no subject or patient"><expression>Bundle.entry.resource.ofType(Patient).first().sameSubject().empty()</expression><output type="boolean">true</output></test>
+		<test name="testSameSubject6" testing="sameSubject" inputfile="bundle-document-ips.json" description="the focus must be a single resource"><expression>Bundle.entry.resource.ofType(Condition).sameSubject().empty()</expression><output type="boolean">true</output></test>
+		<test name="testSameSubject7" testing="sameSubject" inputfile="bundle-document-ips.json"><expression>Bundle.entry.resource.ofType(Condition).all(sameSubject())</expression><output type="boolean">false</output></test>
+		<test name="testSameSubject8" testing="sameSubject" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct', '38341003').all(sameSubject())</expression><output type="boolean">true</output></test>
+		<test name="testSameSubject9" testing="sameSubject" inputfile="bundle-document-ips.json" description="subject and patient are compared"><expression>Bundle.entry.resource.ofType(Immunization).sameSubject(%resource.entry.resource.ofType(Condition).where(id = 'c1'))</expression><output type="boolean">true</output></test>
+		<test name="testSameSubject10" testing="sameSubject" inputfile="bundle-document-ips.json"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c1').sameSubject(%resource.entry.resource.ofType(Condition).where(id = 'c5'))</expression><output type="boolean">false</output></test>
+		<test name="testSameSubject11" testing="sameSubject" inputfile="bundle-document-ips.json" description="other must be a single resource"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c1').sameSubject(%resource.entry.resource.ofType(Condition)).empty()</expression><output type="boolean">true</output></test>
+		<test name="testSameSubject12" testing="sameSubject" inputfile="bundle-document-ips.json" description="identifiers are compared when neither has a reference"><expression>Bundle.entry.resource.ofType(Observation).where(id = 'o2').sameSubject(%resource.entry.resource.ofType(Observation).where(id = 'o3'))</expression><output type="boolean">true</output></test>
+		<test name="testSameSubject13" testing="sameSubject" inputfile="bundle-document-ips.json" description="the identifier systems differ"><expression>Bundle.entry.resource.ofType(Observation).where(id = 'o2').sameSubject(%resource.entry.resource.ofType(Observation).where(id = 'o4'))</expression><output type="boolean">false</output></test>
+		<test name="testSameSubject14" testing="sameSubject" inputfile="bundle-document-ips.json" description="a reference and an identifier aren't compared, even though the patient has that identifier"><expression>Bundle.entry.resource.ofType(Observation).where(id = 'o2').sameSubject()</expression><output type="boolean">false</output></test>
+		<test name="testSameSubject15" testing="sameSubject" inputfile="observation-example.xml" description="without other, the evaluation must be on a document"><expression>Observation.sameSubject().empty()</expression><output type="boolean">true</output></test>
+		<test name="testSameSubject16" testing="sameSubject" inputfile="bundle-document-ips.json"><expression invalid="syntax">Bundle.entry.resource.ofType(Condition).where(id = 'c1').sameSubject(%resource, %resource)</expression></test>
 		<test name="testDocumentElement1" testing="entry" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entry('http://snomed.info/sct', '44054006').id = 'c2'</expression><output type="boolean">true</output></test>
 		<test name="testDocumentElement2" testing="resources" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.resources('http://snomed.info/sct', '871875004').id = 'i1'</expression><output type="boolean">true</output></test>
 		<test name="testDocumentElement3" testing="entryIn" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '11450-4').entryIn('http://hl7.org/fhir/ValueSet/data-absent-reason').id = 'c4'</expression><output type="boolean">true</output></test>
 		<test name="testDocumentElement4" testing="entry" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '10160-0').entry('http://snomed.info/sct', '387207008').id = 'med2'</expression><output type="boolean">true</output></test>
+		<test name="testDocumentElement5" testing="sameSubject" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c5').sameSubject() = false</expression><output type="boolean">true</output></test>
+		<test name="testDocumentElement6" testing="sameSubject" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.entry.resource.ofType(Observation).where(id = 'o2').sameSubject(%resource.entry.resource.ofType(Observation).where(id = 'o3'))</expression><output type="boolean">true</output></test>
 	</group>
 </tests>
