@@ -920,6 +920,14 @@ Any text enclosed within is ignored
 		<test name="testEquality38" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 = @2015-02-04T11:00</expression><output type="boolean">false</output></test>
 		<test name="testEquality39" description="dateTimes with different precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00:00 = @2015-02-04T10:00</expression></test>
 		<test name="testEquality40" description="dateTimes with minute precision and an offset" inputfile="patient-example.xml"><expression>@2015-02-04T10:00-05:00 = @2015-02-04T10:00-05:00</expression><output type="boolean">true</output></test>
+		<test name="testEquality41" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>1 year = 1 years</expression><output type="boolean">true</output></test>
+		<test name="testEquality42" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>1 years = 1 year</expression><output type="boolean">true</output></test>
+		<test name="testEquality43" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>1 month = 1 months</expression><output type="boolean">true</output></test>
+		<test name="testEquality44" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year = 12 months</expression><output type="boolean">true</output></test>
+		<test name="testEquality45" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>2 years = 24 months</expression><output type="boolean">true</output></test>
+		<test name="testEquality46" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>18 months = 1.5 years</expression><output type="boolean">true</output></test>
+		<test name="testEquality47" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year = 13 months</expression><output type="boolean">false</output></test>
+		<test name="testEquality48" description="for equality, the calendar duration year and the UCUM unit mo are not comparable" inputfile="patient-example.xml"><expression>1 year = 12 'mo'</expression></test>
 	</group>
 
 	<group name="testNEquality">
@@ -950,6 +958,9 @@ Any text enclosed within is ignored
 		<test name="testNEquality25" inputfile="patient-example.xml"><expression>name.first() != 'Peter'</expression><output type="boolean">true</output></test>
 		<test name="testNEquality26" inputfile="patient-example.xml"><expression>'Peter' != name.first()</expression><output type="boolean">true</output></test>
 		<test name="testNEquality27" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 != @2015-02-04T11:00</expression><output type="boolean">true</output></test>
+		<test name="testNEquality28" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>1 year != 1 years</expression><output type="boolean">false</output></test>
+		<test name="testNEquality29" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year != 12 months</expression><output type="boolean">false</output></test>
+		<test name="testNEquality30" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year != 13 months</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testHasValue">

@@ -1109,6 +1109,14 @@ Any text enclosed within is ignored
 		<test name="testEquality38" testing="=" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 = @2015-02-04T11:00</expression><output type="boolean">false</output></test>
 		<test name="testEquality39" testing="=" description="dateTimes with different precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00:00 = @2015-02-04T10:00</expression></test>
 		<test name="testEquality40" testing="=" description="dateTimes with minute precision and an offset" inputfile="patient-example.xml"><expression>@2015-02-04T10:00-05:00 = @2015-02-04T10:00-05:00</expression><output type="boolean">true</output></test>
+		<test name="testEquality41" testing="=" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>1 year = 1 years</expression><output type="boolean">true</output></test>
+		<test name="testEquality42" testing="=" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>1 years = 1 year</expression><output type="boolean">true</output></test>
+		<test name="testEquality43" testing="=" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>1 month = 1 months</expression><output type="boolean">true</output></test>
+		<test name="testEquality44" testing="=" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year = 12 months</expression><output type="boolean">true</output></test>
+		<test name="testEquality45" testing="=" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>2 years = 24 months</expression><output type="boolean">true</output></test>
+		<test name="testEquality46" testing="=" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>18 months = 1.5 years</expression><output type="boolean">true</output></test>
+		<test name="testEquality47" testing="=" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year = 13 months</expression><output type="boolean">false</output></test>
+		<test name="testEquality48" testing="=" description="for equality, the calendar duration year and the UCUM unit mo are not comparable" inputfile="patient-example.xml"><expression>1 year = 12 'mo'</expression></test>
 	</group>
 
 	<group name="testNEquality">
@@ -1139,6 +1147,9 @@ Any text enclosed within is ignored
 		<test name="testNEquality25" testing="!=" inputfile="patient-example.xml" description="A primitive and a complex value are different types, so they are not equal"><expression>name.first() != 'Peter'</expression><output type="boolean">true</output></test>
 		<test name="testNEquality26" testing="!=" inputfile="patient-example.xml" description="A primitive and a complex value are different types, so they are not equal"><expression>'Peter' != name.first()</expression><output type="boolean">true</output></test>
 		<test name="testNEquality27" testing="!=" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 != @2015-02-04T11:00</expression><output type="boolean">true</output></test>
+		<test name="testNEquality28" testing="!=" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>1 year != 1 years</expression><output type="boolean">false</output></test>
+		<test name="testNEquality29" testing="!=" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year != 12 months</expression><output type="boolean">false</output></test>
+		<test name="testNEquality30" testing="!=" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year != 13 months</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testHasValue" description="hasValue() is true only for a primitive with a value">
