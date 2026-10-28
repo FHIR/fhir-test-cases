@@ -1251,11 +1251,12 @@ Any text enclosed within is ignored
 		<test name="testLessThanEmpty1" testing="&lt;" inputfile="patient-example.xml"><expression>1 &lt; {}</expression></test>
 		<test name="testLessThanEmpty2" testing="&lt;" inputfile="patient-example.xml"><expression>{} &lt; 1</expression></test>
 		<test name="testLessThanEmpty3" testing="&lt;" inputfile="patient-example.xml"><expression>{} &lt; {}</expression></test>
-		<test name="testLessThan29" testing="&lt;" description="calendar durations in different units are not compared by their values" inputfile="patient-example.xml"><expression>1 year &lt; 2 months</expression></test>
+		<test name="testLessThan29" testing="&lt;" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year &lt; 2 months</expression><output type="boolean">false</output></test>
 		<test name="testLessThan30" testing="&lt;" description="quantities with different dimensions can't be compared" inputfile="patient-example.xml"><expression>1 'kg' &lt; 2 'm'</expression></test>
 		<test name="testLessThan31" testing="&lt;" description="quantities with the same dimension are compared in canonical units" inputfile="patient-example.xml"><expression>1 'kg' &lt; 2000 'g'</expression><output type="boolean">true</output></test>
 		<test name="testLessThan32" testing="&lt;" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>1 year &lt; 2 years</expression><output type="boolean">true</output></test>
 		<test name="testLessThan33" testing="&lt;" description="a quantity with only unit text and a coded quantity with the same unit text" inputfile="parameters-quantity-unit-text.xml"><expression>Parameters.parameter[0].value &lt; Parameters.parameter[1].value</expression><output type="boolean">true</output></test>
+		<test name="testLessThan34" testing="&lt;" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year &lt; 13 months</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testQuantityUnitComparison" description="Comparing quantities that have no UCUM code, by unit text or the lack of a unit">
@@ -1311,6 +1312,7 @@ Any text enclosed within is ignored
 		<test name="testLessOrEqual28" testing="&lt;=" description="a calendar year and a duration in days can't be compared" inputfile="patient-example.xml"><expression>1 year &lt;= 2 days</expression></test>
 		<test name="testLessOrEqual29" testing="&lt;=" description="quantities with the same dimension are compared in canonical units" inputfile="patient-example.xml"><expression>1 'kg' &lt;= 999 'g'</expression><output type="boolean">false</output></test>
 		<test name="testLessOrEqual30" testing="&lt;=" description="a quantity with only unit text and a coded quantity with the same unit text" inputfile="parameters-quantity-unit-text.xml"><expression>Parameters.parameter[0].value &lt;= Parameters.parameter[1].value</expression><output type="boolean">true</output></test>
+		<test name="testLessOrEqual31" testing="&lt;=" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year &lt;= 12 months</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testGreatorOrEqual">
@@ -1346,6 +1348,7 @@ Any text enclosed within is ignored
 		<test name="testGreatorOrEqualEmpty3" testing="&gt;=" inputfile="patient-example.xml"><expression>{} >= {}</expression></test>
 		<test name="testGreatorOrEqual28" testing="&gt;=" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>2 years &gt;= 2 year</expression><output type="boolean">true</output></test>
 		<test name="testGreatorOrEqual29" testing="&gt;=" description="quantities with different dimensions can't be compared" inputfile="patient-example.xml"><expression>2 'kg' &gt;= 1 'm'</expression></test>
+		<test name="testGreatorOrEqual30" testing="&gt;=" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>24 months &gt;= 2 years</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testGreaterThan">
@@ -1380,8 +1383,9 @@ Any text enclosed within is ignored
 		<test name="testGreaterThanEmpty2" testing="&gt;" inputfile="patient-example.xml"><expression>{} > 1</expression></test>
 		<test name="testGreaterThanEmpty3" testing="&gt;" inputfile="patient-example.xml"><expression>{} > {}</expression></test>
 		<test name="testGreaterThan28" testing="&gt;" description="calendar durations and definite durations above seconds can't be compared" inputfile="patient-example.xml"><expression>1 year &gt; 1 'a'</expression></test>
-		<test name="testGreaterThan29" testing="&gt;" description="calendar durations in different units are not compared by their values" inputfile="patient-example.xml"><expression>1 year &gt; 2 months</expression></test>
+		<test name="testGreaterThan29" testing="&gt;" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year &gt; 2 months</expression><output type="boolean">true</output></test>
 		<test name="testGreaterThan30" testing="&gt;" description="a quantity with only unit text and a coded quantity with the same unit text" inputfile="parameters-quantity-unit-text.xml"><expression>Parameters.parameter[1].value &gt; Parameters.parameter[0].value</expression><output type="boolean">true</output></test>
+		<test name="testGreaterThan31" testing="&gt;" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>6 months &gt; 1 year</expression><output type="boolean">false</output></test>
 	</group>
 
   <group name="testCombine()">
