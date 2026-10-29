@@ -953,9 +953,9 @@ Any text enclosed within is ignored
 	</group>
 
 	<group name="testHasValue">
-		<test name="testHasValue1" inputfile="patient-example.xml"><expression>name.first().given.first().hasValue()</expression><output type="boolean">true</output></test>
-		<test name="testHasValue2" inputfile="patient-example.xml"><expression>name.first().hasValue()</expression><output type="boolean">false</output></test>
-		<test name="testHasValue3" inputfile="patient-example.xml"><expression>name.first().given.first().hasValue() and name.first() != 'Peter'</expression><output type="boolean">true</output></test>
+		<test name="testHasCodingValue1" inputfile="patient-example.xml"><expression>name.first().given.first().hasValue()</expression><output type="boolean">true</output></test>
+		<test name="testHasCodingValue2" inputfile="patient-example.xml"><expression>name.first().hasValue()</expression><output type="boolean">false</output></test>
+		<test name="testHasCodingValue3" inputfile="patient-example.xml"><expression>name.first().given.first().hasValue() and name.first() != 'Peter'</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testEquivalent">
@@ -1813,7 +1813,7 @@ Any text enclosed within is ignored
         <output type="boolean">true</output>
       </test>
 	</group>
-	<group name="documentFunctions" mode="custom" description="Functions for FHIR documents: section(), entry(), entryIn(), resources(), resourcesIn() and sameSubject(). These are not part of FHIRPath, nor of the FHIR specification's additional FHIRPath functions - they are an extension of the HL7 Java reference implementation (org.hl7.fhir.core), so other engines run them only if they choose to implement the functions">
+	<group name="documentFunctions" mode="custom" description="Functions for FHIR documents: section(), entry(), entryIn(), resources(), resourcesIn(), sameSubject() and hasCoding(). These are not part of FHIRPath, nor of the FHIR specification's additional FHIRPath functions - they are an extension of the HL7 Java reference implementation (org.hl7.fhir.core), so other engines run them only if they choose to implement the functions">
 		<notes>
   section(system, code [, min, max]): on documents (Bundles) or Compositions (a document's Composition is its first Composition entry), the
     Composition's sections, nested ones too, whose code has a coding with that system and code.
@@ -1826,6 +1826,8 @@ Any text enclosed within is ignored
     Composition of the document the evaluation is on (a Bundle of type document). Empty if the focus or other isn't a single resource, either
     has no subject (or more than one), or, without other, the evaluation isn't on a document. Otherwise true if both references are present and
     identical strings; else if both identifiers are present and have identical system and value; otherwise false.
+  hasCoding(system, code [, version]): on Codings or CodeableConcepts, whether any coding has that system and code (and version, when one is
+    given; a coding without a version doesn't match one that is given). Empty when the input is empty; otherwise true or false.
 
   A resource's code is its code, vaccineCode or medication (a CodeableConcept, or a CodeableReference's concept).
   min and max are both given or neither; max may be '*'. When the number found for an input item is outside min..max, that item adds
@@ -1896,5 +1898,19 @@ Any text enclosed within is ignored
 		<test name="testDocumentElement4" testing="entry" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.section('http://loinc.org', '10160-0').entry('http://snomed.info/sct', '387207008').id = 'med2'</expression><output type="boolean">true</output></test>
 		<test name="testDocumentElement5" testing="sameSubject" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c5').sameSubject() = false</expression><output type="boolean">true</output></test>
 		<test name="testDocumentElement6" testing="sameSubject" mode="element" inputfile="bundle-document-ips.json"><expression>Bundle.entry.resource.ofType(Observation).where(id = 'o2').sameSubject(%resource.entry.resource.ofType(Observation).where(id = 'o3'))</expression><output type="boolean">true</output></test>
+		<test name="testResourcesAbstract1" testing="resources" inputfile="bundle-document-ips.json" description="without a type, resources() is Resource, which is abstract: the elements of any resource type check"><expression>Bundle.resources('http://snomed.info/sct', '38341003').category.empty()</expression><output type="boolean">true</output></test>
+		<test name="testResourcesAbstract2" testing="resources" inputfile="bundle-document-ips.json"><expression>Bundle.resources('http://loinc.org', '8480-6').value.exists()</expression><output type="boolean">true</output></test>
+		<test name="testResourcesAbstract3" testing="resources" inputfile="bundle-document-ips.json" description="an element that no resource type has does not check"><expression invalid="semantic">Bundle.resources('http://snomed.info/sct', '38341003').nonsenseElement</expression></test>
+		<test name="testHasCoding1" testing="hasCoding" inputfile="bundle-document-ips.json" description="on a CodeableConcept"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c1').code.hasCoding('http://snomed.info/sct', '38341003')</expression><output type="boolean">true</output></test>
+		<test name="testHasCoding2" testing="hasCoding" inputfile="bundle-document-ips.json"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c1').code.hasCoding('http://snomed.info/sct', '44054006')</expression><output type="boolean">false</output></test>
+		<test name="testHasCoding3" testing="hasCoding" inputfile="bundle-document-ips.json" description="on Codings"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c1').code.coding.hasCoding('http://snomed.info/sct', '38341003')</expression><output type="boolean">true</output></test>
+		<test name="testHasCoding4" testing="hasCoding" inputfile="bundle-document-ips.json" description="the system must match too"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c1').code.hasCoding('http://loinc.org', '38341003')</expression><output type="boolean">false</output></test>
+		<test name="testHasCoding5" testing="hasCoding" inputfile="bundle-document-ips.json" description="when a version is given, the coding must have it"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c1').code.hasCoding('http://snomed.info/sct', '38341003', '20250101')</expression><output type="boolean">false</output></test>
+		<test name="testHasCoding6" testing="hasCoding" inputfile="bundle-document-ips.json" description="empty when the input is empty"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c1').category.hasCoding('http://snomed.info/sct', '38341003').empty()</expression><output type="boolean">true</output></test>
+		<test name="testHasCoding7" testing="hasCoding" inputfile="bundle-document-ips.json" description="any coding in the input"><expression>Bundle.entry.resource.ofType(Condition).code.hasCoding('http://snomed.info/sct', '44054006')</expression><output type="boolean">true</output></test>
+		<test name="testHasCoding8" testing="hasCoding" inputfile="bundle-document-ips.json" description="each resource, with all()"><expression>Bundle.entry.resource.ofType(Condition).all(code.hasCoding('http://snomed.info/sct', '38341003'))</expression><output type="boolean">false</output></test>
+		<test name="testHasCoding9" testing="hasCoding" inputfile="bundle-document-ips.json"><expression>Bundle.resources('http://snomed.info/sct', '38341003').all(code.hasCoding('http://snomed.info/sct', '38341003'))</expression><output type="boolean">true</output></test>
+		<test name="testHasCoding10" testing="hasCoding" inputfile="bundle-document-ips.json"><expression invalid="syntax">Bundle.entry.resource.ofType(Condition).code.hasCoding('http://snomed.info/sct')</expression></test>
+		<test name="testHasCoding11" testing="hasCoding" inputfile="bundle-document-ips.json" description="only on Codings and CodeableConcepts"><expression invalid="semantic">Bundle.entry.resource.ofType(Patient).name.hasCoding('http://snomed.info/sct', '38341003')</expression></test>
 	</group>
 </tests>
