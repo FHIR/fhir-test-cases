@@ -1,0 +1,1755 @@
+<html lang="en"><head><link rel="stylesheet" href="http://hl7.org/fhir/fhir.css"/><link rel="stylesheet" href="http://hl7.org/fhir/dist/css/bootstrap.css"/><link rel="stylesheet" href="http://hl7.org/fhir/assets/css/bootstrap-fhir.css"/><link rel="stylesheet" href="http://hl7.org/fhir/assets/css/project.css"/><link rel="stylesheet" href="http://hl7.org/fhir/assets/css/pygments-manni.css"/><link rel="stylesheet" href="http://hl7.org/fhir/fhir.css"/><link rel="stylesheet" href="http://hl7.org/fhir/jquery-ui.css"/></head><body>
+<div id="segment-content" class="segment"><div class="container"><div class="row"><div class="inner-wrapper"><div class="col-12">
+<p>Narrative</p><div>
+  <table class="dict">
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List">  </a><span style="color: grey">0</span><b>. List</b><a href="#List" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">A List is a curated collection of resources, for things such as problem lists, allergy lists, facility list, organization list, etc.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>A list is a curated collection of resources</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..*</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Alternate Names</td>
+      <td>Collection, WorkingList, Organizer</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">dom-2</b>
+: If the resource is contained in another resource, it SHALL NOT contain nested Resources (        <code>contained.contained.empty()</code>
+)        <br/>
+        <b title="Formal Invariant Identifier">dom-3</b>
+: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource (        <code>contained.where((('#'+id.trace('id') in %resource.descendants().select(reference | as(uri))) or descendants().where(reference='#' | as(uri)='#').exists()).not()).trace('unmatched', id).empty()</code>
+)        <br/>
+        <b title="Formal Invariant Identifier">dom-4</b>
+: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated (        <code>contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()</code>
+)        <br/>
+        <b title="Formal Invariant Identifier">dom-5</b>
+: If a resource is contained in another resource, it SHALL NOT have a security label (        <code>contained.meta.security.empty()</code>
+)        <br/>
+        <b title="Formal Invariant Identifier">dom-6</b>
+: A resource should have narrative for robust management (        <code>text.`div`.exists()</code>
+)        <br/>
+        <b title="Formal Invariant Identifier">lst-1</b>
+: A list can only have an emptyReason if it is empty (        <code>emptyReason.empty() or entry.empty()</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.id">  </a><span style="color: grey">2</span><b>. List.id</b><a href="#List.id" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>Logical id of this artifact</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">Within the context of the FHIR RESTful interactions, the resource has an id except for cases like the create and conditional update. Otherwise, the use of the resource id depends on the given use case.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..1</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">id</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>true</td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.meta">  </a><span style="color: grey">4</span><b>. List.meta</b><a href="#List.meta" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content might not always be associated with version changes to the resource.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>Metadata about the resource</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..1</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">Meta</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.implicitRules">  </a><span style="color: grey">6</span><b>. List.implicitRules</b><a href="#List.implicitRules" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">
+A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content. Often, this is a reference to an implementation guide that defines the special rules along with other profiles etc. For DomainResources, if more than one implicitRules policy applies, additional policies may be conveyed using the           <a href="https://build.fhir.org/ig/HL7/fhir-extensions/StructureDefinition-additionalImplicitRules.html">additionalImplicitRules</a>
+ extension.
+        </p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>A set of rules under which this content was created</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of its narrative along with other profiles, value sets, etc.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..1</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">uri</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>true because This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies its meaning or interpretation</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/elementdefinition.html#primitives">Primitive Value</a>
+      </td>
+      <td>This primitive element may be present, or absent, or replaced by an extension</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.language">  </a><span style="color: grey">8</span><b>. List.language</b><a href="#List.language" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">The base language in which the resource is written.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>Language of the resource content</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource. Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute).</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..1</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/terminologies.html">Binding</a>
+      </td>
+      <td>
+        <span>
+The codes SHALL be taken from  <a href="http://test">test</a><br/>(<a href="http://build.fhir.org/terminologies.html#required">required</a> to <span class="copy-text-inline"><code>http://hl7.org/fhir/ValueSet/all-languages|6.0.0-snapshot1</code><button data-clipboard-text="http://hl7.org/fhir/ValueSet/all-languages|6.0.0-snapshot1" title="Click to Copy URL" class="btn-copy" aria-label="copy"/></span>)
+        </span>
+        <br/>
+        <p>IETF language tag for a human language</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">code</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/elementdefinition.html#primitives">Primitive Value</a>
+      </td>
+      <td>This primitive element may be present, or absent, or replaced by an extension</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.text">  </a><span style="color: grey">10</span><b>. List.text</b><a href="#List.text" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">A human-readable narrative that contains a summary of the resource and can be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it &quot;clinically safe&quot; for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>Text summary of the resource, for human interpretation</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">Contained resources do not have a narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a &quot;text blob&quot; or where text is additionally entered raw or narrated and encoded information is added later.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>
+0..1        <br/>
+This element is affected by the following invariants: dom-6
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">Narrative</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Alternate Names</td>
+      <td>narrative, html, xhtml, display</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.contained">  </a><span style="color: grey">12</span><b>. List.contained</b><a href="#List.contained" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope. This is allowed to be a Parameters resource if and only if it is referenced by a resource that provides context/meaning.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>Contained, inline Resources</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">
+This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again. Contained resources may have profiles and tags in their meta elements, but SHALL NOT have security labels. Contained resources may be a resource type defined in the FHIR specification, or an           <a href="http://build.fhir.org/resource.html#additional">additional resource</a>
+.
+        </p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>
+0..*        <br/>
+This element is affected by the following invariants: dom-2, dom-4, dom-3, dom-5
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">Resource</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Alternate Names</td>
+      <td>inline resources, anonymous resources, contained resources</td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.extension">  </a><span style="color: grey">14</span><b>. List.extension</b><a href="#List.extension" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">May be used to represent additional information that is not part of the basic definition of the resource. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>Additional content defined by implementations</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..*</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">Extension</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Alternate Names</td>
+      <td>extensions, user content</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/profiling.html#slicing">Slicing</a>
+      </td>
+      <td>
+This element introduces a set of slices on         <code>List.extension</code>
+. The slices areUnordered and Open, and can be differentiated using the following discriminators:        <ul/>
+        <li>value @ url</li>
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.modifierExtension">  </a><span style="color: grey">16</span><b>. List.modifierExtension</b><a href="#List.modifierExtension" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">May be used to represent additional information that is not part of the basic definition of the resource and that modifies the understanding of the element that contains it and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and managable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.</p>
+
+        <p style="font-size: 11px">Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>Extensions that cannot be ignored</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..*</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">Extension</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>true because Modifier extensions are expected to modify the meaning or interpretation of the resource that contains them</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Requirements</td>
+      <td>
+        <p style="font-size: 11px">
+Modifier extensions allow for extensions that           <em>cannot</em>
+ be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the           <a href="http://build.fhir.org/extensibility.html#modifierExtension">definition of modifier extensions</a>
+.
+        </p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Alternate Names</td>
+      <td>extensions, user content</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/profiling.html#slicing">Slicing</a>
+      </td>
+      <td>
+This element introduces a set of slices on         <code>List.modifierExtension</code>
+. The slices areUnordered and Open, and can be differentiated using the following discriminators:        <ul/>
+        <li>value @ url</li>
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.identifier">  </a><span style="color: grey">18</span><b>. List.identifier</b><a href="#List.identifier" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">Identifier for the List assigned for business purposes outside the context of FHIR.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>Business identifier</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Note</td>
+      <td>
+This is a business identifier, not a resource identifier (see         <a href="http://build.fhir.org/resource.html#identifiers">discussion</a>
+)
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..*</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">Identifier</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.status">  </a><span style="color: grey">20</span><b>. List.status</b><a href="#List.status" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">Indicates the current state of this list.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>current | retired | entered-in-error</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">This element is labeled as a modifier because the status contains codes that mark the resource as not currently valid.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>1..1</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/terminologies.html">Binding</a>
+      </td>
+      <td>
+        <span>
+The codes SHALL be taken from  <a href="http://test">test</a><br/>(<a href="http://build.fhir.org/terminologies.html#required">required</a> to <span class="copy-text-inline"><code>http://hl7.org/fhir/ValueSet/list-status|6.0.0-snapshot1</code><button data-clipboard-text="http://hl7.org/fhir/ValueSet/list-status|6.0.0-snapshot1" title="Click to Copy URL" class="btn-copy" aria-label="copy"/></span>)
+        </span>
+        <br/>
+        <p>The current state of the list.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">code</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>true because This element is labeled as a modifier because it is a status element that contains status entered-in-error which means that the resource should not be treated as valid</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/elementdefinition.html#primitives">Primitive Value</a>
+      </td>
+      <td>This primitive element may be present, or absent, or replaced by an extension</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.mode">  </a><span style="color: grey">22</span><b>. List.mode</b><a href="#List.mode" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">How this list was prepared - whether it is a working list that is suitable for being maintained on an ongoing basis, or if it represents a snapshot of a list of items from another source, or whether it is a prepared list where items may be marked as added, modified or deleted.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>working | snapshot | changes</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">This element is labeled as a modifier because a change list must not be misunderstood as a complete list.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>1..1</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/terminologies.html">Binding</a>
+      </td>
+      <td>
+        <span>
+The codes SHALL be taken from  <a href="http://test">test</a><br/>(<a href="http://build.fhir.org/terminologies.html#required">required</a> to <span class="copy-text-inline"><code>http://hl7.org/fhir/ValueSet/list-mode|6.0.0-snapshot1</code><button data-clipboard-text="http://hl7.org/fhir/ValueSet/list-mode|6.0.0-snapshot1" title="Click to Copy URL" class="btn-copy" aria-label="copy"/></span>)
+        </span>
+        <br/>
+        <p>The processing mode that applies to this list.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">code</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>true because If set to &quot;changes&quot;, the list is considered incomplete, while the other two codes indicate the list is complete, which changes the understanding of the elements listed</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/elementdefinition.html#primitives">Primitive Value</a>
+      </td>
+      <td>This primitive element may be present, or absent, or replaced by an extension</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Requirements</td>
+      <td>
+        <p style="font-size: 11px">Lists are used in various ways, and it must be known in what way it is safe to use them.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.title">  </a><span style="color: grey">24</span><b>. List.title</b><a href="#List.title" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">A label for the list assigned by the author.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>Descriptive name for the list</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..1</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">string</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/elementdefinition.html#primitives">Primitive Value</a>
+      </td>
+      <td>This primitive element may be present, or absent, or replaced by an extension</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Requirements</td>
+      <td>
+        <p style="font-size: 11px">Allows customization beyond just the code identifying the kind of list.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Example</td>
+      <td>
+        <b>General: </b>
+Dr. Jane's Patients
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.code">  </a><span style="color: grey">26</span><b>. List.code</b><a href="#List.code" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">This code defines the purpose of the list - why it was created.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>What the purpose of this list is</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">If there is no code, the purpose of the list is implied where it is used, such as in a document section using Document.section.code.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..1</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/terminologies.html">Binding</a>
+      </td>
+      <td>
+        <span>
+For example codes, see  <a href="http://test">test</a><br/>(<a href="http://build.fhir.org/terminologies.html#example">example</a> to <span class="copy-text-inline"><code>http://hl7.org/fhir/ValueSet/list-example-codes</code><button data-clipboard-text="http://hl7.org/fhir/ValueSet/list-example-codes" title="Click to Copy URL" class="btn-copy" aria-label="copy"/></span>)
+        </span>
+        <br/>
+        <p>What the purpose of a list is.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">CodeableConcept</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Requirements</td>
+      <td>
+        <p style="font-size: 11px">Lists often contain subsets of resources rather than an exhaustive list.  The code identifies what type of subset is included.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.subject">  </a><span style="color: grey">28</span><b>. List.subject</b><a href="#List.subject" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">The common subject(s) (or patient(s)) of the resources that are in the list if there is one (or a set of subjects).</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>If all resources have the same subject(s)</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">Some purely arbitrary lists do not have a common subject, so this is optional. Lists having multiple subjects may raise challenges for systems that base access control or other security considerations on linkages to 'subject'. E.g. if a List is associated with multiple Patient subjects, then it would be nominally part of multiple patient compartments, which might drive access rights.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..*</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">Reference</a>
+(        <a href="http://hl7.org/fhir/6.0.0-ballot5/resource.html">Resource</a>
+)
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Requirements</td>
+      <td>
+        <p style="font-size: 11px">The primary purpose of listing the subject explicitly is to help with finding the right list.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.encounter">  </a><span style="color: grey">30</span><b>. List.encounter</b><a href="#List.encounter" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">The encounter that is the context in which this list was created.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>Context in which list created</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..1</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">Reference</a>
+(        <a href="http://hl7.org/fhir/6.0.0-ballot5/encounter.html">Encounter</a>
+)
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.date">  </a><span style="color: grey">32</span><b>. List.date</b><a href="#List.date" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">Date list was last reviewed/revised and determined to be 'current'.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>When the list was prepared</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">The actual important date is the date of currency of the resources that were summarized, but it is usually assumed that these are current when the preparation occurs.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..1</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">dateTime</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/elementdefinition.html#primitives">Primitive Value</a>
+      </td>
+      <td>This primitive element may be present, or absent, or replaced by an extension</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Requirements</td>
+      <td>
+        <p style="font-size: 11px">Identifies how current the list is which affects relevance.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.source">  </a><span style="color: grey">34</span><b>. List.source</b><a href="#List.source" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">The entity responsible for deciding what the contents of the list were. Where the list was created by a human, this is the same as the author of the list.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>Who and/or what defined the list contents (aka Author)</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">The primary source is the entity that made the decisions what items are in the list. This may be software or user.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..1</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">Reference</a>
+(        <a href="http://hl7.org/fhir/6.0.0-ballot5/practitioner.html">Practitioner</a>
+,         <a href="http://hl7.org/fhir/6.0.0-ballot5/practitionerrole.html">PractitionerRole</a>
+,         <a href="http://hl7.org/fhir/6.0.0-ballot5/patient.html">Patient</a>
+,         <a href="http://hl7.org/fhir/6.0.0-ballot5/device.html">Device</a>
+,         <a href="http://hl7.org/fhir/6.0.0-ballot5/organization.html">Organization</a>
+,         <a href="http://hl7.org/fhir/6.0.0-ballot5/relatedperson.html">RelatedPerson</a>
+,         <a href="http://hl7.org/fhir/6.0.0-ballot5/careteam.html">CareTeam</a>
+,         <a href="http://hl7.org/fhir/6.0.0-ballot5/group.html">Group</a>
+)
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Requirements</td>
+      <td>
+        <p style="font-size: 11px">Allows follow-up as well as context.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Alternate Names</td>
+      <td>Author</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.contributor">  </a><span style="color: grey">36</span><b>. List.contributor</b><a href="#List.contributor" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">Entities who have the ability to adjust the contents of the list.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>Who helps maintain the list</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">If both 'source' and 'contributors' are present, then 'source' has primary responsibility.  If contributors are present without source, then all contributors have shared responsibility.   The source SHOULD NOT be also listed as a contributor. To indicate a practitioner working for an organization, use PractitionerRole, even if as a contained resource rather than having separate repetitions of this element for Practitioner and Organization.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..*</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">Reference</a>
+(        <a href="http://hl7.org/fhir/6.0.0-ballot5/practitioner.html">Practitioner</a>
+,         <a href="http://hl7.org/fhir/6.0.0-ballot5/practitionerrole.html">PractitionerRole</a>
+,         <a href="http://hl7.org/fhir/6.0.0-ballot5/patient.html">Patient</a>
+,         <a href="http://hl7.org/fhir/6.0.0-ballot5/device.html">Device</a>
+,         <a href="http://hl7.org/fhir/6.0.0-ballot5/organization.html">Organization</a>
+,         <a href="http://hl7.org/fhir/6.0.0-ballot5/relatedperson.html">RelatedPerson</a>
+,         <a href="http://hl7.org/fhir/6.0.0-ballot5/careteam.html">CareTeam</a>
+,         <a href="http://hl7.org/fhir/6.0.0-ballot5/group.html">Group</a>
+)
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>true</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.orderedBy">  </a><span style="color: grey">38</span><b>. List.orderedBy</b><a href="#List.orderedBy" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">What order applies to the items in the list.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>What order the list has</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">Applications SHOULD render ordered lists in the order provided, but MAY allow users to re-order based on their own preferences as well. If there is no order specified, the order is unknown, though there may still be some order.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..1</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/terminologies.html">Binding</a>
+      </td>
+      <td>
+        <span>
+The codes SHOULD be taken from  <a href="http://test">test</a><br/>(<a href="http://build.fhir.org/terminologies.html#preferred">preferred</a> to <span class="copy-text-inline"><code>http://hl7.org/fhir/ValueSet/list-order</code><button data-clipboard-text="http://hl7.org/fhir/ValueSet/list-order" title="Click to Copy URL" class="btn-copy" aria-label="copy"/></span>)
+        </span>
+        <br/>
+        <p>What order applies to the items in a list.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">CodeableConcept</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Requirements</td>
+      <td>
+        <p style="font-size: 11px">Important for presentation and rendering.  Lists may be sorted to place more important information first or to group related entries.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.note">  </a><span style="color: grey">40</span><b>. List.note</b><a href="#List.note" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">Comments that apply to the overall list.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>Comments about the list</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>0..*</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">Annotation</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <tr>
+      <td colspan="2" class="structure">
+        <span class="self-link-parent">
+<a name="List.emptyReason">  </a><span style="color: grey">54</span><b>. List.emptyReason</b><a href="#List.emptyReason" title="link to here" class="self-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" class="self-link" height="16"><path d="M1520 1216q0-40-28-68l-208-208q-28-28-68-28-42 0-72 32 3 3 19 18.5t21.5 21.5 15 19 13 25.5 3.5 27.5q0 40-28 68t-68 28q-15 0-27.5-3.5t-25.5-13-19-15-21.5-21.5-18.5-19q-33 31-33 73 0 40 28 68l206 207q27 27 68 27 40 0 68-26l147-146q28-28 28-67zm-703-705q0-40-28-68l-206-207q-28-28-68-28-39 0-68 27l-147 146q-28 28-28 67 0 40 28 68l208 208q27 27 68 27 42 0 72-31-3-3-19-18.5t-21.5-21.5-15-19-13-25.5-3.5-27.5q0-40 28-68t68-28q15 0 27.5 3.5t25.5 13 19 15 21.5 21.5 18.5 19q33-31 33-73zm895 705q0 120-85 203l-147 146q-83 83-203 83-121 0-204-85l-206-207q-83-83-83-203 0-123 88-209l-88-88q-86 88-208 88-120 0-204-84l-208-208q-84-84-84-204t85-203l147-146q83-83 203-83 121 0 204 85l206 207q83 83 83 203 0 123-88 209l88 88q86-88 208-88 120 0 204 84l208 208q84 84 84 204z"/></svg></a>        </span>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Definition</td>
+      <td>
+        <p style="font-size: 11px">If the list is empty, why the list is empty.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Short</td>
+      <td>Why list is empty</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Comments</td>
+      <td>
+        <p style="font-size: 11px">The various reasons for an empty list make a significant interpretation to its interpretation. Note that this code is for use when the entire list has been suppressed, and not for when individual items are omitted - implementers may consider using a text note or a flag on an entry in these cases.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#conformance">Control</a>
+      </td>
+      <td>
+0..1        <br/>
+This element is affected by the following invariants: lst-1
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/terminologies.html">Binding</a>
+      </td>
+      <td>
+        <span>
+The codes SHOULD be taken from  <a href="http://test">test</a><br/>(<a href="http://build.fhir.org/terminologies.html#preferred">preferred</a> to <span class="copy-text-inline"><code>http://hl7.org/fhir/ValueSet/list-empty-reason</code><button data-clipboard-text="http://hl7.org/fhir/ValueSet/list-empty-reason" title="Click to Copy URL" class="btn-copy" aria-label="copy"/></span>)
+        </span>
+        <br/>
+        <p>If a list is empty, why it is empty.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/datatypes.html">Type</a>
+      </td>
+      <td>
+        <a href="http://test/link">CodeableConcept</a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#ismodifier">Is Modifier</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/conformance-rules.html#mustSupport">Must Support</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">
+        <a href="http://build.fhir.org/search.html#summary">Summary</a>
+      </td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Requirements</td>
+      <td>
+        <p style="font-size: 11px">Allows capturing things like &quot;none exist&quot; or &quot;not asked&quot; which can be important for most lists.</p>
+
+
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap">Invariants</td>
+      <td>
+        <b title="Formal Invariant Identifier">ele-1</b>
+: All FHIR elements must have a @value or children (        <code>hasValue() or (children().count() &gt; id.count())</code>
+)
+      </td>
+    </tr>
+
+
+
+  </table>
+</div>
+
+</div></div></div></div></div></body></html>
