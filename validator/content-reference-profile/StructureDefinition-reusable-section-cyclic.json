@@ -1,0 +1,43 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "reusable-section-cyclic",
+  "url": "http://example.org/recursive-sections/StructureDefinition/reusable-section-cyclic",
+  "version": "0.1.0",
+  "name": "ReusableSectionCyclic",
+  "status": "active",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Composition",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Composition",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Composition.section",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/contentReferenceProfile",
+            "valueUri": "http://example.org/recursive-sections/StructureDefinition/guide-cyclic#Composition.section.section"
+          }
+        ],
+        "path": "Composition.section"
+      },
+      {
+        "id": "Composition.section.title",
+        "path": "Composition.section.title",
+        "min": 1
+      },
+      {
+        "id": "Composition.section.section",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/contentReferenceProfile",
+            "valueUri": "http://example.org/recursive-sections/StructureDefinition/reusable-section-cyclic#Composition.section"
+          }
+        ],
+        "path": "Composition.section.section"
+      }
+    ]
+  }
+}

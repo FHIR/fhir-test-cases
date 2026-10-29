@@ -1,0 +1,33 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "guide",
+  "url": "http://example.org/recursive-sections/StructureDefinition/guide",
+  "version": "0.1.0",
+  "name": "Guide",
+  "status": "active",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Composition",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Composition",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Composition.section.section",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/contentReferenceProfile",
+            "valueUri": "http://example.org/recursive-sections/StructureDefinition/reusable-section#Composition.section"
+          }
+        ],
+        "path": "Composition.section.section"
+      },
+      {
+        "id": "Composition.section.section.entry",
+        "path": "Composition.section.section.entry",
+        "max": "0"
+      }
+    ]
+  }
+}

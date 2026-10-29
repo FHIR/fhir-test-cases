@@ -1,0 +1,33 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "recursive-questionnaire",
+  "url": "http://example.org/recursive-sections/StructureDefinition/recursive-questionnaire",
+  "version": "0.1.0",
+  "name": "RecursiveQuestionnaire",
+  "status": "active",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Questionnaire",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Questionnaire",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Questionnaire.item.text",
+        "path": "Questionnaire.item.text",
+        "min": 1
+      },
+      {
+        "id": "Questionnaire.item.item",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/contentReferenceProfile",
+            "valueUri": "http://example.org/recursive-sections/StructureDefinition/recursive-questionnaire#Questionnaire.item"
+          }
+        ],
+        "path": "Questionnaire.item.item"
+      }
+    ]
+  }
+}
