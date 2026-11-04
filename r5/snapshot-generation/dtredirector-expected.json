@@ -3126,6 +3126,20 @@
         "human" : "All FHIR elements must have a @value or children",
         "expression" : "hasValue() or (children().count() > id.count())",
         "source" : "http://hl7.org/fhir/StructureDefinition/Element"
+      },
+      {
+        "key" : "cmp-1",
+        "severity" : "error",
+        "human" : "A section must contain at least one of text, entries, or sub-sections",
+        "expression" : "text.exists() or entry.exists() or section.exists()",
+        "source" : "http://hl7.org/fhir/StructureDefinition/Composition"
+      },
+      {
+        "key" : "cmp-2",
+        "severity" : "error",
+        "human" : "A section can only have an emptyReason if it is empty",
+        "expression" : "emptyReason.empty() or entry.empty()",
+        "source" : "http://hl7.org/fhir/StructureDefinition/Composition"
       }],
       "mustSupport" : false,
       "isModifier" : false,
@@ -3265,7 +3279,21 @@
         "path" : "Extension.extension",
         "min" : 0,
         "max" : "*"
-      }
+      },
+      "constraint" : [{
+        "key" : "ele-1",
+        "severity" : "error",
+        "human" : "All FHIR elements must have a @value or children",
+        "expression" : "hasValue() or (children().count() > id.count())",
+        "source" : "http://hl7.org/fhir/StructureDefinition/Element"
+      },
+      {
+        "key" : "ext-1",
+        "severity" : "error",
+        "human" : "Must have either extensions or value[x], not both",
+        "expression" : "extension.exists() != value.exists()",
+        "source" : "http://hl7.org/fhir/StructureDefinition/Extension"
+      }]
     },
     {
       "id" : "Composition.section:summary.section:details.extension:label.extension.id",
