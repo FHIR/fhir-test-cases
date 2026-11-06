@@ -524,6 +524,135 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "LiteralValuesGenerator",
+            "details" : "Literal values in mappings: 'value' instead of 'expression', on an entry and inside parts. A value of any JSON type is used as its text (the boolean on communication.preferred, the date on birthDate); an empty value suppresses an element (name.given), the same as an entry with no expression",
+            "mode": "profile",
+            "profile": "http://hl7.org/fhir/uv/howto/StructureDefinition/test-patient-profile",
+            "data": "patient-cases.xlsx;Patients",
+            "format": "json",
+            "filename": "output/Patient3-$counter$.json",
+            "bundle": false,
+            "tables": {
+                "genders": "patient-genders.csv"
+            },
+            "mappings": [
+                {
+                    "path": "TestPatientProfile.name",
+                    "parts": [
+                        {
+                            "name": "family",
+                            "value": "Literal"
+                        },
+                        {
+                            "name": "given",
+                            "value": ""
+                        }
+                    ]
+                },
+                {
+                    "path": "TestPatientProfile.identifier",
+                    "parts": [
+                        {
+                            "name": "system",
+                            "value": "http://acme.org/identifiers/literal"
+                        },
+                        {
+                            "name": "value",
+                            "expression": "column('Patient ID')"
+                        }
+                    ]
+                },
+                {
+                    "path": "TestPatientProfile.communication.preferred",
+                    "value": false
+                },
+                {
+                    "path": "TestPatientProfile.birthDate",
+                    "value": "2000-01-01"
+                },
+                {
+                    "path": "TestPatientProfile.gender",
+                    "value": "unknown"
+                },
+                {
+                    "path": "TestPatientProfile.id",
+                    "expression": "column('Patient ID')"
+                }
+            ]
+        },
+        {
+            "name": "BinaryGenerator",
+            "details" : "A base64Binary value given in a mapping: whitespace is allowed by FHIR and is stripped, and what remains is checked",
+            "mode": "profile",
+            "profile": "http://hl7.org/fhir/StructureDefinition/Binary",
+            "data": "patient-cases.xlsx;Patients",
+            "format": "json",
+            "filename": "output/Binary-$counter$.json",
+            "bundle": false,
+            "mappings": [
+                {
+                    "path": "Binary.id",
+                    "expression": "column('Patient ID')"
+                },
+                {
+                    "path": "Binary.contentType",
+                    "value": "text/plain"
+                },
+                {
+                    "path": "Binary.data",
+                    "value": "U29tZSBCaW5h\ncnkgVmFsdWU="
+                }
+            ]
+        },
+        {
+            "name": "BinaryRejectedGenerator",
+            "details" : "A base64Binary value that is not base64 is rejected, logged, and replaced by a generated value",
+            "mode": "profile",
+            "profile": "http://hl7.org/fhir/StructureDefinition/Binary",
+            "data": "patient-cases.xlsx;Patients",
+            "format": "json",
+            "filename": "output/BinaryRejected-$counter$.json",
+            "bundle": false,
+            "mappings": [
+                {
+                    "path": "Binary.id",
+                    "expression": "column('Patient ID')"
+                },
+                {
+                    "path": "Binary.contentType",
+                    "value": "text/plain"
+                },
+                {
+                    "path": "Binary.data",
+                    "value": "this is not base64!"
+                }
+            ]
+        },
+        {
+            "name": "RequiredOnlyGenerator",
+            "details" : "requiredOnly: only the elements the profile makes mandatory at the top level are generated, plus any that are mapped or fixed",
+            "mode": "profile",
+            "profile": "http://hl7.org/fhir/uv/howto/StructureDefinition/test-patient-profile",
+            "data": "patient-cases.xlsx;Patients",
+            "format": "json",
+            "filename": "output/Patient5-$counter$.json",
+            "bundle": false,
+            "requiredOnly": true,
+            "tables": {
+                "genders": "patient-genders.csv"
+            },
+            "mappings": [
+                {
+                    "path": "TestPatientProfile.id",
+                    "expression": "column('Patient ID')"
+                },
+                {
+                    "path": "TestPatientProfile.gender",
+                    "expression": "lookup('genders', 'gender', column('Sex'), 'code')"
+                }
+            ]
         }
     ]
 }
