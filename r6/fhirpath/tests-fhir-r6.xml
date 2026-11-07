@@ -702,6 +702,10 @@ Any text enclosed within is ignored
 		<test name="testDistinct34" testing="distinct" description="booleans" inputfile="patient-example.xml"><expression>true.combine(false).combine(true).distinct()</expression><output type="boolean">false</output><output type="boolean">true</output></test>
 		<test name="testDistinct35" testing="distinct" description="dates" inputfile="patient-example.xml"><expression>@2020-01-01.combine(@2020-01-02).combine(@2020-01-01).distinct()</expression><output type="date">@2020-01-02</output><output type="date">@2020-01-01</output></test>
 		<test name="testDistinct36" testing="distinct" description="dates with different precision can't be compared" inputfile="patient-example.xml"><expression>@2020.combine(@2020-01-01).distinct()</expression></test>
+		<test name="testDistinctComplexSubset1" testing="distinct" description="distinct keeps a complex value that has fewer child elements than another" inputfile="patient-name-subset.json"><expression>Patient.name.last().combine(Patient.name.first()).distinct().count()</expression><output type="integer">2</output></test>
+		<test name="testDistinctComplexSubset2" testing="isDistinct" description="complex values that differ in one child element are distinct" inputfile="patient-name-subset.json"><expression>Patient.name.last().combine(Patient.name.first()).isDistinct()</expression><output type="boolean">true</output></test>
+		<test name="testDistinctComplexSubset3" testing="distinct" description="element model: distinct keeps a complex value that has fewer child elements than another" inputfile="patient-name-subset.json" mode="element"><expression>Patient.name.last().combine(Patient.name.first()).distinct().count()</expression><output type="integer">2</output></test>
+		<test name="testDistinctComplexSubset4" testing="isDistinct" description="element model: complex values that differ in one child element are distinct" inputfile="patient-name-subset.json" mode="element"><expression>Patient.name.last().combine(Patient.name.first()).isDistinct()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testCount">
@@ -743,6 +747,11 @@ Any text enclosed within is ignored
 		<test name="testIndexer1" testing="[]" inputfile="patient-example.xml"><expression>Patient.name[0].given = 'Peter' | 'James'</expression><output type="boolean">true</output></test>
 		<test name="testIndexer2" testing="[]" inputfile="patient-example.xml"><expression>Patient.name[1].given = 'Jim'</expression><output type="boolean">true</output></test>
 		<test name="testIndexer3" testing="[]" description="a negative index is out of range, so the result is empty" inputfile="patient-example.xml"><expression>Patient.name[-1]</expression></test>
+		<test name="testIndexerNoTypePrefix1" testing="[]" description="indexer without type prefix: [] binds more tightly than = and |" inputfile="patient-example.xml"><expression>name[0].given = 'Peter' | 'James'</expression><output type="boolean">true</output></test>
+		<test name="testIndexerNoTypePrefix2" testing="[]" description="indexer without type prefix followed by =" inputfile="patient-example.xml"><expression>name[1].given = 'Jim'</expression><output type="boolean">true</output></test>
+		<test name="testIndexerNoTypePrefix3" testing="[]" description="indexer without type prefix followed by =, result false" inputfile="patient-example.xml"><expression>name[0].family = 'Windsor'</expression><output type="boolean">false</output></test>
+		<test name="testIndexerNoTypePrefix4" testing="[]" description="indexer without type prefix followed by and" inputfile="patient-example.xml"><expression>name[0].exists() and false</expression><output type="boolean">false</output></test>
+		<test name="testIndexerNoTypePrefix5" testing="[]" description="indexer without type prefix on both sides of |" inputfile="patient-example.xml"><expression>(name[0] | name[1]).count()</expression><output type="integer">2</output></test>
 	</group>
 
 	<group name="testSingle">
@@ -1111,6 +1120,10 @@ Any text enclosed within is ignored
 		<test name="testEquality38" testing="=" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 = @2015-02-04T11:00</expression><output type="boolean">false</output></test>
 		<test name="testEquality39" testing="=" description="dateTimes with different precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00:00 = @2015-02-04T10:00</expression></test>
 		<test name="testEquality40" testing="=" description="dateTimes with minute precision and an offset" inputfile="patient-example.xml"><expression>@2015-02-04T10:00-05:00 = @2015-02-04T10:00-05:00</expression><output type="boolean">true</output></test>
+		<test name="testEqualityComplexSubset1" testing="=" description="complex values are not equal if only the right one has a child element" inputfile="patient-name-subset.json"><expression>Patient.name.first() = Patient.name.last()</expression><output type="boolean">false</output></test>
+		<test name="testEqualityComplexSubset2" testing="=" description="complex values are not equal if only the left one has a child element" inputfile="patient-name-subset.json"><expression>Patient.name.last() = Patient.name.first()</expression><output type="boolean">false</output></test>
+		<test name="testEqualityComplexSubset3" testing="=" description="element model: complex values are not equal if only the right one has a child element" inputfile="patient-name-subset.json" mode="element"><expression>Patient.name.first() = Patient.name.last()</expression><output type="boolean">false</output></test>
+		<test name="testEqualityComplexSubset4" testing="=" description="element model: complex values are not equal if only the left one has a child element" inputfile="patient-name-subset.json" mode="element"><expression>Patient.name.last() = Patient.name.first()</expression><output type="boolean">false</output></test>
 	</group>
 
 	<group name="testNEquality">
@@ -1141,6 +1154,8 @@ Any text enclosed within is ignored
 		<test name="testNEquality25" testing="!=" inputfile="patient-example.xml" description="A primitive and a complex value are different types, so they are not equal"><expression>name.first() != 'Peter'</expression><output type="boolean">true</output></test>
 		<test name="testNEquality26" testing="!=" inputfile="patient-example.xml" description="A primitive and a complex value are different types, so they are not equal"><expression>'Peter' != name.first()</expression><output type="boolean">true</output></test>
 		<test name="testNEquality27" testing="!=" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 != @2015-02-04T11:00</expression><output type="boolean">true</output></test>
+		<test name="testNEqualityComplexSubset1" testing="!=" description="complex values differ if only the right one has a child element" inputfile="patient-name-subset.json"><expression>Patient.name.first() != Patient.name.last()</expression><output type="boolean">true</output></test>
+		<test name="testNEqualityComplexSubset2" testing="!=" description="element model: complex values differ if only the right one has a child element" inputfile="patient-name-subset.json" mode="element"><expression>Patient.name.first() != Patient.name.last()</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testHasValue" description="hasValue() is true only for a primitive with a value">
@@ -1398,6 +1413,8 @@ Any text enclosed within is ignored
 			<output type="string">Peter</output>
 		</test> <!-- merge duplicates -->
 		<test name="testUnion13" testing="|" description="the union removes a repeated dateTime with minute precision" inputfile="patient-example.xml"><expression>(@2015-02-04T10:00 | @2015-02-04T10:00).count() = 1</expression><output type="boolean">true</output></test>
+		<test name="testUnionComplexSubset1" testing="|" description="the union keeps a complex value that has more child elements than another" inputfile="patient-name-subset.json"><expression>(Patient.name.first() | Patient.name.last()).count()</expression><output type="integer">2</output></test>
+		<test name="testUnionComplexSubset2" testing="|" description="element model: the union keeps a complex value that has more child elements than another" inputfile="patient-name-subset.json" mode="element"><expression>(Patient.name.first() | Patient.name.last()).count()</expression><output type="integer">2</output></test>
 	</group>
 
 	<group name="testIntersect">
