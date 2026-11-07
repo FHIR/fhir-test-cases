@@ -42,7 +42,8 @@
     "cdshooks": "Tests related to parsing & validating CDS Hooks Json documents using the CDSHooks logical model",
     "shc": "Tests related to parsing & validating Smart Health Cards",
     "notes:": "Modules are a work in progress, existing tests need to be allocated to modules, and additional modules defined",
-    "json5": "Use JSON 5 techniques to provide more robust json validation"
+    "json5": "Use JSON 5 techniques to provide more robust json validation",
+    "tx-knowledge": "Tests of checks that use what the terminology server knows about a code - LOINC and SNOMED CT properties (units, scale, panels, the kind of concept, laterality...) - against the resource or profile that uses it"
   },
   "versions": {
     "extensions": "5.3.0-ballot",
@@ -3971,6 +3972,810 @@
       "java": "java/R4.observation-ucum-base.json",
       "firely-sdk-current": "firely-sdk-current/R4.observation-ucum-base.json",
       "firely-sdk-wip": "firely-sdk-wip/R4.observation-ucum-base.json"
+    },
+    {
+      "name": "observation-loinc-units-01-mass-as-moles",
+      "file": "observation-loinc-units-01-mass-as-moles.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A mass concentration (MCnc) LOINC code with a substance concentration unit: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-01-mass-as-moles-base.json"
+    },
+    {
+      "name": "observation-loinc-units-02-mass-ok",
+      "file": "observation-loinc-units-02-mass-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A mass concentration LOINC code in its example unit: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-02-mass-ok-base.json"
+    },
+    {
+      "name": "observation-loinc-units-03-mass-convertible",
+      "file": "observation-loinc-units-03-mass-convertible.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A mass concentration LOINC code in a unit that converts to its example unit: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-03-mass-convertible-base.json"
+    },
+    {
+      "name": "observation-loinc-units-04-moles-ok",
+      "file": "observation-loinc-units-04-moles-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A substance concentration (SCnc) LOINC code in its example unit: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-04-moles-ok-base.json"
+    },
+    {
+      "name": "observation-loinc-units-05-moles-as-count",
+      "file": "observation-loinc-units-05-moles-as-count.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A substance concentration LOINC code with a number concentration unit - UCUM can convert it (a mole is a number), but it isn't moles: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-05-moles-as-count-base.json"
+    },
+    {
+      "name": "observation-loinc-units-06-count-ok",
+      "file": "observation-loinc-units-06-count-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A number concentration (NCnc) LOINC code in its example unit: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-06-count-ok-base.json"
+    },
+    {
+      "name": "observation-loinc-units-07-count-as-moles",
+      "file": "observation-loinc-units-07-count-as-moles.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A number concentration LOINC code with a substance concentration unit: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-07-count-as-moles-base.json"
+    },
+    {
+      "name": "observation-loinc-units-08-glucose-as-moles",
+      "file": "observation-loinc-units-08-glucose-as-moles.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Glucose [Mass/volume] reported in mmol/L (a common real-world error): warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-08-glucose-as-moles-base.json"
+    },
+    {
+      "name": "observation-loinc-units-09-fraction-ok",
+      "file": "observation-loinc-units-09-fraction-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A mass fraction (MFr) LOINC code in %: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-09-fraction-ok-base.json"
+    },
+    {
+      "name": "observation-loinc-units-10-fraction-as-mass-conc",
+      "file": "observation-loinc-units-10-fraction-as-mass-conc.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A mass fraction LOINC code with a mass concentration unit: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-10-fraction-as-mass-conc-base.json"
+    },
+    {
+      "name": "observation-loinc-units-11-catalytic-convertible",
+      "file": "observation-loinc-units-11-catalytic-convertible.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A catalytic concentration (CCnc) LOINC code in ukat/L, which converts to its example unit U/L: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-11-catalytic-convertible-base.json"
+    },
+    {
+      "name": "observation-loinc-units-12-arbitrary-not-checked",
+      "file": "observation-loinc-units-12-arbitrary-not-checked.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A LOINC code measured in arbitrary units ([IU]) - these can't be compared, so the unit is not checked: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-12-arbitrary-not-checked-base.json"
+    },
+    {
+      "name": "observation-loinc-units-13-not-ucum",
+      "file": "observation-loinc-units-13-not-ucum.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A unit that is not a UCUM code (no system or code) is not checked: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-13-not-ucum-base.json"
+    },
+    {
+      "name": "observation-loinc-units-14-component",
+      "file": "observation-loinc-units-14-component.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Components are checked too: the first (SCnc in umol/L) is fine, the second (MCnc in mmol/L) gets a warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-14-component-base.json"
+    },
+    {
+      "name": "observation-loinc-units-15-qn-as-string",
+      "file": "observation-loinc-units-15-qn-as-string.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A quantitative (Qn) LOINC code with the result as a string: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-15-qn-as-string-base.json"
+    },
+    {
+      "name": "observation-loinc-units-16-nom-as-quantity",
+      "file": "observation-loinc-units-16-nom-as-quantity.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A nominal (Nom) LOINC code with a Quantity value: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-16-nom-as-quantity-base.json"
+    },
+    {
+      "name": "observation-loinc-units-17-nom-ok",
+      "file": "observation-loinc-units-17-nom-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A nominal LOINC code with a CodeableConcept value: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-17-nom-ok-base.json"
+    },
+    {
+      "name": "observation-loinc-units-18-ord-as-quantity",
+      "file": "observation-loinc-units-18-ord-as-quantity.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "An ordinal (Ord) LOINC code with a Quantity value: warning (and the units aren't checked)",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-18-ord-as-quantity-base.json"
+    },
+    {
+      "name": "observation-loinc-units-19-ord-ok",
+      "file": "observation-loinc-units-19-ord-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "An ordinal LOINC code with a CodeableConcept value: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-19-ord-ok-base.json"
+    },
+    {
+      "name": "observation-loinc-units-20-nar-as-quantity",
+      "file": "observation-loinc-units-20-nar-as-quantity.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A narrative (Nar) LOINC code with a Quantity value: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-20-nar-as-quantity-base.json"
+    },
+    {
+      "name": "observation-loinc-units-21-nar-ok",
+      "file": "observation-loinc-units-21-nar-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A narrative LOINC code with a string value: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-21-nar-ok-base.json"
+    },
+    {
+      "name": "observation-loinc-units-22-doc",
+      "file": "observation-loinc-units-22-doc.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A document (Doc) LOINC code with a value in an Observation: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-22-doc-base.json"
+    },
+    {
+      "name": "observation-loinc-units-23-panel-with-value",
+      "file": "observation-loinc-units-23-panel-with-value.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A LOINC panel with a value, not members: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-23-panel-with-value-base.json"
+    },
+    {
+      "name": "observation-loinc-units-24-panel-empty",
+      "file": "observation-loinc-units-24-panel-empty.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A LOINC panel with no value, members or components: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-24-panel-empty-base.json"
+    },
+    {
+      "name": "observation-loinc-units-25-panel-ok",
+      "file": "observation-loinc-units-25-panel-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A LOINC panel with its results in hasMember: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-25-panel-ok-base.json"
+    },
+    {
+      "name": "observation-loinc-units-26-order-only",
+      "file": "observation-loinc-units-26-order-only.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "An order-only LOINC code (ORDER_OBS = Order) used for a result: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-26-order-only-base.json"
+    },
+    {
+      "name": "observation-loinc-units-27-units-required",
+      "file": "observation-loinc-units-27-units-required.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A LOINC code that requires units, with a Quantity that has no UCUM unit: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-27-units-required-base.json"
+    },
+    {
+      "name": "observation-loinc-units-28-time-point-as-period",
+      "file": "observation-loinc-units-28-time-point-as-period.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A point in time (Pt) LOINC code with an effectivePeriod that has a duration: hint",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-28-time-point-as-period-base.json"
+    },
+    {
+      "name": "observation-loinc-units-29-time-24h-as-point",
+      "file": "observation-loinc-units-29-time-24h-as-point.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A 24 hour LOINC code with an effectiveDateTime: hint",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-29-time-24h-as-point-base.json"
+    },
+    {
+      "name": "observation-loinc-units-30-time-24h-ok",
+      "file": "observation-loinc-units-30-time-24h-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A 24 hour LOINC code with a 24 hour effectivePeriod: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.observation-loinc-units-30-time-24h-ok-base.json"
+    },
+    {
+      "name": "sd-loinc-01-qn-coded",
+      "file": "sd-loinc-01-qn-coded.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a quantitative (Qn) LOINC code but only allows a CodeableConcept value: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-01-qn-coded-base.json"
+    },
+    {
+      "name": "sd-loinc-02-qn-ok",
+      "file": "sd-loinc-02-qn-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a quantitative LOINC code with a Quantity value in mg/dL: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-02-qn-ok-base.json"
+    },
+    {
+      "name": "sd-loinc-03-qn-open",
+      "file": "sd-loinc-03-qn-open.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a quantitative LOINC code and allows a Quantity or a CodeableConcept: no warning (only contradictions are reported)",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-03-qn-open-base.json"
+    },
+    {
+      "name": "sd-loinc-04-unit-wrong",
+      "file": "sd-loinc-04-unit-wrong.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a mass concentration LOINC code and the unit mmol/L (on a pattern Quantity): warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-04-unit-wrong-base.json"
+    },
+    {
+      "name": "sd-loinc-05-unit-wrong-child",
+      "file": "sd-loinc-05-unit-wrong-child.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a mass concentration LOINC code and the unit mmol/L (on value[x].system and value[x].code): warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-05-unit-wrong-child-base.json"
+    },
+    {
+      "name": "sd-loinc-06-unit-system",
+      "file": "sd-loinc-06-unit-system.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a LOINC code that requires units, and a unit system that isn't UCUM: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-06-unit-system-base.json"
+    },
+    {
+      "name": "sd-loinc-07-coded-quantity",
+      "file": "sd-loinc-07-coded-quantity.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a nominal (Nom) LOINC code but only allows a Quantity value: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-07-coded-quantity-base.json"
+    },
+    {
+      "name": "sd-loinc-08-panel-value",
+      "file": "sd-loinc-08-panel-value.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a LOINC panel and requires a value: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-08-panel-value-base.json"
+    },
+    {
+      "name": "sd-loinc-09-panel-empty",
+      "file": "sd-loinc-09-panel-empty.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a LOINC panel but prohibits hasMember and component: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-09-panel-empty-base.json"
+    },
+    {
+      "name": "sd-loinc-10-panel-ok",
+      "file": "sd-loinc-10-panel-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a LOINC panel and prohibits a value: no warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-10-panel-ok-base.json"
+    },
+    {
+      "name": "sd-loinc-11-order-only",
+      "file": "sd-loinc-11-order-only.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes an order-only LOINC code (ORDER_OBS = Order): warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-11-order-only-base.json"
+    },
+    {
+      "name": "sd-loinc-12-time-point",
+      "file": "sd-loinc-12-time-point.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a point in time (Pt) LOINC code but only allows a Period for effective[x]: hint",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-12-time-point-base.json"
+    },
+    {
+      "name": "sd-loinc-13-time-24h",
+      "file": "sd-loinc-13-time-24h.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a 24 hour LOINC code but doesn't allow a Period for effective[x]: hint",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-13-time-24h-base.json"
+    },
+    {
+      "name": "sd-loinc-14-coding-slice",
+      "file": "sd-loinc-14-coding-slice.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a quantitative LOINC code in a required slice of code.coding, but only allows a CodeableConcept value: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-14-coding-slice-base.json"
+    },
+    {
+      "name": "sd-loinc-15-component",
+      "file": "sd-loinc-15-component.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A component slice that fixes a mass concentration LOINC code and the unit mmol/L: warning",
+      "tags": ["loinc-units"],
+      "java": "java/R4.sd-loinc-15-component-base.json"
+    },
+    {
+      "name": "sct-rules-01-condition-procedure-proxy",
+      "file": "sct-rules-01-condition-procedure-proxy.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A procedure as a Condition.code (coding by proxy): hint",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-01-condition-procedure-proxy-base.json"
+    },
+    {
+      "name": "sct-rules-02-condition-wrong",
+      "file": "sct-rules-02-condition-wrong.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A substance as a Condition.code: warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-02-condition-wrong-base.json"
+    },
+    {
+      "name": "sct-rules-03-condition-ok",
+      "file": "sct-rules-03-condition-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A disorder as a Condition.code: no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-03-condition-ok-base.json"
+    },
+    {
+      "name": "sct-rules-04-procedure-condition-proxy",
+      "file": "sct-rules-04-procedure-condition-proxy.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A disorder as a Procedure.code (coding by proxy): hint",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-04-procedure-condition-proxy-base.json"
+    },
+    {
+      "name": "sct-rules-05-procedure-wrong",
+      "file": "sct-rules-05-procedure-wrong.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A body structure as a Procedure.code: warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-05-procedure-wrong-base.json"
+    },
+    {
+      "name": "sct-rules-06-procedure-planned-done",
+      "file": "sct-rules-06-procedure-planned-done.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A planned procedure with status completed: warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-06-procedure-planned-done-base.json"
+    },
+    {
+      "name": "sct-rules-07-procedure-planned-ok",
+      "file": "sct-rules-07-procedure-planned-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A planned procedure with status preparation: no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-07-procedure-planned-ok-base.json"
+    },
+    {
+      "name": "sct-rules-08-observation-finding",
+      "file": "sct-rules-08-observation-finding.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A disorder as an Observation.code: warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-08-observation-finding-base.json"
+    },
+    {
+      "name": "sct-rules-09-observation-ok",
+      "file": "sct-rules-09-observation-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "An observable entity as an Observation.code: no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-09-observation-ok-base.json"
+    },
+    {
+      "name": "sct-rules-10-bodysite-wrong",
+      "file": "sct-rules-10-bodysite-wrong.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A substance as a Condition.bodySite: warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-10-bodysite-wrong-base.json"
+    },
+    {
+      "name": "sct-rules-11-specimen-wrong",
+      "file": "sct-rules-11-specimen-wrong.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A substance as a Specimen.type: warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-11-specimen-wrong-base.json"
+    },
+    {
+      "name": "sct-rules-12-specimen-ok",
+      "file": "sct-rules-12-specimen-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A specimen as a Specimen.type: no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-12-specimen-ok-base.json"
+    },
+    {
+      "name": "sct-rules-13-allergy-wrong",
+      "file": "sct-rules-13-allergy-wrong.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A procedure as an AllergyIntolerance.code: warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-13-allergy-wrong-base.json"
+    },
+    {
+      "name": "sct-rules-14-allergy-ok",
+      "file": "sct-rules-14-allergy-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "An allergy finding as an AllergyIntolerance.code: no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-14-allergy-ok-base.json"
+    },
+    {
+      "name": "sct-rules-15-medication-substance",
+      "file": "sct-rules-15-medication-substance.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A substance as a medication: hint",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-15-medication-substance-base.json"
+    },
+    {
+      "name": "sct-rules-16-medication-wrong",
+      "file": "sct-rules-16-medication-wrong.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A disorder as a Medication.code: error",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-16-medication-wrong-base.json"
+    },
+    {
+      "name": "sct-rules-17-medication-ok",
+      "file": "sct-rules-17-medication-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A clinical drug as a Medication.code: no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-17-medication-ok-base.json"
+    },
+    {
+      "name": "sct-rules-18-laterality-conflict",
+      "file": "sct-rules-18-laterality-conflict.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A left femur fracture with a right femur body site: warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-18-laterality-conflict-base.json"
+    },
+    {
+      "name": "sct-rules-19-laterality-agree",
+      "file": "sct-rules-19-laterality-agree.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A left femur fracture with a left femur body site: no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-19-laterality-agree-base.json"
+    },
+    {
+      "name": "sct-rules-20-laterality-missing",
+      "file": "sct-rules-20-laterality-missing.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A femur fracture with no side given anywhere: hint",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-20-laterality-missing-base.json"
+    },
+    {
+      "name": "sct-rules-21-laterality-in-bodysite",
+      "file": "sct-rules-21-laterality-in-bodysite.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A femur fracture with the side given by the body site: no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-21-laterality-in-bodysite-base.json"
+    },
+    {
+      "name": "sct-rules-22-laterality-extension-no-side",
+      "file": "sct-rules-22-laterality-extension-no-side.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A laterality extension (left) on a body site that doesn't have a side (stomach): warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-22-laterality-extension-no-side-base.json"
+    },
+    {
+      "name": "sct-rules-23-laterality-expression-no-side",
+      "file": "sct-rules-23-laterality-expression-no-side.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A body site expression that gives a side (left) to a structure that doesn't have one (stomach): warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-23-laterality-expression-no-side-base.json"
+    },
+    {
+      "name": "sd-sct-01-condition-proxy",
+      "file": "sd-sct-01-condition-proxy.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a procedure as the Condition.code (coding by proxy): hint",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sd-sct-01-condition-proxy-base.json"
+    },
+    {
+      "name": "sd-sct-02-condition-ok",
+      "file": "sd-sct-02-condition-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a disorder as the Condition.code: no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sd-sct-02-condition-ok-base.json"
+    },
+    {
+      "name": "sd-sct-03-observation-finding",
+      "file": "sd-sct-03-observation-finding.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a disorder as the Observation.code: warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sd-sct-03-observation-finding-base.json"
+    },
+    {
+      "name": "sd-sct-04-component-finding",
+      "file": "sd-sct-04-component-finding.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a disorder as the code of a component slice: warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sd-sct-04-component-finding-base.json"
+    },
+    {
+      "name": "sd-sct-05-bodysite-wrong",
+      "file": "sd-sct-05-bodysite-wrong.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a substance as the Condition.bodySite: warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sd-sct-05-bodysite-wrong-base.json"
+    },
+    {
+      "name": "sd-sct-06-medication-wrong",
+      "file": "sd-sct-06-medication-wrong.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a disorder as the Medication.code: error",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sd-sct-06-medication-wrong-base.json"
+    },
+    {
+      "name": "sd-sct-07-medication-substance",
+      "file": "sd-sct-07-medication-substance.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a substance as the medication: hint",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sd-sct-07-medication-substance-base.json"
+    },
+    {
+      "name": "sd-sct-08-planned-done",
+      "file": "sd-sct-08-planned-done.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a planned procedure code and the status completed: warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sd-sct-08-planned-done-base.json"
+    },
+    {
+      "name": "sd-sct-09-laterality-conflict",
+      "file": "sd-sct-09-laterality-conflict.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a left femur fracture and a right femur body site: warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sd-sct-09-laterality-conflict-base.json"
+    },
+    {
+      "name": "sd-sct-10-laterality-agree",
+      "file": "sd-sct-10-laterality-agree.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a left femur fracture and a left femur body site: no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sd-sct-10-laterality-agree-base.json"
+    },
+    {
+      "name": "sd-sct-11-laterality-extension-no-side",
+      "file": "sd-sct-11-laterality-extension-no-side.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes the laterality extension (left) on a body site fixed to a structure that doesn't have a side (stomach): warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sd-sct-11-laterality-extension-no-side-base.json"
+    },
+    {
+      "name": "negation-01-allergy-refuted",
+      "file": "negation-01-allergy-refuted.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "No known allergy (a SNOMED CT negation - finding context Known absent), refuted: warning",
+      "tags": ["negation"],
+      "java": "java/R4.negation-01-allergy-refuted-base.json"
+    },
+    {
+      "name": "negation-02-allergy-confirmed",
+      "file": "negation-02-allergy-confirmed.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "No known allergy, confirmed: no issue",
+      "tags": ["negation"],
+      "java": "java/R4.negation-02-allergy-confirmed-base.json"
+    },
+    {
+      "name": "negation-03-allergy-reaction",
+      "file": "negation-03-allergy-reaction.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "No known allergy, with a reaction: warning",
+      "tags": ["negation"],
+      "java": "java/R4.negation-03-allergy-reaction-base.json"
+    },
+    {
+      "name": "negation-04-allergy-inactive-code-refuted",
+      "file": "negation-04-allergy-inactive-code-refuted.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "No known latex allergy (an inactive negation code), refuted: warning (as well as the inactive code)",
+      "tags": ["negation"],
+      "java": "java/R4.negation-04-allergy-inactive-code-refuted-base.json"
+    },
+    {
+      "name": "negation-05-ips-no-known-refuted",
+      "file": "negation-05-ips-no-known-refuted.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "The IPS code no-known-allergies, refuted: warning",
+      "packages": ["hl7.fhir.uv.ips#1.1.0"],
+      "tags": ["negation"],
+      "java": "java/R4.negation-05-ips-no-known-refuted-base.json"
+    },
+    {
+      "name": "negation-06-ips-no-info-refuted",
+      "file": "negation-06-ips-no-info-refuted.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "The IPS code no-allergy-info (no information), refuted: warning",
+      "packages": ["hl7.fhir.uv.ips#1.1.0"],
+      "tags": ["negation"],
+      "java": "java/R4.negation-06-ips-no-info-refuted-base.json"
+    },
+    {
+      "name": "negation-07-ips-no-info-reaction",
+      "file": "negation-07-ips-no-info-reaction.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "The IPS code no-allergy-info (no information), with a reaction: warning",
+      "packages": ["hl7.fhir.uv.ips#1.1.0"],
+      "tags": ["negation"],
+      "java": "java/R4.negation-07-ips-no-info-reaction-base.json"
+    },
+    {
+      "name": "negation-08-condition-refuted",
+      "file": "negation-08-condition-refuted.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "No current problems or disability (a SNOMED CT negation), refuted: warning",
+      "tags": ["negation"],
+      "java": "java/R4.negation-08-condition-refuted-base.json"
+    },
+    {
+      "name": "negation-09-condition-ok",
+      "file": "negation-09-condition-ok.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "No current problems or disability, confirmed: no issue",
+      "tags": ["negation"],
+      "java": "java/R4.negation-09-condition-ok-base.json"
+    },
+    {
+      "name": "negation-10-allergy-not-negation-refuted",
+      "file": "negation-10-allergy-not-negation-refuted.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "An allergy that isn't a negation, refuted: no issue",
+      "tags": ["negation"],
+      "java": "java/R4.negation-10-allergy-not-negation-refuted-base.json"
     },
     {
       "name": "list-xhtml-nested",
@@ -14202,6 +15007,32 @@
       "description": "Test behaviour with strings with a single whitespace",
       "version": "4.0",
       "java": "java/R4.ws-xml-base.json"
+    },
+    {
+      "name": "version-needed-coding",
+      "file": "version-needed-coding.json",
+      "description": "The code system says versionNeeded = true: a coding with no version gets a warning, and a coding with a version doesn't",
+      "version": "5.0",
+      "supporting": [
+        "version-needed-cs.json"
+      ],
+      "module": "tx",
+      "tags": ["version-needed"],
+      "java": "java/R5.version-needed-coding-base.json"
+    },
+    {
+      "name": "version-needed-pinned",
+      "file": "version-needed-pinned.json",
+      "description": "The code system says versionNeeded = true, and the coding has no version. The profile binds to a value set that pins the code system version, but that's specific to the value set, and doesn't travel with the coding, so it still gets the warning",
+      "version": "5.0",
+      "supporting": [
+        "version-needed-cs.json",
+        "version-needed-vs-pinned.json",
+        "version-needed-profile.json"
+      ],
+      "module": "tx",
+      "tags": ["version-needed"],
+      "java": "java/R5.version-needed-pinned-base.json"
     },
     {
       "name": "zzz",

@@ -1,0 +1,53 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "sd-loinc-05-unit-wrong-child",
+  "url": "http://example.org/fhir/StructureDefinition/sd-loinc-05-unit-wrong-child",
+  "name": "SdLoincUnitWrongChild",
+  "status": "draft",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation",
+        "path": "Observation"
+      },
+      {
+        "id": "Observation.code",
+        "path": "Observation.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "3084-1",
+              "display": "Urate [Mass/volume] in Serum or Plasma"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.value[x]",
+        "path": "Observation.value[x]",
+        "type": [
+          {
+            "code": "Quantity"
+          }
+        ]
+      },
+      {
+        "id": "Observation.value[x].system",
+        "path": "Observation.value[x].system",
+        "fixedUri": "http://unitsofmeasure.org"
+      },
+      {
+        "id": "Observation.value[x].code",
+        "path": "Observation.value[x].code",
+        "fixedCode": "mmol/L"
+      }
+    ]
+  }
+}

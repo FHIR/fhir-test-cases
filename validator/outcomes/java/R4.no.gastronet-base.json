@@ -822,6 +822,15 @@
     "expression" : ["Bundle.entry[2].resource/*DiagnosticReport/1*/.result[3]"]
   },
   {
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "The SNOMED CT code 300577008 ('Finding of lesion (finding)') is a finding: the code of an observation says what was observed (an observable entity, or an evaluation procedure), and a finding goes in the value, or in a Condition"
+    },
+    "diagnostics" : "[333,18]",
+    "expression" : ["Bundle.entry[4].resource/*Observation/lesion-1*/.code"]
+  },
+  {
     "extension" : [{
       "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
       "valueUrl" : "https://tx-dev.fhir.org/r4"
@@ -905,6 +914,24 @@
     },
     "diagnostics" : "[458,18]",
     "expression" : ["Bundle.entry[6].resource/*Observation/lumen*/.code.coding[0].code"]
+  },
+  {
+    "severity" : "information",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "The SNOMED CT code 372756006 ('Warfarin (substance)') is a substance, not a medicinal product"
+    },
+    "diagnostics" : "[526,18]",
+    "expression" : ["Bundle.entry[8].resource/*MedicationStatement/2*/.medication.ofType(CodeableConcept)"]
+  },
+  {
+    "severity" : "information",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "The SNOMED CT code 387458008 ('Aspirin (substance)') is a substance, not a medicinal product"
+    },
+    "diagnostics" : "[551,18]",
+    "expression" : ["Bundle.entry[9].resource/*MedicationStatement/3*/.medication.ofType(CodeableConcept)"]
   },
   {
     "extension" : [{

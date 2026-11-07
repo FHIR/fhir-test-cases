@@ -1,0 +1,54 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "sd-sct-04-component-finding",
+  "url": "http://example.org/fhir/StructureDefinition/sd-sct-04-component-finding",
+  "name": "SdSctComponentFinding",
+  "status": "draft",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation",
+        "path": "Observation"
+      },
+      {
+        "id": "Observation.component",
+        "path": "Observation.component",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "code"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Observation.component:htn",
+        "path": "Observation.component",
+        "sliceName": "htn",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Observation.component:htn.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://snomed.info/sct",
+              "code": "38341003",
+              "display": "Hypertensive disorder, systemic arterial"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
