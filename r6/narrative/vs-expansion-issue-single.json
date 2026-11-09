@@ -1,0 +1,86 @@
+{
+  "resourceType": "ValueSet",
+  "id": "vs-expansion-issue-single",
+  "contained": [
+    {
+      "resourceType": "OperationOutcome",
+      "id": "oo1",
+      "issue": [
+        {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/operationoutcome-message-id",
+              "valueString": "VALUESET_EXPANSION_CODESYSTEM_LIMITED"
+            }
+          ],
+          "severity": "warning",
+          "code": "business-rule",
+          "details": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/tools/CodeSystem/tx-issue-type",
+                "code": "business-rule"
+              }
+            ],
+            "text": "Only 1000 codes from the code system 'http://www.ama-assn.org/go/cpt' can be listed in an expansion (by agreement with its publisher), so this expansion doesn't list all the codes asked for"
+          }
+        }
+      ]
+    }
+  ],
+  "url": "http://example.org/fhir/ValueSet/vs-expansion-issue-single",
+  "name": "CPTExpansionIssue",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "http://www.ama-assn.org/go/cpt"
+      }
+    ]
+  },
+  "expansion": {
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/expansion-issue",
+        "valueReference": {
+          "reference": "#oo1"
+        }
+      }
+    ],
+    "identifier": "urn:uuid:0b6ed7a6-2c3e-4c4b-9f3c-6f1a3e2d5b11",
+    "timestamp": "2026-11-09T10:00:00+11:00",
+    "total": 11064,
+    "parameter": [
+      {
+        "name": "count",
+        "valueInteger": 1100
+      },
+      {
+        "name": "used-codesystem",
+        "valueUri": "http://www.ama-assn.org/go/cpt|2023"
+      }
+    ],
+    "contains": [
+      {
+        "system": "http://www.ama-assn.org/go/cpt",
+        "code": "99202"
+      },
+      {
+        "system": "http://www.ama-assn.org/go/cpt",
+        "code": "99203"
+      },
+      {
+        "system": "http://www.ama-assn.org/go/cpt",
+        "code": "99204"
+      },
+      {
+        "system": "http://www.ama-assn.org/go/cpt",
+        "code": "99205"
+      },
+      {
+        "system": "http://www.ama-assn.org/go/cpt",
+        "code": "99211"
+      }
+    ]
+  }
+}
