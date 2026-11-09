@@ -1584,6 +1584,9 @@ Any text enclosed within is ignored
 		<test name="testDivEmpty2" testing="div" inputfile="patient-example.xml"><expression>{} div 1</expression></test>
 		<test name="testDivEmpty3" testing="div" inputfile="patient-example.xml"><expression>{} div {}</expression></test>
 		<test name="testDiv7" testing="div" description="div by a decimal zero is empty, also when the dividend is zero" inputfile="patient-example.xml"><expression>0 div 0.0</expression></test>
+		<test name="testDivDecimal1" testing="div" description="example from the specification: the quotient 7.857... is truncated to 7, not rounded to 8" inputfile="patient-example.xml"><expression>5.5 div 0.7 = 7</expression><output type="boolean">true</output></test>
+		<test name="testDivDecimal2" testing="div" description="truncation is toward zero" inputfile="patient-example.xml"><expression>-5.5 div 0.7 = -7</expression><output type="boolean">true</output></test>
+		<test name="testDivDecimal3" testing="div" description="a quotient of exactly 1.5 is truncated to 1" inputfile="patient-example.xml"><expression>0.75 div 0.5 = 1</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testMod">
@@ -1599,6 +1602,12 @@ Any text enclosed within is ignored
 		<test name="testMod7" testing="mod" description="a decimal mod by zero is empty" inputfile="patient-example.xml"><expression>5.5 mod 0</expression></test>
 		<test name="testMod8" testing="mod" description="a mod by a decimal zero is empty" inputfile="patient-example.xml"><expression>5 mod 0.0</expression></test>
 		<test name="testMod9" testing="mod" description="mod by zero is empty, also when the dividend is zero" inputfile="patient-example.xml"><expression>0.0 mod 0</expression></test>
+		<test name="testModDecimal1" testing="mod" description="example from the specification: the remainder of the truncated division 5.5 div 0.7 = 7" inputfile="patient-example.xml"><expression>5.5 mod 0.7 = 0.6</expression><output type="boolean">true</output></test>
+		<test name="testModDecimal2" testing="mod" description="the remainder of a truncated division has the sign of the dividend" inputfile="patient-example.xml"><expression>-5.5 mod 0.7 = -0.6</expression><output type="boolean">true</output></test>
+		<test name="testModDecimal3" testing="mod" description="the quotient 1.5 is truncated to 1, so the remainder is 0.25" inputfile="patient-example.xml"><expression>0.75 mod 0.5 = 0.25</expression><output type="boolean">true</output></test>
+		<test name="testModDecimal4" testing="mod" description="the remainder is not rounded to the precision of the operands" inputfile="patient-example.xml"><expression>7.5 mod 2 = 1.5</expression><output type="boolean">true</output></test>
+		<test name="testModDecimal5" testing="mod" description="a decimal remainder of zero is equal to the integer 0" inputfile="patient-example.xml"><expression>1.0 mod 1 = 0</expression><output type="boolean">true</output></test>
+		<test name="testModDecimal6" testing="mod" description="a decimal remainder of zero is equal to 0.0" inputfile="patient-example.xml"><expression>1.5 mod 0.5 = 0.0</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testRound">
