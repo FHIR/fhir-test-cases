@@ -1,0 +1,50 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "https://tx-dev.fhir.org/r5"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-context",
+      "valueString" : "http://hl7.org/fhir/StructureDefinition/Observation|5.0.0"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://snomed.info/sct' version 'http://snomed.info/sct/11000279109' could not be found, so the code cannot be validated. Valid versions: http://snomed.info/sct/11000146104/version/20260930, http://snomed.info/sct/11010000107/version/20261021, http://snomed.info/sct/731000124108/version/20230301, http://snomed.info/sct/731000124108/version/20240301, http://snomed.info/sct/731000124108/version/20250901, http://snomed.info/sct/83821000000107/version/20230412, http://snomed.info/sct/900000000000207008/version/20250201, http://snomed.info/sct/900000000000207008/version/20260701 and http://snomed.info/xsct/31000003106/version/20250909"
+    },
+    "diagnostics" : "[17,4]",
+    "expression" : ["Observation.value.ofType(CodeableConcept).coding[0].system"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "https://tx-dev.fhir.org/r5"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-context",
+      "valueString" : "http://hl7.org/fhir/test/StructureDefinition/vs-exclude-sct-split-observation|1.0.0"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://snomed.info/sct' version 'http://snomed.info/sct/11000181102' could not be found, so the code cannot be validated. Valid versions: http://snomed.info/sct/11000146104/version/20260930, http://snomed.info/sct/11010000107/version/20261021, http://snomed.info/sct/731000124108/version/20230301, http://snomed.info/sct/731000124108/version/20240301, http://snomed.info/sct/731000124108/version/20250901, http://snomed.info/sct/83821000000107/version/20230412, http://snomed.info/sct/900000000000207008/version/20250201, http://snomed.info/sct/900000000000207008/version/20260701 and http://snomed.info/xsct/31000003106/version/20250909"
+    },
+    "diagnostics" : "[17,4]",
+    "expression" : ["Observation.value.ofType(CodeableConcept).coding[1].system"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-context",
+      "valueString" : "http://hl7.org/fhir/test/StructureDefinition/vs-exclude-sct-split-observation|1.0.0"
+    }],
+    "severity" : "error",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'Exclude from SNOMED CT across two servers' (http://hl7.org/fhir/test/ValueSet/vs-exclude-sct-split|1.0.0), and a coding from this value set is required) (codes = http://snomed.info/sct#46635009, http://snomed.info/sct#314208002)"
+    },
+    "diagnostics" : "[17,4]",
+    "expression" : ["Observation.value.ofType(CodeableConcept)"]
+  }]
+}

@@ -1,0 +1,43 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "vs-exclude-loinc-observation",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/vs-exclude-loinc-observation",
+  "version": "1.0.0",
+  "name": "VSExcludeLoincObservation",
+  "title": "VS Exclude LOINC Observation",
+  "status": "active",
+  "experimental": false,
+  "date": "2026-11-10",
+  "publisher": "FHIR Project",
+  "description": "Observation.code and Observation.component.code are bound to a LOINC value set with explicit code and filter excludes",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation",
+        "path": "Observation"
+      },
+      {
+        "id": "Observation.code",
+        "path": "Observation.code",
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://hl7.org/fhir/test/ValueSet/vs-exclude-loinc"
+        }
+      },
+      {
+        "id": "Observation.component.code",
+        "path": "Observation.component.code",
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://hl7.org/fhir/test/ValueSet/vs-exclude-loinc"
+        }
+      }
+    ]
+  }
+}
