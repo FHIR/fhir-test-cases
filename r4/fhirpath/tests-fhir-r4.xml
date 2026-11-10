@@ -922,6 +922,14 @@ Any text enclosed within is ignored
 		<test name="testEquality38" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 = @2015-02-04T11:00</expression><output type="boolean">false</output></test>
 		<test name="testEquality39" description="dateTimes with different precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00:00 = @2015-02-04T10:00</expression></test>
 		<test name="testEquality40" description="dateTimes with minute precision and an offset" inputfile="patient-example.xml"><expression>@2015-02-04T10:00-05:00 = @2015-02-04T10:00-05:00</expression><output type="boolean">true</output></test>
+		<test name="testEquality41" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>1 year = 1 years</expression><output type="boolean">true</output></test>
+		<test name="testEquality42" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>1 years = 1 year</expression><output type="boolean">true</output></test>
+		<test name="testEquality43" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>1 month = 1 months</expression><output type="boolean">true</output></test>
+		<test name="testEquality44" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year = 12 months</expression><output type="boolean">true</output></test>
+		<test name="testEquality45" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>2 years = 24 months</expression><output type="boolean">true</output></test>
+		<test name="testEquality46" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>18 months = 1.5 years</expression><output type="boolean">true</output></test>
+		<test name="testEquality47" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year = 13 months</expression><output type="boolean">false</output></test>
+		<test name="testEquality48" description="for equality, the calendar duration year and the UCUM unit mo are not comparable" inputfile="patient-example.xml"><expression>1 year = 12 'mo'</expression></test>
 	</group>
 
 	<group name="testNEquality">
@@ -952,6 +960,9 @@ Any text enclosed within is ignored
 		<test name="testNEquality25" inputfile="patient-example.xml"><expression>name.first() != 'Peter'</expression><output type="boolean">true</output></test>
 		<test name="testNEquality26" inputfile="patient-example.xml"><expression>'Peter' != name.first()</expression><output type="boolean">true</output></test>
 		<test name="testNEquality27" description="dateTimes with minute precision" inputfile="patient-example.xml"><expression>@2015-02-04T10:00 != @2015-02-04T11:00</expression><output type="boolean">true</output></test>
+		<test name="testNEquality28" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>1 year != 1 years</expression><output type="boolean">false</output></test>
+		<test name="testNEquality29" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year != 12 months</expression><output type="boolean">false</output></test>
+		<test name="testNEquality30" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year != 13 months</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testHasValue">
@@ -1050,11 +1061,12 @@ Any text enclosed within is ignored
 		<test name="testLessThan26" inputfile="patient-example.xml"><expression>@2018-03-01T10:30:00 &lt; @2018-03-01T10:30:00.0</expression><output type="boolean">false</output></test>
 		<test name="testLessThan27" inputfile="patient-example.xml"><expression>@T10:30:00 &lt; @T10:30:00.0</expression><output type="boolean">false</output></test>
 		<test name="testLessThan28" description="a comparison does not change the timezone of the value it compares" inputfile="patient-example.xml"><expression>(Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime').value &lt; @1975-01-01T00:00:00Z) and Patient.birthDate.extension('http://hl7.org/fhir/StructureDefinition/patient-birthTime').value.toString() = '1974-12-25T14:35:45-05:00'</expression><output type="boolean">true</output></test>
-		<test name="testLessThan29" description="calendar durations in different units are not compared by their values" inputfile="patient-example.xml"><expression>1 year &lt; 2 months</expression></test>
+		<test name="testLessThan29" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year &lt; 2 months</expression><output type="boolean">false</output></test>
 		<test name="testLessThan30" description="quantities with different dimensions can't be compared" inputfile="patient-example.xml"><expression>1 'kg' &lt; 2 'm'</expression></test>
 		<test name="testLessThan31" description="quantities with the same dimension are compared in canonical units" inputfile="patient-example.xml"><expression>1 'kg' &lt; 2000 'g'</expression><output type="boolean">true</output></test>
 		<test name="testLessThan32" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>1 year &lt; 2 years</expression><output type="boolean">true</output></test>
 		<test name="testLessThan33" description="a quantity with only unit text and a coded quantity with the same unit text" inputfile="parameters-quantity-unit-text.xml"><expression>Parameters.parameter[0].value &lt; Parameters.parameter[1].value</expression><output type="boolean">true</output></test>
+		<test name="testLessThan34" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year &lt; 13 months</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testQuantityUnitComparison">
@@ -1107,6 +1119,7 @@ Any text enclosed within is ignored
 		<test name="testLessOrEqual28" description="a calendar year and a duration in days can't be compared" inputfile="patient-example.xml"><expression>1 year &lt;= 2 days</expression></test>
 		<test name="testLessOrEqual29" description="quantities with the same dimension are compared in canonical units" inputfile="patient-example.xml"><expression>1 'kg' &lt;= 999 'g'</expression><output type="boolean">false</output></test>
 		<test name="testLessOrEqual30" description="a quantity with only unit text and a coded quantity with the same unit text" inputfile="parameters-quantity-unit-text.xml"><expression>Parameters.parameter[0].value &lt;= Parameters.parameter[1].value</expression><output type="boolean">true</output></test>
+		<test name="testLessOrEqual31" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year &lt;= 12 months</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testGreatorOrEqual">
@@ -1139,6 +1152,7 @@ Any text enclosed within is ignored
 		<test name="testGreatorOrEqual27" inputfile="patient-example.xml"><expression>@T10:30:00 >= @T10:30:00.0</expression><output type="boolean">true</output></test>
 		<test name="testGreatorOrEqual28" description="the singular and plural calendar keywords are the same unit" inputfile="patient-example.xml"><expression>2 years &gt;= 2 year</expression><output type="boolean">true</output></test>
 		<test name="testGreatorOrEqual29" description="quantities with different dimensions can't be compared" inputfile="patient-example.xml"><expression>2 'kg' &gt;= 1 'm'</expression></test>
+		<test name="testGreatorOrEqual30" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>24 months &gt;= 2 years</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testGreaterThan">
@@ -1170,8 +1184,9 @@ Any text enclosed within is ignored
 		<test name="testGreaterThan26" inputfile="patient-example.xml"><expression>@2018-03-01T10:30:00 > @2018-03-01T10:30:00.0</expression><output type="boolean">false</output></test>
 		<test name="testGreaterThan27" inputfile="patient-example.xml"><expression>@T10:30:00 > @T10:30:00.0</expression><output type="boolean">false</output></test>
 		<test name="testGreaterThan28" description="calendar durations and definite durations above seconds can't be compared" inputfile="patient-example.xml"><expression>1 year &gt; 1 'a'</expression></test>
-		<test name="testGreaterThan29" description="calendar durations in different units are not compared by their values" inputfile="patient-example.xml"><expression>1 year &gt; 2 months</expression></test>
+		<test name="testGreaterThan29" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>1 year &gt; 2 months</expression><output type="boolean">true</output></test>
 		<test name="testGreaterThan30" description="a quantity with only unit text and a coded quantity with the same unit text" inputfile="parameters-quantity-unit-text.xml"><expression>Parameters.parameter[1].value &gt; Parameters.parameter[0].value</expression><output type="boolean">true</output></test>
+		<test name="testGreaterThan31" description="a calendar year is 12 calendar months" inputfile="patient-example.xml"><expression>6 months &gt; 1 year</expression><output type="boolean">false</output></test>
 	</group>
 
   <group name="testCombine()">
