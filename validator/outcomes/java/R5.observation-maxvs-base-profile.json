@@ -1,3 +1,33 @@
 {
-  "resourceType" : "OperationOutcome"
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "https://tx-dev.fhir.org/r5"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-context",
+      "valueString" : "http://hl7.org/fhir/StructureDefinition/multi-profile-same-resource-profile"
+    }],
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "The concept '109006' has a status of inactive and its use should be reviewed"
+    },
+    "diagnostics" : "[4,8]",
+    "expression" : ["Observation.code.coding[0]"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-context",
+      "valueString" : "http://hl7.org/fhir/StructureDefinition/multi-profile-same-resource-profile"
+    }],
+    "severity" : "warning",
+    "code" : "code-invalid",
+    "details" : {
+      "text" : "None of the codings provided are in the value set 'SNOMED CT Clinical Findings' (http://hl7.org/fhir/ValueSet/clinical-findings|5.0.0), and a coding SHALL come from this value set unless it has no suitable code (note that the validator cannot judge what is suitable) (codes = http://snomed.info/sct#109006)"
+    },
+    "diagnostics" : "[4,8]",
+    "expression" : ["Observation.code"]
+  }]
 }
