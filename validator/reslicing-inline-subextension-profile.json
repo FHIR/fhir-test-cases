@@ -1,0 +1,115 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "InlineSubExtensionAuditEventProfile",
+  "url": "http://example.org/inlinesubext/StructureDefinition/InlineSubExtensionAuditEventProfile",
+  "version": "0.1.0",
+  "name": "InlineSubExtensionAuditEventProfile",
+  "status": "draft",
+  "description": "Re-slices a complex extension whose sub-extensions are defined inline, using a composite discriminator [value:url, pattern:extension('function').value]. The altid slice is a sibling that has no 'function' sub-extension, so the added discriminator legitimately does not resolve for it (R5 5.1.0.13).",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "AuditEvent",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/AuditEvent",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "AuditEvent.agent.extension",
+        "path": "AuditEvent.agent.extension",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "url"
+            },
+            {
+              "type": "pattern",
+              "path": "extension('function').value"
+            }
+          ],
+          "ordered": false,
+          "rules": "open"
+        }
+      },
+      {
+        "id": "AuditEvent.agent.extension:altid",
+        "path": "AuditEvent.agent.extension",
+        "sliceName": "altid",
+        "min": 0,
+        "max": "1",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://hl7.org/fhir/StructureDefinition/auditevent-AlternativeUserID"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "AuditEvent.agent.extension:performer",
+        "path": "AuditEvent.agent.extension",
+        "sliceName": "performer",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Extension",
+            "profile": [
+              "http://example.org/inlinesubext/StructureDefinition/performer"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "AuditEvent.agent.extension:performer/author",
+        "path": "AuditEvent.agent.extension",
+        "sliceName": "performer/author",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "AuditEvent.agent.extension:performer/author.extension:function",
+        "path": "AuditEvent.agent.extension.extension",
+        "sliceName": "function"
+      },
+      {
+        "id": "AuditEvent.agent.extension:performer/author.extension:function.value[x]",
+        "path": "AuditEvent.agent.extension.extension.value[x]",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ParticipationType",
+              "code": "AUT"
+            }
+          ]
+        }
+      },
+      {
+        "id": "AuditEvent.agent.extension:performer/device",
+        "path": "AuditEvent.agent.extension",
+        "sliceName": "performer/device",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "AuditEvent.agent.extension:performer/device.extension:function",
+        "path": "AuditEvent.agent.extension.extension",
+        "sliceName": "function"
+      },
+      {
+        "id": "AuditEvent.agent.extension:performer/device.extension:function.value[x]",
+        "path": "AuditEvent.agent.extension.extension.value[x]",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-ParticipationType",
+              "code": "DEV"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
