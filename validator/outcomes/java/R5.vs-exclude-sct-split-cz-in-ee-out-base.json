@@ -2,15 +2,19 @@
   "resourceType" : "OperationOutcome",
   "issue" : [{
     "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "https://tx-dev.fhir.org/r5"
+    },
+    {
       "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-context",
       "valueString" : "http://hl7.org/fhir/StructureDefinition/Observation|5.0.0"
     }],
     "severity" : "error",
-    "code" : "exception",
+    "code" : "invalid",
     "details" : {
-      "text" : "Error from https://tx-dev.fhir.org/r5: Error: http://snomed.info/sct|http://snomed.info/sct/11000279109/version/20260618 is not held on this server, and is provided by https://tx.hl7.cz/r5, but 'valueSet' isn't supported for code systems on other servers\r\n"
+      "text" : "The code system 'http://snomed.info/sct' version 'http://snomed.info/sct/11000279109/version/20260618' in the ValueSet include is different to the one in the value ('http://snomed.info/sct/11000181102')"
     },
     "diagnostics" : "[17,4]",
-    "expression" : ["Observation.value.ofType(CodeableConcept)"]
+    "expression" : ["Observation.value.ofType(CodeableConcept).coding[1].version"]
   }]
 }
