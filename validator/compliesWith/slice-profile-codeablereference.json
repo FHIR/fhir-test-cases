@@ -1,0 +1,55 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "complies-with-slice-profile-codeablereference",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-compliesWithProfile",
+      "valueCanonical": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-profile-codeablereference-base"
+    }
+  ],
+  "url": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-profile-codeablereference",
+  "name": "CompliesWithSliceProfileCodeablereference",
+  "title": "complies-with-slice-profile-codeablereference",
+  "status": "active",
+  "kind": "resource",
+  "abstract": false,
+  "type": "MedicationStatement",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/MedicationStatement",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "MedicationStatement",
+        "path": "MedicationStatement"
+      },
+      {
+        "id": "MedicationStatement.reason",
+        "path": "MedicationStatement.reason",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "profile",
+              "path": "reference.resolve()"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "MedicationStatement.reason:cond",
+        "path": "MedicationStatement.reason",
+        "sliceName": "cond",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "CodeableReference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Condition"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
