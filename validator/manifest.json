@@ -14,6 +14,7 @@
     " * 'supporting': An array of string, other files to load before doing the validation",
     " * 'profiles': An alias for supporting",
     " * 'launch-context': An object naming the launch contexts to supply, as name : reference - the same thing the -launch-context command line parameter supplies. Where the reference names a file in the test cases, it is extracted and the absolute path is what the validator is given, so that it does the same loading it would do for a real run; a reference that names nothing is passed through as written, which is how the unresolvable cases are set up",
+    " * 'jurisdiction': The jurisdiction to validate in - the same thing the -jurisdiction command line parameter supplies. Either a 2 letter country code, uv/global, or system#code. The jurisdiction is also a use context (usage-context-type#jurisdiction) for additional bindings",
     " * 'usage': A UsageContext (or an array of them) that the caller declares to apply - the same thing the -usage command line parameter supplies. Additional bindings scoped to a use context only apply when it is declared here. Note that UsageContext.value[x] is CodeableConcept | Quantity | Range | Reference; there is no valueCoding",
     " * 'logical': For some logical models, they cannot be automatically recognized; they have to configured in advance. This is the URL of the logical model to parse with (e..g the base model)",
     " * 'bundle-param' : A string that functions as a bundle parameter - this is specifically for testing the parameter functionality",
@@ -13916,6 +13917,36 @@
       "java": "java/R5.usage-context-jurisdiction-us-base.json"
     },
     {
+      "name": "usage-context-jurisdiction-param-us-bad",
+      "file": "patient-gender-unknown.json",
+      "version": "5.0",
+      "description": "-jurisdiction us puts the additional binding scoped to jurisdiction US in scope, and 'unknown' is not in it",
+      "module": "profile",
+      "jurisdiction" : "us",
+      "supporting" : ["patient-profile-usage-jurisdiction.xml", "ValueSet-male-female.json"],
+      "java": "java/R5.usage-context-jurisdiction-param-us-bad-base.json"
+    },
+    {
+      "name": "usage-context-jurisdiction-param-us-good",
+      "file": "patient-gender-male.json",
+      "version": "5.0",
+      "description": "-jurisdiction us puts the additional binding scoped to jurisdiction US in scope, and 'male' is in it",
+      "module": "profile",
+      "jurisdiction" : "us",
+      "supporting" : ["patient-profile-usage-jurisdiction.xml", "ValueSet-male-female.json"],
+      "java": "java/R5.usage-context-jurisdiction-param-us-good-base.json"
+    },
+    {
+      "name": "usage-context-jurisdiction-param-au",
+      "file": "patient-gender-unknown.json",
+      "version": "5.0",
+      "description": "-jurisdiction au does not match the binding's jurisdiction (US), so the additional binding is not in scope and 'unknown' is not checked against it",
+      "module": "profile",
+      "jurisdiction" : "au",
+      "supporting" : ["patient-profile-usage-jurisdiction.xml", "ValueSet-male-female.json"],
+      "java": "java/R5.usage-context-jurisdiction-param-au-base.json"
+    },
+    {
       "name": "usage-context-gender-none",
       "file": "observation-menstrual-cycle-day.json",
       "version": "5.0",
@@ -15206,6 +15237,15 @@
       "module": "tx",
       "tags": ["vs-exclude"],
       "java": "java/R5.vs-exclude-sct-split-cz-out-ee-in-base.json"
+    },
+    {
+      "name": "bundle-relative-ref-no-fullurl",
+      "file": "bundle-relative-ref-no-fullurl.json",
+      "description": "Document whose Composition (urn:uuid fullUrl) has relative references, and the only other entry has no fullUrl. Neither reference can be resolved under the bundle resolution rules (all of which match on fullUrl); the validator used to resolve both of them to the entry without a fullUrl, whatever type/id they named",
+      "version": "4.0",
+      "module": "bundle",
+      "tags": ["bundle-index"],
+      "java": "java/R4.bundle-relative-ref-no-fullurl-base.json"
     },
     {
       "name": "zzz",
