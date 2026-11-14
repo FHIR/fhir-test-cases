@@ -1,0 +1,31 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "sd-other-mappings",
+  "url": "http://example.org/fhir/StructureDefinition/sd-other-mappings",
+  "name": "OtherMappings",
+  "title": "Other Mappings Test",
+  "status": "draft",
+  "mapping": [
+    { "identity": "workflow", "uri": "http://hl7.org/fhir/workflow", "name": "Workflow Pattern", "comment": "Maps to the Event pattern" },
+    { "identity": "v2", "uri": "http://hl7.org/v2", "name": "HL7 v2 Mapping" },
+    { "extension": [ { "url": "http://hl7.org/fhir/tools/StructureDefinition/mapping-reference", "valueUrl": "http://example.org/docs/local-mapping.html" } ], "identity": "local", "uri": "http://example.org/mapping/local", "name": "Local Mapping", "comment": "A mapping space that isn't in the core mapping spaces" },
+    { "identity": "urn", "uri": "urn:oid:1.2.3.4.5", "name": "OID Mapping" }
+  ],
+  "kind": "logical",
+  "abstract": false,
+  "type": "http://example.org/fhir/StructureDefinition/sd-other-mappings",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Base",
+  "derivation": "specialization",
+  "snapshot": {
+    "element": [
+      { "id": "OtherMappings", "path": "OtherMappings", "short": "Other mappings test", "definition": "Other mappings test.", "min": 0, "max": "*",
+        "mapping": [ { "identity": "workflow", "map": "Event" } ] },
+      { "id": "OtherMappings.code", "path": "OtherMappings.code", "short": "What happened", "definition": "What happened.", "min": 1, "max": "1",
+        "type": [ { "code": "CodeableConcept" } ],
+        "mapping": [ { "identity": "workflow", "map": "Event.code" }, { "identity": "v2", "map": "OBX-3, OBX-4", "comment": "OBX-4 only when there are multiple observations" }, { "identity": "local", "map": ".outboundRelationship[typeCode=\"COMP\"].target[classCode=\"LIST\" , moodCode=\"INT\"].code\nNote: see Item.code" }, { "identity": "urn", "map": "code" } ] },
+      { "id": "OtherMappings.status", "path": "OtherMappings.status", "short": "Status", "definition": "Status.", "min": 1, "max": "1",
+        "type": [ { "code": "code" } ],
+        "mapping": [ { "identity": "workflow", "map": "Event.status" }, { "identity": "v2", "map": "OBX-11" } ] }
+    ]
+  }
+}
