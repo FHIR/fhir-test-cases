@@ -1,0 +1,31 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "sd-other-changes-links",
+  "url": "http://example.org/fhir/StructureDefinition/sd-other-changes-links",
+  "name": "OtherChangesLinks",
+  "status": "draft",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation",
+        "path": "Observation"
+      },
+      {
+        "id": "Observation.partOf",
+        "path": "Observation.partOf",
+        "comment": "To link an Observation to an Encounter use `encounter`.  See the  [Notes](observation.html#obsgrouping) below for guidance on referencing another Observation."
+      },
+      {
+        "id": "Observation.issued",
+        "path": "Observation.issued",
+        "min": 1,
+        "comment": "For Observations that don't require review and verification, it may be the same as the [`lastUpdated` ](resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn't require the new version to be reviewed and verified again."
+      }
+    ]
+  }
+}

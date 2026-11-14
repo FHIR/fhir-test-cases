@@ -1,0 +1,36 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "sd-recursive-prohibited",
+  "url": "http://example.org/fhir/StructureDefinition/sd-recursive-prohibited",
+  "name": "RecursiveProhibited",
+  "title": "Consent profile that prohibits the third level of nested provisions (fhir-ig-publisher#667)",
+  "status": "draft",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Consent",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Consent",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Consent",
+        "path": "Consent"
+      },
+      {
+        "id": "Consent.provision",
+        "path": "Consent.provision",
+        "min": 1
+      },
+      {
+        "id": "Consent.provision.provision",
+        "path": "Consent.provision.provision",
+        "mustSupport": true
+      },
+      {
+        "id": "Consent.provision.provision.provision",
+        "path": "Consent.provision.provision.provision",
+        "max": "0"
+      }
+    ]
+  }
+}
