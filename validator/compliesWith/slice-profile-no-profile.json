@@ -1,0 +1,75 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "complies-with-slice-profile-no-profile",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-compliesWithProfile",
+      "valueCanonical": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-profile-no-profile-base"
+    }
+  ],
+  "url": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-profile-no-profile",
+  "name": "CompliesWithSliceProfileNoProfile",
+  "title": "complies-with-slice-profile-no-profile",
+  "status": "active",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Bundle",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Bundle",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Bundle",
+        "path": "Bundle"
+      },
+      {
+        "id": "Bundle.entry",
+        "path": "Bundle.entry",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "profile",
+              "path": "resource"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Bundle.entry:patient",
+        "path": "Bundle.entry",
+        "sliceName": "patient",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Bundle.entry:patient.resource",
+        "path": "Bundle.entry.resource",
+        "type": [
+          {
+            "code": "Patient"
+          }
+        ]
+      },
+      {
+        "id": "Bundle.entry:vs",
+        "path": "Bundle.entry",
+        "sliceName": "vs",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Bundle.entry:vs.resource",
+        "path": "Bundle.entry.resource",
+        "type": [
+          {
+            "code": "Observation",
+            "profile": [
+              "http://hl7.org/fhir/StructureDefinition/vitalsigns"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

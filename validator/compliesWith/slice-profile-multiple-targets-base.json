@@ -1,0 +1,50 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "complies-with-slice-profile-multiple-targets-base",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-profile-multiple-targets-base",
+  "name": "CompliesWithSliceProfileMultipleTargetsBase",
+  "title": "complies-with-slice-profile-multiple-targets-base",
+  "status": "active",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation",
+        "path": "Observation"
+      },
+      {
+        "id": "Observation.hasMember",
+        "path": "Observation.hasMember",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "profile",
+              "path": "resolve()"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Observation.hasMember:vs",
+        "path": "Observation.hasMember",
+        "sliceName": "vs",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/bodyweight",
+              "http://hl7.org/fhir/StructureDefinition/heartrate"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

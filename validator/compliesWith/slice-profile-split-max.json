@@ -1,0 +1,81 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "complies-with-slice-profile-split-max",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-compliesWithProfile",
+      "valueCanonical": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-profile-split-max-base"
+    }
+  ],
+  "url": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-profile-split-max",
+  "name": "CompliesWithSliceProfileSplitMax",
+  "title": "complies-with-slice-profile-split-max",
+  "status": "active",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Bundle",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Bundle",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Bundle",
+        "path": "Bundle"
+      },
+      {
+        "id": "Bundle.entry",
+        "path": "Bundle.entry",
+        "min": 1,
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "profile",
+              "path": "resource"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Bundle.entry:bw",
+        "path": "Bundle.entry",
+        "sliceName": "bw",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Bundle.entry:bw.resource",
+        "path": "Bundle.entry.resource",
+        "min": 1,
+        "type": [
+          {
+            "code": "Observation",
+            "profile": [
+              "http://hl7.org/fhir/StructureDefinition/bodyweight"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Bundle.entry:hr",
+        "path": "Bundle.entry",
+        "sliceName": "hr",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Bundle.entry:hr.resource",
+        "path": "Bundle.entry.resource",
+        "min": 1,
+        "type": [
+          {
+            "code": "Observation",
+            "profile": [
+              "http://hl7.org/fhir/StructureDefinition/heartrate"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
