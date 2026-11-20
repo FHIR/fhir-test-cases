@@ -17,6 +17,7 @@
   parameters-example-types.xml
   parameters-example-quantities.xml
   parameters-example-decimals.xml
+  parameters-example-large-exponents.xml
   ccda.xml
   patient-example-period.xml
   explanationofbenefit-example.json
@@ -1266,6 +1267,38 @@ Any text enclosed within is ignored
 		<test name="testQuantityUnitVsNoUnitEquivalent" testing="~" description="a quantity with a unit is not equivalent to one without, whichever side the unit is on" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[2].value ~ Parameters.parameter[0].value</expression><output type="boolean">false</output></test>
 		<!-- left: parameter[0] = 1 with no unit; right: parameter[2] = 1 with unit text "tablets" and no code -->
 		<test name="testQuantityNoUnitVsUnitEquivalent" testing="~" description="a quantity with a unit is not equivalent to one without, whichever side the unit is on" inputfile="parameters-example-quantities.xml"><expression>Parameters.parameter[0].value ~ Parameters.parameter[2].value</expression><output type="boolean">false</output></test>
+	</group>
+
+	<group name="testLargeExponents" description="Decimals and quantities with a very large or very small exponent: an engine must not write these values out in full">
+		<test name="testLargeExponentQtyEqualOtherUnit" testing="=" description="a huge quantity is not converted to canonical units, so it can't be compared to a quantity in other units" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[0].value = 1 'g'</expression></test>
+		<test name="testLargeExponentQtyEqualSameUnit" testing="=" description="a huge quantity compared to a quantity in the same units" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[0].value = 1 'kg'</expression><output type="boolean">false</output></test>
+		<test name="testLargeExponentQtyEquivalentOtherUnit" testing="~" description="a huge quantity is not converted to canonical units, so it is not equivalent to a quantity in other units" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[0].value ~ 1 'g'</expression><output type="boolean">false</output></test>
+		<test name="testLargeExponentQtyEquivalentSameUnit" testing="~" description="a huge quantity compared to a quantity in the same units" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[0].value ~ 1 'kg'</expression><output type="boolean">false</output></test>
+		<test name="testLargeExponentQtyLessOtherUnit" testing="&lt;" description="a huge quantity is not converted to canonical units, so it can't be ordered against a quantity in other units" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[0].value &lt; 1 'g'</expression></test>
+		<test name="testLargeExponentQtyGreaterSameUnit" testing="&gt;" description="a huge quantity ordered against a quantity in the same units" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[0].value &gt; 1 'kg'</expression><output type="boolean">true</output></test>
+		<test name="testLargeExponentQtyToString" testing="toString" description="a huge quantity is converted to a string with an exponent" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[0].value.toString()</expression><output type="string">1E+999999999 'kg'</output></test>
+		<test name="testLargeExponentQtyTimes" testing="*" description="arithmetic on a huge quantity gives empty" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[0].value * 2 'kg'</expression></test>
+		<test name="testLargeExponentQtyDivide" testing="/" description="arithmetic on a huge quantity gives empty" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[0].value / 2 'kg'</expression></test>
+		<test name="testLargeExponentQtyLowBoundary" testing="lowBoundary" description="the boundary of a huge quantity is empty" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[0].value.lowBoundary()</expression></test>
+		<test name="testLargeExponentQtyEqualOtherUnitElement" testing="=" description="as testLargeExponentQtyEqualOtherUnit, using the element model" inputfile="parameters-example-large-exponents.xml" mode="element"><expression>Parameters.parameter[0].value = 1 'g'</expression></test>
+		<test name="testLargeExponentQtyToStringElement" testing="toString" description="as testLargeExponentQtyToString, using the element model" inputfile="parameters-example-large-exponents.xml" mode="element"><expression>Parameters.parameter[0].value.toString()</expression><output type="string">1E+999999999 'kg'</output></test>
+		<test name="testSmallExponentQtyEquivalentSameUnit" testing="~" description="a tiny quantity rounds to zero at the precision of 0 'kg'" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[1].value ~ 0 'kg'</expression><output type="boolean">true</output></test>
+		<test name="testSmallExponentQtyToString" testing="toString" description="a tiny quantity is converted to a string with an exponent" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[1].value.toString()</expression><output type="string">1E-999999999 'kg'</output></test>
+		<test name="testLargeExponentDecPlus" testing="+" description="arithmetic on a huge decimal gives empty" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[2].value + 1</expression></test>
+		<test name="testLargeExponentDecMinus" testing="-" description="arithmetic on a huge decimal gives empty" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[2].value - 1</expression></test>
+		<test name="testLargeExponentDecTimes" testing="*" description="arithmetic on a huge decimal gives empty" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[2].value * 2</expression></test>
+		<test name="testLargeExponentDecDivide" testing="/" description="arithmetic on a huge decimal gives empty" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[2].value / 2</expression></test>
+		<test name="testLargeExponentDecDiv" testing="div" description="arithmetic on a huge decimal gives empty" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[2].value div 2</expression></test>
+		<test name="testLargeExponentDecMod" testing="mod" description="arithmetic on a huge decimal gives empty" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[2].value mod 2</expression></test>
+		<test name="testLargeExponentDecRound" testing="round" description="rounding a huge decimal gives empty" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[2].value.round(2)</expression></test>
+		<test name="testLargeExponentDecLowBoundary" testing="lowBoundary" description="the boundary of a huge decimal is empty" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[2].value.lowBoundary()</expression></test>
+		<test name="testLargeExponentDecHighBoundary" testing="highBoundary" description="the boundary of a huge decimal is empty" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[2].value.highBoundary()</expression></test>
+		<test name="testLargeExponentDecEqual" testing="=" description="a huge decimal is not equal to 1" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[2].value = 1</expression><output type="boolean">false</output></test>
+		<test name="testLargeExponentDecEquivalent" testing="~" description="a huge decimal is not equivalent to 1" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[2].value ~ 1</expression><output type="boolean">false</output></test>
+		<test name="testLargeExponentDecGreater" testing="&gt;" description="a huge decimal is greater than 1" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[2].value &gt; 1</expression><output type="boolean">true</output></test>
+		<test name="testSmallExponentDecEquivalent" testing="~" description="a tiny decimal rounds to zero at the precision of 0" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[3].value ~ 0</expression><output type="boolean">true</output></test>
+		<test name="testSmallExponentDecPlus" testing="+" description="arithmetic on a tiny decimal gives empty" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[3].value + 1</expression></test>
+		<test name="testLargeExponentDateAdd" testing="+" description="adding a huge duration to a date gives empty" inputfile="parameters-example-large-exponents.xml"><expression>@2020-01-01 + Parameters.parameter[4].value</expression></test>
 	</group>
 
 	<group name="testLessOrEqual">
