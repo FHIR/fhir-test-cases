@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="obs-comp-low-ext"/>
+  <url value="http://example.org/fhir/StructureDefinition/obs-comp-low-ext"/>
+  <name value="ObsCompLowExt"/>
+  <status value="draft"/>
+  <description value="From fhir-ig-publisher#1299: constrains component.referenceRange (a content reference to Observation.referenceRange), then low.extension (sliced in the base) and its url. This caused a StackOverflowError; it needs all three - the content reference, the extension, and walking into the extension's url"/>
+  <fhirVersion value="6.0.0-ballot4"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.component">
+      <path value="Observation.component"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Observation.component.referenceRange">
+      <path value="Observation.component.referenceRange"/>
+      <max value="1"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Observation.component.referenceRange.low.extension">
+      <path value="Observation.component.referenceRange.low.extension"/>
+      <max value="1"/>
+    </element>
+    <element id="Observation.component.referenceRange.low.extension.url">
+      <path value="Observation.component.referenceRange.low.extension.url"/>
+      <fixedUri value="http://example.org/fhir/StructureDefinition/obs-comp-low"/>
+    </element>
+  </differential>
+</StructureDefinition>

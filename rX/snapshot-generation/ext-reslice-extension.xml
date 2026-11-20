@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <url value="http://example.org/fhir/StructureDefinition/ext-reslice-extension"/>
+  <name value="ExtResliceExtension"/>
+  <status value="draft"/>
+  <description value="A complex extension shaped like FR Core identity reliability (fhir-ig-publisher#846): sub-extensions identityStatus (Coding) and validationDate (dateTime)"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="complex-type"/>
+  <abstract value="false"/>
+  <context>
+    <type value="element"/>
+    <expression value="Patient"/>
+  </context>
+  <type value="Extension"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Extension.extension">
+      <path value="Extension.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Extension.extension:identityStatus">
+      <path value="Extension.extension"/>
+      <sliceName value="identityStatus"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="Extension.extension:identityStatus.url">
+      <path value="Extension.extension.url"/>
+      <fixedUri value="identityStatus"/>
+    </element>
+    <element id="Extension.extension:identityStatus.value[x]">
+      <path value="Extension.extension.value[x]"/>
+      <type>
+        <code value="Coding"/>
+      </type>
+    </element>
+    <element id="Extension.extension:validationDate">
+      <path value="Extension.extension"/>
+      <sliceName value="validationDate"/>
+      <max value="1"/>
+    </element>
+    <element id="Extension.extension:validationDate.url">
+      <path value="Extension.extension.url"/>
+      <fixedUri value="validationDate"/>
+    </element>
+    <element id="Extension.extension:validationDate.value[x]">
+      <path value="Extension.extension.value[x]"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+    </element>
+    <element id="Extension.url">
+      <path value="Extension.url"/>
+      <fixedUri value="http://example.org/fhir/StructureDefinition/ext-reslice-extension"/>
+    </element>
+    <element id="Extension.value[x]">
+      <path value="Extension.value[x]"/>
+      <max value="0"/>
+    </element>
+  </differential>
+</StructureDefinition>

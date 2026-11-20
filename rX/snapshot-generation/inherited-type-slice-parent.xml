@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <url value="http://example.org/fhir/StructureDefinition/inherited-type-slice-parent"/>
+  <name value="InheritedTypeSliceParent"/>
+  <status value="draft"/>
+  <description value="The middle of the chain (fhir-ig-publisher#1303, shaped like MII ICU Extrakorporales Verfahren): restricts the inherited type sliced Procedure.performed[x] to Period and walks into it without restating the slicing, and doesn't mention the inherited extension slice"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Procedure"/>
+  <baseDefinition value="http://example.org/fhir/StructureDefinition/inherited-type-slice-grandparent"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Procedure.performed[x]">
+      <path value="Procedure.performed[x]"/>
+      <type>
+        <code value="Period"/>
+      </type>
+    </element>
+    <element id="Procedure.performed[x].start">
+      <path value="Procedure.performed[x].start"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Procedure.performed[x].end">
+      <path value="Procedure.performed[x].end"/>
+      <mustSupport value="true"/>
+    </element>
+  </differential>
+</StructureDefinition>

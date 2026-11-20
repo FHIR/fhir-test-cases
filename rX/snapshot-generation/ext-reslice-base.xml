@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <url value="http://example.org/fhir/StructureDefinition/ext-reslice-base"/>
+  <name value="ExtResliceBase"/>
+  <status value="draft"/>
+  <description value="Shaped like FR Core Patient (fhir-ig-publisher#846): slices extension into nationality, identityReliability (the complex extension, 0..*) and birthPlace, in that order"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Patient.extension">
+      <path value="Patient.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Patient.extension:nationality">
+      <path value="Patient.extension"/>
+      <sliceName value="nationality"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-nationality"/>
+      </type>
+    </element>
+    <element id="Patient.extension:identityReliability">
+      <path value="Patient.extension"/>
+      <sliceName value="identityReliability"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://example.org/fhir/StructureDefinition/ext-reslice-extension"/>
+      </type>
+    </element>
+    <element id="Patient.extension:birthPlace">
+      <path value="Patient.extension"/>
+      <sliceName value="birthPlace"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-birthPlace"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>
