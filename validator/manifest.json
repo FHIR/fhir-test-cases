@@ -827,6 +827,18 @@
       "firely-sdk-wip": "firely-sdk-wip/R4.slicing-types-by-string-base.json"
     },
     {
+      "name": "slicing-fixed-string-quote",
+      "file": "slicing-fixed-string-quote.json",
+      "version": "4.0",
+      "description": "Slicing by value on a fixed string that contains single quotes (core#2867): the slice matches, no issue",
+      "profile": {
+        "source": "slicing-fixed-string-quote-profile.json",
+        "java": "java/R4.slicing-fixed-string-quote-profile.json"
+      },
+      "module": "profile",
+      "java": "java/R4.slicing-fixed-string-quote-base.json"
+    },
+    {
       "name": "entry-resource-bad1",
       "file": "entry-resource-bad1.xml",
       "module": "bundle",
@@ -1276,6 +1288,51 @@
       ],
       "module": "questionnaire",
       "java": "java/R4.answerconstraint-badcode-qr-base.json"
+    },
+    {
+      "name": "targetconstraint-qr-fail",
+      "file": "questionnaire/targetconstraint-qr-fail.json",
+      "description": "core#2788: a completed response that doesn't meet the questionnaire's targetConstraints - two on the Questionnaire using its variables, and a regex on item 2a - is an error for each. One constraint uses %patient, which isn't available, so it isn't checked",
+      "version": "4.0",
+      "supporting": ["questionnaire/targetconstraint-q.json"],
+      "module": "questionnaire",
+      "java": "java/R4.targetconstraint-qr-fail-base.json"
+    },
+    {
+      "name": "targetconstraint-qr-inprogress",
+      "file": "questionnaire/targetconstraint-qr-inprogress.json",
+      "description": "core#2788: the same answers in a response that isn't completed: the error constraints are warnings",
+      "version": "4.0",
+      "supporting": ["questionnaire/targetconstraint-q.json"],
+      "module": "questionnaire",
+      "java": "java/R4.targetconstraint-qr-inprogress-base.json"
+    },
+    {
+      "name": "targetconstraint-qr-pass",
+      "file": "questionnaire/targetconstraint-qr-pass.json",
+      "description": "core#2788: a completed response that meets all the targetConstraints (including ones using %questionnaire and %qitem)",
+      "version": "4.0",
+      "supporting": ["questionnaire/targetconstraint-q.json"],
+      "module": "questionnaire",
+      "java": "java/R4.targetconstraint-qr-pass-base.json"
+    },
+    {
+      "name": "targetconstraint-qr-noitem",
+      "file": "questionnaire/targetconstraint-qr-noitem.json",
+      "description": "core#2788: item 2a isn't in the response, so its constraints aren't checked",
+      "version": "4.0",
+      "supporting": ["questionnaire/targetconstraint-q.json"],
+      "module": "questionnaire",
+      "java": "java/R4.targetconstraint-qr-noitem-base.json"
+    },
+    {
+      "name": "targetconstraint-qr-noanswer",
+      "file": "questionnaire/targetconstraint-qr-noanswer.json",
+      "description": "core#2788: question 1 isn't answered: the error constraints that need it fail, and so does the warning constraint that asks for it",
+      "version": "4.0",
+      "supporting": ["questionnaire/targetconstraint-q.json"],
+      "module": "questionnaire",
+      "java": "java/R4.targetconstraint-qr-noanswer-base.json"
     },
     {
       "name": "enablewhen-launchcontext-qr",
@@ -4447,7 +4504,7 @@
       "file": "sct-rules-08-observation-finding.json",
       "version": "4.0",
       "module": "tx-knowledge",
-      "description": "A disorder as an Observation.code: warning",
+      "description": "A disorder as an Observation.code, with a result (a quantity) as the value: warning",
       "tags": ["sct-rules"],
       "java": "java/R4.sct-rules-08-observation-finding-base.json"
     },
@@ -4587,6 +4644,42 @@
       "java": "java/R4.sct-rules-23-laterality-expression-no-side-base.json"
     },
     {
+      "name": "sct-rules-24-observation-finding-boolean",
+      "file": "sct-rules-24-observation-finding-boolean.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A finding as an Observation.code, with a boolean value (issue 2870): no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-24-observation-finding-boolean-base.json"
+    },
+    {
+      "name": "sct-rules-25-observation-finding-no-value",
+      "file": "sct-rules-25-observation-finding-no-value.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A finding as an Observation.code, with no value: no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-25-observation-finding-no-value-base.json"
+    },
+    {
+      "name": "sct-rules-26-observation-finding-yes-no",
+      "file": "sct-rules-26-observation-finding-yes-no.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A finding as an Observation.code, with a yes/no qualifier (Yes) as the value: no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-26-observation-finding-yes-no-base.json"
+    },
+    {
+      "name": "sct-rules-27-observation-finding-coded-result",
+      "file": "sct-rules-27-observation-finding-coded-result.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "A disorder as an Observation.code, with a coded result (an organism) as the value: warning",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sct-rules-27-observation-finding-coded-result-base.json"
+    },
+    {
       "name": "sd-sct-01-condition-proxy",
       "file": "sd-sct-01-condition-proxy.json",
       "version": "4.0",
@@ -4609,7 +4702,7 @@
       "file": "sd-sct-03-observation-finding.json",
       "version": "4.0",
       "module": "tx-knowledge",
-      "description": "Fixes a disorder as the Observation.code: warning",
+      "description": "Fixes a disorder as the Observation.code, and a quantity as the value: warning",
       "tags": ["sct-rules"],
       "java": "java/R4.sd-sct-03-observation-finding-base.json"
     },
@@ -4618,7 +4711,7 @@
       "file": "sd-sct-04-component-finding.json",
       "version": "4.0",
       "module": "tx-knowledge",
-      "description": "Fixes a disorder as the code of a component slice: warning",
+      "description": "Fixes a disorder as the code of a component slice, and a quantity as its value: warning",
       "tags": ["sct-rules"],
       "java": "java/R4.sd-sct-04-component-finding-base.json"
     },
@@ -4684,6 +4777,24 @@
       "description": "Fixes the laterality extension (left) on a body site fixed to a structure that doesn't have a side (stomach): warning",
       "tags": ["sct-rules"],
       "java": "java/R4.sd-sct-11-laterality-extension-no-side-base.json"
+    },
+    {
+      "name": "sd-sct-12-observation-finding-any-value",
+      "file": "sd-sct-12-observation-finding-any-value.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a disorder as the Observation.code, and leaves the value open (the instance decides): no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sd-sct-12-observation-finding-any-value-base.json"
+    },
+    {
+      "name": "sd-sct-13-observation-finding-boolean",
+      "file": "sd-sct-13-observation-finding-boolean.json",
+      "version": "4.0",
+      "module": "tx-knowledge",
+      "description": "Fixes a disorder as the Observation.code, and a boolean as the value: no issue",
+      "tags": ["sct-rules"],
+      "java": "java/R4.sd-sct-13-observation-finding-boolean-base.json"
     },
     {
       "name": "negation-01-allergy-refuted",
@@ -11281,7 +11392,6 @@
       "module": "references",
       "description": "checking default settings for bundle resolution of relative references is correct against R5 rules",
       "version": "4.0",
-      "r5-bundle-relative-reference-policy": "always",
       "java": "java/R4.ref-policy-default-apply-r5-base.json"
     },
     {
@@ -11298,7 +11408,6 @@
       "module": "references",
       "description": "checking default settings for bundle resolution of relative references is correct against R5 rules",
       "version": "5.0",
-      "r5-bundle-relative-reference-policy": "never",
       "java": "java/R5.ref-policy-default-r4-base.json"
     },
     {
@@ -11365,7 +11474,7 @@
       "file": "sd-tslice-inherited.json",
       "module": "sd",
       "tags": ["slicer-rules"],
-      "description": "Type slices made by an older snapshot generator carry the binding and maxLength of the unsliced value[x] into every type slice: that is not an error on the slices, but there is a warning on the type slicer",
+      "description": "Type slices made by an older snapshot generator carry the binding and maxLength of the unsliced value[x] into every type slice: that is not an error on the slices, and since the profile doesn't state them on the type slicer either (they are inherited), there is no hint on the slicer (core#2699)",
       "version": "4.0",
       "profiles": ["sd-tslice-base.json"],
       "java": "java/R4.sd-tslice-inherited-base.json"
@@ -11379,6 +11488,16 @@
       "version": "4.0",
       "profiles": ["sd-tslice-base.json"],
       "java": "java/R4.sd-tslice-stated-base.json"
+    },
+    {
+      "name": "sd-tslice-slicer-stated",
+      "file": "sd-tslice-slicer-stated.json",
+      "module": "sd",
+      "tags": ["slicer-rules"],
+      "description": "The differential states the binding and maxLength on the type slicer value[x]: they apply to all the slices but only make sense for some of their types, so there is a hint on the type slicer (core#2699)",
+      "version": "4.0",
+      "profiles": ["sd-tslice-base.json"],
+      "java": "java/R4.sd-tslice-slicer-stated-base.json"
     },
     {
       "name": "slicer-rules-base-bad",
@@ -13777,6 +13896,24 @@
       "java": "java/R5.supplement-reserved-nested-base.json"
     },
     {
+      "name": "supplement-same-url",
+      "file": "supplement-same-url.json",
+      "description": "A supplement with the url of the code system it supplements, and its own version: url|version claims to be a version of that code system, which it is not, so an error on CodeSystem.url",
+      "version": "5.0",
+      "supporting": ["supplement-same-url-cs.json"],
+      "module": "tx",
+      "java": "java/R5.supplement-same-url-base.json"
+    },
+    {
+      "name": "supplement-same-url-unversioned",
+      "file": "supplement-same-url-unversioned.json",
+      "description": "As supplement-same-url, with no version in the supplements reference: the url is what is compared, so the same error",
+      "version": "5.0",
+      "supporting": ["supplement-same-url-cs.json"],
+      "module": "tx",
+      "java": "java/R5.supplement-same-url-unversioned-base.json"
+    },
+    {
       "name": "ext-recursion",
       "file": "ext-recursion-example.json",
       "supporting" : ["ext-recursion-defn.json"],
@@ -13885,6 +14022,15 @@
       "description": "https://github.com/hapifhir/org.hl7.fhir.core/issues/2769 - a code (no system) bound to version-independent-all-resource-types, whose compose has an include that only imports a value set (no system). The system and version are inferred, and the system-less include must still be used when choosing which includes apply to that version. Run without a terminology server",
       "module": "tx",
       "java": "java/R5.graphdefinition-node-type-notx-base.json"
+    },
+    {
+      "name": "notx-codes-without-system",
+      "file": "notx-codes-without-system.json",
+      "version": "5.0",
+      "no-tx": "true",
+      "description": "https://github.com/hapifhir/org.hl7.fhir.core/issues/2773 - codes with no system (mime types, then a language) bound to value sets, run without a terminology server: the second and later codes get the same answer as the first, rather than 'could not determine the system'",
+      "module": "tx",
+      "java": "java/R5.notx-codes-without-system-base.json"
     },
     {
       "name": "usage-context-jurisdiction-no",
@@ -15246,6 +15392,79 @@
       "module": "bundle",
       "tags": ["bundle-index"],
       "java": "java/R4.bundle-relative-ref-no-fullurl-base.json"
+    },
+    {
+      "name": "coding-userselected-slice-good",
+      "file": "coding-userselected-slice-good.json",
+      "description": "A pattern discriminator on $this where the slice pattern is a Coding that only fixes userSelected (core #2511): the coding has userSelected = true, so it is in the KundenCode slice. The validator used to report that the slicing could not be evaluated",
+      "version": "4.0",
+      "module": "profile",
+      "tags": [
+        "coding-userselected"
+      ],
+      "profile": {
+        "source": "coding-userselected-slice-profile.json",
+        "java": "java/R4.coding-userselected-slice-good-profile.json"
+      },
+      "java": "java/R4.coding-userselected-slice-good-base.json"
+    },
+    {
+      "name": "coding-userselected-slice-bad",
+      "file": "coding-userselected-slice-bad.json",
+      "description": "As coding-userselected-slice-good, but the coding has userSelected = false, so it matches no slice, and the slicing is closed",
+      "version": "4.0",
+      "module": "profile",
+      "tags": [
+        "coding-userselected"
+      ],
+      "profile": {
+        "source": "coding-userselected-slice-profile.json",
+        "java": "java/R4.coding-userselected-slice-bad-profile.json"
+      },
+      "java": "java/R4.coding-userselected-slice-bad-base.json"
+    },
+    {
+      "name": "coding-userselected-cc-slice",
+      "file": "coding-userselected-cc-slice.json",
+      "description": "As coding-userselected-slice-good, but the slice pattern is a CodeableConcept whose only coding only fixes userSelected (core #2511): the category is in the picked slice",
+      "version": "4.0",
+      "module": "profile",
+      "tags": [
+        "coding-userselected"
+      ],
+      "profile": {
+        "source": "coding-userselected-cc-slice-profile.json",
+        "java": "java/R4.coding-userselected-cc-slice-profile.json"
+      },
+      "java": "java/R4.coding-userselected-cc-slice-base.json"
+    },
+    {
+      "name": "translation-validator",
+      "file": "translation-validator.json",
+      "description": "TranslationValidator: CodeableConcepts whose codings are checked against ConceptMap/101 (address-use -> v3 AddressUse) and ConceptMap/102 (v2-0487 -> SNOMED CT): confirmed, other, not-related-to, noMap, unmapped and multi-coding combinations; plus a test map (translation-validator-cm) for element.valueSet, target.valueSet, unmapped fixed-to-a-valueSet and unmapped use-source-code",
+      "version": "5.0",
+      "module": "tx",
+      "tags": [
+        "translation-validator"
+      ],
+      "supporting": [
+        "translation-validator-cm.json",
+        "translation-validator-vs-v3-male.json",
+        "translation-validator-vs-v2-unknown.json",
+        "translation-validator-vs-v3-undifferentiated.json"
+      ],
+      "java": "java/R5.translation-validator-base.json"
+    },
+    {
+      "name": "translation-loinc-sct",
+      "file": "translation-loinc-sct.json",
+      "description": "Observation.valueCodeableConcept (no binding) with LA32-8 (No) and 260413007 (None): the core validator has no LOINC/SNOMED CT maps, so what is said about the pair comes from the terminology server, from LOINC's own mappings to SNOMED CT (LA32-8 maps to 373067005, and 260413007 to LA137-2) - two hints, reported once each at the CodeableConcept",
+      "version": "4.0",
+      "module": "tx",
+      "tags": [
+        "translation-validator"
+      ],
+      "java": "java/R4.translation-loinc-sct-base.json"
     },
     {
       "name": "zzz",

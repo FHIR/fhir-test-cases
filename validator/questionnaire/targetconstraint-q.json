@@ -1,0 +1,225 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "targetconstraint",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Questionnaire with targetConstraint extensions (core#2788)</div>"
+  },
+  "url": "http://example.org/Questionnaire/targetconstraint",
+  "version": "0.1.0",
+  "name": "TargetConstraint",
+  "status": "active",
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/variable",
+      "valueExpression": {
+        "name": "myVar1",
+        "language": "text/fhirpath",
+        "expression": "QuestionnaireResponse.item.where(linkId='1').answer.first().valueBoolean"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/variable",
+      "valueExpression": {
+        "name": "myVar2",
+        "language": "text/fhirpath",
+        "expression": "%myVar1.exists() and %myVar1 = true"
+      }
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/targetConstraint",
+      "extension": [
+        {
+          "url": "key",
+          "valueId": "tc-1"
+        },
+        {
+          "url": "severity",
+          "valueCode": "error"
+        },
+        {
+          "url": "expression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%myVar1 = true"
+          }
+        },
+        {
+          "url": "human",
+          "valueString": "The value of myVar1 must be true."
+        }
+      ]
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/targetConstraint",
+      "extension": [
+        {
+          "url": "key",
+          "valueId": "tc-2"
+        },
+        {
+          "url": "severity",
+          "valueCode": "error"
+        },
+        {
+          "url": "expression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%myVar2 = true"
+          }
+        },
+        {
+          "url": "human",
+          "valueString": "The value of myVar2 must also be true, based on myVar1."
+        }
+      ]
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/targetConstraint",
+      "extension": [
+        {
+          "url": "key",
+          "valueId": "tc-patient"
+        },
+        {
+          "url": "severity",
+          "valueCode": "error"
+        },
+        {
+          "url": "expression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%patient.exists()"
+          }
+        },
+        {
+          "url": "human",
+          "valueString": "There must be a patient."
+        }
+      ]
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/targetConstraint",
+      "extension": [
+        {
+          "url": "key",
+          "valueId": "tc-warn"
+        },
+        {
+          "url": "severity",
+          "valueCode": "warning"
+        },
+        {
+          "url": "expression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%resource.item.where(linkId='1').answer.exists()"
+          }
+        },
+        {
+          "url": "human",
+          "valueString": "Question 1 should be answered."
+        }
+      ]
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/targetConstraint",
+      "extension": [
+        {
+          "url": "key",
+          "valueId": "tc-questionnaire"
+        },
+        {
+          "url": "severity",
+          "valueCode": "error"
+        },
+        {
+          "url": "expression",
+          "valueExpression": {
+            "language": "text/fhirpath",
+            "expression": "%questionnaire.item.count() = 2"
+          }
+        },
+        {
+          "url": "human",
+          "valueString": "%questionnaire is available."
+        }
+      ]
+    }
+  ],
+  "item": [
+    {
+      "linkId": "1",
+      "text": "Are you doing well?",
+      "type": "boolean"
+    },
+    {
+      "linkId": "2",
+      "text": "Visit Numbers",
+      "type": "group",
+      "item": [
+        {
+          "extension": [
+            {
+              "extension": [
+                {
+                  "url": "key",
+                  "valueId": "2-format"
+                },
+                {
+                  "url": "severity",
+                  "valueCode": "error"
+                },
+                {
+                  "url": "human",
+                  "valueString": "Invalid Visit Number (2a). Visit number must be exactly 6 alphanumeric characters."
+                },
+                {
+                  "url": "expression",
+                  "valueExpression": {
+                    "language": "text/fhirpath",
+                    "expression": "%resource.descendants().where(linkId='2a').answer.value.matches('^[A-Za-z0-9]{6}$')"
+                  }
+                },
+                {
+                  "url": "location",
+                  "valueString": "%questionnaire.descendants().where(linkId='2a')"
+                }
+              ],
+              "url": "http://hl7.org/fhir/StructureDefinition/targetConstraint"
+            },
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/targetConstraint",
+              "extension": [
+                {
+                  "url": "key",
+                  "valueId": "2-qitem"
+                },
+                {
+                  "url": "severity",
+                  "valueCode": "error"
+                },
+                {
+                  "url": "expression",
+                  "valueExpression": {
+                    "language": "text/fhirpath",
+                    "expression": "%qitem.linkId = '2a'"
+                  }
+                },
+                {
+                  "url": "human",
+                  "valueString": "%qitem is available."
+                }
+              ]
+            }
+          ],
+          "linkId": "2a",
+          "text": "Visit Number",
+          "type": "string",
+          "required": true,
+          "maxLength": 6
+        }
+      ]
+    }
+  ]
+}

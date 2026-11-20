@@ -1,0 +1,60 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "coding-userselected-slice-profile",
+  "url": "http://example.org/StructureDefinition/coding-userselected-slice-profile",
+  "version": "0.1.0",
+  "name": "CodingUserSelectedSliceProfile",
+  "status": "draft",
+  "description": "Slices Medication.code.coding with a closed pattern discriminator on $this, where the slice KundenCode is identified only by userSelected = true (core #2511)",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Medication",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Medication",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Medication.code.coding",
+        "path": "Medication.code.coding",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "pattern",
+              "path": "$this"
+            }
+          ],
+          "rules": "closed"
+        }
+      },
+      {
+        "id": "Medication.code.coding:KundenCode",
+        "path": "Medication.code.coding",
+        "sliceName": "KundenCode",
+        "min": 0,
+        "max": "1",
+        "patternCoding": {
+          "userSelected": true
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Medication.code.coding:KundenCode.system",
+        "path": "Medication.code.coding.system",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Medication.code.coding:KundenCode.code",
+        "path": "Medication.code.coding.code",
+        "min": 1,
+        "mustSupport": true
+      },
+      {
+        "id": "Medication.code.coding:KundenCode.userSelected",
+        "path": "Medication.code.coding.userSelected",
+        "mustSupport": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "coding-userselected-cc-slice-profile",
+  "url": "http://example.org/StructureDefinition/coding-userselected-cc-slice-profile",
+  "version": "0.1.0",
+  "name": "CodingUserSelectedCCSliceProfile",
+  "status": "draft",
+  "description": "Slices Observation.category with a closed pattern discriminator on $this, where the slice picked is identified only by a CodeableConcept pattern whose coding has userSelected = true (core #2511)",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation.category",
+        "path": "Observation.category",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "pattern",
+              "path": "$this"
+            }
+          ],
+          "rules": "closed"
+        }
+      },
+      {
+        "id": "Observation.category:picked",
+        "path": "Observation.category",
+        "sliceName": "picked",
+        "min": 0,
+        "max": "1",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "userSelected": true
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
