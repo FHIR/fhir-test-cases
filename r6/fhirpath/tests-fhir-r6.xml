@@ -731,6 +731,7 @@ Any text enclosed within is ignored
 		<test name="testRepeat3" testing="descendants" inputfile="questionnaire-example.xml"><expression>Questionnaire.descendants().code.count() = 23</expression><output type="boolean">true</output></test>
 		<test name="testRepeat4" testing="children" inputfile="questionnaire-example.xml"><expression>Questionnaire.children().code.count() = 2</expression><output type="boolean">true</output></test>
 		<test name="testRepeat5" testing="repeat" inputfile="patient-example.xml"><expression>Patient.name.repeat('test')</expression><output type="string">test</output></test>
+		<test name="testRepeat6" testing="repeat" description="$this is the item the expression is evaluated for" inputfile="patient-example.xml"><expression>(1 | 2).repeat($this).count() = 2</expression><output type="boolean">true</output></test>
 	</group>
 
 	<group name="testAggregate">
@@ -1299,6 +1300,10 @@ Any text enclosed within is ignored
 		<test name="testSmallExponentDecEquivalent" testing="~" description="a tiny decimal rounds to zero at the precision of 0" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[3].value ~ 0</expression><output type="boolean">true</output></test>
 		<test name="testSmallExponentDecPlus" testing="+" description="arithmetic on a tiny decimal gives empty" inputfile="parameters-example-large-exponents.xml"><expression>Parameters.parameter[3].value + 1</expression></test>
 		<test name="testLargeExponentDateAdd" testing="+" description="adding a huge duration to a date gives empty" inputfile="parameters-example-large-exponents.xml"><expression>@2020-01-01 + Parameters.parameter[4].value</expression></test>
+		<test name="testHugeRoundPrecision" testing="round" description="a precision that would make a huge decimal gives empty" inputfile="parameters-example-large-exponents.xml"><expression>1.5.round(2000000000)</expression></test>
+		<test name="testNegativeRoundPrecision" testing="round" description="a negative precision gives empty" inputfile="parameters-example-large-exponents.xml"><expression>1.5.round(-1)</expression></test>
+		<test name="testHugeQtyLowBoundaryPrecision" testing="lowBoundary" description="a precision that would make a huge quantity gives empty" inputfile="parameters-example-large-exponents.xml"><expression>1.5 'kg'.lowBoundary(999999999)</expression></test>
+		<test name="testNegativeQtyHighBoundaryPrecision" testing="highBoundary" description="a negative precision gives empty" inputfile="parameters-example-large-exponents.xml"><expression>1.5 'kg'.highBoundary(-1)</expression></test>
 	</group>
 
 	<group name="testLessOrEqual">

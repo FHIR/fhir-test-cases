@@ -1,0 +1,64 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "reslicesiblingmin",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/reslicesiblingmin",
+  "name": "reslicesiblingmin",
+  "status": "draft",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient.identifier",
+        "path": "Patient.identifier",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 1
+      },
+      {
+        "id": "Patient.identifier:a",
+        "path": "Patient.identifier",
+        "sliceName": "a",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Patient.identifier:a.system",
+        "path": "Patient.identifier.system",
+        "min": 1,
+        "fixedUri": "http://example.org/a"
+      },
+      {
+        "id": "Patient.identifier:a/b",
+        "path": "Patient.identifier",
+        "sliceName": "a/b",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Patient.identifier:c",
+        "path": "Patient.identifier",
+        "sliceName": "c",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Patient.identifier:c.system",
+        "path": "Patient.identifier.system",
+        "min": 1,
+        "fixedUri": "http://example.org/c"
+      }
+    ]
+  },
+  "description": "Error when for publication: the slicer is 1..*, a (0..*) is resliced by a/b (1..1), and c (1..1) follows a. The slices add up to 2: a counts for 1 (its reslices), and c is counted against the slicer, not against a"
+}
