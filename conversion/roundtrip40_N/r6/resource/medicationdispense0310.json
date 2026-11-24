@@ -1,0 +1,112 @@
+{
+  "resourceType" : "MedicationDispense",
+  "id" : "meddisp0310",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "contained" : [{
+    "resourceType" : "Medication",
+    "id" : "med0308",
+    "code" : {
+      "coding" : [{
+        "system" : "http://hl7.org/fhir/sid/ndc",
+        "code" : "63481-623-70",
+        "display" : "PERCOCET, 100 TABLET in 1 BOTTLE (63481-623-70) (package)"
+      }],
+      "text" : "Percocet tablet"
+    }
+  }],
+  "status" : "in-progress",
+  "medication" : {
+    "reference" : {
+      "reference" : "#med0308",
+      "display" : "Percocet"
+    }
+  },
+  "subject" : {
+    "reference" : "Patient/pat1",
+    "display" : "Donald Duck "
+  },
+  "performer" : [{
+    "actor" : {
+      "reference" : "Practitioner/f006"
+    }
+  }],
+  "authorizingPrescription" : [{
+    "reference" : "MedicationRequest/medrx0307"
+  }],
+  "type" : {
+    "coding" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+      "code" : "EM",
+      "display" : "Emergency Supply"
+    }]
+  },
+  "quantity" : {
+    "value" : 30,
+    "unit" : "TAB",
+    "system" : "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
+    "code" : "TAB"
+  },
+  "daysSupply" : {
+    "value" : 30,
+    "unit" : "Day",
+    "system" : "http://unitsofmeasure.org",
+    "code" : "d"
+  },
+  "whenPrepared" : "2015-01-15T10:20:00Z",
+  "dosageInstruction" : {
+    "step" : [{
+      "component" : [{
+        "text" : "1 tablet every four hours as needed for pain",
+        "additionalInstruction" : [{
+          "coding" : [{
+            "system" : "http://snomed.info/sct",
+            "code" : "418914006",
+            "display" : "Warning. May cause drowsiness. If affected do not drive or operate machinery. Avoid alcoholic drink (qualifier value)"
+          }]
+        }],
+        "timing" : {
+          "repeat" : {
+            "frequency" : 1,
+            "period" : 4,
+            "periodUnit" : "h"
+          }
+        },
+        "asNeededFor" : [{
+          "coding" : [{
+            "system" : "http://snomed.info/sct",
+            "code" : "203082005",
+            "display" : "Fibromyalgia (disorder)"
+          }]
+        }],
+        "route" : {
+          "coding" : [{
+            "system" : "http://snomed.info/sct",
+            "code" : "26643006",
+            "display" : "Oral Route"
+          }]
+        },
+        "doseAndRate" : [{
+          "type" : {
+            "coding" : [{
+              "system" : "http://terminology.hl7.org/CodeSystem/dose-rate-type",
+              "code" : "ordered",
+              "display" : "Ordered"
+            }]
+          },
+          "doseQuantity" : {
+            "value" : 1,
+            "unit" : "TAB",
+            "system" : "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
+            "code" : "TAB"
+          }
+        }]
+      }]
+    }]
+  }
+}

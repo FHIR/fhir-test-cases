@@ -1,0 +1,95 @@
+{
+  "resourceType" : "OperationDefinition",
+  "id" : "Subscription-events",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: OperationDefinition Subscription-events</b></p><a name=\"Subscription-events\"> </a><a name=\"hcSubscription-events\"> </a><p>URL: [base]/Subscription/[id]/$events</p><h3>Parameters</h3><table class=\"grid\"><tr><td><b>Use</b></td><td><b>Name</b></td><td><b>Scope</b></td><td><b>Cardinality</b></td><td><b>Type</b></td><td><b>Binding</b></td><td><b>Documentation</b></td></tr><tr><td>IN</td><td>eventsSinceNumber</td><td/><td>0..1</td><td><a href=\"datatypes.html#integer64\">integer64</a></td><td/><td><div><p>The lowest event number to be included in the response (lower bound, inclusive).</p>\n</div></td></tr><tr><td>IN</td><td>eventsUntilNumber</td><td/><td>0..1</td><td><a href=\"datatypes.html#integer64\">integer64</a></td><td/><td><div><p>The highest event number to be included in the response (upper bound, inclusive).</p>\n</div></td></tr><tr><td>IN</td><td>content</td><td/><td>0..1</td><td><a href=\"datatypes.html#code\">code</a></td><td><a href=\"valueset-subscription-payload-content.html\">Subscription Payload Content</a> (Required)</td><td><div><p>Requested content style of returned data. Codes from backport-content-value-set (e.g., empty, id-only, full-resource). This is a hint to the server what a client would prefer, and MAY be ignored.</p>\n</div></td></tr><tr><td>OUT</td><td>return</td><td/><td>1..1</td><td><a href=\"bundle.html\">Bundle</a></td><td/><td><div><p>The operation returns a valid notification bundle, with the first entry being a SubscriptionStatus resource. The bundle type is &quot;subscription-notification&quot;.</p>\n</div></td></tr></table></div>"
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status",
+    "valueCode" : "normative"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version",
+    "valueCode" : "6.0.0-snapshot1"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "fhir"
+  }],
+  "url" : "http://hl7.org/fhir/OperationDefinition/Subscription-events",
+  "version" : "6.0.0-snapshot1",
+  "name" : "Events",
+  "title" : "Search and retrieve prior events for a Subscription",
+  "status" : "active",
+  "kind" : "operation",
+  "experimental" : false,
+  "date" : "2026-11-20T23:46:23+11:00",
+  "publisher" : "HL7 International / FHIR Infrastructure",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://hl7.org/fhir"
+    },
+    {
+      "system" : "email",
+      "value" : "fhir@lists.hl7.org"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/fiwg"
+    }]
+  }],
+  "description" : "This operation is used to search for and return notifications that have been previously triggered by a topic-based Subscription.",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
+  "affectsState" : false,
+  "code" : "events",
+  "resource" : ["Subscription"],
+  "system" : false,
+  "type" : false,
+  "instance" : true,
+  "parameter" : [{
+    "name" : "eventsSinceNumber",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "The lowest event number to be included in the response (lower bound, inclusive).",
+    "type" : "integer64"
+  },
+  {
+    "name" : "eventsUntilNumber",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "The highest event number to be included in the response (upper bound, inclusive).",
+    "type" : "integer64"
+  },
+  {
+    "name" : "content",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "Requested content style of returned data. Codes from backport-content-value-set (e.g., empty, id-only, full-resource). This is a hint to the server what a client would prefer, and MAY be ignored.",
+    "type" : "code",
+    "binding" : {
+      "strength" : "required",
+      "valueSet" : "http://hl7.org/fhir/ValueSet/subscription-payload-content|6.0.0-snapshot1"
+    }
+  },
+  {
+    "name" : "return",
+    "use" : "out",
+    "min" : 1,
+    "max" : "1",
+    "documentation" : "The operation returns a valid notification bundle, with the first entry being a SubscriptionStatus resource. The bundle type is \"subscription-notification\".",
+    "type" : "Bundle"
+  }]
+}

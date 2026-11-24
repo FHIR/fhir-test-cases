@@ -1,0 +1,93 @@
+{
+  "resourceType" : "MedicationAdministration",
+  "id" : "medadmin0305",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "contained" : [{
+    "resourceType" : "Medication",
+    "id" : "med0306",
+    "code" : {
+      "coding" : [{
+        "system" : "http://hl7.org/fhir/sid/ndc",
+        "code" : "51144-050-01",
+        "display" : "ADCETRIS, 1 VIAL, SINGLE-DOSE in 1 BOX (51144-050-01) / 10.5 mL in 1 VIAL, SINGLE-DOSE (package)"
+      }]
+    },
+    "marketingAuthorizationHolder" : {
+      "reference" : "Organization/mmanu"
+    },
+    "doseForm" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "421637006",
+        "display" : "Lyophilised powder for conventional release solution for injection"
+      }]
+    },
+    "instance" : {
+      "lotNumber" : "12345",
+      "expirationDate" : "2019-10-31"
+    }
+  }],
+  "status" : "completed",
+  "medication" : {
+    "reference" : {
+      "reference" : "#med0306"
+    }
+  },
+  "subject" : {
+    "reference" : "Patient/pat1",
+    "display" : "Donald Duck"
+  },
+  "encounter" : {
+    "reference" : "Encounter/f001",
+    "display" : "encounter who leads to this prescription"
+  },
+  "occurrencePeriod" : {
+    "start" : "2015-01-15T04:30:00+01:00",
+    "end" : "2015-01-15T14:30:00+01:00"
+  },
+  "performer" : [{
+    "actor" : {
+      "reference" : {
+        "reference" : "Practitioner/f007",
+        "display" : "Patrick Pump"
+      }
+    }
+  }],
+  "request" : {
+    "reference" : "MedicationRequest/medrx0316"
+  },
+  "dosage" : {
+    "text" : "1.8 mg/kg IV infusion over 30 minutes",
+    "route" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "255560000",
+        "display" : "Intravenous"
+      }]
+    },
+    "dose" : {
+      "value" : 1.8,
+      "unit" : "mg/kg",
+      "system" : "http://unitsofmeasure.org",
+      "code" : "mg/kg"
+    },
+    "rateRatio" : {
+      "numerator" : {
+        "value" : 250,
+        "unit" : "ml",
+        "system" : "http://unitsofmeasure.org"
+      },
+      "denominator" : {
+        "value" : 30,
+        "unit" : "min",
+        "system" : "http://unitsofmeasure.org"
+      }
+    }
+  }
+}

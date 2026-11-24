@@ -1,0 +1,102 @@
+{
+  "resourceType" : "MedicationRequest",
+  "id" : "medrx0331",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "contained" : [{
+    "resourceType" : "Medication",
+    "id" : "med0350",
+    "code" : {
+      "coding" : [{
+        "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "code" : "114194",
+        "display" : "Warfarin Sodium"
+      }]
+    },
+    "form" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "421026006",
+        "display" : "Oral Tablet"
+      }]
+    }
+  }],
+  "identifier" : [{
+    "use" : "official",
+    "system" : "http://www.bmc.nl/portal/prescriptions",
+    "value" : "12345689"
+  }],
+  "status" : "active",
+  "intent" : "order",
+  "medicationReference" : {
+    "reference" : "#med0350"
+  },
+  "subject" : {
+    "reference" : "Patient/pat1",
+    "display" : "Donald Duck"
+  },
+  "authoredOn" : "2015-01-15",
+  "requester" : {
+    "reference" : "Practitioner/f007",
+    "display" : "Patrick Pump"
+  },
+  "dosageInstruction" : [{
+    "text" : "7mg once daily",
+    "timing" : {
+      "repeat" : {
+        "frequency" : 1,
+        "period" : 1,
+        "periodUnit" : "d"
+      }
+    },
+    "doseAndRate" : [{
+      "type" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/dose-rate-type",
+          "code" : "ordered",
+          "display" : "Ordered"
+        }]
+      },
+      "doseQuantity" : {
+        "value" : 7,
+        "unit" : "mg",
+        "system" : "http://unitsofmeasure.org",
+        "code" : "mg"
+      }
+    }]
+  }],
+  "dispenseRequest" : {
+    "validityPeriod" : {
+      "start" : "2015-01-15",
+      "end" : "2016-01-15"
+    },
+    "numberOfRepeatsAllowed" : 3,
+    "quantity" : {
+      "value" : 30,
+      "unit" : "TAB",
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
+      "code" : "TAB"
+    },
+    "expectedSupplyDuration" : {
+      "value" : 30,
+      "unit" : "days",
+      "system" : "http://unitsofmeasure.org",
+      "code" : "d"
+    }
+  },
+  "substitution" : {
+    "allowedBoolean" : true,
+    "reason" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code" : "FP",
+        "display" : "formulary policy"
+      }]
+    }
+  }
+}

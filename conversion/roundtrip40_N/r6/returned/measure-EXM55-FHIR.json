@@ -1,0 +1,348 @@
+{
+  "resourceType" : "Measure",
+  "id" : "measure-EXM55-FHIR",
+  "contained" : [{
+    "resourceType" : "Library",
+    "id" : "EXM55",
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+      "valueCode" : "cqi"
+    }],
+    "url" : "http://hl7.org/fhir/uv/cqm/Library/EXM55",
+    "identifier" : [{
+      "use" : "official",
+      "system" : "http://example.org/fhir/cqi/ecqm/Library/Identifier",
+      "value" : "EXM55"
+    }],
+    "version" : "5.0.0",
+    "name" : "EXM55",
+    "title" : "EXM55 - Median Emergency Department Visit Duration Library (Example Continuous Variable Measure Library)",
+    "status" : "active",
+    "experimental" : true,
+    "type" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/library-type",
+        "code" : "logic-library"
+      }]
+    },
+    "date" : "2019-09-03",
+    "publisher" : "HL7 International / Clinical Quality Information",
+    "contact" : [{
+      "telecom" : [{
+        "system" : "url",
+        "value" : "http://www.hl7.org/Special/committees/cqi"
+      }]
+    }],
+    "description" : "This library is used as an example in the FHIR Continuous Variable Measure example",
+    "jurisdiction" : [{
+      "coding" : [{
+        "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+        "code" : "001"
+      }]
+    }],
+    "approvalDate" : "2019-08-03",
+    "lastReviewDate" : "2019-08-03",
+    "relatedArtifact" : [{
+      "type" : "depends-on",
+      "display" : "FHIR model information",
+      "resource" : "http://hl7.org/fhir/uv/cql/Library/FHIR-ModelInfo|4.0.1"
+    },
+    {
+      "type" : "depends-on",
+      "display" : "Library FHIRHelpers",
+      "resource" : "http://hl7.org/fhir/uv/cql/Library/FHIRHelpers|4.0.1"
+    }],
+    "parameter" : [{
+      "name" : "Measurement Period",
+      "use" : "in",
+      "min" : 0,
+      "max" : "1",
+      "type" : "Period"
+    },
+    {
+      "name" : "Patient",
+      "use" : "out",
+      "min" : 0,
+      "max" : "1",
+      "type" : "Patient"
+    },
+    {
+      "name" : "Inpatient Encounter",
+      "use" : "out",
+      "min" : 0,
+      "max" : "*",
+      "type" : "Encounter"
+    },
+    {
+      "name" : "Initial Population",
+      "use" : "out",
+      "min" : 0,
+      "max" : "*",
+      "type" : "Encounter"
+    },
+    {
+      "name" : "Measure Population",
+      "use" : "out",
+      "min" : 0,
+      "max" : "*",
+      "type" : "Encounter"
+    },
+    {
+      "name" : "Measure Population Exclusion",
+      "use" : "out",
+      "min" : 0,
+      "max" : "*",
+      "type" : "Encounter"
+    },
+    {
+      "name" : "Stratification 1",
+      "use" : "out",
+      "min" : 0,
+      "max" : "*",
+      "type" : "Encounter"
+    },
+    {
+      "name" : "Stratification 2",
+      "use" : "out",
+      "min" : 0,
+      "max" : "*",
+      "type" : "Encounter"
+    },
+    {
+      "name" : "Stratification 3",
+      "use" : "out",
+      "min" : 0,
+      "max" : "*",
+      "type" : "Encounter"
+    }],
+    "dataRequirement" : [{
+      "type" : "Patient",
+      "profile" : ["http://hl7.org/fhir/StructureDefinition/Patient"]
+    },
+    {
+      "type" : "Encounter",
+      "profile" : ["http://hl7.org/fhir/StructureDefinition/Encounter"],
+      "mustSupport" : ["period",
+      "use",
+      "rank",
+      "rank.value",
+      "condition",
+      "condition.reference"]
+    },
+    {
+      "type" : "Encounter",
+      "profile" : ["http://hl7.org/fhir/StructureDefinition/Encounter"],
+      "mustSupport" : ["type",
+      "status",
+      "period",
+      "use",
+      "rank",
+      "rank.value",
+      "condition",
+      "condition.reference",
+      "hospitalization",
+      "hospitalization.admitSource"]
+    },
+    {
+      "type" : "Condition",
+      "profile" : ["http://hl7.org/fhir/StructureDefinition/Condition"],
+      "mustSupport" : ["id"],
+      "codeFilter" : [{
+        "path" : "id"
+      }]
+    }],
+    "content" : [{
+      "contentType" : "text/cql",
+      "data" : "LyoNClRoaXMgZXhhbXBsZSBpcyBhIHdvcmsgaW4gcHJvZ3Jlc3MgYW5kIHNob3VsZCBub3QgYmUgY29uc2lkZXJlZCBhIGZpbmFsIHNwZWNpZmljYXRpb24NCm9yIHJlY29tbWVuZGF0aW9uIGZvciBndWlkYW5jZS4gVGhpcyBleGFtcGxlIHdpbGwgaGVscCBndWlkZSBhbmQgZGlyZWN0IHRoZSBwcm9jZXNzDQpvZiBmaW5kaW5nIGNvbnZlbnRpb25zIGFuZCB1c2FnZSBwYXR0ZXJucyB0aGF0IG1lZXQgdGhlIG5lZWRzIG9mIHRoZSB2YXJpb3VzIHN0YWtlaG9sZGVycw0KaW4gdGhlIG1lYXN1cmUgZGV2ZWxvcG1lbnQgY29tbXVuaXR5Lg0KKi8NCg0KbGlicmFyeSBFWE01NSB2ZXJzaW9uICc1LjAuMCcNCg0KdXNpbmcgRkhJUiB2ZXJzaW9uICc0LjAuMScNCg0KaW5jbHVkZSBobDcuZmhpci51di5jcWwuRkhJUkhlbHBlcnMgdmVyc2lvbiAnNC4wLjEnIGNhbGxlZCBGSElSSGVscGVycw0KDQpjb2Rlc3lzdGVtICJEaWFnbm9zaXMgUm9sZSI6ICdodHRwOi8vdGVybWlub2xvZ3kuaGw3Lm9yZy9Db2RlU3lzdGVtL2RpYWdub3Npcy1yb2xlJw0KDQp2YWx1ZXNldCAiRW1lcmdlbmN5IERlcGFydG1lbnQgVmlzaXQiIDogJ2h0dHA6Ly9jdHMubmxtLm5paC5nb3YvZmhpci9WYWx1ZVNldC8yLjE2Ljg0MC4xLjExMzg4My4zLjExNy4xLjcuMS4yOTInDQp2YWx1ZXNldCAiUHN5Y2hpYXRyaWMvTWVudGFsIEhlYWx0aCBQYXRpZW50IiA6ICdodHRwOi8vY3RzLm5sbS5uaWguZ292L2ZoaXIvVmFsdWVTZXQvMi4xNi44NDAuMS4xMTM4ODMuMy4xMTcuMS43LjEuMjk5Jw0KdmFsdWVzZXQgIkhvc3BpdGFsIFNldHRpbmdzIiA6ICdodHRwOi8vY3RzLm5sbS5uaWguZ292L2ZoaXIvVmFsdWVTZXQvMi4xNi44NDAuMS4xMTM3NjIuMS40LjExMTEuMTI2Jw0KDQpjb2RlICJCaWxsaW5nIjogJ2JpbGxpbmcnIGZyb20gIkRpYWdub3NpcyBSb2xlIiBkaXNwbGF5ICdCaWxsaW5nJw0KDQpwYXJhbWV0ZXIgIk1lYXN1cmVtZW50IFBlcmlvZCIgSW50ZXJ2YWw8RGF0ZVRpbWU+DQoNCmNvbnRleHQgUGF0aWVudA0KDQpkZWZpbmUgIkluaXRpYWwgUG9wdWxhdGlvbiIgOg0KICAiSW5wYXRpZW50IEVuY291bnRlciIgRW5jb3VudGVyDQogICAgd2l0aCBbIkVuY291bnRlciIgOiAiRW1lcmdlbmN5IERlcGFydG1lbnQgVmlzaXQiXSBFRA0KICAgICBzdWNoIHRoYXQgRUQuc3RhdHVzID0gJ2ZpbmlzaGVkJw0KICAgICAgIGFuZCBFRC5wZXJpb2QgZW5kcyAxIGhvdXIgb3IgbGVzcyBiZWZvcmUgc3RhcnQgb2YgRW5jb3VudGVyLnBlcmlvZA0KDQpkZWZpbmUgIk1lYXN1cmUgUG9wdWxhdGlvbiIgOg0KICAiSW5pdGlhbCBQb3B1bGF0aW9uIg0KDQpkZWZpbmUgIklucGF0aWVudCBFbmNvdW50ZXIiIDoNCiAgWyJFbmNvdW50ZXIiXSBFbmNvdW50ZXINCiAgICB3aGVyZSBMZW5ndGhJbkRheXMoRW5jb3VudGVyLnBlcmlvZCkgPD0gMTIwDQogICAgICBhbmQgRW5jb3VudGVyLnBlcmlvZCBlbmRzIGR1cmluZyAiTWVhc3VyZW1lbnQgUGVyaW9kIg0KDQpkZWZpbmUgIk1lYXN1cmUgUG9wdWxhdGlvbiBFeGNsdXNpb24iIDoNCiAgIklucGF0aWVudCBFbmNvdW50ZXIiIEVuY291bnRlcg0KICAgIHdpdGggWyJFbmNvdW50ZXIiIDogIkVtZXJnZW5jeSBEZXBhcnRtZW50IFZpc2l0Il0gRUQNCiAgICAgIHN1Y2ggdGhhdCBFRC5wZXJpb2QgZW5kcyAxIGhvdXIgb3IgbGVzcyBiZWZvcmUgc3RhcnQgb2YgRW5jb3VudGVyLnBlcmlvZA0KICAgICAgICBhbmQgRUQuc3RhdHVzID0gJ2ZpbmlzaGVkJw0KICAgICAgICBhbmQgRUQuaG9zcGl0YWxpemF0aW9uLmFkbWl0U291cmNlIGluICJIb3NwaXRhbCBTZXR0aW5ncyINCg0KZGVmaW5lIGZ1bmN0aW9uICJQcmluY2lwYWxEaWFnbm9zaXMiKEVuY291bnRlciBFbmNvdW50ZXIpOg0KCShzaW5nbGV0b24gZnJvbSAoRW5jb3VudGVyLmRpYWdub3NpcyBEIHdoZXJlIEQudXNlIH4gVG9Db25jZXB0KCJCaWxsaW5nIikgYW5kIEQucmFuay52YWx1ZSA9IDEpKSBQRA0KCQlyZXR1cm4gc2luZ2xldG9uIGZyb20gKFtDb25kaXRpb246IGlkIGluICJHZXRJZCIoUEQuY29uZGl0aW9uLnJlZmVyZW5jZSldKQ0KDQpkZWZpbmUgZnVuY3Rpb24gIkxlbmd0aEluRGF5cyIoVmFsdWUgSW50ZXJ2YWw8RGF0ZVRpbWU+KToNCglkaWZmZXJlbmNlIGluIGRheXMgYmV0d2VlbiBzdGFydCBvZiBWYWx1ZSBhbmQgZW5kIG9mIFZhbHVlDQoNCmRlZmluZSBmdW5jdGlvbiAiR2V0SWQiKHVyaSBTdHJpbmcpOg0KCUxhc3QoU3BsaXQodXJpLCAnLycpKQ0KDQpkZWZpbmUgIlN0cmF0aWZpY2F0aW9uIDEiIDoNCiAgIklucGF0aWVudCBFbmNvdW50ZXIiIEVuY291bnRlcg0KICAgIHdoZXJlIG5vdCAoUHJpbmNpcGFsRGlhZ25vc2lzKEVuY291bnRlcikuY29kZSBpbiAiUHN5Y2hpYXRyaWMvTWVudGFsIEhlYWx0aCBQYXRpZW50IikNCg0KZGVmaW5lICJTdHJhdGlmaWNhdGlvbiAyIiA6DQogICJJbnBhdGllbnQgRW5jb3VudGVyIiBFbmNvdW50ZXINCiAgICB3aGVyZSBQcmluY2lwYWxEaWFnbm9zaXMoRW5jb3VudGVyKS5jb2RlIGluICJQc3ljaGlhdHJpYy9NZW50YWwgSGVhbHRoIFBhdGllbnQiDQoNCmRlZmluZSAiU3RyYXRpZmljYXRpb24gMyIgOg0KICAiSW5wYXRpZW50IEVuY291bnRlciIgRW5jb3VudGVyDQogICAgd2hlcmUgUHJpbmNpcGFsRGlhZ25vc2lzKEVuY291bnRlcikgaXMgbnVsbA0KDQovL01lYXN1cmUgT2JzZXJ2YXRpb24NCmRlZmluZSBmdW5jdGlvbiAiUmVsYXRlZCBFRCBWaXNpdCIgKEVuY291bnRlciAiRW5jb3VudGVyIiApIDoNCiAgTGFzdChbIkVuY291bnRlciIgOiAiRW1lcmdlbmN5IERlcGFydG1lbnQgVmlzaXQiXSBFRA0KICAgIHdoZXJlIEVELnN0YXR1cyA9ICdmaW5pc2hlZCcNCiAgICAgIGFuZCBFRC5wZXJpb2QgZW5kcyAxIGhvdXIgb3IgbGVzcyBiZWZvcmUgc3RhcnQgb2YgRW5jb3VudGVyLnBlcmlvZA0KICAgIHNvcnQgYnkgc3RhcnQgb2YgcGVyaW9kICkNCg0KZGVmaW5lIGZ1bmN0aW9uICJNZWFzdXJlIE9ic2VydmF0aW9uIiAoRW5jb3VudGVyICJFbmNvdW50ZXIiICkgOg0KICBkdXJhdGlvbiBpbiBtaW51dGVzIG9mICJSZWxhdGVkIEVEIFZpc2l0IihFbmNvdW50ZXIpLnBlcmlvZA0K"
+    }]
+  }],
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "cqi"
+  }],
+  "url" : "http://hl7.org/fhir/uv/cqm/Measure/measure-EXM55-FHIR",
+  "identifier" : [{
+    "use" : "official",
+    "system" : "http://example.org/fhir/cqi/ecqm/Measure/Identifier/exm",
+    "value" : "55"
+  }],
+  "version" : "5.0.0",
+  "name" : "EXM55",
+  "title" : "EXM55 - Median Emergency Department Visit Duration",
+  "status" : "active",
+  "experimental" : true,
+  "date" : "2025-08-13",
+  "publisher" : "HL7 International / Clinical Quality Information",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/cqi"
+    }]
+  }],
+  "description" : "This example illustrates a continuous variable measure represented as a FHIR eCQM",
+  "useContext" : [{
+    "code" : {
+      "system" : "http://terminology.hl7.org/CodeSystem/usage-context-type",
+      "code" : "venue",
+      "display" : "Clinical Venue"
+    },
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://hl7.org/fhir/uv/cqm/CodeSystem/intended-venue-codes",
+        "code" : "eh",
+        "display" : "EH"
+      }]
+    }
+  }],
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001"
+    }]
+  }],
+  "approvalDate" : "2019-03-08",
+  "lastReviewDate" : "2019-03-08",
+  "effectivePeriod" : {
+    "start" : "2018-01-01",
+    "end" : "2018-12-31"
+  },
+  "topic" : [{
+    "coding" : [{
+      "system" : "http://loinc.org",
+      "code" : "57024-2",
+      "display" : "Health Quality Measure Document"
+    }]
+  }],
+  "library" : ["#EXM55"],
+  "group" : [{
+    "id" : "group-1",
+    "linkId" : "Primary",
+    "type" : [{
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/measure-type",
+        "code" : "process"
+      }]
+    }],
+    "basis" : "Encounter",
+    "scoring" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/measure-scoring",
+        "code" : "continuous-variable",
+        "display" : "Continuous Variable"
+      }]
+    },
+    "improvementNotation" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/measure-improvement-notation",
+        "code" : "decrease",
+        "display" : "Decreased score indicates improvement"
+      }]
+    },
+    "population" : [{
+      "linkId" : "Primary_exm55_initial_population",
+      "code" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/measure-population",
+          "code" : "initial-population",
+          "display" : "Initial Population"
+        }]
+      },
+      "criteria" : {
+        "language" : "text/plain",
+        "expression" : "Initial Population"
+      }
+    },
+    {
+      "linkId" : "Primary_exm55_measure_population",
+      "code" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/measure-population",
+          "code" : "measure-population",
+          "display" : "Measure Population"
+        }]
+      },
+      "criteria" : {
+        "language" : "text/plain",
+        "expression" : "Measure Population"
+      }
+    },
+    {
+      "linkId" : "Primary_exm55_measure_population_exclusion",
+      "code" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/measure-population",
+          "code" : "measure-population-exclusion",
+          "display" : "Measure Population Exclusion"
+        }]
+      },
+      "criteria" : {
+        "language" : "text/plain",
+        "expression" : "Measure Population Exclusion"
+      }
+    },
+    {
+      "linkId" : "Primary_exm55_measure_population_identifier",
+      "code" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/measure-population",
+          "code" : "measure-observation",
+          "display" : "Measure Observation"
+        }]
+      },
+      "criteria" : {
+        "language" : "text/plain",
+        "expression" : "Measure Observation"
+      },
+      "inputPopulationId" : "measure-population-identifier",
+      "aggregateMethod" : {
+        "coding" : [{
+          "system" : "http://hl7.org/fhir/CodeSystem/measure-aggregate-method",
+          "code" : "median",
+          "display" : "Median"
+        }]
+      }
+    }],
+    "stratifier" : [{
+      "linkId" : "Primary_exm55_stratification_1",
+      "code" : {
+        "coding" : [{
+          "system" : "http://example.org/stratification",
+          "code" : "Stratification 1",
+          "display" : "Stratification 1"
+        }]
+      },
+      "criteria" : {
+        "language" : "text/plain",
+        "expression" : "Stratification 1"
+      }
+    },
+    {
+      "linkId" : "Primary_exm55_stratification_2",
+      "code" : {
+        "coding" : [{
+          "system" : "http://example.org/stratification",
+          "code" : "Stratification 2",
+          "display" : "Stratification 2"
+        }]
+      },
+      "criteria" : {
+        "language" : "text/plain",
+        "expression" : "Stratification 2"
+      }
+    },
+    {
+      "linkId" : "Primary_exm55_stratification_3",
+      "code" : {
+        "coding" : [{
+          "system" : "http://example.org/stratification",
+          "code" : "Stratification 3",
+          "display" : "Stratification 3"
+        }]
+      },
+      "criteria" : {
+        "language" : "text/plain",
+        "expression" : "Stratification 3"
+      }
+    }]
+  }]
+}

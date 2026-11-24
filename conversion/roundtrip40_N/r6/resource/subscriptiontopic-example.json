@@ -1,0 +1,89 @@
+{
+  "resourceType" : "SubscriptionTopic",
+  "id" : "example",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "fhir"
+  }],
+  "url" : "http://example.org/FHIR/SubscriptionTopic/example",
+  "identifier" : [{
+    "system" : "urn:ietf:rfc:3986",
+    "value" : "urn:uuid:1caa02ba-051b-4602-8856-65921748ae76"
+  }],
+  "version" : "1.0.0-beta.1",
+  "title" : "example",
+  "status" : "draft",
+  "date" : "2019-01-01",
+  "publisher" : "HL7 International / FHIR Infrastructure",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/fiwg"
+    }]
+  }],
+  "description" : "Example topic for completed encounters",
+  "trigger" : [{
+    "description" : "An Encounter has been completed",
+    "resource" : "http://hl7.org/fhir/StructureDefinition/Encounter",
+    "supportedInteraction" : ["update"],
+    "queryCriteria" : {
+      "previous" : "status:not=completed",
+      "resultForCreate" : "test-passes",
+      "current" : "status=completed",
+      "resultForDelete" : "test-fails",
+      "requireBoth" : true
+    },
+    "fhirPathCriteria" : "(%previous.empty() | (%previous.status != 'completed')) and (%current.status = 'completed')",
+    "canFilterBy" : [{
+      "description" : "Filter based on the subject of an encounter.",
+      "resource" : "Encounter",
+      "filterParameter" : "subject"
+    },
+    {
+      "description" : "Filter based on the group membership of the subject of an encounter.",
+      "resource" : "Encounter",
+      "filterParameter" : "_in"
+    },
+    {
+      "description" : "Filter based on the length of an encounter.",
+      "resource" : "Encounter",
+      "filterParameter" : "length",
+      "comparator" : ["gt",
+      "lt",
+      "ge",
+      "le"]
+    },
+    {
+      "description" : "Filter based on the account for billing an encounter.",
+      "resource" : "Encounter",
+      "filterParameter" : "account",
+      "modifier" : ["missing",
+      "not",
+      "identifier"]
+    }],
+    "notificationShape" : [{
+      "resource" : "Encounter",
+      "include" : ["Encounter:patient&iterate=Patient.link",
+      "Encounter:practitioner",
+      "Encounter:service-provider",
+      "Encounter:account",
+      "Encounter:diagnosis",
+      "Encounter:observation",
+      "Encounter:location"],
+      "relatedQuery" : [{
+        "queryType" : {
+          "system" : "http://example.org/fhir/CodeSystem-patient-queries",
+          "code" : "current-patient"
+        },
+        "query" : "Patient?_include:iterate=Patient:link"
+      },
+      {
+        "queryType" : {
+          "system" : "http://example.org/fhir/CodeSystem-patient-queries",
+          "code" : "current-providers"
+        },
+        "query" : "$current-providers"
+      }]
+    }]
+  }]
+}

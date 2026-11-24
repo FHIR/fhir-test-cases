@@ -1,0 +1,148 @@
+{
+  "resourceType" : "MedicationRequest",
+  "id" : "medrx0323",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "contained" : [{
+    "resourceType" : "Medication",
+    "id" : "med0318",
+    "doseForm" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "385221006",
+        "display" : "Conventional release emulsion for injection (dose form)"
+      }]
+    },
+    "ingredient" : [{
+      "item" : {
+        "concept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/sid/ndc",
+            "code" : "0338-1134-03",
+            "display" : "CLINIMIX, 1000 mL in 1 BAG (0338-1134-03) (package)"
+          }]
+        }
+      }
+    },
+    {
+      "item" : {
+        "concept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/sid/ndc",
+            "code" : "0409-5779-01",
+            "display" : "TPN Electrolytes, 25 VIAL, SINGLE-DOSE in 1 CARTON (0409-5779-01) / 20 mL in 1 VIAL, SINGLE-DOSE (0409-5779-11) (package)"
+          }]
+        }
+      }
+    },
+    {
+      "item" : {
+        "concept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/sid/ndc",
+            "code" : "0338-0519-02",
+            "display" : "Intralipid, 250 mL in 1 BAG (0338-0519-02) (package)"
+          }],
+          "text" : "Intralipid 20% IV Fat Emulsion"
+        }
+      }
+    }],
+    "instance" : {
+      "lotNumber" : "123455",
+      "expirationDate" : "2016-07-09"
+    }
+  }],
+  "identifier" : [{
+    "use" : "official",
+    "system" : "http://www.bmc.nl/portal/prescriptions",
+    "value" : "12345689"
+  }],
+  "status" : "completed",
+  "intent" : "order",
+  "medication" : {
+    "reference" : {
+      "reference" : "#med0318"
+    }
+  },
+  "subject" : {
+    "reference" : "Patient/pat1",
+    "display" : "Donald Duck"
+  },
+  "encounter" : {
+    "reference" : "Encounter/f001",
+    "display" : "encounter who leads to this prescription"
+  },
+  "authoredOn" : "2015-01-15",
+  "requester" : {
+    "reference" : "Practitioner/f007",
+    "display" : "Patrick Pump"
+  },
+  "dosageInstruction" : {
+    "step" : [{
+      "component" : [{
+        "text" : "1000mL infused at 50ml/hour for 4 hours - hung at 2200 hours",
+        "timing" : {
+          "event" : ["2015-01-15T22:00:00+11:00"],
+          "repeat" : {
+            "frequency" : 1,
+            "period" : 24,
+            "periodUnit" : "h"
+          }
+        },
+        "site" : {
+          "concept" : {
+            "coding" : [{
+              "system" : "http://snomed.info/sct",
+              "code" : "6073002",
+              "display" : "Structure of ligament of left superior vena cava"
+            }]
+          }
+        },
+        "route" : {
+          "coding" : [{
+            "system" : "http://snomed.info/sct",
+            "code" : "255560000",
+            "display" : "Intravenous"
+          }]
+        },
+        "method" : {
+          "text" : "PICC line"
+        },
+        "doseAndRate" : [{
+          "type" : {
+            "coding" : [{
+              "system" : "http://terminology.hl7.org/CodeSystem/dose-rate-type",
+              "code" : "ordered",
+              "display" : "Ordered"
+            }]
+          },
+          "doseQuantity" : {
+            "value" : 1000,
+            "unit" : "mL",
+            "system" : "http://unitsofmeasure.org",
+            "code" : "mL"
+          },
+          "rateRatio" : {
+            "numerator" : {
+              "value" : 50,
+              "unit" : "mL",
+              "system" : "http://unitsofmeasure.org",
+              "code" : "mL"
+            },
+            "denominator" : {
+              "value" : 1,
+              "unit" : "h",
+              "system" : "http://unitsofmeasure.org",
+              "code" : "h"
+            }
+          }
+        }]
+      }]
+    }]
+  }
+}

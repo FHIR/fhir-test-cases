@@ -1,0 +1,111 @@
+{
+  "resourceType" : "MedicationDispense",
+  "id" : "meddisp0311",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "status" : "completed",
+  "medication" : {
+    "concept" : {
+      "coding" : [{
+        "system" : "http://hl7.org/fhir/sid/ndc",
+        "code" : "0713-0118",
+        "display" : "ACEPHEN (product)"
+      }]
+    }
+  },
+  "subject" : {
+    "reference" : "Patient/pat1",
+    "display" : "Donald Duck"
+  },
+  "performer" : [{
+    "actor" : {
+      "reference" : "Practitioner/f006"
+    }
+  }],
+  "authorizingPrescription" : [{
+    "reference" : "MedicationRequest/medrx0324"
+  }],
+  "type" : {
+    "coding" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+      "code" : "RFP",
+      "display" : "Refill - Part Fill"
+    }]
+  },
+  "quantity" : {
+    "value" : 60,
+    "system" : "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
+    "code" : "RECSUPP"
+  },
+  "daysSupply" : {
+    "value" : 10,
+    "unit" : "Day",
+    "system" : "http://unitsofmeasure.org",
+    "code" : "d"
+  },
+  "whenPrepared" : "2015-01-15T10:20:00Z",
+  "whenHandedOver" : "2015-01-15T16:20:00Z",
+  "dosageInstruction" : {
+    "step" : [{
+      "component" : [{
+        "text" : "Insert two suppositories (240mg) rectally twice daily as needed for fever to a maximim of 6 per day",
+        "additionalInstruction" : [{
+          "coding" : [{
+            "system" : "http://snomed.info/sct",
+            "code" : "418637003",
+            "display" : "Do not take with any other paracetamol products (qualifier value)"
+          }]
+        }],
+        "timing" : {
+          "repeat" : {
+            "frequency" : 2,
+            "period" : 1,
+            "periodUnit" : "d"
+          }
+        },
+        "asNeededFor" : [{
+          "coding" : [{
+            "system" : "http://snomed.info/sct",
+            "code" : "386661006",
+            "display" : "Fever (finding)"
+          }]
+        }],
+        "doseAndRate" : [{
+          "type" : {
+            "coding" : [{
+              "system" : "http://terminology.hl7.org/CodeSystem/dose-rate-type",
+              "code" : "ordered",
+              "display" : "Ordered"
+            }]
+          },
+          "doseQuantity" : {
+            "value" : 240,
+            "unit" : "mg",
+            "system" : "http://unitsofmeasure.org",
+            "code" : "mg"
+          }
+        }],
+        "safety" : {
+          "doseLimit" : [{
+            "valueQuantity" : {
+              "value" : 720,
+              "system" : "http://unitsofmeasure.org",
+              "code" : "mg"
+            },
+            "scope" : "period",
+            "period" : {
+              "value" : 1,
+              "system" : "http://unitsofmeasure.org",
+              "code" : "d"
+            }
+          }]
+        }
+      }]
+    }]
+  }
+}

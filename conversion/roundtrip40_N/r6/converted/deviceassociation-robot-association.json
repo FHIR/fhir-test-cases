@@ -1,0 +1,97 @@
+{
+  "resourceType" : "Basic",
+  "id" : "robot-association",
+  "contained" : [{
+    "resourceType" : "Patient",
+    "id" : "example-patient",
+    "name" : [{
+      "family" : "Doe",
+      "given" : ["John"]
+    }]
+  },
+  {
+    "resourceType" : "Practitioner",
+    "id" : "example-practitioner",
+    "name" : [{
+      "family" : "Nguyen",
+      "given" : ["Alex"]
+    }]
+  },
+  {
+    "resourceType" : "Device",
+    "id" : "surgical-robot",
+    "status" : "active",
+    "deviceName" : [{
+      "name" : "Da Vinci Xi",
+      "_type" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-Device.name.type",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "code" : "model-name"
+            }]
+          }
+        }]
+      }
+    }],
+    "type" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "466893009",
+        "display" : "Robotic surgical system"
+      }]
+    }
+  }],
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-DeviceAssociation.device",
+    "valueReference" : {
+      "reference" : "#surgical-robot"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-DeviceAssociation.status",
+    "valueCode" : "active"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-DeviceAssociation.period",
+    "valuePeriod" : {
+      "start" : "2025-07-01T08:00:00Z",
+      "end" : "2025-07-01T12:00:00Z"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-DeviceAssociation.relationship",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/deviceassociation-relationship",
+        "code" : "used-by",
+        "display" : "Used By"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-DeviceAssociation.relationshipStatus",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/deviceassociation-relationship-status",
+        "code" : "ended",
+        "display" : "Ended"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-DeviceAssociation.focus",
+    "valueReference" : {
+      "reference" : "#example-practitioner"
+    }
+  }],
+  "code" : {
+    "coding" : [{
+      "system" : "http://hl7.org/fhir/fhir-types",
+      "code" : "DeviceAssociation"
+    }]
+  },
+  "subject" : {
+    "reference" : "#example-patient"
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "resourceType" : "Evidence",
+  "id" : "example-statistic-model-include-if",
+  "meta" : {
+    "versionId" : "9",
+    "lastUpdated" : "2025-03-10T14:59:32.227Z",
+    "profile" : ["http://hl7.org/fhir/uv/ebm/StructureDefinition/statistic-model"]
+  },
+  "extension" : [{
+    "extension" : [{
+      "url" : "description",
+      "valueMarkdown" : "Adults with hypertension"
+    },
+    {
+      "url" : "variableRole",
+      "valueCode" : "population"
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Evidence.variableDefinition"
+  },
+  {
+    "extension" : [{
+      "url" : "description",
+      "valueMarkdown" : "Reversitol vs. Placebo"
+    },
+    {
+      "url" : "variableRole",
+      "valueCode" : "exposure"
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Evidence.variableDefinition"
+  },
+  {
+    "extension" : [{
+      "url" : "description",
+      "valueMarkdown" : "Change in systolic blood pressure from baseline to 3 months"
+    },
+    {
+      "url" : "variableRole",
+      "valueCode" : "outcome"
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Evidence.variableDefinition"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Evidence.studyDesign",
+    "valueCodeableConcept" : {
+      "coding" : [{
+        "system" : "https://fevir.net/sevco",
+        "code" : "SEVCO:01003",
+        "display" : "randomized assignment"
+      }]
+    }
+  },
+  {
+    "extension" : [{
+      "url" : "statisticType",
+      "valueCodeableConcept" : {
+        "coding" : [{
+          "system" : "https://fevir.net/sevco",
+          "code" : "STATO:0000457",
+          "display" : "difference in means"
+        }]
+      }
+    },
+    {
+      "extension" : [{
+        "extension" : [{
+          "url" : "attribute",
+          "valueCodeableConcept" : {
+            "text" : "data distribution"
+          }
+        },
+        {
+          "url" : "value",
+          "valueCodeableConcept" : {
+            "text" : "normal distribution (Shapiro-Wilk test with p-value >= 0.05)"
+          }
+        }],
+        "url" : "http://hl7.org/fhir/StructureDefinition/statistic-model-include-if"
+      },
+      {
+        "url" : "code",
+        "valueCodeableConcept" : {
+          "text" : "Welch's 2-sample t-test"
+        }
+      },
+      {
+        "url" : "intended",
+        "valueBoolean" : true
+      }],
+      "url" : "modelCharacteristic"
+    },
+    {
+      "extension" : [{
+        "extension" : [{
+          "url" : "attribute",
+          "valueCodeableConcept" : {
+            "text" : "data distribution"
+          }
+        },
+        {
+          "url" : "value",
+          "valueCodeableConcept" : {
+            "text" : "not consistent with normal distribution (Shapiro-Wilk test with p-value < 0.05)"
+          }
+        }],
+        "url" : "http://hl7.org/fhir/StructureDefinition/statistic-model-include-if"
+      },
+      {
+        "url" : "code",
+        "valueCodeableConcept" : {
+          "text" : "Wilcoxon Mann-Whitney test"
+        }
+      },
+      {
+        "url" : "intended",
+        "valueBoolean" : true
+      }],
+      "url" : "modelCharacteristic"
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Evidence.statistic"
+  }],
+  "url" : "http://hl7.org/fhir/Evidence/example-statistic-model-include-if",
+  "identifier" : [{
+    "type" : {
+      "text" : "FEvIR Object Identifier"
+    },
+    "system" : "urn:ietf:rfc:3986",
+    "value" : "https://fevir.net/FOI/346428",
+    "assigner" : {
+      "display" : "Computable Publishing LLC"
+    }
+  }],
+  "title" : "Example of statistical analysis plan with different statistical test if non-normal distribution",
+  "status" : "active",
+  "publisher" : "Computable Publishing LLC",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "email",
+      "value" : "support@computablepublishing.com"
+    }]
+  }],
+  "description" : "This example uses the StatisticModelIncludeIf extension to represent the model characteristic of Welch's 2-sample t-test if the data is consistent with a normal distribution (based on Shapiro-Wilk test with p-value >= 0.05) and a Wilcoxon Mann-Whitney test if not.",
+  "copyright" : "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+  "author" : [{
+    "name" : "Brian S. Alper, MD, MSPH"
+  }]
+}

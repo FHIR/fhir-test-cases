@@ -1,0 +1,76 @@
+{
+  "resourceType" : "Observation",
+  "id" : "ekg-coded-annotations",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n      <p>This Observation annotates samples in the EKG waveform referenced by derivedFrom. SampledData code 426783006 indicates sinus rhythm; code 5370000 indicates atrial flutter. The contained ConceptMap maps those SNOMED CT codes to LOINC answer codes.</p>\n    </div>"
+  },
+  "contained" : [{
+    "resourceType" : "ConceptMap",
+    "id" : "ekg-annotation-map",
+    "status" : "draft",
+    "experimental" : true,
+    "group" : [{
+      "source" : "http://snomed.info/sct",
+      "target" : "http://loinc.org",
+      "element" : [{
+        "code" : "426783006",
+        "display" : "ECG: sinus rhythm",
+        "target" : [{
+          "code" : "LA17718-0",
+          "display" : "Sinus rhythm",
+          "equivalence" : "equivalent"
+        }]
+      },
+      {
+        "code" : "5370000",
+        "display" : "Atrial flutter",
+        "target" : [{
+          "code" : "LA17085-4",
+          "display" : "Atrial flutter",
+          "equivalence" : "equivalent"
+        }]
+      }]
+    }]
+  }],
+  "status" : "final",
+  "code" : {
+    "coding" : [{
+      "system" : "http://loinc.org",
+      "code" : "76281-5",
+      "display" : "Type of arrhythmia on EKG"
+    }]
+  },
+  "subject" : {
+    "reference" : "Patient/f001",
+    "display" : "P. van de Heuvel"
+  },
+  "effectiveDateTime" : "2015-02-19T09:30:35+01:00",
+  "performer" : [{
+    "reference" : "Practitioner/f005",
+    "display" : "A. Langeveld"
+  }],
+  "valueSampledData" : {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SampledData.codeMap",
+      "valueCanonical" : "#ekg-annotation-map"
+    }],
+    "origin" : {
+      "value" : 2048
+    },
+    "period" : 10,
+    "dimensions" : 1,
+    "data" : "426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 426783006 5370000 5370000 5370000 5370000 5370000 5370000 5370000 5370000 5370000 426783006 426783006 426783006 426783006 426783006 426783006 426783006"
+  },
+  "derivedFrom" : [{
+    "reference" : "Observation/ekg",
+    "display" : "EKG waveform"
+  }]
+}

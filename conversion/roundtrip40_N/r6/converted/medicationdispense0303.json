@@ -1,0 +1,109 @@
+{
+  "resourceType" : "MedicationDispense",
+  "id" : "meddisp0303",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "contained" : [{
+    "resourceType" : "Medication",
+    "id" : "med0310",
+    "code" : {
+      "coding" : [{
+        "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "code" : "1049623",
+        "display" : "oxycodone hydrochloride 5 MG Oral Tablet [Roxicodone]"
+      }]
+    }
+  }],
+  "partOf" : [{
+    "reference" : "Procedure/biopsy"
+  }],
+  "status" : "on-hold",
+  "category" : {
+    "coding" : [{
+      "system" : "http://terminology.hl7.org/fhir/CodeSystem/medicationdispense-category",
+      "code" : "outpatient",
+      "display" : "Outpatient"
+    }]
+  },
+  "medicationReference" : {
+    "reference" : "#med0310"
+  },
+  "subject" : {
+    "reference" : "Patient/pat1",
+    "display" : "Donald Duck"
+  },
+  "context" : {
+    "reference" : "Encounter/f001"
+  },
+  "performer" : [{
+    "actor" : {
+      "reference" : "Practitioner/f006"
+    }
+  }],
+  "authorizingPrescription" : [{
+    "reference" : "MedicationRequest/medrx0310"
+  }],
+  "type" : {
+    "coding" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+      "code" : "EM",
+      "display" : "Emergency Supply"
+    }]
+  },
+  "quantity" : {
+    "value" : 30,
+    "system" : "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
+    "code" : "TAB"
+  },
+  "daysSupply" : {
+    "value" : 10,
+    "unit" : "Day",
+    "system" : "http://unitsofmeasure.org",
+    "code" : "d"
+  },
+  "whenPrepared" : "2016-04-15T07:14:00+05:00",
+  "dosageInstruction" : [{
+    "text" : "one to two tablets every 4-6 hours as needed for rib pain",
+    "additionalInstruction" : [{
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "418914006",
+        "display" : "Warning. May cause drowsiness. If affected do not drive or operate machinery. Avoid alcoholic drink (qualifier value)"
+      }]
+    }],
+    "timing" : {
+      "repeat" : {
+        "frequency" : 1,
+        "period" : 4,
+        "periodMax" : 6,
+        "periodUnit" : "h"
+      }
+    },
+    "asNeededCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "297217002",
+        "display" : "Rib Pain (finding)"
+      }]
+    },
+    "route" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "26643006",
+        "display" : "Oral Route"
+      }]
+    },
+    "method" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "421521009",
+        "display" : "Swallow - dosing instruction imperative (qualifier value)"
+      }]
+    }
+  }]
+}
