@@ -1,0 +1,78 @@
+{
+  "resourceType" : "DeviceAssociation",
+  "id" : "implant-association",
+  "contained" : [{
+    "resourceType" : "Patient",
+    "id" : "example-patient",
+    "name" : [{
+      "family" : "Doe",
+      "given" : ["John"]
+    }]
+  },
+  {
+    "resourceType" : "Device",
+    "id" : "implant-device",
+    "status" : "active",
+    "name" : [{
+      "value" : "ICD Model X",
+      "type" : {
+        "coding" : [{
+          "code" : "model-name"
+        }]
+      }
+    }],
+    "type" : [{
+      "coding" : [{
+        "system" : "urn:iso:std:iso:11073:10101",
+        "code" : "753666",
+        "display" : "MDC_IDC_ENUM_DEV_TYPE_ICD"
+      }]
+    }]
+  },
+  {
+    "resourceType" : "BodyStructure",
+    "id" : "heart-structure",
+    "includedStructure" : [{
+      "structure" : {
+        "coding" : [{
+          "system" : "http://snomed.info/sct",
+          "code" : "80891009",
+          "display" : "Heart structure"
+        }]
+      }
+    }],
+    "description" : "Anatomical site for ICD implantation",
+    "patient" : {
+      "reference" : "#example-patient"
+    }
+  }],
+  "device" : {
+    "reference" : "#implant-device"
+  },
+  "relationship" : {
+    "coding" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/deviceassociation-relationship",
+      "code" : "implanted-in",
+      "display" : "Implanted In"
+    }]
+  },
+  "status" : "active",
+  "relationshipStatus" : {
+    "coding" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/deviceassociation-relationship-status",
+      "code" : "active",
+      "display" : "Active"
+    }]
+  },
+  "subject" : {
+    "reference" : "#example-patient"
+  },
+  "bodyStructure" : [{
+    "reference" : {
+      "reference" : "#heart-structure"
+    }
+  }],
+  "period" : {
+    "start" : "2022-01-01"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "resourceType" : "SubscriptionTopic",
+  "id" : "admission-lm",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "fhir"
+  }],
+  "url" : "http://example.org/FHIR/SubscriptionTopic/admission-lm",
+  "identifier" : [{
+    "system" : "urn:ietf:rfc:3986",
+    "value" : "urn:uuid:44c36873-5167-4b17-a15d-df4f8cb51343"
+  }],
+  "title" : "admission-lm",
+  "status" : "active",
+  "publisher" : "HL7 International / FHIR Infrastructure",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/fiwg"
+    }]
+  }],
+  "description" : "Example admission topic using a Logical Model",
+  "trigger" : [{
+    "description" : "Logical Model of Admission being created or updated into an `in-progress` state",
+    "resource" : "http://example.org/LogicalModels/Admission",
+    "supportedInteraction" : ["create",
+    "update"],
+    "event" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/v2-0003",
+        "code" : "A01",
+        "display" : "ADT/ACK - Admit/visit notification"
+      }]
+    },
+    "canFilterBy" : [{
+      "description" : "Matching based on the Patient. Input is expected to be a search `token` and match against the ID of the patient.",
+      "resource" : "http://example.org/LogicalModels/Admission",
+      "filterParameter" : "Patient",
+      "filterDefinition" : "http://example.org/LogicalModels/Admission/Match_Patient"
+    },
+    {
+      "description" : "Matching based on the Patient Group. Input is expected to be a `string` and match against the logical group name where a patient has membership.",
+      "resource" : "http://example.org/LogicalModels/Admission",
+      "filterParameter" : "PatientGroup",
+      "filterDefinition" : "http://example.org/LogicalModels/Admission/Match_Patient_Group"
+    }],
+    "notificationShape" : [{
+      "resource" : "http://example.org/LogicalModels/Admission"
+    }]
+  }]
+}

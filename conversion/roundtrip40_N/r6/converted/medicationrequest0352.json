@@ -1,0 +1,147 @@
+{
+  "resourceType" : "MedicationRequest",
+  "id" : "medrx0352",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "contained" : [{
+    "resourceType" : "DeviceDefinition",
+    "id" : "nasal-cannula",
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-DeviceDefinition.status",
+      "valueCode" : "active"
+    }],
+    "deviceName" : [{
+      "name" : "Oxygen nasal cannula",
+      "type" : "user-friendly-name",
+      "_type" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-DeviceDefinition.deviceName.type",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "http://terminology.hl7.org/CodeSystem/device-nametype",
+              "code" : "user-friendly-name"
+            }]
+          }
+        }]
+      }
+    }],
+    "type" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "336623009",
+        "display" : "Oxygen nasal cannula"
+      }]
+    }
+  }],
+  "extension" : [{
+    "extension" : [{
+      "url" : "reference",
+      "valueReference" : {
+        "reference" : "#nasal-cannula"
+      }
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-MedicationRequest.device"
+  },
+  {
+    "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-MedicationRequest.dosageInstruction.renderedInstruction",
+    "valueMarkdown" : "Oxygen 2 L/min (1 to 3 L/min) via nasal cannula if SpO2 is below 88%, titrated to SpO2"
+  }],
+  "status" : "active",
+  "intent" : "order",
+  "medicationCodeableConcept" : {
+    "coding" : [{
+      "system" : "http://snomed.info/sct",
+      "code" : "320917000",
+      "display" : "Oxygen only product in gas for inhalation"
+    }]
+  },
+  "subject" : {
+    "reference" : "Patient/pat1",
+    "display" : "Donald Duck"
+  },
+  "authoredOn" : "2026-02-10",
+  "requester" : {
+    "reference" : "Practitioner/f007"
+  },
+  "reasonCode" : [{
+    "coding" : [{
+      "system" : "http://snomed.info/sct",
+      "code" : "71186008",
+      "display" : "Croup (disorder)"
+    }]
+  }],
+  "groupIdentifier" : {
+    "system" : "urn:ietf:rfc:3986",
+    "value" : "urn:uuid:8b7a3c6e-4d2f-4a1b-9e0c-5f6d7e8a9b10"
+  },
+  "dosageInstruction" : [{
+    "extension" : [{
+      "extension" : [{
+        "url" : "code",
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "http://loinc.org",
+            "code" : "59408-5",
+            "display" : "Oxygen saturation in Arterial blood by Pulse oximetry"
+          }],
+          "text" : "SpO2"
+        }
+      },
+      {
+        "url" : "operation",
+        "valueCode" : "lt"
+      },
+      {
+        "url" : "value",
+        "valueQuantity" : {
+          "value" : 88,
+          "unit" : "%",
+          "system" : "http://unitsofmeasure.org",
+          "code" : "%"
+        }
+      },
+      {
+        "url" : "text",
+        "valueString" : "if SpO2 is below 88%"
+      }],
+      "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-Dosage.condition"
+    }],
+    "text" : "Oxygen 2 L/min (1 to 3 L/min) via nasal cannula if SpO2 is below 88%, titrated to SpO2",
+    "asNeededCodeableConcept" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "449171008",
+        "display" : "Oxygen saturation below reference range"
+      }],
+      "text" : "SpO2 below 88%"
+    },
+    "route" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "447694001",
+        "display" : "Respiratory tract route"
+      }]
+    },
+    "doseAndRate" : [{
+      "rateRange" : {
+        "low" : {
+          "value" : 1,
+          "unit" : "L/min",
+          "system" : "http://unitsofmeasure.org",
+          "code" : "L/min"
+        },
+        "high" : {
+          "value" : 3,
+          "unit" : "L/min",
+          "system" : "http://unitsofmeasure.org",
+          "code" : "L/min"
+        }
+      }
+    }]
+  }]
+}

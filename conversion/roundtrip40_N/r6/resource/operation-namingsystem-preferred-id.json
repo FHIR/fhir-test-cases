@@ -1,0 +1,99 @@
+{
+  "resourceType" : "OperationDefinition",
+  "id" : "NamingSystem-preferred-id",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: OperationDefinition NamingSystem-preferred-id</b></p><a name=\"NamingSystem-preferred-id\"> </a><a name=\"hcNamingSystem-preferred-id\"> </a><p>URL: [base]/NamingSystem/$preferred-id</p><h3>Parameters</h3><table class=\"grid\"><tr><td><b>Use</b></td><td><b>Name</b></td><td><b>Scope</b></td><td><b>Cardinality</b></td><td><b>Type</b></td><td><b>Binding</b></td><td><b>Documentation</b></td></tr><tr><td>IN</td><td>id</td><td/><td>1..1</td><td><a href=\"datatypes.html#string\">string</a></td><td/><td><div><p>The server parses the provided identifier to see what type it is (e.g. a URI, an OID as a URI, a plain OID, or a v2 table 0396 code). If the server can't tell what type of identifier it is, it can try it as multiple types. It is an error if more than one system matches the provided identifier</p>\n</div></td></tr><tr><td>IN</td><td>type</td><td/><td>1..1</td><td><a href=\"datatypes.html#code\">code</a></td><td><a href=\"valueset-namingsystem-identifier-type.html\">Naming System Identifier Type</a> (Required)</td><td/></tr><tr><td>IN</td><td>date</td><td/><td>0..1</td><td><a href=\"datatypes.html#dateTime\">dateTime</a></td><td/><td><div><p>If specified, the operation will indicate what the preferred identifier was on the specified date.  If not specified, the operation will provide the preferred identifier as of 'now'</p>\n</div></td></tr><tr><td>OUT</td><td>result</td><td/><td>1..1</td><td><a href=\"datatypes.html#string\">string</a></td><td/><td><div><p>OIDs are return as plain OIDs (not the URI form).</p>\n</div></td></tr></table><div><p>Servers handle this request by finding the provided identifier in their known naming systems, and returning the requested identifier type (<a href=\"namingsystem-definitions.html#NamingSystem.uniqueId.type\">NamingSystem.uniqueId.type</a>). If there is more than one identifier of the specified type (for the specified date), then the 'preferred' identifier will be returned.  If there is only one identifier, that identifier will be returned even if it is not preferred.  If there are multiple preferred identifiers or multiple identifiers with none marked as preferred, the system MAY return an error or may list all identifiers applicable for that date and period.</p>\n<p>If the server wishes, it can also look through all code systems and value sets it knows about when attempting to find the requested identifier.</p>\n</div></div>"
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status",
+    "valueCode" : "normative"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version",
+    "valueCode" : "6.0.0-snapshot1"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "vocab"
+  }],
+  "url" : "http://hl7.org/fhir/OperationDefinition/NamingSystem-preferred-id",
+  "version" : "6.0.0-snapshot1",
+  "name" : "PreferredId",
+  "title" : "Fetch Preferred id",
+  "status" : "active",
+  "kind" : "operation",
+  "experimental" : false,
+  "date" : "2026-11-20T23:46:23+11:00",
+  "publisher" : "HL7 International / Terminology Infrastructure",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://hl7.org/fhir"
+    },
+    {
+      "system" : "email",
+      "value" : "fhir@lists.hl7.org"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/Vocab"
+    }]
+  }],
+  "description" : "This operation returns the preferred identifiers for identifiers, and terminologies. The operation takes 2 parameters:     \n\n* a system identifier - either a URI, an OID, or a v2 table 0396 (other) code  \n* a code for what kind of identifier is desired (URI, OID, v2 table 0396 identifier)    \n\nand returns either the requested identifier, or an HTTP errors response with an OperationOutcome because either the provided identifier was not recognized, or the requested identiifer type is not known.    \n\nThe principle use of this operation is when converting between v2, CDA and FHIR Identifier/CX/II and CodeableConcepts/C(N/W)E/CD but the operation may also find use when converting metadata such as profiles.",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
+  "affectsState" : false,
+  "code" : "preferred-id",
+  "comment" : "Servers handle this request by finding the provided identifier in their known naming systems, and returning the requested identifier type ([NamingSystem.uniqueId.type](namingsystem-definitions.html#NamingSystem.uniqueId.type)). If there is more than one identifier of the specified type (for the specified date), then the 'preferred' identifier will be returned.  If there is only one identifier, that identifier will be returned even if it is not preferred.  If there are multiple preferred identifiers or multiple identifiers with none marked as preferred, the system MAY return an error or may list all identifiers applicable for that date and period.  \n\nIf the server wishes, it can also look through all code systems and value sets it knows about when attempting to find the requested identifier.",
+  "resource" : ["NamingSystem"],
+  "system" : false,
+  "type" : true,
+  "instance" : false,
+  "parameter" : [{
+    "name" : "id",
+    "use" : "in",
+    "min" : 1,
+    "max" : "1",
+    "documentation" : "The server parses the provided identifier to see what type it is (e.g. a URI, an OID as a URI, a plain OID, or a v2 table 0396 code). If the server can't tell what type of identifier it is, it can try it as multiple types. It is an error if more than one system matches the provided identifier",
+    "type" : "string"
+  },
+  {
+    "name" : "type",
+    "use" : "in",
+    "min" : 1,
+    "max" : "1",
+    "type" : "code",
+    "binding" : {
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName",
+        "valueString" : "NamingSystemIdentifierType"
+      }],
+      "strength" : "required",
+      "valueSet" : "http://hl7.org/fhir/ValueSet/namingsystem-identifier-type|6.0.0-snapshot1"
+    }
+  },
+  {
+    "name" : "date",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "If specified, the operation will indicate what the preferred identifier was on the specified date.  If not specified, the operation will provide the preferred identifier as of 'now'",
+    "type" : "dateTime"
+  },
+  {
+    "name" : "result",
+    "use" : "out",
+    "min" : 1,
+    "max" : "1",
+    "documentation" : "OIDs are return as plain OIDs (not the URI form).",
+    "type" : "string"
+  }]
+}

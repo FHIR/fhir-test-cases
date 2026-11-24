@@ -1,0 +1,198 @@
+{
+  "resourceType" : "MedicationRequest",
+  "id" : "medrx0321",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "contained" : [{
+    "resourceType" : "Medication",
+    "id" : "med0307",
+    "code" : {
+      "coding" : [{
+        "system" : "http://hl7.org/fhir/sid/ndc",
+        "code" : "0169-7501-11",
+        "display" : "NOVOLOG, 1 VIAL, GLASS in 1 CARTON (0169-7501-11) / 10 mL in 1 VIAL, GLASS (package)"
+      }],
+      "text" : "Novolog 100u/ml"
+    },
+    "doseForm" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "385219001",
+        "display" : "Solution for injection"
+      }]
+    },
+    "ingredient" : [{
+      "item" : {
+        "concept" : {
+          "coding" : [{
+            "system" : "http://snomed.info/sct",
+            "code" : "325072002",
+            "display" : "Insulin Aspart (substance)"
+          }]
+        }
+      },
+      "strengthRatio" : {
+        "numerator" : {
+          "value" : 100,
+          "system" : "http://unitsofmeasure.org",
+          "code" : "U"
+        },
+        "denominator" : {
+          "value" : 1,
+          "system" : "http://unitsofmeasure.org",
+          "code" : "mL"
+        }
+      }
+    }],
+    "instance" : {
+      "lotNumber" : "12345",
+      "expirationDate" : "2019-10-31"
+    }
+  }],
+  "identifier" : [{
+    "use" : "official",
+    "system" : "http://www.bmc.nl/portal/prescriptions",
+    "value" : "12345689"
+  }],
+  "status" : "active",
+  "intent" : "order",
+  "medication" : {
+    "reference" : {
+      "reference" : "#med0307",
+      "display" : "NOVOLOG, 1 VIAL, GLASS in 1 CARTON (0169-7501-11) / 10 mL in 1 VIAL, GLASS (package)"
+    }
+  },
+  "subject" : {
+    "reference" : "Patient/pat1",
+    "display" : "Donald Duck"
+  },
+  "authoredOn" : "2015-01-15",
+  "requester" : {
+    "reference" : "Practitioner/f007",
+    "display" : "Patrick Pump"
+  },
+  "reason" : [{
+    "concept" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "44054006",
+        "display" : "Diabetes mellitus type 2 (disorder)"
+      }]
+    }
+  }],
+  "note" : [{
+    "text" : "Check blood sugar levels before taking insulin"
+  }],
+  "dosageInstruction" : {
+    "renderedInstruction" : "Inject 10 units subcut 10 minutes before breakfast, 15 units before lunch, 20 units before dinner. Check blood sugar levels before taking insulin.",
+    "step" : [{
+      "component" : [{
+        "text" : "inject 10 units subcut 10 minutes before breakfast",
+        "timing" : {
+          "repeat" : {
+            "frequency" : 1,
+            "period" : 1,
+            "periodUnit" : "d",
+            "when" : ["ACM"],
+            "offset" : 10
+          }
+        },
+        "doseAndRate" : [{
+          "type" : {
+            "coding" : [{
+              "system" : "http://terminology.hl7.org/CodeSystem/dose-rate-type",
+              "code" : "ordered",
+              "display" : "Ordered"
+            }]
+          },
+          "doseQuantity" : {
+            "value" : 10,
+            "unit" : "U",
+            "system" : "http://unitsofmeasure.org",
+            "code" : "U"
+          }
+        }]
+      },
+      {
+        "text" : "15 units before lunch",
+        "additionalInstruction" : [{
+          "text" : "Before Lunch"
+        }],
+        "timing" : {
+          "repeat" : {
+            "frequency" : 1,
+            "period" : 1,
+            "periodUnit" : "d"
+          }
+        },
+        "doseAndRate" : [{
+          "type" : {
+            "coding" : [{
+              "system" : "http://terminology.hl7.org/CodeSystem/dose-rate-type",
+              "code" : "ordered",
+              "display" : "Ordered"
+            }]
+          },
+          "doseQuantity" : {
+            "value" : 15,
+            "unit" : "U",
+            "system" : "http://unitsofmeasure.org",
+            "code" : "U"
+          }
+        }]
+      },
+      {
+        "text" : "20 units before dinner",
+        "additionalInstruction" : [{
+          "text" : "Before Dinner"
+        }],
+        "timing" : {
+          "repeat" : {
+            "frequency" : 1,
+            "period" : 1,
+            "periodUnit" : "d"
+          }
+        },
+        "doseAndRate" : [{
+          "type" : {
+            "coding" : [{
+              "system" : "http://terminology.hl7.org/CodeSystem/dose-rate-type",
+              "code" : "ordered",
+              "display" : "Ordered"
+            }]
+          },
+          "doseQuantity" : {
+            "value" : 20,
+            "unit" : "U",
+            "system" : "http://unitsofmeasure.org",
+            "code" : "U"
+          }
+        }]
+      }]
+    }]
+  },
+  "dispenseRequest" : {
+    "validityPeriod" : {
+      "start" : "2015-01-15",
+      "end" : "2016-01-15"
+    },
+    "numberOfRepeatsAllowed" : 3,
+    "quantity" : {
+      "value" : 10,
+      "unit" : "ml",
+      "system" : "http://unitsofmeasure.org",
+      "code" : "ml"
+    },
+    "expectedSupplyDuration" : {
+      "value" : 30,
+      "unit" : "days",
+      "system" : "http://unitsofmeasure.org",
+      "code" : "d"
+    }
+  }
+}

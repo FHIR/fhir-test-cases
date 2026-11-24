@@ -1,0 +1,62 @@
+{
+  "resourceType" : "SubscriptionTopic",
+  "id" : "admission-basic",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "fhir"
+  }],
+  "url" : "http://example.org/FHIR/SubscriptionTopic/admission-basic",
+  "identifier" : [{
+    "system" : "urn:ietf:rfc:3986",
+    "value" : "urn:uuid:0b67b140-59d0-4c49-9fe8-b62f7fcf4eb9"
+  }],
+  "title" : "admission-basic",
+  "status" : "active",
+  "publisher" : "HL7 International / FHIR Infrastructure",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/fiwg"
+    }]
+  }],
+  "description" : "Example admission topic using a Basic resource",
+  "trigger" : [{
+    "description" : "Basic Resource Admission being created or updated into an `in-progress` state",
+    "resource" : "http://hl7.org/fhir/StructureDefinition/Basic",
+    "supportedInteraction" : ["create",
+    "update"],
+    "queryCriteria" : {
+      "previous" : "code=Admission&admission-status:not=in-progress",
+      "resultForCreate" : "test-passes",
+      "current" : "code=Admission&admission-status=in-progress",
+      "resultForDelete" : "test-fails",
+      "requireBoth" : true
+    },
+    "fhirPathCriteria" : "(%previous.id.empty() or (%previous.extension('status') != 'in-progress')) and (%current.extension('status') = 'in-progress')",
+    "event" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/v2-0003",
+        "code" : "A01",
+        "display" : "ADT/ACK - Admit/visit notification"
+      }]
+    },
+    "canFilterBy" : [{
+      "description" : "Matching based on the Patient. Input is expected to be a search `reference` and match against a reference to the patient.",
+      "resource" : "Basic",
+      "filterParameter" : "admission-patient",
+      "filterDefinition" : "http://example.org/SearchParameters/Basic/admission-patient"
+    },
+    {
+      "description" : "Matching based on the Patient Group. Input is expected to be a search `reference` and match against a reference to a group the patient has membership in.",
+      "resource" : "Basic",
+      "filterParameter" : "admission-patient-group",
+      "filterDefinition" : "http://example.org/SearchParameters/Basic/admission-patient-group"
+    }],
+    "notificationShape" : [{
+      "resource" : "Basic",
+      "include" : ["Basic:admission-patient",
+      "Basic:admission-patient-group",
+      "Basic:admission-diagnosis"]
+    }]
+  }]
+}
