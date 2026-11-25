@@ -1,0 +1,24 @@
+{
+  "resourceType" : "Subscription",
+  "id" : "case-partial-criteria",
+  "meta" : {
+    "profile" : ["http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-subscription"]
+  },
+  "status" : "requested",
+  "reason" : "test",
+  "criteria" : "http://example.org/fhir/SubscriptionTopic/encounter-start",
+  "_criteria" : {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-filter-criteria",
+      "valueString" : "Encounter?patient=Patient/123"
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-filter-criteria",
+      "valueString" : "Encounter?status=finished&&class=IMP"
+    }]
+  },
+  "channel" : {
+    "type" : "rest-hook",
+    "endpoint" : "https://example.org/hook"
+  }
+}

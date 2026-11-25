@@ -22,6 +22,7 @@
   appointment-examplereq.json
   patient-container-example.json
   bundle-document-ips.json (for the documentFunctions group, which is mode="custom")
+  bundle-document-sections.json (also for the documentFunctions group)
 
   The test schema for this test suite is maintained in the FHIRPath specification repository:
   https://github.com/HL7/FHIRPath/blob/master/tests/testSchema.xsd
@@ -1853,7 +1854,7 @@ Any text enclosed within is ignored
         <output type="boolean">true</output>
       </test>
 	</group>
-	<group name="documentFunctions" mode="custom" description="Functions for FHIR documents: section(), entry(), entryIn(), resources(), resourcesIn(), sameSubject() and hasCoding(). These are not part of FHIRPath, nor of the FHIR specification's additional FHIRPath functions - they are an extension of the HL7 Java reference implementation (org.hl7.fhir.core), so other engines run them only if they choose to implement the functions">
+	<group name="documentFunctions" mode="custom" description="Functions for FHIR documents: section(), entry(), entryIn(), resources(), resourcesIn(), sameSubject(), hasCoding(), isKnown() and hasData(). These are not part of FHIRPath, nor of the FHIR specification's additional FHIRPath functions - they are an extension of the HL7 Java reference implementation (org.hl7.fhir.core), so other engines run them only if they choose to implement the functions">
 		<notes>
   section(system, code [, min, max]): on documents (Bundles) or Compositions (a document's Composition is its first Composition entry), the
     Composition's sections, nested ones too, whose code has a coding that matches system and code. min and max default to 1 and 1.
@@ -1868,6 +1869,13 @@ Any text enclosed within is ignored
     has no subject (or more than one), or, without other, the evaluation isn't on a document. Otherwise true if both references are present and
     identical strings; else if both identifiers are present and have identical system and value; otherwise false. other given as empty
     ({}) is not the same as no other: the result is empty.
+  isKnown(): on sections, whether each is known - its emptyReason is missing or is nil known (list-empty-reason#nilknown). Any
+    other emptyReason (not asked, withheld..., or one that is only text) is not known, and an item that is not a section of a Composition
+    is not known. Empty when the input is empty; otherwise true when every item is known.
+  hasData(): on sections, whether each has its data - an emptyReason (it says why it is empty), or else entries. An item that is not a
+    section of a Composition doesn't. Empty when the input is empty; otherwise true when every item has its data.
+  sameSubject([other]) on a section: true when the section has no focus; otherwise whether its focus is the same as the subject of other -
+    or, without other, of the section's Composition - compared as for resources.
   hasCoding(system, code [, version]): on Codings or CodeableConcepts, whether any coding matches. A parameter that is a string must
     match the coding's system, code or version precisely (so a coding without a version doesn't match a version that is given); a
     parameter that is empty ({}), or the version when it isn't given, is ignored. Empty when the input is empty; otherwise true or false.
@@ -1998,5 +2006,32 @@ Any text enclosed within is ignored
 		<test name="testHasCoding20" testing="hasCoding" inputfile="bundle-document-ips.json" description="with everything ignored, any coding matches"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c1').code.hasCoding({}, {}, {})</expression><output type="boolean">true</output></test>
 		<test name="testHasCoding21" testing="hasCoding" inputfile="bundle-document-ips.json" description="empty when the input is empty, whatever the parameters"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c1').category.hasCoding({}, {}).empty()</expression><output type="boolean">true</output></test>
 		<test name="testHasCoding22" testing="hasCoding" inputfile="bundle-document-ips.json" description="a parameter with more than one value makes the result empty (checking the expression gives a warning)"><expression>Bundle.entry.resource.ofType(Condition).where(id = 'c1').code.hasCoding(('http://snomed.info/sct' | 'http://loinc.org'), '38341003').empty()</expression><output type="boolean">true</output></test>
+			<test name="testIsKnown1" testing="isKnown" inputfile="bundle-document-sections.json" description="no emptyReason"><expression>Bundle.section('http://loinc.org', '11450-4').isKnown()</expression><output type="boolean">true</output></test>
+		<test name="testIsKnown2" testing="isKnown" inputfile="bundle-document-sections.json" description="emptyReason nil known"><expression>Bundle.section('http://loinc.org', '48765-2').isKnown()</expression><output type="boolean">true</output></test>
+		<test name="testIsKnown3" testing="isKnown" inputfile="bundle-document-sections.json" description="emptyReason not asked"><expression>Bundle.section('http://loinc.org', '10160-0').isKnown()</expression><output type="boolean">false</output></test>
+		<test name="testIsKnown4" testing="isKnown" inputfile="bundle-document-sections.json" description="no emptyReason, and no entries either"><expression>Bundle.section('http://loinc.org', '46264-8').isKnown()</expression><output type="boolean">true</output></test>
+		<test name="testIsKnown5" testing="isKnown" inputfile="bundle-document-sections.json" description="an emptyReason that is only text"><expression>Bundle.section('http://loinc.org', '11369-6').isKnown()</expression><output type="boolean">false</output></test>
+		<test name="testIsKnown6" testing="isKnown" inputfile="bundle-document-sections.json" description="a nested section, withheld"><expression>Bundle.section('http://loinc.org', '30954-2').isKnown()</expression><output type="boolean">false</output></test>
+		<test name="testIsKnown7" testing="isKnown" inputfile="bundle-document-sections.json" description="several sections: true when every one is known"><expression>(Bundle.section('http://loinc.org', '11450-4') | Bundle.section('http://loinc.org', '48765-2')).isKnown()</expression><output type="boolean">true</output></test>
+		<test name="testIsKnown8" testing="isKnown" inputfile="bundle-document-sections.json" description="several sections: false when one is not known"><expression>(Bundle.section('http://loinc.org', '11450-4') | Bundle.section('http://loinc.org', '10160-0')).isKnown()</expression><output type="boolean">false</output></test>
+		<test name="testIsKnown9" testing="isKnown" inputfile="bundle-document-sections.json" description="empty when the input is empty (there is no such section)"><expression>Bundle.section('http://loinc.org', '99999-9').isKnown().empty()</expression><output type="boolean">true</output></test>
+		<test name="testIsKnown10" testing="isKnown" inputfile="bundle-document-sections.json" description="something that is not a section is not known"><expression>Bundle.entry.resource.ofType(Condition).isKnown()</expression><output type="boolean">false</output></test>
+		<test name="testHasData1" testing="hasData" inputfile="bundle-document-sections.json" description="entries"><expression>Bundle.section('http://loinc.org', '11450-4').hasData()</expression><output type="boolean">true</output></test>
+		<test name="testHasData2" testing="hasData" inputfile="bundle-document-sections.json" description="no entries, but an emptyReason"><expression>Bundle.section('http://loinc.org', '48765-2').hasData()</expression><output type="boolean">true</output></test>
+		<test name="testHasData3" testing="hasData" inputfile="bundle-document-sections.json" description="an emptyReason that says it is not known is still data"><expression>Bundle.section('http://loinc.org', '10160-0').hasData()</expression><output type="boolean">true</output></test>
+		<test name="testHasData4" testing="hasData" inputfile="bundle-document-sections.json" description="no entries and no emptyReason"><expression>Bundle.section('http://loinc.org', '46264-8').hasData()</expression><output type="boolean">false</output></test>
+		<test name="testHasData5" testing="hasData" inputfile="bundle-document-sections.json" description="several sections: true when every one has data"><expression>(Bundle.section('http://loinc.org', '11450-4') | Bundle.section('http://loinc.org', '48765-2')).hasData()</expression><output type="boolean">true</output></test>
+		<test name="testHasData6" testing="hasData" inputfile="bundle-document-sections.json" description="several sections: false when one has none"><expression>(Bundle.section('http://loinc.org', '11450-4') | Bundle.section('http://loinc.org', '46264-8')).hasData()</expression><output type="boolean">false</output></test>
+		<test name="testHasData7" testing="hasData" inputfile="bundle-document-sections.json" description="empty when the input is empty"><expression>Bundle.section('http://loinc.org', '99999-9').hasData().empty()</expression><output type="boolean">true</output></test>
+		<test name="testHasData8" testing="hasData" inputfile="bundle-document-sections.json" description="something that is not a section has no data"><expression>Bundle.entry.resource.ofType(Condition).hasData()</expression><output type="boolean">false</output></test>
+		<test name="testSameSubjectSection1" testing="sameSubject" inputfile="bundle-document-sections.json" description="a section with no focus"><expression>Bundle.section('http://loinc.org', '11450-4').sameSubject()</expression><output type="boolean">true</output></test>
+		<test name="testSameSubjectSection2" testing="sameSubject" inputfile="bundle-document-sections.json" description="a section whose focus is the Composition's subject"><expression>Bundle.section('http://loinc.org', '42348-3').sameSubject()</expression><output type="boolean">true</output></test>
+		<test name="testSameSubjectSection3" testing="sameSubject" inputfile="bundle-document-sections.json" description="a section whose focus isn't the Composition's subject"><expression>Bundle.section('http://loinc.org', '18776-5').sameSubject()</expression><output type="boolean">false</output></test>
+		<test name="testSameSubjectSection4" testing="sameSubject" inputfile="bundle-document-sections.json" description="with other: the section's focus against other's subject"><expression>Bundle.section('http://loinc.org', '42348-3').sameSubject(%resource.entry.resource.ofType(Condition))</expression><output type="boolean">true</output></test>
+		<test name="testSameSubjectSection5" testing="sameSubject" inputfile="bundle-document-sections.json" description="with other: the section's focus against other's subject"><expression>Bundle.section('http://loinc.org', '18776-5').sameSubject(%resource.entry.resource.ofType(Condition))</expression><output type="boolean">false</output></test>
+		<test name="testSameSubjectSection6" testing="sameSubject" inputfile="bundle-document-sections.json" description="with other: a section with no focus"><expression>Bundle.section('http://loinc.org', '11450-4').sameSubject(%resource.entry.resource.ofType(Condition))</expression><output type="boolean">true</output></test>
+		<test name="testSameSubjectSection7" testing="sameSubject" inputfile="bundle-document-sections.json" description="other has no subject: empty"><expression>Bundle.section('http://loinc.org', '42348-3').sameSubject(%resource.entry.resource.ofType(Patient)).empty()</expression><output type="boolean">true</output></test>
+		<test name="testSameSubjectSection8" testing="sameSubject" inputfile="bundle-document-sections.json" description="other given as empty: empty"><expression>Bundle.section('http://loinc.org', '42348-3').sameSubject({}).empty()</expression><output type="boolean">true</output></test>
+		<test name="testSameSubjectSection9" testing="sameSubject" inputfile="bundle-document-sections.json" description="the input must be a single section: empty"><expression>(Bundle.section('http://loinc.org', '11450-4') | Bundle.section('http://loinc.org', '42348-3')).sameSubject().empty()</expression><output type="boolean">true</output></test>
 	</group>
 </tests>
