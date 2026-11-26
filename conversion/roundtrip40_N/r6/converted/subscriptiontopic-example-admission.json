@@ -1,0 +1,161 @@
+{
+  "resourceType" : "Basic",
+  "id" : "admission",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "fhir"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SubscriptionTopic.url",
+    "valueUri" : "http://example.org/FHIR/SubscriptionTopic/admission"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SubscriptionTopic.title",
+    "valueString" : "admission"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SubscriptionTopic.status",
+    "valueCode" : "active"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SubscriptionTopic.publisher",
+    "valueString" : "HL7 International / FHIR Infrastructure"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SubscriptionTopic.contact",
+    "valueContactDetail" : {
+      "telecom" : [{
+        "system" : "url",
+        "value" : "http://www.hl7.org/Special/committees/fiwg"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SubscriptionTopic.description",
+    "valueMarkdown" : "Example admission topic"
+  },
+  {
+    "extension" : [{
+      "url" : "description",
+      "valueMarkdown" : "Encounter resource moving to state 'in-progress' or event matching HL7v2 ADT^A01"
+    },
+    {
+      "url" : "resource",
+      "valueUri" : "http://hl7.org/fhir/StructureDefinition/Encounter"
+    },
+    {
+      "url" : "supportedInteraction",
+      "valueCode" : "create"
+    },
+    {
+      "url" : "supportedInteraction",
+      "valueCode" : "update"
+    },
+    {
+      "extension" : [{
+        "url" : "previous",
+        "valueString" : "status:not=in-progress"
+      },
+      {
+        "url" : "resultForCreate",
+        "valueCode" : "test-passes"
+      },
+      {
+        "url" : "current",
+        "valueString" : "status=in-progress"
+      },
+      {
+        "url" : "resultForDelete",
+        "valueCode" : "test-fails"
+      },
+      {
+        "url" : "requireBoth",
+        "valueBoolean" : true
+      }],
+      "url" : "queryCriteria"
+    },
+    {
+      "url" : "fhirPathCriteria",
+      "valueString" : "(%previous.id.empty() or (%previous.status != 'in-progress')) and (%current.status = 'in-progress')"
+    },
+    {
+      "url" : "event",
+      "valueCodeableConcept" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v2-0003",
+          "code" : "A01",
+          "display" : "ADT/ACK - Admit/visit notification"
+        }]
+      }
+    },
+    {
+      "extension" : [{
+        "url" : "description",
+        "valueMarkdown" : "Matching based on the Patient (subject) of an Encounter or based on the Patient's group membership (in/not-in)."
+      },
+      {
+        "url" : "resource",
+        "valueUri" : "Encounter"
+      },
+      {
+        "url" : "filterParameter",
+        "valueString" : "patient"
+      },
+      {
+        "url" : "modifier",
+        "valueCode" : "in"
+      },
+      {
+        "url" : "modifier",
+        "valueCode" : "not-in"
+      }],
+      "url" : "canFilterBy"
+    },
+    {
+      "extension" : [{
+        "url" : "resource",
+        "valueUri" : "Encounter"
+      },
+      {
+        "url" : "include",
+        "valueString" : "Encounter:patient"
+      },
+      {
+        "url" : "include",
+        "valueString" : "Encounter:practitioner"
+      },
+      {
+        "url" : "include",
+        "valueString" : "Encounter:service-provider"
+      },
+      {
+        "url" : "include",
+        "valueString" : "Encounter:account"
+      },
+      {
+        "url" : "include",
+        "valueString" : "Encounter:diagnosis"
+      },
+      {
+        "url" : "include",
+        "valueString" : "Encounter:observation"
+      },
+      {
+        "url" : "include",
+        "valueString" : "Encounter:location"
+      }],
+      "url" : "notificationShape"
+    }],
+    "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-SubscriptionTopic.trigger"
+  }],
+  "identifier" : [{
+    "system" : "urn:ietf:rfc:3986",
+    "value" : "urn:uuid:915c2040-b0a8-4935-adf8-94d6e1a74052"
+  }],
+  "code" : {
+    "coding" : [{
+      "system" : "http://hl7.org/fhir/fhir-types",
+      "code" : "SubscriptionTopic"
+    }]
+  }
+}

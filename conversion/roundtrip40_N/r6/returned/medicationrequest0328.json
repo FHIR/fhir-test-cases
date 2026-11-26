@@ -1,0 +1,108 @@
+{
+  "resourceType" : "MedicationRequest",
+  "id" : "medrx0328",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "contained" : [{
+    "resourceType" : "Medication",
+    "id" : "med0315",
+    "code" : {
+      "coding" : [{
+        "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "code" : "1797865",
+        "display" : "mometasone furoate 0.05 MG/ACTUAT Metered Dose Nasal Spray"
+      }]
+    },
+    "doseForm" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "385157007",
+        "display" : "Nasal Spray"
+      }]
+    }
+  }],
+  "identifier" : [{
+    "use" : "official",
+    "system" : "http://www.bmc.nl/portal/prescriptions",
+    "value" : "12345689"
+  }],
+  "status" : "active",
+  "intent" : "order",
+  "medication" : {
+    "reference" : {
+      "reference" : "#med0315"
+    }
+  },
+  "subject" : {
+    "reference" : "Patient/pat1",
+    "display" : "Donald Duck"
+  },
+  "authoredOn" : "2015-01-15",
+  "requester" : {
+    "reference" : "Practitioner/f007",
+    "display" : "Patrick Pump"
+  },
+  "dosageInstruction" : {
+    "step" : [{
+      "component" : [{
+        "text" : "Use 1 spray twice daily",
+        "timing" : {
+          "repeat" : {
+            "frequency" : 2,
+            "period" : 1,
+            "periodUnit" : "d"
+          }
+        },
+        "doseAndRate" : [{
+          "type" : {
+            "coding" : [{
+              "system" : "http://terminology.hl7.org/CodeSystem/dose-rate-type",
+              "code" : "ordered",
+              "display" : "Ordered"
+            }]
+          },
+          "doseQuantity" : {
+            "value" : 1,
+            "unit" : "ea",
+            "system" : "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
+            "code" : "NASINHL"
+          }
+        }]
+      }]
+    }]
+  },
+  "dispenseRequest" : {
+    "validityPeriod" : {
+      "start" : "2015-01-15",
+      "end" : "2016-01-15"
+    },
+    "numberOfRepeatsAllowed" : 3,
+    "quantity" : {
+      "value" : 30,
+      "unit" : "ml",
+      "system" : "http://unitsofmeasure.org",
+      "code" : "ml"
+    },
+    "expectedSupplyDuration" : {
+      "value" : 30,
+      "unit" : "days",
+      "system" : "http://unitsofmeasure.org",
+      "code" : "d"
+    }
+  },
+  "substitution" : {
+    "allowedBoolean" : true,
+    "reason" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code" : "FP",
+        "display" : "formulary policy"
+      }]
+    }
+  }
+}

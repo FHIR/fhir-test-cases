@@ -1,0 +1,181 @@
+{
+  "resourceType" : "OperationDefinition",
+  "id" : "Measure-care-gaps",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: OperationDefinition Measure-care-gaps</b></p><a name=\"Measure-care-gaps\"> </a><a name=\"hcMeasure-care-gaps\"> </a><p>URL: [base]/Measure/$care-gaps</p><h3>Parameters</h3><table class=\"grid\"><tr><td><b>Use</b></td><td><b>Name</b></td><td><b>Scope</b></td><td><b>Cardinality</b></td><td><b>Type</b></td><td><b>Binding</b></td><td><b>Documentation</b></td></tr><tr><td>IN</td><td>measureUrl</td><td/><td>1..*</td><td><a href=\"datatypes.html#canonical\">canonical</a></td><td/><td><div><p>The URL of a measure for which the gaps in care report will be created. A measure URL is specified in the <a href=\"https://www.hl7.org/fhir/measure-definitions.html#Measure.url\">url</a> element of the Measure resource. The measure URL remains the same when the measure is stored on different servers.</p>\n</div></td></tr><tr><td>IN</td><td>periodStart</td><td/><td>1..1</td><td><a href=\"datatypes.html#date\">date</a></td><td/><td><div><p>The start of a gaps through period. This may be the start of the measurement period defined by a measure, or a customized desired performance period start date determined by a payer, a provider, a measure program, and etc.</p>\n</div></td></tr><tr><td>IN</td><td>periodEnd</td><td/><td>1..1</td><td><a href=\"datatypes.html#date\">date</a></td><td/><td><div><p>The end of a gaps through period (the gaps through date). The gaps through date could be a past date or a future date. For example, today's date is 2020-06-18, 1) if periodEnd date is 2020-09-30, it returns gaps through 2020-09-30, and 2) if the periodEnd date is 2020-05-31, it returns gaps through 2020-05-31.</p>\n</div></td></tr><tr><td>IN</td><td>subject</td><td/><td>0..1</td><td><a href=\"datatypes.html#string\">string</a><br/>(<a href=\"search.html#reference\">reference</a>)</td><td/><td><div><p>Subject(s) for which the care gaps report will be produced. The subject may be a Patient, Practitioner, PractitionerRole, Organization, Location, Device, or Group. Subjects provided in this parameter SHALL match the subjectType of the measure being evaluated (e.g. if the Measure.group.subjectType is Patient, the subject SHALL be a reference to a Patient or a Group of Patients). If no subject is provided, what subjects are evaluated is up to the server. This parameter cannot be used with the subjectGroup parameter.</p>\n</div></td></tr><tr><td>IN</td><td>subjectGroup</td><td/><td>0..1</td><td><a href=\"group.html\">Group</a></td><td/><td><div><p>Subject for which the gaps in care report will be created is provided as a Group resource. Subjects provided in this parameter SHALL match the subjectType of the measure being evaluated.  (e.g. if the Measure.group.subjectType is Patient, the subject SHALL be a reference to a Patient or a Group of Patients). If no subject is provided, what subjects are evaluated is up to the server. This parameter cannot be used with the subject parameter.</p>\n</div></td></tr><tr><td>IN</td><td>location</td><td/><td>0..*</td><td><a href=\"datatypes.html#string\">string</a><br/>(<a href=\"search.html#reference\">reference</a>)</td><td/><td><div><p>The location(s) for which the gaps in care report will be run. This parameter is reflected in the location element of the resulting MeasureReport(s).</p>\n</div></td></tr><tr><td>IN</td><td>provider</td><td/><td>0..1</td><td><a href=\"datatypes.html#string\">string</a><br/>(<a href=\"search.html#reference\">reference</a>)</td><td/><td><div><p>The provider for which the report will be run. This may be a reference to a Practitioner, PractitionerRole, or Organization. If specified, systems MAY use this information to determine subjects for which the measure will be calculated, but how subjects are determined is implementation-specific. This parameter is reflected in the reporter element of the resulting MeasureReport(s). This parameter cannot be used with the providerResource parameter.</p>\n</div></td></tr><tr><td>IN</td><td>providerResource</td><td/><td>0..1</td><td><a href=\"practitioner.html\">Practitioner</a> | <a href=\"practitionerrole.html\">PractitionerRole</a> | <a href=\"organization.html\">Organization</a><br/>(<a href=\"search.html#reference\">reference</a>)</td><td/><td><div><p>The provider for which the report will be run, provided as a Practitioner, PractitionerRole, or Organization resource. This is intended to support the use case in which the organization information is not on the server performing the evaluation, for example an <a href=\"clinicalreasoning-quality-reporting.html#ad-hoc-organizations\">ad-hoc group of practitioners</a> that are part of a provider group. This parameter is reflected in the reporter element of the resulting MeasureReport(s). This parameter cannot be used with the provider parameter.</p>\n</div></td></tr><tr><td>IN</td><td>status</td><td/><td>1..*</td><td><a href=\"datatypes.html#code\">code</a></td><td/><td><div><p>Indicates status of a care gap. For all [open, closed, and prospective gaps], three seperate status parameters must be provided. For a positive proportion measure, gap means the patient is not in the numerator. For an inverse (negative) proportion measure (e.g., Diabetes: Hemoglobin A1c (HbA1c) Poor Control (&gt; 9%)), gap means the patient is in the numerator.</p>\n</div></td></tr><tr><td>IN</td><td>isDocument</td><td/><td>0..1</td><td><a href=\"datatypes.html#boolean\">boolean</a></td><td/><td><div><p>The isDocument parameter controls whether a Gaps in Care Composition is returned in the Bundle (i.e. if the Bundle is of type <code>document</code>). When 'true' the returned Bundles contain the Gaps in Care Composition. This parameter defaults to 'true'.</p>\n</div></td></tr><tr><td>IN</td><td>parameters</td><td/><td>0..1</td><td><a href=\"parameters.html\">Parameters</a></td><td/><td><div><p>Any input parameters for the evaluation. Parameters defined in this input will be made available by name to the CQL expression. Parameter types are mapped to CQL as specified in the <a href=\"https://hl7.org/fhir/uv/cql/\">Using CQL with FHIR</a> implementation guide. If a parameter appears more than once in the input Parameters resource, it is represented with a List in the input CQL. If a parameter has parts, it is represented as a Tuple in the input CQL.</p>\n</div></td></tr><tr><td>IN</td><td>manifest</td><td/><td>0..1</td><td><a href=\"datatypes.html#canonical\">canonical</a> (<a href=\"library.html\" title=\"http://hl7.org/fhir/StructureDefinition/Library\">Library</a>)</td><td/><td><div><p>Specifies an asset-collection library that provides dependency version resolution and expansion rules for the operation. See the version manifest discussion in the <a href=\"http://hl7.org/fhir/uv/crmi/version-manifest.html\">Canonical Resource Management Infrastructure IG</a> for a complete description of how manifest values are used to provide defaults for dependency version resolution and expansion parameters. Parameters specified directly in the operation override behaviors specified by the manifest parameter. In general, if this parameter is supplied, it is expected to be used in nested operation calls. For example, in evaluating a measure, if the expansion of a value set is required, this parameter SHALL be supplied to that expansion.</p>\n</div></td></tr><tr><td>OUT</td><td>return</td><td/><td>0..*</td><td><a href=\"bundle.html\">Bundle</a></td><td/><td><div><p>The $care-gaps operation returns zero or more Bundles, <a href=\"https://build.fhir.org/clinicalreasoning-quality-reporting.html#bundles-organized-by-subject\">one for each input subject</a>. If <code>isDocument</code> is true, each bundle <strong>SHALL</strong> have a <code>type</code> of <code>document</code> and <strong>SHALL</strong> contain a Composition to define a document consisting of one or more MeasureReports as well as related gaps-in-care resources (GuidanceResponse and DetectedIssue). If <code>isDocument</code> is false, each bundle <strong>SHALL</strong> have a type of <code>collection</code>, <strong>SHALL</strong> contain at least the MeasureReport(s) and <strong>SHOULD</strong> contain the resources used to calculate the measure report. In addition, the collection bundle <strong>MAY</strong> contain the gaps-in-care-specific resources describing the gaps.\\n\\nNote that even though there is a single parameter named return of type Bundle, it is a multi-cardinality parameter, and so will still be returned using a Parameters resource, as described in the general operations framework <a href=\"operations.html#response\">response</a>.</p>\n</div></td></tr></table><div><p>The effect of invoking this operation is to calculate the gaps in care for one or more measures and to return one or more Bundles describing the gaps in care results of each measure for the specified gaps through period and for the given subject. Because more than one Bundle may be returned, the result of the operation must be returned using the Parameter resource even if the result is a single Bundle. Note that it is up to the server to determine whether or not the generated care gaps report is persisted. If the server does not persist the results, the operation does not affect state and can be invoked with a GET.</p>\n</div></div>"
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status",
+    "valueCode" : "normative"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version",
+    "valueCode" : "6.0.0-snapshot1"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "cqi"
+  }],
+  "url" : "http://hl7.org/fhir/OperationDefinition/Measure-care-gaps",
+  "version" : "6.0.0-snapshot1",
+  "name" : "CareGaps",
+  "title" : "Care Gaps",
+  "status" : "active",
+  "kind" : "operation",
+  "experimental" : false,
+  "date" : "2026-11-20T23:46:23+11:00",
+  "publisher" : "HL7 International / Clinical Quality Information",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://hl7.org/fhir"
+    },
+    {
+      "system" : "email",
+      "value" : "fhir@lists.hl7.org"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/cqi"
+    }]
+  }],
+  "description" : "The care-gaps operation is used to determine gaps-in-care based on the results of quality measures",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
+  "affectsState" : false,
+  "code" : "care-gaps",
+  "comment" : "The effect of invoking this operation is to calculate the gaps in care for one or more measures and to return one or more Bundles describing the gaps in care results of each measure for the specified gaps through period and for the given subject. Because more than one Bundle may be returned, the result of the operation must be returned using the Parameter resource even if the result is a single Bundle. Note that it is up to the server to determine whether or not the generated care gaps report is persisted. If the server does not persist the results, the operation does not affect state and can be invoked with a GET.",
+  "resource" : ["Measure"],
+  "system" : false,
+  "type" : true,
+  "instance" : false,
+  "parameter" : [{
+    "name" : "measureUrl",
+    "use" : "in",
+    "min" : 1,
+    "max" : "*",
+    "documentation" : "The URL of a measure for which the gaps in care report will be created. A measure URL is specified in the [url](https://www.hl7.org/fhir/measure-definitions.html#Measure.url) element of the Measure resource. The measure URL remains the same when the measure is stored on different servers.",
+    "type" : "canonical"
+  },
+  {
+    "name" : "periodStart",
+    "use" : "in",
+    "min" : 1,
+    "max" : "1",
+    "documentation" : "The start of a gaps through period. This may be the start of the measurement period defined by a measure, or a customized desired performance period start date determined by a payer, a provider, a measure program, and etc.",
+    "type" : "date"
+  },
+  {
+    "name" : "periodEnd",
+    "use" : "in",
+    "min" : 1,
+    "max" : "1",
+    "documentation" : "The end of a gaps through period (the gaps through date). The gaps through date could be a past date or a future date. For example, today's date is 2020-06-18, 1) if periodEnd date is 2020-09-30, it returns gaps through 2020-09-30, and 2) if the periodEnd date is 2020-05-31, it returns gaps through 2020-05-31.",
+    "type" : "date"
+  },
+  {
+    "name" : "subject",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "Subject(s) for which the care gaps report will be produced. The subject may be a Patient, Practitioner, PractitionerRole, Organization, Location, Device, or Group. Subjects provided in this parameter SHALL match the subjectType of the measure being evaluated (e.g. if the Measure.group.subjectType is Patient, the subject SHALL be a reference to a Patient or a Group of Patients). If no subject is provided, what subjects are evaluated is up to the server. This parameter cannot be used with the subjectGroup parameter.",
+    "type" : "string",
+    "searchType" : "reference"
+  },
+  {
+    "name" : "subjectGroup",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "Subject for which the gaps in care report will be created is provided as a Group resource. Subjects provided in this parameter SHALL match the subjectType of the measure being evaluated.  (e.g. if the Measure.group.subjectType is Patient, the subject SHALL be a reference to a Patient or a Group of Patients). If no subject is provided, what subjects are evaluated is up to the server. This parameter cannot be used with the subject parameter.",
+    "type" : "Group"
+  },
+  {
+    "name" : "location",
+    "use" : "in",
+    "min" : 0,
+    "max" : "*",
+    "documentation" : "The location(s) for which the gaps in care report will be run. This parameter is reflected in the location element of the resulting MeasureReport(s).",
+    "type" : "string",
+    "searchType" : "reference"
+  },
+  {
+    "name" : "provider",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "The provider for which the report will be run. This may be a reference to a Practitioner, PractitionerRole, or Organization. If specified, systems MAY use this information to determine subjects for which the measure will be calculated, but how subjects are determined is implementation-specific. This parameter is reflected in the reporter element of the resulting MeasureReport(s). This parameter cannot be used with the providerResource parameter.",
+    "type" : "string",
+    "searchType" : "reference"
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationdefinition-allowed-type",
+      "valueUri" : "Practitioner"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationdefinition-allowed-type",
+      "valueUri" : "PractitionerRole"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationdefinition-allowed-type",
+      "valueUri" : "Organization"
+    }],
+    "name" : "providerResource",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "The provider for which the report will be run, provided as a Practitioner, PractitionerRole, or Organization resource. This is intended to support the use case in which the organization information is not on the server performing the evaluation, for example an [ad-hoc group of practitioners](clinicalreasoning-quality-reporting.html#ad-hoc-organizations) that are part of a provider group. This parameter is reflected in the reporter element of the resulting MeasureReport(s). This parameter cannot be used with the provider parameter.",
+    "type" : "Element",
+    "searchType" : "reference"
+  },
+  {
+    "name" : "status",
+    "use" : "in",
+    "min" : 1,
+    "max" : "*",
+    "documentation" : "Indicates status of a care gap. For all [open, closed, and prospective gaps], three seperate status parameters must be provided. For a positive proportion measure, gap means the patient is not in the numerator. For an inverse (negative) proportion measure (e.g., Diabetes: Hemoglobin A1c (HbA1c) Poor Control (> 9%)), gap means the patient is in the numerator.",
+    "type" : "code"
+  },
+  {
+    "name" : "isDocument",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "The isDocument parameter controls whether a Gaps in Care Composition is returned in the Bundle (i.e. if the Bundle is of type `document`). When 'true' the returned Bundles contain the Gaps in Care Composition. This parameter defaults to 'true'.",
+    "type" : "boolean"
+  },
+  {
+    "name" : "parameters",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "Any input parameters for the evaluation. Parameters defined in this input will be made available by name to the CQL expression. Parameter types are mapped to CQL as specified in the [Using CQL with FHIR](https://hl7.org/fhir/uv/cql/) implementation guide. If a parameter appears more than once in the input Parameters resource, it is represented with a List in the input CQL. If a parameter has parts, it is represented as a Tuple in the input CQL.",
+    "type" : "Parameters"
+  },
+  {
+    "name" : "manifest",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "Specifies an asset-collection library that provides dependency version resolution and expansion rules for the operation. See the version manifest discussion in the [Canonical Resource Management Infrastructure IG](http://hl7.org/fhir/uv/crmi/version-manifest.html) for a complete description of how manifest values are used to provide defaults for dependency version resolution and expansion parameters. Parameters specified directly in the operation override behaviors specified by the manifest parameter. In general, if this parameter is supplied, it is expected to be used in nested operation calls. For example, in evaluating a measure, if the expansion of a value set is required, this parameter SHALL be supplied to that expansion.",
+    "type" : "canonical",
+    "targetProfile" : ["http://hl7.org/fhir/StructureDefinition/Library"]
+  },
+  {
+    "name" : "return",
+    "use" : "out",
+    "min" : 0,
+    "max" : "*",
+    "documentation" : "The $care-gaps operation returns zero or more Bundles, [one for each input subject](https://build.fhir.org/clinicalreasoning-quality-reporting.html#bundles-organized-by-subject). If `isDocument` is true, each bundle **SHALL** have a `type` of `document` and **SHALL** contain a Composition to define a document consisting of one or more MeasureReports as well as related gaps-in-care resources (GuidanceResponse and DetectedIssue). If `isDocument` is false, each bundle **SHALL** have a type of `collection`, **SHALL** contain at least the MeasureReport(s) and **SHOULD** contain the resources used to calculate the measure report. In addition, the collection bundle **MAY** contain the gaps-in-care-specific resources describing the gaps.\\n\\nNote that even though there is a single parameter named return of type Bundle, it is a multi-cardinality parameter, and so will still be returned using a Parameters resource, as described in the general operations framework [response](operations.html#response).",
+    "type" : "Bundle"
+  }]
+}

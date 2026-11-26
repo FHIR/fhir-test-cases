@@ -1,0 +1,54 @@
+{
+  "resourceType" : "Provenance",
+  "id" : "example-onbehalf-sister",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "target" : [{
+    "reference" : "Patient/example"
+  }],
+  "occurredDateTime" : "2024-06-01T12:00:00Z",
+  "recorded" : "2024-06-01T12:00:00Z",
+  "authorization" : [{
+    "coding" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "FAMRQT"
+    }]
+  }],
+  "why" : "Updated the Patient resource demographics by big Brother acting on behalf of sister to change demographics in Patient resource",
+  "patient" : {
+    "reference" : "Patient/example"
+  },
+  "agent" : [{
+    "type" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/v3-ParticipationType",
+        "code" : "INF"
+      }]
+    },
+    "who" : {
+      "reference" : "http://example.org/fhir/RelatedPerson/brother"
+    },
+    "onBehalfOf" : {
+      "reference" : "http://example.org/fhir/RelatedPerson/sister"
+    }
+  }],
+  "entity" : [{
+    "role" : "source",
+    "what" : {
+      "reference" : "http://example.org/fhir/DocumentReference/example",
+      "display" : "Document created by brother on behalf of sister"
+    }
+  },
+  {
+    "role" : "source",
+    "what" : {
+      "reference" : "Patient/example",
+      "display" : "Original Patient resource"
+    }
+  }]
+}

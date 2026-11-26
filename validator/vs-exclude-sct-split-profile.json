@@ -1,0 +1,53 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "vs-exclude-sct-split-observation",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/vs-exclude-sct-split-observation",
+  "version": "1.0.0",
+  "name": "VSExcludeSctSplitObservation",
+  "title": "VS Exclude SNOMED CT Split-server Observation",
+  "status": "active",
+  "experimental": false,
+  "date": "2026-11-10",
+  "publisher": "FHIR Project",
+  "description": "Observation.value[x] and Observation.component.value[x] are bound to a SNOMED CT value set that draws on two editions that no single terminology server has, with explicit code and filter excludes",
+  "fhirVersion": "5.0.0",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation",
+        "path": "Observation"
+      },
+      {
+        "id": "Observation.value[x]",
+        "path": "Observation.value[x]",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://hl7.org/fhir/test/ValueSet/vs-exclude-sct-split"
+        }
+      },
+      {
+        "id": "Observation.component.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "CodeableConcept"
+          }
+        ],
+        "binding": {
+          "strength": "required",
+          "valueSet": "http://hl7.org/fhir/test/ValueSet/vs-exclude-sct-split"
+        }
+      }
+    ]
+  }
+}

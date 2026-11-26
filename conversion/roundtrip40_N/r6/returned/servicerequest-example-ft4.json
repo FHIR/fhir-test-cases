@@ -1,0 +1,53 @@
+{
+  "resourceType" : "ServiceRequest",
+  "id" : "ft4",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "contained" : [{
+    "resourceType" : "ServiceRequest",
+    "id" : "tsh",
+    "status" : "completed",
+    "intent" : "original-order",
+    "code" : {
+      "concept" : {
+        "coding" : [{
+          "system" : "http://loinc.org",
+          "code" : "3016-3",
+          "display" : "Thyrotropin [Units/volume] in Serum or Plasma"
+        }],
+        "text" : "TSH"
+      }
+    },
+    "subject" : {
+      "reference" : "Patient/pat2"
+    }
+  }],
+  "basedOn" : [{
+    "reference" : "#tsh",
+    "display" : "Original request for TSH test"
+  }],
+  "status" : "active",
+  "intent" : "reflex-order",
+  "code" : {
+    "concept" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "3024-7",
+        "display" : "Thyroxine (T4) free [Mass/volume] in Serum or Plasma"
+      }],
+      "text" : "Free T4"
+    }
+  },
+  "subject" : {
+    "reference" : "Patient/pat2"
+  },
+  "occurrenceDateTime" : "2015-08-27T09:33:27+07:00",
+  "requester" : {
+    "reference" : "Practitioner/example"
+  }
+}

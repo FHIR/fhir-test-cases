@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <url value="http://example.org/fhir/StructureDefinition/inherited-type-slice-grandparent"/>
+  <name value="InheritedTypeSliceGrandparent"/>
+  <status value="draft"/>
+  <description value="The top of a three level chain (fhir-ig-publisher#1303, shaped like MII Prozedur): slices Procedure.extension, and type slices Procedure.performed[x] (dateTime and Period)"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Procedure"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Procedure"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Procedure.extension">
+      <path value="Procedure.extension"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="url"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Procedure.extension:incision">
+      <path value="Procedure.extension"/>
+      <sliceName value="incision"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/procedure-incisionDateTime"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Procedure.performed[x]">
+      <path value="Procedure.performed[x]"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Procedure.performed[x]:performedDateTime">
+      <path value="Procedure.performed[x]"/>
+      <sliceName value="performedDateTime"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Procedure.performed[x]:performedPeriod">
+      <path value="Procedure.performed[x]"/>
+      <sliceName value="performedPeriod"/>
+      <type>
+        <code value="Period"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+  </differential>
+</StructureDefinition>

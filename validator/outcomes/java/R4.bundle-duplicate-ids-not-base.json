@@ -658,6 +658,15 @@
     "expression" : ["Bundle.entry[21].resource/*Observation/2*/.meta.profile[0]"]
   },
   {
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "The LOINC code 4535-1 ('Cytotoxic percent reactive Ab [Presence] in Serum by Quick method') is for a coded result (scale Ord), so the value should be a CodeableConcept, not a Quantity"
+    },
+    "diagnostics" : "[1941,6]",
+    "expression" : ["Bundle.entry[22].resource/*Observation/3*/.value.ofType(Quantity)"]
+  },
+  {
     "extension" : [{
       "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-context",
       "valueString" : "http://hl7.org/fhir/StructureDefinition/Patient|4.0.1"
@@ -773,23 +782,6 @@
     },
     "diagnostics" : "[2121,5]",
     "expression" : ["Bundle.entry[26].resource/*Observation/7*/.meta.profile[0]"]
-  },
-  {
-    "extension" : [{
-      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
-      "valueUrl" : "https://tx-dev.fhir.org/r4"
-    },
-    {
-      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-context",
-      "valueString" : "http://hl7.org/fhir/StructureDefinition/Patient|4.0.1"
-    }],
-    "severity" : "warning",
-    "code" : "not-found",
-    "details" : {
-      "text" : "A definition for the code system 'https://mednet.swiss/fhir/CodeSystem/mni-obs-bloodGroup' could not be found, so this coding was not checked. The CodeableConcept is still valid: another coding is in the value set"
-    },
-    "diagnostics" : "[2248,6]",
-    "expression" : ["Bundle.entry[27].resource/*Observation/8*/.value.ofType(CodeableConcept).coding[1].system"]
   },
   {
     "extension" : [{
@@ -980,7 +972,7 @@
       "text" : "Entry 'RelatedPerson/1' isn't reachable by traversing forwards from the Composition. Only Provenance is approved to be used this way (R4 section 3.3.1)"
     },
     "diagnostics" : "[1121,4]",
-    "expression" : ["Bundle.entry[40]"]
+    "expression" : ["Bundle.entry[9]"]
   },
   {
     "severity" : "error",

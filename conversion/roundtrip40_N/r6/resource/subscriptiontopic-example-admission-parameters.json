@@ -1,0 +1,44 @@
+{
+  "resourceType" : "SubscriptionTopic",
+  "id" : "admission-parameters",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "fhir"
+  }],
+  "url" : "http://example.org/FHIR/SubscriptionTopic/admission-parameters",
+  "identifier" : [{
+    "system" : "urn:ietf:rfc:3986",
+    "value" : "urn:uuid:6651a462-e65e-4ef1-9bab-b3ae997e5be9"
+  }],
+  "title" : "admission-parameters",
+  "status" : "active",
+  "publisher" : "HL7 International / FHIR Infrastructure",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/fiwg"
+    }]
+  }],
+  "description" : "Example admission topic using a Parameters representation",
+  "trigger" : [{
+    "description" : "Patient admission or visit begins.",
+    "resource" : "Parameters",
+    "supportedInteraction" : ["create",
+    "update"],
+    "event" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/v2-0003",
+        "code" : "A01",
+        "display" : "ADT/ACK - Admit/visit notification"
+      }]
+    },
+    "canFilterBy" : [{
+      "description" : "Matching based on the Patient MRN, expected to be in a `part` named `mrn` and contain a `string` value, matched using `token` search rules.",
+      "resource" : "Parameters",
+      "filterParameter" : "MRN"
+    }],
+    "notificationShape" : [{
+      "resource" : "Parameters"
+    }]
+  }]
+}

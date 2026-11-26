@@ -1,0 +1,78 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "sd-other-changes",
+  "url": "http://example.org/fhir/StructureDefinition/sd-other-changes",
+  "name": "OtherChanges",
+  "status": "draft",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient",
+        "path": "Patient"
+      },
+      {
+        "id": "Patient.identifier",
+        "path": "Patient.identifier",
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "id[root=\"1.2.3\"]"
+          }
+        ]
+      },
+      {
+        "id": "Patient.name",
+        "path": "Patient.name",
+        "definition": "The name the patient prefers to be called by."
+      },
+      {
+        "id": "Patient.telecom",
+        "path": "Patient.telecom",
+        "min": 1,
+        "definition": "A contact detail (e.g. a telephone number or an email address) by which the individual may be contacted."
+      },
+      {
+        "id": "Patient.birthDate",
+        "path": "Patient.birthDate",
+        "constraint": [
+          {
+            "key": "oc-1",
+            "severity": "error",
+            "human": "Birth date must be after 1900",
+            "expression": "$this > @1900-01-01"
+          }
+        ],
+        "example": [
+          {
+            "label": "General",
+            "valueDate": "1970-03-14"
+          }
+        ]
+      },
+      {
+        "id": "Patient.address",
+        "path": "Patient.address",
+        "comment": "Postal addresses only.",
+        "alias": [
+          "Mailing address"
+        ]
+      },
+      {
+        "id": "Patient.maritalStatus",
+        "path": "Patient.maritalStatus",
+        "max": "0",
+        "mapping": [
+          {
+            "identity": "rim",
+            "map": "n/a"
+          }
+        ]
+      }
+    ]
+  }
+}

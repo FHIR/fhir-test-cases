@@ -1,0 +1,90 @@
+{
+  "resourceType" : "AuditEvent",
+  "id" : "example-consent-permit-authz",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-AuditEvent.patient",
+    "valueReference" : {
+      "reference" : "Patient/example"
+    }
+  },
+  {
+    "extension" : [{
+      "url" : "code",
+      "valueCoding" : {
+        "system" : "http://terminology.hl7.org/CodeSystem/audit-event-outcome",
+        "code" : "0",
+        "display" : "Success"
+      }
+    },
+    {
+      "url" : "detail",
+      "valueCodeableConcept" : {
+        "text" : "CONSENT_PERMIT"
+      }
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-AuditEvent.outcome"
+  }],
+  "type" : {
+    "system" : "http://dicom.nema.org/resources/ontology/DCM",
+    "code" : "110113",
+    "display" : "Security Alert"
+  },
+  "subtype" : [{
+    "system" : "http://dicom.nema.org/resources/ontology/DCM",
+    "code" : "110112",
+    "display" : "Query"
+  }],
+  "action" : "E",
+  "recorded" : "2021-09-08T21:51:59.932Z",
+  "outcome" : "0",
+  "outcomeDesc" : "CONSENT_PERMIT",
+  "agent" : [{
+    "type" : {
+      "coding" : [{
+        "system" : "http://dicom.nema.org/resources/ontology/DCM",
+        "code" : "110152",
+        "display" : "Destination Role ID"
+      }]
+    },
+    "who" : {
+      "identifier" : {
+        "system" : "https://github.com/synthetichealth/synthea",
+        "value" : "Org1"
+      }
+    },
+    "requestor" : true,
+    "purposeOfUse" : [{
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code" : "TREAT"
+      }]
+    }]
+  }],
+  "source" : {
+    "observer" : {
+      "display" : "LEAP Consent Decision Service"
+    },
+    "type" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/security-source-type",
+      "code" : "4",
+      "display" : "Application Server"
+    }]
+  },
+  "entity" : [{
+    "what" : {
+      "reference" : "Consent/consent-example-basic"
+    },
+    "role" : {
+      "system" : "http://terminology.hl7.org/CodeSystem/object-role",
+      "code" : "4",
+      "display" : "Domain Resource"
+    }
+  }]
+}

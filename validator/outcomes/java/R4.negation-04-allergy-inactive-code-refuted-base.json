@@ -1,0 +1,29 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "https://tx-dev.fhir.org/r4"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-context",
+      "valueString" : "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance|4.0.1"
+    }],
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "The concept '716184000' has a status of inactive and its use should be reviewed"
+    },
+    "diagnostics" : "[20,4]",
+    "expression" : ["AllergyIntolerance.code.coding[0]"]
+  },
+  {
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "The code 716184000 ('No known latex allergy') says the patient doesn't have something, and it is refuted: this is understood as refuting the negative - that the patient does have it"
+    },
+    "diagnostics" : "[20,4]",
+    "expression" : ["AllergyIntolerance.code"]
+  }]
+}

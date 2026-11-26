@@ -1,0 +1,181 @@
+{
+  "resourceType" : "OperationDefinition",
+  "id" : "Measure-collect-data",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: OperationDefinition Measure-collect-data</b></p><a name=\"Measure-collect-data\"> </a><a name=\"hcMeasure-collect-data\"> </a><p>URL: [base]/Measure/$collect-data</p><h3>Parameters</h3><table class=\"grid\"><tr><td><b>Use</b></td><td><b>Name</b></td><td><b>Scope</b></td><td><b>Cardinality</b></td><td><b>Type</b></td><td><b>Binding</b></td><td><b>Documentation</b></td></tr><tr><td>IN</td><td>measureUrl</td><td/><td>1..*</td><td><a href=\"datatypes.html#canonical\">canonical</a></td><td/><td><div><p>This the the URL of a measure for which the data-of-interest will be collected. A measure URL is specified in the url element of the Measure resource. The measure URL remains the same when the measure is stored on different servers.</p>\n</div></td></tr><tr><td>IN</td><td>periodStart</td><td/><td>1..1</td><td><a href=\"datatypes.html#date\">date</a></td><td/><td><div><p>The start of the measurement period. In keeping with the semantics of the date parameter used in the FHIR search operation, the period will start at the beginning of the period implied by the supplied timestamp. E.g. a value of 2014 would set the period start to be 2014-01-01T00:00:00 inclusive</p>\n</div></td></tr><tr><td>IN</td><td>periodEnd</td><td/><td>1..1</td><td><a href=\"datatypes.html#date\">date</a></td><td/><td><div><p>The end of the measurement period. The period will end at the end of the period implied by the supplied timestamp. E.g. a value of 2014 would set the period end to be 2014-12-31T23:59:59 inclusive</p>\n</div></td></tr><tr><td>IN</td><td>subject</td><td/><td>0..1</td><td><a href=\"datatypes.html#string\">string</a><br/>(<a href=\"search.html#reference\">reference</a>)</td><td/><td><div><p>Subject(s) for which the data-of-interest for the measure will be collected. The subject may be a Patient, Practitioner, PractitionerRole, Organization, Location, Device, or Group. Subjects provided in this parameter SHALL match the subjectType of the measure for which data is being collected (e.g. if the Measure.group.subjectType is Patient, the subject SHALL be a reference to a Patient or a Group of Patients). If no subject is provided, subjects for which data is collected is up to the server. This parameter cannot be used with the subjectGroup parameter.</p>\n</div></td></tr><tr><td>IN</td><td>subjectGroup</td><td/><td>0..1</td><td><a href=\"group.html\">Group</a></td><td/><td><div><p>Subjects for which the data-of-interest for the measure will be collected, provided as a Group resource. Subjects provided in this parameter SHALL match the subjectType of the measure for which data is being collected. (e.g. if the Measure.group.subjectType is Patient, the subject SHALL be a reference to a Patient or a Group of Patients). If no subject is provided, subjects for which data is collected is up to the server. This parameter cannot be used with the subject parameter.</p>\n</div></td></tr><tr><td>IN</td><td>provider</td><td/><td>0..1</td><td><a href=\"datatypes.html#string\">string</a><br/>(<a href=\"search.html#reference\">reference</a>)</td><td/><td><div><p>The provider for which the data-of-interest will be collected. This may be a reference to a Practitioner, PractitionerRole, or Organization. If specified, systems MAY use this information to determine subjects for which the data-of-interest will be calculated, but how subjects are determined is implementation-specific. This parameter is reflected in the reporter element of the resulting MeasureReport(s). This parameter cannot be used with the providerResource parameter.</p>\n</div></td></tr><tr><td>IN</td><td>providerResource</td><td/><td>0..1</td><td><a href=\"practitioner.html\">Practitioner</a> | <a href=\"practitionerrole.html\">PractitionerRole</a> | <a href=\"organization.html\">Organization</a><br/>(<a href=\"search.html#reference\">reference</a>)</td><td/><td><div><p>The provider for which the report will be run, provided as a Practitioner, PractitionerRole, or Organization resource. This is intended to support the use case in which the organization information is not on the server performing the evaluation, for example an <a href=\"clinicalreasoning-quality-reporting.html#ad-hoc-organizations\">ad-hoc group of practitioners</a> that are part of a provider group. This parameter is reflected in the reporter element of the resulting MeasureReport(s). This parameter cannot be used with the provider parameter.</p>\n</div></td></tr><tr><td>IN</td><td>location</td><td/><td>0..*</td><td><a href=\"datatypes.html#string\">string</a><br/>(<a href=\"search.html#reference\">reference</a>)</td><td/><td><div><p>The location(s) for which the data-of-interest will be collected. This parameter is reflected in the location element of the resulting MeasureReport(s).</p>\n</div></td></tr><tr><td>IN</td><td>lastReceivedOn</td><td/><td>0..1</td><td><a href=\"datatypes.html#dateTime\">dateTime</a></td><td/><td><div><p>The date the results of this measure were last received. This parameter used to indicate when the last time data for this measure was collected. This information is used to support incremental data collection scenarios</p>\n</div></td></tr><tr><td>IN</td><td>parameters</td><td/><td>0..1</td><td><a href=\"parameters.html\">Parameters</a></td><td/><td><div><p>Any input parameters for the evaluation. Parameters defined in this input will be made available by name to the CQL expression. Parameter types are mapped to CQL as specified in the <a href=\"https://hl7.org/fhir/uv/cql/\">Using CQL with FHIR</a> implementation guide. If a parameter appears more than once in the input Parameters resource, it is represented with a List in the input CQL. If a parameter has parts, it is represented as a Tuple in the input CQL.</p>\n</div></td></tr><tr><td>IN</td><td>manifest</td><td/><td>0..1</td><td><a href=\"datatypes.html#canonical\">canonical</a> (<a href=\"library.html\" title=\"http://hl7.org/fhir/StructureDefinition/Library\">Library</a>)</td><td/><td><div><p>Specifies an asset-collection library that provides dependency version resolution and expansion rules for the operation. See the version manifest discussion in the <a href=\"http://hl7.org/fhir/uv/crmi/version-manifest.html\">Canonical Resource Management Infrastructure IG</a> for a complete description of how manifest values are used to provide defaults for dependency version resolution and expansion parameters. Parameters specified directly in the operation override behaviors specified by the manifest parameter. In general, if this parameter is supplied, it is expected to be used in nested operation calls. For example, in evaluating a measure, if the expansion of a value set is required, this parameter SHALL be supplied to that expansion.</p>\n</div></td></tr><tr><td>IN</td><td>validateResources</td><td/><td>0..1</td><td><a href=\"datatypes.html#boolean\">boolean</a></td><td/><td><div><p>Indicates whether data collected conform to the appropriate profiles as specified by the measure.</p>\n</div></td></tr><tr><td>OUT</td><td>return</td><td/><td>0..*</td><td><a href=\"bundle.html\">Bundle</a></td><td/><td><div><p>The results of the data collection, returned as a Bundle for each input subject. The first entries in each Bundle are MeasureReport(s) corresponding to the measures for which data was collected. The MeasureReport resources SHALL have a type of data-exchange. Subsequent entries in each Bundle are resources representing the data-of-interest for the measures, and referenced from the evaluatedResource element of the corresponding MeasureReport resources. See the <a href=\"clinicalreasoning-quality-reporting.html#bundles-organized-by-subject\">guidance</a> on Bundle structure for discussion about the Bundle content and organization.\\n\\nNote that even though there is a single parameter named return of type Bundle, it is a multi-cardinality parameter, and so will still be returned using a Parameters resource, as described in the general operations framework <a href=\"operations.html#response\">response</a>.</p>\n</div></td></tr></table><div><p>The effect of invoking this operation is to gather the data required to perform an evaluation of the measure. If the lastReceivedOn parameter is supplied, only data that is new or has been changed since the lastReceivedOn date is included in the response. Note that the resulting MeasureReport is a transient resource</p>\n</div></div>"
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status",
+    "valueCode" : "normative"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version",
+    "valueCode" : "6.0.0-snapshot1"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "cqi"
+  }],
+  "url" : "http://hl7.org/fhir/OperationDefinition/Measure-collect-data",
+  "version" : "6.0.0-snapshot1",
+  "name" : "CollectData",
+  "title" : "Collect Data",
+  "status" : "active",
+  "kind" : "operation",
+  "experimental" : false,
+  "date" : "2026-11-20T23:46:23+11:00",
+  "publisher" : "HL7 International / Clinical Quality Information",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://hl7.org/fhir"
+    },
+    {
+      "system" : "email",
+      "value" : "fhir@lists.hl7.org"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/cqi"
+    }]
+  }],
+  "description" : "The collect-data operation is used to collect the data-of-interest for the given measure. Note that the use of the [X-Provenance header data](provenance.html#header) with data that establishes provenance being submitted/collected **SHOULD** be supported.  This provides the capability for associating the provider with the data submitted through the $collect-data transaction. If the X-Provenance header is used it should be consistent with the `provider` element in the DEQM Data Exchange MeasureReport Profile.",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
+  "affectsState" : false,
+  "code" : "collect-data",
+  "comment" : "The effect of invoking this operation is to gather the data required to perform an evaluation of the measure. If the lastReceivedOn parameter is supplied, only data that is new or has been changed since the lastReceivedOn date is included in the response. Note that the resulting MeasureReport is a transient resource",
+  "resource" : ["Measure"],
+  "system" : false,
+  "type" : true,
+  "instance" : false,
+  "parameter" : [{
+    "name" : "measureUrl",
+    "use" : "in",
+    "min" : 1,
+    "max" : "*",
+    "documentation" : "This the the URL of a measure for which the data-of-interest will be collected. A measure URL is specified in the url element of the Measure resource. The measure URL remains the same when the measure is stored on different servers.",
+    "type" : "canonical"
+  },
+  {
+    "name" : "periodStart",
+    "use" : "in",
+    "min" : 1,
+    "max" : "1",
+    "documentation" : "The start of the measurement period. In keeping with the semantics of the date parameter used in the FHIR search operation, the period will start at the beginning of the period implied by the supplied timestamp. E.g. a value of 2014 would set the period start to be 2014-01-01T00:00:00 inclusive",
+    "type" : "date"
+  },
+  {
+    "name" : "periodEnd",
+    "use" : "in",
+    "min" : 1,
+    "max" : "1",
+    "documentation" : "The end of the measurement period. The period will end at the end of the period implied by the supplied timestamp. E.g. a value of 2014 would set the period end to be 2014-12-31T23:59:59 inclusive",
+    "type" : "date"
+  },
+  {
+    "name" : "subject",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "Subject(s) for which the data-of-interest for the measure will be collected. The subject may be a Patient, Practitioner, PractitionerRole, Organization, Location, Device, or Group. Subjects provided in this parameter SHALL match the subjectType of the measure for which data is being collected (e.g. if the Measure.group.subjectType is Patient, the subject SHALL be a reference to a Patient or a Group of Patients). If no subject is provided, subjects for which data is collected is up to the server. This parameter cannot be used with the subjectGroup parameter.",
+    "type" : "string",
+    "searchType" : "reference"
+  },
+  {
+    "name" : "subjectGroup",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "Subjects for which the data-of-interest for the measure will be collected, provided as a Group resource. Subjects provided in this parameter SHALL match the subjectType of the measure for which data is being collected. (e.g. if the Measure.group.subjectType is Patient, the subject SHALL be a reference to a Patient or a Group of Patients). If no subject is provided, subjects for which data is collected is up to the server. This parameter cannot be used with the subject parameter.",
+    "type" : "Group"
+  },
+  {
+    "name" : "provider",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "The provider for which the data-of-interest will be collected. This may be a reference to a Practitioner, PractitionerRole, or Organization. If specified, systems MAY use this information to determine subjects for which the data-of-interest will be calculated, but how subjects are determined is implementation-specific. This parameter is reflected in the reporter element of the resulting MeasureReport(s). This parameter cannot be used with the providerResource parameter.",
+    "type" : "string",
+    "searchType" : "reference"
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationdefinition-allowed-type",
+      "valueUri" : "Practitioner"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationdefinition-allowed-type",
+      "valueUri" : "PractitionerRole"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationdefinition-allowed-type",
+      "valueUri" : "Organization"
+    }],
+    "name" : "providerResource",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "The provider for which the report will be run, provided as a Practitioner, PractitionerRole, or Organization resource. This is intended to support the use case in which the organization information is not on the server performing the evaluation, for example an [ad-hoc group of practitioners](clinicalreasoning-quality-reporting.html#ad-hoc-organizations) that are part of a provider group. This parameter is reflected in the reporter element of the resulting MeasureReport(s). This parameter cannot be used with the provider parameter.",
+    "type" : "Element",
+    "searchType" : "reference"
+  },
+  {
+    "name" : "location",
+    "use" : "in",
+    "min" : 0,
+    "max" : "*",
+    "documentation" : "The location(s) for which the data-of-interest will be collected. This parameter is reflected in the location element of the resulting MeasureReport(s).",
+    "type" : "string",
+    "searchType" : "reference"
+  },
+  {
+    "name" : "lastReceivedOn",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "The date the results of this measure were last received. This parameter used to indicate when the last time data for this measure was collected. This information is used to support incremental data collection scenarios",
+    "type" : "dateTime"
+  },
+  {
+    "name" : "parameters",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "Any input parameters for the evaluation. Parameters defined in this input will be made available by name to the CQL expression. Parameter types are mapped to CQL as specified in the [Using CQL with FHIR](https://hl7.org/fhir/uv/cql/) implementation guide. If a parameter appears more than once in the input Parameters resource, it is represented with a List in the input CQL. If a parameter has parts, it is represented as a Tuple in the input CQL.",
+    "type" : "Parameters"
+  },
+  {
+    "name" : "manifest",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "Specifies an asset-collection library that provides dependency version resolution and expansion rules for the operation. See the version manifest discussion in the [Canonical Resource Management Infrastructure IG](http://hl7.org/fhir/uv/crmi/version-manifest.html) for a complete description of how manifest values are used to provide defaults for dependency version resolution and expansion parameters. Parameters specified directly in the operation override behaviors specified by the manifest parameter. In general, if this parameter is supplied, it is expected to be used in nested operation calls. For example, in evaluating a measure, if the expansion of a value set is required, this parameter SHALL be supplied to that expansion.",
+    "type" : "canonical",
+    "targetProfile" : ["http://hl7.org/fhir/StructureDefinition/Library"]
+  },
+  {
+    "name" : "validateResources",
+    "use" : "in",
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "Indicates whether data collected conform to the appropriate profiles as specified by the measure.",
+    "type" : "boolean"
+  },
+  {
+    "name" : "return",
+    "use" : "out",
+    "min" : 0,
+    "max" : "*",
+    "documentation" : "The results of the data collection, returned as a Bundle for each input subject. The first entries in each Bundle are MeasureReport(s) corresponding to the measures for which data was collected. The MeasureReport resources SHALL have a type of data-exchange. Subsequent entries in each Bundle are resources representing the data-of-interest for the measures, and referenced from the evaluatedResource element of the corresponding MeasureReport resources. See the [guidance](clinicalreasoning-quality-reporting.html#bundles-organized-by-subject) on Bundle structure for discussion about the Bundle content and organization.\\n\\nNote that even though there is a single parameter named return of type Bundle, it is a multi-cardinality parameter, and so will still be returned using a Parameters resource, as described in the general operations framework [response](operations.html#response).",
+    "type" : "Bundle"
+  }]
+}

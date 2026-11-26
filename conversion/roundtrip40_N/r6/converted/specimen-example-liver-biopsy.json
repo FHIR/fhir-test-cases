@@ -1,0 +1,151 @@
+{
+  "resourceType" : "Specimen",
+  "id" : "liver-biopsy",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "contained" : [{
+    "resourceType" : "ServiceRequest",
+    "id" : "liver-biopsy-request",
+    "status" : "active",
+    "intent" : "order",
+    "code" : {
+      "coding" : [{
+        "system" : "http://loinc.org",
+        "code" : "11529-5",
+        "display" : "Surgical pathology study"
+      }],
+      "text" : "Surgical pathology study of liver tissue"
+    },
+    "subject" : {
+      "reference" : "Patient/example"
+    }
+  },
+  {
+    "resourceType" : "Procedure",
+    "id" : "liver-biopsy-procedure",
+    "status" : "completed",
+    "code" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "287489008",
+        "display" : "Percutaneous needle biopsy of liver"
+      }]
+    },
+    "subject" : {
+      "reference" : "Patient/example"
+    },
+    "performedDateTime" : "2024-03-15T09:45:00Z",
+    "performer" : [{
+      "actor" : {
+        "reference" : "Practitioner/gastroenterologist"
+      }
+    }]
+  }],
+  "identifier" : [{
+    "system" : "http://lab.acme.org/specimens/2024",
+    "value" : "LB-2024-001"
+  },
+  {
+    "type" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/v2-0203",
+        "code" : "ACSN",
+        "display" : "Accession ID"
+      }]
+    },
+    "system" : "http://pathology.acme.org/accession",
+    "value" : "PB24-00789"
+  }],
+  "status" : "available",
+  "type" : {
+    "coding" : [{
+      "system" : "http://snomed.info/sct",
+      "code" : "128168004",
+      "display" : "Tissue specimen from liver"
+    }]
+  },
+  "subject" : {
+    "reference" : "Patient/example",
+    "display" : "Peter Patient"
+  },
+  "receivedTime" : "2024-03-15T10:30:00Z",
+  "request" : [{
+    "reference" : "#liver-biopsy-request",
+    "display" : "Surgical pathology study of liver tissue"
+  }],
+  "collection" : {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Specimen.collection.procedure",
+      "valueReference" : {
+        "reference" : "#liver-biopsy-procedure"
+      }
+    }],
+    "collector" : {
+      "reference" : "Practitioner/gastroenterologist"
+    },
+    "collectedDateTime" : "2024-03-15T09:45:00Z",
+    "quantity" : {
+      "value" : 1.5,
+      "unit" : "cm",
+      "system" : "http://unitsofmeasure.org",
+      "code" : "cm"
+    },
+    "method" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "287489008",
+        "display" : "Percutaneous needle biopsy of liver"
+      }]
+    },
+    "bodySite" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "10200004",
+        "display" : "Liver structure"
+      }]
+    }
+  },
+  "processing" : [{
+    "extension" : [{
+      "extension" : [{
+        "extension" : [{
+          "url" : "concept",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "http://terminology.hl7.org/CodeSystem/v2-0371",
+              "code" : "F10",
+              "display" : "10% Formalin"
+            }]
+          }
+        }],
+        "url" : "type"
+      }],
+      "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-Specimen.processing.additive"
+    }],
+    "description" : "Fixed in 10% neutral buffered formalin",
+    "timeDateTime" : "2024-03-15T10:45:00Z"
+  }],
+  "container" : [{
+    "type" : {
+      "text" : "Formalin specimen container"
+    },
+    "specimenQuantity" : {
+      "value" : 1,
+      "unit" : "specimen"
+    }
+  }],
+  "condition" : [{
+    "coding" : [{
+      "system" : "http://snomed.info/sct",
+      "code" : "48883003"
+    }]
+  }],
+  "note" : [{
+    "text" : "Core biopsy specimen obtained for evaluation of hepatic steatosis and fibrosis. Adequate tissue for histopathological assessment."
+  }]
+}

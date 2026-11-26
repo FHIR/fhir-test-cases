@@ -1,0 +1,35 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "version-needed-observation",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/version-needed-observation",
+  "version" : "1.0.0",
+  "name" : "VersionNeededObservation",
+  "title" : "Version Needed Observation",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2026-11-07",
+  "publisher" : "FHIR Project",
+  "description" : "Observation.code is bound to a value set that pins the version of a code system that has versionNeeded = true",
+  "fhirVersion" : "5.0.0",
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Observation",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [
+      {
+        "id" : "Observation",
+        "path" : "Observation"
+      },
+      {
+        "id" : "Observation.code",
+        "path" : "Observation.code",
+        "binding" : {
+          "strength" : "required",
+          "valueSet" : "http://hl7.org/fhir/test/ValueSet/version-needed-pinned"
+        }
+      }
+    ]
+  }
+}

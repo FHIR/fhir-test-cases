@@ -1,0 +1,65 @@
+{
+  "resourceType": "ConceptMap",
+  "id": "translation-validator",
+  "url": "http://hl7.org/fhir/test/ConceptMap/translation-validator",
+  "version": "1.0.0",
+  "name": "TranslationValidatorTest",
+  "title": "TranslationValidator test map: v3 AdministrativeGender <-> v2 0001",
+  "status": "active",
+  "experimental": true,
+  "description": "Exercises the parts of a ConceptMap group that don't list codes directly: element.valueSet, target.valueSet, noMap, and unmapped (fixed with a valueSet, and use-source-code)",
+  "group": [
+    {
+      "source": "http://terminology.hl7.org/CodeSystem/v3-AdministrativeGender",
+      "target": "http://terminology.hl7.org/CodeSystem/v2-0001",
+      "element": [
+        {
+          "code": "F",
+          "target": [
+            {
+              "code": "F",
+              "relationship": "equivalent"
+            }
+          ]
+        },
+        {
+          "valueSet": "http://hl7.org/fhir/test/ValueSet/translation-validator-vs-v3-male",
+          "target": [
+            {
+              "code": "M",
+              "relationship": "equivalent"
+            }
+          ]
+        }
+      ],
+      "unmapped": {
+        "mode": "fixed",
+        "valueSet": "http://hl7.org/fhir/test/ValueSet/translation-validator-vs-v2-unknown",
+        "relationship": "related-to"
+      }
+    },
+    {
+      "source": "http://terminology.hl7.org/CodeSystem/v2-0001",
+      "target": "http://terminology.hl7.org/CodeSystem/v3-AdministrativeGender",
+      "element": [
+        {
+          "code": "A",
+          "target": [
+            {
+              "valueSet": "http://hl7.org/fhir/test/ValueSet/translation-validator-vs-v3-undifferentiated",
+              "relationship": "related-to"
+            }
+          ]
+        },
+        {
+          "code": "N",
+          "noMap": true
+        }
+      ],
+      "unmapped": {
+        "mode": "use-source-code",
+        "relationship": "equivalent"
+      }
+    }
+  ]
+}

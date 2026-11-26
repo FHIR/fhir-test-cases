@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <url value="http://example.org/fhir/StructureDefinition/inherited-type-slice"/>
+  <name value="InheritedTypeSlice"/>
+  <status value="draft"/>
+  <description value="The bottom of the chain (fhir-ig-publisher#1303, shaped like the FDPG obligations layer profiles that SUSHI makes): refers to the extension slice and the type slice that the grandparent defines and the parent only inherits, without restating either slicing"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Procedure"/>
+  <baseDefinition value="http://example.org/fhir/StructureDefinition/inherited-type-slice-parent"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Procedure.extension">
+      <path value="Procedure.extension"/>
+    </element>
+    <element id="Procedure.extension:incision">
+      <path value="Procedure.extension"/>
+      <sliceName value="incision"/>
+      <short value="When the incision was made (constrained in the child)"/>
+    </element>
+    <element id="Procedure.performed[x]">
+      <path value="Procedure.performed[x]"/>
+    </element>
+    <element id="Procedure.performed[x]:performedPeriod">
+      <path value="Procedure.performed[x]"/>
+      <sliceName value="performedPeriod"/>
+      <short value="The period (constrained in the child)"/>
+      <type>
+        <code value="Period"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

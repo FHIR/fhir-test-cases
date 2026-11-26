@@ -1,0 +1,170 @@
+{
+  "resourceType" : "MedicationRequest",
+  "id" : "medrx0339",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "contained" : [{
+    "resourceType" : "Medication",
+    "id" : "med0322",
+    "code" : {
+      "coding" : [{
+        "system" : "http://hl7.org/fhir/sid/ndc",
+        "code" : "0067-2091-03",
+        "display" : "Vagistat-3, 1 KIT in 1 CARTON (0067-2091-03) * 3 SUPPOSITORY in 1 BLISTER PACK * 1 TUBE in 1 CARTON / 9 g in 1 TUBE (package)"
+      }],
+      "text" : "Vagistat-3"
+    }
+  }],
+  "identifier" : [{
+    "use" : "official",
+    "system" : "http://www.bmc.nl/portal/prescriptions",
+    "value" : "12345689"
+  }],
+  "basedOn" : [{
+    "reference" : "CarePlan/gpvisit"
+  }],
+  "groupIdentifier" : {
+    "use" : "official",
+    "system" : "http://www.bmc.nl/portal/prescriptions",
+    "value" : "983939393"
+  },
+  "status" : "active",
+  "intent" : "order",
+  "medication" : {
+    "reference" : {
+      "reference" : "#med0322"
+    }
+  },
+  "subject" : {
+    "reference" : "Patient/pat1",
+    "display" : "Donald Duck"
+  },
+  "encounter" : {
+    "reference" : "Encounter/f001",
+    "display" : "encounter who leads to this prescription"
+  },
+  "authoredOn" : "2015-01-15",
+  "requester" : {
+    "reference" : "Practitioner/f007",
+    "display" : "Patrick Pump"
+  },
+  "dosageInstruction" : {
+    "renderedInstruction" : "Insert one suppository into the vagina daily at bedtime and apply cream to vaginal area topically once daily for 3 days.",
+    "step" : [{
+      "component" : [{
+        "text" : "Insert one suppository into the vagina daily at bedtime",
+        "timing" : {
+          "repeat" : {
+            "boundsPeriod" : {
+              "start" : "2015-01-16",
+              "end" : "2015-01-18"
+            },
+            "frequency" : 1,
+            "period" : 1,
+            "periodUnit" : "d"
+          }
+        },
+        "route" : {
+          "coding" : [{
+            "system" : "http://snomed.info/sct",
+            "code" : "16857009",
+            "display" : "Vaginal Route"
+          }]
+        },
+        "method" : {
+          "coding" : [{
+            "system" : "http://snomed.info/sct",
+            "code" : "421257003",
+            "display" : "Insert"
+          }]
+        },
+        "doseAndRate" : [{
+          "type" : {
+            "coding" : [{
+              "system" : "http://terminology.hl7.org/CodeSystem/dose-rate-type",
+              "code" : "ordered",
+              "display" : "Ordered"
+            }]
+          },
+          "doseQuantity" : {
+            "value" : 1,
+            "unit" : "VAGTAB",
+            "system" : "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
+            "code" : "VAGTAB"
+          }
+        }]
+      },
+      {
+        "text" : "Apply to vaginal area topically once daily",
+        "timing" : {
+          "repeat" : {
+            "boundsPeriod" : {
+              "start" : "2015-01-16",
+              "end" : "2015-01-18"
+            },
+            "frequency" : 1,
+            "period" : 1,
+            "periodUnit" : "d"
+          }
+        },
+        "route" : {
+          "coding" : [{
+            "system" : "http://snomed.info/sct",
+            "code" : "6064005",
+            "display" : "Topical Route"
+          }]
+        },
+        "method" : {
+          "coding" : [{
+            "system" : "http://snomed.info/sct",
+            "code" : "417924000",
+            "display" : "Apply - dosing instruction imperative (qualifier value)"
+          }]
+        },
+        "doseAndRate" : [{
+          "type" : {
+            "coding" : [{
+              "system" : "http://terminology.hl7.org/CodeSystem/dose-rate-type",
+              "code" : "ordered",
+              "display" : "Ordered"
+            }]
+          }
+        }]
+      }]
+    }]
+  },
+  "dispenseRequest" : {
+    "validityPeriod" : {
+      "start" : "2015-01-15",
+      "end" : "2016-01-15"
+    },
+    "numberOfRepeatsAllowed" : 1,
+    "quantity" : {
+      "value" : 1
+    },
+    "expectedSupplyDuration" : {
+      "value" : 3,
+      "unit" : "days",
+      "system" : "http://unitsofmeasure.org",
+      "code" : "d"
+    },
+    "dispenser" : {
+      "reference" : "Organization/f001"
+    }
+  },
+  "substitution" : {
+    "allowedBoolean" : true,
+    "reason" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code" : "FP",
+        "display" : "formulary policy"
+      }]
+    }
+  }
+}

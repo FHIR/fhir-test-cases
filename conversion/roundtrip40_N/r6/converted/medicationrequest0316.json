@@ -1,0 +1,108 @@
+{
+  "resourceType" : "MedicationRequest",
+  "id" : "medrx0316",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "contained" : [{
+    "resourceType" : "Medication",
+    "id" : "med0306",
+    "code" : {
+      "coding" : [{
+        "system" : "http://hl7.org/fhir/sid/ndc",
+        "code" : "51144-050-01",
+        "display" : "ADCETRIS, 1 VIAL, SINGLE-DOSE in 1 BOX (51144-050-01) / 10.5 mL in 1 VIAL, SINGLE-DOSE (package)"
+      }],
+      "text" : "Adcetris"
+    },
+    "form" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "421637006",
+        "display" : "Lyophilised powder for conventional release solution for injection"
+      }]
+    },
+    "batch" : {
+      "lotNumber" : "12345",
+      "expirationDate" : "2019-10-31"
+    }
+  }],
+  "identifier" : [{
+    "use" : "official",
+    "system" : "http://www.bmc.nl/portal/prescriptions",
+    "value" : "12345689"
+  }],
+  "status" : "completed",
+  "intent" : "order",
+  "medicationReference" : {
+    "reference" : "#med0306"
+  },
+  "subject" : {
+    "reference" : "Patient/pat1",
+    "display" : "Donald Duck"
+  },
+  "encounter" : {
+    "reference" : "Encounter/f001",
+    "display" : "encounter who leads to this prescription"
+  },
+  "authoredOn" : "2015-01-15",
+  "requester" : {
+    "reference" : "Practitioner/f007",
+    "display" : "Patrick Pump"
+  },
+  "dosageInstruction" : [{
+    "text" : "1.8 mg/kg IV infusion over 20 minutes every 3 weeks for 16 cycles",
+    "timing" : {
+      "repeat" : {
+        "count" : 16,
+        "frequency" : 1,
+        "period" : 3,
+        "periodUnit" : "wk"
+      }
+    },
+    "route" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "255560000",
+        "display" : "Intravenous"
+      }]
+    },
+    "doseAndRate" : [{
+      "type" : {
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/dose-rate-type",
+          "code" : "ordered",
+          "display" : "Ordered"
+        }]
+      },
+      "doseQuantity" : {
+        "value" : 1.8,
+        "unit" : "mg/kg",
+        "system" : "http://unitsofmeasure.org",
+        "code" : "mg/kg"
+      },
+      "rateRatio" : {
+        "numerator" : {
+          "value" : 1.8,
+          "system" : "http://unitsofmeasure.org",
+          "code" : "mg/kg"
+        },
+        "denominator" : {
+          "value" : 20,
+          "system" : "http://unitsofmeasure.org",
+          "code" : "min"
+        }
+      }
+    }],
+    "maxDosePerAdministration" : {
+      "value" : 400,
+      "unit" : "mg",
+      "system" : "http://unitsofmeasure.org",
+      "code" : "mg"
+    }
+  }]
+}

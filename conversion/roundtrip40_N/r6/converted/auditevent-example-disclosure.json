@@ -1,0 +1,144 @@
+{
+  "resourceType" : "AuditEvent",
+  "id" : "example-disclosure",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-AuditEvent.severity",
+    "valueCode" : "notice"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-AuditEvent.patient",
+    "valueReference" : {
+      "reference" : "Patient/example"
+    }
+  },
+  {
+    "extension" : [{
+      "url" : "code",
+      "valueCoding" : {
+        "system" : "http://terminology.hl7.org/CodeSystem/audit-event-outcome",
+        "code" : "0",
+        "display" : "Success"
+      }
+    },
+    {
+      "url" : "detail",
+      "valueCodeableConcept" : {
+        "text" : "Successful Disclosure"
+      }
+    }],
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-AuditEvent.outcome"
+  }],
+  "type" : {
+    "system" : "http://dicom.nema.org/resources/ontology/DCM",
+    "code" : "110106",
+    "display" : "Export"
+  },
+  "subtype" : [{
+    "code" : "Disclosure",
+    "display" : "HIPAA disclosure"
+  }],
+  "action" : "R",
+  "recorded" : "2013-09-22T00:08:00Z",
+  "outcome" : "0",
+  "outcomeDesc" : "Successful Disclosure",
+  "purposeOfEvent" : [{
+    "coding" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HMARKT",
+      "display" : "healthcare marketing"
+    }]
+  }],
+  "agent" : [{
+    "type" : {
+      "coding" : [{
+        "system" : "http://dicom.nema.org/resources/ontology/DCM",
+        "code" : "110153",
+        "display" : "Source Role ID"
+      }]
+    },
+    "who" : {
+      "identifier" : {
+        "value" : "SomeIdiot@nowhere"
+      },
+      "display" : "That guy everyone wishes would be caught"
+    },
+    "requestor" : true,
+    "location" : {
+      "reference" : "Location/1"
+    },
+    "policy" : ["http://consent.com/yes"],
+    "network" : {
+      "address" : "custodian.net"
+    }
+  },
+  {
+    "type" : {
+      "coding" : [{
+        "system" : "http://dicom.nema.org/resources/ontology/DCM",
+        "code" : "110152",
+        "display" : "Destination Role ID"
+      }]
+    },
+    "who" : {
+      "reference" : "Practitioner/example",
+      "display" : "Where"
+    },
+    "requestor" : false,
+    "network" : {
+      "address" : "marketing.land"
+    },
+    "purposeOfUse" : [{
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code" : "HMARKT",
+        "display" : "healthcare marketing"
+      }]
+    }]
+  }],
+  "source" : {
+    "observer" : {
+      "display" : "Watchers Accounting of Disclosures Application"
+    },
+    "type" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/security-source-type",
+      "code" : "4",
+      "display" : "Application Server"
+    }]
+  },
+  "entity" : [{
+    "what" : {
+      "reference" : "Patient/example/_history/1",
+      "identifier" : {
+        "value" : "What.id"
+      },
+      "display" : "data about Everthing important"
+    },
+    "role" : {
+      "system" : "http://terminology.hl7.org/CodeSystem/object-role",
+      "code" : "4",
+      "display" : "Domain Resource"
+    },
+    "securityLabel" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-Confidentiality",
+      "code" : "V",
+      "display" : "very restricted"
+    },
+    {
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+      "code" : "STD",
+      "display" : "sexually transmitted disease information sensitivity"
+    },
+    {
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+      "code" : "DELAU",
+      "display" : "delete after use"
+    }]
+  }]
+}

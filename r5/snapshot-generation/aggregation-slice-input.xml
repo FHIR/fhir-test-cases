@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="aggregation-slice"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/aggregation-slice"/>
+  <name value="AggregationSlice"/>
+  <status value="draft"/>
+  <description value="Slices MessageHeader.focus, which the base made bundled and specific: the slice narrows the target profile without restating aggregation or versioning, and keeps them (#733)"/>
+  <fhirVersion value="5.0.0"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="MessageHeader"/>
+  <baseDefinition value="http://hl7.org/fhir/test/StructureDefinition/aggregation-base"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="MessageHeader.focus">
+      <path value="MessageHeader.focus"/>
+      <slicing>
+        <discriminator>
+          <type value="profile"/>
+          <path value="resolve()"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="MessageHeader.focus:encounter">
+      <path value="MessageHeader.focus"/>
+      <sliceName value="encounter"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Encounter"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

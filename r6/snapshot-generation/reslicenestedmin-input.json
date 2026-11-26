@@ -1,0 +1,58 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "reslicenestedmin",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/reslicenestedmin",
+  "name": "reslicenestedmin",
+  "status": "draft",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient.identifier",
+        "path": "Patient.identifier",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "system"
+            }
+          ],
+          "rules": "open"
+        },
+        "min": 0
+      },
+      {
+        "id": "Patient.identifier:a",
+        "path": "Patient.identifier",
+        "sliceName": "a",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Patient.identifier:a.system",
+        "path": "Patient.identifier.system",
+        "min": 1,
+        "fixedUri": "http://example.org/a"
+      },
+      {
+        "id": "Patient.identifier:a/b",
+        "path": "Patient.identifier",
+        "sliceName": "a/b",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Patient.identifier:a/b/c",
+        "path": "Patient.identifier",
+        "sliceName": "a/b/c",
+        "min": 1,
+        "max": "1"
+      }
+    ]
+  },
+  "description": "Error when for publication: a (0..*) is resliced by a/b (0..*), which is resliced by a/b/c (1..1). a/b's reslices add up to more than its minimum, and so a's do too: a/b counts for 1 in a. The excess was credited to the slicer, skipping a"
+}

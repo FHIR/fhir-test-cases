@@ -1,0 +1,33 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-server",
+      "valueUrl" : "https://tx-dev.fhir.org/r4"
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-context",
+      "valueString" : "http://example.org/StructureDefinition/coding-userselected-slice-profile|0.1.0"
+    }],
+    "severity" : "warning",
+    "code" : "not-found",
+    "details" : {
+      "text" : "A definition for CodeSystem 'http://example.org/fhir/CodeSystem/kunden' could not be found, so the code cannot be validated"
+    },
+    "diagnostics" : "[9,4]",
+    "expression" : ["Medication.code.coding[0].system"]
+  },
+  {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-context",
+      "valueString" : "http://example.org/StructureDefinition/coding-userselected-slice-profile|0.1.0"
+    }],
+    "severity" : "error",
+    "code" : "invalid",
+    "details" : {
+      "text" : "This element does not match any known slice defined in the profile http://example.org/StructureDefinition/coding-userselected-slice-profile|0.1.0 and slicing is CLOSED: Medication.code.coding[0]: Does not match slice 'KundenCode' (discriminator: $this.where(userSelected = true).exists())"
+    },
+    "diagnostics" : "[11,8]",
+    "expression" : ["Medication.code.coding[0]"]
+  }]
+}

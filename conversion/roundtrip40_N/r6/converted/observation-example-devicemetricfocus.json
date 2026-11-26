@@ -1,0 +1,128 @@
+{
+  "resourceType" : "Bundle",
+  "id" : "example-observation-device-flowratemetric",
+  "type" : "collection",
+  "entry" : [{
+    "fullUrl" : "http://hl7.org/fhir/Observation/example-observation-device-flowratemetric",
+    "resource" : {
+      "resourceType" : "Observation",
+      "id" : "example-observation-device-flowratemetric",
+      "identifier" : [{
+        "system" : "http://goodcare.org/observation/id",
+        "value" : "1191144-10"
+      }],
+      "status" : "final",
+      "code" : {
+        "coding" : [{
+          "system" : "http://loinc.org",
+          "code" : "8977-1",
+          "display" : "Fluid intake intravascular 8 hour"
+        }]
+      },
+      "subject" : {
+        "reference" : "Device/example-IV-pump"
+      },
+      "focus" : [{
+        "reference" : "DeviceMetric/example-iv-pump-flowratemetric"
+      }],
+      "effectiveDateTime" : "2024-12-05T09:30:10+01:00",
+      "valueQuantity" : {
+        "value" : 150,
+        "unit" : "milliliter per 8 hour",
+        "system" : "http://unitsofmeasure.org",
+        "code" : "mL/(8.h)"
+      },
+      "device" : {
+        "reference" : "Device/example-IV-pump"
+      }
+    }
+  },
+  {
+    "fullUrl" : "http://hl7.org/fhir/DeviceAssociation/example-device-patient-association",
+    "resource" : {
+      "resourceType" : "Basic",
+      "id" : "example-device-patient-association",
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-DeviceAssociation.device",
+        "valueReference" : {
+          "reference" : "Device/example-IV-pump"
+        }
+      },
+      {
+        "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-DeviceAssociation.status",
+        "valueCode" : "active"
+      },
+      {
+        "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-DeviceAssociation.relationship",
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/deviceassociation-relationship",
+            "code" : "attached-to",
+            "display" : "Attached To"
+          }]
+        }
+      },
+      {
+        "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-DeviceAssociation.relationshipStatus",
+        "valueCodeableConcept" : {
+          "coding" : [{
+            "system" : "http://hl7.org/fhir/deviceassociation-relationship-status",
+            "code" : "active",
+            "display" : "Active"
+          }]
+        }
+      }],
+      "code" : {
+        "coding" : [{
+          "system" : "http://hl7.org/fhir/fhir-types",
+          "code" : "DeviceAssociation"
+        }]
+      },
+      "subject" : {
+        "reference" : "Patient/pat1",
+        "display" : "Donald Duck"
+      }
+    }
+  },
+  {
+    "fullUrl" : "http://hl7.org/fhir/DeviceMetric/example-iv-pump-flowratemetric",
+    "resource" : {
+      "resourceType" : "DeviceMetric",
+      "id" : "example-iv-pump-flowratemetric",
+      "extension" : [{
+        "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-DeviceMetric.status",
+        "valueCode" : "active"
+      }],
+      "type" : {
+        "coding" : [{
+          "system" : "urn:iso:std:iso:11073:10101",
+          "code" : "157784",
+          "display" : "MDC_FLOW_FLUID_PUMP"
+        }]
+      },
+      "unit" : {
+        "coding" : [{
+          "system" : "http://unitsofmeasure.org",
+          "code" : "mL/(8.h)",
+          "display" : "mL/(8.h)"
+        }]
+      },
+      "source" : {
+        "reference" : "Device/example-IV-pump"
+      },
+      "operationalStatus" : "on",
+      "_category" : {
+        "extension" : [{
+          "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-DeviceMetric.category",
+          "valueCodeableConcept" : {
+            "coding" : [{
+              "system" : "http://hl7.org/fhir/metric-category",
+              "code" : "measurement",
+              "display" : "Measurement"
+            }]
+          }
+        }]
+      }
+    }
+  }]
+}

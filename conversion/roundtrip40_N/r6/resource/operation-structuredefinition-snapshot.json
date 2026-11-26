@@ -1,0 +1,86 @@
+{
+  "resourceType" : "OperationDefinition",
+  "id" : "StructureDefinition-snapshot",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: OperationDefinition StructureDefinition-snapshot</b></p><a name=\"StructureDefinition-snapshot\"> </a><a name=\"hcStructureDefinition-snapshot\"> </a><p>URL: [base]/StructureDefinition/$snapshot</p><p>URL: [base]/StructureDefinition/[id]/$snapshot</p><h3>Parameters</h3><table class=\"grid\"><tr><td><b>Use</b></td><td><b>Name</b></td><td><b>Scope</b></td><td><b>Cardinality</b></td><td><b>Type</b></td><td><b>Binding</b></td><td><b>Documentation</b></td></tr><tr><td>IN</td><td>definition</td><td>type</td><td>0..1</td><td><a href=\"structuredefinition.html\">StructureDefinition</a></td><td/><td><div><p>The <a href=\"structuredefinition.html\">StructureDefinition</a> is provided directly as part of the request. Servers may choose not to accept profiles in this fashion</p>\n</div></td></tr><tr><td>IN</td><td>url</td><td>type</td><td>0..1</td><td><a href=\"datatypes.html#string\">string</a><br/>(<a href=\"search.html#token\">token</a>)</td><td/><td><div><p>The StructureDefinition's canonical URL (i.e. 'StructureDefinition.url'). The server must know the structure definition, or be able to retrieve it from other known repositories.</p>\n</div></td></tr><tr><td>OUT</td><td>return</td><td/><td>1..1</td><td><a href=\"structuredefinition.html\">StructureDefinition</a></td><td/><td><div><p>The structure definition with a snapshot</p>\n</div></td></tr></table></div>"
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status",
+    "valueCode" : "normative"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version",
+    "valueCode" : "6.0.0-snapshot1"
+  },
+  {
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "fhir"
+  }],
+  "url" : "http://hl7.org/fhir/OperationDefinition/StructureDefinition-snapshot",
+  "version" : "6.0.0-snapshot1",
+  "name" : "Snapshot",
+  "title" : "Generate Snapshot",
+  "status" : "active",
+  "kind" : "operation",
+  "experimental" : false,
+  "date" : "2026-11-20T23:46:23+11:00",
+  "publisher" : "HL7 International / FHIR Infrastructure",
+  "contact" : [{
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://hl7.org/fhir"
+    },
+    {
+      "system" : "email",
+      "value" : "fhir@lists.hl7.org"
+    }]
+  },
+  {
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://www.hl7.org/Special/committees/fiwg"
+    }]
+  }],
+  "description" : "Generates a [StructureDefinition](structuredefinition.html) instance  with  a snapshot, based on a differential in a specified [StructureDefinition](structuredefinition.html).   \n\nIf the operation is not called at the instance level, either *definition* or *url* 'in' parameters must be provided. If more than one is specified, servers may raise an error or may resolve with the parameter of their choice. If called at the instance level, these parameters will be ignored. Snapshot generation is dependent on profiles that are referenced - if those profiles change, the snapshot can change. For a frozen package, $snapshot is idempotent.",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
+  "affectsState" : false,
+  "code" : "snapshot",
+  "resource" : ["StructureDefinition"],
+  "system" : false,
+  "type" : true,
+  "instance" : true,
+  "parameter" : [{
+    "name" : "definition",
+    "use" : "in",
+    "scope" : ["type"],
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "The [StructureDefinition](structuredefinition.html) is provided directly as part of the request. Servers may choose not to accept profiles in this fashion",
+    "type" : "StructureDefinition"
+  },
+  {
+    "name" : "url",
+    "use" : "in",
+    "scope" : ["type"],
+    "min" : 0,
+    "max" : "1",
+    "documentation" : "The StructureDefinition's canonical URL (i.e. 'StructureDefinition.url'). The server must know the structure definition, or be able to retrieve it from other known repositories.",
+    "type" : "string",
+    "searchType" : "token"
+  },
+  {
+    "name" : "return",
+    "use" : "out",
+    "min" : 1,
+    "max" : "1",
+    "documentation" : "The structure definition with a snapshot",
+    "type" : "StructureDefinition"
+  }]
+}

@@ -1,0 +1,112 @@
+{
+  "resourceType" : "MedicationAdministration",
+  "id" : "medadmin0301",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "contained" : [{
+    "resourceType" : "Medication",
+    "id" : "med0301",
+    "code" : {
+      "coding" : [{
+        "system" : "http://hl7.org/fhir/sid/ndc",
+        "code" : "0409-6531-02",
+        "display" : "Vancomycin Hydrochloride, 10 VIAL in 1 TRAY (0409-6531-02) / 1 INJECTION, POWDER, LYOPHILIZED, FOR SOLUTION in 1 VIAL (0409-6531-12) (package)"
+      }],
+      "text" : "Vancomycin Hydrochloride (VANCOMYCIN HYDROCHLORIDE)"
+    }
+  },
+  {
+    "resourceType" : "Provenance",
+    "id" : "signature",
+    "target" : [{
+      "reference" : "ServiceRequest/physiotherapy"
+    }],
+    "recorded" : "2017-02-01T17:23:07Z",
+    "agent" : [{
+      "role" : [{
+        "coding" : [{
+          "system" : "http://terminology.hl7.org/CodeSystem/v3-ParticipationType",
+          "code" : "AUT"
+        }]
+      }],
+      "who" : {
+        "reference" : "Practitioner/example",
+        "display" : "Dr Adam Careful"
+      }
+    }],
+    "signature" : [{
+      "type" : [{
+        "system" : "urn:iso-astm:E1762-95:2013",
+        "code" : "1.2.840.10065.1.12.1.1",
+        "display" : "Author's Signature"
+      }],
+      "when" : "2017-02-01T17:23:07Z",
+      "who" : {
+        "reference" : "Practitioner/example",
+        "display" : "Dr Adam Careful"
+      },
+      "targetFormat" : "application/fhir+xml",
+      "sigFormat" : "application/signature+xml",
+      "data" : "dGhpcyBibG9iIGlzIHNuaXBwZWQ="
+    }]
+  }],
+  "status" : "in-progress",
+  "medicationReference" : {
+    "reference" : "#med0301"
+  },
+  "subject" : {
+    "reference" : "Patient/pat1",
+    "display" : "Donald Duck"
+  },
+  "context" : {
+    "reference" : "Encounter/f001",
+    "display" : "encounter who leads to this prescription"
+  },
+  "effectivePeriod" : {
+    "start" : "2015-01-15T14:30:00+01:00"
+  },
+  "performer" : [{
+    "actor" : {
+      "reference" : "Practitioner/f007",
+      "display" : "Patrick Pump"
+    }
+  }],
+  "reasonCode" : [{
+    "coding" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/reason-medication-given",
+      "code" : "b",
+      "display" : "Given as Ordered"
+    }]
+  }],
+  "request" : {
+    "reference" : "MedicationRequest/medrx0318"
+  },
+  "dosage" : {
+    "text" : "500mg IV q6h x 3 days",
+    "route" : {
+      "coding" : [{
+        "system" : "http://snomed.info/sct",
+        "code" : "47625008",
+        "display" : "Intravenous route"
+      }]
+    },
+    "method" : {
+      "text" : "IV Push"
+    },
+    "dose" : {
+      "value" : 500,
+      "unit" : "mg",
+      "system" : "http://unitsofmeasure.org",
+      "code" : "mg"
+    }
+  },
+  "eventHistory" : [{
+    "reference" : "#signature",
+    "display" : "Author's Signature"
+  }]
+}

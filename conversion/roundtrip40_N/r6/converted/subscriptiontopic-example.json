@@ -1,0 +1,248 @@
+{
+  "resourceType" : "Basic",
+  "id" : "example",
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+    "valueCode" : "fhir"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SubscriptionTopic.url",
+    "valueUri" : "http://example.org/FHIR/SubscriptionTopic/example"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SubscriptionTopic.version",
+    "valueString" : "1.0.0-beta.1"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SubscriptionTopic.title",
+    "valueString" : "example"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SubscriptionTopic.status",
+    "valueCode" : "draft"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SubscriptionTopic.date",
+    "valueDateTime" : "2019-01-01"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SubscriptionTopic.publisher",
+    "valueString" : "HL7 International / FHIR Infrastructure"
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SubscriptionTopic.contact",
+    "valueContactDetail" : {
+      "telecom" : [{
+        "system" : "url",
+        "value" : "http://www.hl7.org/Special/committees/fiwg"
+      }]
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-SubscriptionTopic.description",
+    "valueMarkdown" : "Example topic for completed encounters"
+  },
+  {
+    "extension" : [{
+      "url" : "description",
+      "valueMarkdown" : "An Encounter has been completed"
+    },
+    {
+      "url" : "resource",
+      "valueUri" : "http://hl7.org/fhir/StructureDefinition/Encounter"
+    },
+    {
+      "url" : "supportedInteraction",
+      "valueCode" : "update"
+    },
+    {
+      "extension" : [{
+        "url" : "previous",
+        "valueString" : "status:not=completed"
+      },
+      {
+        "url" : "resultForCreate",
+        "valueCode" : "test-passes"
+      },
+      {
+        "url" : "current",
+        "valueString" : "status=completed"
+      },
+      {
+        "url" : "resultForDelete",
+        "valueCode" : "test-fails"
+      },
+      {
+        "url" : "requireBoth",
+        "valueBoolean" : true
+      }],
+      "url" : "queryCriteria"
+    },
+    {
+      "url" : "fhirPathCriteria",
+      "valueString" : "(%previous.empty() | (%previous.status != 'completed')) and (%current.status = 'completed')"
+    },
+    {
+      "extension" : [{
+        "url" : "description",
+        "valueMarkdown" : "Filter based on the subject of an encounter."
+      },
+      {
+        "url" : "resource",
+        "valueUri" : "Encounter"
+      },
+      {
+        "url" : "filterParameter",
+        "valueString" : "subject"
+      }],
+      "url" : "canFilterBy"
+    },
+    {
+      "extension" : [{
+        "url" : "description",
+        "valueMarkdown" : "Filter based on the group membership of the subject of an encounter."
+      },
+      {
+        "url" : "resource",
+        "valueUri" : "Encounter"
+      },
+      {
+        "url" : "filterParameter",
+        "valueString" : "_in"
+      }],
+      "url" : "canFilterBy"
+    },
+    {
+      "extension" : [{
+        "url" : "description",
+        "valueMarkdown" : "Filter based on the length of an encounter."
+      },
+      {
+        "url" : "resource",
+        "valueUri" : "Encounter"
+      },
+      {
+        "url" : "filterParameter",
+        "valueString" : "length"
+      },
+      {
+        "url" : "comparator",
+        "valueCode" : "gt"
+      },
+      {
+        "url" : "comparator",
+        "valueCode" : "lt"
+      },
+      {
+        "url" : "comparator",
+        "valueCode" : "ge"
+      },
+      {
+        "url" : "comparator",
+        "valueCode" : "le"
+      }],
+      "url" : "canFilterBy"
+    },
+    {
+      "extension" : [{
+        "url" : "description",
+        "valueMarkdown" : "Filter based on the account for billing an encounter."
+      },
+      {
+        "url" : "resource",
+        "valueUri" : "Encounter"
+      },
+      {
+        "url" : "filterParameter",
+        "valueString" : "account"
+      },
+      {
+        "url" : "modifier",
+        "valueCode" : "missing"
+      },
+      {
+        "url" : "modifier",
+        "valueCode" : "not"
+      },
+      {
+        "url" : "modifier",
+        "valueCode" : "identifier"
+      }],
+      "url" : "canFilterBy"
+    },
+    {
+      "extension" : [{
+        "url" : "resource",
+        "valueUri" : "Encounter"
+      },
+      {
+        "url" : "include",
+        "valueString" : "Encounter:patient&iterate=Patient.link"
+      },
+      {
+        "url" : "include",
+        "valueString" : "Encounter:practitioner"
+      },
+      {
+        "url" : "include",
+        "valueString" : "Encounter:service-provider"
+      },
+      {
+        "url" : "include",
+        "valueString" : "Encounter:account"
+      },
+      {
+        "url" : "include",
+        "valueString" : "Encounter:diagnosis"
+      },
+      {
+        "url" : "include",
+        "valueString" : "Encounter:observation"
+      },
+      {
+        "url" : "include",
+        "valueString" : "Encounter:location"
+      },
+      {
+        "extension" : [{
+          "url" : "queryType",
+          "valueCoding" : {
+            "system" : "http://example.org/fhir/CodeSystem-patient-queries",
+            "code" : "current-patient"
+          }
+        },
+        {
+          "url" : "query",
+          "valueString" : "Patient?_include:iterate=Patient:link"
+        }],
+        "url" : "relatedQuery"
+      },
+      {
+        "extension" : [{
+          "url" : "queryType",
+          "valueCoding" : {
+            "system" : "http://example.org/fhir/CodeSystem-patient-queries",
+            "code" : "current-providers"
+          }
+        },
+        {
+          "url" : "query",
+          "valueString" : "$current-providers"
+        }],
+        "url" : "relatedQuery"
+      }],
+      "url" : "notificationShape"
+    }],
+    "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-SubscriptionTopic.trigger"
+  }],
+  "identifier" : [{
+    "system" : "urn:ietf:rfc:3986",
+    "value" : "urn:uuid:1caa02ba-051b-4602-8856-65921748ae76"
+  }],
+  "code" : {
+    "coding" : [{
+      "system" : "http://hl7.org/fhir/fhir-types",
+      "code" : "SubscriptionTopic"
+    }]
+  }
+}

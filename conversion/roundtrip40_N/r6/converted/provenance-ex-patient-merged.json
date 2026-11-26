@@ -1,0 +1,83 @@
+{
+  "resourceType" : "Provenance",
+  "id" : "ex-patient-merged",
+  "meta" : {
+    "tag" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HTEST",
+      "display" : "test health data"
+    }]
+  },
+  "extension" : [{
+    "url" : "http://hl7.org/fhir/5.0/StructureDefinition/extension-Provenance.patient",
+    "valueReference" : {
+      "reference" : "Patient/example-merge-survivor"
+    }
+  },
+  {
+    "url" : "http://hl7.org/fhir/6.0/StructureDefinition/extension-Provenance.why",
+    "valueMarkdown" : "Merge Patient Records that were matched by SSN and confirmed by review, with the data linked to the non-surviving patient is also fixed up to point at the surviving patient."
+  }],
+  "target" : [{
+    "reference" : "Patient/example-merge-survivor"
+  },
+  {
+    "reference" : "Patient/example-merge-subsumed"
+  },
+  {
+    "reference" : "Observation/body-height-merged"
+  }],
+  "recorded" : "2024-06-01T19:00:00Z",
+  "reason" : [{
+    "coding" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "HQUALIMP"
+    }]
+  }],
+  "activity" : {
+    "coding" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+      "code" : "MDATA"
+    }]
+  },
+  "agent" : [{
+    "type" : {
+      "coding" : [{
+        "system" : "http://terminology.hl7.org/CodeSystem/provenance-participant-type",
+        "code" : "author"
+      }]
+    },
+    "who" : {
+      "reference" : "http://example.org/Practitioner/ex-practitioner"
+    }
+  }],
+  "entity" : [{
+    "role" : "removal",
+    "what" : {
+      "reference" : "Patient/example-merge-subsumed",
+      "identifier" : {
+        "system" : "http://example.org/mrn",
+        "value" : "MRN-002"
+      },
+      "display" : "Removed Duplicate Patient Record"
+    }
+  },
+  {
+    "role" : "revision",
+    "what" : {
+      "reference" : "Patient/example-merge-survivor",
+      "identifier" : {
+        "system" : "http://example.org/mrn",
+        "value" : "MRN-001"
+      },
+      "display" : "Surviving Patient Record after Merge"
+    }
+  },
+  {
+    "role" : "revision",
+    "what" : {
+      "reference" : "Observation/body-height-merged",
+      "display" : "Body Height Observation from previous Patient is fixed to point at the surviving Patient after Merge"
+    }
+  }]
+}

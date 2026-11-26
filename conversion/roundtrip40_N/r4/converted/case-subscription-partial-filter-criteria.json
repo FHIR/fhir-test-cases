@@ -1,0 +1,40 @@
+{
+  "resourceType" : "Subscription",
+  "id" : "case-partial-criteria",
+  "meta" : {
+    "profile" : ["http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-subscription"]
+  },
+  "status" : "requested",
+  "topic" : "http://example.org/fhir/SubscriptionTopic/encounter-start",
+  "_topic" : {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-filter-criteria",
+      "valueString" : "Encounter?patient=Patient/123"
+    },
+    {
+      "url" : "http://hl7.org/fhir/uv/subscriptions-backport/StructureDefinition/backport-filter-criteria",
+      "valueString" : "Encounter?status=finished&&class=IMP"
+    }]
+  },
+  "reason" : "test",
+  "filterBy" : [{
+    "resource" : "http://hl7.org/fhir/StructureDefinition/Encounter",
+    "filterParameter" : "patient",
+    "value" : "Patient/123"
+  },
+  {
+    "resource" : "http://hl7.org/fhir/StructureDefinition/Encounter",
+    "filterParameter" : "status",
+    "value" : "finished"
+  },
+  {
+    "resource" : "http://hl7.org/fhir/StructureDefinition/Encounter",
+    "filterParameter" : "class",
+    "value" : "IMP"
+  }],
+  "channelType" : {
+    "system" : "http://terminology.hl7.org/CodeSystem/subscription-channel-type",
+    "code" : "rest-hook"
+  },
+  "endpoint" : "https://example.org/hook"
+}

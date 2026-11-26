@@ -1,0 +1,408 @@
+{
+  "resourceType": "Parameters",
+  "id": "translation-validator",
+  "parameter": [
+    {
+      "name": "cm101-confirmed",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/address-use",
+            "code": "home"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AddressUse",
+            "code": "H"
+          }
+        ],
+        "text": "home + H: ConceptMap/101 maps home to H (equivalent) - nothing to say"
+      }
+    },
+    {
+      "name": "cm101-confirmed-reversed",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AddressUse",
+            "code": "H"
+          },
+          {
+            "system": "http://hl7.org/fhir/address-use",
+            "code": "home"
+          }
+        ],
+        "text": "as cm101-confirmed, but the codings in the other order - nothing to say"
+      }
+    },
+    {
+      "name": "cm101-other",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/address-use",
+            "code": "home"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AddressUse",
+            "code": "WP"
+          }
+        ],
+        "text": "home + WP: ConceptMap/101 maps home to H, not WP - hint"
+      }
+    },
+    {
+      "name": "cm101-denied",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/address-use",
+            "code": "old"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AddressUse",
+            "code": "BAD"
+          }
+        ],
+        "text": "old + BAD: ConceptMap/101 says old is not-related-to BAD - warning"
+      }
+    },
+    {
+      "name": "cm101-not-in-map",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/address-use",
+            "code": "billing"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AddressUse",
+            "code": "H"
+          }
+        ],
+        "text": "billing + H: ConceptMap/101 doesn't mention billing - nothing to say"
+      }
+    },
+    {
+      "name": "cm101-one-of-many",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/address-use",
+            "code": "work"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AddressUse",
+            "code": "H"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AddressUse",
+            "code": "WP"
+          }
+        ],
+        "text": "work + H + WP: ConceptMap/101 maps work to WP, which is present, so H is not reported"
+      }
+    },
+    {
+      "name": "cm101-no-target-coding",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/address-use",
+            "code": "home"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0487",
+            "code": "ACNE"
+          }
+        ],
+        "text": "home + a v2-0487 code: no ConceptMap/101 target coding present - nothing to say"
+      }
+    },
+    {
+      "name": "cm101-incomplete-codings",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/address-use",
+            "code": "home"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AddressUse"
+          },
+          {
+            "code": "H"
+          }
+        ],
+        "text": "home + a v3 coding with no code + a coding with no system: nothing to say, and no crash"
+      }
+    },
+    {
+      "name": "cm102-confirmed",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0487",
+            "code": "ACNE"
+          },
+          {
+            "system": "http://snomed.info/sct",
+            "code": "309068002"
+          }
+        ],
+        "text": "ACNE + 309068002: ConceptMap/102 maps ACNE to 309068002 - nothing to say"
+      }
+    },
+    {
+      "name": "cm102-other",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0487",
+            "code": "ACNE"
+          },
+          {
+            "system": "http://snomed.info/sct",
+            "code": "119323008"
+          }
+        ],
+        "text": "ACNE + 119323008: ConceptMap/102 maps ACNE to 309068002 - hint"
+      }
+    },
+    {
+      "name": "cm102-many-to-one",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0487",
+            "code": "PUS"
+          },
+          {
+            "system": "http://snomed.info/sct",
+            "code": "119323008"
+          }
+        ],
+        "text": "PUS + 119323008: ConceptMap/102 maps several v2 codes to 119323008, this is one of them - nothing to say"
+      }
+    },
+    {
+      "name": "cm102-nomap",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0487",
+            "code": "ASERU"
+          },
+          {
+            "system": "http://snomed.info/sct",
+            "code": "119297000"
+          }
+        ],
+        "text": "ASERU + 119297000: ConceptMap/102 says ASERU has no map - warning"
+      }
+    },
+    {
+      "name": "cm102-confirmed-plus-extra",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0487",
+            "code": "ACNE"
+          },
+          {
+            "system": "http://snomed.info/sct",
+            "code": "309068002"
+          },
+          {
+            "system": "http://snomed.info/sct",
+            "code": "119323008"
+          }
+        ],
+        "text": "ACNE + 309068002 + 119323008: the map is confirmed by 309068002, so nothing to say about 119323008"
+      }
+    },
+    {
+      "name": "cm102-other-two",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0487",
+            "code": "ACNE"
+          },
+          {
+            "system": "http://snomed.info/sct",
+            "code": "119323008"
+          },
+          {
+            "system": "http://snomed.info/sct",
+            "code": "119297000"
+          }
+        ],
+        "text": "ACNE + 119323008 + 119297000: neither SNOMED CT code is what ConceptMap/102 maps ACNE to - a hint for each"
+      }
+    },
+    {
+      "name": "cm101-and-cm102",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/address-use",
+            "code": "home"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AddressUse",
+            "code": "H"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0487",
+            "code": "ACNE"
+          },
+          {
+            "system": "http://snomed.info/sct",
+            "code": "119323008"
+          }
+        ],
+        "text": "home + H + ACNE + 119323008: both maps apply, one confirms, one hints"
+      }
+    },
+    {
+      "name": "cm101-unmapped-fixed",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/address-use",
+            "code": "billing"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AddressUse",
+            "code": "TMP"
+          }
+        ],
+        "text": "billing + TMP: ConceptMap/101 doesn't list billing, but its unmapped is fixed to 'temp' - hint (the map's unmapped is itself wrong: temp isn't a v3 code)"
+      }
+    },
+    {
+      "name": "tv-element-valueset-confirmed",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AdministrativeGender",
+            "code": "M"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0001",
+            "code": "M"
+          }
+        ],
+        "text": "v3 M + v2 M: the test map's element.valueSet covers M, mapped to M; the reverse group's use-source-code also gives M - nothing to say"
+      }
+    },
+    {
+      "name": "tv-element-valueset-other",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AdministrativeGender",
+            "code": "M"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0001",
+            "code": "F"
+          }
+        ],
+        "text": "v3 M + v2 F: element.valueSet maps M to M - hint; reverse group use-source-code maps F to F - hint"
+      }
+    },
+    {
+      "name": "tv-unmapped-valueset-confirmed",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AdministrativeGender",
+            "code": "UN"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0001",
+            "code": "U"
+          }
+        ],
+        "text": "v3 UN + v2 U: UN isn't listed, unmapped is fixed to the value set {O, U}, so U is fine; the reverse use-source-code maps U to U - hint"
+      }
+    },
+    {
+      "name": "tv-unmapped-valueset-other",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AdministrativeGender",
+            "code": "UN"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0001",
+            "code": "F"
+          }
+        ],
+        "text": "v3 UN + v2 F: unmapped maps UN to O or U - hint; reverse use-source-code maps F to F - hint"
+      }
+    },
+    {
+      "name": "tv-target-valueset-confirmed",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0001",
+            "code": "A"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AdministrativeGender",
+            "code": "UN"
+          }
+        ],
+        "text": "v2 A + v3 UN: A's target is the value set {UN} - fine; the forward group's unmapped maps UN to O or U - hint"
+      }
+    },
+    {
+      "name": "tv-target-valueset-other",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0001",
+            "code": "A"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AdministrativeGender",
+            "code": "F"
+          }
+        ],
+        "text": "v2 A + v3 F: A's target is the value set {UN} - hint; forward group maps F to F - hint"
+      }
+    },
+    {
+      "name": "tv-nomap",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0001",
+            "code": "N"
+          },
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v3-AdministrativeGender",
+            "code": "F"
+          }
+        ],
+        "text": "v2 N + v3 F: the reverse group says N has no map - warning; forward group maps F to F - hint"
+      }
+    },
+    {
+      "name": "single-coding",
+      "valueCodeableConcept": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0487",
+            "code": "ACNE"
+          }
+        ],
+        "text": "one coding only - nothing to check"
+      }
+    }
+  ]
+}

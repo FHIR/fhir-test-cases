@@ -1,0 +1,67 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "sd-loinc-15-component",
+  "url": "http://example.org/fhir/StructureDefinition/sd-loinc-15-component",
+  "name": "SdLoincComponent",
+  "status": "draft",
+  "fhirVersion": "4.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation",
+        "path": "Observation"
+      },
+      {
+        "id": "Observation.component",
+        "path": "Observation.component",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "value",
+              "path": "code"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Observation.component:urate",
+        "path": "Observation.component",
+        "sliceName": "urate",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Observation.component:urate.code",
+        "path": "Observation.component.code",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "3084-1",
+              "display": "Urate [Mass/volume] in Serum or Plasma"
+            }
+          ]
+        }
+      },
+      {
+        "id": "Observation.component:urate.value[x]",
+        "path": "Observation.component.value[x]",
+        "type": [
+          {
+            "code": "Quantity"
+          }
+        ],
+        "patternQuantity": {
+          "system": "http://unitsofmeasure.org",
+          "code": "mmol/L"
+        }
+      }
+    ]
+  }
+}

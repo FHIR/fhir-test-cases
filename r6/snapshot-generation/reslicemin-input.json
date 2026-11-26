@@ -1,0 +1,31 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "reslicemin",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/reslicemin",
+  "name": "reslicemin",
+  "status": "draft",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/test/StructureDefinition/inherited-reslicing-base",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient.telecom:phone/work",
+        "path": "Patient.telecom",
+        "sliceName": "phone/work",
+        "min": 1,
+        "max": "1"
+      },
+      {
+        "id": "Patient.telecom:phone/work.use",
+        "path": "Patient.telecom.use",
+        "min": 1,
+        "max": "1",
+        "fixedCode": "work"
+      }
+    ]
+  },
+  "description": "Error when for publication: reslices the inherited slice phone (0..*) with phone/work 1..1, so the reslices add up to more than phone's minimum (#846)"
+}
