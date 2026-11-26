@@ -1,0 +1,49 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "complies-with-slice-type-resolve-base",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-type-resolve-base",
+  "name": "CompliesWithSliceTypeResolveBase",
+  "title": "complies-with-slice-type-resolve-base",
+  "status": "active",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Observation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Observation",
+        "path": "Observation"
+      },
+      {
+        "id": "Observation.hasMember",
+        "path": "Observation.hasMember",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "type",
+              "path": "resolve()"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Observation.hasMember:obs",
+        "path": "Observation.hasMember",
+        "sliceName": "obs",
+        "min": 0,
+        "max": "*",
+        "type": [
+          {
+            "code": "Reference",
+            "targetProfile": [
+              "http://hl7.org/fhir/StructureDefinition/Observation"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

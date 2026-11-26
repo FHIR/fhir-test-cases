@@ -1,0 +1,46 @@
+{
+  "resourceType" : "OperationOutcome",
+  "issue" : [{
+    "severity" : "warning",
+    "code" : "business-rule",
+    "details" : {
+      "text" : "Cannot check whether the target profile http://hl7.org/fhir/test/StructureDefinition/complies-with-target-patient-unknown-base on Observation.subject is valid constraint on the base because these profiles it derives from, imposes or claims to comply with are not known: http://example.org/unknown/StructureDefinition/patient"
+    },
+    "expression" : ["StructureDefinition.differential.element[1]"]
+  },
+  {
+    "severity" : "error",
+    "code" : "exception",
+    "details" : {
+      "text" : "Found profile http://hl7.org/fhir/test/StructureDefinition/complies-with-target-patient-unknown-base, but unable to determine the type it applies to"
+    },
+    "expression" : ["StructureDefinition.differential.element[1].type[0].targetProfile[0]"]
+  },
+  {
+    "extension" : [{
+      "extension" : [{
+        "url" : "severity",
+        "valueCode" : "warning"
+      },
+      {
+        "url" : "type",
+        "valueCode" : "business-rule"
+      },
+      {
+        "url" : "path",
+        "valueString" : "Observation.subject"
+      },
+      {
+        "url" : "message",
+        "valueString" : "The profile 'http://example.org/unknown/StructureDefinition/patient' cannot be found, so the claim cannot be checked for the target profile 'http://hl7.org/fhir/test/StructureDefinition/complies-with-target-patient-unknown-base'"
+      }],
+      "url" : "http://hl7.org/fhir/tools/StructureDefinition/operationoutcome-inner-message"
+    }],
+    "severity" : "warning",
+    "code" : "invalid",
+    "details" : {
+      "text" : "The validator cannot confirm that this profile complies with the claimed profile 'http://hl7.org/fhir/test/StructureDefinition/complies-with-target-base' because: The profile 'http://example.org/unknown/StructureDefinition/patient' cannot be found, so the claim cannot be checked for the target profile 'http://hl7.org/fhir/test/StructureDefinition/complies-with-target-patient-unknown-base'"
+    },
+    "expression" : ["StructureDefinition"]
+  }]
+}

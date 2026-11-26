@@ -1,0 +1,55 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "complies-with-slice-profile-split-base",
+  "url": "http://hl7.org/fhir/test/StructureDefinition/complies-with-slice-profile-split-base",
+  "name": "CompliesWithSliceProfileSplitBase",
+  "title": "complies-with-slice-profile-split-base",
+  "status": "active",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Bundle",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Bundle",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Bundle",
+        "path": "Bundle"
+      },
+      {
+        "id": "Bundle.entry",
+        "path": "Bundle.entry",
+        "min": 1,
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "profile",
+              "path": "resource"
+            }
+          ],
+          "rules": "open"
+        }
+      },
+      {
+        "id": "Bundle.entry:vs",
+        "path": "Bundle.entry",
+        "sliceName": "vs",
+        "min": 1,
+        "max": "2"
+      },
+      {
+        "id": "Bundle.entry:vs.resource",
+        "path": "Bundle.entry.resource",
+        "min": 1,
+        "type": [
+          {
+            "code": "Observation",
+            "profile": [
+              "http://hl7.org/fhir/StructureDefinition/vitalsigns"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
